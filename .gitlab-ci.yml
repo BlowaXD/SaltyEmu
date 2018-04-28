@@ -1,0 +1,48 @@
+image: microsoft/dotnet:2.1-sdk-alpine
+services:
+  - docker:dind
+
+stages:
+- build
+- test
+- release
+- deploy
+
+variables:
+  GIT_SUBMODULE_STRATEGY: recursive
+  REVISION: 1
+  DOCKER_VERSION: "18.04"
+  DOCKER_HEALTHCHECK_TIMEOUT: "60"
+  CONTAINER_TEST_IMAGE: registry.gitlab.com/gamefield/noswings/emulator/nossharp.world:$CI_BUILD_REF_NAME
+  CONTAINER_RELEASE_IMAGE: registry.gitlab.com/gamefield/noswings/emulator/nossharp.world:latest
+
+before_script:
+  - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
+
+build:
+  stage: build
+  script:
+    - docker build -t $CONTAINER_TEST_IMAGE .
+    - docker push $CONTAINER_TEST_IMAGE
+
+unit_test:
+  stage: test
+  script:
+    - docker run $CONTAINER_TEST_IMAGE /nossharp/test/unit_test
+
+integration_test:
+  stage: test
+  services:
+    - postgre:latest
+    - redis:latest
+  script:
+    - docker run $CONTAINER_TEST_IMAGE /nossharp/test/integration_test
+
+release-image:
+  stage: release
+  script:
+    - docker pull $CONTAINER_TEST_IMAGE
+    - docker tag $CONTAINER_TEST_IMAGE $CONTAINER_RELEASE_IMAGE
+    - docker push $CONTAINER_RELEASE_IMAGE
+  only:
+    - master
