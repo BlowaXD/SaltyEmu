@@ -5,4 +5,17 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="DotNetty.Buffers" Version="0.4.7" />
+    <PackageReference Include="DotNetty.Codecs" Version="0.4.7" />
+    <PackageReference Include="DotNetty.Common" Version="0.4.7" />
+    <PackageReference Include="DotNetty.Transport" Version="0.4.7" />
+    <PackageReference Include="log4net" Version="2.0.8" />
+    <PackageReference Include="System.Memory" Version="4.5.0-preview2-26406-04" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\libs\ChickenAPI\src\ChickenAPI\ChickenAPI.csproj" />
+  </ItemGroup>
+
 </Project>

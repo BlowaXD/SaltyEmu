@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27428.2015
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NosSharp.Login", "src\NosSharp.Login\NosSharp.Login.csproj", "{5DE39525-401B-449D-A756-14AA4E1876F1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NosSharp.World", "src\NosSharp.World\NosSharp.World.csproj", "{AA43BE87-BF99-48B4-9D96-DCE25D73109C}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{FE72E81F-39A7-49C2-BAF1-8CC8E1C8B5DC}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "libs", "libs", "{A0D754EC-ADE9-4B97-BCAF-A59C24C10B7F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NosSharp.World", "src\NosSharp.World\NosSharp.World.csproj", "{AA43BE87-BF99-48B4-9D96-DCE25D73109C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChickenAPI", "libs\ChickenAPI\src\ChickenAPI\ChickenAPI.csproj", "{34A37BA5-AE4F-4727-BA15-CD9F02F26390}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NosSharp.PacketHandler", "src\NosSharp.PacketHandler\ClassLibrary1\NosSharp.PacketHandler.csproj", "{54B0F033-7DDE-4305-A4EE-CA0CBC817741}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,17 +17,24 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{5DE39525-401B-449D-A756-14AA4E1876F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5DE39525-401B-449D-A756-14AA4E1876F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5DE39525-401B-449D-A756-14AA4E1876F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5DE39525-401B-449D-A756-14AA4E1876F1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{AA43BE87-BF99-48B4-9D96-DCE25D73109C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{AA43BE87-BF99-48B4-9D96-DCE25D73109C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AA43BE87-BF99-48B4-9D96-DCE25D73109C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AA43BE87-BF99-48B4-9D96-DCE25D73109C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{34A37BA5-AE4F-4727-BA15-CD9F02F26390}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34A37BA5-AE4F-4727-BA15-CD9F02F26390}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34A37BA5-AE4F-4727-BA15-CD9F02F26390}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34A37BA5-AE4F-4727-BA15-CD9F02F26390}.Release|Any CPU.Build.0 = Release|Any CPU
+		{54B0F033-7DDE-4305-A4EE-CA0CBC817741}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{54B0F033-7DDE-4305-A4EE-CA0CBC817741}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{54B0F033-7DDE-4305-A4EE-CA0CBC817741}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{54B0F033-7DDE-4305-A4EE-CA0CBC817741}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{34A37BA5-AE4F-4727-BA15-CD9F02F26390} = {A0D754EC-ADE9-4B97-BCAF-A59C24C10B7F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {33B1EC1B-965D-4770-B047-390647E82322}
