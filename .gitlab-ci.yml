@@ -1,4 +1,4 @@
-image: docker:latest
+image: docker:stable
 services:
   - docker:dind
 
@@ -21,6 +21,9 @@ before_script:
 
 build:
   stage: build
+  tags:
+    - docker
+    - docker-privileged
   script:
     - docker build -t $CONTAINER_TEST_IMAGE .
     - docker push $CONTAINER_TEST_IMAGE
