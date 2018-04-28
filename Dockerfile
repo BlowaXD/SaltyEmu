@@ -1,6 +1,7 @@
 # Project Builder
 FROM microsoft/dotnet:2.1-sdk-alpine as builder
 
+USER root
 RUN mkdir /nossharp
 COPY . /nossharp
 RUN chmod +x /nossharp/scripts/publish.sh
