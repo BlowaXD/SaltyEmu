@@ -1,4 +1,4 @@
-image: microsoft/dotnet:2.1-sdk-alpine
+image: docker:latest
 services:
   - docker:dind
 
