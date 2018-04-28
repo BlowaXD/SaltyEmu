@@ -1,13 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using ChickenAPI.Accounts;
+using ChickenAPI.Dtos;
+using ChickenAPI.Packets;
+using ChickenAPI.Player;
+using ChickenAPI.Session;
 using DotNetty.Transport.Channels;
 using DotNetty.Transport.Channels.Groups;
 
 namespace NosSharp.World.Session
 {
-    public class NetworkClient : ChannelHandlerAdapter
+    public class ClientSession : ChannelHandlerAdapter, ISession
     {
+        private static IPacketFactory _packetFactory;
+        private static IPacketHandler _packetHandler;
         private readonly IChannel _channel;
 
         #region Members
@@ -22,7 +29,17 @@ namespace NosSharp.World.Session
         private int? _waitForPacketsAmount;
         private readonly IList<string> _waitForPacketList = new List<string>();
 
-        public NetworkClient(IChannel channel)
+        public static void SetPacketFactory(IPacketFactory packetFactory)
+        {
+            _packetFactory = packetFactory;
+        }
+
+        public static void SetPacketHandler(IPacketHandler packetHandler)
+        {
+            _packetHandler = packetHandler;
+        }
+
+        public ClientSession(IChannel channel)
         {
             _channel = channel;
         }
@@ -175,35 +192,64 @@ namespace NosSharp.World.Session
 
         private void TriggerHandler(string packetHeader, string packet, bool force)
         {
-            // TODO look if we got the delegate for that packet header
-            // TODO check if there is no packet Listener for that header
-            /*
+            PacketHandlerMethodReference methodReference = _packetHandler.GetPacketHandlerMethodReference(packetHeader);
             if (methodReference == null)
             {
-                // unhandled packet logg it
+                //Log.Warn(string.Format(Language.Instance.GetMessageFromKey("HANDLER_NOT_FOUND"), packetHeader));
                 return;
             }
-            */
 
-            // TODO check for waitedPacketList
-
-            /*
-            if (methodReference.PacketHeaderAttribute != null && !force && methodReference.PacketHeaderAttribute.Amount > 1 && !_waitForPacketsAmount.HasValue)
+            if (methodReference.PacketHeader != null && !force && methodReference.PacketHeader.Amount > 1 && !_waitForPacketsAmount.HasValue)
             {
                 // we need to wait for more
-                _waitForPacketsAmount = methodReference.PacketHeaderAttribute.Amount;
+                _waitForPacketsAmount = methodReference.PacketHeader.Amount;
                 _waitForPacketList.Add(packet != string.Empty ? packet : $"1 {packetHeader} ");
                 return;
             }
-            */
 
-            // TODO check if is in CharacterLoginState to handle the right packets
-            // TODO check packet permission
+            APacket deserializedPacket = _packetFactory.Deserialize(packet, methodReference.PacketDefinitionParameterType, IsAuthenticated);
+            _packetHandler.Handle(deserializedPacket, this, methodReference.PacketDefinitionParameterType);
+
+        }
+
+        public AccountDto AccountDto { get; private set; }
+
+        public bool HasSelectedCharacter => Character != null;
+
+        public Character Character { get; private set; }
+
+        public AuthorityType Authority => AccountDto.Authority;
+
+        public void SendPacket(APacket packet)
+        {
+            _channel.WriteAsync(_packetFactory.Serialize(packet));
+            _channel.Flush();
+        }
+
+        public void SendPackets(IEnumerable<APacket> packets)
+        {
+            foreach (APacket packet in packets)
+            {
+                _channel.WriteAsync(_packetFactory.Serialize(packet));
+            }
+
+            _channel.Flush();
+        }
+
+        public void InitializeAccount(AccountDto account)
+        {
+            AccountDto = account;
+        }
+
+        public void InitializeCharacter(Character character)
+        {
+            Character = character;
         }
 
         public void Disconnect()
         {
             _channel.DisconnectAsync();
+            _channel.DeregisterAsync();
         }
 
 

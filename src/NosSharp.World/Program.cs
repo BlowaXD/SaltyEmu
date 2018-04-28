@@ -1,10 +1,14 @@
 ﻿using System;
 using System.IO;
 using System.Net;
+using ChickenAPI.Packets;
 using ChickenAPI.Plugin;
 using ChickenAPI.Utils;
 using NosSharp.World.Cryptography;
+using NosSharp.World.Extensions;
 using NosSharp.World.Network;
+using NosSharp.World.Packets;
+using NosSharp.World.Session;
 using NosSharp.World.Utils;
 
 namespace NosSharp.World
@@ -16,6 +20,7 @@ namespace NosSharp.World
 
         private static void InitializePlugins()
         {
+            DependencyContainer.Instance.Register<IPluginManager>(new SimplePluginManager());
             DependencyContainer.Instance.Get<IPluginManager>().LoadPlugins(new DirectoryInfo("plugins"));
         }
 
@@ -27,7 +32,6 @@ namespace NosSharp.World
                 _port = 1337;
             }
             _ip = Environment.GetEnvironmentVariable("SERVER_IP");
-            DependencyContainer.Instance.Register<IPluginManager>(new SimplePluginManager());
         }
 
         private static void PrintHeader()
@@ -43,7 +47,11 @@ namespace NosSharp.World
         {
             PrintHeader();
             InitializeConfigs();
+            DependencyContainer.Instance.Register<IPacketFactory>(new PluggablePacketFactory());
+            DependencyContainer.Instance.Register<IPacketHandler>(new PacketHandler());
             InitializePlugins();
+            ClientSession.SetPacketFactory(DependencyContainer.Instance.Get<IPacketFactory>());
+            ClientSession.SetPacketHandler(DependencyContainer.Instance.Get<IPacketHandler>());
             Server.RunServerAsync(_port, new WorldCryptoFactory()).Wait();
         }
     }

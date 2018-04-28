@@ -45,7 +45,12 @@ namespace NosSharp.World.Utils
 
             if (directory.Exists)
             {
-                return directory.GetFiles("*.dll").Select(LoadPlugin).ToArray();
+                return directory.GetFiles("*.dll").Select(s =>
+                {
+                    IPlugin tmp = LoadPlugin(s);
+                    tmp.OnLoad();
+                    return tmp;
+                }).ToArray();
             }
 
             directory.Create();

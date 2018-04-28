@@ -27,7 +27,7 @@ namespace NosSharp.World.Network
                     {
                         IChannelPipeline pipeline = channel.Pipeline;
                         pipeline.AddLast((MessageToMessageDecoder<IByteBuffer>)factory.GetDecoder());
-                        pipeline.AddLast(new NetworkClient(channel));
+                        pipeline.AddLast(new ClientSession(channel));
                         pipeline.AddLast((MessageToMessageEncoder<string>)factory.GetEncoder());
                     }));
 

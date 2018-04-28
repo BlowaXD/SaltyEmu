@@ -9,10 +9,11 @@ using ChickenAPI.Packets.ServerPackets;
 using ChickenAPI.Player;
 using ChickenAPI.Session;
 using ChickenAPI.Utils;
+using NosSharp.PacketHandler.Utils;
 
 namespace NosSharp.PacketHandler
 {
-    public class CharacterScreenPacketHandler
+    public class CharacterScreenPacketHandler : ICharacterScreenPacketHandler
     {
 
         private ClistPacket GenerateCListPacket(CharacterDto character)
