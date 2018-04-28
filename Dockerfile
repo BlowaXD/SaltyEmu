@@ -5,6 +5,7 @@ USER root
 RUN mkdir /nossharp
 COPY . /nossharp
 RUN chmod +x /nossharp/scripts/publish.sh
+WORKDIR /nossharp
 RUN /nossharp/scripts/publish.sh
 
 
