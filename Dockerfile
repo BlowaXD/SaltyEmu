@@ -1,5 +1,11 @@
 FROM microsoft/dotnet:2.1-sdk-alpine as builder
 
+RUN mkdir /nossharp
+COPY . /nossharp
+RUN /nossharp/scripts/publish.sh
+
+FROM alpine:latest
+
 ENV SERVER_PORT=1337
 ENV PLUGINS_GIT_URL=""
 ENV PLUGINS_GIT_USERNAME=""
@@ -9,11 +15,6 @@ LABEL Name="NosSharp.World"
 LABEL Author="BlowaXD"
 LABEL MAINTAINER BlowaXD <blowaxd693@gmail.com>
 
-RUN mkdir /nossharp
-COPY . /NosSharp
-RUN scripts/publish.sh
-
-FROM alpine:latest
 RUN apk update && apk upgrade && \
     apk add --no-cache git
 
