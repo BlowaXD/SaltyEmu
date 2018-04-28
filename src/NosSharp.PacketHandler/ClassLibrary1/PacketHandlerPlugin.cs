@@ -18,9 +18,10 @@ namespace NosSharp.PacketHandler
         public void OnEnable()
         {
             var packetHandler =  DependencyContainer.Instance.Get<IPacketHandler>();
-            foreach (PacketHandlerMethodReference handler in PacketHandlerMethodReferenceGenerator.GetHandlerMethodReference())
+            Console.WriteLine($"{packetHandler.GetType()}");
+            foreach (PacketHandlerMethodReference handler in PacketMethodGenerator.GetHandlerMethodReference())
             {
-                Console.WriteLine($"{handler.PacketHeader} Loaded !");
+                Console.WriteLine($"[PACKET] : {handler.Identification} Loaded !");
                 packetHandler.Register(handler);
             }
         }

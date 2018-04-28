@@ -41,7 +41,7 @@ namespace NosSharp.World.Packets
             }
 
             //check for the correct authority
-            if (session.IsAuthenticated && (byte)methodReference.Authority > (byte)session.AccountDto.Authority)
+            if (session.IsAuthenticated && (byte)methodReference.Authority > (byte)session.Account.Authority)
             {
                 return;
             }

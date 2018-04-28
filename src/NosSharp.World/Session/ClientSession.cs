@@ -19,6 +19,7 @@ namespace NosSharp.World.Session
 
         #region Members
 
+        public bool HasCurrentMapInstance { get; }
         public bool IsAuthenticated { get; set; }
 
         public int SessionId { get; set; }
@@ -212,13 +213,13 @@ namespace NosSharp.World.Session
 
         }
 
-        public AccountDto AccountDto { get; private set; }
+        public AccountDto Account { get; private set; }
 
         public bool HasSelectedCharacter => Character != null;
 
         public Character Character { get; private set; }
 
-        public AuthorityType Authority => AccountDto.Authority;
+        public AuthorityType Authority => Account.Authority;
 
         public void SendPacket(APacket packet)
         {
@@ -238,7 +239,7 @@ namespace NosSharp.World.Session
 
         public void InitializeAccount(AccountDto account)
         {
-            AccountDto = account;
+            Account = account;
         }
 
         public void InitializeCharacter(Character character)

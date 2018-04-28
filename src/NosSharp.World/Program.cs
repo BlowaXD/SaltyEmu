@@ -21,7 +21,12 @@ namespace NosSharp.World
         private static void InitializePlugins()
         {
             DependencyContainer.Instance.Register<IPluginManager>(new SimplePluginManager());
-            DependencyContainer.Instance.Get<IPluginManager>().LoadPlugins(new DirectoryInfo("plugins"));
+            IPlugin[] plugins = DependencyContainer.Instance.Get<IPluginManager>().LoadPlugins(new DirectoryInfo("plugins"));
+            foreach (IPlugin plugin in plugins)
+            {
+                Console.WriteLine($"{plugin.Name}.onEnable()");
+                plugin.OnEnable();
+            }
         }
 
         private static void InitializeConfigs()

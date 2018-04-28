@@ -7,9 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NosSharp.World", "src\NosSh
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "libs", "libs", "{A0D754EC-ADE9-4B97-BCAF-A59C24C10B7F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChickenAPI", "libs\ChickenAPI\src\ChickenAPI\ChickenAPI.csproj", "{34A37BA5-AE4F-4727-BA15-CD9F02F26390}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChickenAPI", "libs\ChickenAPI\src\ChickenAPI\ChickenAPI.csproj", "{34A37BA5-AE4F-4727-BA15-CD9F02F26390}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NosSharp.PacketHandler", "src\NosSharp.PacketHandler\ClassLibrary1\NosSharp.PacketHandler.csproj", "{54B0F033-7DDE-4305-A4EE-CA0CBC817741}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NosSharp.BasicPacketHandlerPlugin", "src\NosSharp.PacketHandler\ClassLibrary1\NosSharp.BasicPacketHandlerPlugin.csproj", "{54B0F033-7DDE-4305-A4EE-CA0CBC817741}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

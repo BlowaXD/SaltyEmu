@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -59,7 +60,7 @@ namespace NosSharp.PacketHandler.Utils
 
             return queueMissingParams.Count > 0
                 ? Expression.Constant(queueMissingParams.Dequeue())
-                : Expression.Constant(callParamType.ParameterType.IsValueType ? callParamType.ParameterType.CreateInstance() : null);
+                : Expression.Constant(callParamType.ParameterType.IsValueType ? Activator.CreateInstance(callParamType.ParameterType) : null);
         }
 
         #endregion
