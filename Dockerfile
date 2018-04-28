@@ -1,9 +1,13 @@
+# Project Builder
 FROM microsoft/dotnet:2.1-sdk-alpine as builder
 
 RUN mkdir /nossharp
 COPY . /nossharp
+RUN chmod +x /nossharp/scripts/publish.NosSharp
 RUN /nossharp/scripts/publish.sh
 
+
+## Use alpine as basis
 FROM alpine:latest
 
 ENV SERVER_PORT=1337
