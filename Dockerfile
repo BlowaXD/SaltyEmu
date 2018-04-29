@@ -28,10 +28,10 @@ RUN apk update && apk upgrade && \
 RUN mkdir /nossharp
 RUN adduser -S nossharp
 
-COPY --from=builder --chown=nossharp /nossharp/dist/World/linux /nossharp/bin
-COPY --from=builder --chown=nossharp /nossharp/config /nossharp/bin/config
-COPY --from=builder --chown=nossharp /nossharp/script/unit_test.sh /nossharp/test/unit_test
-COPY --from=builder --chown=nossharp /nossharp/script/integration_test.sh /nossharp/test/integration_test
+COPY --from=builder --chown=nossharp:nossharp /nossharp/dist/World/linux /nossharp/bin
+COPY --from=builder --chown=nossharp:nossharp /nossharp/config /nossharp/bin/config
+COPY --from=builder --chown=nossharp:nossharp /nossharp/script/unit_test.sh /nossharp/test/unit_test
+COPY --from=builder --chown=nossharp:nossharp /nossharp/script/integration_test.sh /nossharp/test/integration_test
 RUN chmod -R +r /nossharp/
 RUN chmod +x /nossharp/bin/NosSharp.World
 RUN chmod +x /nossharp/test/unit_test

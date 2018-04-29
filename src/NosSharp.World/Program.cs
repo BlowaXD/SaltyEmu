@@ -24,7 +24,6 @@ namespace NosSharp.World
             IPlugin[] plugins = DependencyContainer.Instance.Get<IPluginManager>().LoadPlugins(new DirectoryInfo("plugins"));
             foreach (IPlugin plugin in plugins)
             {
-                Console.WriteLine($"{plugin.Name}.onEnable()");
                 plugin.OnEnable();
             }
         }
@@ -57,6 +56,7 @@ namespace NosSharp.World
             InitializePlugins();
             ClientSession.SetPacketFactory(DependencyContainer.Instance.Get<IPacketFactory>());
             ClientSession.SetPacketHandler(DependencyContainer.Instance.Get<IPacketHandler>());
+            Console.WriteLine($"\n\nListening on port {_port}");
             Server.RunServerAsync(_port, new WorldCryptoFactory()).Wait();
         }
     }

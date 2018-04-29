@@ -1,3 +1,6 @@
 [submodule "ChickenAPI"]
 	path = libs/ChickenAPI
 	url = ../ChickenAPI.git
+[submodule "NosSharp.Plugins"]
+	path = libs/NosSharp.Plugins
+	url = ../NosSharp.Plugins.git

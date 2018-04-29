@@ -9,7 +9,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "libs", "libs", "{A0D754EC-A
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChickenAPI", "libs\ChickenAPI\src\ChickenAPI\ChickenAPI.csproj", "{34A37BA5-AE4F-4727-BA15-CD9F02F26390}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NosSharp.BasicPacketHandlerPlugin", "src\NosSharp.PacketHandler\ClassLibrary1\NosSharp.BasicPacketHandlerPlugin.csproj", "{54B0F033-7DDE-4305-A4EE-CA0CBC817741}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NosSharp.DatabasePlugin", "libs\NosSharp.Plugins\src\NosSharp.DatabasePlugin\NosSharp.DatabasePlugin.csproj", "{7F7FB93E-8A19-4E7B-95EE-7B476B870398}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PluginTester", "libs\NosSharp.Plugins\test\PluginTester\PluginTester.csproj", "{E6464E48-30B8-436C-91A6-D58E1C445D42}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "plugins", "plugins", "{CA5EC656-9D8A-4607-8DE1-C0C815207B4D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NosSharp.BasicPacketHandlerPlugin", "libs\NosSharp.Plugins\src\NosSharp.PacketHandler\NosSharp.BasicPacketHandlerPlugin.csproj", "{705869C4-9E83-4005-9131-BBC36FB3D7C9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,16 +31,26 @@ Global
 		{34A37BA5-AE4F-4727-BA15-CD9F02F26390}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{34A37BA5-AE4F-4727-BA15-CD9F02F26390}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{34A37BA5-AE4F-4727-BA15-CD9F02F26390}.Release|Any CPU.Build.0 = Release|Any CPU
-		{54B0F033-7DDE-4305-A4EE-CA0CBC817741}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{54B0F033-7DDE-4305-A4EE-CA0CBC817741}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{54B0F033-7DDE-4305-A4EE-CA0CBC817741}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{54B0F033-7DDE-4305-A4EE-CA0CBC817741}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7F7FB93E-8A19-4E7B-95EE-7B476B870398}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F7FB93E-8A19-4E7B-95EE-7B476B870398}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F7FB93E-8A19-4E7B-95EE-7B476B870398}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F7FB93E-8A19-4E7B-95EE-7B476B870398}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E6464E48-30B8-436C-91A6-D58E1C445D42}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E6464E48-30B8-436C-91A6-D58E1C445D42}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E6464E48-30B8-436C-91A6-D58E1C445D42}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E6464E48-30B8-436C-91A6-D58E1C445D42}.Release|Any CPU.Build.0 = Release|Any CPU
+		{705869C4-9E83-4005-9131-BBC36FB3D7C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{705869C4-9E83-4005-9131-BBC36FB3D7C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{705869C4-9E83-4005-9131-BBC36FB3D7C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{705869C4-9E83-4005-9131-BBC36FB3D7C9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{34A37BA5-AE4F-4727-BA15-CD9F02F26390} = {A0D754EC-ADE9-4B97-BCAF-A59C24C10B7F}
+		{7F7FB93E-8A19-4E7B-95EE-7B476B870398} = {CA5EC656-9D8A-4607-8DE1-C0C815207B4D}
+		{705869C4-9E83-4005-9131-BBC36FB3D7C9} = {CA5EC656-9D8A-4607-8DE1-C0C815207B4D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {33B1EC1B-965D-4770-B047-390647E82322}
