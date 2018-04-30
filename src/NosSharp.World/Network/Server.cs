@@ -38,6 +38,7 @@ namespace NosSharp.World.Network
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex);
                 //Log.Error(ex.Message);
             }
             finally

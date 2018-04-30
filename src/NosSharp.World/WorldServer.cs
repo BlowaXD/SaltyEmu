@@ -1,6 +1,9 @@
 ﻿using System;
 using System.IO;
 using System.Net;
+using ChickenAPI.Accounts;
+using ChickenAPI.DAL.Interfaces;
+using ChickenAPI.Dtos;
 using ChickenAPI.Packets;
 using ChickenAPI.Plugin;
 using ChickenAPI.Utils;
@@ -13,7 +16,7 @@ using NosSharp.World.Utils;
 
 namespace NosSharp.World
 {
-    internal class Program
+    internal class WorldServer
     {
         private static string _ip;
         private static int _port;
@@ -22,6 +25,11 @@ namespace NosSharp.World
         {
             DependencyContainer.Instance.Register<IPluginManager>(new SimplePluginManager());
             IPlugin[] plugins = DependencyContainer.Instance.Get<IPluginManager>().LoadPlugins(new DirectoryInfo("plugins"));
+            if (plugins == null)
+            {
+                return;
+            }
+
             foreach (IPlugin plugin in plugins)
             {
                 plugin.OnEnable();
@@ -35,6 +43,7 @@ namespace NosSharp.World
             {
                 _port = 1337;
             }
+
             _ip = Environment.GetEnvironmentVariable("SERVER_IP");
         }
 
