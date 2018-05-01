@@ -28,19 +28,6 @@ build_docker:
     - docker build -t $CONTAINER_TEST_IMAGE .
     - docker push $CONTAINER_TEST_IMAGE
 
-unit_test:
-  stage: test
-  script:
-    - docker run $CONTAINER_TEST_IMAGE /nossharp/test/unit_test
-
-integration_test:
-  stage: test
-  services:
-    - postgre:latest
-    - redis:latest
-  script:
-    - docker run $CONTAINER_TEST_IMAGE /nossharp/test/integration_test
-
 release-image:
   stage: release
   script:

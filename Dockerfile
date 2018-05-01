@@ -24,8 +24,7 @@ LABEL name="nossharp-world"
 LABEL author="BlowaXD"
 LABEL maintainer="BlowaXD <blowaxd693@gmail.com>"
 
-RUN apk update && apk upgrade && \
-    apk add --no-cache git
+RUN apk add --no-cache git
 
 # Setup Application Directory
 RUN mkdir /nossharp && \
