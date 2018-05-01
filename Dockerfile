@@ -1,3 +1,6 @@
+###
+## Docker used to build
+### 
 # Project Builder
 FROM microsoft/dotnet:2.1-sdk-alpine as builder
 
@@ -6,48 +9,46 @@ WORKDIR /nossharp
 # Copy everything and build
 COPY . ./
 RUN dotnet publish src/NosSharp.World/ -c Release -o ../../dist/
+
+
+###
+## Real Docker
+###
+
 ## Use alpine as basis
 FROM microsoft/dotnet:2.1-runtime-alpine
 
-# Local Server Port
-ENV SERVER_PORT=1337
-
 # Output Server Port (that will be sent to IServerApiService)
-ENV SERVER_OUTPUT_PORT=4000
-ENV SERVER_OUTPUT_IP=127.0.0.1
+ENV SERVER_OUTPUT_PORT=7777 \
+    SERVER_OUTPUT_IP=127.0.0.1
 
-# Env variables used to pull repository
-ENV PLUGINS_GIT_URL=ssh@git.gitlab.com/plugins.git
-ENV PLUGINS_GIT_SSH_KEY=
-
-LABEL name="nossharp-world"
-LABEL author="BlowaXD"
-LABEL maintainer="BlowaXD <blowaxd693@gmail.com>"
-
-RUN apk add --no-cache git
+LABEL name="nossharp-world" \
+    author="BlowaXD" \
+    maintainer="BlowaXD <blowaxd693@gmail.com>"
 
 # Setup Application Directory
 RUN mkdir /nossharp && \
-    adduser -S nossharp
+    mkdir /nossharp/plugins && \
+    mkdir /nossharp/plugins/config && \
+    chmod -R +r /nossharp/ && \
+    chmod -R +x /nossharp
 
 WORKDIR /nossharp/
 
-COPY --from=builder /nossharp/dist/ bin
-COPY config bin/plugins/config
-COPY scripts/run.sh run.sh
+COPY --from=builder /nossharp/dist/ .
+COPY config plugins/config
 
-# execute rights
-RUN chmod -R +r /nossharp/ && \
-    chmod +x /nossharp/bin/
-
-USER nossharp
-WORKDIR /nossharp/
+VOLUME /nossharp/plugins
 
 # SETUP DOCKER HEALTHCHECK
-HEALTHCHECK --interval=5s --timeout=5s --start-period=5s --retries=3 CMD [ "netstat -an | grep ${SERVER_PORT} > /dev/null; if [ 0 != $? ]; then exit 1; fi;" ]
+# HEALTHCHECK --interval=5s --timeout=5s --start-period=5s --retries=3 CMD [ "" ]
 
-# EXPOSE TCP Port
-EXPOSE ${SERVER_PORT}/TCP
 
 # RUN NosSharp World Server
-ENTRYPOINT [ "run.sh" ]
+# COPY scripts/docker-entrypoint.sh /usr/local/bin/
+# ENTRYPOINT [ "docker-entrypoint.sh" ]
+
+# EXPOSE TCP Port
+EXPOSE 1337
+
+CMD ["dotnet", "NosSharp.World.dll"]
