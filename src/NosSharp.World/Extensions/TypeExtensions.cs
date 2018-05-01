@@ -36,6 +36,7 @@ namespace NosSharp.World.Extensions
                 {
                     throw new InvalidProgramException(string.Format("Type '{0}' doesn't have a parameterless constructor.", type.Name));
                 }
+
                 throw new InvalidProgramException(string.Format("Type '{0}' doesn't have the requested constructor.", type.Name));
             }
 
@@ -45,6 +46,7 @@ namespace NosSharp.World.Extensions
             {
                 ilGen.Emit(OpCodes.Ldarg, i);
             }
+
             ilGen.Emit(OpCodes.Newobj, constructor);
             ilGen.Emit(OpCodes.Ret);
             return dynamicMethod.CreateDelegate(delegateType);

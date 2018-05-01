@@ -5,14 +5,8 @@ namespace NosSharp.World.Cryptography
 {
     public class WorldCryptoFactory : IPacketCryptoFactory
     {
-        public IEncoder GetEncoder()
-        {
-            return new WorldEncoder();
-        }
+        public IEncoder GetEncoder() => new WorldEncoder();
 
-        public IDecoder GetDecoder()
-        {
-            return new WorldDecoder();
-        }
+        public IDecoder GetDecoder() => new WorldDecoder();
     }
 }

@@ -7,8 +7,8 @@ namespace NosSharp.World.Packets
 {
     public class PacketHandler : IPacketHandler
     {
-        private readonly Dictionary<string, PacketHandlerMethodReference> _packetHandlerMethod = new Dictionary<string, PacketHandlerMethodReference>();
         private readonly Dictionary<Type, PacketHandlerMethodReference> _packetHandler = new Dictionary<Type, PacketHandlerMethodReference>();
+        private readonly Dictionary<string, PacketHandlerMethodReference> _packetHandlerMethod = new Dictionary<string, PacketHandlerMethodReference>();
 
 
         public void Register(PacketHandlerMethodReference method)
@@ -23,10 +23,7 @@ namespace NosSharp.World.Packets
             _packetHandlerMethod.Remove(method.Identification);
         }
 
-        public PacketHandlerMethodReference GetPacketHandlerMethodReference(string header)
-        {
-            return !_packetHandlerMethod.TryGetValue(header, out PacketHandlerMethodReference reference) ? null : reference;
-        }
+        public PacketHandlerMethodReference GetPacketHandlerMethodReference(string header) => !_packetHandlerMethod.TryGetValue(header, out PacketHandlerMethodReference reference) ? null : reference;
 
         public void Handle(APacket packet, ISession session, Type type)
         {
@@ -35,7 +32,7 @@ namespace NosSharp.World.Packets
                 return;
             }
 
-            if (!session.HasSelectedCharacter && !(methodReference.ParentHandler is ICharacterScreenPacketHandler))
+            if (!session.HasSelectedCharacter && methodReference.NeedCharacter)
             {
                 return;
             }

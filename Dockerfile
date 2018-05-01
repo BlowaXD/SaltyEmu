@@ -13,6 +13,9 @@ RUN /nossharp/scripts/publish.sh
 FROM alpine:latest
 
 ENV SERVER_PORT=1337
+ENV SERVER_OUTPUT_PORT=4000
+ENV SERVER_OUTPUT_IP="127.0.0.1"
+
 ENV PLUGINS_GIT_URL=""
 ENV PLUGINS_GIT_USERNAME=""
 ENV PLUGINS_GIT_PASSWORD=""
@@ -28,10 +31,10 @@ RUN apk update && apk upgrade && \
 RUN mkdir /nossharp
 RUN adduser -S nossharp
 
-COPY --from=builder --chown=nossharp:nossharp /nossharp/dist/World/linux /nossharp/bin
-COPY --from=builder --chown=nossharp:nossharp /nossharp/config /nossharp/bin/config
-COPY --from=builder --chown=nossharp:nossharp /nossharp/script/unit_test.sh /nossharp/test/unit_test
-COPY --from=builder --chown=nossharp:nossharp /nossharp/script/integration_test.sh /nossharp/test/integration_test
+COPY --from=builder /nossharp/dist/World/linux /nossharp/bin
+COPY --from=builder /nossharp/config /nossharp/bin/config
+COPY --from=builder /nossharp/script/unit_test.sh /nossharp/test/unit_test
+COPY --from=builder /nossharp/script/integration_test.sh /nossharp/test/integration_test
 RUN chmod -R +r /nossharp/
 RUN chmod +x /nossharp/bin/NosSharp.World
 RUN chmod +x /nossharp/test/unit_test

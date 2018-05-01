@@ -5,13 +5,6 @@ namespace NosSharp.World.Session
 {
     public class SessionManager
     {
-        #region Singleton
-
-        private static readonly Lazy<SessionManager> LazyInstance = new Lazy<SessionManager>(() => new SessionManager());
-
-        public static SessionManager Instance => LazyInstance.Value;
-
-        #endregion
         private readonly ConcurrentDictionary<string, int> _sessions = new ConcurrentDictionary<string, int>();
 
         public void RegisterSession(string key, int sessionId)
@@ -25,5 +18,13 @@ namespace NosSharp.World.Session
         {
             _sessions.TryRemove(key, out int _);
         }
+
+        #region Singleton
+
+        private static readonly Lazy<SessionManager> LazyInstance = new Lazy<SessionManager>(() => new SessionManager());
+
+        public static SessionManager Instance => LazyInstance.Value;
+
+        #endregion
     }
 }

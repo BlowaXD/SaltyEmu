@@ -1,14 +1,12 @@
 ﻿using System;
 using System.IO;
-using System.Net;
-using ChickenAPI.Accounts;
 using ChickenAPI.DAL.Interfaces;
 using ChickenAPI.Dtos;
 using ChickenAPI.Packets;
 using ChickenAPI.Plugin;
 using ChickenAPI.Utils;
+using Newtonsoft.Json;
 using NosSharp.World.Cryptography;
-using NosSharp.World.Extensions;
 using NosSharp.World.Network;
 using NosSharp.World.Packets;
 using NosSharp.World.Session;
@@ -18,6 +16,7 @@ namespace NosSharp.World
 {
     internal class WorldServer
     {
+        private static string _worldGroup;
         private static string _ip;
         private static int _port;
 
@@ -44,7 +43,8 @@ namespace NosSharp.World
                 _port = 1337;
             }
 
-            _ip = Environment.GetEnvironmentVariable("SERVER_IP");
+            _ip = Environment.GetEnvironmentVariable("SERVER_OUTPUT_IP");
+            _worldGroup = Environment.GetEnvironmentVariable("SERVER_OUTPUT_WORLDGROUP");
         }
 
         private static void PrintHeader()
@@ -56,7 +56,24 @@ namespace NosSharp.World
             Console.WriteLine(separator + string.Format("{0," + offset + "}\n", text) + separator);
         }
 
-        static void Main()
+        private static bool RegisterServer()
+        {
+            var worldServer = new WorldServerDto
+            {
+                WorldGroup = _worldGroup,
+                Ip = _ip,
+                Port = _port
+            };
+            var api = DependencyContainer.Instance.Get<IServerApiService>();
+            if (api.RegisterServer(worldServer))
+            {
+                return true;
+            }
+            Server.WorldServer = worldServer;
+            return false;
+        }
+
+        private static void Main()
         {
             PrintHeader();
             InitializeConfigs();
@@ -66,6 +83,12 @@ namespace NosSharp.World
             ClientSession.SetPacketFactory(DependencyContainer.Instance.Get<IPacketFactory>());
             ClientSession.SetPacketHandler(DependencyContainer.Instance.Get<IPacketHandler>());
             Console.WriteLine($"\n\nListening on port {_port}");
+            if (RegisterServer())
+            {
+                Console.WriteLine("Failed to register ServerApi");
+                return;
+            }
+            Console.WriteLine($"{JsonConvert.SerializeObject(Server.WorldServer)}");
             Server.RunServerAsync(_port, new WorldCryptoFactory()).Wait();
         }
     }

@@ -59,6 +59,7 @@ namespace NosSharp.World.Utils
                     {
                         return null;
                     }
+
                     Console.WriteLine($"[PluginManager] {tmp.Name} Loaded !");
                     tmp.OnLoad();
 
@@ -68,7 +69,6 @@ namespace NosSharp.World.Utils
 
             directory.Create();
             return null;
-
         }
     }
 }

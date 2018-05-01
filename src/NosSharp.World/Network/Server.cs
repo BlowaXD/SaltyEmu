@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
+using ChickenAPI.DAL.Interfaces;
+using ChickenAPI.Dtos;
+using ChickenAPI.Utils;
 using DotNetty.Buffers;
 using DotNetty.Codecs;
 using DotNetty.Transport.Bootstrapping;
@@ -12,6 +15,15 @@ namespace NosSharp.World.Network
 {
     public class Server
     {
+        public static WorldServerDto WorldServer;
+        private static void UnregisterServer()
+        {
+            var api = DependencyContainer.Instance.Get<IServerApiService>();
+            var sessionManager = DependencyContainer.Instance.Get<ISessionService>();
+            api.UnregisterServer(WorldServer);
+            sessionManager.UnregisterSessions(WorldServer.Id);
+        }
+
         public static async Task RunServerAsync(int port, IPacketCryptoFactory factory)
         {
             var bossGroup = new MultithreadEventLoopGroup(1);
@@ -39,10 +51,12 @@ namespace NosSharp.World.Network
             catch (Exception ex)
             {
                 Console.WriteLine(ex);
+                UnregisterServer();
                 //Log.Error(ex.Message);
             }
             finally
             {
+                UnregisterServer();
                 Task.WaitAll(bossGroup.ShutdownGracefullyAsync(), workerGroup.ShutdownGracefullyAsync());
             }
         }

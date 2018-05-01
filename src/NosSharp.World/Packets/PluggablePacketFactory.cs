@@ -12,13 +12,13 @@ using NosSharp.World.Extensions;
 namespace NosSharp.World.Packets
 {
     /// <summary>
-    /// First version of a pluggable PacketFactory
+    ///     First version of a pluggable PacketFactory
     /// </summary>
     public class PluggablePacketFactory : IPacketFactory
     {
+        private readonly Dictionary<Type, PacketInformation> _deserializationInformations = new Dictionary<Type, PacketInformation>();
         private readonly Dictionary<string, Type> _packetByHeader = new Dictionary<string, Type>();
         private readonly Dictionary<Type, string> _packetByType = new Dictionary<Type, string>();
-        private readonly Dictionary<Type, PacketInformation> _deserializationInformations = new Dictionary<Type, PacketInformation>();
 
         public string Serialize<TPacket>(TPacket packet) where TPacket : APacket
         {
@@ -119,7 +119,7 @@ namespace NosSharp.World.Packets
             }
 
             // check for nullable without value or string
-            if (propertyType == typeof(string) && (string.IsNullOrEmpty(Convert.ToString(value))))
+            if (propertyType == typeof(string) && string.IsNullOrEmpty(Convert.ToString(value)))
             {
                 return " -";
             }
@@ -235,10 +235,9 @@ namespace NosSharp.World.Packets
             return tmp;
         }
 
-        private PacketInformation GetSerializationInformation(Type serializationType)
-        {
-            return _deserializationInformations.TryGetValue(serializationType, out PacketInformation packetInfo) ? packetInfo : GenerateSerializationInformations(serializationType);
-        }
+        private PacketInformation GetSerializationInformation(Type serializationType) => _deserializationInformations.TryGetValue(serializationType, out PacketInformation packetInfo)
+            ? packetInfo
+            : GenerateSerializationInformations(serializationType);
 
         private string SerializeSubpackets(IList listValues, Type packetBasePropertyType, bool shouldRemoveSeparator)
         {
@@ -397,7 +396,10 @@ namespace NosSharp.World.Packets
         {
             validationAttributes.ToList().ForEach(s =>
             {
-                if (!s.IsValid(currentValue)) throw new ValidationException(s.ErrorMessage);
+                if (!s.IsValid(currentValue))
+                {
+                    throw new ValidationException(s.ErrorMessage);
+                }
             });
             // check for empty value and cast it to null
             if (currentValue == "-1" || currentValue == "-")
@@ -406,14 +408,14 @@ namespace NosSharp.World.Packets
             }
 
             // enum should be casted to number
-            if (packetPropertyType.BaseType?.Equals(typeof(System.Enum)) == true)
+            if (packetPropertyType.BaseType?.Equals(typeof(Enum)) == true)
             {
                 object convertedValue = null;
                 try
                 {
-                    if (currentValue != null && packetPropertyType.IsEnumDefined(System.Enum.Parse(packetPropertyType, currentValue)))
+                    if (currentValue != null && packetPropertyType.IsEnumDefined(Enum.Parse(packetPropertyType, currentValue)))
                     {
-                        convertedValue = System.Enum.Parse(packetPropertyType, currentValue);
+                        convertedValue = Enum.Parse(packetPropertyType, currentValue);
                     }
                 }
                 catch (Exception)
@@ -455,7 +457,7 @@ namespace NosSharp.World.Packets
             {
                 if (packetPropertyType.GenericTypeArguments[0]?.BaseType == typeof(Enum))
                 {
-                    return System.Enum.Parse(packetPropertyType.GenericTypeArguments[0], currentValue);
+                    return Enum.Parse(packetPropertyType.GenericTypeArguments[0], currentValue);
                 }
 
                 return Convert.ChangeType(currentValue, packetPropertyType.GenericTypeArguments[0]);
@@ -465,7 +467,8 @@ namespace NosSharp.World.Packets
             {
                 throw new NullReferenceException();
             }
-            else if (packetPropertyType == typeof(string) && currentValue == null)
+
+            if (packetPropertyType == typeof(string) && currentValue == null)
             {
                 currentValue = string.Empty;
             }

@@ -19,7 +19,8 @@ namespace NosSharp.World.Session
 
         #region Members
 
-        public bool HasCurrentMapInstance { get; }
+        public bool HasCurrentMapInstance => false;
+
         public bool IsAuthenticated { get; set; }
 
         public int SessionId { get; set; }
@@ -40,10 +41,7 @@ namespace NosSharp.World.Session
             _packetHandler = packetHandler;
         }
 
-        public ClientSession(IChannel channel)
-        {
-            _channel = channel;
-        }
+        public ClientSession(IChannel channel) => _channel = channel;
 
         #endregion
 
@@ -210,7 +208,6 @@ namespace NosSharp.World.Session
 
             APacket deserializedPacket = _packetFactory.Deserialize(packet, methodReference.PacketDefinitionParameterType, IsAuthenticated);
             _packetHandler.Handle(deserializedPacket, this, methodReference.PacketDefinitionParameterType);
-
         }
 
         public AccountDto Account { get; private set; }
