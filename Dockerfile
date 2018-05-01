@@ -1,12 +1,12 @@
 # Project Builder
 FROM microsoft/dotnet:2.1-sdk-alpine as builder
 
-USER root
-RUN mkdir /nossharp
-COPY . /nossharp
-RUN chmod +x /nossharp/scripts/publish.sh
 WORKDIR /nossharp
-RUN /nossharp/scripts/publish.sh
+
+# Copy everything and build
+COPY . ./
+RUN dotnet publish src/NosSharp.World/ -c Release -o ./dist/
+RUN ls -lR
 
 
 ## Use alpine as basis
@@ -28,17 +28,18 @@ RUN apk update && apk upgrade && \
     apk add --no-cache git
 
 # Setup Application Directory
-RUN mkdir /nossharp
-RUN adduser -S nossharp
+RUN mkdir /nossharp && \
+    adduser -S nossharp
 
-COPY --from=builder /nossharp/dist/World/linux /nossharp/bin
-COPY --from=builder /nossharp/config /nossharp/bin/config
-COPY --from=builder /nossharp/script/unit_test.sh /nossharp/test/unit_test
-COPY --from=builder /nossharp/script/integration_test.sh /nossharp/test/integration_test
-RUN chmod -R +r /nossharp/
-RUN chmod +x /nossharp/bin/NosSharp.World
-RUN chmod +x /nossharp/test/unit_test
-RUN chmod +x /nossharp/test/integration_test
+WORKDIR /nossharp/
+
+COPY --from=builder /nossharp/dist/World/linux/ bin
+COPY config bin/plugins/config
+COPY scripts/run.sh run.sh
+
+# execute rights
+RUN chmod -R +r /nossharp/ && \
+    chmod +x /nossharp/bin/NosSharp.World
 
 USER nossharp
 WORKDIR /nossharp/
@@ -50,4 +51,4 @@ HEALTHCHECK --interval=5s --timeout=5s --start-period=5s --retries=3 CMD [ "scri
 EXPOSE ${SERVER_PORT}/TCP
 
 # RUN NosSharp World Server
-ENTRYPOINT [ "scripts/run.sh" ]
+ENTRYPOINT [ "run.sh" ]

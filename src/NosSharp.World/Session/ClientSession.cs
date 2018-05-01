@@ -25,7 +25,7 @@ namespace NosSharp.World.Session
 
         public bool HasCurrentMapInstance => false;
 
-        public bool IsAuthenticated { get; set; }
+        public bool IsAuthenticated => Account != null;
 
         public int SessionId { get; set; }
         public IPEndPoint Ip { get; private set; }
@@ -49,7 +49,7 @@ namespace NosSharp.World.Session
         public ClientSession(IChannel channel)
         {
             _channel = channel;
-        } 
+        }
 
         #endregion
 
@@ -78,7 +78,7 @@ namespace NosSharp.World.Session
 
         public override void ExceptionCaught(IChannelHandlerContext context, Exception exception)
         {
-            Console.WriteLine("{0}", exception.StackTrace);
+            Logger.Log.Error(exception);
             context.CloseAsync();
         }
 
@@ -87,11 +87,11 @@ namespace NosSharp.World.Session
         {
             if (!(message is string buff))
             {
-                Console.WriteLine($"Message is not string !");
+                Logger.Log.Debug("Message is not string !");
                 return;
             }
 
-            Console.WriteLine($"[Session : {SessionId}] {buff}");
+            Logger.Log.Debug($"[Session-{SessionId}] {buff}");
 
             if (SessionId == 0)
             {
@@ -129,7 +129,7 @@ namespace NosSharp.World.Session
             SessionId = sessid;
             SessionManager.Instance.RegisterSession(context.Channel.Id.AsLongText(), SessionId);
             // CLIENT ARRIVED
-            Console.WriteLine($"Registered session for {SessionId}");
+            Console.WriteLine($"[SessionManager] Registered {SessionId}");
             if (!_waitForPacketsAmount.HasValue)
             {
                 TriggerHandler("EntryPoint", string.Empty, false);
@@ -147,7 +147,6 @@ namespace NosSharp.World.Session
                 string nextKeepAliveRaw = packetsplit[0];
                 if (!int.TryParse(nextKeepAliveRaw, out int nextKeepaliveIdentity) && nextKeepaliveIdentity != (LastKeepAliveIdentity + 1))
                 {
-                    // CORRUPTED KEEPALIVE
                     Disconnect();
                     return;
                 }
@@ -208,24 +207,30 @@ namespace NosSharp.World.Session
         private void TriggerHandler(string packetHeader, string packet, bool force)
         {
             PacketHandlerMethodReference methodReference = _packetHandler.GetPacketHandlerMethodReference(packetHeader);
+            Logger.Log.Debug($"PacketHeader : {packetHeader}");
             if (methodReference == null)
             {
-                Console.WriteLine($"Handler not found for packet : {packetHeader}");
-                //Log.Warn(string.Format(Language.Instance.GetMessageFromKey("HANDLER_NOT_FOUND"), packetHeader));
+                Logger.Log.Warn($"Handler for {packetHeader} not found !");
                 return;
             }
 
             if (methodReference.PacketHeader != null && !force && methodReference.PacketHeader.Amount > 1 && !_waitForPacketsAmount.HasValue)
             {
-                Console.WriteLine($"waiting for more : {packetHeader}");
-                // we need to wait for more
                 _waitForPacketsAmount = methodReference.PacketHeader.Amount;
                 _waitForPacketList.Add(packet != string.Empty ? packet : $"1 {packetHeader} ");
                 return;
             }
 
-            APacket deserializedPacket = _packetFactory.Deserialize(packet, methodReference.PacketDefinitionParameterType, IsAuthenticated);
-            _packetHandler.Handle(deserializedPacket, this, methodReference.PacketDefinitionParameterType);
+            APacket deserializedPacket = _packetFactory.Deserialize(packet, methodReference.PacketType, IsAuthenticated);
+
+            if (deserializedPacket != null)
+            {
+                _packetHandler.Handle(deserializedPacket, this, methodReference.PacketType);
+            }
+            else
+            {
+                Logger.Log.Warn($"Corrupted Packet {packet}");
+            }
         }
 
         public AccountDto Account { get; private set; }

@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using ChickenAPI.Packets;
+using ChickenAPI.Utils;
 using NosSharp.World.Extensions;
 
 namespace NosSharp.World.Packets
@@ -79,6 +80,7 @@ namespace NosSharp.World.Packets
             }
             catch (Exception e)
             {
+                Logger.Log.Warn(e);
                 //Logger.Logger.Log.Warn($"The serialized packet has the wrong format. Packet: {packetContent}", e);
                 return null;
             }
@@ -229,7 +231,6 @@ namespace NosSharp.World.Packets
                 Header = header,
                 PacketProperties = packetsForPacketDefinition
             };
-            // order by index
             _deserializationInformations.Add(serializationType, tmp);
 
             return tmp;
@@ -290,8 +291,13 @@ namespace NosSharp.World.Packets
 
                 // set the value & convert currentValue
                 packetBasePropertyInfo.Value.SetValue(deserializedPacket,
-                    DeserializeValue(packetBasePropertyInfo.Value.PropertyType, currentValue, packetBasePropertyInfo.Key, packetBasePropertyInfo.Value.GetCustomAttributes<ValidationAttribute>(),
-                        matches, includesKeepAliveIdentity));
+                    DeserializeValue(packetBasePropertyInfo.Value.PropertyType, 
+                        currentValue, 
+                        packetBasePropertyInfo.Key,
+                        packetBasePropertyInfo.Value.GetCustomAttributes<ValidationAttribute>(),
+                        matches, includesKeepAliveIdentity
+                        )
+                    );
             }
 
             return deserializedPacket;
@@ -394,7 +400,8 @@ namespace NosSharp.World.Packets
             MatchCollection packetMatches,
             bool includesKeepAliveIdentity = false)
         {
-            validationAttributes.ToList().ForEach(s =>
+
+            validationAttributes.ToList().ForEach(s => 
             {
                 if (!s.IsValid(currentValue))
                 {
@@ -420,49 +427,39 @@ namespace NosSharp.World.Packets
                 }
                 catch (Exception)
                 {
-                    //Logger.Logger.Log.Warn($"Could not convert value {currentValue} to type {packetPropertyType.Name}");
+                    Logger.Log.Warn($"Could not convert value {currentValue} to type {packetPropertyType.Name}");
                 }
 
                 return convertedValue;
             }
-
             if (packetPropertyType == typeof(bool)) // handle boolean values
             {
                 return currentValue != "0";
             }
-
             if (packetPropertyType.BaseType?.Equals(typeof(APacket)) == true) // subpacket
             {
                 PacketInformation subpacketSerializationInfo = GetSerializationInformation(packetPropertyType);
                 return DeserializeSubpacket(currentValue, packetPropertyType, subpacketSerializationInfo, packetIndexAttribute?.IsReturnPacket ?? false);
             }
-
             if (packetPropertyType.IsGenericType && packetPropertyType.GetGenericTypeDefinition().IsAssignableFrom(typeof(List<>)) // subpacket list
                 && packetPropertyType.GenericTypeArguments[0].BaseType == typeof(APacket))
             {
                 return DeserializeSubpackets(currentValue, packetPropertyType, packetIndexAttribute?.RemoveSeparator ?? false, packetMatches, packetIndexAttribute?.Index, includesKeepAliveIdentity);
             }
-
             if (packetPropertyType.IsGenericType && packetPropertyType.GetGenericTypeDefinition().IsAssignableFrom(typeof(List<>))) // simple list
             {
                 return DeserializeSimpleList(currentValue, packetPropertyType);
             }
-
             if (Nullable.GetUnderlyingType(packetPropertyType) != null && string.IsNullOrEmpty(currentValue)) // empty nullable value
             {
                 return null;
             }
-
             if (Nullable.GetUnderlyingType(packetPropertyType) != null) // nullable value
             {
-                if (packetPropertyType.GenericTypeArguments[0]?.BaseType == typeof(Enum))
-                {
-                    return Enum.Parse(packetPropertyType.GenericTypeArguments[0], currentValue);
-                }
-
-                return Convert.ChangeType(currentValue, packetPropertyType.GenericTypeArguments[0]);
+                return packetPropertyType.GenericTypeArguments[0]?.BaseType == typeof(Enum)
+                    ? Enum.Parse(packetPropertyType.GenericTypeArguments[0], currentValue)
+                    : Convert.ChangeType(currentValue, packetPropertyType.GenericTypeArguments[0]);
             }
-
             if (packetPropertyType == typeof(string) && string.IsNullOrEmpty(currentValue) && !packetIndexAttribute.SerializeToEnd)
             {
                 throw new NullReferenceException();
@@ -472,7 +469,6 @@ namespace NosSharp.World.Packets
             {
                 currentValue = string.Empty;
             }
-
             return Convert.ChangeType(currentValue, packetPropertyType); // cast to specified type
         }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Reflection;
 using ChickenAPI.Accounts;
 using ChickenAPI.DAL.Interfaces;
 using ChickenAPI.Dtos;
@@ -7,6 +8,9 @@ using ChickenAPI.Enums;
 using ChickenAPI.Packets;
 using ChickenAPI.Plugin;
 using ChickenAPI.Utils;
+using log4net;
+using log4net.Config;
+using log4net.Repository;
 using Newtonsoft.Json;
 using NosSharp.World.Cryptography;
 using NosSharp.World.Network;
@@ -77,10 +81,18 @@ namespace NosSharp.World
             Server.WorldServer = worldServer;
             return false;
         }
+        private static void InitializeLogger()
+        {
+            ILoggerRepository logRepository = LogManager.GetRepository(Assembly.GetEntryAssembly());
+            XmlConfigurator.Configure(logRepository, new FileInfo("config/log4net.config"));
+            Logger.Log = LogManager.GetLogger(typeof(WorldServer));
+        }
+
 
         private static void Main()
         {
             PrintHeader();
+            InitializeLogger();
             InitializeConfigs();
             DependencyContainer.Instance.Register<IPacketFactory>(new PluggablePacketFactory());
             DependencyContainer.Instance.Register<IPacketHandler>(new PacketHandler());

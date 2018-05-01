@@ -9,6 +9,9 @@ namespace NosSharp.World.Utils
 {
     public class SimplePluginManager : IPluginManager
     {
+        public DirectoryInfo GetPluginDirectory() => new DirectoryInfo("plugin");
+        public DirectoryInfo GetConfigDirectory() => new DirectoryInfo("plugin/config");
+
         public IPlugin LoadPlugin(FileInfo file)
         {
             try

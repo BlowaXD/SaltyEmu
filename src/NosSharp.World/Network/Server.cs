@@ -35,6 +35,7 @@ namespace NosSharp.World.Network
             {
                 var bootstrap = new ServerBootstrap();
                 bootstrap
+                    .Option(ChannelOption.SoBacklog, 100)
                     .Group(bossGroup, workerGroup)
                     .Channel<TcpServerSocketChannel>()
                     .ChildHandler(new ActionChannelInitializer<ISocketChannel>(channel =>

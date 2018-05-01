@@ -14,7 +14,7 @@ namespace NosSharp.World.Packets
         public void Register(PacketHandlerMethodReference method)
         {
             _packetHandlerMethod.TryAdd(method.Identification, method);
-            _packetHandler.TryAdd(method.PacketDefinitionParameterType, method);
+            _packetHandler.TryAdd(method.PacketType, method);
         }
 
         public void Unregister(Type type)
