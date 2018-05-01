@@ -5,9 +5,7 @@ WORKDIR /nossharp
 
 # Copy everything and build
 COPY . ./
-RUN dotnet publish src/NosSharp.World/ -c Release -o ./dist/
-RUN ls -lR
-
+RUN dotnet publish src/NosSharp.World/ -c Release -o ../../dist/
 
 ## Use alpine as basis
 FROM microsoft/dotnet:2.1-runtime-alpine
