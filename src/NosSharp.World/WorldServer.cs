@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Reflection;
-using ChickenAPI.Accounts;
 using ChickenAPI.DAL.Interfaces;
 using ChickenAPI.Dtos;
 using ChickenAPI.Enums;
@@ -11,7 +10,6 @@ using ChickenAPI.Utils;
 using log4net;
 using log4net.Config;
 using log4net.Repository;
-using Newtonsoft.Json;
 using NosSharp.World.Cryptography;
 using NosSharp.World.Network;
 using NosSharp.World.Packets;
@@ -84,7 +82,7 @@ namespace NosSharp.World
         private static void InitializeLogger()
         {
             ILoggerRepository logRepository = LogManager.GetRepository(Assembly.GetEntryAssembly());
-            XmlConfigurator.Configure(logRepository, new FileInfo("config/log4net.config"));
+            XmlConfigurator.Configure(logRepository, new FileInfo("plugins/config/log4net.config"));
             Logger.Log = LogManager.GetLogger(typeof(WorldServer));
         }
 
@@ -99,10 +97,10 @@ namespace NosSharp.World
             InitializePlugins();
             ClientSession.SetPacketFactory(DependencyContainer.Instance.Get<IPacketFactory>());
             ClientSession.SetPacketHandler(DependencyContainer.Instance.Get<IPacketHandler>());
-            Console.WriteLine($"\n\nListening on port {_port}");
+            Logger.Log.Info($"\n\nListening on port {_port}");
             if (RegisterServer())
             {
-                Console.WriteLine("Failed to register ServerApi");
+                Logger.Log.Info($"Failed to register to ServerAPI");
                 return;
             }
             Server.RunServerAsync(_port, new WorldCryptoFactory()).Wait();

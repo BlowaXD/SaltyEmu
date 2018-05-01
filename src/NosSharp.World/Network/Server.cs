@@ -53,9 +53,8 @@ namespace NosSharp.World.Network
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                Logger.Log.Error(ex);
                 UnregisterServer();
-                //Log.Error(ex.Message);
             }
             finally
             {

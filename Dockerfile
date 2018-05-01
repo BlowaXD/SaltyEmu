@@ -6,21 +6,23 @@ WORKDIR /nossharp
 # Copy everything and build
 COPY . ./
 RUN dotnet publish src/NosSharp.World/ -c Release -o ../../dist/
-
 ## Use alpine as basis
 FROM microsoft/dotnet:2.1-runtime-alpine
 
+# Local Server Port
 ENV SERVER_PORT=1337
+
+# Output Server Port (that will be sent to IServerApiService)
 ENV SERVER_OUTPUT_PORT=4000
 ENV SERVER_OUTPUT_IP=127.0.0.1
 
-ENV PLUGINS_GIT_URL=https://pluginrepo.com/plugins.git
-ENV PLUGINS_GIT_USERNAME=pluginRepo
-ENV PLUGINS_GIT_PASSWORD=pluginRepoPassword
+# Env variables used to pull repository
+ENV PLUGINS_GIT_URL=ssh@git.gitlab.com/plugins.git
+ENV PLUGINS_GIT_SSH_KEY=
 
-LABEL Name="NosSharp.World"
-LABEL Author="BlowaXD"
-LABEL MAINTAINER BlowaXD <blowaxd693@gmail.com>
+LABEL name="nossharp-world"
+LABEL author="BlowaXD"
+LABEL maintainer="BlowaXD <blowaxd693@gmail.com>"
 
 RUN apk update && apk upgrade && \
     apk add --no-cache git
@@ -31,19 +33,19 @@ RUN mkdir /nossharp && \
 
 WORKDIR /nossharp/
 
-COPY --from=builder /nossharp/dist/World/linux/ bin
+COPY --from=builder /nossharp/dist/ bin
 COPY config bin/plugins/config
 COPY scripts/run.sh run.sh
 
 # execute rights
 RUN chmod -R +r /nossharp/ && \
-    chmod +x /nossharp/bin/NosSharp.World
+    chmod +x /nossharp/bin/
 
 USER nossharp
 WORKDIR /nossharp/
 
 # SETUP DOCKER HEALTHCHECK
-HEALTHCHECK --interval=5s --timeout=5s --start-period=5s --retries=3 CMD [ "scripts/healthcheck.sh" ]
+HEALTHCHECK --interval=5s --timeout=5s --start-period=5s --retries=3 CMD [ "netstat -an | grep ${SERVER_PORT} > /dev/null; if [ 0 != $? ]; then exit 1; fi;" ]
 
 # EXPOSE TCP Port
 EXPOSE ${SERVER_PORT}/TCP

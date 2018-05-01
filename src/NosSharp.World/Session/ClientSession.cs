@@ -129,7 +129,6 @@ namespace NosSharp.World.Session
             SessionId = sessid;
             SessionManager.Instance.RegisterSession(context.Channel.Id.AsLongText(), SessionId);
             // CLIENT ARRIVED
-            Console.WriteLine($"[SessionManager] Registered {SessionId}");
             if (!_waitForPacketsAmount.HasValue)
             {
                 TriggerHandler("EntryPoint", string.Empty, false);
@@ -270,7 +269,7 @@ namespace NosSharp.World.Session
         public void Disconnect()
         {
             _channel.DisconnectAsync();
-            GC.Collect();
+            DependencyContainer.Instance.Get<ISessionService>().UnregisterSession(SessionId);
         }
 
 

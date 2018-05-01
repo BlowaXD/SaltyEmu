@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using ChickenAPI.Plugin;
+using ChickenAPI.Utils;
 
 namespace NosSharp.World.Utils
 {
@@ -63,7 +64,7 @@ namespace NosSharp.World.Utils
                         return null;
                     }
 
-                    Console.WriteLine($"[PluginManager] {tmp.Name} Loaded !");
+                    Logger.Log.Info($"[PluginManager] Loading plugin {tmp.Name}...");
                     tmp.OnLoad();
 
                     return tmp;
