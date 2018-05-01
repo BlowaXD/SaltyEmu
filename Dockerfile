@@ -10,15 +10,15 @@ RUN /nossharp/scripts/publish.sh
 
 
 ## Use alpine as basis
-FROM alpine:latest
+FROM microsoft/dotnet:2.1-runtime-alpine
 
 ENV SERVER_PORT=1337
 ENV SERVER_OUTPUT_PORT=4000
-ENV SERVER_OUTPUT_IP="127.0.0.1"
+ENV SERVER_OUTPUT_IP=127.0.0.1
 
-ENV PLUGINS_GIT_URL=""
-ENV PLUGINS_GIT_USERNAME=""
-ENV PLUGINS_GIT_PASSWORD=""
+ENV PLUGINS_GIT_URL=https://pluginrepo.com/plugins.git
+ENV PLUGINS_GIT_USERNAME=pluginRepo
+ENV PLUGINS_GIT_PASSWORD=pluginRepoPassword
 
 LABEL Name="NosSharp.World"
 LABEL Author="BlowaXD"

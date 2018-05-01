@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection.Metadata;
 using System.Threading.Tasks;
 using ChickenAPI.DAL.Interfaces;
 using ChickenAPI.Dtos;
@@ -16,7 +17,8 @@ namespace NosSharp.World.Network
     public class Server
     {
         public static WorldServerDto WorldServer;
-        private static void UnregisterServer()
+
+        public static void UnregisterServer()
         {
             var api = DependencyContainer.Instance.Get<IServerApiService>();
             var sessionManager = DependencyContainer.Instance.Get<ISessionService>();
@@ -38,15 +40,15 @@ namespace NosSharp.World.Network
                     .ChildHandler(new ActionChannelInitializer<ISocketChannel>(channel =>
                     {
                         IChannelPipeline pipeline = channel.Pipeline;
-                        pipeline.AddLast((MessageToMessageDecoder<IByteBuffer>)factory.GetDecoder());
-                        pipeline.AddLast(new ClientSession(channel));
-                        pipeline.AddLast((MessageToMessageEncoder<string>)factory.GetEncoder());
+                        pipeline.AddLast("decoder", (MessageToMessageDecoder<IByteBuffer>)factory.GetDecoder());
+                        pipeline.AddLast("encoder", (MessageToMessageEncoder<string>)factory.GetEncoder());
+                        pipeline.AddLast("session", new ClientSession(channel));
                     }));
 
-                IChannel bootstrapChannel = await bootstrap.BindAsync(port).ConfigureAwait(false);
+                    IChannel bootstrapChannel = await bootstrap.BindAsync(port);
 
                 Console.ReadLine();
-                await bootstrapChannel.CloseAsync().ConfigureAwait(false);
+                await bootstrapChannel.CloseAsync();
             }
             catch (Exception ex)
             {

@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using ChickenAPI.Accounts;
+using ChickenAPI.DAL.Interfaces;
 using ChickenAPI.Dtos;
 using ChickenAPI.Packets;
 using ChickenAPI.Player;
+using ChickenAPI.Player.Enums;
 using ChickenAPI.Session;
+using ChickenAPI.Utils;
 using DotNetty.Transport.Channels;
 using DotNetty.Transport.Channels.Groups;
 
@@ -24,6 +28,7 @@ namespace NosSharp.World.Session
         public bool IsAuthenticated { get; set; }
 
         public int SessionId { get; set; }
+        public IPEndPoint Ip { get; private set; }
 
         public int LastKeepAliveIdentity { get; set; }
 
@@ -41,7 +46,10 @@ namespace NosSharp.World.Session
             _packetHandler = packetHandler;
         }
 
-        public ClientSession(IChannel channel) => _channel = channel;
+        public ClientSession(IChannel channel)
+        {
+            _channel = channel;
+        } 
 
         #endregion
 
@@ -64,13 +72,13 @@ namespace NosSharp.World.Session
             }
 
             g.Add(context.Channel);
+            Ip = _channel.RemoteAddress as IPEndPoint;
             SessionId = 0;
         }
 
         public override void ExceptionCaught(IChannelHandlerContext context, Exception exception)
         {
             Console.WriteLine("{0}", exception.StackTrace);
-
             context.CloseAsync();
         }
 
@@ -79,8 +87,11 @@ namespace NosSharp.World.Session
         {
             if (!(message is string buff))
             {
+                Console.WriteLine($"Message is not string !");
                 return;
             }
+
+            Console.WriteLine($"[Session : {SessionId}] {buff}");
 
             if (SessionId == 0)
             {
@@ -118,6 +129,11 @@ namespace NosSharp.World.Session
             SessionId = sessid;
             SessionManager.Instance.RegisterSession(context.Channel.Id.AsLongText(), SessionId);
             // CLIENT ARRIVED
+            Console.WriteLine($"Registered session for {SessionId}");
+            if (!_waitForPacketsAmount.HasValue)
+            {
+                TriggerHandler("EntryPoint", string.Empty, false);
+            }
         }
 
         private void HandlePackets(string packets)
@@ -194,12 +210,14 @@ namespace NosSharp.World.Session
             PacketHandlerMethodReference methodReference = _packetHandler.GetPacketHandlerMethodReference(packetHeader);
             if (methodReference == null)
             {
+                Console.WriteLine($"Handler not found for packet : {packetHeader}");
                 //Log.Warn(string.Format(Language.Instance.GetMessageFromKey("HANDLER_NOT_FOUND"), packetHeader));
                 return;
             }
 
             if (methodReference.PacketHeader != null && !force && methodReference.PacketHeader.Amount > 1 && !_waitForPacketsAmount.HasValue)
             {
+                Console.WriteLine($"waiting for more : {packetHeader}");
                 // we need to wait for more
                 _waitForPacketsAmount = methodReference.PacketHeader.Amount;
                 _waitForPacketList.Add(packet != string.Empty ? packet : $"1 {packetHeader} ");
@@ -247,13 +265,15 @@ namespace NosSharp.World.Session
         public void Disconnect()
         {
             _channel.DisconnectAsync();
-            _channel.DeregisterAsync();
+            GC.Collect();
         }
 
 
         public override void ChannelUnregistered(IChannelHandlerContext context)
         {
             SessionManager.Instance.UnregisterSession(context.Channel.Id.AsLongText());
+            Disconnect();
+            context.CloseAsync();
         }
 
         #endregion

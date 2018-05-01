@@ -1,7 +1,9 @@
 ﻿using System;
 using System.IO;
+using ChickenAPI.Accounts;
 using ChickenAPI.DAL.Interfaces;
 using ChickenAPI.Dtos;
+using ChickenAPI.Enums;
 using ChickenAPI.Packets;
 using ChickenAPI.Plugin;
 using ChickenAPI.Utils;
@@ -43,8 +45,8 @@ namespace NosSharp.World
                 _port = 1337;
             }
 
-            _ip = Environment.GetEnvironmentVariable("SERVER_OUTPUT_IP");
-            _worldGroup = Environment.GetEnvironmentVariable("SERVER_OUTPUT_WORLDGROUP");
+            _ip = Environment.GetEnvironmentVariable("SERVER_OUTPUT_IP") ?? "127.0.0.1";
+            _worldGroup = Environment.GetEnvironmentVariable("SERVER_OUTPUT_WORLDGROUP") ?? "NosWings";
         }
 
         private static void PrintHeader()
@@ -62,7 +64,10 @@ namespace NosSharp.World
             {
                 WorldGroup = _worldGroup,
                 Ip = _ip,
-                Port = _port
+                Port = _port,
+                Color = ChannelColor.White,
+                Id = Guid.Empty,
+                ChannelId = 0
             };
             var api = DependencyContainer.Instance.Get<IServerApiService>();
             if (api.RegisterServer(worldServer))
@@ -88,8 +93,8 @@ namespace NosSharp.World
                 Console.WriteLine("Failed to register ServerApi");
                 return;
             }
-            Console.WriteLine($"{JsonConvert.SerializeObject(Server.WorldServer)}");
             Server.RunServerAsync(_port, new WorldCryptoFactory()).Wait();
+            Server.UnregisterServer();
         }
     }
 }
