@@ -2,13 +2,14 @@
 ## Docker used to build
 ### 
 # Project Builder
-FROM microsoft/dotnet:2.1-sdk-alpine as builder
+FROM microsoft/dotnet:2.0-sdk as builder
 
 WORKDIR /nossharp
 
 # Copy everything and build
 COPY . ./
-RUN dotnet publish src/NosSharp.World/ -c Release -o ../../dist/
+RUN dotnet restore
+RUN dotnet publish . -c Release -o ../../dist/
 
 
 ###
@@ -16,7 +17,7 @@ RUN dotnet publish src/NosSharp.World/ -c Release -o ../../dist/
 ###
 
 ## Use alpine as basis
-FROM microsoft/dotnet:2.1-runtime-alpine
+FROM microsoft/dotnet:2.0-runtime
 
 # Output Server Port (that will be sent to IServerApiService)
 ENV SERVER_OUTPUT_PORT=7777 \
