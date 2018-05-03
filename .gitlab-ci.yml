@@ -23,13 +23,14 @@ build_docker:
   stage: build
   tags:
     - docker
-    - docker-privileged
   script:
     - docker build -t $CONTAINER_TEST_IMAGE .
     - docker push $CONTAINER_TEST_IMAGE
 
 release-image:
   stage: release
+  tags:
+    - docker
   script:
     - docker pull $CONTAINER_TEST_IMAGE
     - docker tag $CONTAINER_TEST_IMAGE $CONTAINER_RELEASE_IMAGE
