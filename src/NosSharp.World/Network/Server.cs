@@ -39,7 +39,8 @@ namespace NosSharp.World.Network
             {
                 return true;
             }
-            Server.WorldServer = worldServer;
+            WorldServer = worldServer;
+            ClientSession.SetWorldServerId(WorldServer.Id);
             return false;
         }
 

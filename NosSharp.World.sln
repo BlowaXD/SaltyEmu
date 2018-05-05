@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NosSharp.RedisSessionPlugin
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChickenAPI", "libs\NosSharp.Plugins\libs\ChickenAPI\src\ChickenAPI\ChickenAPI.csproj", "{8609781F-AC05-439D-8423-338A0D4BF81C}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NosSharp.BasicPacketHandlerPlugin", "libs\NosSharp.Plugins\src\NosSharp.PacketHandler\NosSharp.BasicPacketHandlerPlugin.csproj", "{1F39DB8F-348F-4F8E-824B-F25BBAE31508}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +37,10 @@ Global
 		{8609781F-AC05-439D-8423-338A0D4BF81C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8609781F-AC05-439D-8423-338A0D4BF81C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8609781F-AC05-439D-8423-338A0D4BF81C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F39DB8F-348F-4F8E-824B-F25BBAE31508}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F39DB8F-348F-4F8E-824B-F25BBAE31508}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F39DB8F-348F-4F8E-824B-F25BBAE31508}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F39DB8F-348F-4F8E-824B-F25BBAE31508}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -43,6 +49,7 @@ Global
 		{7E79BBD0-A02F-4799-93E1-011DA9E9522C} = {A0D754EC-ADE9-4B97-BCAF-A59C24C10B7F}
 		{AAE83F52-DFF8-418A-B8C2-24216DEB5E64} = {A0D754EC-ADE9-4B97-BCAF-A59C24C10B7F}
 		{8609781F-AC05-439D-8423-338A0D4BF81C} = {A0D754EC-ADE9-4B97-BCAF-A59C24C10B7F}
+		{1F39DB8F-348F-4F8E-824B-F25BBAE31508} = {A0D754EC-ADE9-4B97-BCAF-A59C24C10B7F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {33B1EC1B-965D-4770-B047-390647E82322}

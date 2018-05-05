@@ -54,7 +54,6 @@ namespace NosSharp.World
             }
 
             Server.Port = intPort;
-
             Server.Ip = Environment.GetEnvironmentVariable("SERVER_IP") ?? "127.0.0.1";
             Server.WorldGroup = Environment.GetEnvironmentVariable("SERVER_WORLDGROUP") ?? "NosWings";
         }

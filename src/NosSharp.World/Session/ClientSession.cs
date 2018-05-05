@@ -17,6 +17,7 @@ namespace NosSharp.World.Session
 {
     public class ClientSession : ChannelHandlerAdapter, ISession
     {
+        private static Guid _worldServerId;
         private static IPacketFactory _packetFactory;
         private static IPacketHandler _packetHandler;
         private readonly IChannel _channel;
@@ -44,6 +45,11 @@ namespace NosSharp.World.Session
         public static void SetPacketHandler(IPacketHandler packetHandler)
         {
             _packetHandler = packetHandler;
+        }
+
+        public static void SetWorldServerId(Guid id)
+        {
+            _worldServerId = id;
         }
 
         public ClientSession(IChannel channel)
@@ -259,6 +265,10 @@ namespace NosSharp.World.Session
         public void InitializeAccount(AccountDto account)
         {
             Account = account;
+            PlayerSessionDto sessionDto = DependencyContainer.Instance.Get<ISessionService>().GetByName(account.Name);
+            sessionDto.State = PlayerSessionState.Connected;
+            sessionDto.WorldServerId = _worldServerId;
+            DependencyContainer.Instance.Get<ISessionService>().UpdateSession(sessionDto);
         }
 
         public void InitializeCharacter(Character character)
