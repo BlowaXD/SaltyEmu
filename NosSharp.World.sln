@@ -7,7 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NosSharp.World", "src\NosSh
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "libs", "libs", "{A0D754EC-ADE9-4B97-BCAF-A59C24C10B7F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChickenAPI", "libs\ChickenAPI\src\ChickenAPI\ChickenAPI.csproj", "{34A37BA5-AE4F-4727-BA15-CD9F02F26390}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NosSharp.DatabasePlugin", "libs\NosSharp.Plugins\src\NosSharp.DatabasePlugin\NosSharp.DatabasePlugin.csproj", "{7E79BBD0-A02F-4799-93E1-011DA9E9522C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NosSharp.RedisSessionPlugin", "libs\NosSharp.Plugins\src\NosSharp.RedisSessionPlugin\NosSharp.RedisSessionPlugin.csproj", "{AAE83F52-DFF8-418A-B8C2-24216DEB5E64}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChickenAPI", "libs\NosSharp.Plugins\libs\ChickenAPI\src\ChickenAPI\ChickenAPI.csproj", "{8609781F-AC05-439D-8423-338A0D4BF81C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,16 +23,26 @@ Global
 		{AA43BE87-BF99-48B4-9D96-DCE25D73109C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AA43BE87-BF99-48B4-9D96-DCE25D73109C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AA43BE87-BF99-48B4-9D96-DCE25D73109C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{34A37BA5-AE4F-4727-BA15-CD9F02F26390}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{34A37BA5-AE4F-4727-BA15-CD9F02F26390}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{34A37BA5-AE4F-4727-BA15-CD9F02F26390}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{34A37BA5-AE4F-4727-BA15-CD9F02F26390}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7E79BBD0-A02F-4799-93E1-011DA9E9522C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E79BBD0-A02F-4799-93E1-011DA9E9522C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E79BBD0-A02F-4799-93E1-011DA9E9522C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E79BBD0-A02F-4799-93E1-011DA9E9522C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AAE83F52-DFF8-418A-B8C2-24216DEB5E64}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AAE83F52-DFF8-418A-B8C2-24216DEB5E64}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AAE83F52-DFF8-418A-B8C2-24216DEB5E64}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AAE83F52-DFF8-418A-B8C2-24216DEB5E64}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8609781F-AC05-439D-8423-338A0D4BF81C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8609781F-AC05-439D-8423-338A0D4BF81C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8609781F-AC05-439D-8423-338A0D4BF81C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8609781F-AC05-439D-8423-338A0D4BF81C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{34A37BA5-AE4F-4727-BA15-CD9F02F26390} = {A0D754EC-ADE9-4B97-BCAF-A59C24C10B7F}
+		{7E79BBD0-A02F-4799-93E1-011DA9E9522C} = {A0D754EC-ADE9-4B97-BCAF-A59C24C10B7F}
+		{AAE83F52-DFF8-418A-B8C2-24216DEB5E64} = {A0D754EC-ADE9-4B97-BCAF-A59C24C10B7F}
+		{8609781F-AC05-439D-8423-338A0D4BF81C} = {A0D754EC-ADE9-4B97-BCAF-A59C24C10B7F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {33B1EC1B-965D-4770-B047-390647E82322}

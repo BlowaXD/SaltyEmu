@@ -10,6 +10,8 @@ using ChickenAPI.Utils;
 using log4net;
 using log4net.Config;
 using log4net.Repository;
+using NosSharp.DatabasePlugin;
+using NosSharp.RedisSessionPlugin;
 using NosSharp.World.Cryptography;
 using NosSharp.World.Network;
 using NosSharp.World.Packets;
@@ -20,13 +22,15 @@ namespace NosSharp.World
 {
     internal class WorldServer
     {
-        private static string _worldGroup;
-        private static string _ip;
-        private static int _port;
-
         private static void InitializePlugins()
         {
             DependencyContainer.Instance.Register<IPluginManager>(new SimplePluginManager());
+            var tmp = new RedisPlugin();
+            tmp.OnLoad();
+            tmp.OnEnable();
+            var tmpAgain = new NosSharpDatabasePlugin();
+            tmpAgain.OnLoad();
+            tmpAgain.OnDisable();
             IPlugin[] plugins = DependencyContainer.Instance.Get<IPluginManager>().LoadPlugins(new DirectoryInfo("plugins"));
             if (plugins == null)
             {
@@ -41,14 +45,18 @@ namespace NosSharp.World
 
         private static void InitializeConfigs()
         {
+            Environment.SetEnvironmentVariable("io.netty.allocator.type", "unpooled");
+            Environment.SetEnvironmentVariable("io.netty.allocator.maxOrder", "5");
             string port = Environment.GetEnvironmentVariable("SERVER_PORT");
-            if (!int.TryParse(port, out _port))
+            if (!int.TryParse(port, out int intPort))
             {
-                _port = 1337;
+                Server.Port = 1337;
             }
 
-            _ip = Environment.GetEnvironmentVariable("SERVER_OUTPUT_IP") ?? "127.0.0.1";
-            _worldGroup = Environment.GetEnvironmentVariable("SERVER_OUTPUT_WORLDGROUP") ?? "NosWings";
+            Server.Port = intPort;
+
+            Server.Ip = Environment.GetEnvironmentVariable("SERVER_IP") ?? "127.0.0.1";
+            Server.WorldGroup = Environment.GetEnvironmentVariable("SERVER_WORLDGROUP") ?? "NosWings";
         }
 
         private static void PrintHeader()
@@ -60,25 +68,6 @@ namespace NosSharp.World
             Console.WriteLine(separator + string.Format("{0," + offset + "}\n", text) + separator);
         }
 
-        private static bool RegisterServer()
-        {
-            var worldServer = new WorldServerDto
-            {
-                WorldGroup = _worldGroup,
-                Ip = _ip,
-                Port = _port,
-                Color = ChannelColor.White,
-                Id = Guid.Empty,
-                ChannelId = 0
-            };
-            var api = DependencyContainer.Instance.Get<IServerApiService>();
-            if (api.RegisterServer(worldServer))
-            {
-                return true;
-            }
-            Server.WorldServer = worldServer;
-            return false;
-        }
         private static void InitializeLogger()
         {
             ILoggerRepository logRepository = LogManager.GetRepository(Assembly.GetEntryAssembly());
@@ -97,13 +86,12 @@ namespace NosSharp.World
             InitializePlugins();
             ClientSession.SetPacketFactory(DependencyContainer.Instance.Get<IPacketFactory>());
             ClientSession.SetPacketHandler(DependencyContainer.Instance.Get<IPacketHandler>());
-            Logger.Log.Info($"\n\nListening on port {_port}");
-            if (RegisterServer())
+            if (Server.RegisterServer())
             {
                 Logger.Log.Info($"Failed to register to ServerAPI");
                 return;
             }
-            Server.RunServerAsync(_port, new WorldCryptoFactory()).Wait();
+            Server.RunServerAsync(1337, new WorldCryptoFactory()).Wait();
             Server.UnregisterServer();
         }
     }

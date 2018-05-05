@@ -27,6 +27,10 @@ namespace NosSharp.World.Packets
 
         public void Handle(APacket packet, ISession session, Type type)
         {
+            if (packet == null)
+            {
+                return;
+            }
             if (!_packetHandler.TryGetValue(type, out PacketHandlerMethodReference methodReference))
             {
                 return;
@@ -42,13 +46,6 @@ namespace NosSharp.World.Packets
             {
                 return;
             }
-
-
-            if (packet != null)
-            {
-                methodReference.HandlerMethod(packet, session);
-            }
-
             methodReference.HandlerMethod(packet, session);
         }
     }

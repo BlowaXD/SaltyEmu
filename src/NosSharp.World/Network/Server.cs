@@ -3,6 +3,7 @@ using System.Reflection.Metadata;
 using System.Threading.Tasks;
 using ChickenAPI.DAL.Interfaces;
 using ChickenAPI.Dtos;
+using ChickenAPI.Enums;
 using ChickenAPI.Utils;
 using DotNetty.Buffers;
 using DotNetty.Codecs;
@@ -16,13 +17,41 @@ namespace NosSharp.World.Network
 {
     public class Server
     {
+        private static bool _running { get; set; }
+        public static string WorldGroup { get; set; }
+        public static string Ip { get; set; }
+        public static int Port { get; set; }
         public static WorldServerDto WorldServer;
+
+        public static bool RegisterServer()
+        {
+            var worldServer = new WorldServerDto
+            {
+                WorldGroup = WorldGroup,
+                Ip = Ip,
+                Port = Port,
+                Color = ChannelColor.White,
+                Id = Guid.Empty,
+                ChannelId = 0
+            };
+            var api = DependencyContainer.Instance.Get<IServerApiService>();
+            if (api?.RegisterServer(worldServer) == true)
+            {
+                return true;
+            }
+            Server.WorldServer = worldServer;
+            return false;
+        }
 
         public static void UnregisterServer()
         {
             var api = DependencyContainer.Instance.Get<IServerApiService>();
+            if (api == null)
+            {
+                return;
+            }
             var sessionManager = DependencyContainer.Instance.Get<ISessionService>();
-            api.UnregisterServer(WorldServer);
+            api.UnregisterServer(WorldServer.Id);
             sessionManager.UnregisterSessions(WorldServer.Id);
         }
 
@@ -48,7 +77,11 @@ namespace NosSharp.World.Network
 
                     IChannel bootstrapChannel = await bootstrap.BindAsync(port);
 
-                Console.ReadLine();
+                while (_running)
+                {
+                    string readLine = Console.ReadLine();
+                }
+
                 await bootstrapChannel.CloseAsync();
             }
             catch (Exception ex)
