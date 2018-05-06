@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Autofac;
 using ChickenAPI.DAL.Interfaces;
 using ChickenAPI.Dtos;
 using ChickenAPI.Enums;
@@ -29,7 +30,7 @@ namespace NosSharp.World.Network
                 Id = Guid.Empty,
                 ChannelId = 0
             };
-            var api = DependencyContainer.Instance.Get<IServerApiService>();
+            var api = Container.Instance.Resolve<IServerApiService>();
             if (api?.RegisterServer(worldServer) == true)
             {
                 return true;
@@ -48,7 +49,7 @@ namespace NosSharp.World.Network
                 return;
             }
 
-            var api = DependencyContainer.Instance.Get<IServerApiService>();
+            var api = Container.Instance.Resolve<IServerApiService>();
             if (api == null)
             {
                 return;
@@ -56,7 +57,7 @@ namespace NosSharp.World.Network
 
             Logger.Log.Info($"Unregister server {WorldServer.Id}");
 
-            var sessionManager = DependencyContainer.Instance.Get<ISessionService>();
+            var sessionManager = Container.Instance.Resolve<ISessionService>();
             api.UnregisterServer(WorldServer.Id);
             sessionManager.UnregisterSessions(WorldServer.Id);
             _running = false;

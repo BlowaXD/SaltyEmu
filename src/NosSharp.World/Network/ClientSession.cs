@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using Autofac;
 using ChickenAPI.Accounts;
 using ChickenAPI.DAL.Interfaces;
 using ChickenAPI.Dtos;
@@ -103,7 +104,7 @@ namespace NosSharp.World.Network
 
         public void Disconnect()
         {
-            DependencyContainer.Instance.Get<ISessionService>().UnregisterSession(SessionId);
+            Container.Instance.Resolve<ISessionService>().UnregisterSession(SessionId);
             _channel.DisconnectAsync().Wait();
         }
 
@@ -294,10 +295,10 @@ namespace NosSharp.World.Network
         public void InitializeAccount(AccountDto account)
         {
             Account = account;
-            PlayerSessionDto sessionDto = DependencyContainer.Instance.Get<ISessionService>().GetByName(account.Name);
+            PlayerSessionDto sessionDto = Container.Instance.Resolve<ISessionService>().GetByName(account.Name);
             sessionDto.State = PlayerSessionState.Connected;
             sessionDto.WorldServerId = _worldServerId;
-            DependencyContainer.Instance.Get<ISessionService>().UpdateSession(sessionDto);
+            Container.Instance.Resolve<ISessionService>().UpdateSession(sessionDto);
         }
 
         public void InitializeCharacter(Character character)

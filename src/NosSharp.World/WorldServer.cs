@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Reflection;
+using Autofac;
 using ChickenAPI.Accounts;
 using ChickenAPI.DAL.Interfaces;
 using ChickenAPI.Dtos;
@@ -23,7 +24,7 @@ namespace NosSharp.World
     {
         private static void InitializePlugins()
         {
-            DependencyContainer.Instance.Register<IPluginManager>(new SimplePluginManager());
+            IPlugin[] plugins = new SimplePluginManager().LoadPlugins(new DirectoryInfo("plugins"));
             var tmp = new RedisPlugin();
             tmp.OnLoad();
             tmp.OnEnable();
@@ -33,7 +34,6 @@ namespace NosSharp.World
             var packetHandler = new PacketHandlerPlugin();
             packetHandler.OnLoad();
             packetHandler.OnEnable();
-            IPlugin[] plugins = DependencyContainer.Instance.Get<IPluginManager>().LoadPlugins(new DirectoryInfo("plugins"));
             if (plugins == null)
             {
                 return;
@@ -82,18 +82,17 @@ namespace NosSharp.World
             PrintHeader();
             InitializeLogger();
             InitializeConfigs();
-            DependencyContainer.Instance.Register<IPacketFactory>(new PluggablePacketFactory());
-            DependencyContainer.Instance.Register<IPacketHandler>(new Packets.PacketHandler());
             InitializePlugins();
-            ClientSession.SetPacketFactory(DependencyContainer.Instance.Get<IPacketFactory>());
-            ClientSession.SetPacketHandler(DependencyContainer.Instance.Get<IPacketHandler>());
+            Container.Initialize();
+            ClientSession.SetPacketFactory(new PluggablePacketFactory());
+            ClientSession.SetPacketHandler(new Packets.PacketHandler());
             if (Server.RegisterServer())
             {
                 Logger.Log.Info($"Failed to register to ServerAPI");
                 return;
             }
 
-            var acc = DependencyContainer.Instance.Get<IAccountService>();
+            var acc = Container.Instance.Resolve<IAccountService>();
             if (acc.GetByName("admin") == null)
             {
                 var account = new AccountDto

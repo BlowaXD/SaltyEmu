@@ -69,7 +69,7 @@ namespace NosSharp.World.Packets
             }
         }
 
-        public APacket Deserialize(string packetContent, Type packetType, bool includesKeepAliveIdentity = false)
+        public APacket Deserialize(string packetContent, Type packetType, bool includesKeepAliveIdentity)
         {
             try
             {
@@ -80,8 +80,7 @@ namespace NosSharp.World.Packets
             }
             catch (Exception e)
             {
-                Logger.Log.Warn(e);
-                //Logger.Logger.Log.Warn($"The serialized packet has the wrong format. Packet: {packetContent}", e);
+                Logger.Log.Warn($"The serialized packet has the wrong format. Packet: {packetContent}", e);
                 return null;
             }
         }
