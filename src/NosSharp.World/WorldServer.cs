@@ -1,9 +1,9 @@
 ﻿using System;
 using System.IO;
 using System.Reflection;
+using ChickenAPI.Accounts;
 using ChickenAPI.DAL.Interfaces;
 using ChickenAPI.Dtos;
-using ChickenAPI.Enums;
 using ChickenAPI.Packets;
 using ChickenAPI.Plugin;
 using ChickenAPI.Utils;
@@ -11,11 +11,10 @@ using log4net;
 using log4net.Config;
 using log4net.Repository;
 using NosSharp.DatabasePlugin;
+using NosSharp.PacketHandler;
 using NosSharp.RedisSessionPlugin;
-using NosSharp.World.Cryptography;
 using NosSharp.World.Network;
 using NosSharp.World.Packets;
-using NosSharp.World.Session;
 using NosSharp.World.Utils;
 
 namespace NosSharp.World
@@ -30,7 +29,10 @@ namespace NosSharp.World
             tmp.OnEnable();
             var tmpAgain = new NosSharpDatabasePlugin();
             tmpAgain.OnLoad();
-            tmpAgain.OnDisable();
+            tmpAgain.OnEnable();
+            var packetHandler = new PacketHandlerPlugin();
+            packetHandler.OnLoad();
+            packetHandler.OnEnable();
             IPlugin[] plugins = DependencyContainer.Instance.Get<IPluginManager>().LoadPlugins(new DirectoryInfo("plugins"));
             if (plugins == null)
             {
@@ -47,7 +49,7 @@ namespace NosSharp.World
         {
             Environment.SetEnvironmentVariable("io.netty.allocator.type", "unpooled");
             Environment.SetEnvironmentVariable("io.netty.allocator.maxOrder", "5");
-            string port = Environment.GetEnvironmentVariable("SERVER_PORT");
+            string port = Environment.GetEnvironmentVariable("SERVER_PORT") ?? "1337";
             if (!int.TryParse(port, out int intPort))
             {
                 Server.Port = 1337;
@@ -81,7 +83,7 @@ namespace NosSharp.World
             InitializeLogger();
             InitializeConfigs();
             DependencyContainer.Instance.Register<IPacketFactory>(new PluggablePacketFactory());
-            DependencyContainer.Instance.Register<IPacketHandler>(new PacketHandler());
+            DependencyContainer.Instance.Register<IPacketHandler>(new Packets.PacketHandler());
             InitializePlugins();
             ClientSession.SetPacketFactory(DependencyContainer.Instance.Get<IPacketFactory>());
             ClientSession.SetPacketHandler(DependencyContainer.Instance.Get<IPacketHandler>());
@@ -90,8 +92,31 @@ namespace NosSharp.World
                 Logger.Log.Info($"Failed to register to ServerAPI");
                 return;
             }
-            Server.RunServerAsync(1337, new WorldCryptoFactory()).Wait();
+
+            var acc = DependencyContainer.Instance.Get<IAccountService>();
+            if (acc.GetByName("admin") == null)
+            {
+                var account = new AccountDto
+                {
+                    Authority = AuthorityType.Administrator,
+                    Email = "admin@chickenapi.com",
+                    Name = "admin",
+                    Password = "admin".ToSha512()
+                };
+                acc.InsertOrUpdate(account);
+                account = new AccountDto
+                {
+                    Authority = AuthorityType.User,
+                    Email = "user@chickenapi.com",
+                    Name = "user",
+                    Password = "user".ToSha512()
+                };
+                acc.InsertOrUpdate(account);
+            }
+
+            Server.RunServerAsync(1337).Wait();
             Server.UnregisterServer();
+            Console.ReadLine();
         }
     }
 }

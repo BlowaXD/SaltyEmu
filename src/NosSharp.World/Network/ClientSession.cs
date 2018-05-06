@@ -5,6 +5,7 @@ using System.Net;
 using ChickenAPI.Accounts;
 using ChickenAPI.DAL.Interfaces;
 using ChickenAPI.Dtos;
+using ChickenAPI.Enums;
 using ChickenAPI.Packets;
 using ChickenAPI.Player;
 using ChickenAPI.Player.Enums;
@@ -12,8 +13,9 @@ using ChickenAPI.Session;
 using ChickenAPI.Utils;
 using DotNetty.Transport.Channels;
 using DotNetty.Transport.Channels.Groups;
+using NosSharp.World.Session;
 
-namespace NosSharp.World.Session
+namespace NosSharp.World.Network
 {
     public class ClientSession : ChannelHandlerAdapter, ISession
     {
@@ -29,6 +31,8 @@ namespace NosSharp.World.Session
         public bool IsAuthenticated => Account != null;
 
         public int SessionId { get; set; }
+        // todo implement multilanguage
+        public RegionType SessionRegion => RegionType.English;
         public IPEndPoint Ip { get; private set; }
 
         public int LastKeepAliveIdentity { get; set; }
@@ -52,10 +56,7 @@ namespace NosSharp.World.Session
             _worldServerId = id;
         }
 
-        public ClientSession(IChannel channel)
-        {
-            _channel = channel;
-        }
+        public ClientSession(IChannel channel) => _channel = channel;
 
         #endregion
 
@@ -79,7 +80,40 @@ namespace NosSharp.World.Session
 
             g.Add(context.Channel);
             Ip = _channel.RemoteAddress as IPEndPoint;
+            Logger.Log.Info($"[CLIENT] Connected {Ip.Address}");
             SessionId = 0;
+        }
+
+
+        public void SendPacket(APacket packet)
+        {
+            _channel.WriteAsync(_packetFactory.Serialize(packet));
+            _channel.Flush();
+        }
+
+        public void SendPackets(IEnumerable<APacket> packets)
+        {
+            foreach (APacket packet in packets)
+            {
+                _channel.WriteAsync(_packetFactory.Serialize(packet));
+            }
+
+            _channel.Flush();
+        }
+
+        public void Disconnect()
+        {
+            DependencyContainer.Instance.Get<ISessionService>().UnregisterSession(SessionId);
+            _channel.DisconnectAsync().Wait();
+        }
+
+
+        public override void ChannelUnregistered(IChannelHandlerContext context)
+        {
+            Logger.Log.Info($"[CLIENT] Disconnected {Ip.Address}");
+            SessionManager.Instance.UnregisterSession(context.Channel.Id.AsLongText());
+            Disconnect();
+            context.CloseAsync();
         }
 
         public override void ExceptionCaught(IChannelHandlerContext context, Exception exception)
@@ -141,6 +175,28 @@ namespace NosSharp.World.Session
             }
         }
 
+        private bool WaitForPackets(string packetstring, IReadOnlyList<string> packetsplit)
+        {
+            _waitForPacketList.Add(packetstring);
+            string[] packetssplit = packetstring.Split(' ');
+            if (packetssplit.Length > 3 && packetsplit[1] == "DAC")
+            {
+                _waitForPacketList.Add("0 CrossServerAuthenticate");
+            }
+
+            if (_waitForPacketList.Count != _waitForPacketsAmount)
+            {
+                return true;
+            }
+
+            _waitForPacketsAmount = null;
+            string queuedPackets = string.Join(" ", _waitForPacketList.ToArray());
+            string header = queuedPackets.Split(' ', '^')[1];
+            TriggerHandler(header, queuedPackets, true);
+            _waitForPacketList.Clear();
+            return false;
+        }
+
         private void HandlePackets(string packets)
         {
             foreach (string packet in packets.Split((char)0xFF, StringSplitOptions.RemoveEmptyEntries))
@@ -171,23 +227,11 @@ namespace NosSharp.World.Session
                 // TODO NEED TO BE REWRITED
                 if (_waitForPacketsAmount.HasValue)
                 {
-                    _waitForPacketList.Add(packetstring);
-                    string[] packetssplit = packetstring.Split(' ');
-                    if (packetssplit.Length > 3 && packetsplit[1] == "DAC")
-                    {
-                        _waitForPacketList.Add("0 CrossServerAuthenticate");
-                    }
-
-                    if (_waitForPacketList.Count != _waitForPacketsAmount)
+                    if (WaitForPackets(packetstring, packetsplit))
                     {
                         continue;
                     }
 
-                    _waitForPacketsAmount = null;
-                    string queuedPackets = string.Join(" ", _waitForPacketList.ToArray());
-                    string header = queuedPackets.Split(' ', '^')[1];
-                    TriggerHandler(header, queuedPackets, true);
-                    _waitForPacketList.Clear();
                     return;
                 }
 
@@ -246,21 +290,6 @@ namespace NosSharp.World.Session
 
         public AuthorityType Authority => Account.Authority;
 
-        public void SendPacket(APacket packet)
-        {
-            _channel.WriteAsync(_packetFactory.Serialize(packet));
-            _channel.Flush();
-        }
-
-        public void SendPackets(IEnumerable<APacket> packets)
-        {
-            foreach (APacket packet in packets)
-            {
-                _channel.WriteAsync(_packetFactory.Serialize(packet));
-            }
-
-            _channel.Flush();
-        }
 
         public void InitializeAccount(AccountDto account)
         {
@@ -274,20 +303,6 @@ namespace NosSharp.World.Session
         public void InitializeCharacter(Character character)
         {
             Character = character;
-        }
-
-        public void Disconnect()
-        {
-            _channel.DisconnectAsync();
-            DependencyContainer.Instance.Get<ISessionService>().UnregisterSession(SessionId);
-        }
-
-
-        public override void ChannelUnregistered(IChannelHandlerContext context)
-        {
-            SessionManager.Instance.UnregisterSession(context.Channel.Id.AsLongText());
-            Disconnect();
-            context.CloseAsync();
         }
 
         #endregion

@@ -31,6 +31,7 @@ namespace NosSharp.World.Packets
             {
                 return;
             }
+
             if (!_packetHandler.TryGetValue(type, out PacketHandlerMethodReference methodReference))
             {
                 return;
@@ -46,6 +47,7 @@ namespace NosSharp.World.Packets
             {
                 return;
             }
+
             methodReference.HandlerMethod(packet, session);
         }
     }
