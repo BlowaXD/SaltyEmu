@@ -3,13 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using Autofac;
-using ChickenAPI.Accounts;
 using ChickenAPI.DAL.Interfaces;
 using ChickenAPI.Dtos;
 using ChickenAPI.Enums;
 using ChickenAPI.Packets;
 using ChickenAPI.Player;
-using ChickenAPI.Player.Enums;
 using ChickenAPI.Session;
 using ChickenAPI.Utils;
 using DotNetty.Transport.Channels;
@@ -295,7 +293,7 @@ namespace NosSharp.World.Network
         public void InitializeAccount(AccountDto account)
         {
             Account = account;
-            PlayerSessionDto sessionDto = Container.Instance.Resolve<ISessionService>().GetByName(account.Name);
+            PlayerSessionDto sessionDto = Container.Instance.Resolve<ISessionService>().GetByAccountName(account.Name);
             sessionDto.State = PlayerSessionState.Connected;
             sessionDto.WorldServerId = _worldServerId;
             Container.Instance.Resolve<ISessionService>().UpdateSession(sessionDto);

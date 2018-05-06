@@ -2,9 +2,9 @@
 using System.IO;
 using System.Reflection;
 using Autofac;
-using ChickenAPI.Accounts;
 using ChickenAPI.DAL.Interfaces;
 using ChickenAPI.Dtos;
+using ChickenAPI.Enums;
 using ChickenAPI.Packets;
 using ChickenAPI.Plugin;
 using ChickenAPI.Utils;
