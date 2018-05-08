@@ -22,27 +22,20 @@ namespace NosSharp.World
 {
     internal class WorldServer
     {
+        private static IPlugin[] _plugins;
         private static void InitializePlugins()
         {
-            IPlugin[] plugins = new SimplePluginManager().LoadPlugins(new DirectoryInfo("plugins"));
+            _plugins = new SimplePluginManager().LoadPlugins(new DirectoryInfo("plugins"));
+            foreach (IPlugin plugin in _plugins)
+            {
+                plugin.OnEnable();
+            }
             var tmp = new RedisPlugin();
             tmp.OnLoad();
             tmp.OnEnable();
             var tmpAgain = new NosSharpDatabasePlugin();
             tmpAgain.OnLoad();
             tmpAgain.OnEnable();
-            var packetHandler = new PacketHandlerPlugin();
-            packetHandler.OnLoad();
-            packetHandler.OnEnable();
-            if (plugins == null)
-            {
-                return;
-            }
-
-            foreach (IPlugin plugin in plugins)
-            {
-                plugin.OnEnable();
-            }
         }
 
         private static void InitializeConfigs()
@@ -83,9 +76,10 @@ namespace NosSharp.World
             InitializeLogger();
             InitializeConfigs();
             InitializePlugins();
+            Container.Builder.Register(s => new Packets.PacketHandler()).As<IPacketHandler>().SingleInstance();
             Container.Initialize();
             ClientSession.SetPacketFactory(new PluggablePacketFactory());
-            ClientSession.SetPacketHandler(new Packets.PacketHandler());
+            ClientSession.SetPacketHandler(Container.Instance.Resolve<IPacketHandler>());
             if (Server.RegisterServer())
             {
                 Logger.Log.Info($"Failed to register to ServerAPI");
@@ -113,6 +107,9 @@ namespace NosSharp.World
                 acc.InsertOrUpdate(account);
             }
 
+            var packetHandler = new PacketHandlerPlugin();
+            packetHandler.OnLoad();
+            packetHandler.OnEnable();
             Server.RunServerAsync(1337).Wait();
             Server.UnregisterServer();
             Console.ReadLine();

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Reflection;
 using Autofac;
 using ChickenAPI.DAL.Interfaces;
 using ChickenAPI.Dtos;
@@ -12,6 +13,7 @@ using ChickenAPI.Session;
 using ChickenAPI.Utils;
 using DotNetty.Transport.Channels;
 using DotNetty.Transport.Channels.Groups;
+using NosSharp.PacketHandler.Utils;
 using NosSharp.World.Session;
 
 namespace NosSharp.World.Network
@@ -30,6 +32,7 @@ namespace NosSharp.World.Network
         public bool IsAuthenticated => Account != null;
 
         public int SessionId { get; set; }
+
         // todo implement multilanguage
         public RegionType SessionRegion => RegionType.English;
         public IPEndPoint Ip { get; private set; }
@@ -55,7 +58,10 @@ namespace NosSharp.World.Network
             _worldServerId = id;
         }
 
-        public ClientSession(IChannel channel) => _channel = channel;
+        public ClientSession(IChannel channel)
+        {
+            _channel = channel;
+        }
 
         #endregion
 

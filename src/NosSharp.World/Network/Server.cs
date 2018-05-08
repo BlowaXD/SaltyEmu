@@ -4,6 +4,7 @@ using Autofac;
 using ChickenAPI.DAL.Interfaces;
 using ChickenAPI.Dtos;
 using ChickenAPI.Enums;
+using ChickenAPI.Enums.Game.Character;
 using ChickenAPI.Utils;
 using DotNetty.Transport.Bootstrapping;
 using DotNetty.Transport.Channels;
@@ -81,6 +82,7 @@ namespace NosSharp.World.Network
                 Console.ReadLine();
 
                 await bootstrapChannel.CloseAsync().ConfigureAwait(false);
+                UnregisterServer();
             }
             catch (Exception ex)
             {
