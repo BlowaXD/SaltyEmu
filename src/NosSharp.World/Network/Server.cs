@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Autofac;
-using ChickenAPI.DAL.Interfaces;
-using ChickenAPI.Dtos;
-using ChickenAPI.Enums;
+using ChickenAPI.Data.AccessLayer;
+using ChickenAPI.Data.TransferObjects;
 using ChickenAPI.Enums.Game.Character;
 using ChickenAPI.Utils;
 using DotNetty.Transport.Bootstrapping;

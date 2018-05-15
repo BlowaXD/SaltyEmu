@@ -2,11 +2,11 @@
 using System.IO;
 using System.Reflection;
 using Autofac;
-using ChickenAPI.DAL.Interfaces;
-using ChickenAPI.Dtos;
+using ChickenAPI.Data.AccessLayer;
+using ChickenAPI.Data.TransferObjects;
 using ChickenAPI.Enums;
 using ChickenAPI.Packets;
-using ChickenAPI.Plugin;
+using ChickenAPI.Plugins;
 using ChickenAPI.Utils;
 using log4net;
 using log4net.Config;
@@ -22,7 +22,7 @@ namespace NosSharp.World
 {
     internal class WorldServer
     {
-        private static IPlugin[] _plugins;
+        private static ChickenAPI.Plugins.IPlugin[] _plugins;
         private static void InitializePlugins()
         {
             _plugins = new SimplePluginManager().LoadPlugins(new DirectoryInfo("plugins"));
@@ -96,7 +96,7 @@ namespace NosSharp.World
                     Name = "admin",
                     Password = "admin".ToSha512()
                 };
-                acc.InsertOrUpdate(account);
+                acc.Insert(account);
                 account = new AccountDto
                 {
                     Authority = AuthorityType.User,
@@ -104,7 +104,7 @@ namespace NosSharp.World
                     Name = "user",
                     Password = "user".ToSha512()
                 };
-                acc.InsertOrUpdate(account);
+                acc.Insert(account);
             }
 
             var packetHandler = new PacketHandlerPlugin();

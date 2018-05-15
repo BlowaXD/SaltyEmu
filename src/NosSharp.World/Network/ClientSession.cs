@@ -4,12 +4,13 @@ using System.Linq;
 using System.Net;
 using System.Reflection;
 using Autofac;
-using ChickenAPI.DAL.Interfaces;
-using ChickenAPI.Dtos;
+using ChickenAPI.Data.AccessLayer;
+using ChickenAPI.Data.TransferObjects;
 using ChickenAPI.Enums;
+using ChickenAPI.Enums.Game;
+using ChickenAPI.Game;
+using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Packets;
-using ChickenAPI.Player;
-using ChickenAPI.Session;
 using ChickenAPI.Utils;
 using DotNetty.Transport.Channels;
 using DotNetty.Transport.Channels.Groups;
@@ -27,15 +28,20 @@ namespace NosSharp.World.Network
 
         #region Members
 
+        public AuthorityType Authority { get; }
         public bool HasCurrentMapInstance => false;
 
         public bool IsAuthenticated => Account != null;
+        public bool HasSelectedCharacter { get; }
 
         public int SessionId { get; set; }
 
         // todo implement multilanguage
         public RegionType SessionRegion => RegionType.English;
         public IPEndPoint Ip { get; private set; }
+        public AccountDto Account { get; }
+        public CharacterDto Character { get; }
+        public CharacterEntity Player { get; }
 
         public int LastKeepAliveIdentity { get; set; }
 
@@ -90,20 +96,35 @@ namespace NosSharp.World.Network
         }
 
 
-        public void SendPacket(APacket packet)
+        public void SendPacket(IPacket packetBase)
         {
-            _channel.WriteAsync(_packetFactory.Serialize(packet));
+            _channel.WriteAsync(_packetFactory.Serialize(packetBase));
             _channel.Flush();
         }
 
-        public void SendPackets(IEnumerable<APacket> packets)
+        public void SendPackets(IEnumerable<IPacket> packets)
         {
-            foreach (APacket packet in packets)
+            foreach (IPacket packet in packets)
             {
                 _channel.WriteAsync(_packetFactory.Serialize(packet));
             }
 
             _channel.Flush();
+        }
+
+        public void InitializeAccount(AccountDto account)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void InitializeCharacter(CharacterDto character)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void InitializeEntity(CharacterEntity entity)
+        {
+            throw new NotImplementedException();
         }
 
         public void Disconnect()
@@ -261,7 +282,6 @@ namespace NosSharp.World.Network
         private void TriggerHandler(string packetHeader, string packet, bool force)
         {
             PacketHandlerMethodReference methodReference = _packetHandler.GetPacketHandlerMethodReference(packetHeader);
-            Logger.Log.Debug($"PacketHeader : {packetHeader}");
             if (methodReference == null)
             {
                 Logger.Log.Warn($"Handler for {packetHeader} not found !");
@@ -275,39 +295,16 @@ namespace NosSharp.World.Network
                 return;
             }
 
-            APacket deserializedPacket = _packetFactory.Deserialize(packet, methodReference.PacketType, IsAuthenticated);
+            IPacket deserializedPacketBase = _packetFactory.Deserialize(packet, methodReference.PacketType, IsAuthenticated);
 
-            if (deserializedPacket != null)
+            if (deserializedPacketBase != null)
             {
-                _packetHandler.Handle(deserializedPacket, this, methodReference.PacketType);
+                _packetHandler.Handle(deserializedPacketBase, this, methodReference.PacketType);
             }
             else
             {
                 Logger.Log.Warn($"Corrupted Packet {packet}");
             }
-        }
-
-        public AccountDto Account { get; private set; }
-
-        public bool HasSelectedCharacter => Character != null;
-
-        public Character Character { get; private set; }
-
-        public AuthorityType Authority => Account.Authority;
-
-
-        public void InitializeAccount(AccountDto account)
-        {
-            Account = account;
-            PlayerSessionDto sessionDto = Container.Instance.Resolve<ISessionService>().GetByAccountName(account.Name);
-            sessionDto.State = PlayerSessionState.Connected;
-            sessionDto.WorldServerId = _worldServerId;
-            Container.Instance.Resolve<ISessionService>().UpdateSession(sessionDto);
-        }
-
-        public void InitializeCharacter(Character character)
-        {
-            Character = character;
         }
 
         #endregion

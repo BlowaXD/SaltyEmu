@@ -21,7 +21,7 @@ namespace NosSharp.World.Packets
         private readonly Dictionary<string, Type> _packetByHeader = new Dictionary<string, Type>();
         private readonly Dictionary<Type, string> _packetByType = new Dictionary<Type, string>();
 
-        public string Serialize<TPacket>(TPacket packet) where TPacket : APacket
+        public string Serialize<TPacket>(TPacket packet) where TPacket : IPacket
         {
             try
             {
@@ -69,18 +69,18 @@ namespace NosSharp.World.Packets
             }
         }
 
-        public APacket Deserialize(string packetContent, Type packetType, bool includesKeepAliveIdentity)
+        public IPacket Deserialize(string packetContent, Type packetType, bool includesKeepAliveIdentity)
         {
             try
             {
                 PacketInformation serializationInformation = GetSerializationInformation(packetType);
-                var deserializedPacket = (APacket)packetType.CreateInstance();
+                var deserializedPacket = (PacketBase)packetType.CreateInstance();
                 SetDeserializationInformations(deserializedPacket, packetContent, serializationInformation.Header);
                 return Deserialize(packetContent, deserializedPacket, serializationInformation, includesKeepAliveIdentity);
             }
             catch (Exception e)
             {
-                Logger.Log.Warn($"The serialized packet has the wrong format. Packet: {packetContent}", e);
+                Logger.Log.Warn($"The serialized packetBase has the wrong format. Packet: {packetContent}", e);
                 return null;
             }
         }
@@ -142,14 +142,14 @@ namespace NosSharp.World.Packets
                 return Convert.ToBoolean(value) ? " 1" : " 0";
             }
 
-            if (propertyType.BaseType?.Equals(typeof(APacket)) == true)
+            if (propertyType.BaseType?.Equals(typeof(PacketBase)) == true)
             {
                 PacketInformation subpacketSerializationInfo = GetSerializationInformation(propertyType);
                 return SerializeSubpacket(value, subpacketSerializationInfo, packetIndexAttribute?.IsReturnPacket ?? false, packetIndexAttribute?.RemoveSeparator ?? false);
             }
 
             if (propertyType.IsGenericType && propertyType.GetGenericTypeDefinition().IsAssignableFrom(typeof(List<>))
-                && propertyType.GenericTypeArguments[0].BaseType == typeof(APacket))
+                && propertyType.GenericTypeArguments[0].BaseType == typeof(PacketBase))
             {
                 return SerializeSubpackets((IList)value, propertyType, packetIndexAttribute?.RemoveSeparator ?? false);
             }
@@ -258,17 +258,17 @@ namespace NosSharp.World.Packets
 
         #region Deserialization
 
-        private APacket Deserialize(string packetContent, APacket deserializedPacket, PacketInformation serializationInformation, bool includesKeepAliveIdentity)
+        private PacketBase Deserialize(string packetContent, PacketBase deserializedPacketBase, PacketInformation serializationInformation, bool includesKeepAliveIdentity)
         {
             MatchCollection matches = Regex.Matches(packetContent, @"([^\040]+[\.][^\040]+[\040]?)+((?=\040)|$)|([^\040]+)((?=\040)|$)");
             if (matches.Count <= 0)
             {
-                return deserializedPacket;
+                return deserializedPacketBase;
             }
 
             foreach (KeyValuePair<PacketIndexAttribute, PropertyInfo> packetBasePropertyInfo in serializationInformation.PacketProperties)
             {
-                int currentIndex = packetBasePropertyInfo.Key.Index + (includesKeepAliveIdentity ? 2 : 1); // adding 2 because we need to skip incrementing number and packet header
+                int currentIndex = packetBasePropertyInfo.Key.Index + (includesKeepAliveIdentity ? 2 : 1); // adding 2 because we need to skip incrementing number and packetBase header
 
                 if (currentIndex >= matches.Count + (includesKeepAliveIdentity ? 1 : 0))
                 {
@@ -280,7 +280,7 @@ namespace NosSharp.World.Packets
                     // get the value to the end and stop deserialization
                     int index = matches.Count > currentIndex ? matches[currentIndex].Index : packetContent.Length;
                     string valueToEnd = packetContent.Substring(packetContent.Length, packetContent.Length - index);
-                    packetBasePropertyInfo.Value.SetValue(deserializedPacket,
+                    packetBasePropertyInfo.Value.SetValue(deserializedPacketBase,
                         DeserializeValue(packetBasePropertyInfo.Value.PropertyType, valueToEnd, packetBasePropertyInfo.Key, packetBasePropertyInfo.Value.GetCustomAttributes<ValidationAttribute>(),
                             matches, includesKeepAliveIdentity));
                     break;
@@ -289,7 +289,7 @@ namespace NosSharp.World.Packets
                 string currentValue = matches[currentIndex].Value;
 
                 // set the value & convert currentValue
-                packetBasePropertyInfo.Value.SetValue(deserializedPacket,
+                packetBasePropertyInfo.Value.SetValue(deserializedPacketBase,
                     DeserializeValue(packetBasePropertyInfo.Value.PropertyType,
                         currentValue,
                         packetBasePropertyInfo.Key,
@@ -299,7 +299,7 @@ namespace NosSharp.World.Packets
                 );
             }
 
-            return deserializedPacket;
+            return deserializedPacketBase;
         }
 
         private IList DeserializeSimpleList(string currentValues, Type genericListType)
@@ -436,14 +436,14 @@ namespace NosSharp.World.Packets
                 return currentValue != "0";
             }
 
-            if (packetPropertyType.BaseType?.Equals(typeof(APacket)) == true) // subpacket
+            if (packetPropertyType.BaseType?.Equals(typeof(PacketBase)) == true) // subpacket
             {
                 PacketInformation subpacketSerializationInfo = GetSerializationInformation(packetPropertyType);
                 return DeserializeSubpacket(currentValue, packetPropertyType, subpacketSerializationInfo, packetIndexAttribute?.IsReturnPacket ?? false);
             }
 
             if (packetPropertyType.IsGenericType && packetPropertyType.GetGenericTypeDefinition().IsAssignableFrom(typeof(List<>)) // subpacket list
-                && packetPropertyType.GenericTypeArguments[0].BaseType == typeof(APacket))
+                && packetPropertyType.GenericTypeArguments[0].BaseType == typeof(PacketBase))
             {
                 return DeserializeSubpackets(currentValue, packetPropertyType, packetIndexAttribute?.RemoveSeparator ?? false, packetMatches, packetIndexAttribute?.Index, includesKeepAliveIdentity);
             }
@@ -479,10 +479,10 @@ namespace NosSharp.World.Packets
         }
 
 
-        private void SetDeserializationInformations(APacket packetDefinition, string packetContent, string packetHeader)
+        private void SetDeserializationInformations(PacketBase packetBaseDefinition, string packetContent, string packetHeader)
         {
-            packetDefinition.OriginalContent = packetContent;
-            packetDefinition.OriginalHeader = packetHeader;
+            packetBaseDefinition.OriginalContent = packetContent;
+            packetBaseDefinition.Header = packetHeader;
         }
 
         #endregion

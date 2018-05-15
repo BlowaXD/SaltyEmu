@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using ChickenAPI.Plugin;
+using ChickenAPI.Plugins;
 using ChickenAPI.Utils;
 
 namespace NosSharp.World.Utils

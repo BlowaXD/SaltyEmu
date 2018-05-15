@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using ChickenAPI.ECS.Entities;
+using ChickenAPI.Game;
 using ChickenAPI.Packets;
-using ChickenAPI.Session;
 
 namespace NosSharp.World.Packets
 {
@@ -25,7 +26,7 @@ namespace NosSharp.World.Packets
 
         public PacketHandlerMethodReference GetPacketHandlerMethodReference(string header) => !_packetHandlerMethod.TryGetValue(header, out PacketHandlerMethodReference reference) ? null : reference;
 
-        public void Handle(APacket packet, ISession session, Type type)
+        public void Handle(IPacket packet, ISession session, Type type)
         {
             if (packet == null)
             {
@@ -49,6 +50,10 @@ namespace NosSharp.World.Packets
             }
 
             methodReference.HandlerMethod(packet, session);
+        }
+
+        public void Handle(IPacket packet, IPlayerEntity session, Type type)
+        {
         }
     }
 }
