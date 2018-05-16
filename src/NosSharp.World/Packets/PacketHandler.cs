@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using ChickenAPI.ECS.Entities;
 using ChickenAPI.Game;
+using ChickenAPI.Game.Network;
 using ChickenAPI.Packets;
 
 namespace NosSharp.World.Packets
@@ -33,12 +34,13 @@ namespace NosSharp.World.Packets
                 return;
             }
 
-            if (!_packetHandler.TryGetValue(type, out PacketHandlerMethodReference methodReference))
+            if (session.Player != null)
             {
+                Handle(packet, session.Player, type);
                 return;
             }
 
-            if (!session.HasSelectedCharacter && methodReference.NeedCharacter)
+            if (!_packetHandler.TryGetValue(type, out PacketHandlerMethodReference methodReference))
             {
                 return;
             }
@@ -52,8 +54,30 @@ namespace NosSharp.World.Packets
             methodReference.HandlerMethod(packet, session);
         }
 
-        public void Handle(IPacket packet, IPlayerEntity session, Type type)
+        public void Handle(IPacket packet, IPlayerEntity player, Type type)
         {
+            if (packet == null)
+            {
+                return;
+            }
+
+            if (player == null)
+            {
+                return;
+            }
+            if (!_packetHandler.TryGetValue(type, out PacketHandlerMethodReference methodReference))
+            {
+                return;
+            }
+
+            //check for the correct authority
+            if ((byte)methodReference.Authority > (byte)player.Session.Account.Authority)
+            {
+                return;
+            }
+
+            // todo cleanup this
+            methodReference.HandlerMethod(packet, player.Session);
         }
     }
 }

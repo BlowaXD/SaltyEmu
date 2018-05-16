@@ -6,10 +6,12 @@ using System.Reflection;
 using Autofac;
 using ChickenAPI.Data.AccessLayer;
 using ChickenAPI.Data.TransferObjects;
+using ChickenAPI.ECS.Entities;
 using ChickenAPI.Enums;
 using ChickenAPI.Enums.Game;
 using ChickenAPI.Game;
 using ChickenAPI.Game.Entities.Player;
+using ChickenAPI.Game.Network;
 using ChickenAPI.Packets;
 using ChickenAPI.Utils;
 using DotNetty.Transport.Channels;
@@ -31,6 +33,7 @@ namespace NosSharp.World.Network
         public AuthorityType Authority { get; }
         public bool HasCurrentMapInstance => false;
 
+        public long CharacterId { get; }
         public bool IsAuthenticated => Account != null;
         public bool HasSelectedCharacter { get; }
 
@@ -40,6 +43,11 @@ namespace NosSharp.World.Network
         public RegionType SessionRegion => RegionType.English;
         public IPEndPoint Ip { get; private set; }
         public AccountDto Account { get; }
+        IPlayerEntity ISession.Player
+        {
+            get { return Player; }
+        }
+
         public CharacterDto Character { get; }
         public CharacterEntity Player { get; }
 
@@ -96,6 +104,11 @@ namespace NosSharp.World.Network
         }
 
 
+        public void InitializeEntity(IPlayerEntity ett)
+        {
+            throw new NotImplementedException();
+        }
+
         public void SendPacket(IPacket packetBase)
         {
             _channel.WriteAsync(_packetFactory.Serialize(packetBase));
@@ -113,16 +126,6 @@ namespace NosSharp.World.Network
         }
 
         public void InitializeAccount(AccountDto account)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void InitializeCharacter(CharacterDto character)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void InitializeEntity(CharacterEntity entity)
         {
             throw new NotImplementedException();
         }
