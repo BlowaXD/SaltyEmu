@@ -17,6 +17,7 @@ namespace NosSharp.World.Packets
     /// </summary>
     public class PluggablePacketFactory : IPacketFactory
     {
+        private static readonly Logger Log = Logger.GetLogger<PluggablePacketFactory>();
         private readonly Dictionary<Type, PacketInformation> _deserializationInformations = new Dictionary<Type, PacketInformation>();
         private readonly Dictionary<string, Type> _packetByHeader = new Dictionary<string, Type>();
         private readonly Dictionary<Type, string> _packetByType = new Dictionary<Type, string>();
@@ -80,7 +81,7 @@ namespace NosSharp.World.Packets
             }
             catch (Exception e)
             {
-                Logger.Log.Warn($"The serialized packetBase has the wrong format. Packet: {packetContent}", e);
+                Log.Error($"The serialized packetBase has the wrong format. Packet: {packetContent}", e);
                 return null;
             }
         }
@@ -425,7 +426,7 @@ namespace NosSharp.World.Packets
                 }
                 catch (Exception)
                 {
-                    Logger.Log.Warn($"Could not convert value {currentValue} to type {packetPropertyType.Name}");
+                    Log.Warn($"Could not convert value {currentValue} to type {packetPropertyType.Name}");
                 }
 
                 return convertedValue;

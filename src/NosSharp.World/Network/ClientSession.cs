@@ -23,6 +23,7 @@ namespace NosSharp.World.Network
 {
     public class ClientSession : ChannelHandlerAdapter, ISession
     {
+        private static readonly Logger Log = Logger.GetLogger<ClientSession>();
         private static Guid _worldServerId;
         private static IPacketFactory _packetFactory;
         private static IPacketHandler _packetHandler;
@@ -30,26 +31,18 @@ namespace NosSharp.World.Network
 
         #region Members
 
-        public AuthorityType Authority { get; }
         public bool HasCurrentMapInstance => false;
 
         public long CharacterId { get; }
         public bool IsAuthenticated => Account != null;
-        public bool HasSelectedCharacter { get; }
 
         public int SessionId { get; set; }
 
         // todo implement multilanguage
         public RegionType SessionRegion => RegionType.English;
         public IPEndPoint Ip { get; private set; }
-        public AccountDto Account { get; }
-        IPlayerEntity ISession.Player
-        {
-            get { return Player; }
-        }
-
-        public CharacterDto Character { get; }
-        public CharacterEntity Player { get; }
+        public AccountDto Account { get; private set; }
+        public IPlayerEntity Player { get; }
 
         public int LastKeepAliveIdentity { get; set; }
 
@@ -99,7 +92,7 @@ namespace NosSharp.World.Network
 
             g.Add(context.Channel);
             Ip = _channel.RemoteAddress as IPEndPoint;
-            Logger.Log.Info($"[CLIENT] Connected {Ip.Address}");
+            Log.Info($"[CLIENT] Connected {Ip.Address}");
             SessionId = 0;
         }
 
@@ -127,7 +120,7 @@ namespace NosSharp.World.Network
 
         public void InitializeAccount(AccountDto account)
         {
-            throw new NotImplementedException();
+            Account = account;
         }
 
         public void Disconnect()
@@ -139,7 +132,7 @@ namespace NosSharp.World.Network
 
         public override void ChannelUnregistered(IChannelHandlerContext context)
         {
-            Logger.Log.Info($"[CLIENT] Disconnected {Ip.Address}");
+            Log.Info($"[CLIENT] Disconnected {Ip.Address}");
             SessionManager.Instance.UnregisterSession(context.Channel.Id.AsLongText());
             Disconnect();
             context.CloseAsync();
@@ -147,7 +140,7 @@ namespace NosSharp.World.Network
 
         public override void ExceptionCaught(IChannelHandlerContext context, Exception exception)
         {
-            Logger.Log.Error(exception);
+            Log.Error("[CLIENT] ExceptionCaught", exception);
             context.CloseAsync();
         }
 
@@ -156,11 +149,8 @@ namespace NosSharp.World.Network
         {
             if (!(message is string buff))
             {
-                Logger.Log.Debug("Message is not string !");
                 return;
             }
-
-            Logger.Log.Debug($"[Session-{SessionId}] {buff}");
 
             if (SessionId == 0)
             {
@@ -282,32 +272,55 @@ namespace NosSharp.World.Network
             }
         }
 
-        private void TriggerHandler(string packetHeader, string packet, bool force)
+        private void GameHandler(string packetHeader, string packet)
         {
-            PacketHandlerMethodReference methodReference = _packetHandler.GetPacketHandlerMethodReference(packetHeader);
-            if (methodReference == null)
+            GamePacketHandler gameHandler = _packetHandler.GetGamePacketHandler(packetHeader);
+            if (gameHandler == null)
             {
-                Logger.Log.Warn($"Handler for {packetHeader} not found !");
+                Log.Warn($"Handler for {packetHeader} not found !");
                 return;
             }
 
-            if (methodReference.PacketHeader != null && !force && methodReference.PacketHeader.Amount > 1 && !_waitForPacketsAmount.HasValue)
+            IPacket packetT = _packetFactory.Deserialize(packet, gameHandler.PacketType, IsAuthenticated);
+            _packetHandler.Handle((packetT, Player));
+        }
+
+        private void CharacterHandler(string packetHeader, string packet, CharacterScreenPacketHandler handler)
+        {
+            IPacket deserializedPacketBase = _packetFactory.Deserialize(packet, handler.PacketType, IsAuthenticated);
+            _packetHandler.Handle((deserializedPacketBase, this));
+        }
+
+        private void TriggerHandler(string packetHeader, string packet, bool force)
+        {
+            if (Player != null)
             {
-                _waitForPacketsAmount = methodReference.PacketHeader.Amount;
+                GameHandler(packetHeader, packet);
+                return;
+            }
+
+
+            CharacterScreenPacketHandler handler = _packetHandler.GetCharacterScreenPacketHandler(packetHeader);
+            if (handler == null)
+            {
+                Log.Warn($"Handler for {packetHeader} not found !");
+                return;
+            }
+
+            if (force)
+            {
+                CharacterHandler(packetHeader, packet, handler);
+                return;
+            }
+
+            if (handler.PacketHeader != null && handler.PacketHeader.Amount > 1 && !_waitForPacketsAmount.HasValue)
+            {
+                _waitForPacketsAmount = handler.PacketHeader.Amount;
                 _waitForPacketList.Add(packet != string.Empty ? packet : $"1 {packetHeader} ");
                 return;
             }
 
-            IPacket deserializedPacketBase = _packetFactory.Deserialize(packet, methodReference.PacketType, IsAuthenticated);
-
-            if (deserializedPacketBase != null)
-            {
-                _packetHandler.Handle(deserializedPacketBase, this, methodReference.PacketType);
-            }
-            else
-            {
-                Logger.Log.Warn($"Corrupted Packet {packet}");
-            }
+            CharacterHandler(packetHeader, packet, handler);
         }
 
         #endregion

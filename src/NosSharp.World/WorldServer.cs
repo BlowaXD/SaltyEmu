@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Reflection;
 using Autofac;
 using ChickenAPI.Data.AccessLayer;
 using ChickenAPI.Data.TransferObjects;
@@ -8,9 +7,6 @@ using ChickenAPI.Enums;
 using ChickenAPI.Packets;
 using ChickenAPI.Plugins;
 using ChickenAPI.Utils;
-using log4net;
-using log4net.Config;
-using log4net.Repository;
 using NosSharp.DatabasePlugin;
 using NosSharp.PacketHandler;
 using NosSharp.RedisSessionPlugin;
@@ -22,6 +18,7 @@ namespace NosSharp.World
 {
     internal class WorldServer
     {
+        private static readonly Logger Log = Logger.GetLogger<WorldServer>();
         private static ChickenAPI.Plugins.IPlugin[] _plugins;
         private static void InitializePlugins()
         {
@@ -64,9 +61,6 @@ namespace NosSharp.World
 
         private static void InitializeLogger()
         {
-            ILoggerRepository logRepository = LogManager.GetRepository(Assembly.GetEntryAssembly());
-            XmlConfigurator.Configure(logRepository, new FileInfo("plugins/config/log4net.config"));
-            Logger.Log = LogManager.GetLogger(typeof(WorldServer));
         }
 
 
@@ -82,7 +76,7 @@ namespace NosSharp.World
             ClientSession.SetPacketHandler(Container.Instance.Resolve<IPacketHandler>());
             if (Server.RegisterServer())
             {
-                Logger.Log.Info($"Failed to register to ServerAPI");
+                Log.Info($"Failed to register to ServerAPI");
                 return;
             }
 

@@ -13,6 +13,7 @@ namespace NosSharp.World.Network
 {
     public class Server
     {
+        private static readonly Logger Log = Logger.GetLogger<Server>();
         public static WorldServerDto WorldServer;
         private static bool _running { get; set; }
         public static string WorldGroup { get; set; }
@@ -55,7 +56,7 @@ namespace NosSharp.World.Network
                 return;
             }
 
-            Logger.Log.Info($"Unregister server {WorldServer.Id}");
+            Log.Info($"Unregister server {WorldServer.Id}");
 
             var sessionManager = Container.Instance.Resolve<ISessionService>();
             api.UnregisterServer(WorldServer.Id);
@@ -85,7 +86,7 @@ namespace NosSharp.World.Network
             }
             catch (Exception ex)
             {
-                Logger.Log.Error(ex);
+                Log.Error("RunServerAsync", ex);
                 UnregisterServer();
             }
             finally

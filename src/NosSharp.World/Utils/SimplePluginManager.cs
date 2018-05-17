@@ -10,6 +10,7 @@ namespace NosSharp.World.Utils
 {
     public class SimplePluginManager : IPluginManager
     {
+        private static readonly Logger Log = Logger.GetLogger<SimplePluginManager>();
         public DirectoryInfo GetPluginDirectory() => new DirectoryInfo("plugin");
         public DirectoryInfo GetConfigDirectory() => new DirectoryInfo("plugin/config");
 
@@ -64,7 +65,7 @@ namespace NosSharp.World.Utils
                         return null;
                     }
 
-                    Logger.Log.Info($"[PluginManager] Loading plugin {tmp.Name}...");
+                    Log.Info($"[PluginManager] Loading plugin {tmp.Name}...");
                     tmp.OnLoad();
 
                     return tmp;
