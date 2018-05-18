@@ -1,0 +1,38 @@
+version: '3'
+services:
+  redis:
+    image: redis
+    ports:
+      - "6379:6379"
+  postgres:
+    image: postgres
+    ports:
+      - "5432:5432"
+  nossharp-world-1:
+    image: nossharp-world:latest
+    restart: always
+    ports:
+      - "1337:10001"
+    volumes:
+      - ./nossharp/plugins:/plugins
+    environment:
+      - SERVER_IP=yourIP
+      - SERVER_PORT=10001
+      - SERVER_WORLDGROUP=NosWings
+    links:
+      - "postgres:database"
+      - "redis:redis"
+  nossharp-world-1:
+    image: nossharp-world:latest
+    restart: always
+    ports:
+      - "1337:10002"
+    volumes:
+      - ./nossharp/plugins:/plugins
+    environment:
+      - SERVER_IP=yourIP
+      - SERVER_PORT=10002
+      - SERVER_WORLDGROUP=NosWings
+    links:
+      - "postgres:database"
+      - "redis:redis"

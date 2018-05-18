@@ -77,6 +77,12 @@ namespace NosSharp.World
         }
 
 
+        // Declare the SetConsoleCtrlHandler function
+        // as external and receiving a delegate.
+
+#if  DEBUG
+
+
         private static bool ConsoleCtrlCheck(CtrlTypes ctrlType)
         {
             // Put your own handler here
@@ -90,10 +96,6 @@ namespace NosSharp.World
 
             return true;
         }
-        
-
-        // Declare the SetConsoleCtrlHandler function
-        // as external and receiving a delegate.
 
         [DllImport("Kernel32")]
         public static extern bool SetConsoleCtrlHandler(HandlerRoutine Handler, bool Add);
@@ -113,10 +115,13 @@ namespace NosSharp.World
             CTRL_LOGOFF_EVENT = 5,
             CTRL_SHUTDOWN_EVENT
         }
+#endif
 
         private static void Main()
         {
+#if DEBUG
             SetConsoleCtrlHandler(ConsoleCtrlCheck, true);
+#endif
             AppDomain.CurrentDomain.UnhandledException += Exit;
             AppDomain.CurrentDomain.ProcessExit += Exit;
             Console.CancelKeyPress += Exit;

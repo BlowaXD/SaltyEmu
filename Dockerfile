@@ -20,8 +20,9 @@ RUN dotnet publish . -c Release -o ../../dist/
 FROM microsoft/dotnet:2.0-runtime
 
 # Output Server Port (that will be sent to IServerApiService)
-ENV SERVER_OUTPUT_PORT=7777 \
-    SERVER_OUTPUT_IP=127.0.0.1
+ENV SERVER_PORT=7777 \
+    SERVER_IP=127.0.0.1 \
+    SERVER_WORLDGROUP=NosWings
 
 LABEL name="nossharp-world" \
     author="BlowaXD" \
@@ -37,7 +38,6 @@ RUN mkdir /nossharp && \
 WORKDIR /nossharp/
 
 COPY --from=builder /nossharp/dist/ .
-COPY config plugins/config
 
 VOLUME /nossharp/plugins
 
