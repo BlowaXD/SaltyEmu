@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Runtime.InteropServices;
 using Autofac;
 using ChickenAPI.Data.AccessLayer;
 using ChickenAPI.Data.TransferObjects;
@@ -7,38 +8,49 @@ using ChickenAPI.Enums;
 using ChickenAPI.Packets;
 using ChickenAPI.Plugins;
 using ChickenAPI.Utils;
+using NLog;
 using NosSharp.DatabasePlugin;
 using NosSharp.PacketHandler;
 using NosSharp.RedisSessionPlugin;
 using NosSharp.World.Network;
 using NosSharp.World.Packets;
 using NosSharp.World.Utils;
+using Logger = ChickenAPI.Utils.Logger;
 
 namespace NosSharp.World
 {
     internal class WorldServer
     {
         private static readonly Logger Log = Logger.GetLogger<WorldServer>();
-        private static ChickenAPI.Plugins.IPlugin[] _plugins;
+        private static IPlugin[] _plugins;
+
         private static void InitializePlugins()
         {
-            _plugins = new SimplePluginManager().LoadPlugins(new DirectoryInfo("plugins"));
-            foreach (IPlugin plugin in _plugins)
+            try
             {
-                plugin.OnEnable();
+                _plugins = new SimplePluginManager().LoadPlugins(new DirectoryInfo("plugins"));
+                foreach (IPlugin plugin in _plugins)
+                {
+                    plugin.OnEnable();
+                }
+
+                var tmp = new RedisPlugin();
+                tmp.OnLoad();
+                tmp.OnEnable();
+                var tmpAgain = new NosSharpDatabasePlugin();
+                tmpAgain.OnLoad();
+                tmpAgain.OnEnable();
             }
-            var tmp = new RedisPlugin();
-            tmp.OnLoad();
-            tmp.OnEnable();
-            var tmpAgain = new NosSharpDatabasePlugin();
-            tmpAgain.OnLoad();
-            tmpAgain.OnEnable();
+            catch (Exception e)
+            {
+                Log.Error("Plugins load", e);
+            }
         }
 
         private static void InitializeConfigs()
         {
             Environment.SetEnvironmentVariable("io.netty.allocator.type", "unpooled");
-            Environment.SetEnvironmentVariable("io.netty.allocator.maxOrder", "5");
+            Environment.SetEnvironmentVariable("io.netty.allocator.maxOrder", "10");
             string port = Environment.GetEnvironmentVariable("SERVER_PORT") ?? "1337";
             if (!int.TryParse(port, out int intPort))
             {
@@ -61,11 +73,53 @@ namespace NosSharp.World
 
         private static void InitializeLogger()
         {
+            Logger.Initialize();
         }
 
 
+        private static bool ConsoleCtrlCheck(CtrlTypes ctrlType)
+        {
+            // Put your own handler here
+
+            switch (ctrlType)
+            {
+                case CtrlTypes.CTRL_CLOSE_EVENT:
+                    Exit(null, null);
+                    break;
+            }
+
+            return true;
+        }
+        
+
+        // Declare the SetConsoleCtrlHandler function
+        // as external and receiving a delegate.
+
+        [DllImport("Kernel32")]
+        public static extern bool SetConsoleCtrlHandler(HandlerRoutine Handler, bool Add);
+
+        // A delegate type to be used as the handler routine
+        // for SetConsoleCtrlHandler.
+        public delegate bool HandlerRoutine(CtrlTypes CtrlType);
+
+        // An enumerated type for the control messages
+        // sent to the handler routine.
+
+        public enum CtrlTypes
+        {
+            CTRL_C_EVENT = 0,
+            CTRL_BREAK_EVENT,
+            CTRL_CLOSE_EVENT,
+            CTRL_LOGOFF_EVENT = 5,
+            CTRL_SHUTDOWN_EVENT
+        }
+
         private static void Main()
         {
+            SetConsoleCtrlHandler(ConsoleCtrlCheck, true);
+            AppDomain.CurrentDomain.UnhandledException += Exit;
+            AppDomain.CurrentDomain.ProcessExit += Exit;
+            Console.CancelKeyPress += Exit;
             PrintHeader();
             InitializeLogger();
             InitializeConfigs();
@@ -105,7 +159,12 @@ namespace NosSharp.World
             packetHandler.OnLoad();
             packetHandler.OnEnable();
             Server.RunServerAsync(1337).Wait();
+        }
+
+        private static void Exit(object sender, EventArgs e)
+        {
             Server.UnregisterServer();
+            LogManager.Shutdown();
             Console.ReadLine();
         }
     }
