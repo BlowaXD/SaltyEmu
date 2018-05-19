@@ -4,11 +4,13 @@ using ChickenAPI.ECS.Entities;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Network;
 using ChickenAPI.Packets;
+using ChickenAPI.Utils;
 
 namespace NosSharp.World.Packets
 {
     public class PacketHandler : IPacketHandler
     {
+        private static readonly Logger Log = Logger.GetLogger<PacketHandler>();
         private readonly Dictionary<Type, CharacterScreenPacketHandler> _characterScreenHandlersByType = new Dictionary<Type, CharacterScreenPacketHandler>();
         private readonly Dictionary<string, CharacterScreenPacketHandler> _characterScreenByHeader = new Dictionary<string, CharacterScreenPacketHandler>();
 
@@ -57,81 +59,50 @@ namespace NosSharp.World.Packets
             _gameHandlersByType.Remove(packetType, out GamePacketHandler handler);
             _gameHandlerByHeader.Remove(handler.Identification);
         }
+
         public void Handle((IPacket, ISession) handlingInfo)
         {
             if (handlingInfo.Item1 == null)
             {
+                Log.Warn($"[HANDLE][CHARACTERSCREEN] PacketNull by {handlingInfo.Item2.Ip}");
                 return;
             }
 
-            if (handlingInfo.Item2 != null)
+            if (handlingInfo.Item2.Player != null)
             {
                 // can't handle CharacterScreen packet while ingame
+                Log.Warn($"[HANDLE][CHARACTERSCREEN] {handlingInfo.Item2.Ip} tries to use CharacterScreen packets while ingame");
+                return;
             }
-            throw new NotImplementedException();
+
+            if (!_characterScreenByHeader.TryGetValue(handlingInfo.Item1.Header, out CharacterScreenPacketHandler handler))
+            {
+                return;
+            }
+
+            handler.Handler(handlingInfo.Item1, handlingInfo.Item2);
         }
 
         public void Handle((IPacket, IPlayerEntity) handlingInfo)
         {
-            throw new NotImplementedException();
-        }
+            if (handlingInfo.Item1 == null)
+            {
+                Log.Warn($"[HANDLE][GAME] Wrong packet");
+                return;
+            }
 
-        public void Handle((IPacket, ISession) session, Type type)
-        {
-            /*
-            if (packet == null)
+            if (!_gameHandlerByHeader.TryGetValue(handlingInfo.Item1.Header, out GamePacketHandler handler))
             {
                 return;
             }
 
-            if (session.Player != null)
+            if (handler.Authority > handlingInfo.Item2.Session.Account.Authority)
             {
-                Handle(packet, session.Player, type);
+                Log.Warn($"[HANDLE][GAME] {handlingInfo.Item2.Session.Account.Name} Tries to use forbidden packets");
                 return;
             }
 
-            if (!_characterScreenHandlersByType.TryGetValue(type, out CharacterScreenPacketHandler methodReference))
-            {
-                return;
-            }
-
-            //check for the correct authority
-            if (session.IsAuthenticated && (byte)methodReference.Authority > (byte)session.Account.Authority)
-            {
-                return;
-            }
-
-            methodReference.Handler(packet, session);
-            */
-        }
-
-        public void Handle(IPacket packet, IPlayerEntity player, Type type)
-        {
-            /*
-            if (packet == null)
-            {
-                return;
-            }
-
-            if (player == null)
-            {
-                return;
-            }
-
-            if (!_characterScreenHandlersByType.TryGetValue(type, out CharacterScreenPacketHandler methodReference))
-            {
-                return;
-            }
-
-            //check for the correct authority
-            if ((byte)methodReference.Authority > (byte)player.Session.Account.Authority)
-            {
-                return;
-            }
-
-            // todo cleanup this
-            methodReference.Handler(packet, player.Session);
-            */
+            handler.HandlerMethod(handlingInfo.Item1, handlingInfo.Item2);
         }
     }
 }

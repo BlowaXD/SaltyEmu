@@ -92,7 +92,7 @@ namespace NosSharp.World.Network
 
             g.Add(context.Channel);
             Ip = _channel.RemoteAddress as IPEndPoint;
-            Log.Info($"[CLIENT] Connected {Ip.Address}");
+            Log.Info($"[CONNECT] {Ip.Address}");
             SessionId = 0;
         }
 
@@ -132,7 +132,7 @@ namespace NosSharp.World.Network
 
         public override void ChannelUnregistered(IChannelHandlerContext context)
         {
-            Log.Info($"[CLIENT] Disconnected {Ip.Address}");
+            Log.Info($"[DISCONNECT] {Ip.Address}");
             SessionManager.Instance.UnregisterSession(context.Channel.Id.AsLongText());
             Disconnect();
             context.CloseAsync();
@@ -140,7 +140,7 @@ namespace NosSharp.World.Network
 
         public override void ExceptionCaught(IChannelHandlerContext context, Exception exception)
         {
-            Log.Error("[CLIENT] ExceptionCaught", exception);
+            Log.Error("[EXCEPTION]", exception);
             context.CloseAsync();
         }
 
@@ -303,7 +303,7 @@ namespace NosSharp.World.Network
             CharacterScreenPacketHandler handler = _packetHandler.GetCharacterScreenPacketHandler(packetHeader);
             if (handler == null)
             {
-                Log.Warn($"Handler for {packetHeader} not found !");
+                Log.Warn($"[HANDLER_NOT_FOUND] {packetHeader}");
                 return;
             }
 

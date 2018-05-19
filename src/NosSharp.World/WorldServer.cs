@@ -8,14 +8,12 @@ using ChickenAPI.Enums;
 using ChickenAPI.Packets;
 using ChickenAPI.Plugins;
 using ChickenAPI.Utils;
-using NLog;
 using NosSharp.DatabasePlugin;
 using NosSharp.PacketHandler;
 using NosSharp.RedisSessionPlugin;
 using NosSharp.World.Network;
 using NosSharp.World.Packets;
 using NosSharp.World.Utils;
-using Logger = ChickenAPI.Utils.Logger;
 
 namespace NosSharp.World
 {
@@ -40,6 +38,10 @@ namespace NosSharp.World
                 var tmpAgain = new NosSharpDatabasePlugin();
                 tmpAgain.OnLoad();
                 tmpAgain.OnEnable();
+
+                var handling = new PacketHandlerPlugin();
+                handling.OnLoad();
+                handling.OnEnable();
             }
             catch (Exception e)
             {
@@ -92,17 +94,20 @@ namespace NosSharp.World
                 case CtrlTypes.CTRL_CLOSE_EVENT:
                     Exit(null, null);
                     break;
+                default:
+                    Exit(null, null);
+                    break;
             }
 
             return true;
         }
 
         [DllImport("Kernel32")]
-        public static extern bool SetConsoleCtrlHandler(HandlerRoutine Handler, bool Add);
+        public static extern bool SetConsoleCtrlHandler(HandlerRoutine handler, bool add);
 
         // A delegate type to be used as the handler routine
         // for SetConsoleCtrlHandler.
-        public delegate bool HandlerRoutine(CtrlTypes CtrlType);
+        public delegate bool HandlerRoutine(CtrlTypes ctrlType);
 
         // An enumerated type for the control messages
         // sent to the handler routine.
@@ -169,7 +174,7 @@ namespace NosSharp.World
         private static void Exit(object sender, EventArgs e)
         {
             Server.UnregisterServer();
-            LogManager.Shutdown();
+            NLog.LogManager.Shutdown();
             Console.ReadLine();
         }
     }
