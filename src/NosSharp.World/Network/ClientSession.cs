@@ -25,7 +25,7 @@ namespace NosSharp.World.Network
         private readonly IChannel _channel;
 
         #region Members
-        public long CharacterId { get; }
+        public long CharacterId { get; private set; }
         public bool IsAuthenticated => Account != null;
 
         public int SessionId { get; set; }
@@ -87,6 +87,11 @@ namespace NosSharp.World.Network
             SessionId = 0;
         }
 
+
+        public void InitializeCharacterId(long id)
+        {
+            CharacterId = id;
+        }
 
         public void InitializeEntity(IPlayerEntity ett)
         {
