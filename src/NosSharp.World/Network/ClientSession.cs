@@ -2,21 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Reflection;
 using Autofac;
 using ChickenAPI.Data.AccessLayer;
 using ChickenAPI.Data.TransferObjects;
-using ChickenAPI.ECS.Entities;
 using ChickenAPI.Enums;
-using ChickenAPI.Enums.Game;
-using ChickenAPI.Game;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Network;
 using ChickenAPI.Packets;
 using ChickenAPI.Utils;
 using DotNetty.Transport.Channels;
 using DotNetty.Transport.Channels.Groups;
-using NosSharp.PacketHandler.Utils;
 using NosSharp.World.Session;
 
 namespace NosSharp.World.Network
@@ -30,19 +25,15 @@ namespace NosSharp.World.Network
         private readonly IChannel _channel;
 
         #region Members
-
-        public bool HasCurrentMapInstance => false;
-
         public long CharacterId { get; }
         public bool IsAuthenticated => Account != null;
 
         public int SessionId { get; set; }
 
-        // todo implement multilanguage
         public RegionType SessionRegion => RegionType.English;
         public IPEndPoint Ip { get; private set; }
         public AccountDto Account { get; private set; }
-        public IPlayerEntity Player { get; }
+        public IPlayerEntity Player { get; private set; }
 
         public int LastKeepAliveIdentity { get; set; }
 
@@ -92,14 +83,14 @@ namespace NosSharp.World.Network
 
             g.Add(context.Channel);
             Ip = _channel.RemoteAddress as IPEndPoint;
-            Log.Info($"[CONNECT] {Ip.Address}");
+            Log.Info($"[CONNECT] {Ip?.Address}");
             SessionId = 0;
         }
 
 
         public void InitializeEntity(IPlayerEntity ett)
         {
-            throw new NotImplementedException();
+            Player = ett;
         }
 
         public void SendPacket(IPacket packetBase)
@@ -143,8 +134,7 @@ namespace NosSharp.World.Network
             Log.Error("[EXCEPTION]", exception);
             context.CloseAsync();
         }
-
-
+        
         public override void ChannelRead(IChannelHandlerContext context, object message)
         {
             if (!(message is string buff))
@@ -285,7 +275,7 @@ namespace NosSharp.World.Network
             _packetHandler.Handle((packetT, Player));
         }
 
-        private void CharacterHandler(string packetHeader, string packet, CharacterScreenPacketHandler handler)
+        private void CharacterHandler(string packet, CharacterScreenPacketHandler handler)
         {
             IPacket deserializedPacketBase = _packetFactory.Deserialize(packet, handler.PacketType, IsAuthenticated);
             _packetHandler.Handle((deserializedPacketBase, this));
@@ -309,7 +299,7 @@ namespace NosSharp.World.Network
 
             if (force)
             {
-                CharacterHandler(packetHeader, packet, handler);
+                CharacterHandler(packet, handler);
                 return;
             }
 
@@ -320,7 +310,7 @@ namespace NosSharp.World.Network
                 return;
             }
 
-            CharacterHandler(packetHeader, packet, handler);
+            CharacterHandler(packet, handler);
         }
 
         #endregion
