@@ -40,6 +40,7 @@ namespace NosSharp.World.Network
             WorldServer = worldServer;
             ClientSession.SetWorldServerId(WorldServer.Id);
             _running = true;
+            Log.Info($"Registering server {WorldServer.Id}");
             return false;
         }
 
@@ -82,16 +83,13 @@ namespace NosSharp.World.Network
                 Console.ReadLine();
 
                 await bootstrapChannel.CloseAsync().ConfigureAwait(false);
-                UnregisterServer();
             }
             catch (Exception ex)
             {
                 Log.Error("RunServerAsync", ex);
-                UnregisterServer();
             }
             finally
             {
-                UnregisterServer();
                 Task.WaitAll(bossGroup.ShutdownGracefullyAsync(), workerGroup.ShutdownGracefullyAsync());
             }
         }

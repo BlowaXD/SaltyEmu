@@ -11,6 +11,7 @@ using ChickenAPI.Utils;
 using NosSharp.DatabasePlugin;
 using NosSharp.PacketHandler;
 using NosSharp.RedisSessionPlugin;
+using NosSharp.TemporaryMapPlugins;
 using NosSharp.World.Network;
 using NosSharp.World.Packets;
 using NosSharp.World.Utils;
@@ -39,9 +40,9 @@ namespace NosSharp.World
                 tmpAgain.OnLoad();
                 tmpAgain.OnEnable();
 
-                var handling = new PacketHandlerPlugin();
-                handling.OnLoad();
-                handling.OnEnable();
+                var maps = new TemporaryMapPlugin();
+                maps.OnLoad();
+                maps.OnEnable();
             }
             catch (Exception e)
             {

@@ -11,7 +11,7 @@ namespace NosSharp.World.Cryptography.Encoder
     {
         protected override void Encode(IChannelHandlerContext context, string message, List<object> output)
         {
-            Span<byte> strBytes = Encoding.Default.GetBytes(message);
+            Span<byte> strBytes = Encoding.UTF8.GetBytes(message);
             int bytesLength = strBytes.Length;
             byte[] encryptedData = new byte[bytesLength + (int)Math.Ceiling((decimal)bytesLength / 0x7E) + 1];
 

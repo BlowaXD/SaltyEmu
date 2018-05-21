@@ -100,7 +100,9 @@ namespace NosSharp.World.Network
 
         public void SendPacket(IPacket packetBase)
         {
-            _channel.WriteAsync(_packetFactory.Serialize(packetBase));
+            var tmp = _packetFactory.Serialize(packetBase);
+            Log.Info($"[SEND_PACKET] {SessionId} : {tmp}");
+            _channel.WriteAsync(tmp);
             _channel.Flush();
         }
 
