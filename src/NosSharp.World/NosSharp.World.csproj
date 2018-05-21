@@ -22,6 +22,7 @@
     <ProjectReference Include="..\..\libs\NosSharp.Plugins\src\NosSharp.DatabasePlugin\NosSharp.DatabasePlugin.csproj" />
     <ProjectReference Include="..\..\libs\NosSharp.Plugins\src\NosSharp.PacketHandler\NosSharp.BasicPacketHandlerPlugin.csproj" />
     <ProjectReference Include="..\..\libs\NosSharp.Plugins\src\NosSharp.RedisSessionPlugin\NosSharp.RedisSessionPlugin.csproj" />
+    <ProjectReference Include="..\..\libs\NosSharp.Plugins\src\NosSharp.TemporaryMapPlugins\NosSharp.TemporaryMapPlugins.csproj" />
   </ItemGroup>
 
 </Project>
