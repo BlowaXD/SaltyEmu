@@ -4,7 +4,7 @@ using System.Text;
 using DotNetty.Buffers;
 using DotNetty.Codecs;
 using DotNetty.Transport.Channels;
-using NosSharp.World.Session;
+using NosSharp.World.Network;
 
 namespace NosSharp.World.Cryptography.Decoder
 {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 
-namespace NosSharp.World.Session
+namespace NosSharp.World.Network
 {
     public class SessionManager
     {

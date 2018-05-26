@@ -12,7 +12,6 @@ using ChickenAPI.Packets;
 using ChickenAPI.Utils;
 using DotNetty.Transport.Channels;
 using DotNetty.Transport.Channels.Groups;
-using NosSharp.World.Session;
 
 namespace NosSharp.World.Network
 {
