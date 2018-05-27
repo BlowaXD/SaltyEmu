@@ -8,6 +8,7 @@ using ChickenAPI.Enums;
 using ChickenAPI.Packets;
 using ChickenAPI.Plugins;
 using ChickenAPI.Utils;
+using NosSharp.BasicAlgorithm;
 using NosSharp.DatabasePlugin;
 using NosSharp.PacketHandler;
 using NosSharp.RedisSessionPlugin;
@@ -43,6 +44,9 @@ namespace NosSharp.World
                 var maps = new TemporaryMapPlugin();
                 maps.OnLoad();
                 maps.OnEnable();
+
+                var algorithm = new BasicAlgorithmPlugin();
+                algorithm.OnLoad();
             }
             catch (Exception e)
             {

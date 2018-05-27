@@ -1,3 +1,6 @@
 [submodule "libs/NosSharp.Plugins"]
 	path = libs/NosSharp.Plugins
 	url = ../NosSharp.Plugins.git
+[submodule "libs/NosSharp.BasicAlgorithm"]
+	path = libs/NosSharp.BasicAlgorithm
+	url = https://github.com/NosSharp/NosSharp.BasicAlgorithms.git

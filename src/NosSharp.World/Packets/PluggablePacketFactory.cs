@@ -65,7 +65,7 @@ namespace NosSharp.World.Packets
             }
             catch (Exception e)
             {
-                //Logger.Logger.Log.Warn("Wrong Packet Format!", e);
+                Log.Error("Wrong Packet format", e);
                 return string.Empty;
             }
         }
