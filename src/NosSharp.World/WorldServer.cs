@@ -169,7 +169,6 @@ namespace NosSharp.World
                 };
                 acc.Insert(account);
             }
-
             var packetHandler = new PacketHandlerPlugin();
             packetHandler.OnLoad();
             packetHandler.OnEnable();

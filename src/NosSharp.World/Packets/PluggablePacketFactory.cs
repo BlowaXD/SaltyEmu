@@ -22,12 +22,15 @@ namespace NosSharp.World.Packets
         private readonly Dictionary<string, Type> _packetByHeader = new Dictionary<string, Type>();
         private readonly Dictionary<Type, string> _packetByType = new Dictionary<Type, string>();
 
-        public string Serialize<TPacket>(TPacket packet) where TPacket : IPacket
+        public string Serialize<TPacket>(TPacket packet) where TPacket : IPacket => Serialize(packet, typeof(TPacket));
+
+        public string Serialize(IPacket packet, Type type)
         {
+
             try
             {
                 // load pregenerated serialization information
-                PacketInformation serializationInformation = GetSerializationInformation(packet.GetType());
+                PacketInformation serializationInformation = GetSerializationInformation(type);
 
                 var builder = new StringBuilder();
                 builder.Append(serializationInformation.Header);

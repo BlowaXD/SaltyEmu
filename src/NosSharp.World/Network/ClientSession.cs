@@ -97,14 +97,24 @@ namespace NosSharp.World.Network
             Player = ett;
         }
 
-        public void SendPacket(IPacket packetBase)
+        public void SendPacket<T>(T packet) where T : IPacket
         {
-            var tmp = _packetFactory.Serialize(packetBase);
+            string tmp = _packetFactory.Serialize<T>(packet);
             Log.Info($"[SEND_PACKET] {SessionId} : {tmp}");
             _channel.WriteAsync(tmp);
             _channel.Flush();
         }
 
+        public void SendPackets<T>(IEnumerable<T> packets) where T : IPacket
+        {
+            foreach (T packet in packets)
+            {
+                _channel.WriteAsync(_packetFactory.Serialize(packet));
+            }
+
+            _channel.Flush();
+        }
+        
         public void SendPackets(IEnumerable<IPacket> packets)
         {
             foreach (IPacket packet in packets)
