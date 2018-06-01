@@ -9,11 +9,13 @@ namespace NosSharp.World.Cryptography.Encoder
 {
     public class WorldEncoder : MessageToMessageEncoder<string>, IEncoder
     {
+        private static readonly Encoding encoding = Encoding.GetEncoding(1252);
+
         protected override void Encode(IChannelHandlerContext context, string message, List<object> output)
         {
-            Span<byte> strBytes = Encoding.UTF8.GetBytes(message);
+            Span<byte> strBytes = Encoding.Convert(Encoding.UTF8, encoding, Encoding.UTF8.GetBytes(message));
             int bytesLength = strBytes.Length;
-            byte[] encryptedData = new byte[bytesLength + (int)Math.Ceiling((decimal)bytesLength / 0x7E) + 1];
+            Span<byte> encryptedData = new byte[bytesLength + (int)Math.Ceiling((decimal)bytesLength / 0x7E) + 1];
 
             int j = 0;
             for (int i = 0; i < bytesLength; i++)
@@ -29,7 +31,7 @@ namespace NosSharp.World.Cryptography.Encoder
 
             encryptedData[encryptedData.Length - 1] = 0xFF;
 
-            output.Add(Unpooled.WrappedBuffer(encryptedData));
+            output.Add(Unpooled.WrappedBuffer(encryptedData.ToArray()));
         }
     }
 }

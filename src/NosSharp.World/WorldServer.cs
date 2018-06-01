@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Runtime.InteropServices;
+using System.Text;
 using Autofac;
 using ChickenAPI.Data.AccessLayer;
 using ChickenAPI.Data.TransferObjects;
@@ -129,6 +130,7 @@ namespace NosSharp.World
 
         private static void Main()
         {
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 #if DEBUG
             SetConsoleCtrlHandler(ConsoleCtrlCheck, true);
 #endif
