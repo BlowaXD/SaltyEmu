@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using ChickenAPI.ECS.Entities;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Network;
 using ChickenAPI.Packets;

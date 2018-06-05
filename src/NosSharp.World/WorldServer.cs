@@ -9,6 +9,7 @@ using ChickenAPI.Enums;
 using ChickenAPI.Packets;
 using ChickenAPI.Plugins;
 using ChickenAPI.Utils;
+using NLog;
 using NosSharp.BasicAlgorithm;
 using NosSharp.DatabasePlugin;
 using NosSharp.PacketHandler;
@@ -17,6 +18,7 @@ using NosSharp.TemporaryMapPlugins;
 using NosSharp.World.Network;
 using NosSharp.World.Packets;
 using NosSharp.World.Utils;
+using Logger = ChickenAPI.Utils.Logger;
 
 namespace NosSharp.World
 {
@@ -180,7 +182,7 @@ namespace NosSharp.World
         private static void Exit(object sender, EventArgs e)
         {
             Server.UnregisterServer();
-            NLog.LogManager.Shutdown();
+            LogManager.Shutdown();
             Console.ReadLine();
         }
     }
