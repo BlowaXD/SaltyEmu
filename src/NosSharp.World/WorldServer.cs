@@ -4,6 +4,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using Autofac;
 using ChickenAPI.Data.AccessLayer;
+using ChickenAPI.Data.AccessLayer.Character;
 using ChickenAPI.Data.TransferObjects;
 using ChickenAPI.Enums;
 using ChickenAPI.Packets;

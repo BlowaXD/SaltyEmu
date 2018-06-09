@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Autofac;
 using ChickenAPI.Data.AccessLayer;
+using ChickenAPI.Data.AccessLayer.Server;
 using ChickenAPI.Data.TransferObjects;
 using ChickenAPI.Enums.Game.Character;
 using ChickenAPI.Utils;
