@@ -4,6 +4,7 @@ using Autofac;
 using ChickenAPI.Data.AccessLayer;
 using ChickenAPI.Data.AccessLayer.Server;
 using ChickenAPI.Data.TransferObjects;
+using ChickenAPI.Data.TransferObjects.Server;
 using ChickenAPI.Enums.Game.Character;
 using ChickenAPI.Utils;
 using DotNetty.Transport.Bootstrapping;
