@@ -4,3 +4,6 @@
 [submodule "libs/NosSharp.BasicAlgorithm"]
 	path = libs/NosSharp.BasicAlgorithm
 	url = https://github.com/NosSharp/NosSharp.BasicAlgorithms.git
+[submodule "libs/NosSharp.MultilanguagePlugin"]
+	path = libs/NosSharp.MultilanguagePlugin
+	url = https://github.com/NosSharp/NosSharp.RedisMultilanguagePlugin.git

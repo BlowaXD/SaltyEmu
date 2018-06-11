@@ -53,6 +53,7 @@ namespace NosSharp.World
 
                 var algorithm = new BasicAlgorithmPlugin();
                 algorithm.OnLoad();
+                algorithm.OnEnable();
             }
             catch (Exception e)
             {
