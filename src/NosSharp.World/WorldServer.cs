@@ -167,7 +167,7 @@ namespace NosSharp.World
                     Name = "admin",
                     Password = "admin".ToSha512()
                 };
-                acc.Insert(account);
+                acc.Save(account);
                 account = new AccountDto
                 {
                     Authority = AuthorityType.User,
@@ -175,7 +175,7 @@ namespace NosSharp.World
                     Name = "user",
                     Password = "user".ToSha512()
                 };
-                acc.Insert(account);
+                acc.Save(account);
             }
             var packetHandler = new PacketHandlerPlugin();
             packetHandler.OnLoad();
