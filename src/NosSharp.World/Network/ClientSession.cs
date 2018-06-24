@@ -101,6 +101,10 @@ namespace NosSharp.World.Network
 
         public void SendPacket<T>(T packet) where T : IPacket
         {
+            if (packet == null)
+            {
+                return;
+            }
             string tmp = _packetFactory.Serialize(packet);
             Log.Info($"[SEND_PACKET] {SessionId} : {tmp}");
             _channel.WriteAsync(tmp);
@@ -111,6 +115,10 @@ namespace NosSharp.World.Network
         {
             foreach (T packet in packets)
             {
+                if (packet == null)
+                {
+                    continue;
+                }
                 _channel.WriteAsync(_packetFactory.Serialize(packet));
             }
 
@@ -121,6 +129,10 @@ namespace NosSharp.World.Network
         {
             foreach (IPacket packet in packets)
             {
+                if (packet == null)
+                {
+                    continue;
+                }
                 _channel.WriteAsync(_packetFactory.Serialize(packet));
             }
 

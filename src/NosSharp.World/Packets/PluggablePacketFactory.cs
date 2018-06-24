@@ -126,24 +126,24 @@ namespace NosSharp.World.Packets
             // check for nullable without value or string
             if (propertyType == typeof(string) && string.IsNullOrEmpty(Convert.ToString(value)))
             {
-                return " -";
+                return $"{packetIndexAttribute?.SpecialSeparator ?? " "}-";
             }
 
             if (Nullable.GetUnderlyingType(propertyType) != null && string.IsNullOrEmpty(Convert.ToString(value)))
             {
-                return " -1";
+                return $"{packetIndexAttribute?.SpecialSeparator ?? " "}-1";
             }
 
             // enum should be casted to number
             if (propertyType.BaseType?.Equals(typeof(Enum)) == true)
             {
-                return $" {Convert.ToInt16(value)}";
+                return $"{packetIndexAttribute?.SpecialSeparator ?? " "}{Convert.ToInt16(value)}";
             }
 
             if (propertyType == typeof(bool))
             {
                 // bool is 0 or 1 not True or False
-                return Convert.ToBoolean(value) ? " 1" : " 0";
+                return Convert.ToBoolean(value) ? $"{packetIndexAttribute?.SpecialSeparator ?? " "}1" : $"{packetIndexAttribute?.SpecialSeparator ?? " "}0";
             }
 
             if (propertyType.BaseType?.Equals(typeof(PacketBase)) == true)
@@ -163,7 +163,7 @@ namespace NosSharp.World.Packets
                 return SerializeSimpleList((IList)value, propertyType);
             }
 
-            return $" {value}";
+            return $"{packetIndexAttribute?.SpecialSeparator ?? " "}{value}";
         }
 
         private string SerializeSimpleList(IList listValues, Type propertyType)
