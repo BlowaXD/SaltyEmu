@@ -89,26 +89,6 @@ namespace NosSharp.World.Packets
             }
         }
 
-        public void RegisterPacket(PacketInformation packetInformation)
-        {
-        }
-
-        public void RegisterPackets(IEnumerable<PacketInformation> packetInformations)
-        {
-        }
-
-        public void UnregisterPacket(string header)
-        {
-            _packetByHeader.Remove(header, out Type type);
-            _packetByType.Remove(type);
-        }
-
-        public void UnregisterPacket(Type type)
-        {
-            _packetByType.Remove(type, out string str);
-            _packetByHeader.Remove(str);
-        }
-
         #region Serialization
 
         private string SerializeValue(Type propertyType, object value, IEnumerable<ValidationAttribute> validationAttributes, PacketIndexAttribute packetIndexAttribute = null)
