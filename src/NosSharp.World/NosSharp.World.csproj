@@ -14,7 +14,7 @@
     <PackageReference Include="DotNetty.Codecs" Version="0.4.8" />
     <PackageReference Include="DotNetty.Common" Version="0.4.8" />
     <PackageReference Include="DotNetty.Transport" Version="0.4.8" />
-    <PackageReference Include="System.Memory" Version="4.5.0" />
+    <PackageReference Include="System.Memory" Version="4.5.1" />
     <PackageReference Include="System.Text.Encoding.CodePages" Version="4.5.0" />
   </ItemGroup>
 

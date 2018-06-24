@@ -126,24 +126,24 @@ namespace NosSharp.World.Packets
             // check for nullable without value or string
             if (propertyType == typeof(string) && string.IsNullOrEmpty(Convert.ToString(value)))
             {
-                return $"{packetIndexAttribute?.SpecialSeparator ?? " "}-";
+                return $"{packetIndexAttribute?.SeparatorBeforeProperty}-";
             }
 
             if (Nullable.GetUnderlyingType(propertyType) != null && string.IsNullOrEmpty(Convert.ToString(value)))
             {
-                return $"{packetIndexAttribute?.SpecialSeparator ?? " "}-1";
+                return $"{packetIndexAttribute?.SeparatorBeforeProperty}-1";
             }
 
             // enum should be casted to number
             if (propertyType.BaseType?.Equals(typeof(Enum)) == true)
             {
-                return $"{packetIndexAttribute?.SpecialSeparator ?? " "}{Convert.ToInt16(value)}";
+                return $"{packetIndexAttribute?.SeparatorBeforeProperty}{Convert.ToInt16(value)}";
             }
 
             if (propertyType == typeof(bool))
             {
                 // bool is 0 or 1 not True or False
-                return Convert.ToBoolean(value) ? $"{packetIndexAttribute?.SpecialSeparator ?? " "}1" : $"{packetIndexAttribute?.SpecialSeparator ?? " "}0";
+                return Convert.ToBoolean(value) ? $"{packetIndexAttribute?.SeparatorBeforeProperty}1" : $"{packetIndexAttribute?.SeparatorBeforeProperty}0";
             }
 
             if (propertyType.BaseType?.Equals(typeof(PacketBase)) == true)
@@ -163,7 +163,7 @@ namespace NosSharp.World.Packets
                 return SerializeSimpleList((IList)value, propertyType);
             }
 
-            return $"{packetIndexAttribute?.SpecialSeparator ?? " "}{value}";
+            return $"{packetIndexAttribute?.SeparatorBeforeProperty}{value}";
         }
 
         private string SerializeSimpleList(IList listValues, Type propertyType)
@@ -197,7 +197,7 @@ namespace NosSharp.World.Packets
                 // first element
                 if (subpacketPropertyInfo.Key.Index != 0)
                 {
-                    serializedSubpacket += isReturnPacket ? "^" : shouldRemoveSeparator ? " " : subpacketPropertyInfo.Key.SpecialSeparator;
+                    serializedSubpacket += isReturnPacket ? "^" : shouldRemoveSeparator ? " " : subpacketPropertyInfo.Key.SeparatorNestedElements;
                 }
 
                 serializedSubpacket += SerializeValue(subpacketPropertyInfo.Value.PropertyType, subpacketPropertyInfo.Value.GetValue(value),
@@ -243,7 +243,7 @@ namespace NosSharp.World.Packets
             ? packetInfo
             : GenerateSerializationInformations(serializationType);
 
-        private string SerializeSubpackets(IList listValues, Type packetBasePropertyType, bool shouldRemoveSeparator)
+        private string SerializeSubpackets(ICollection listValues, Type packetBasePropertyType, bool shouldRemoveSeparator)
         {
             string serializedSubPacket = string.Empty;
             PacketInformation subpacketSerializationInfo = GetSerializationInformation(packetBasePropertyType.GetGenericArguments()[0]);
