@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27428.2015
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NosSharp.World", "src\NosSharp.World\NosSharp.World.csproj", "{AA43BE87-BF99-48B4-9D96-DCE25D73109C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WingsEmu.World", "src\NosSharp.World\WingsEmu.World.csproj", "{AA43BE87-BF99-48B4-9D96-DCE25D73109C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "libs", "libs", "{A0D754EC-ADE9-4B97-BCAF-A59C24C10B7F}"
 EndProject
@@ -23,7 +23,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NosSharp.TemporaryMapPlugin
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "plugins", "plugins", "{7A7E9A02-CEFC-4E77-A495-70804348CA47}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NosSharp.BasicAlgorithm", "libs\NosSharp.BasicAlgorithm\src\NosSharp.BasicAlgorithm\NosSharp.BasicAlgorithm.csproj", "{8CCAB713-DBCB-4716-87BF-E1687D6C8CB3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NosSharp.BasicAlgorithm", "libs\NosSharp.BasicAlgorithm\src\NosSharp.BasicAlgorithm\NosSharp.BasicAlgorithm.csproj", "{8CCAB713-DBCB-4716-87BF-E1687D6C8CB3}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BasicAlgorithm", "BasicAlgorithm", "{465E04D7-4986-4AE9-9AAD-C39238E3B167}"
 EndProject
