@@ -13,8 +13,8 @@ variables:
   REVISION: 1
   DOCKER_VERSION: "18.04"
   DOCKER_HEALTHCHECK_TIMEOUT: "60"
-  CONTAINER_TEST_IMAGE: registry.gitlab.com/gamefield/noswings/docker/nossharp-world:$CI_BUILD_REF_NAME
-  CONTAINER_RELEASE_IMAGE: registry.gitlab.com/gamefield/noswings/docker/nossharp-world:latest
+  CONTAINER_TEST_IMAGE: registry.gitlab.com/gamefield/noswings/server/world:$CI_BUILD_REF_NAME
+  CONTAINER_RELEASE_IMAGE: registry.gitlab.com/gamefield/noswings/server/world:latest
 
 before_script:
   - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
