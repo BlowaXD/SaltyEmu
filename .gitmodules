@@ -1,9 +1,9 @@
 [submodule "libs/NosSharp.Plugins"]
 	path = libs/NosSharp.Plugins
-	url = ../NosSharp.Plugins.git
+	url = ../Plugins.git
 [submodule "libs/NosSharp.BasicAlgorithm"]
 	path = libs/NosSharp.BasicAlgorithm
-	url = https://github.com/NosSharp/NosSharp.BasicAlgorithms.git
+	url = https://github.com/NosWings/WingsEmu.Plugins.BasicAlgorithms.git
 [submodule "libs/NosSharp.MultilanguagePlugin"]
 	path = libs/NosSharp.MultilanguagePlugin
-	url = https://github.com/NosSharp/NosSharp.RedisMultilanguagePlugin.git
+	url = https://github.com/NosWings/WingsEmu.Plugins.RedisMultilanguagePlugin.git
