@@ -5,16 +5,16 @@ using ChickenAPI.Game.Network;
 using ChickenAPI.Packets;
 using ChickenAPI.Utils;
 
-namespace NosSharp.World.Packets
+namespace WingsEmu.World.Packets
 {
     public class PacketHandler : IPacketHandler
     {
         private static readonly Logger Log = Logger.GetLogger<PacketHandler>();
-        private readonly Dictionary<Type, CharacterScreenPacketHandler> _characterScreenHandlersByType = new Dictionary<Type, CharacterScreenPacketHandler>();
         private readonly Dictionary<string, CharacterScreenPacketHandler> _characterScreenByHeader = new Dictionary<string, CharacterScreenPacketHandler>();
+        private readonly Dictionary<Type, CharacterScreenPacketHandler> _characterScreenHandlersByType = new Dictionary<Type, CharacterScreenPacketHandler>();
+        private readonly Dictionary<string, GamePacketHandler> _gameHandlerByHeader = new Dictionary<string, GamePacketHandler>();
 
         private readonly Dictionary<Type, GamePacketHandler> _gameHandlersByType = new Dictionary<Type, GamePacketHandler>();
-        private readonly Dictionary<string, GamePacketHandler> _gameHandlerByHeader = new Dictionary<string, GamePacketHandler>();
 
 
         public void Register(CharacterScreenPacketHandler method)

@@ -15,12 +15,12 @@ using NosSharp.DatabasePlugin;
 using NosSharp.PacketHandler;
 using NosSharp.RedisSessionPlugin;
 using NosSharp.TemporaryMapPlugins;
-using NosSharp.World.Network;
-using NosSharp.World.Packets;
-using NosSharp.World.Utils;
+using WingsEmu.World.Network;
+using WingsEmu.World.Packets;
+using WingsEmu.World.Utils;
 using Logger = ChickenAPI.Utils.Logger;
 
-namespace NosSharp.World
+namespace WingsEmu.World
 {
     internal class WorldServer
     {
@@ -87,11 +87,68 @@ namespace NosSharp.World
             Logger.Initialize();
         }
 
+        private static void Main()
+        {
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+#if DEBUG
+            SetConsoleCtrlHandler(ConsoleCtrlCheck, true);
+#endif
+            AppDomain.CurrentDomain.UnhandledException += Exit;
+            AppDomain.CurrentDomain.ProcessExit += Exit;
+            Console.CancelKeyPress += Exit;
+            PrintHeader();
+            InitializeLogger();
+            InitializeConfigs();
+            InitializePlugins();
+            Container.Builder.Register(s => new PacketHandler()).As<IPacketHandler>().SingleInstance();
+            Container.Initialize();
+            ClientSession.SetPacketFactory(new PluggablePacketFactory());
+            ClientSession.SetPacketHandler(Container.Instance.Resolve<IPacketHandler>());
+            if (Server.RegisterServer())
+            {
+                Log.Info($"Failed to register to ServerAPI");
+                return;
+            }
+
+            var acc = Container.Instance.Resolve<IAccountService>();
+            if (acc.GetByName("admin") == null)
+            {
+                var account = new AccountDto
+                {
+                    Authority = AuthorityType.Administrator,
+                    Email = "admin@chickenapi.com",
+                    Name = "admin",
+                    Password = "admin".ToSha512()
+                };
+                acc.Save(account);
+                account = new AccountDto
+                {
+                    Authority = AuthorityType.User,
+                    Email = "user@chickenapi.com",
+                    Name = "user",
+                    Password = "user".ToSha512()
+                };
+                acc.Save(account);
+            }
+
+            var packetHandler = new PacketHandlerPlugin();
+            packetHandler.OnLoad();
+            packetHandler.OnEnable();
+            Server.RunServerAsync(1337).Wait();
+        }
+
+        private static void Exit(object sender, EventArgs e)
+        {
+            Server.UnregisterServer();
+            LogManager.Shutdown();
+            Console.ReadLine();
+        }
+
 
         // Declare the SetConsoleCtrlHandler function
         // as external and receiving a delegate.
 
-#if  DEBUG
+#if DEBUG
 
 
         private static bool ConsoleCtrlCheck(CtrlTypes ctrlType)
@@ -130,61 +187,5 @@ namespace NosSharp.World
             CTRL_SHUTDOWN_EVENT
         }
 #endif
-
-        private static void Main()
-        {
-            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
-#if DEBUG
-            SetConsoleCtrlHandler(ConsoleCtrlCheck, true);
-#endif
-            AppDomain.CurrentDomain.UnhandledException += Exit;
-            AppDomain.CurrentDomain.ProcessExit += Exit;
-            Console.CancelKeyPress += Exit;
-            PrintHeader();
-            InitializeLogger();
-            InitializeConfigs();
-            InitializePlugins();
-            Container.Builder.Register(s => new Packets.PacketHandler()).As<IPacketHandler>().SingleInstance();
-            Container.Initialize();
-            ClientSession.SetPacketFactory(new PluggablePacketFactory());
-            ClientSession.SetPacketHandler(Container.Instance.Resolve<IPacketHandler>());
-            if (Server.RegisterServer())
-            {
-                Log.Info($"Failed to register to ServerAPI");
-                return;
-            }
-
-            var acc = Container.Instance.Resolve<IAccountService>();
-            if (acc.GetByName("admin") == null)
-            {
-                var account = new AccountDto
-                {
-                    Authority = AuthorityType.Administrator,
-                    Email = "admin@chickenapi.com",
-                    Name = "admin",
-                    Password = "admin".ToSha512()
-                };
-                acc.Save(account);
-                account = new AccountDto
-                {
-                    Authority = AuthorityType.User,
-                    Email = "user@chickenapi.com",
-                    Name = "user",
-                    Password = "user".ToSha512()
-                };
-                acc.Save(account);
-            }
-            var packetHandler = new PacketHandlerPlugin();
-            packetHandler.OnLoad();
-            packetHandler.OnEnable();
-            Server.RunServerAsync(1337).Wait();
-        }
-
-        private static void Exit(object sender, EventArgs e)
-        {
-            Server.UnregisterServer();
-            LogManager.Shutdown();
-            Console.ReadLine();
-        }
     }
 }

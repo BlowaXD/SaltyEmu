@@ -1,4 +1,4 @@
-﻿namespace NosSharp.World.Cryptography.Encoder
+﻿namespace WingsEmu.World.Cryptography.Encoder
 {
     public interface IEncoder
     {

@@ -5,7 +5,7 @@ using DotNetty.Buffers;
 using DotNetty.Codecs;
 using DotNetty.Transport.Channels;
 
-namespace NosSharp.World.Cryptography.Encoder
+namespace WingsEmu.World.Cryptography.Encoder
 {
     public class WorldEncoder : MessageToMessageEncoder<string>, IEncoder
     {

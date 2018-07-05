@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 
-namespace NosSharp.World.Network
+namespace WingsEmu.World.Network
 {
     public class SessionManager
     {

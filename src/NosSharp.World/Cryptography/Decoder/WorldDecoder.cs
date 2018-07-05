@@ -4,9 +4,9 @@ using System.Text;
 using DotNetty.Buffers;
 using DotNetty.Codecs;
 using DotNetty.Transport.Channels;
-using NosSharp.World.Network;
+using WingsEmu.World.Network;
 
-namespace NosSharp.World.Cryptography.Decoder
+namespace WingsEmu.World.Cryptography.Decoder
 {
     public class WorldDecoder : MessageToMessageDecoder<IByteBuffer>, IDecoder
     {

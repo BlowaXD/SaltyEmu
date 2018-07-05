@@ -13,7 +13,7 @@ using ChickenAPI.Utils;
 using DotNetty.Transport.Channels;
 using DotNetty.Transport.Channels.Groups;
 
-namespace NosSharp.World.Network
+namespace WingsEmu.World.Network
 {
     public class ClientSession : ChannelHandlerAdapter, ISession
     {
@@ -24,6 +24,7 @@ namespace NosSharp.World.Network
         private readonly IChannel _channel;
 
         #region Members
+
         public long CharacterId { get; private set; }
         public bool IsAuthenticated => Account != null;
 
@@ -55,10 +56,7 @@ namespace NosSharp.World.Network
             _worldServerId = id;
         }
 
-        public ClientSession(IChannel channel)
-        {
-            _channel = channel;
-        }
+        public ClientSession(IChannel channel) => _channel = channel;
 
         #endregion
 
@@ -103,6 +101,7 @@ namespace NosSharp.World.Network
             {
                 return;
             }
+
             string tmp = _packetFactory.Serialize(packet);
             Log.Info($"[SEND_PACKET] {SessionId} : {tmp}");
             _channel.WriteAsync(tmp);
@@ -117,12 +116,13 @@ namespace NosSharp.World.Network
                 {
                     continue;
                 }
+
                 _channel.WriteAsync(_packetFactory.Serialize(packet));
             }
 
             _channel.Flush();
         }
-        
+
         public void SendPackets(IEnumerable<IPacket> packets)
         {
             foreach (IPacket packet in packets)
@@ -131,6 +131,7 @@ namespace NosSharp.World.Network
                 {
                     continue;
                 }
+
                 _channel.WriteAsync(_packetFactory.Serialize(packet));
             }
 
@@ -162,7 +163,7 @@ namespace NosSharp.World.Network
             Log.Error("[EXCEPTION]", exception);
             context.CloseAsync();
         }
-        
+
         public override void ChannelRead(IChannelHandlerContext context, object message)
         {
             if (!(message is string buff))

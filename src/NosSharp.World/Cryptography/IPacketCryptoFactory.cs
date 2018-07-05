@@ -1,7 +1,7 @@
-﻿using NosSharp.World.Cryptography.Decoder;
-using NosSharp.World.Cryptography.Encoder;
+﻿using WingsEmu.World.Cryptography.Decoder;
+using WingsEmu.World.Cryptography.Encoder;
 
-namespace NosSharp.World.Cryptography
+namespace WingsEmu.World.Cryptography
 {
     public interface IPacketCryptoFactory
     {

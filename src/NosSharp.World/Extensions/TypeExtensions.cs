@@ -4,7 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
 
-namespace NosSharp.World.Extensions
+namespace WingsEmu.World.Extensions
 {
     public static class TypeExtension
     {

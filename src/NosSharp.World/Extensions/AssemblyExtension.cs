@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Reflection;
 
-namespace NosSharp.World.Extensions
+namespace WingsEmu.World.Extensions
 {
     public static class AssemblyExtension
     {

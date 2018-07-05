@@ -8,9 +8,9 @@ using System.Text;
 using System.Text.RegularExpressions;
 using ChickenAPI.Packets;
 using ChickenAPI.Utils;
-using NosSharp.World.Extensions;
+using WingsEmu.World.Extensions;
 
-namespace NosSharp.World.Packets
+namespace WingsEmu.World.Packets
 {
     /// <summary>
     ///     First version of a pluggable PacketFactory
@@ -26,7 +26,6 @@ namespace NosSharp.World.Packets
 
         public string Serialize(IPacket packet, Type type)
         {
-
             try
             {
                 // load pregenerated serialization information

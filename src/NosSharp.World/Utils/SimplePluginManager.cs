@@ -6,13 +6,11 @@ using System.Reflection;
 using ChickenAPI.Plugins;
 using ChickenAPI.Utils;
 
-namespace NosSharp.World.Utils
+namespace WingsEmu.World.Utils
 {
     public class SimplePluginManager : IPluginManager
     {
         private static readonly Logger Log = Logger.GetLogger<SimplePluginManager>();
-        public DirectoryInfo GetPluginDirectory() => new DirectoryInfo("plugin");
-        public DirectoryInfo GetConfigDirectory() => new DirectoryInfo("plugin/config");
 
         public IPlugin LoadPlugin(FileInfo file)
         {
@@ -75,5 +73,8 @@ namespace NosSharp.World.Utils
             directory.Create();
             return null;
         }
+
+        public DirectoryInfo GetPluginDirectory() => new DirectoryInfo("plugin");
+        public DirectoryInfo GetConfigDirectory() => new DirectoryInfo("plugin/config");
     }
 }

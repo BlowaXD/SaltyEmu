@@ -1,4 +1,4 @@
-﻿namespace NosSharp.World.Cryptography.Decoder
+﻿namespace WingsEmu.World.Cryptography.Decoder
 {
     public interface IDecoder
     {

@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Autofac;
-using ChickenAPI.Data.AccessLayer;
 using ChickenAPI.Data.AccessLayer.Server;
-using ChickenAPI.Data.TransferObjects;
 using ChickenAPI.Data.TransferObjects.Server;
 using ChickenAPI.Enums.Game.Character;
 using ChickenAPI.Utils;
@@ -11,7 +9,7 @@ using DotNetty.Transport.Bootstrapping;
 using DotNetty.Transport.Channels;
 using DotNetty.Transport.Channels.Sockets;
 
-namespace NosSharp.World.Network
+namespace WingsEmu.World.Network
 {
     public class Server
     {

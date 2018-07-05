@@ -2,9 +2,9 @@
 using DotNetty.Codecs;
 using DotNetty.Transport.Channels;
 using DotNetty.Transport.Channels.Sockets;
-using NosSharp.World.Cryptography;
+using WingsEmu.World.Cryptography;
 
-namespace NosSharp.World.Network
+namespace WingsEmu.World.Network
 {
     public class ClientSessionInitializer : ChannelInitializer<ISocketChannel>
     {
