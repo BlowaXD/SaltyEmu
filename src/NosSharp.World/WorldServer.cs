@@ -65,18 +65,30 @@ namespace WingsEmu.World
             string port = Environment.GetEnvironmentVariable("SERVER_PORT") ?? "1337";
             if (!int.TryParse(port, out int intPort))
             {
-                Server.Port = 1337;
+                intPort = 1337;
+                Server.Port = intPort;
+            }
+            string tick = Environment.GetEnvironmentVariable("SERVER_REFRESH_RATE") ?? "20";
+            if (!int.TryParse(tick, out int tickRate))
+            {
+                tickRate = 20;
             }
 
             Server.Port = intPort;
             Server.Ip = Environment.GetEnvironmentVariable("SERVER_IP") ?? "127.0.0.1";
             Server.WorldGroup = Environment.GetEnvironmentVariable("SERVER_WORLDGROUP") ?? "NosWings";
+            Server.TickRate = tickRate;
         }
 
         private static void PrintHeader()
         {
-            Console.Title = "Nos# - WORLD";
-            const string text = "WORLD SERVER - Nos#";
+            Console.Title = "WingsEmu - WORLD";
+            const string text = @" __      __.__                     ___________              
+/  \    /  \__| ____    ____  _____\_   _____/ _____  __ __ 
+\   \/\/   /  |/    \  / ___\/  ___/|    __)_ /     \|  |  \
+ \        /|  |   |  \/ /_/  >___ \ |        \  Y Y  \  |  /
+  \__/\  / |__|___|  /\___  /____  >_______  /__|_|  /____/ 
+       \/          \//_____/     \/        \/      \/       ";
             int offset = Console.WindowWidth / 2 + text.Length / 2;
             string separator = new string('=', Console.WindowWidth);
             Console.WriteLine(separator + string.Format("{0," + offset + "}\n", text) + separator);

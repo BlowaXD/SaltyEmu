@@ -16,14 +16,14 @@ namespace WingsEmu.World.Network
     public class Server
     {
         // Server Tick config 
-        private const int ServerRefreshRate = 20;
-        private const long DelayBetweenTicks = 1000 / ServerRefreshRate;
         private static readonly Logger Log = Logger.GetLogger<Server>();
         public static WorldServerDto WorldServer;
         private static bool _running { get; set; }
         public static string WorldGroup { get; set; }
         public static string Ip { get; set; }
         public static int Port { get; set; }
+        public static int TickRate { get; set; }
+        private static long DelayBetweenTicks = 1000 / TickRate;
 
         public static bool RegisterServer()
         {
@@ -69,25 +69,24 @@ namespace WingsEmu.World.Network
             sessionManager.UnregisterSessions(WorldServer.Id);
             _running = false;
         }
+
         private static void ServerLoop()
         {
-            // SetupServerLoop(); 
             while (_running)
             {
-                DateTime before = DateTime.Now;
+                DateTime next = DateTime.Now.AddMilliseconds(DelayBetweenTicks);
                 Update();
                 DateTime after = DateTime.Now;
 
-                DateTime next = before.AddMilliseconds(DelayBetweenTicks);
-                Thread.Sleep((next - after).Milliseconds);
+                if (next > after)
+                {
+                    Thread.Sleep((next - after).Milliseconds);
+                }
             }
         }
 
         private static void Update()
         {
-            Log.Info("Tick");
-            Task.Delay(100).Wait();
-            Log.Info("100ms");
         }
 
         private static void SetupServerLoop(IEventExecutor eventExecutor)
@@ -96,6 +95,7 @@ namespace WingsEmu.World.Network
             {
                 return;
             }
+
             eventExecutor.Execute(() =>
             {
                 eventExecutor.Schedule(() => { SetupServerLoop(eventExecutor); }, TimeSpan.FromMilliseconds(DelayBetweenTicks));
@@ -105,6 +105,7 @@ namespace WingsEmu.World.Network
 
         public static async Task RunServerAsync(int port)
         {
+            Log.Info($"TICK RATE : {TickRate} Hz");
             var bossGroup = new MultithreadEventLoopGroup(1);
             var workerGroup = new MultithreadEventLoopGroup();
 
