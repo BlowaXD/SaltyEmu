@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Autofac;
 using ChickenAPI.Data.AccessLayer.Server;
 using ChickenAPI.Data.TransferObjects.Server;
 using ChickenAPI.Enums.Game.Character;
 using ChickenAPI.Utils;
+using DotNetty.Common.Concurrency;
 using DotNetty.Transport.Bootstrapping;
 using DotNetty.Transport.Channels;
 using DotNetty.Transport.Channels.Sockets;
@@ -13,6 +15,9 @@ namespace WingsEmu.World.Network
 {
     public class Server
     {
+        // Server Tick config 
+        private const int ServerRefreshRate = 20;
+        private const long DelayBetweenTicks = 1000 / ServerRefreshRate;
         private static readonly Logger Log = Logger.GetLogger<Server>();
         public static WorldServerDto WorldServer;
         private static bool _running { get; set; }
@@ -64,6 +69,39 @@ namespace WingsEmu.World.Network
             sessionManager.UnregisterSessions(WorldServer.Id);
             _running = false;
         }
+        private static void ServerLoop()
+        {
+            // SetupServerLoop(); 
+            while (_running)
+            {
+                DateTime before = DateTime.Now;
+                Update();
+                DateTime after = DateTime.Now;
+
+                DateTime next = before.AddMilliseconds(DelayBetweenTicks);
+                Thread.Sleep((next - after).Milliseconds);
+            }
+        }
+
+        private static void Update()
+        {
+            Log.Info("Tick");
+            Task.Delay(100).Wait();
+            Log.Info("100ms");
+        }
+
+        private static void SetupServerLoop(IEventExecutor eventExecutor)
+        {
+            if (!_running)
+            {
+                return;
+            }
+            eventExecutor.Execute(() =>
+            {
+                eventExecutor.Schedule(() => { SetupServerLoop(eventExecutor); }, TimeSpan.FromMilliseconds(DelayBetweenTicks));
+                Update();
+            });
+        }
 
         public static async Task RunServerAsync(int port)
         {
@@ -80,8 +118,7 @@ namespace WingsEmu.World.Network
                     .ChildHandler(new ClientSessionInitializer());
 
                 IChannel bootstrapChannel = await bootstrap.BindAsync(port).ConfigureAwait(false);
-                Console.ReadLine();
-
+                ServerLoop();
                 await bootstrapChannel.CloseAsync().ConfigureAwait(false);
             }
             catch (Exception ex)
