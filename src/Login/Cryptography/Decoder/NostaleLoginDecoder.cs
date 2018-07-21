@@ -18,17 +18,18 @@ namespace LoginServer.Cryptography.Decoder
             {
                 var decryptedPacket = new StringBuilder();
 
-                foreach (byte character in ((Span<byte>)message.Array).Slice(message.ArrayOffset, message.ReadableBytes)
-                )
+                foreach (byte character in ((Span<byte>)message.Array).Slice(message.ArrayOffset, message.ReadableBytes))
                 {
-                    decryptedPacket.Append(character > 14 ? Convert.ToChar((character - 15) ^ 195)
-                        : Convert.ToChar((256 - (15 - character)) ^ 195));
+                    decryptedPacket.Append(character > 14
+                        ? Convert.ToChar(character - 15 ^ 195)
+                        : Convert.ToChar(256 - (15 - character) ^ 195));
                 }
 
                 output.Add(decryptedPacket.ToString());
             }
-            catch
+            catch (Exception e)
             {
+                Log.Error("[DECODE]", e);
             }
         }
     }
