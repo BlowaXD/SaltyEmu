@@ -76,8 +76,12 @@ namespace World
 
             Server.Port = intPort;
             Server.Ip = Environment.GetEnvironmentVariable("SERVER_IP") ?? "127.0.0.1";
-            Server.WorldGroup = Environment.GetEnvironmentVariable("SERVER_WORLDGROUP") ?? "NosWings";
+            Server.WorldGroup = Environment.GetEnvironmentVariable("SERVER_WORLDGROUP") ?? "ParaNosia";
             Server.TickRate = tickRate;
+            Log.Info($"TICK-RATE : {Server.TickRate} Hz");
+            Log.Info($"WORLDGROUP : {Server.WorldGroup}");
+            Log.Info($"IP : {Server.Ip}");
+            Log.Info($"PORT : {Server.Port}");
         }
 
         private static void PrintHeader()

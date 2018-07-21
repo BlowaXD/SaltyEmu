@@ -23,7 +23,8 @@ namespace World.Network
         public static string Ip { get; set; }
         public static int Port { get; set; }
         public static int TickRate { get; set; }
-        private static long DelayBetweenTicks = 1000 / TickRate;
+
+        private static long DelayBetweenTicks => 1000 / TickRate;
 
         public static bool RegisterServer()
         {
@@ -105,7 +106,6 @@ namespace World.Network
 
         public static async Task RunServerAsync(int port)
         {
-            Log.Info($"TICK RATE : {TickRate} Hz");
             var bossGroup = new MultithreadEventLoopGroup(1);
             var workerGroup = new MultithreadEventLoopGroup();
 
