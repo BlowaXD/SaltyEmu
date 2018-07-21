@@ -1,0 +1,37 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <AssemblyName>LoginServer</AssemblyName>
+    <RootNamespace>LoginServer</RootNamespace>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <OutputPath>..\..\bin\Debug\Login</OutputPath>
+    <LangVersion>7.2</LangVersion>
+    <DebugType>none</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+    <Optimize>true</Optimize>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <OutputPath>..\..\bin\Release\</OutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="DotNetty.Buffers" Version="0.4.8" />
+    <PackageReference Include="DotNetty.Codecs" Version="0.4.8" />
+    <PackageReference Include="DotNetty.Common" Version="0.4.8" />
+    <PackageReference Include="DotNetty.Transport" Version="0.4.8" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+    <PackageReference Include="System.Memory" Version="4.5.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\libs\NosSharp.Plugins\libs\ChickenAPI\src\ChickenAPI\ChickenAPI.csproj" />
+    <ProjectReference Include="..\..\libs\NosSharp.Plugins\src\NosSharp.DatabasePlugin\NosSharp.DatabasePlugin.csproj" />
+    <ProjectReference Include="..\..\libs\NosSharp.Plugins\src\NosSharp.RedisSessionPlugin\NosSharp.RedisSessionPlugin.csproj" />
+  </ItemGroup>
+
+</Project>
