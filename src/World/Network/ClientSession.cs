@@ -152,6 +152,7 @@ namespace World.Network
 
         public override void ChannelUnregistered(IChannelHandlerContext context)
         {
+            Player?.EntityManager.UnregisterEntity(Player);
             Log.Info($"[DISCONNECT] {Ip.Address}");
             SessionManager.Instance.UnregisterSession(context.Channel.Id.AsLongText());
             Disconnect();

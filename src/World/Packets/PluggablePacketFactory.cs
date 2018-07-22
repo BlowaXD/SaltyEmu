@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using ChickenAPI.Packets;
+using ChickenAPI.Packets.Game.Server;
 using ChickenAPI.Utils;
 using World.Extensions;
 
@@ -134,12 +135,12 @@ namespace World.Packets
             if (propertyType.IsGenericType && propertyType.GetGenericTypeDefinition().IsAssignableFrom(typeof(List<>))
                 && propertyType.GenericTypeArguments[0].BaseType == typeof(PacketBase))
             {
-                return SerializeSubpackets((IList)value, propertyType, packetIndexAttribute?.RemoveSeparator ?? false);
+                return packetIndexAttribute?.SeparatorBeforeProperty + SerializeSubpackets((IList)value, propertyType, packetIndexAttribute?.RemoveSeparator ?? false);
             }
 
             if (propertyType.IsGenericType && propertyType.GetGenericTypeDefinition().IsAssignableFrom(typeof(List<>))) //simple list
             {
-                return SerializeSimpleList((IList)value, propertyType);
+                return packetIndexAttribute?.SeparatorBeforeProperty + SerializeSimpleList((IList)value, propertyType);
             }
 
             return $"{packetIndexAttribute?.SeparatorBeforeProperty}{value}";
@@ -169,18 +170,18 @@ namespace World.Packets
             bool shouldRemoveSeparator)
         {
             string serializedSubpacket = isReturnPacket ? $" #{subpacketSerializationInfo.Header}^" : " ";
-
+            
             // iterate thru configure subpacket properties
             foreach (KeyValuePair<PacketIndexAttribute, PropertyInfo> subpacketPropertyInfo in subpacketSerializationInfo.PacketProperties)
             {
                 // first element
                 if (subpacketPropertyInfo.Key.Index != 0)
                 {
-                    serializedSubpacket += isReturnPacket ? "^" : shouldRemoveSeparator ? " " : subpacketPropertyInfo.Key.SeparatorNestedElements;
+                    serializedSubpacket += isReturnPacket ? "^" : shouldRemoveSeparator ? subpacketPropertyInfo.Key.SeparatorBeforeProperty : subpacketPropertyInfo.Key.SeparatorNestedElements;
                 }
 
                 serializedSubpacket += SerializeValue(subpacketPropertyInfo.Value.PropertyType, subpacketPropertyInfo.Value.GetValue(value),
-                    subpacketPropertyInfo.Value.GetCustomAttributes<ValidationAttribute>()).Replace(" ", "");
+                    subpacketPropertyInfo.Value.GetCustomAttributes<ValidationAttribute>(), subpacketPropertyInfo.Key).Replace(" ", "");
             }
 
             return serializedSubpacket;
