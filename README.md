@@ -13,11 +13,13 @@
 
 ### Enable Session Service
 You will need to start a Redis 
+ 
 `docker run -p 6379:6379 --name saltyemu-session -d redis:latest`
 
 
 ### Enable Database
 You also need to start a MSSQL Server instance
+ 
 `docker run -p 1433:1433 -e ACCEPT_EULA=Y -e SA_PASSWORD=DevNos#2018 --name saltyemu-database -d mssql-server-linux:latest`
 
 Now create your Database & your user in MSSQL with SSMS (an tool is about to be finished to automatically create your database)
@@ -25,6 +27,7 @@ Now create your Database & your user in MSSQL with SSMS (an tool is about to be 
 ### Parse Datas
 
 Go in SaltyEmu.Toolkit
+ 
 `dotnet src/SaltyEmu.Toolkit parse -i {PathToParsingDirectory}`
 
 
