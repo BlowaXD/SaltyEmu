@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <PackageProjectUrl>https://github.com/BlowaXD/ChickenAPI</PackageProjectUrl>
+    <PackageIconUrl>https://raw.githubusercontent.com/BlowaXD/ChickenAPI/master/docs/_media/logo_512.png</PackageIconUrl>
+    <RepositoryUrl>https://github.com/BlowaXD/ChickenAPI.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>nostale private server source API</PackageTags>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Copyright>GPL3.0</Copyright>
+    <PackageLicenseUrl>https://github.com/BlowaXD/ChickenAPI/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageReleaseNotes>First version, not stable at all</PackageReleaseNotes>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion>
+    <Version>0.2.0</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Accounts\**" />
+    <EmbeddedResource Remove="Accounts\**" />
+    <None Remove="Accounts\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autofac" Version="4.8.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+    <PackageReference Include="NLog" Version="4.5.7" />
+    <PackageReference Include="NLog.Config" Version="4.5.7" />
+  </ItemGroup>
+</Project>

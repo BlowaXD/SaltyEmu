@@ -1,6 +1,3 @@
-[submodule "libs/NosSharp.Plugins"]
-	path = libs/NosSharp.Plugins
-	url = ../Plugins.git
 [submodule "libs/NosSharp.BasicAlgorithm"]
 	path = libs/NosSharp.BasicAlgorithm
 	url = https://github.com/NosWings/WingsEmu.Plugins.BasicAlgorithms.git
