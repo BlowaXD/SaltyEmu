@@ -4,16 +4,18 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using ChickenAPI.Plugins;
+using ChickenAPI.Utils;
 
 namespace LoginServer
 {
     public class SimplePluginManager : IPluginManager
     {
+        private static readonly Logger Log = Logger.GetLogger<SimplePluginManager>();
         public DirectoryInfo GetPluginDirectory() => null;
 
         public DirectoryInfo GetConfigDirectory() => null;
 
-        public IPlugin LoadPlugin(FileInfo file)
+        public IPlugin[] LoadPlugin(FileInfo file)
         {
             try
             {
@@ -36,10 +38,11 @@ namespace LoginServer
                 foreach (Type type in pluginTypes)
                 {
                     var plugin = (IPlugin)Activator.CreateInstance(type);
+                    Log.Info($"{plugin.Name} Loaded !");
                     plugins.Add(plugin);
                 }
 
-                return plugins.FirstOrDefault();
+                return plugins.ToArray();
             }
             catch
             {
@@ -56,16 +59,9 @@ namespace LoginServer
 
             if (directory.Exists)
             {
-                return directory.GetFiles("*.dll").Select(s =>
+                return directory.GetFiles("*.dll").SelectMany(s =>
                 {
-                    IPlugin tmp = LoadPlugin(s);
-                    if (tmp == null)
-                    {
-                        return null;
-                    }
-
-                    Console.WriteLine($"[PluginManager] {tmp.Name} Loaded !");
-                    tmp.OnLoad();
+                    IPlugin[] tmp = LoadPlugin(s);
 
                     return tmp;
                 }).Where(s => s != null).ToArray();

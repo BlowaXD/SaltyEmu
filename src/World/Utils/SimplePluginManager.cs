@@ -11,8 +11,11 @@ namespace World.Utils
     public class SimplePluginManager : IPluginManager
     {
         private static readonly Logger Log = Logger.GetLogger<SimplePluginManager>();
+        public DirectoryInfo GetPluginDirectory() => new DirectoryInfo("plugins");
 
-        public IPlugin LoadPlugin(FileInfo file)
+        public DirectoryInfo GetConfigDirectory() => new DirectoryInfo("config");
+
+        public IPlugin[] LoadPlugin(FileInfo file)
         {
             try
             {
@@ -35,10 +38,12 @@ namespace World.Utils
                 foreach (Type type in pluginTypes)
                 {
                     var plugin = (IPlugin)Activator.CreateInstance(type);
+                    Log.Info($"{plugin.Name} Loaded !");
+                    plugin.OnLoad();
                     plugins.Add(plugin);
                 }
 
-                return plugins.FirstOrDefault();
+                return plugins.ToArray();
             }
             catch
             {
@@ -55,16 +60,9 @@ namespace World.Utils
 
             if (directory.Exists)
             {
-                return directory.GetFiles("*.dll").Select(s =>
+                return directory.GetFiles("*.dll").SelectMany(s =>
                 {
-                    IPlugin tmp = LoadPlugin(s);
-                    if (tmp == null)
-                    {
-                        return null;
-                    }
-
-                    Log.Info($"[PluginManager] Loading plugin {tmp.Name}...");
-                    tmp.OnLoad();
+                    IPlugin[] tmp = LoadPlugin(s);
 
                     return tmp;
                 }).Where(s => s != null).ToArray();
@@ -73,8 +71,5 @@ namespace World.Utils
             directory.Create();
             return null;
         }
-
-        public DirectoryInfo GetPluginDirectory() => new DirectoryInfo("plugin");
-        public DirectoryInfo GetConfigDirectory() => new DirectoryInfo("plugin/config");
     }
 }

@@ -4,7 +4,7 @@ namespace ChickenAPI.Plugins
 {
     public interface IPluginManager
     {
-        IPlugin LoadPlugin(FileInfo file);
+        IPlugin[] LoadPlugin(FileInfo file);
         IPlugin[] LoadPlugins(DirectoryInfo directory);
     }
 }
