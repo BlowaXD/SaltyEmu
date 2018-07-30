@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using ChickenAPI.Core.IoC;
 using ChickenAPI.Data.AccessLayer.Item;
 using ChickenAPI.Data.TransferObjects.Item;
 using ChickenAPI.Enums;
@@ -6,7 +7,6 @@ using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Systems.Inventory;
 using ChickenAPI.Game.Systems.Inventory.Args;
 using ChickenAPI.Packets;
-using ChickenAPI.Utils;
 
 namespace NosSharp.PacketHandler.Inventory.Commands
 {

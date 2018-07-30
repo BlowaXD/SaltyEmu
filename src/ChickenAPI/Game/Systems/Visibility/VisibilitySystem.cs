@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Linq.Expressions;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.ECS.Entities;
 using ChickenAPI.ECS.Systems;
 using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Game.Components;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Packets.Game.Server;
-using ChickenAPI.Utils;
 
 namespace ChickenAPI.Game.Systems.Visibility
 {

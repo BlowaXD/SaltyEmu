@@ -1,9 +1,11 @@
 ﻿using System;
 using Autofac;
+using ChickenAPI.Core.IoC;
+using ChickenAPI.Core.Logging;
+using ChickenAPI.Core.Utils;
 using ChickenAPI.Data.AccessLayer;
 using ChickenAPI.Data.AccessLayer.Server;
 using ChickenAPI.Plugins;
-using ChickenAPI.Utils;
 
 namespace NosSharp.RedisSessionPlugin
 {

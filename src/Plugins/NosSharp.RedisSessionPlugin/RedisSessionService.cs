@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Linq;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Data.AccessLayer;
 using ChickenAPI.Data.AccessLayer.Server;
 using ChickenAPI.Data.TransferObjects;
 using ChickenAPI.Data.TransferObjects.Server;
 using ChickenAPI.Enums.Game;
-using ChickenAPI.Utils;
 using ServiceStack.Redis;
 using ServiceStack.Redis.Generic;
 

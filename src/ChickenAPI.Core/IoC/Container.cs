@@ -1,6 +1,6 @@
 ﻿using Autofac;
 
-namespace ChickenAPI.Utils
+namespace ChickenAPI.Core.IoC
 {
     public class Container
     {

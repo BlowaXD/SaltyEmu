@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ChickenAPI.Utils
+namespace ChickenAPI.Core.Utils
 {
     public class Position<T> : IEquatable<Position<T>>
     {

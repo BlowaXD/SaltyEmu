@@ -1,11 +1,12 @@
 ﻿using System;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.ECS.Systems;
 using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Systems.Movable;
+using ChickenAPI.Packets;
 using ChickenAPI.Packets.Game.Client;
 using ChickenAPI.Packets.Game.Server;
-using ChickenAPI.Utils;
 
 namespace NosSharp.PacketHandler.Move
 {
@@ -29,8 +30,11 @@ namespace NosSharp.PacketHandler.Move
             session.Movable.Actual.Y = packet.YCoordinate;
             session.Movable.Speed = packet.Speed;
 
-            session.EntityManager.Broadcast(new MvPacket(session));
             session.SendPacket(new CondPacketBase(session));
+            if (session.EntityManager is IBroadcastable broadcastable)
+            {
+                broadcastable.Broadcast(new MvPacket(session));
+            }
         }
     }
 }

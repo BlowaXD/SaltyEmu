@@ -29,4 +29,8 @@
     <PackageReference Include="NLog" Version="4.5.7" />
     <PackageReference Include="NLog.Config" Version="4.5.7" />
   </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ChickenAPI.Core\ChickenAPI.Core.csproj" />
+  </ItemGroup>
 </Project>

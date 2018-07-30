@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using ChickenAPI.Core.Data.TransferObjects;
 using ChickenAPI.Data.AccessLayer.Repository;
 using ChickenAPI.Enums.Game.Items;
 

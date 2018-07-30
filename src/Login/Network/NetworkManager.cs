@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using ChickenAPI.Utils;
+using ChickenAPI.Core.Logging;
 using DotNetty.Buffers;
 using DotNetty.Codecs;
 using DotNetty.Transport.Bootstrapping;

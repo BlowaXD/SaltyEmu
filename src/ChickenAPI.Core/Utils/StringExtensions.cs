@@ -2,7 +2,7 @@
 using System.Security.Cryptography;
 using System.Text;
 
-namespace ChickenAPI.Utils
+namespace ChickenAPI.Core.Utils
 {
     public static class StringExtensions
     {

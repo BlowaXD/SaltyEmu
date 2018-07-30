@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using ChickenAPI.Core.Utils;
 using ChickenAPI.Data.TransferObjects.Character;
 using ChickenAPI.ECS.Components;
 using ChickenAPI.ECS.Entities;
@@ -13,7 +14,6 @@ using ChickenAPI.Packets.Game.Client;
 using ChickenAPI.Packets.Game.Server;
 using ChickenAPI.Packets.Game.Server.Group;
 using ChickenAPI.Packets.Game.Server.Inventory;
-using ChickenAPI.Utils;
 
 namespace ChickenAPI.Game.Entities.Player
 {

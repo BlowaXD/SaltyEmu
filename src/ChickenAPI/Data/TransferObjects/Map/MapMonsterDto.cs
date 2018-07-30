@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
+using ChickenAPI.Core.Data.TransferObjects;
 using ChickenAPI.Data.AccessLayer.Repository;
 using ChickenAPI.Data.TransferObjects.BCard;
 using ChickenAPI.Data.TransferObjects.Drop;
 using ChickenAPI.Data.TransferObjects.NpcMonster;
 using ChickenAPI.Enums.Game.Entity;
-using ChickenAPI.Utils;
 
 namespace ChickenAPI.Data.TransferObjects.Map
 {

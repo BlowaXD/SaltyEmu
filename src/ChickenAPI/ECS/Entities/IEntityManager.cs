@@ -7,12 +7,11 @@ using ChickenAPI.Packets;
 
 namespace ChickenAPI.ECS.Entities
 {
-    /// <inheritdoc cref="IBroadcastable" />
     /// <inheritdoc cref="IDisposable" />
     /// <summary>
     ///     Contains entities and sub <see cref="T:ChickenAPI.ECS.Entities.IEntityManager" />
     /// </summary>
-    public interface IEntityManager : IBroadcastable, IDisposable
+    public interface IEntityManager : IDisposable
     {
         #region EntityManager
 

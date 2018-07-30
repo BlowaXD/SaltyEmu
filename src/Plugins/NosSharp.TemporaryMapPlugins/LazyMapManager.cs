@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using Autofac;
+using ChickenAPI.Core.IoC;
 using ChickenAPI.Data.AccessLayer.Map;
 using ChickenAPI.Data.AccessLayer.NpcMonster;
 using ChickenAPI.Data.TransferObjects.Map;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Maps;
 using ChickenAPI.Managers;
-using ChickenAPI.Utils;
 
 namespace NosSharp.TemporaryMapPlugins
 {

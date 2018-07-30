@@ -1,8 +1,9 @@
 ﻿using System;
 using Autofac;
+using ChickenAPI.Core.IoC;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Packets;
 using ChickenAPI.Plugins;
-using ChickenAPI.Utils;
 using NosSharp.PacketHandler.Utils;
 
 namespace NosSharp.PacketHandler

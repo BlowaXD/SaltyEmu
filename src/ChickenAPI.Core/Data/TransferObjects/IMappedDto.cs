@@ -1,4 +1,4 @@
-﻿namespace ChickenAPI.Data.AccessLayer.Repository
+﻿namespace ChickenAPI.Core.Data.TransferObjects
 {
     public interface IMappedDto
     {

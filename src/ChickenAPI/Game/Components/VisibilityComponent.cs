@@ -1,7 +1,7 @@
 ﻿using System;
+using ChickenAPI.Core.Utils;
 using ChickenAPI.ECS.Components;
 using ChickenAPI.ECS.Entities;
-using ChickenAPI.Utils;
 
 namespace ChickenAPI.Game.Components
 {

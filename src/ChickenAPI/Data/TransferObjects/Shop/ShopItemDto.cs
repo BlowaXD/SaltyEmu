@@ -1,4 +1,5 @@
-﻿using ChickenAPI.Data.AccessLayer.Repository;
+﻿using ChickenAPI.Core.Data.TransferObjects;
+using ChickenAPI.Data.AccessLayer.Repository;
 
 namespace ChickenAPI.Data.TransferObjects.Shop
 {

@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Text;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Data.AccessLayer.Account;
 using ChickenAPI.Data.AccessLayer.Server;
 using ChickenAPI.Data.TransferObjects.Character;
 using ChickenAPI.Data.TransferObjects.Server;
 using ChickenAPI.Enums;
 using ChickenAPI.Enums.Game;
-using ChickenAPI.Utils;
 using DotNetty.Transport.Channels;
 using DotNetty.Transport.Channels.Groups;
 using DotNetty.Transport.Channels.Sockets;

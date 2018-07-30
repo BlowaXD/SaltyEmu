@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Plugins;
-using ChickenAPI.Utils;
 
 namespace World.Utils
 {

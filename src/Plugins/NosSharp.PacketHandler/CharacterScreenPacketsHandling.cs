@@ -5,6 +5,9 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Autofac;
+using ChickenAPI.Core.IoC;
+using ChickenAPI.Core.Logging;
+using ChickenAPI.Core.Utils;
 using ChickenAPI.Data.AccessLayer;
 using ChickenAPI.Data.AccessLayer.Account;
 using ChickenAPI.Data.AccessLayer.Character;
@@ -20,7 +23,6 @@ using ChickenAPI.Enums.Game.Items;
 using ChickenAPI.Game.Network;
 using ChickenAPI.Packets.CharacterScreen.Client;
 using ChickenAPI.Packets.CharacterScreen.Server;
-using ChickenAPI.Utils;
 
 namespace NosSharp.PacketHandler
 {

@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using ChickenAPI.Core.IoC;
 using ChickenAPI.Data.AccessLayer;
 using ChickenAPI.Data.AccessLayer.Character;
 using ChickenAPI.Data.AccessLayer.Server;
@@ -16,7 +17,6 @@ using ChickenAPI.Managers;
 using ChickenAPI.Packets.CharacterScreen.Client;
 using ChickenAPI.Packets.Game.Server;
 using ChickenAPI.Packets.Game.Server.Map;
-using ChickenAPI.Utils;
 
 namespace NosSharp.PacketHandler
 {

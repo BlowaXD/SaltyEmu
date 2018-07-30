@@ -3,7 +3,6 @@ using System.Text;
 using Autofac;
 using ChickenAPI.Data.AccessLayer.Server;
 using ChickenAPI.Enums;
-using ChickenAPI.Utils;
 
 namespace ChickenAPI.Data.Language
 {

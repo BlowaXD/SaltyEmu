@@ -1,6 +1,9 @@
 ﻿using System;
 using Autofac;
 using AutoMapper;
+using ChickenAPI.Core.IoC;
+using ChickenAPI.Core.Logging;
+using ChickenAPI.Core.Utils;
 using ChickenAPI.Data.AccessLayer.Account;
 using ChickenAPI.Data.AccessLayer.BCard;
 using ChickenAPI.Data.AccessLayer.Character;
@@ -12,7 +15,6 @@ using ChickenAPI.Data.AccessLayer.Skill;
 using ChickenAPI.Data.TransferObjects.Character;
 using ChickenAPI.Enums.Game.Character;
 using ChickenAPI.Plugins;
-using ChickenAPI.Utils;
 using Microsoft.EntityFrameworkCore;
 using NosSharp.DatabasePlugin.Configuration;
 using NosSharp.DatabasePlugin.Context;

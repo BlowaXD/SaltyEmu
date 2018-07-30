@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Network;
 using ChickenAPI.Packets;
-using ChickenAPI.Utils;
 
 namespace World.Packets
 {

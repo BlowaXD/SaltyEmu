@@ -5,7 +5,6 @@ using ChickenAPI.ECS.Entities;
 using ChickenAPI.Enums.Game.Portals;
 using ChickenAPI.Game.Maps;
 using ChickenAPI.Managers;
-using ChickenAPI.Utils;
 
 namespace ChickenAPI.Game.Components
 {

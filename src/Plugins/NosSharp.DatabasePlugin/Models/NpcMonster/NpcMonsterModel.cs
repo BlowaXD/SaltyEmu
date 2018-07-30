@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using ChickenAPI.Core.Data.TransferObjects;
 using ChickenAPI.Data.AccessLayer.Repository;
 using ChickenAPI.Enums.Game.Entity;
 using NosSharp.DatabasePlugin.Models.BCard;

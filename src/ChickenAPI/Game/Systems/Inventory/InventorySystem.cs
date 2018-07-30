@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Autofac;
+using ChickenAPI.Core.IoC;
 using ChickenAPI.Data.AccessLayer.Item;
 using ChickenAPI.Data.TransferObjects.Item;
 using ChickenAPI.ECS.Entities;
@@ -15,7 +16,6 @@ using ChickenAPI.Game.Systems.Inventory.Args;
 using ChickenAPI.Packets;
 using ChickenAPI.Packets.Game.Server;
 using ChickenAPI.Packets.Game.Server.Inventory;
-using ChickenAPI.Utils;
 
 namespace ChickenAPI.Game.Systems.Inventory
 {

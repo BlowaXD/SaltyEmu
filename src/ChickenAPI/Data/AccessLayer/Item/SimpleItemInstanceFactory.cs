@@ -1,7 +1,6 @@
 ﻿using System;
 using Autofac;
 using ChickenAPI.Data.TransferObjects.Item;
-using ChickenAPI.Utils;
 
 namespace ChickenAPI.Data.AccessLayer.Item
 {

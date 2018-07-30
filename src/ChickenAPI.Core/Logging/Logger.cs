@@ -4,7 +4,7 @@ using NLog.Conditions;
 using NLog.Config;
 using NLog.Targets;
 
-namespace ChickenAPI.Utils
+namespace ChickenAPI.Core.Logging
 {
     public class Logger
     {

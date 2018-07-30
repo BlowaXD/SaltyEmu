@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace ChickenAPI.Data.AccessLayer.Repository
+namespace ChickenAPI.Core.Data.AccessLayer
 {
     public interface ISynchronousRepository<TObject, in TObjectId> where TObject : class
     {

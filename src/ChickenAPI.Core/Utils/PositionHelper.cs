@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ChickenAPI.Utils
+namespace ChickenAPI.Core.Utils
 {
     public static class PositionHelper
     {

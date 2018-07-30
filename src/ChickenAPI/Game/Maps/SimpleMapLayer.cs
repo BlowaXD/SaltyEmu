@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using ChickenAPI.Core.Utils;
 using ChickenAPI.Data.TransferObjects.Map;
 using ChickenAPI.ECS.Entities;
 using ChickenAPI.ECS.Systems;
@@ -13,7 +14,6 @@ using ChickenAPI.Game.Systems.Chat;
 using ChickenAPI.Game.Systems.Inventory;
 using ChickenAPI.Game.Systems.Movable;
 using ChickenAPI.Game.Systems.Visibility;
-using ChickenAPI.Utils;
 
 namespace ChickenAPI.Game.Maps
 {

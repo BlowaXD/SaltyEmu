@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.ECS.Systems;
 using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Packets;
-using ChickenAPI.Utils;
 
 namespace ChickenAPI.ECS.Entities
 {
-    public abstract class EntityManagerBase : IEntityManager
+    public abstract class EntityManagerBase : IEntityManager, IBroadcastable
     {
         protected static readonly Logger Log = Logger.GetLogger<EntityManagerBase>();
         protected bool Update;

@@ -3,12 +3,13 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
 using Autofac;
+using ChickenAPI.Core.IoC;
+using ChickenAPI.Core.Utils;
 using ChickenAPI.Data.AccessLayer.Account;
 using ChickenAPI.Data.TransferObjects.Character;
 using ChickenAPI.Enums;
 using ChickenAPI.Packets;
 using ChickenAPI.Plugins;
-using ChickenAPI.Utils;
 using NLog;
 using NosSharp.BasicAlgorithm;
 using NosSharp.DatabasePlugin;
@@ -18,7 +19,7 @@ using NosSharp.TemporaryMapPlugins;
 using World.Network;
 using World.Packets;
 using World.Utils;
-using Logger = ChickenAPI.Utils.Logger;
+using Logger = ChickenAPI.Core.Logging.Logger;
 
 namespace World
 {

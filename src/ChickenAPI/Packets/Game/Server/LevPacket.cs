@@ -1,8 +1,8 @@
 ﻿using Autofac;
+using ChickenAPI.Core.IoC;
 using ChickenAPI.Data.AccessLayer.Character;
 using ChickenAPI.Game.Components;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Utils;
 
 namespace ChickenAPI.Packets.Game.Server
 {

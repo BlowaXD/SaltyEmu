@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using Newtonsoft.Json;
 
-namespace ChickenAPI.Utils
+namespace ChickenAPI.Core.Utils
 {
     public class ConfigurationHelper
     {

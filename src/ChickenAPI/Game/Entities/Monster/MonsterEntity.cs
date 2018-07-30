@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using ChickenAPI.Core.Utils;
 using ChickenAPI.Data.TransferObjects.Map;
 using ChickenAPI.ECS.Components;
 using ChickenAPI.ECS.Entities;
 using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Game.Components;
-using ChickenAPI.Utils;
 
 namespace ChickenAPI.Game.Entities.Monster
 {

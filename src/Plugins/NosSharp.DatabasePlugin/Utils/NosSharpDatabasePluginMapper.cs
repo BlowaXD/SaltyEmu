@@ -1,6 +1,7 @@
 ﻿using System;
 using Autofac;
 using AutoMapper;
+using ChickenAPI.Core.IoC;
 using ChickenAPI.Data.AccessLayer.NpcMonster;
 using ChickenAPI.Data.TransferObjects.BCard;
 using ChickenAPI.Data.TransferObjects.Character;
@@ -11,7 +12,6 @@ using ChickenAPI.Data.TransferObjects.NpcMonster;
 using ChickenAPI.Data.TransferObjects.Skills;
 using ChickenAPI.Enums.Game.BCard;
 using ChickenAPI.Enums.Game.Drop;
-using ChickenAPI.Utils;
 using NosSharp.DatabasePlugin.Models;
 using NosSharp.DatabasePlugin.Models.BCard;
 using NosSharp.DatabasePlugin.Models.Character;

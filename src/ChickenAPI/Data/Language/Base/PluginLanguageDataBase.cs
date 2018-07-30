@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using Autofac;
+using ChickenAPI.Core.IoC;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Data.AccessLayer.Server;
 using ChickenAPI.Enums;
-using ChickenAPI.Utils;
 
 namespace ChickenAPI.Data.Language.Base
 {

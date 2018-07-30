@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.ECS.Components;
 using ChickenAPI.ECS.Systems;
 using ChickenAPI.Enums.Game.Entity;
-using ChickenAPI.Utils;
 
 namespace ChickenAPI.ECS.Entities
 {

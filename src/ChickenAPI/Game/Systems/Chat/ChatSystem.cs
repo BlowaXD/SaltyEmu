@@ -3,6 +3,7 @@ using ChickenAPI.ECS.Systems;
 using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Enums.Packets;
 using ChickenAPI.Game.Entities.Player;
+using ChickenAPI.Packets;
 using ChickenAPI.Packets.Game.Server;
 
 namespace ChickenAPI.Game.Systems.Chat
@@ -33,7 +34,10 @@ namespace ChickenAPI.Game.Systems.Chat
                 VisualId = args.SenderId
             };
 
-            entity.EntityManager.Broadcast((IPlayerEntity)entity, sayPacket);
+            if (entity.EntityManager is IBroadcastable broadcastable)
+            {
+                broadcastable.Broadcast((IPlayerEntity)entity, sayPacket);
+            }
         }
     }
 }

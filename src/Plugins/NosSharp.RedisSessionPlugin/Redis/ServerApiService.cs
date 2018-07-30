@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Data.AccessLayer.Server;
 using ChickenAPI.Data.TransferObjects.Server;
-using ChickenAPI.Utils;
 using Foundatio.Caching;
 using StackExchange.Redis;
 

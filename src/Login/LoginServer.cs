@@ -1,10 +1,11 @@
 ﻿using System;
 using System.IO;
 using Autofac;
+using ChickenAPI.Core.IoC;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Data.AccessLayer.Account;
 using ChickenAPI.Data.AccessLayer.Server;
 using ChickenAPI.Plugins;
-using ChickenAPI.Utils;
 using LoginServer.Cryptography.Factories;
 using LoginServer.Network;
 using NosSharp.DatabasePlugin;
