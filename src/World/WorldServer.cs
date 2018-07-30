@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -26,7 +27,14 @@ namespace World
     internal class WorldServer
     {
         private static readonly Logger Log = Logger.GetLogger<WorldServer>();
-        private static IPlugin[] _plugins;
+
+        private static readonly List<IPlugin> Plugins = new List<IPlugin>
+        {
+            new BasicAlgorithmPlugin(),
+            new RedisPlugin(),
+            new NosSharpDatabasePlugin(),
+            new TemporaryMapPlugin()
+        };
 
         private static void InitializePlugins()
         {
@@ -36,26 +44,17 @@ namespace World
                 {
                     Directory.CreateDirectory("plugins");
                 }
-                _plugins = new SimplePluginManager().LoadPlugins(new DirectoryInfo("plugins"));
-                foreach (IPlugin plugin in _plugins)
+
+                foreach (IPlugin plugin in Plugins)
+                {
+                    plugin.OnLoad();
+                }
+
+                Plugins.AddRange(new SimplePluginManager().LoadPlugins(new DirectoryInfo("plugins")));
+                foreach (IPlugin plugin in Plugins)
                 {
                     plugin.OnEnable();
                 }
-
-                var tmp = new RedisPlugin();
-                tmp.OnLoad();
-                tmp.OnEnable();
-                var tmpAgain = new NosSharpDatabasePlugin();
-                tmpAgain.OnLoad();
-                tmpAgain.OnEnable();
-
-                var maps = new TemporaryMapPlugin();
-                maps.OnLoad();
-                maps.OnEnable();
-
-                var algorithm = new BasicAlgorithmPlugin();
-                algorithm.OnLoad();
-                algorithm.OnEnable();
             }
             catch (Exception e)
             {
@@ -73,6 +72,7 @@ namespace World
                 intPort = 1337;
                 Server.Port = intPort;
             }
+
             string tick = Environment.GetEnvironmentVariable("SERVER_REFRESH_RATE") ?? "20";
             if (!int.TryParse(tick, out int tickRate))
             {
