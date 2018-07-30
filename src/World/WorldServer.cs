@@ -31,6 +31,10 @@ namespace World
         {
             try
             {
+                if (!Directory.Exists("plugins"))
+                {
+                    Directory.CreateDirectory("plugins");
+                }
                 _plugins = new SimplePluginManager().LoadPlugins(new DirectoryInfo("plugins"));
                 foreach (IPlugin plugin in _plugins)
                 {

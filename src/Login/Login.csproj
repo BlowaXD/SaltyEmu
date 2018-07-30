@@ -30,9 +30,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\libs\NosSharp.Plugins\libs\ChickenAPI\src\ChickenAPI\ChickenAPI.csproj" />
-    <ProjectReference Include="..\..\libs\NosSharp.Plugins\src\NosSharp.DatabasePlugin\NosSharp.DatabasePlugin.csproj" />
-    <ProjectReference Include="..\..\libs\NosSharp.Plugins\src\NosSharp.RedisSessionPlugin\NosSharp.RedisSessionPlugin.csproj" />
+    <ProjectReference Include="..\ChickenAPI\ChickenAPI.csproj" />
+    <ProjectReference Include="..\Plugins\NosSharp.DatabasePlugin\NosSharp.DatabasePlugin.csproj" />
+    <ProjectReference Include="..\Plugins\NosSharp.RedisSessionPlugin\NosSharp.RedisSessionPlugin.csproj" />
   </ItemGroup>
 
 </Project>
