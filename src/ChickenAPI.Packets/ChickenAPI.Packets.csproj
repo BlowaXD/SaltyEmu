@@ -7,7 +7,6 @@
   <ItemGroup>
     <Folder Include="Login\Client\" />
     <Folder Include="World\Client\" />
-    <Folder Include="World\Server\" />
   </ItemGroup>
 
 </Project>

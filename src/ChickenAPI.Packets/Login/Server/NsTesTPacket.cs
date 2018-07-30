@@ -53,7 +53,7 @@ namespace ChickenAPI.Packets.Login.Server
         public class NsTeStSubPacket
         {
             /// <summary>
-            /// 
+            /// Ip Address
             /// </summary>
             public string Host { get; set; }
 
