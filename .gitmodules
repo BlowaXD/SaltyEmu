@@ -1,3 +1,0 @@
-[submodule "libs/NosSharp.MultilanguagePlugin"]
-	path = libs/NosSharp.MultilanguagePlugin
-	url = https://github.com/NosWings/WingsEmu.Plugins.RedisMultilanguagePlugin.git
