@@ -5,12 +5,12 @@ namespace ChickenAPI.Packets
     public interface IPacket
     {
         /// <summary>
-        /// 
+        /// Packet's header
         /// </summary>
         string Header { get; }
 
         /// <summary>
-        /// <see cref="IPacket"/>
+        /// <see cref="IPacket"/> type
         /// </summary>
         Type Type { get; }
 

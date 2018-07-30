@@ -5,8 +5,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Login\" />
-    <Folder Include="World\" />
+    <Folder Include="Login\Client\" />
+    <Folder Include="World\Client\" />
+    <Folder Include="World\Server\" />
   </ItemGroup>
 
 </Project>
