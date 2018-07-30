@@ -6,7 +6,6 @@
 
   <ItemGroup>
     <Folder Include="Login\Client\" />
-    <Folder Include="World\Client\" />
   </ItemGroup>
 
 </Project>
