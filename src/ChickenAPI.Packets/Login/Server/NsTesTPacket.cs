@@ -29,10 +29,8 @@ namespace ChickenAPI.Packets.Login.Server
         {
             var tmp = new StringBuilder();
 
-            tmp.Append(AccountName);
-            tmp.Append(' ');
-            tmp.Append(SessionId);
-            tmp.Append(' ');
+            tmp.Append(Header);
+            tmp.AppendFormat(" {0} {1} ", AccountName, SessionId);
             foreach (NsTeStSubPacket subpacket in SubPacket)
             {
                 tmp.AppendFormat("{0}:{1}:{2}:{3}.{4}.{5}", subpacket.Host ?? "-1", subpacket.Port ?? -1, subpacket.Color ?? -1, subpacket.WorldCount, subpacket.WorldId, subpacket.Name);

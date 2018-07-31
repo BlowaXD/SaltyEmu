@@ -8,4 +8,8 @@
     <Folder Include="Login\Client\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ChickenAPI\ChickenAPI.csproj" />
+  </ItemGroup>
+
 </Project>
