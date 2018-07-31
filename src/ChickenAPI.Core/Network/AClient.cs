@@ -6,6 +6,8 @@ namespace ChickenAPI.Core.Network
 {
     public abstract class AClient<TClient, TPacket> : IClient<TPacket> where TClient : class
     {
+        public int Id { get; set; }
+
         public static event TypedSenderEventHandler<TClient, EventArgs> PacketReceived;
         public static event TypedSenderEventHandler<TClient, EventArgs> PacketSent;
         public static event TypedSenderEventHandler<TClient, EventArgs> Disconnected;

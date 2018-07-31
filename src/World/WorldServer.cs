@@ -108,6 +108,32 @@ namespace World
             Logger.Initialize();
         }
 
+        private static void InitializeAccounts()
+        {
+            var acc = Container.Instance.Resolve<IAccountService>();
+            if (acc.GetByName("admin") != null)
+            {
+                return;
+            }
+
+            var account = new AccountDto
+            {
+                Authority = AuthorityType.Administrator,
+                Email = "admin@chickenapi.com",
+                Name = "admin",
+                Password = "admin".ToSha512()
+            };
+            acc.Save(account);
+            account = new AccountDto
+            {
+                Authority = AuthorityType.User,
+                Email = "user@chickenapi.com",
+                Name = "user",
+                Password = "user".ToSha512()
+            };
+            acc.Save(account);
+        }
+
         private static void Main()
         {
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
@@ -131,26 +157,7 @@ namespace World
                 return;
             }
 
-            var acc = Container.Instance.Resolve<IAccountService>();
-            if (acc.GetByName("admin") == null)
-            {
-                var account = new AccountDto
-                {
-                    Authority = AuthorityType.Administrator,
-                    Email = "admin@chickenapi.com",
-                    Name = "admin",
-                    Password = "admin".ToSha512()
-                };
-                acc.Save(account);
-                account = new AccountDto
-                {
-                    Authority = AuthorityType.User,
-                    Email = "user@chickenapi.com",
-                    Name = "user",
-                    Password = "user".ToSha512()
-                };
-                acc.Save(account);
-            }
+            InitializeAccounts();
 
             var packetHandler = new PacketHandlerPlugin();
             packetHandler.OnLoad();
