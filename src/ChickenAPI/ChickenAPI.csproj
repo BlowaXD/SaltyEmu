@@ -32,5 +32,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ChickenAPI.Core\ChickenAPI.Core.csproj" />
+    <ProjectReference Include="..\ChickenAPI.Enums\ChickenAPI.Enums.csproj" />
   </ItemGroup>
 </Project>
