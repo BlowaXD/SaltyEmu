@@ -1,9 +1,12 @@
-﻿using ChickenAPI.Core.IoC;
+﻿using System;
+using System.IO;
+using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Logging;
 using CommandLine;
 using NosSharp.BasicAlgorithm;
 using NosSharp.DatabasePlugin;
 using NosSharp.Parser.Converter;
+using NosSharp.Parser.Generators.FromPackets;
 
 namespace NosSharp.Parser.Commands
 {
@@ -15,15 +18,6 @@ namespace NosSharp.Parser.Commands
         [Value(0, Default = "all", HelpText = "Parsing type : card, skill, map, item, einfo, monster")]
         public string ParsingType { get; set; }
 
-        [Option("db", Default = false, HelpText = "Parsing uses database plugin")]
-        public bool IsDb { get; set; }
-
-        [Option("fs", Default = false, HelpText = "Parsing uses filesystem plugin")]
-        public bool IsFs { get; set; }
-
-        [Option('v', "verbose", Default = false, HelpText = "Prints all messages to standard output.")]
-        public bool Verbose { get; set; }
-
         [Option('p', "packet", HelpText = "Packet file")]
         public string PacketFile { get; set; }
 
@@ -33,23 +27,78 @@ namespace NosSharp.Parser.Commands
         [Option('i', "input", HelpText = "Input directory", Required = true)]
         public string InputDirectory { get; set; }
 
+        public static bool CheckFiles(string inputDirectory)
+        {
+            if (!File.Exists(inputDirectory + "/dats/Skill.dat"))
+            {
+                return true;
+            }
+            if (!File.Exists(inputDirectory + "/dats/Monster.dat"))
+            {
+                return true;
+            }
+            if (!File.Exists(inputDirectory + "/dats/Item.dat"))
+            {
+                return true;
+            }
+            if (!File.Exists(inputDirectory + "/dats/Card.dat"))
+            {
+                return true;
+            }
+            if (!File.Exists(inputDirectory + "/dats/Card.dat"))
+            {
+                return true;
+            }
+            if (!File.Exists(inputDirectory + "/dats/Card.dat"))
+            {
+                return true;
+            }
+
+            if (!File.Exists(inputDirectory + "/packets/einfo.packet"))
+            {
+                return true;
+            }
+            if (!File.Exists(inputDirectory + "/packets/portals.packet"))
+            {
+                return true;
+            }
+            if (!File.Exists(inputDirectory + "/packets/monster.packet"))
+            {
+                return true;
+            }
+            if (!File.Exists(inputDirectory + "/packets/packet.txt"))
+            {
+                return true;
+            }
+            return false;
+        }
+
         public static int Handle(ParseCommand command)
         {
+            if (CheckFiles(command.InputDirectory))
+            {
+                Log.Warn("Respect the following parsing directory layer : ");
+                Console.WriteLine($"{command.InputDirectory}/");
+                Console.WriteLine($"\t- maps");
+                Console.WriteLine($"\t- dats");
+                Console.WriteLine($"\t\t- Skill.dat");
+                Console.WriteLine($"\t\t- Monster.dat");
+                Console.WriteLine($"\t\t- Item.dat");
+                Console.WriteLine($"\t\t- Card.dat");
+                Console.WriteLine($"\t- packets");
+                Console.WriteLine($"\t\t- einfo.packet");
+                Console.WriteLine($"\t\t- portals.packet");
+                Console.WriteLine($"\t\t- monster.packet");
+                Console.WriteLine($"\t\t- packet.txt");
+                return 1;
+            }
+
             var algo = new BasicAlgorithmPlugin();
             algo.OnLoad();
             algo.OnEnable();
-            if (command.IsDb)
-            {
-                var tmp = new NosSharpDatabasePlugin();
-                tmp.OnLoad();
-                tmp.OnEnable();
-            }
-
-            if (command.Verbose)
-            {
-                Logger.Initialize();
-            }
-
+            var tmp = new NosSharpDatabasePlugin();
+            tmp.OnLoad();
+            tmp.OnEnable();
             Container.Initialize();
 
             var card = new CardDatConverter();
@@ -58,6 +107,11 @@ namespace NosSharp.Parser.Commands
             var map = new MapDatConverter();
             var skill = new SkillDatConverter();
             var einfo = new EInfoFiller();
+            var portal = new PacketPortalGenerator();
+            var monGenerator = new MapMonsterGenerator();
+            var npc = new MapNpcGenerator();
+            var shop = new ShopParserGenerator();
+            var shopItem = new ShopItemGenerator();
             switch (command.ParsingType)
             {
                 case "card":
@@ -83,13 +137,19 @@ namespace NosSharp.Parser.Commands
                     {
                         return 1;
                     }
+
                     Log.Info("Parsing...");
                     map.Extract(command.InputDirectory + "/maps");
                     skill.Extract(command.InputDirectory + "/dats");
                     item.Extract(command.InputDirectory + "/dats");
                     card.Extract(command.InputDirectory + "/dats");
                     monster.Extract(command.InputDirectory + "/dats");
-                    einfo.Fill(command.PacketFile);
+                    einfo.Fill(command.InputDirectory + "/packets/einfo.packet");
+                    portal.Generate(command.InputDirectory + "/packets/portals.packet");
+                    monGenerator.Generate(command.InputDirectory + "/packets/monster.packet");
+                    npc.Generate(command.InputDirectory + "/packets/monster.packet");
+                    shop.Generate(command.InputDirectory + "/packets/packet.txt");
+                    shopItem.Generate(command.InputDirectory + "/packets/packet.txt");
                     Log.Info("Parsing done");
                     break;
             }

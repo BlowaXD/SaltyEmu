@@ -25,6 +25,7 @@ namespace NosSharp.Parser.Generators.FromPackets
 
             IEnumerable<PortalDto> portals = portalService.Get();
             IEnumerable<PortalDto> portalDtos = portals as PortalDto[] ?? portals.ToArray();
+            _sourcePortals.AddRange(portalDtos);
 
             string[] lines = File.ReadAllText(filePath, Encoding.UTF8).Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
             short map = 0;
@@ -50,7 +51,7 @@ namespace NosSharp.Parser.Generators.FromPackets
                             DestinationY = -1,
                             IsDisabled = false
                         };
-                        if (portalDtos.Any(s => PortalsAreSame(s, portal)))
+                        if (_sourcePortals.Any(s => PortalsAreSame(s, portal)))
                         {
                             break;
                         }
@@ -60,7 +61,6 @@ namespace NosSharp.Parser.Generators.FromPackets
                 }
             }
 
-            _sourcePortals.AddRange(portalDtos);
             foreach (PortalDto pp in _sourcePortals)
             {
                 PortalDto p = _sourcePortals.Except(_destinationPortals).FirstOrDefault(s => s.SourceMapId == pp.DestinationMapId && s.DestinationMapId == pp.SourceMapId);
