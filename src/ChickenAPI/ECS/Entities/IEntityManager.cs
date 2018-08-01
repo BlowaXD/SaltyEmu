@@ -164,6 +164,8 @@ namespace ChickenAPI.ECS.Entities
         /// <param name="e">Arguments</param>
         void NotifySystem<T>(IEntity entity, SystemEventArgs e) where T : class, INotifiableSystem;
 
+        void NotifySystems(IEntity entity, SystemEventArgs e);
+
         #endregion
     }
 }

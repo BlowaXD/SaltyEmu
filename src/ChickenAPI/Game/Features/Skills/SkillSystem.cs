@@ -1,5 +1,6 @@
 ﻿using ChickenAPI.ECS.Entities;
 using ChickenAPI.ECS.Systems;
+using ChickenAPI.Game.Features.Skills.Args;
 
 namespace ChickenAPI.Game.Features.Skills
 {
@@ -11,7 +12,11 @@ namespace ChickenAPI.Game.Features.Skills
 
         public override void Execute(IEntity entity, SystemEventArgs e)
         {
-            throw new System.NotImplementedException();
+            switch (e)
+            {
+                case SkillCastArgs skillcast:
+                    break;
+            }
         }
     }
 }

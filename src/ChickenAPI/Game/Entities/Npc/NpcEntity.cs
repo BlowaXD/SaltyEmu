@@ -2,28 +2,35 @@
 using System.Collections.Generic;
 using ChickenAPI.Core.Utils;
 using ChickenAPI.Data.TransferObjects.Map;
+using ChickenAPI.Data.TransferObjects.Shop;
 using ChickenAPI.ECS.Components;
 using ChickenAPI.ECS.Entities;
 using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Game.Components;
+using ChickenAPI.Game.Features.Shops;
 
 namespace ChickenAPI.Game.Entities.Npc
 {
-    public class NpcEntity : EntityBase
+    public class NpcEntity : EntityBase, INpcEntity
     {
         public NpcEntity(MapNpcDto npc) : base(EntityType.Npc)
         {
+            Battle = new BattleComponent(this);
+            Movable = new MovableComponent(this)
+            {
+                Actual = new Position<short>(npc.MapX, npc.MapY),
+                Destination = new Position<short>(npc.MapX, npc.MapY),
+                DirectionType = npc.Position,
+                Speed = npc.NpcMonster.Speed
+            };
             Components = new Dictionary<Type, IComponent>
             {
-                { typeof(BattleComponent), new BattleComponent(this) },
+                { typeof(BattleComponent), Battle },
                 { typeof(VisibilityComponent), new VisibilityComponent(this) },
-                { typeof(MovableComponent), new MovableComponent(this)
+                { typeof(MovableComponent), Movable },
                 {
-                    Actual = new Position<short>(npc.MapX, npc.MapY),
-                    Destination = new Position<short>(npc.MapX, npc.MapY),
-                    DirectionType = npc.Position
-                } },
-                { typeof(NpcMonsterComponent), new NpcMonsterComponent(this, npc) }
+                    typeof(NpcMonsterComponent), new NpcMonsterComponent(this, npc)
+                }
             };
         }
 
@@ -31,5 +38,10 @@ namespace ChickenAPI.Game.Entities.Npc
         {
             GC.SuppressFinalize(this);
         }
+        public MapNpcDto MapNpc { get; set; }
+
+        public ShopDto Shop { get; set; }
+        public BattleComponent Battle { get; }
+        public MovableComponent Movable { get; }
     }
 }

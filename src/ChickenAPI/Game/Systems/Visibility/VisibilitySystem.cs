@@ -5,7 +5,9 @@ using ChickenAPI.ECS.Entities;
 using ChickenAPI.ECS.Systems;
 using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Game.Components;
+using ChickenAPI.Game.Entities.Npc;
 using ChickenAPI.Game.Entities.Player;
+using ChickenAPI.Game.Features.Shops.Packets;
 using ChickenAPI.Packets.Game.Server;
 
 namespace ChickenAPI.Game.Systems.Visibility
@@ -27,7 +29,7 @@ namespace ChickenAPI.Game.Systems.Visibility
             {
                 return;
             }
-
+            
             switch (e)
             {
                 case VisibilitySetInvisibleEventArgs invisibleEvent:
@@ -44,7 +46,6 @@ namespace ChickenAPI.Game.Systems.Visibility
 
         private void SetVisible(IEntity entity, VisibilitySetVisibleEventArgs args)
         {
-            Log.Info($"[ENTITY:{entity.Id}] VISIBLE");
             entity.GetComponent<VisibilityComponent>().IsVisible = true;
             if (!args.Broadcast)
             {
@@ -94,6 +95,22 @@ namespace ChickenAPI.Game.Systems.Visibility
                             player.SendPacket(inEntity);
                         }
 
+                        if (entityy.Type == EntityType.Npc && entityy is NpcEntity npc)
+                        {
+                            if (npc.Shop != null)
+                            {
+                                session.SendPacket(new ShopPacket
+                                {
+                                    EntityId = npc.MapNpc.Id,
+                                    ShopId = npc.Shop.Id,
+                                    MenuType = npc.Shop.MenuType,
+                                    ShopType = npc.Shop.ShopType,
+                                    Name = npc.Shop.Name
+                                });
+
+                            }
+                        }
+
                         break;
                     case EntityType.Portal:
                         session.SendPacket(new GpPacket(entityy));
@@ -104,7 +121,6 @@ namespace ChickenAPI.Game.Systems.Visibility
 
         private void SetInvisible(IEntity entity, VisibilitySetInvisibleEventArgs args)
         {
-            Log.Info($"[ENTITY:{entity.Id}] INVISIBLE");
             entity.GetComponent<VisibilityComponent>().IsVisible = false;
             if (!args.Broadcast)
             {

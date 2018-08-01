@@ -169,9 +169,25 @@ namespace ChickenAPI.ECS.Entities
             }
         }
 
+        public void NotifySystems(IEntity entity, SystemEventArgs e)
+        {
+            foreach (INotifiableSystem system in NotifiableSystems.Values)
+            {
+                try
+                {
+                    system.Execute(entity, e);
+                }
+                catch (Exception exception)
+                {
+                    Log.Error("[NOTIFY_SYSTEM]", exception);
+                    Console.WriteLine(exception);
+                }
+            }
+        }
+
         public void Broadcast<T>(T packet) where T : IPacket
         {
-            foreach (IEntity entity in EntitiesByEntityId.Values.AsParallel().Where(s => s.Type == EntityType.Player))
+            foreach (IEntity entity in EntitiesByEntityId.Values.Where(s => s.Type == EntityType.Player).AsParallel())
             {
                 if (!(entity is IPlayerEntity session))
                 {
