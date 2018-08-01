@@ -16,6 +16,8 @@ namespace ChickenAPI.Game.Features.Skills
             {
                 case SkillCastArgs skillcast:
                     break;
+                case PlayerAddSkillEventArgs addSkill:
+                    break;
             }
         }
     }
