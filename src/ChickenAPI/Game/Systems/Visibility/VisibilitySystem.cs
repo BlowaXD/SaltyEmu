@@ -8,6 +8,7 @@ using ChickenAPI.Game.Components;
 using ChickenAPI.Game.Entities.Npc;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Features.Shops.Packets;
+using ChickenAPI.Game.Game.Entities.Npc;
 using ChickenAPI.Packets.Game.Server;
 
 namespace ChickenAPI.Game.Systems.Visibility

@@ -7,9 +7,9 @@ using ChickenAPI.ECS.Components;
 using ChickenAPI.ECS.Entities;
 using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Game.Components;
-using ChickenAPI.Game.Features.Shops;
+using ChickenAPI.Game.Entities.Npc;
 
-namespace ChickenAPI.Game.Entities.Npc
+namespace ChickenAPI.Game.Game.Entities.Npc
 {
     public class NpcEntity : EntityBase, INpcEntity
     {

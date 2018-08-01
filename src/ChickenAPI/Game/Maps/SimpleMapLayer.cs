@@ -11,6 +11,7 @@ using ChickenAPI.Game.Components;
 using ChickenAPI.Game.Entities.Monster;
 using ChickenAPI.Game.Entities.Npc;
 using ChickenAPI.Game.Entities.Portal;
+using ChickenAPI.Game.Game.Entities.Npc;
 using ChickenAPI.Game.Systems.Chat;
 using ChickenAPI.Game.Systems.Inventory;
 using ChickenAPI.Game.Systems.Movable;
