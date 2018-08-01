@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ChickenAPI\ChickenAPI.csproj" />
+    <ProjectReference Include="..\ChickenAPI\ChickenAPI.Game.csproj" />
     <ProjectReference Include="..\Plugins\NosSharp.BasicAlgorithm\NosSharp.BasicAlgorithm.csproj" />
     <ProjectReference Include="..\Plugins\NosSharp.DatabasePlugin\NosSharp.DatabasePlugin.csproj" />
   </ItemGroup>

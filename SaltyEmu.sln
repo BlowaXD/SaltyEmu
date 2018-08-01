@@ -19,7 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NosSharp.DatabasePlugin", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NosSharp.BasicAlgorithm", "src\Plugins\NosSharp.BasicAlgorithm\NosSharp.BasicAlgorithm.csproj", "{28B389E6-9863-4306-B32E-756A2C6D9E99}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChickenAPI", "src\ChickenAPI\ChickenAPI.csproj", "{34BBD274-3133-4894-8776-783731D126BC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChickenAPI.Game", "src\ChickenAPI\ChickenAPI.Game.csproj", "{34BBD274-3133-4894-8776-783731D126BC}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChickenAPI.Core", "src\ChickenAPI.Core\ChickenAPI.Core.csproj", "{3DC7543A-221A-4491-962C-C1E04A24F69F}"
 EndProject

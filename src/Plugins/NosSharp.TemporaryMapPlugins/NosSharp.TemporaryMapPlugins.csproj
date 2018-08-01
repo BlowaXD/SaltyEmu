@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\ChickenAPI\ChickenAPI.csproj" />
+    <ProjectReference Include="..\..\ChickenAPI\ChickenAPI.Game.csproj" />
   </ItemGroup>
 
 </Project>
