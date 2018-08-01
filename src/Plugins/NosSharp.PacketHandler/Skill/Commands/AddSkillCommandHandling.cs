@@ -12,7 +12,7 @@ namespace NosSharp.PacketHandler.Skill.Commands
 {
     public class AddSkillCommandHandling
     {
-        public static void OnAddItemCommand(AddSkillCommandPacket packet, IPlayerEntity player)
+        public static void OnAddSkillCommand(AddSkillCommandPacket packet, IPlayerEntity player)
         {
             var skillService = Container.Instance.Resolve<ISkillService>();
             SkillDto skill = skillService.GetById(packet.SkillId);
