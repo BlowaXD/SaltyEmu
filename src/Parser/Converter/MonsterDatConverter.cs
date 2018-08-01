@@ -19,7 +19,7 @@ using ChickenAPI.Enums.Game.BCard;
 using ChickenAPI.Enums.Game.Drop;
 using ChickenAPI.Enums.Game.Entity;
 
-namespace NosSharp.Parser.Converter
+namespace Toolkit.Converter
 {
     public class MonsterDatConverter
     {

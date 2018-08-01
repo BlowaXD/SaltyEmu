@@ -9,7 +9,7 @@ using ChickenAPI.Core.Logging;
 using ChickenAPI.Data.AccessLayer.Shop;
 using ChickenAPI.Data.TransferObjects.Shop;
 
-namespace NosSharp.Parser.Generators.FromPackets
+namespace Toolkit.Generators.FromPackets
 {
     public class ShopItemGenerator
     {

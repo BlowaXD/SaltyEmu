@@ -13,7 +13,7 @@ using ChickenAPI.Data.TransferObjects.Item;
 using ChickenAPI.Enums.Game.BCard;
 using ChickenAPI.Enums.Game.Items;
 
-namespace NosSharp.Parser.Converter
+namespace Toolkit.Converter
 {
     public class ItemDatConverter
     {

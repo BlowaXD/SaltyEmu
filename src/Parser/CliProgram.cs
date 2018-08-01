@@ -1,9 +1,9 @@
 ﻿using System.Text;
 using ChickenAPI.Core.Logging;
 using CommandLine;
-using NosSharp.Parser.Commands;
+using Toolkit.Commands;
 
-namespace NosSharp.Parser
+namespace Toolkit
 {
     internal class CliProgram
     {

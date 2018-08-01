@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.IO;
 using System.Linq;
+using System.Text;
 using Autofac;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Logging;
@@ -10,7 +10,7 @@ using ChickenAPI.Data.AccessLayer.Map;
 using ChickenAPI.Data.TransferObjects.Map;
 using ChickenAPI.Enums.Game.Entity;
 
-namespace NosSharp.Parser.Generators.FromPackets
+namespace Toolkit.Generators.FromPackets
 {
     public class MapNpcGenerator
     {

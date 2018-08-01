@@ -8,7 +8,7 @@ using ChickenAPI.Core.Logging;
 using ChickenAPI.Data.AccessLayer.Map;
 using ChickenAPI.Data.TransferObjects.Map;
 
-namespace NosSharp.Parser.Converter
+namespace Toolkit.Converter
 {
     public class MapDatConverter
     {

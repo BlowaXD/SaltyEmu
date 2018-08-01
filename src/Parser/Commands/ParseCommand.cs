@@ -5,10 +5,10 @@ using ChickenAPI.Core.Logging;
 using CommandLine;
 using NosSharp.BasicAlgorithm;
 using NosSharp.DatabasePlugin;
-using NosSharp.Parser.Converter;
-using NosSharp.Parser.Generators.FromPackets;
+using Toolkit.Converter;
+using Toolkit.Generators.FromPackets;
 
-namespace NosSharp.Parser.Commands
+namespace Toolkit.Commands
 {
     [Verb("parse")]
     public class ParseCommand

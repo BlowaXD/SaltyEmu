@@ -3,9 +3,9 @@ using ChickenAPI.Core.Logging;
 using CommandLine;
 using NosSharp.BasicAlgorithm;
 using NosSharp.DatabasePlugin;
-using NosSharp.Parser.Generators.FromPackets;
+using Toolkit.Generators.FromPackets;
 
-namespace NosSharp.Parser.Commands
+namespace Toolkit.Commands
 {
     [Verb("generate", HelpText = "Generate Portals, Npcs, Monsters")]
     public class GenerateCommand

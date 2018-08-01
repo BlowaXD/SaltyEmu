@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using ChickenAPI.Core.Logging;
 
-namespace NosSharp.Parser.Cleaners
+namespace Toolkit.Cleaners
 {
     public class InPacketCleaner
     {

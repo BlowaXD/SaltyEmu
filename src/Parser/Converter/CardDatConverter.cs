@@ -11,7 +11,7 @@ using ChickenAPI.Data.TransferObjects.Skills;
 using ChickenAPI.Enums.Game.BCard;
 using ChickenAPI.Enums.Game.Buffs;
 
-namespace NosSharp.Parser.Converter
+namespace Toolkit.Converter
 {
     public class CardDatConverter
     {

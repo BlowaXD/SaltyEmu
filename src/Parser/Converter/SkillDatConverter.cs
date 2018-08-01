@@ -13,7 +13,7 @@ using ChickenAPI.Data.TransferObjects.BCard;
 using ChickenAPI.Data.TransferObjects.Skills;
 using ChickenAPI.Enums.Game.BCard;
 
-namespace NosSharp.Parser.Converter
+namespace Toolkit.Converter
 {
     public class SkillDatConverter
     {

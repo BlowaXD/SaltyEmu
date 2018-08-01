@@ -1,9 +1,9 @@
 ﻿using System.IO;
 using ChickenAPI.Core.Logging;
 using CommandLine;
-using NosSharp.Parser.Cleaners;
+using Toolkit.Cleaners;
 
-namespace NosSharp.Parser.Commands
+namespace Toolkit.Commands
 {
     [Verb("clean", HelpText = "Clean packets")]
     public class CleanCommand

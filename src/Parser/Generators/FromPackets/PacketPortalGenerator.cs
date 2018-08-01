@@ -10,7 +10,7 @@ using ChickenAPI.Data.AccessLayer.Map;
 using ChickenAPI.Data.TransferObjects.Map;
 using ChickenAPI.Enums.Game.Portals;
 
-namespace NosSharp.Parser.Generators.FromPackets
+namespace Toolkit.Generators.FromPackets
 {
     public class PacketPortalGenerator
     {

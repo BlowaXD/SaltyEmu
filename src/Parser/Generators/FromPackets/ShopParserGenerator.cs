@@ -10,7 +10,7 @@ using ChickenAPI.Data.AccessLayer.Map;
 using ChickenAPI.Data.AccessLayer.Shop;
 using ChickenAPI.Data.TransferObjects.Shop;
 
-namespace NosSharp.Parser.Generators.FromPackets
+namespace Toolkit.Generators.FromPackets
 {
     public class ShopParserGenerator
     {
