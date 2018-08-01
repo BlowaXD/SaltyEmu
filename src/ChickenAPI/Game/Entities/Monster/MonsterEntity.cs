@@ -25,6 +25,7 @@ namespace ChickenAPI.Game.Entities.Monster
                 Mp = dto.NpcMonster.MaxMp,
                 MpMax = dto.NpcMonster.MaxMp
             };
+            Skills = new SkillsComponent(this);
             Components = new Dictionary<Type, IComponent>
             {
                 {
@@ -35,7 +36,8 @@ namespace ChickenAPI.Game.Entities.Monster
                 },
                 { typeof(BattleComponent), Battle },
                 { typeof(MovableComponent), Movable },
-                { typeof(NpcMonsterComponent), new NpcMonsterComponent(this, dto) }
+                { typeof(NpcMonsterComponent), new NpcMonsterComponent(this, dto) },
+                { typeof(SkillsComponent), Skills }
             };
         }
 
@@ -46,5 +48,6 @@ namespace ChickenAPI.Game.Entities.Monster
 
         public MovableComponent Movable { get; }
         public BattleComponent Battle { get; set; }
+        public SkillsComponent Skills { get; }
     }
 }

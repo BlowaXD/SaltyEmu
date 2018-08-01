@@ -24,6 +24,7 @@ namespace ChickenAPI.Game.Entities.Player
         public InventoryComponent Inventory { get; }
         public ExperienceComponent Experience { get; }
         public NameComponent Name { get; set; }
+        public SkillsComponent Skills { get; }
 
         public PlayerEntity(ISession session, CharacterDto dto) : base(EntityType.Player)
         {
@@ -57,21 +58,19 @@ namespace ChickenAPI.Game.Entities.Player
                     Y = dto.MapY
                 }
             };
+            Skills = new SkillsComponent(this);
             Components = new Dictionary<Type, IComponent>
             {
                 { typeof(VisibilityComponent), new VisibilityComponent(this) },
                 { typeof(MovableComponent), Movable },
                 { typeof(BattleComponent), Battle },
                 { typeof(CharacterComponent), Character },
-                {
-                    typeof(ExperienceComponent), Experience
-                },
+                { typeof(ExperienceComponent), Experience },
                 { typeof(FamilyComponent), new FamilyComponent(this) },
                 { typeof(InventoryComponent), Inventory },
-                {
-                    typeof(NameComponent), Name
-                },
-                { typeof(SpecialistComponent), new SpecialistComponent(this) }
+                { typeof(NameComponent), Name },
+                { typeof(SpecialistComponent), new SpecialistComponent(this) },
+                { typeof(SkillsComponent), Skills }
             };
         }
 

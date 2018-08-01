@@ -24,14 +24,14 @@ namespace ChickenAPI.Game.Game.Entities.Npc
                 Speed = npc.NpcMonster.Speed
             };
             Shop = shop;
+            Skills = new SkillsComponent(this);
             Components = new Dictionary<Type, IComponent>
             {
                 { typeof(BattleComponent), Battle },
                 { typeof(VisibilityComponent), new VisibilityComponent(this) },
                 { typeof(MovableComponent), Movable },
-                {
-                    typeof(NpcMonsterComponent), new NpcMonsterComponent(this, npc)
-                }
+                { typeof(NpcMonsterComponent), new NpcMonsterComponent(this, npc) },
+                { typeof(SkillsComponent), Skills }
             };
         }
 
@@ -44,5 +44,6 @@ namespace ChickenAPI.Game.Game.Entities.Npc
         public ShopDto Shop { get; set; }
         public BattleComponent Battle { get; }
         public MovableComponent Movable { get; }
+        public SkillsComponent Skills { get; }
     }
 }
