@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Autofac;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Data.AccessLayer.Map;
 using ChickenAPI.Data.AccessLayer.NpcMonster;
+using ChickenAPI.Data.AccessLayer.Shop;
 using ChickenAPI.Data.TransferObjects.Map;
+using ChickenAPI.Data.TransferObjects.Shop;
+using ChickenAPI.Game.Data.AccessLayer.Shop;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Maps;
 using ChickenAPI.Managers;
@@ -22,7 +26,8 @@ namespace NosSharp.TemporaryMapPlugins
             IEnumerable<MapNpcDto> npcs = Container.Instance.Resolve<IMapNpcService>().GetByMapId(mapId);
             IEnumerable<MapMonsterDto> monsters = Container.Instance.Resolve<IMapMonsterService>().GetByMapId(mapId);
             IEnumerable<PortalDto> portals = Container.Instance.Resolve<IPortalService>().GetByMapId(mapId);
-            return new SimpleMap(map, monsters, npcs, portals);
+            IEnumerable<ShopDto> shops = Container.Instance.Resolve<IShopService>().GetByMapNpcIds(npcs.Select(s => s.Id));
+            return new SimpleMap(map, monsters, npcs, portals, shops);
         }
 
         public IReadOnlyDictionary<long, IMap> Maps { get; }

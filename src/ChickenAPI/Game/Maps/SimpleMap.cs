@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using ChickenAPI.Data.TransferObjects.Map;
+using ChickenAPI.Data.TransferObjects.Shop;
 using ChickenAPI.ECS.Entities;
 
 namespace ChickenAPI.Game.Maps
@@ -12,13 +13,14 @@ namespace ChickenAPI.Game.Maps
         private readonly IEnumerable<MapMonsterDto> _monsters;
         private readonly IEnumerable<MapNpcDto> _npcs;
 
-        public SimpleMap(MapDto map, IEnumerable<MapMonsterDto> monsters, IEnumerable<MapNpcDto> npcs, IEnumerable<PortalDto> portals)
+        public SimpleMap(MapDto map, IEnumerable<MapMonsterDto> monsters, IEnumerable<MapNpcDto> npcs, IEnumerable<PortalDto> portals, IEnumerable<ShopDto> shops)
         {
             _map = map;
             _monsters = monsters;
             _npcs = npcs;
             Portals = new HashSet<PortalDto>(portals);
-            _baseMapLayer = new SimpleMapLayer(this, _monsters, _npcs, Portals);
+            Shops = new HashSet<ShopDto>(shops);
+            _baseMapLayer = new SimpleMapLayer(this, _monsters, _npcs, Portals, Shops);
             Layers = new HashSet<IMapLayer>();
         }
 
@@ -27,6 +29,8 @@ namespace ChickenAPI.Game.Maps
         public IMapLayer BaseLayer => _baseMapLayer ?? (_baseMapLayer = new SimpleMapLayer(this, _monsters, _npcs, Portals));
         public HashSet<IMapLayer> Layers { get; }
         public HashSet<PortalDto> Portals { get; }
+        public HashSet<ShopDto> Shops { get; }
+
         public short Width => _map.Width;
         public short Height => _map.Height;
         public byte[] Grid => _map.Grid;

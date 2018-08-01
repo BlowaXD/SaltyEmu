@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ChickenAPI.Core.Utils;
 using ChickenAPI.Data.TransferObjects.Map;
+using ChickenAPI.Data.TransferObjects.Shop;
 using ChickenAPI.ECS.Entities;
 using ChickenAPI.ECS.Systems;
 using ChickenAPI.Enums.Game.Entity;
@@ -19,7 +20,7 @@ namespace ChickenAPI.Game.Maps
 {
     public class SimpleMapLayer : EntityManagerBase, IMapLayer
     {
-        public SimpleMapLayer(IMap map, IEnumerable<MapMonsterDto> monsters, IEnumerable<MapNpcDto> npcs = null, IEnumerable<PortalDto> portals = null)
+        public SimpleMapLayer(IMap map, IEnumerable<MapMonsterDto> monsters, IEnumerable<MapNpcDto> npcs = null, IEnumerable<PortalDto> portals = null, IEnumerable<ShopDto> shops = null)
         {
             Id = Guid.NewGuid();
             Map = map;
@@ -29,7 +30,7 @@ namespace ChickenAPI.Game.Maps
                 { typeof(VisibilitySystem), new VisibilitySystem(this) },
                 { typeof(ChatSystem), new ChatSystem(this) },
                 { typeof(MovableSystem), new MovableSystem(this) },
-                { typeof(InventorySystem), new InventorySystem(this) }
+                { typeof(InventorySystem), new InventorySystem(this) },
             };
             foreach (MapMonsterDto monster in monsters)
             {
@@ -43,7 +44,8 @@ namespace ChickenAPI.Game.Maps
 
             foreach (MapNpcDto npc in npcs)
             {
-                RegisterEntity(new NpcEntity(npc));
+                ShopDto shop = shops?.FirstOrDefault(s => s.MapNpcId == npc.Id);
+                    RegisterEntity(new NpcEntity(npc, shop));
             }
 
             if (portals == null)

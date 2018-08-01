@@ -14,6 +14,7 @@ using ChickenAPI.Data.AccessLayer.Shop;
 using ChickenAPI.Data.AccessLayer.Skill;
 using ChickenAPI.Data.TransferObjects.Character;
 using ChickenAPI.Enums.Game.Character;
+using ChickenAPI.Game.Data.AccessLayer.Shop;
 using ChickenAPI.Plugins;
 using Microsoft.EntityFrameworkCore;
 using NosSharp.DatabasePlugin.Configuration;

@@ -9,6 +9,7 @@ using ChickenAPI.Data.AccessLayer.Shop;
 using ChickenAPI.Data.TransferObjects.Map;
 using ChickenAPI.Data.TransferObjects.NpcMonster;
 using ChickenAPI.Data.TransferObjects.Shop;
+using ChickenAPI.Game.Data.AccessLayer.Shop;
 using Microsoft.EntityFrameworkCore;
 using NosSharp.DatabasePlugin.Context;
 using NosSharp.DatabasePlugin.Models.NpcMonster;
@@ -45,6 +46,32 @@ namespace NosSharp.DatabasePlugin.Services.Shop
             catch (Exception e)
             {
                 Log.Error("[GET_BY_MAP_NPC_ID]", e);
+                throw;
+            }
+        }
+
+        public IEnumerable<ShopDto> GetByMapNpcIds(IEnumerable<long> npcIds)
+        {
+            try
+            {
+                return DbSet.Where(s => npcIds.Contains(s.Id)).ToList().Select(Mapper.Map<ShopDto>);
+            }
+            catch (Exception e)
+            {
+                Log.Error("[GET_BY_MAP_NPC_IDS]", e);
+                throw;
+            }
+        }
+
+        public async Task<IEnumerable<ShopDto>> GetByMapNpcIdsAsync(IEnumerable<long> npcIds)
+        {
+            try
+            {
+                return (await DbSet.Where(s => npcIds.Contains(s.Id)).ToListAsync()).Select(Mapper.Map<ShopDto>);
+            }
+            catch (Exception e)
+            {
+                Log.Error("[GET_BY_MAP_NPC_IDS]", e);
                 throw;
             }
         }

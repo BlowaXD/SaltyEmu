@@ -8,6 +8,7 @@ using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Logging;
 using ChickenAPI.Data.AccessLayer.Shop;
 using ChickenAPI.Data.TransferObjects.Shop;
+using ChickenAPI.Game.Data.AccessLayer.Shop;
 
 namespace Toolkit.Generators.FromPackets
 {

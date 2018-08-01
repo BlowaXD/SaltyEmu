@@ -13,7 +13,7 @@ namespace ChickenAPI.Game.Entities.Npc
 {
     public class NpcEntity : EntityBase, INpcEntity
     {
-        public NpcEntity(MapNpcDto npc) : base(EntityType.Npc)
+        public NpcEntity(MapNpcDto npc, ShopDto shop) : base(EntityType.Npc)
         {
             Battle = new BattleComponent(this);
             Movable = new MovableComponent(this)
@@ -23,6 +23,7 @@ namespace ChickenAPI.Game.Entities.Npc
                 DirectionType = npc.Position,
                 Speed = npc.NpcMonster.Speed
             };
+            Shop = shop;
             Components = new Dictionary<Type, IComponent>
             {
                 { typeof(BattleComponent), Battle },
