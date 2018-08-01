@@ -15,7 +15,7 @@ namespace NosSharp.PacketHandler.Skill.Commands
         public static void OnAddItemCommand(AddSkillCommandPacket packet, IPlayerEntity player)
         {
             var skillService = Container.Instance.Resolve<ISkillService>();
-            SkillDto skill = skillService.GetById(packet.SkillVnum);
+            SkillDto skill = skillService.GetById(packet.SkillId);
 
             player.NotifySystem<SkillSystem>(new PlayerAddSkillEventArgs
             {
@@ -28,6 +28,6 @@ namespace NosSharp.PacketHandler.Skill.Commands
     public class AddSkillCommandPacket : PacketBase
     {
         [PacketIndex(0)]
-        public long SkillVnum { get; set; }
+        public long SkillId { get; set; }
     }
 }
