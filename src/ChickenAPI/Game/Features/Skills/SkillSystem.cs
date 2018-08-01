@@ -1,9 +1,8 @@
-﻿using ChickenAPI.ECS.Entities;
+﻿using System.Linq;
+using ChickenAPI.Data.TransferObjects.Skills;
+using ChickenAPI.ECS.Entities;
 using ChickenAPI.ECS.Systems;
-using ChickenAPI.Game.Entities.Monster;
-using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Features.Skills.Args;
-using ChickenAPI.Game.Game.Entities.Npc;
 
 namespace ChickenAPI.Game.Features.Skills
 {
@@ -38,15 +37,43 @@ namespace ChickenAPI.Game.Features.Skills
                 return; //the skill doesn't exist?
             }
 
-            switch (component.Entity)
+            if (e.Skill.Id < 200)
             {
-                case PlayerEntity player:
-                    break;
-                case MonsterEntity monster:
-                    break;
-                case NpcEntity npc:
-                    break;
+                foreach (var skill in component.Skills.Values)
+                {
+                    if (e.Skill.CastId == skill.CastId && skill.Id < 200)
+                    {
+                        component.Skills.TryRemove(skill.Id, out _);
+                    }
+                }
             }
+            else
+            {
+                if (component.Skills.ContainsKey(e.Skill.Id))
+                {
+                    return; //we already have that skill!
+                }
+
+                if (e.Skill.UpgradeSkill != 0) //means it's not a skill but an upgrade
+                {
+                    SkillDto oldUpgrade = component.Skills.Values.FirstOrDefault(
+                        s => s.UpgradeSkill == e.Skill.UpgradeSkill &&
+                             s.UpgradeType == e.Skill.UpgradeType &&
+                             s.UpgradeSkill != 0);
+
+                    if (!(oldUpgrade is null))
+                    {
+                        component.Skills.TryRemove(oldUpgrade.Id, out _);
+                    }
+                }
+            }
+
+            if (!component.Skills.TryAdd(e.Skill.Id, e.Skill))
+            {
+                return; //something that shouldn't happen happened kek
+            }
+
+            //todo: send different packets to add the skill.
         }
     }
 }
