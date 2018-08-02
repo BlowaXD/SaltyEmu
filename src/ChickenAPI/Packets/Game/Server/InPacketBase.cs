@@ -51,6 +51,10 @@ namespace ChickenAPI.Packets.Game.Server
     [PacketHeader("in")]
     public class InPacketBase : PacketBase
     {
+        public InPacketBase()
+        {
+
+        }
         public InPacketBase(IEntity entity)
         {
             switch (entity.Type)
@@ -172,38 +176,6 @@ namespace ChickenAPI.Packets.Game.Server
 
         private void FillMonster(IEntity entity)
         {
-            var battle = entity.GetComponent<BattleComponent>();
-            var npcMonster = entity.GetComponent<NpcMonsterComponent>();
-            var movable = entity.GetComponent<MovableComponent>();
-
-            VisualType = VisualType.Monster;
-            Name = npcMonster.Vnum.ToString();
-            Unknown = npcMonster.MapNpcMonsterId.ToString();
-            PositionX = movable.Actual.X;
-            PositionY = movable.Actual.Y;
-            DirectionType = movable.DirectionType;
-            InMonsterSubPacket = new InMonsterSubPacket
-            {
-                HpPercentage = Convert.ToByte(Math.Ceiling(battle.Hp / (battle.HpMax * 100.0))),
-                MpPercentage = Convert.ToByte(Math.Ceiling(battle.Mp / (battle.MpMax * 100.0))),
-                Unknown1 = 0,
-                Unknown2 = 0,
-                Unknown3 = -1,
-                NoAggressiveIcon = !npcMonster.IsAggressive,
-                Unknown4 = 0,
-                Unknown5 = -1,
-                Unknown6 = "-",
-                Unknown7 = 0,
-                Unknown8 = -1,
-                Unknown9 = 0,
-                Unknown10 = 0,
-                Unknown11 = 0,
-                Unknown12 = 0,
-                Unknown13 = 0,
-                Unknown14 = 0,
-                Unknown15 = 0,
-                Unknown16 = 0
-            };
         }
 
         #region Properties

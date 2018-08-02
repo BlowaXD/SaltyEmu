@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using ChickenAPI.Core.Utils;
 using ChickenAPI.Data.TransferObjects.Map;
+using ChickenAPI.Data.TransferObjects.NpcMonster;
 using ChickenAPI.ECS.Components;
 using ChickenAPI.ECS.Entities;
 using ChickenAPI.Enums.Game.Entity;
@@ -26,6 +27,8 @@ namespace ChickenAPI.Game.Entities.Monster
                 MpMax = dto.NpcMonster.MaxMp
             };
             Skills = new SkillsComponent(this);
+            NpcMonster = dto.NpcMonster;
+            MapMonster = dto;
             Components = new Dictionary<Type, IComponent>
             {
                 {
@@ -49,5 +52,7 @@ namespace ChickenAPI.Game.Entities.Monster
         public MovableComponent Movable { get; }
         public BattleComponent Battle { get; set; }
         public SkillsComponent Skills { get; }
+        public NpcMonsterDto NpcMonster { get; }
+        public MapMonsterDto MapMonster { get; }
     }
 }
