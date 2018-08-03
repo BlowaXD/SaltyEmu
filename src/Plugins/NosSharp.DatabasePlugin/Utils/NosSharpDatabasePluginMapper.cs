@@ -9,15 +9,18 @@ using ChickenAPI.Data.TransferObjects.Drop;
 using ChickenAPI.Data.TransferObjects.Item;
 using ChickenAPI.Data.TransferObjects.Map;
 using ChickenAPI.Data.TransferObjects.NpcMonster;
+using ChickenAPI.Data.TransferObjects.Shop;
 using ChickenAPI.Data.TransferObjects.Skills;
 using ChickenAPI.Enums.Game.BCard;
 using ChickenAPI.Enums.Game.Drop;
+using ChickenAPI.Game.Data.TransferObjects.Shop;
 using NosSharp.DatabasePlugin.Models;
 using NosSharp.DatabasePlugin.Models.BCard;
 using NosSharp.DatabasePlugin.Models.Character;
 using NosSharp.DatabasePlugin.Models.Drops;
 using NosSharp.DatabasePlugin.Models.Map;
 using NosSharp.DatabasePlugin.Models.NpcMonster;
+using NosSharp.DatabasePlugin.Models.Shop;
 using NosSharp.DatabasePlugin.Models.Skill;
 
 namespace NosSharp.DatabasePlugin.Utils
@@ -35,6 +38,7 @@ namespace NosSharp.DatabasePlugin.Utils
                 MapItems(cfg);
                 MapBCards(cfg);
                 MapNpcMonster(cfg);
+                MapShop(cfg);
                 ConfigureMapObjects(cfg);
                 ConfigureCards(cfg);
             });
@@ -245,6 +249,24 @@ namespace NosSharp.DatabasePlugin.Utils
         {
             cfg.CreateMap<AccountDto, AccountModel>();
             cfg.CreateMap<AccountModel, AccountDto>();
+        }
+
+        private static void MapShop(IMapperConfigurationExpression cfg)
+        {
+            cfg.CreateMap<ShopDto, ShopModel>();
+            cfg.CreateMap<ShopModel, ShopDto>();
+
+            cfg.CreateMap<ShopItemDto, ShopItemModel>();
+            cfg.CreateMap<ShopItemModel, ShopItemDto>();
+
+            cfg.CreateMap<ShopSkillDto, ShopSkillModel>();
+            cfg.CreateMap<ShopSkillModel, ShopSkillDto>();
+
+            cfg.CreateMap<RecipeDto, RecipeModel>();
+            cfg.CreateMap<RecipeModel, RecipeDto>();
+
+            cfg.CreateMap<RecipeItemDto, RecipeItemModel>();
+            cfg.CreateMap<RecipeItemModel, RecipeItemDto>();
         }
     }
 }

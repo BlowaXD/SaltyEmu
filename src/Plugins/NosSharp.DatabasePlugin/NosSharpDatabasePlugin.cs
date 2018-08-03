@@ -68,6 +68,7 @@ namespace NosSharp.DatabasePlugin
             Container.Builder.Register(s => new MapPortalDao(s.Resolve<NosSharpContext>(), _mapper)).As<IPortalService>().InstancePerLifetimeScope();
             Container.Builder.Register(s => new ShopDao(s.Resolve<NosSharpContext>(), _mapper)).As<IShopService>().InstancePerLifetimeScope();
             Container.Builder.Register(s => new ShopItemDao(s.Resolve<NosSharpContext>(), _mapper)).As<IShopItemService>().InstancePerLifetimeScope();
+            Container.Builder.Register(s => new ShopSkillDao(s.Resolve<NosSharpContext>(), _mapper)).As<IShopSkillService>().InstancePerLifetimeScope();
             Container.Builder.Register(s => new RecipeDao(s.Resolve<NosSharpContext>(), _mapper)).As<IRecipeService>().InstancePerLifetimeScope();
             Container.Builder.Register(s => new RecipeItemDao(s.Resolve<NosSharpContext>(), _mapper)).As<IRecipeItemService>().InstancePerLifetimeScope();
         }
