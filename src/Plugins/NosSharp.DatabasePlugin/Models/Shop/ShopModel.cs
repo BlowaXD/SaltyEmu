@@ -27,5 +27,6 @@ namespace NosSharp.DatabasePlugin.Models.Shop
         public IEnumerable<ShopItemModel> ShopItems { get; set; }
 
         public IEnumerable<RecipeModel> Recipes { get; set; }
+        public IEnumerable<ShopSkillModel> ShopSkills { get; set; }
     }
 }

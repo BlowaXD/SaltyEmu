@@ -212,6 +212,11 @@ namespace NosSharp.DatabasePlugin.Context
                 .WithMany(s => s.ShopItems)
                 .HasForeignKey(s => s.ShopId);
 
+            modelBuilder.Entity<ShopSkillModel>()
+                .HasOne(s => s.Shop)
+                .WithMany(s => s.ShopSkills)
+                .HasForeignKey(s => s.ShopId);
+
             modelBuilder.Entity<RecipeModel>()
                 .HasOne(s => s.Shop)
                 .WithMany(s => s.Recipes)
