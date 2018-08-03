@@ -90,8 +90,7 @@ namespace ChickenAPI.Game.Systems.Visibility
                     case EntityType.Mate:
                     case EntityType.Npc:
                     case EntityType.Player:
-                        var inpacket = new InPacketBase(entityy);
-                        session.SendPacket(inpacket);
+                        session.SendPacket(entityy.GenerateInPacket());
                         if (entityy is IPlayerEntity player)
                         {
                             player.SendPacket(inEntity);
