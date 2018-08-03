@@ -19,10 +19,17 @@ namespace ChickenAPI.Game.Features.Shops
                 case GetShopInformationEventArgs getinfos:
                     SendInformations(getinfos, entity);
                     break;
+                case BuyShopEventArgs buy:
+                    HandleBuyRequest(entity, buy);
+                    break;
+                case SellShopEventArgs sell:
+                    HandleSellRequest(entity, sell);
+                    break;
             }
         }
 
-        private void SendInformations(GetShopInformationEventArgs getinfos, IEntity entity)
+
+        private static void SendInformations(GetShopInformationEventArgs getinfos, IEntity entity)
         {
             if (!(entity is IPlayerEntity player))
             {
@@ -39,6 +46,16 @@ namespace ChickenAPI.Game.Features.Shops
                 VisualId = getinfos.Shop.MapNpcId,
                 VisualType = 2
             });
+        }
+
+        private static void HandleBuyRequest(IEntity entity, BuyShopEventArgs buy)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        private static void HandleSellRequest(IEntity entity, SellShopEventArgs sell)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }
