@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using ChickenAPI.Data.AccessLayer.Shop;
 using ChickenAPI.Data.TransferObjects.Shop;
+using ChickenAPI.Game.Data.TransferObjects.Shop;
 using Microsoft.EntityFrameworkCore;
 using NosSharp.DatabasePlugin.Context;
 using NosSharp.DatabasePlugin.Models.Shop;

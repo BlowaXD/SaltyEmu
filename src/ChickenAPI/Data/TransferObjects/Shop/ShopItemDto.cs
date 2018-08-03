@@ -1,7 +1,7 @@
 ﻿using ChickenAPI.Core.Data.TransferObjects;
-using ChickenAPI.Data.AccessLayer.Repository;
+using ChickenAPI.Data.TransferObjects.Item;
 
-namespace ChickenAPI.Data.TransferObjects.Shop
+namespace ChickenAPI.Game.Data.TransferObjects.Shop
 {
     public class ShopItemDto : IMappedDto
     {
@@ -20,5 +20,7 @@ namespace ChickenAPI.Data.TransferObjects.Shop
         public byte Type { get; set; }
 
         public byte Upgrade { get; set; }
+
+        public ItemDto Item { get; set; }
     }
 }

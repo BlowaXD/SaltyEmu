@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using ChickenAPI.Core.Data.AccessLayer;
-using ChickenAPI.Data.AccessLayer.Repository;
-using ChickenAPI.Data.TransferObjects.Shop;
+using ChickenAPI.Game.Data.TransferObjects.Shop;
 
 namespace ChickenAPI.Data.AccessLayer.Shop
 {

@@ -1,4 +1,5 @@
 ﻿using ChickenAPI.Core.Data.TransferObjects;
+using ChickenAPI.Data.TransferObjects.Skills;
 
 namespace ChickenAPI.Game.Data.TransferObjects.Shop
 {
@@ -13,5 +14,7 @@ namespace ChickenAPI.Game.Data.TransferObjects.Shop
         public byte Slot { get; set; }
 
         public byte Type { get; set; }
+
+        public SkillDto Skill { get; set; }
     }
 }
