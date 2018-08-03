@@ -61,6 +61,8 @@ namespace NosSharp.DatabasePlugin.Context
 
         public DbSet<ShopItemModel> ShopItems { get; set; }
 
+        public DbSet<ShopItemModel> ShopSkills { get; set; }
+
         public DbSet<RecipeModel> Recipes { get; set; }
 
         public DbSet<RecipeItemModel> RecipeItems { get; set; }
