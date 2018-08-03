@@ -49,24 +49,26 @@ namespace ChickenAPI.Game.Features.Shops
             float percent = 1.0f;
             foreach (ShopItemDto itemInfo in getinfos.Shop.Items.Where(s => s.Type == getinfos.Packet.Type))
             {
-                ItemDto item = itemInfo.Item;
-                if (itemInfo.Type == 0 && itemInfo.Item.ReputPrice > 0)
+                tmp.Append(' ');
+                float price = itemInfo.Item.ReputPrice > 0 ? itemInfo.Item.ReputPrice : itemInfo.Item.Price * percent;
+                byte color = itemInfo.Color != 0 ? itemInfo.Item.Color : itemInfo.Item.BasicUpgrade;
+                int rare = itemInfo.Type == 0 ? itemInfo.Rare : -1;
+                if (itemInfo.Type != 0 || itemInfo.Item.ReputPrice <= 0)
                 {
-                    tmp.Append(
-                        $" {itemInfo.Type}.{(byte)itemInfo.Item.EquipmentSlot}.{itemInfo.ItemId}.{itemInfo.Rare}.{(itemInfo.Color != 0 ? itemInfo.Item.Color : itemInfo.Item.BasicUpgrade)}.{itemInfo.Item.ReputPrice}");
+                    continue;
                 }
-                else if (itemInfo.Item.ReputPrice > 0 && itemInfo.Type != 0)
-                {
-                    tmp.Append($" {itemInfo.Type}.{(byte)item.EquipmentSlot}.{itemInfo.ItemId}.-1.{itemInfo.Item.ReputPrice}");
-                }
-                else if (itemInfo.Type != 0)
-                {
-                    tmp.Append($" {itemInfo.Type}.{(byte)item.EquipmentSlot}.{itemInfo.ItemId}.-1.{itemInfo.Item.Price * percent}");
-                }
-                else
-                {
-                    tmp.Append($" {itemInfo.Type}.{(byte)item.EquipmentSlot}.{item.Id}.{itemInfo.Rare}.{(itemInfo.Color != 0 ? item.Color : item.BasicUpgrade)}.{itemInfo.Item.Price * percent}");
-                }
+
+                tmp.Append(itemInfo.Type);
+                tmp.Append('.');
+                tmp.Append((byte)itemInfo.Item.EquipmentSlot);
+                tmp.Append('.');
+                tmp.Append(itemInfo.ItemId);
+                tmp.Append('.');
+                tmp.Append(rare);
+                tmp.Append('.');
+                tmp.Append(color);
+                tmp.Append('.');
+                tmp.Append(price);
             }
 
             foreach (ShopSkillDto skill in getinfos.Shop.Skills.Where(s => s.Type.Equals(getinfos.Packet.Type)))
@@ -88,7 +90,7 @@ namespace ChickenAPI.Game.Features.Shops
                     tmp.Append(skillinfo.Id);
                 }
             }
-            
+
             player.SendPacket(new NInvPacket()
             {
                 ShopList = tmp.ToString(),
