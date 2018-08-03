@@ -5,6 +5,6 @@ namespace ChickenAPI.Game.Features.Shops.Args
 {
     public class GetShopInformationEventArgs : SystemEventArgs
     {
-        public ShopDto Shop { get; set; }
+        public Shop Shop { get; set; }
     }
 }

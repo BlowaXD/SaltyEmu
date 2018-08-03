@@ -8,6 +8,7 @@ using ChickenAPI.ECS.Entities;
 using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Game.Components;
 using ChickenAPI.Game.Entities.Npc;
+using ChickenAPI.Game.Features.Shops;
 
 namespace ChickenAPI.Game.Game.Entities.Npc
 {
@@ -23,7 +24,7 @@ namespace ChickenAPI.Game.Game.Entities.Npc
                 DirectionType = npc.Position,
                 Speed = npc.NpcMonster.Speed
             };
-            Shop = shop;
+            Shop = new Shop(shop);
             Skills = new SkillsComponent(this);
             Components = new Dictionary<Type, IComponent>
             {
@@ -41,7 +42,7 @@ namespace ChickenAPI.Game.Game.Entities.Npc
         }
         public MapNpcDto MapNpc { get; set; }
 
-        public ShopDto Shop { get; set; }
+        public Shop Shop { get; set; }
         public BattleComponent Battle { get; }
         public MovableComponent Movable { get; }
         public SkillsComponent Skills { get; }
