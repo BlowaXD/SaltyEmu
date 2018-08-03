@@ -9,6 +9,7 @@ using ChickenAPI.Game.Entities.Npc;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Features.Shops.Packets;
 using ChickenAPI.Game.Game.Entities.Npc;
+using ChickenAPI.Game.Packets.Extensions;
 using ChickenAPI.Packets.Game.Server;
 
 namespace ChickenAPI.Game.Systems.Visibility
@@ -53,7 +54,7 @@ namespace ChickenAPI.Game.Systems.Visibility
                 return;
             }
 
-            var inEntity = new InPacketBase(entity);
+            InPacketBase inEntity = entity.GenerateInPacket();
 
             foreach (IEntity entityy in entity.EntityManager.Entities)
             {

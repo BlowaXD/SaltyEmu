@@ -10,7 +10,7 @@
         }
 
         [PacketIndex(0)]
-        public long PartySize { get; set; } = 0;
+        public long PartySize { get; set; }
 
         [PacketIndex(1)]
         public string PartyString { get; set; }

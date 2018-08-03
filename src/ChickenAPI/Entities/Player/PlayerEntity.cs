@@ -8,6 +8,7 @@ using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Game.Components;
 using ChickenAPI.Game.Maps;
 using ChickenAPI.Game.Network;
+using ChickenAPI.Game.Packets.Extensions;
 using ChickenAPI.Game.Systems.Visibility;
 using ChickenAPI.Packets;
 using ChickenAPI.Packets.Game.Client;
@@ -94,7 +95,9 @@ namespace ChickenAPI.Game.Entities.Player
             SendPacket(new EquipmentPacket(this));
             SendPacket(new LevPacket(this));
             SendPacket(new StPacket(this));
-            SendPacket(new AtPacketBase(this));
+
+            SendPacket(this.GenerateAtPacket());
+
             SendPacket(new CondPacketBase(this));
             SendPacket(new CMapPacketBase(map.Map));
             // StatChar()

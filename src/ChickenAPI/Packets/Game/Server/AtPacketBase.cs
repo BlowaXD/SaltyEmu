@@ -7,19 +7,8 @@ namespace ChickenAPI.Packets.Game.Server
     [PacketHeader("at")]
     public class AtPacketBase : PacketBase
     {
-        public AtPacketBase(IPlayerEntity entity)
+        public AtPacketBase()
         {
-            var layer = (IMapLayer)entity.EntityManager;
-            
-
-            CharacterId = entity.Character.Id;
-            MapId = entity.Character.MapId;
-            PositionX = entity.Movable.Actual.X;
-            PositionY = entity.Movable.Actual.Y;
-            Unknown1 = 2; // TODO: Find signification
-            Unknown2 = 0; // TODO: Find signification
-            Music = layer.Map.MusicId; //layer.Map.MusicId;
-            Unknown3 = -1; // TODO: Find signification
         }
 
         #region Properties

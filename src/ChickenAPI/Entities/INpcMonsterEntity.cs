@@ -1,6 +1,6 @@
 ﻿using ChickenAPI.Data.TransferObjects.NpcMonster;
 
-namespace ChickenAPI.Game.Game.Entities
+namespace ChickenAPI.Game.Entities
 {
     public interface INpcMonsterEntity
     {

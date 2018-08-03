@@ -127,51 +127,6 @@ namespace ChickenAPI.Packets.Game.Server
 
         private void FillPlayer(IPlayerEntity entity)
         {
-            var character = entity.GetComponent<CharacterComponent>();
-            var battle = entity.GetComponent<BattleComponent>();
-            var movable = entity.GetComponent<MovableComponent>();
-
-            VisualType = VisualType.Character;
-            Name = entity.GetComponent<NameComponent>().Name;
-            Unknown = "-";
-            VNum = character.Id;
-            PositionX = movable.Actual.X;
-            PositionY = movable.Actual.Y;
-            DirectionType = movable.DirectionType;
-            InCharacterSubPacket = new InCharacterSubPacketBase
-            {
-                Authority = entity.Session.Account.Authority > AuthorityType.GameMaster ? (byte)2 : (byte)0,
-                Gender = character.Gender,
-                HairStyle = character.HairStyle,
-                HairColor = character.HairColor,
-                Class = character.Class,
-                Equipment = new InventoryWearSubPacket(entity.Inventory),
-                HpPercentage = battle.HpPercentage,
-                MpPercentage = battle.MpPercentage,
-                IsSitting = false,
-                GroupId = -1,
-                FairyId = 0,
-                FairyElement = 0,
-                IsBoostedFairy = 0,
-                FairyMorph = 0,
-                EntryType = 0,
-                Morph = 0,
-                EquipmentRare = "00",
-                EquipmentRareTwo = "00",
-                FamilyId = -1,
-                FamilyName = "-", // if not put -1
-                ReputationIcon = 27,
-                Invisible = !entity.GetComponent<VisibilityComponent>().IsVisible,
-                SpUpgrade = 0,
-                Faction = FactionType.Neutral, // todo faction system
-                SpDesign = 0,
-                Level = entity.Experience.Level,
-                FamilyLevel = 0,
-                ArenaWinner = character.ArenaWinner,
-                Compliment = character.Compliment,
-                Size = 10,
-                HeroLevel = entity.Experience.HeroLevel
-            };
         }
 
         private void FillMonster(IEntity entity)
