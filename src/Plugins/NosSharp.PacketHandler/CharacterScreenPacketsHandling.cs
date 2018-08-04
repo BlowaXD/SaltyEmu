@@ -1,15 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Autofac;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Logging;
 using ChickenAPI.Core.Utils;
-using ChickenAPI.Data.AccessLayer;
-using ChickenAPI.Data.TransferObjects;
 using ChickenAPI.Enums.Game;
 using ChickenAPI.Enums.Game.Character;
 using ChickenAPI.Enums.Game.Items;

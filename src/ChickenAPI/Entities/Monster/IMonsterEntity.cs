@@ -1,5 +1,4 @@
 ﻿using ChickenAPI.Core.ECS.Entities;
-using ChickenAPI.Game.Game.Entities;
 
 namespace ChickenAPI.Game.Entities.Monster
 {

@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using ChickenAPI.Core.Logging;
-using ChickenAPI.Data.AccessLayer;
-using ChickenAPI.Data.TransferObjects;
 using ChickenAPI.Game.Data.AccessLayer.Server;
 using ChickenAPI.Game.Data.TransferObjects.Server;
 using ServiceStack.Redis;

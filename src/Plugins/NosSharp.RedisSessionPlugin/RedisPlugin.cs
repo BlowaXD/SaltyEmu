@@ -4,7 +4,6 @@ using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Logging;
 using ChickenAPI.Core.Plugins;
 using ChickenAPI.Core.Utils;
-using ChickenAPI.Data.AccessLayer;
 using ChickenAPI.Game.Data.AccessLayer.Server;
 
 namespace NosSharp.RedisSessionPlugin

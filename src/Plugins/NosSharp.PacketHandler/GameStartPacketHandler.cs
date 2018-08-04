@@ -1,7 +1,5 @@
 ﻿using Autofac;
 using ChickenAPI.Core.IoC;
-using ChickenAPI.Data.AccessLayer;
-using ChickenAPI.Data.TransferObjects;
 using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Enums.Packets;
 using ChickenAPI.Game.Data.AccessLayer.Character;

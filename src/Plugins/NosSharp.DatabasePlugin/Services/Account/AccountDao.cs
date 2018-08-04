@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using ChickenAPI.Data.TransferObjects;
 using ChickenAPI.Game.Data.AccessLayer.Account;
 using ChickenAPI.Game.Data.TransferObjects.Character;
 using Microsoft.EntityFrameworkCore;
