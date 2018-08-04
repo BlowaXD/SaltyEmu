@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using Autofac;
 using ChickenAPI.Core.ECS.Components;
 using ChickenAPI.Core.ECS.Entities;
+using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Utils;
+using ChickenAPI.Game.Data.AccessLayer.Character;
+using ChickenAPI.Game.Data.AccessLayer.Item;
 using ChickenAPI.Game.Data.TransferObjects.Character;
 using ChickenAPI.Game.Features.Battle;
 using ChickenAPI.Game.Features.Families;
@@ -27,6 +31,19 @@ namespace ChickenAPI.Game.Entities.Player
 {
     public class PlayerEntity : EntityBase, IPlayerEntity
     {
+        private static IItemInstanceService _itemInstance
+        {
+            get => _itemInstance ?? (_itemInstance = Container.Instance.Resolve<IItemInstanceService>());
+            set => _itemInstance = value;
+        }
+
+        private static ICharacterService _characterService
+        {
+            get => _characterService ?? (_characterService = Container.Instance.Resolve<ICharacterService>());
+            set => _characterService = value;
+        }
+
+
         public PlayerEntity(ISession session, CharacterDto dto) : base(EntityType.Player)
         {
             Session = session;
@@ -146,7 +163,14 @@ namespace ChickenAPI.Game.Entities.Player
 
         private void Save()
         {
-            Log.Info($"[SAVE_START] {Session.Account.Name}");
+            DateTime before = DateTime.UtcNow;
+            _itemInstance.Save(Inventory.Wear);
+            _itemInstance.Save(Inventory.Equipment);
+            _itemInstance.Save(Inventory.Main);
+            _itemInstance.Save(Inventory.Etc);
+            _itemInstance.Save(Inventory.Costumes);
+            _itemInstance.Save(Inventory.Specialists);
+            Log.Info($"[SAVE] {Name} saved in {(DateTime.UtcNow - before).TotalMilliseconds} ms");
         }
     }
 }
