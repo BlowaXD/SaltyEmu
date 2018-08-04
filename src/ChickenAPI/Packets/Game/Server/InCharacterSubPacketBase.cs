@@ -1,6 +1,6 @@
 ﻿using ChickenAPI.Enums.Game.Character;
 
-namespace ChickenAPI.Packets.Game.Server
+namespace ChickenAPI.Game.Packets.Game.Server
 {
     [PacketHeader("in_character_subpacket")]
     public class InCharacterSubPacketBase : PacketBase

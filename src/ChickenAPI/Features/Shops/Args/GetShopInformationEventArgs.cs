@@ -1,6 +1,5 @@
-﻿using ChickenAPI.Data.TransferObjects.Shop;
-using ChickenAPI.ECS.Systems;
-using ChickenAPI.Packets.Game.Client;
+﻿using ChickenAPI.Core.ECS.Systems;
+using ChickenAPI.Game.Packets.Game.Client;
 
 namespace ChickenAPI.Game.Features.Shops.Args
 {

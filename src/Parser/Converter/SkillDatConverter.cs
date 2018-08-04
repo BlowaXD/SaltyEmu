@@ -7,11 +7,11 @@ using Autofac;
 using ChickenAPI.Core.Data.TransferObjects;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Logging;
-using ChickenAPI.Data.AccessLayer.BCard;
-using ChickenAPI.Data.AccessLayer.Skill;
-using ChickenAPI.Data.TransferObjects.BCard;
-using ChickenAPI.Data.TransferObjects.Skills;
 using ChickenAPI.Enums.Game.BCard;
+using ChickenAPI.Game.Data.AccessLayer.BCard;
+using ChickenAPI.Game.Data.AccessLayer.Skill;
+using ChickenAPI.Game.Data.TransferObjects.BCard;
+using ChickenAPI.Game.Data.TransferObjects.Skills;
 
 namespace Toolkit.Converter
 {

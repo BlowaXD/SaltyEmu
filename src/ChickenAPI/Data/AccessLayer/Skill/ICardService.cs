@@ -1,8 +1,7 @@
 ﻿using ChickenAPI.Core.Data.AccessLayer;
-using ChickenAPI.Data.AccessLayer.Repository;
-using ChickenAPI.Data.TransferObjects.Skills;
+using ChickenAPI.Game.Data.TransferObjects.Skills;
 
-namespace ChickenAPI.Data.AccessLayer.Skill
+namespace ChickenAPI.Game.Data.AccessLayer.Skill
 {
     public interface ICardService : IMappedRepository<CardDto>
     {

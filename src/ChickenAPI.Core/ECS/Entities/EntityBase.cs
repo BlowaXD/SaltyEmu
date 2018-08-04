@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using ChickenAPI.Core.ECS.Components;
+using ChickenAPI.Core.ECS.Systems;
 using ChickenAPI.Core.Logging;
-using ChickenAPI.ECS.Components;
-using ChickenAPI.ECS.Systems;
-using ChickenAPI.Enums.Game.Entity;
 
-namespace ChickenAPI.ECS.Entities
+namespace ChickenAPI.Core.ECS.Entities
 {
     public abstract class EntityBase : IEntity
     {
@@ -50,11 +49,15 @@ namespace ChickenAPI.ECS.Entities
 
         public virtual void AddComponent<T>(T component) where T : IComponent
         {
+            if (!Components.TryGetValue(typeof(T), out IComponent comp))
+            {
+                Components[typeof(T)] = component;
+            }
         }
 
         public virtual void RemoveComponent<T>(T component) where T : IComponent
         {
-            throw new NotImplementedException();
+            Components.Remove(typeof(T));
         }
 
         public virtual bool HasComponent<T>() where T : IComponent

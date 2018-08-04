@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using ChickenAPI.ECS.Entities;
+using ChickenAPI.Core.ECS.Entities;
 
-namespace ChickenAPI.Game.Maps
+namespace ChickenAPI.Game.Game.Maps
 {
     public interface IMap : IEntityManager
     {

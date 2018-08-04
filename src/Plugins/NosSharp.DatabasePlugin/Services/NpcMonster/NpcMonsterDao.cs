@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
-using ChickenAPI.Data.AccessLayer.NpcMonster;
-using ChickenAPI.Data.TransferObjects.NpcMonster;
+using ChickenAPI.Game.Data.AccessLayer.NpcMonster;
+using ChickenAPI.Game.Data.TransferObjects.NpcMonster;
 using NosSharp.DatabasePlugin.Context;
 using NosSharp.DatabasePlugin.Models.NpcMonster;
 using NosSharp.DatabasePlugin.Services.Base;

@@ -1,5 +1,5 @@
 ﻿using ChickenAPI.Core.Data.TransferObjects;
-using ChickenAPI.Data.TransferObjects.Item;
+using ChickenAPI.Game.Data.TransferObjects.Item;
 
 namespace ChickenAPI.Game.Data.TransferObjects.Shop
 {

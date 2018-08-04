@@ -1,7 +1,7 @@
-﻿using ChickenAPI.Game.Components;
-using ChickenAPI.Game.Entities.Player;
+﻿using ChickenAPI.Game.Entities.Player;
+using ChickenAPI.Game.Game.Components;
 
-namespace ChickenAPI.Packets.Game.Server
+namespace ChickenAPI.Game.Packets.Game.Server
 {
     [PacketHeader("stat")]
     public class StatPacket : PacketBase

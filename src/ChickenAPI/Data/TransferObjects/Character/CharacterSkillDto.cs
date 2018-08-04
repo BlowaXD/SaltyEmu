@@ -1,7 +1,7 @@
 ﻿using System;
-using ChickenAPI.Data.AccessLayer.Repository;
+using ChickenAPI.Core.Data.TransferObjects;
 
-namespace ChickenAPI.Data.TransferObjects.Character
+namespace ChickenAPI.Game.Data.TransferObjects.Character
 {
     public class CharacterSkillDto : ISynchronizedDto
     {

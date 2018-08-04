@@ -1,8 +1,7 @@
 ﻿using ChickenAPI.Core.Data.AccessLayer;
-using ChickenAPI.Data.AccessLayer.Repository;
-using ChickenAPI.Data.TransferObjects.Map;
+using ChickenAPI.Game.Data.TransferObjects.Map;
 
-namespace ChickenAPI.Data.AccessLayer.Map
+namespace ChickenAPI.Game.Data.AccessLayer.Map
 {
     public interface IMapService : IMappedRepository<MapDto>
     {

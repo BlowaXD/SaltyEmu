@@ -1,7 +1,7 @@
 ﻿using System.Linq;
-using ChickenAPI.Data.TransferObjects.Skills;
-using ChickenAPI.ECS.Entities;
-using ChickenAPI.ECS.Systems;
+using ChickenAPI.Core.ECS.Entities;
+using ChickenAPI.Core.ECS.Systems;
+using ChickenAPI.Game.Data.TransferObjects.Skills;
 using ChickenAPI.Game.Features.Skills.Args;
 
 namespace ChickenAPI.Game.Features.Skills

@@ -1,7 +1,6 @@
 ﻿using ChickenAPI.Core.Data.TransferObjects;
-using ChickenAPI.Data.AccessLayer.Repository;
 
-namespace ChickenAPI.Data.TransferObjects.Map
+namespace ChickenAPI.Game.Data.TransferObjects.Map
 {
     public class MapDto : IMappedDto
     {

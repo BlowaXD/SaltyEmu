@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using ChickenAPI.ECS.Entities;
+using ChickenAPI.Core.ECS.Entities;
 using ChickenAPI.Enums.Game.Entity;
-using ChickenAPI.Game.Components;
+using ChickenAPI.Game.Game.Components;
 
-namespace ChickenAPI.Packets.Game.Server
+namespace ChickenAPI.Game.Packets.Game.Server
 {
     [PacketHeader("st")]
     public class StPacket : PacketBase

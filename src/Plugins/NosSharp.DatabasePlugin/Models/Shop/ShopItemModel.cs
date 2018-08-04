@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using ChickenAPI.Core.Data.TransferObjects;
-using ChickenAPI.Data.AccessLayer.Repository;
 
 namespace NosSharp.DatabasePlugin.Models.Shop
 {

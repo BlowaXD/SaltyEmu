@@ -9,20 +9,20 @@ using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Logging;
 using ChickenAPI.Core.Utils;
 using ChickenAPI.Data.AccessLayer;
-using ChickenAPI.Data.AccessLayer.Account;
-using ChickenAPI.Data.AccessLayer.Character;
-using ChickenAPI.Data.AccessLayer.Item;
-using ChickenAPI.Data.AccessLayer.Server;
 using ChickenAPI.Data.TransferObjects;
-using ChickenAPI.Data.TransferObjects.Character;
-using ChickenAPI.Data.TransferObjects.Item;
-using ChickenAPI.Data.TransferObjects.Server;
 using ChickenAPI.Enums.Game;
 using ChickenAPI.Enums.Game.Character;
 using ChickenAPI.Enums.Game.Items;
-using ChickenAPI.Game.Network;
-using ChickenAPI.Packets.CharacterScreen.Client;
-using ChickenAPI.Packets.CharacterScreen.Server;
+using ChickenAPI.Game.Data.AccessLayer.Account;
+using ChickenAPI.Game.Data.AccessLayer.Character;
+using ChickenAPI.Game.Data.AccessLayer.Item;
+using ChickenAPI.Game.Data.AccessLayer.Server;
+using ChickenAPI.Game.Data.TransferObjects.Character;
+using ChickenAPI.Game.Data.TransferObjects.Item;
+using ChickenAPI.Game.Data.TransferObjects.Server;
+using ChickenAPI.Game.Game.Network;
+using ChickenAPI.Game.Packets.CharacterScreen.Client;
+using ChickenAPI.Game.Packets.CharacterScreen.Server;
 
 namespace NosSharp.PacketHandler
 {

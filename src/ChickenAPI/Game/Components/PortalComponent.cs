@@ -1,12 +1,10 @@
-﻿using Autofac;
-using ChickenAPI.Data.TransferObjects.Map;
-using ChickenAPI.ECS.Components;
-using ChickenAPI.ECS.Entities;
+﻿using ChickenAPI.Core.ECS.Components;
+using ChickenAPI.Core.ECS.Entities;
 using ChickenAPI.Enums.Game.Portals;
-using ChickenAPI.Game.Maps;
-using ChickenAPI.Managers;
+using ChickenAPI.Game.Data.TransferObjects.Map;
+using ChickenAPI.Game.Game.Maps;
 
-namespace ChickenAPI.Game.Components
+namespace ChickenAPI.Game.Game.Components
 {
     public class PortalComponent : IComponent
     {

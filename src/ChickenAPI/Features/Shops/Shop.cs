@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
 using Autofac;
 using ChickenAPI.Core.IoC;
-using ChickenAPI.Data.AccessLayer.Shop;
-using ChickenAPI.Data.TransferObjects.Shop;
 using ChickenAPI.Game.Data.AccessLayer.Shop;
 using ChickenAPI.Game.Data.TransferObjects.Shop;
 

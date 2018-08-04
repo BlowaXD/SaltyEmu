@@ -1,6 +1,6 @@
 ﻿using ChickenAPI.Enums.Game.Entity;
 
-namespace ChickenAPI.Data.AccessLayer.NpcMonster
+namespace ChickenAPI.Game.Data.AccessLayer.NpcMonster
 {
     public interface INpcMonsterAlgorithmService
     {

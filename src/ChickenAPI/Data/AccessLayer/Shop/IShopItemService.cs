@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using ChickenAPI.Core.Data.AccessLayer;
 using ChickenAPI.Game.Data.TransferObjects.Shop;
 
-namespace ChickenAPI.Data.AccessLayer.Shop
+namespace ChickenAPI.Game.Data.AccessLayer.Shop
 {
     public interface IShopItemService : IMappedRepository<ShopItemDto>
     {

@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
-using ChickenAPI.Data.AccessLayer.Repository;
 using NosSharp.DatabasePlugin.Models.NpcMonster;
 
 namespace NosSharp.DatabasePlugin.Models.Drops

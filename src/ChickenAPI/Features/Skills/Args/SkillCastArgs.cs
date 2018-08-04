@@ -1,4 +1,4 @@
-﻿using ChickenAPI.ECS.Systems;
+﻿using ChickenAPI.Core.ECS.Systems;
 
 namespace ChickenAPI.Game.Features.Skills.Args
 {

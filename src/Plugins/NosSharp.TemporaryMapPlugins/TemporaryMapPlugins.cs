@@ -1,9 +1,9 @@
 ﻿using Autofac;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Logging;
-using ChickenAPI.Data.AccessLayer.Item;
-using ChickenAPI.Managers;
-using ChickenAPI.Plugins;
+using ChickenAPI.Core.Plugins;
+using ChickenAPI.Game.Data.AccessLayer.Item;
+using ChickenAPI.Game.Managers;
 
 namespace NosSharp.TemporaryMapPlugins
 {

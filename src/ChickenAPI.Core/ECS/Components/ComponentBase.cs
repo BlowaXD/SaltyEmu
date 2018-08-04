@@ -1,6 +1,6 @@
-﻿using ChickenAPI.ECS.Entities;
+﻿using ChickenAPI.Core.ECS.Entities;
 
-namespace ChickenAPI.ECS.Components
+namespace ChickenAPI.Core.ECS.Components
 {
     public abstract class ComponentBase : IComponent
     {

@@ -1,7 +1,7 @@
 ﻿using ChickenAPI.Enums.Game.Items;
-using ChickenAPI.Game.Components;
+using ChickenAPI.Game.Game.Components;
 
-namespace ChickenAPI.Packets.Game.Server
+namespace ChickenAPI.Game.Packets.Game.Server
 {
     [PacketHeader("eq_subpacket")]
     public class InventoryWearSubPacket : PacketBase

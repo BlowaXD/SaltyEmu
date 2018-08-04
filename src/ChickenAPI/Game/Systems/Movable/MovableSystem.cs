@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Linq.Expressions;
-using ChickenAPI.ECS.Entities;
-using ChickenAPI.ECS.Systems;
-using ChickenAPI.Game.Components;
+using ChickenAPI.Core.ECS.Entities;
+using ChickenAPI.Core.ECS.Systems;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Packets.Game.Server;
+using ChickenAPI.Game.Game.Components;
+using ChickenAPI.Game.Packets.Game.Server;
 
-namespace ChickenAPI.Game.Systems.Movable
+namespace ChickenAPI.Game.Game.Systems.Movable
 {
     public class MovableSystem : NotifiableSystemBase
     {
@@ -16,7 +16,7 @@ namespace ChickenAPI.Game.Systems.Movable
 
         protected override Expression<Func<IEntity, bool>> Filter => entity => entity.HasComponent<MovableComponent>();
 
-        public override void Execute(IEntity entity)
+        protected override void Execute(IEntity entity)
         {
             if (!Match(entity))
             {

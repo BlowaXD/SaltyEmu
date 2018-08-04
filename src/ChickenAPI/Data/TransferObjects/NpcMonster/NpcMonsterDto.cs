@@ -1,8 +1,7 @@
 ﻿using ChickenAPI.Core.Data.TransferObjects;
-using ChickenAPI.Data.AccessLayer.Repository;
 using ChickenAPI.Enums.Game.Entity;
 
-namespace ChickenAPI.Data.TransferObjects.NpcMonster
+namespace ChickenAPI.Game.Data.TransferObjects.NpcMonster
 {
     public class NpcMonsterDto : IMappedDto
     {

@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Net;
-using ChickenAPI.Data.TransferObjects.Character;
+using ChickenAPI.Game.Data.TransferObjects.Character;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Packets;
+using ChickenAPI.Game.Packets;
 
-namespace ChickenAPI.Game.Network
+namespace ChickenAPI.Game.Game.Network
 {
     public interface ISession
     {

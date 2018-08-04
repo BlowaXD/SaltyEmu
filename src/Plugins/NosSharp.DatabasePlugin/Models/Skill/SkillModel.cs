@@ -2,7 +2,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using ChickenAPI.Core.Data.TransferObjects;
-using ChickenAPI.Data.AccessLayer.Repository;
 using NosSharp.DatabasePlugin.Models.BCard;
 using NosSharp.DatabasePlugin.Models.NpcMonster;
 

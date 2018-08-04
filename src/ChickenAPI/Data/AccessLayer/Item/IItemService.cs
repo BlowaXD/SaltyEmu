@@ -1,8 +1,7 @@
 ﻿using ChickenAPI.Core.Data.AccessLayer;
-using ChickenAPI.Data.AccessLayer.Repository;
-using ChickenAPI.Data.TransferObjects.Item;
+using ChickenAPI.Game.Data.TransferObjects.Item;
 
-namespace ChickenAPI.Data.AccessLayer.Item
+namespace ChickenAPI.Game.Data.AccessLayer.Item
 {
     public interface IItemService : IMappedRepository<ItemDto>
     {

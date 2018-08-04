@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using ChickenAPI.Game.Entities.Player;
 
-namespace ChickenAPI.Packets.Game.Server.Inventory
+namespace ChickenAPI.Game.Packets.Game.Server.Inventory
 {
     [PacketHeader("equip")]
     public class EquipmentPacket : PacketBase

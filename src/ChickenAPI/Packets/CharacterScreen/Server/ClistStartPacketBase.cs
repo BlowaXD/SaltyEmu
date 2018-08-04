@@ -1,4 +1,4 @@
-﻿namespace ChickenAPI.Packets.CharacterScreen.Server
+﻿namespace ChickenAPI.Game.Packets.CharacterScreen.Server
 {
     [PacketHeader("clist_start")]
     public class ClistStartPacketBase : PacketBase

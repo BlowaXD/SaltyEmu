@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ChickenAPI.ECS.Systems
+namespace ChickenAPI.Core.ECS.Systems
 {
     public class SystemEventArgs : EventArgs
     {

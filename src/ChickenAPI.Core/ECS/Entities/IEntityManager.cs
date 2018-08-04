@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using ChickenAPI.ECS.Systems;
-using ChickenAPI.Enums.Game.Entity;
-using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Packets;
+using ChickenAPI.Core.ECS.Systems;
 
-namespace ChickenAPI.ECS.Entities
+namespace ChickenAPI.Core.ECS.Entities
 {
     /// <inheritdoc cref="IDisposable" />
     /// <summary>
-    ///     Contains entities and sub <see cref="T:ChickenAPI.ECS.Entities.IEntityManager" />
+    ///     Contains entities and sub <see cref="T:ChickenAPI.Core.ECS.Entities.IEntityManager" />
     /// </summary>
     public interface IEntityManager : IDisposable
     {
@@ -48,7 +45,6 @@ namespace ChickenAPI.ECS.Entities
         long NextEntityId { get; }
 
         IEnumerable<IEntity> Entities { get; }
-        IEnumerable<IPlayerEntity> Players { get; }
 
         /// <summary>
         /// Get all entities with the given type
@@ -56,7 +52,7 @@ namespace ChickenAPI.ECS.Entities
         /// <typeparam name="T"></typeparam>
         /// <param name="type"></param>
         /// <returns></returns>
-        IEnumerable<T> GetEntitiesByType<T>(EntityType type) where T : IEntity;
+        IEnumerable<T> GetEntitiesByType<T>(EntityType type) where T : class, IEntity;
 
         /// <summary>
         ///     Creates a new entity.

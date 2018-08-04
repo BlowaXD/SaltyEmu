@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using ChickenAPI.Data.TransferObjects.Server;
+using ChickenAPI.Game.Data.TransferObjects.Server;
 
-namespace ChickenAPI.Data.AccessLayer.Server
+namespace ChickenAPI.Game.Data.AccessLayer.Server
 {
     public interface IServerApiService
     {

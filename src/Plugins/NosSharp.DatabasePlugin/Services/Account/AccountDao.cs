@@ -2,10 +2,9 @@
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using ChickenAPI.Data.AccessLayer.Account;
-using ChickenAPI.Data.AccessLayer.Character;
 using ChickenAPI.Data.TransferObjects;
-using ChickenAPI.Data.TransferObjects.Character;
+using ChickenAPI.Game.Data.AccessLayer.Account;
+using ChickenAPI.Game.Data.TransferObjects.Character;
 using Microsoft.EntityFrameworkCore;
 using NosSharp.DatabasePlugin.Context;
 using NosSharp.DatabasePlugin.Models.Character;

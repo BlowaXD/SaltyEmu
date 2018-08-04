@@ -1,7 +1,7 @@
-﻿using ChickenAPI.Data.TransferObjects.Map;
-using ChickenAPI.Data.TransferObjects.Shop;
-using ChickenAPI.ECS.Components;
-using ChickenAPI.ECS.Entities;
+﻿using ChickenAPI.Core.ECS.Components;
+using ChickenAPI.Core.ECS.Entities;
+using ChickenAPI.Game.Data.TransferObjects.Map;
+using ChickenAPI.Game.Data.TransferObjects.Shop;
 
 namespace ChickenAPI.Game.Features.Shops
 {

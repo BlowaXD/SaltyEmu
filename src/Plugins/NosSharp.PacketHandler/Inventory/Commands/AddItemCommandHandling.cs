@@ -1,12 +1,12 @@
 ﻿using Autofac;
 using ChickenAPI.Core.IoC;
-using ChickenAPI.Data.AccessLayer.Item;
-using ChickenAPI.Data.TransferObjects.Item;
 using ChickenAPI.Enums;
+using ChickenAPI.Game.Data.AccessLayer.Item;
+using ChickenAPI.Game.Data.TransferObjects.Item;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Game.Systems.Inventory;
-using ChickenAPI.Game.Systems.Inventory.Args;
-using ChickenAPI.Packets;
+using ChickenAPI.Game.Game.Systems.Inventory;
+using ChickenAPI.Game.Game.Systems.Inventory.Args;
+using ChickenAPI.Game.Packets;
 
 namespace NosSharp.PacketHandler.Inventory.Commands
 {

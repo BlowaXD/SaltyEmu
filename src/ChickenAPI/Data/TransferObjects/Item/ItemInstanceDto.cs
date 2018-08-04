@@ -1,9 +1,9 @@
 ﻿using System;
-using ChickenAPI.Data.AccessLayer.Repository;
+using ChickenAPI.Core.Data.TransferObjects;
 using ChickenAPI.Enums.Game.Items;
 using ElementType = ChickenAPI.Enums.Game.Entity.ElementType;
 
-namespace ChickenAPI.Data.TransferObjects.Item
+namespace ChickenAPI.Game.Data.TransferObjects.Item
 {
     public class ItemInstanceDto : ISynchronizedDto
     {

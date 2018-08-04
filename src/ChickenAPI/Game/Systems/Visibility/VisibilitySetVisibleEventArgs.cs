@@ -1,6 +1,6 @@
-﻿using ChickenAPI.ECS.Systems;
+﻿using ChickenAPI.Core.ECS.Systems;
 
-namespace ChickenAPI.Game.Systems.Visibility
+namespace ChickenAPI.Game.Game.Systems.Visibility
 {
     public class VisibilitySetVisibleEventArgs : SystemEventArgs
     {

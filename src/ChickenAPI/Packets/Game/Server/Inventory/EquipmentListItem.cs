@@ -1,6 +1,6 @@
 ﻿using ChickenAPI.Enums.Game.Items;
 
-namespace ChickenAPI.Packets.Game.Server.Inventory
+namespace ChickenAPI.Game.Packets.Game.Server.Inventory
 {
     [PacketHeader("subpacket_eq_list")]
     public class EquipmentListItem

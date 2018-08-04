@@ -1,6 +1,6 @@
 ﻿using ChickenAPI.Enums.Game.Character;
 
-namespace ChickenAPI.Packets.Game.Client
+namespace ChickenAPI.Game.Packets.Game.Client
 {
     [PacketHeader("gop")]
     public class CharacterOptionPacket : PacketBase

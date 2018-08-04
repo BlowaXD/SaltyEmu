@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
+using ChickenAPI.Core.Data.TransferObjects;
+using ChickenAPI.Core.ECS.Entities;
 using ChickenAPI.Core.Utils;
-using ChickenAPI.Data.AccessLayer.Repository;
-using ChickenAPI.ECS.Entities;
 
-namespace ChickenAPI.Game.Maps
+namespace ChickenAPI.Game.Game.Maps
 {
     public interface IMapLayer : ISynchronizedDto, IEntityManager
     {

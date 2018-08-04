@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using ChickenAPI.Core.ECS.Systems;
 using ChickenAPI.Core.Logging;
-using ChickenAPI.ECS.Systems;
-using ChickenAPI.Enums.Game.Entity;
-using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Packets;
 
-namespace ChickenAPI.ECS.Entities
+namespace ChickenAPI.Core.ECS.Entities
 {
-    public abstract class EntityManagerBase : IEntityManager, IBroadcastable
+    public abstract class EntityManagerBase : IEntityManager
     {
         protected static readonly Logger Log = Logger.GetLogger<EntityManagerBase>();
         protected bool Update;
@@ -17,10 +14,7 @@ namespace ChickenAPI.ECS.Entities
 
         // entities
         protected readonly Dictionary<long, IEntity> EntitiesByEntityId = new Dictionary<long, IEntity>();
-
-        // players
-        protected readonly Dictionary<long, IPlayerEntity> PlayersBySessionId = new Dictionary<long, IPlayerEntity>();
-        protected readonly Dictionary<long, IPlayerEntity> PlayersByEntityId = new Dictionary<long, IPlayerEntity>();
+        protected readonly Dictionary<EntityType, HashSet<IEntity>> EntitiesByEntityType = new Dictionary<EntityType, HashSet<IEntity>>();
 
         protected List<IEntityManager> EntityManagers = new List<IEntityManager>();
 
@@ -49,12 +43,11 @@ namespace ChickenAPI.ECS.Entities
 
         public long NextEntityId => ++LastEntityId;
         public IEnumerable<IEntity> Entities => EntitiesByEntityId.Values.AsEnumerable();
-        public IEnumerable<IPlayerEntity> Players => PlayersBySessionId.Values;
 
-        public IEnumerable<T> GetEntitiesByType<T>(EntityType type) where T : IEntity
+
+        public IEnumerable<T> GetEntitiesByType<T>(EntityType type) where T : class, IEntity
         {
-            // todo implementation
-            return null;
+            return !EntitiesByEntityType.TryGetValue(type, out HashSet<IEntity> entities) ? new List<T>() : entities.Select(s => s as T);
         }
 
         public TEntity CreateEntity<TEntity>() where TEntity : class, IEntity, new()
@@ -78,38 +71,12 @@ namespace ChickenAPI.ECS.Entities
         {
             entity.Id = NextEntityId;
             EntitiesByEntityId[entity.Id] = entity;
-            switch (entity.Type)
-            {
-                case EntityType.Player:
-                    if (entity is IPlayerEntity sess)
-                    {
-                        PlayersByEntityId.Add(entity.Id, sess);
-                        PlayersBySessionId.Add(sess.Session.SessionId, sess);
-                    }
-
-                    break;
-                default:
-                    break;
-            }
         }
 
         public void UnregisterEntity<T>(T entity) where T : IEntity
         {
             EntitiesByEntityId.Remove(entity.Id);
 
-            switch (entity.Type)
-            {
-                case EntityType.Player:
-                    if (entity is IPlayerEntity sess)
-                    {
-                        PlayersByEntityId.Remove(entity.Id);
-                        PlayersBySessionId.Remove(sess.Session.SessionId);
-                    }
-
-                    break;
-                default:
-                    break;
-            }
         }
 
         public bool HasEntity(IEntity entity) => HasEntity(entity.Id);
@@ -182,27 +149,6 @@ namespace ChickenAPI.ECS.Entities
                     Log.Error("[NOTIFY_SYSTEM]", exception);
                     Console.WriteLine(exception);
                 }
-            }
-        }
-
-        public void Broadcast<T>(T packet) where T : IPacket
-        {
-            foreach (IEntity entity in EntitiesByEntityId.Values.Where(s => s.Type == EntityType.Player).AsParallel())
-            {
-                if (!(entity is IPlayerEntity session))
-                {
-                    continue;
-                }
-
-                session.SendPacket(packet);
-            }
-        }
-
-        public void Broadcast<T>(IPlayerEntity sender, T packet) where T : IPacket
-        {
-            foreach (IPlayerEntity session in PlayersBySessionId.Values)
-            {
-                session.SendPacket(packet);
             }
         }
     }

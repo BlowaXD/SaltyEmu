@@ -1,7 +1,7 @@
 ﻿using ChickenAPI.Core.Network;
-using ChickenAPI.Packets;
+using ChickenAPI.Game.Packets;
 
-namespace ChickenAPI.Managers
+namespace ChickenAPI.Game.Managers
 {
     public interface INostaleSession : IClient<IPacket>
     {

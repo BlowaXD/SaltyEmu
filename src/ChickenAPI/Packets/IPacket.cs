@@ -1,4 +1,4 @@
-﻿namespace ChickenAPI.Packets
+﻿namespace ChickenAPI.Game.Packets
 {
     public interface IPacket
     {

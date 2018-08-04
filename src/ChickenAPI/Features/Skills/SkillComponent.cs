@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using ChickenAPI.Data.TransferObjects.Skills;
-using ChickenAPI.ECS.Components;
-using ChickenAPI.ECS.Entities;
+using ChickenAPI.Core.ECS.Components;
+using ChickenAPI.Core.ECS.Entities;
+using ChickenAPI.Game.Data.TransferObjects.Skills;
 
 namespace ChickenAPI.Game.Features.Skills
 {

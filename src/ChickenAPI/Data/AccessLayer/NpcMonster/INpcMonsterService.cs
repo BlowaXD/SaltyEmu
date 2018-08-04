@@ -1,8 +1,7 @@
 ﻿using ChickenAPI.Core.Data.AccessLayer;
-using ChickenAPI.Data.AccessLayer.Repository;
-using ChickenAPI.Data.TransferObjects.NpcMonster;
+using ChickenAPI.Game.Data.TransferObjects.NpcMonster;
 
-namespace ChickenAPI.Data.AccessLayer.NpcMonster
+namespace ChickenAPI.Game.Data.AccessLayer.NpcMonster
 {
     public interface INpcMonsterService : IMappedRepository<NpcMonsterDto>
     {

@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using ChickenAPI.Data.AccessLayer.Skill;
-using ChickenAPI.Data.TransferObjects.Skills;
+using ChickenAPI.Game.Data.AccessLayer.Skill;
+using ChickenAPI.Game.Data.TransferObjects.Skills;
 using NosSharp.DatabasePlugin.Context;
 using NosSharp.DatabasePlugin.Models;
 using NosSharp.DatabasePlugin.Services.Base;

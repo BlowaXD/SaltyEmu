@@ -1,5 +1,5 @@
-﻿using ChickenAPI.Data.AccessLayer.Character;
-using ChickenAPI.Enums.Game.Character;
+﻿using ChickenAPI.Enums.Game.Character;
+using ChickenAPI.Game.Data.AccessLayer.Character;
 using NosSharp.BasicAlgorithm.CharacterAlgorithms;
 using NosSharp.BasicAlgorithm.CharacterAlgorithms.Close;
 using NosSharp.BasicAlgorithm.CharacterAlgorithms.Distance;

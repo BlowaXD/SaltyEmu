@@ -1,23 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using ChickenAPI.Core.ECS.Entities;
+using ChickenAPI.Core.ECS.Systems;
 using ChickenAPI.Core.Utils;
-using ChickenAPI.Data.TransferObjects.Map;
-using ChickenAPI.Data.TransferObjects.Shop;
-using ChickenAPI.ECS.Entities;
-using ChickenAPI.ECS.Systems;
-using ChickenAPI.Enums.Game.Entity;
-using ChickenAPI.Game.Components;
+using ChickenAPI.Game.Data.TransferObjects.Map;
+using ChickenAPI.Game.Data.TransferObjects.Shop;
 using ChickenAPI.Game.Entities.Monster;
 using ChickenAPI.Game.Entities.Npc;
 using ChickenAPI.Game.Entities.Portal;
-using ChickenAPI.Game.Game.Entities.Npc;
-using ChickenAPI.Game.Systems.Chat;
-using ChickenAPI.Game.Systems.Inventory;
-using ChickenAPI.Game.Systems.Movable;
-using ChickenAPI.Game.Systems.Visibility;
+using ChickenAPI.Game.Game.Components;
+using ChickenAPI.Game.Game.Systems.Chat;
+using ChickenAPI.Game.Game.Systems.Inventory;
+using ChickenAPI.Game.Game.Systems.Movable;
+using ChickenAPI.Game.Game.Systems.Visibility;
 
-namespace ChickenAPI.Game.Maps
+namespace ChickenAPI.Game.Game.Maps
 {
     public class SimpleMapLayer : EntityManagerBase, IMapLayer
     {

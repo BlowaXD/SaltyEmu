@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using ChickenAPI.Core.Data.TransferObjects;
-using ChickenAPI.Data.AccessLayer.Repository;
 using ChickenAPI.Enums.Game.Portals;
 
 namespace NosSharp.DatabasePlugin.Models.Map

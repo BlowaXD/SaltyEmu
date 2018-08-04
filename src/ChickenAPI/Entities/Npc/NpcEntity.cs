@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using ChickenAPI.Core.ECS.Components;
+using ChickenAPI.Core.ECS.Entities;
 using ChickenAPI.Core.Utils;
-using ChickenAPI.Data.TransferObjects.Map;
-using ChickenAPI.Data.TransferObjects.Shop;
-using ChickenAPI.ECS.Components;
-using ChickenAPI.ECS.Entities;
-using ChickenAPI.Enums.Game.Entity;
-using ChickenAPI.Game.Components;
-using ChickenAPI.Game.Entities.Npc;
+using ChickenAPI.Game.Data.TransferObjects.Map;
+using ChickenAPI.Game.Data.TransferObjects.Shop;
 using ChickenAPI.Game.Features.Shops;
+using ChickenAPI.Game.Game.Components;
 
-namespace ChickenAPI.Game.Game.Entities.Npc
+namespace ChickenAPI.Game.Entities.Npc
 {
     public class NpcEntity : EntityBase, INpcEntity
     {

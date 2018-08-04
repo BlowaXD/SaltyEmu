@@ -1,6 +1,4 @@
-﻿using ChickenAPI.Enums.Game.Items;
-
-namespace ChickenAPI.Packets.Game.Server.Inventory
+﻿namespace ChickenAPI.Game.Packets.Game.Server.Inventory
 {
 
     [PacketHeader("eqinfo")]

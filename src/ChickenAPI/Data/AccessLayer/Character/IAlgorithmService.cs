@@ -1,6 +1,6 @@
 ﻿using ChickenAPI.Enums.Game.Character;
 
-namespace ChickenAPI.Data.AccessLayer.Character
+namespace ChickenAPI.Game.Data.AccessLayer.Character
 {
     /// <summary>
     ///     IAlgorithmService should provide the methods to recover some algorithm based datas of the game such as Xp, JobXp...

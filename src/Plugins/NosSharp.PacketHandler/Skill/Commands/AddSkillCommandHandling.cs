@@ -1,12 +1,12 @@
 ﻿using Autofac;
 using ChickenAPI.Core.IoC;
-using ChickenAPI.Data.AccessLayer.Skill;
-using ChickenAPI.Data.TransferObjects.Skills;
 using ChickenAPI.Enums;
+using ChickenAPI.Game.Data.AccessLayer.Skill;
+using ChickenAPI.Game.Data.TransferObjects.Skills;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Features.Skills;
 using ChickenAPI.Game.Features.Skills.Args;
-using ChickenAPI.Packets;
+using ChickenAPI.Game.Packets;
 
 namespace NosSharp.PacketHandler.Skill.Commands
 {

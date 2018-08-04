@@ -1,9 +1,9 @@
 ﻿using System;
+using ChickenAPI.Core.ECS.Components;
+using ChickenAPI.Core.ECS.Entities;
 using ChickenAPI.Core.Utils;
-using ChickenAPI.ECS.Components;
-using ChickenAPI.ECS.Entities;
 
-namespace ChickenAPI.Game.Components
+namespace ChickenAPI.Game.Game.Components
 {
     public class VisibilityComponent : ComponentBase
     {

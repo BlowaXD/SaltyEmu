@@ -1,15 +1,14 @@
 ﻿using System;
-using ChickenAPI.Data.TransferObjects.NpcMonster;
-using ChickenAPI.ECS.Entities;
+using ChickenAPI.Core.ECS.Entities;
 using ChickenAPI.Enums;
 using ChickenAPI.Enums.Game.Character;
 using ChickenAPI.Enums.Game.Entity;
-using ChickenAPI.Game.Components;
+using ChickenAPI.Game.Data.TransferObjects.NpcMonster;
 using ChickenAPI.Game.Entities.Monster;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Game.Maps;
-using ChickenAPI.Packets;
-using ChickenAPI.Packets.Game.Server;
+using ChickenAPI.Game.Game.Components;
+using ChickenAPI.Game.Game.Maps;
+using ChickenAPI.Game.Packets.Game.Server;
 
 namespace ChickenAPI.Game.Packets.Extensions
 {

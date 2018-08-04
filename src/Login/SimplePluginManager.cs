@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using ChickenAPI.Core.Logging;
-using ChickenAPI.Plugins;
+using ChickenAPI.Core.Plugins;
 
 namespace LoginServer
 {

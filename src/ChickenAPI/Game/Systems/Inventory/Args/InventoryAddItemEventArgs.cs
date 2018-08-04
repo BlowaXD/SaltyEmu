@@ -1,7 +1,7 @@
-﻿using ChickenAPI.Data.TransferObjects.Item;
-using ChickenAPI.ECS.Systems;
+﻿using ChickenAPI.Core.ECS.Systems;
+using ChickenAPI.Game.Data.TransferObjects.Item;
 
-namespace ChickenAPI.Game.Systems.Inventory.Args
+namespace ChickenAPI.Game.Game.Systems.Inventory.Args
 {
     public class InventoryAddItemEventArgs : SystemEventArgs
     {

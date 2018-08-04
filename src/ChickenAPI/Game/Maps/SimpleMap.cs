@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using ChickenAPI.Data.TransferObjects.Map;
-using ChickenAPI.Data.TransferObjects.Shop;
-using ChickenAPI.ECS.Entities;
+using ChickenAPI.Core.ECS.Entities;
+using ChickenAPI.Game.Data.TransferObjects.Map;
+using ChickenAPI.Game.Data.TransferObjects.Shop;
 
-namespace ChickenAPI.Game.Maps
+namespace ChickenAPI.Game.Game.Maps
 {
     public class SimpleMap : EntityManagerBase, IMap
     {

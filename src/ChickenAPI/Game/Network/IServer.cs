@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using ChickenAPI.ECS.Entities;
+using ChickenAPI.Core.ECS.Entities;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Packets;
+using ChickenAPI.Game.Packets;
 
-namespace ChickenAPI.Game.Network
+namespace ChickenAPI.Game.Game.Network
 {
     public interface IServer : IBroadcastable
     {

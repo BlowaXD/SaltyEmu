@@ -1,12 +1,12 @@
-﻿using ChickenAPI.ECS.Entities;
-using ChickenAPI.ECS.Systems;
+﻿using ChickenAPI.Core.ECS.Entities;
+using ChickenAPI.Core.ECS.Systems;
 using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Enums.Packets;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Packets;
-using ChickenAPI.Packets.Game.Server;
+using ChickenAPI.Game.Packets;
+using ChickenAPI.Game.Packets.Game.Server;
 
-namespace ChickenAPI.Game.Systems.Chat
+namespace ChickenAPI.Game.Game.Systems.Chat
 {
     public class ChatSystem : NotifiableSystemBase
     {

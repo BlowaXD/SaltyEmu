@@ -1,20 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using ChickenAPI.Core.ECS.Components;
+using ChickenAPI.Core.ECS.Entities;
 using ChickenAPI.Core.Utils;
-using ChickenAPI.Data.TransferObjects.Character;
-using ChickenAPI.ECS.Components;
-using ChickenAPI.ECS.Entities;
 using ChickenAPI.Enums.Game.Entity;
-using ChickenAPI.Game.Components;
-using ChickenAPI.Game.Maps;
-using ChickenAPI.Game.Network;
+using ChickenAPI.Game.Data.TransferObjects.Character;
+using ChickenAPI.Game.Game.Components;
+using ChickenAPI.Game.Game.Maps;
+using ChickenAPI.Game.Game.Network;
+using ChickenAPI.Game.Game.Systems.Visibility;
+using ChickenAPI.Game.Packets;
 using ChickenAPI.Game.Packets.Extensions;
-using ChickenAPI.Game.Systems.Visibility;
-using ChickenAPI.Packets;
-using ChickenAPI.Packets.Game.Client;
-using ChickenAPI.Packets.Game.Server;
-using ChickenAPI.Packets.Game.Server.Group;
-using ChickenAPI.Packets.Game.Server.Inventory;
+using ChickenAPI.Game.Packets.Game.Client;
+using ChickenAPI.Game.Packets.Game.Server;
+using ChickenAPI.Game.Packets.Game.Server.Group;
+using ChickenAPI.Game.Packets.Game.Server.Inventory;
 
 namespace ChickenAPI.Game.Entities.Player
 {

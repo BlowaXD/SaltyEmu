@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using ChickenAPI.Enums.Game.Character;
 
-namespace ChickenAPI.Packets.CharacterScreen.Server
+namespace ChickenAPI.Game.Packets.CharacterScreen.Server
 {
     [PacketHeader("clist")]
     public class ClistPacketBase : PacketBase

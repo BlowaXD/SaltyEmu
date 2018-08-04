@@ -1,5 +1,5 @@
 ﻿using System;
-using ChickenAPI.Data.AccessLayer.Repository;
+using ChickenAPI.Core.Data.TransferObjects;
 
 namespace ChickenAPI.Core.Data.AccessLayer
 {

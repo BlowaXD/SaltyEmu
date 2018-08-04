@@ -1,8 +1,7 @@
-﻿using System.Text;
-using ChickenAPI.Data.Language;
-using ChickenAPI.Enums;
+﻿using ChickenAPI.Enums;
+using ChickenAPI.Game.Data.Language;
 
-namespace ChickenAPI.Data.AccessLayer.Server
+namespace ChickenAPI.Game.Data.AccessLayer.Server
 {
     public interface ILanguageService
     {

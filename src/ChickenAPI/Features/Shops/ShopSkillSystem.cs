@@ -1,11 +1,9 @@
 ﻿using System.Linq;
 using System.Text;
-using ChickenAPI.Data.TransferObjects.Item;
-using ChickenAPI.Data.TransferObjects.Shop;
-using ChickenAPI.Data.TransferObjects.Skills;
-using ChickenAPI.ECS.Entities;
-using ChickenAPI.ECS.Systems;
+using ChickenAPI.Core.ECS.Entities;
+using ChickenAPI.Core.ECS.Systems;
 using ChickenAPI.Game.Data.TransferObjects.Shop;
+using ChickenAPI.Game.Data.TransferObjects.Skills;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Features.Shops.Args;
 using ChickenAPI.Game.Features.Shops.Packets;

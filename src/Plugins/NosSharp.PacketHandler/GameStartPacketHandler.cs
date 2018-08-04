@@ -1,22 +1,21 @@
 ﻿using Autofac;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Data.AccessLayer;
-using ChickenAPI.Data.AccessLayer.Character;
-using ChickenAPI.Data.AccessLayer.Server;
 using ChickenAPI.Data.TransferObjects;
-using ChickenAPI.Data.TransferObjects.Character;
 using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Enums.Packets;
-using ChickenAPI.Game.Components;
+using ChickenAPI.Game.Data.AccessLayer.Character;
+using ChickenAPI.Game.Data.TransferObjects.Character;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Game.Maps;
-using ChickenAPI.Game.Network;
-using ChickenAPI.Game.Systems.Inventory;
-using ChickenAPI.Game.Systems.Inventory.Args;
-using ChickenAPI.Managers;
-using ChickenAPI.Packets.CharacterScreen.Client;
-using ChickenAPI.Packets.Game.Server;
-using ChickenAPI.Packets.Game.Server.Map;
+using ChickenAPI.Game.Game.Components;
+using ChickenAPI.Game.Game.Maps;
+using ChickenAPI.Game.Game.Network;
+using ChickenAPI.Game.Game.Systems.Inventory;
+using ChickenAPI.Game.Game.Systems.Inventory.Args;
+using ChickenAPI.Game.Managers;
+using ChickenAPI.Game.Packets.CharacterScreen.Client;
+using ChickenAPI.Game.Packets.Game.Server;
+using ChickenAPI.Game.Packets.Game.Server.Map;
 
 namespace NosSharp.PacketHandler
 {

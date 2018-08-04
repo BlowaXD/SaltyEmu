@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using ChickenAPI.Data.AccessLayer.Repository;
+using ChickenAPI.Core.Data.TransferObjects;
 using NosSharp.DatabasePlugin.Models.Skill;
 
 namespace NosSharp.DatabasePlugin.Models.Character

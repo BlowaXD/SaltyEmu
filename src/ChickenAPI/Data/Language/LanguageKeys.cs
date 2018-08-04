@@ -1,4 +1,4 @@
-﻿namespace ChickenAPI.Data.Language
+﻿namespace ChickenAPI.Game.Data.Language
 {
     public enum LanguageKeys
     {

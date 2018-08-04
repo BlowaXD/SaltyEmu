@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq;
 using ChickenAPI.Enums;
-using ChickenAPI.Game.Network;
+using ChickenAPI.Game.Game.Network;
 
-namespace ChickenAPI.Packets
+namespace ChickenAPI.Game.Packets
 {
     /// <summary>
     ///     Packet that does not need to be ingame to be handled

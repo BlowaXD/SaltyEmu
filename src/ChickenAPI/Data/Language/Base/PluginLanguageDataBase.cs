@@ -2,10 +2,10 @@
 using Autofac;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Logging;
-using ChickenAPI.Data.AccessLayer.Server;
 using ChickenAPI.Enums;
+using ChickenAPI.Game.Data.AccessLayer.Server;
 
-namespace ChickenAPI.Data.Language.Base
+namespace ChickenAPI.Game.Data.Language.Base
 {
     public abstract class PluginLanguageDataBase : IPluginLanguageData
     {

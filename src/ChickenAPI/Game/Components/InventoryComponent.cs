@@ -1,9 +1,8 @@
-﻿using ChickenAPI.Data.TransferObjects.Item;
-using ChickenAPI.ECS.Components;
-using ChickenAPI.ECS.Entities;
-using ChickenAPI.Enums.Game.Items;
+﻿using ChickenAPI.Core.ECS.Components;
+using ChickenAPI.Core.ECS.Entities;
+using ChickenAPI.Game.Data.TransferObjects.Item;
 
-namespace ChickenAPI.Game.Components
+namespace ChickenAPI.Game.Game.Components
 {
     public class InventoryComponent : IComponent
     {

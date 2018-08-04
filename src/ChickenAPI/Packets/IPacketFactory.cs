@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ChickenAPI.Packets
+namespace ChickenAPI.Game.Packets
 {
     public interface IPacketFactory
     {

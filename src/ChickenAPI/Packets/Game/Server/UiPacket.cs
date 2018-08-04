@@ -1,7 +1,7 @@
-﻿using ChickenAPI.Enums.Game.Items;
-using ChickenAPI.Enums.Game.Entity;
+﻿using ChickenAPI.Enums.Game.Entity;
+using ChickenAPI.Enums.Game.Items;
 
-namespace ChickenAPI.Packets.Game.Server
+namespace ChickenAPI.Game.Packets.Game.Server
 {
     [PacketHeader("u_i")]
     public class UiPacket : PacketBase

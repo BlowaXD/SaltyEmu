@@ -1,4 +1,4 @@
-﻿namespace ChickenAPI.Packets.CharacterScreen.Client
+﻿namespace ChickenAPI.Game.Packets.CharacterScreen.Client
 {
     [PacketHeader("Char_DEL", false)]
     public class CharacterDeletePacketBase : PacketBase

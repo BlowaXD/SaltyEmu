@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using ChickenAPI.Enums;
+using ChickenAPI.Game.Data.Language.Base;
 
-namespace ChickenAPI.Data.Language
+namespace ChickenAPI.Game.Data.Language
 {
     public class FrChickenApiLanguageData : ChickenApiLanguageDataBase
     {

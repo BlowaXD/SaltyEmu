@@ -1,12 +1,10 @@
 ﻿using System;
-using ChickenAPI.ECS.Entities;
-using ChickenAPI.Enums;
-using ChickenAPI.Enums.Game.Character;
+using ChickenAPI.Core.ECS.Entities;
 using ChickenAPI.Enums.Game.Entity;
-using ChickenAPI.Game.Components;
 using ChickenAPI.Game.Entities.Player;
+using ChickenAPI.Game.Game.Components;
 
-namespace ChickenAPI.Packets.Game.Server
+namespace ChickenAPI.Game.Packets.Game.Server
 {
     /*
         $"in 

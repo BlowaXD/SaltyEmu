@@ -1,7 +1,7 @@
-﻿using ChickenAPI.ECS.Systems;
+﻿using ChickenAPI.Core.ECS.Systems;
 using ChickenAPI.Enums.Game.Items;
 
-namespace ChickenAPI.Game.Systems.Inventory.Args
+namespace ChickenAPI.Game.Game.Systems.Inventory.Args
 {
     public class InventoryMoveEventArgs : SystemEventArgs
     {

@@ -1,7 +1,6 @@
 ﻿using ChickenAPI.Core.Data.TransferObjects;
-using ChickenAPI.Data.AccessLayer.Repository;
 
-namespace ChickenAPI.Data.TransferObjects.Skills
+namespace ChickenAPI.Game.Data.TransferObjects.Skills
 {
     public class SkillDto : IMappedDto
     {

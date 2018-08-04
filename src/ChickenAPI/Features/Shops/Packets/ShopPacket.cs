@@ -1,4 +1,4 @@
-﻿using ChickenAPI.Packets;
+﻿using ChickenAPI.Game.Packets;
 
 namespace ChickenAPI.Game.Features.Shops.Packets
 {

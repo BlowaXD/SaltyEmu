@@ -1,9 +1,8 @@
-﻿using ChickenAPI.ECS.Entities;
-using ChickenAPI.Enums.Game.Entity;
+﻿using ChickenAPI.Core.ECS.Entities;
 using ChickenAPI.Enums.Game.Portals;
-using ChickenAPI.Game.Components;
+using ChickenAPI.Game.Game.Components;
 
-namespace ChickenAPI.Packets.Game.Server
+namespace ChickenAPI.Game.Packets.Game.Server
 {
     /// <summary>
     /// gp {SourceX} {SourceY} {ServerManager.Instance.GetMapInstance(DestinationMapInstanceId)?.Map.MapId ?? 0} {Type} {PortalId} {(IsDisabled ? 1 : 0)}

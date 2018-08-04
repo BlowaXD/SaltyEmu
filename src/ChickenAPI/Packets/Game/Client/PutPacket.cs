@@ -1,6 +1,6 @@
 ﻿using ChickenAPI.Enums.Game.Items;
 
-namespace ChickenAPI.Packets.Game.Client
+namespace ChickenAPI.Game.Packets.Game.Client
 {
     [PacketHeader("put")]
     public class PutPacket : PacketBase

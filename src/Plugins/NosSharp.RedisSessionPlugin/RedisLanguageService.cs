@@ -1,8 +1,8 @@
 ﻿using System;
 using ChickenAPI.Data.AccessLayer;
-using ChickenAPI.Data.AccessLayer.Server;
-using ChickenAPI.Data.Language;
 using ChickenAPI.Enums;
+using ChickenAPI.Game.Data.AccessLayer.Server;
+using ChickenAPI.Game.Data.Language;
 using ServiceStack.Redis;
 using ServiceStack.Redis.Generic;
 

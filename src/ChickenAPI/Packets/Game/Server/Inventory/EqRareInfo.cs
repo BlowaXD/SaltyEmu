@@ -1,7 +1,7 @@
 ﻿using ChickenAPI.Enums.Game.Items;
-using ChickenAPI.Game.Components;
+using ChickenAPI.Game.Game.Components;
 
-namespace ChickenAPI.Packets.Game.Server.Inventory
+namespace ChickenAPI.Game.Packets.Game.Server.Inventory
 {
     [PacketHeader("subpacket_eq_rare_info")]
     public class EqRareInfo : PacketBase

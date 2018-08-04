@@ -1,6 +1,6 @@
 ﻿using ChickenAPI.Enums.Game.Entity;
 
-namespace ChickenAPI.Packets.Game.Client
+namespace ChickenAPI.Game.Packets.Game.Client
 {
 
     [PacketHeader("ncif")]

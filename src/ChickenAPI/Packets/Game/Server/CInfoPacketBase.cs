@@ -1,9 +1,9 @@
 ﻿using ChickenAPI.Enums;
 using ChickenAPI.Enums.Game.Character;
-using ChickenAPI.Game.Components;
 using ChickenAPI.Game.Entities.Player;
+using ChickenAPI.Game.Game.Components;
 
-namespace ChickenAPI.Packets.Game.Server
+namespace ChickenAPI.Game.Packets.Game.Server
 {
     [PacketHeader("c_info")]
     public class CInfoPacketBase : PacketBase

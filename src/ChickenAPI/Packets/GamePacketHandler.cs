@@ -3,7 +3,7 @@ using System.Linq;
 using ChickenAPI.Enums;
 using ChickenAPI.Game.Entities.Player;
 
-namespace ChickenAPI.Packets
+namespace ChickenAPI.Game.Packets
 {
     /// <summary>
     ///     Game Packets only

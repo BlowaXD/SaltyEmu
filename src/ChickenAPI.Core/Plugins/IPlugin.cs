@@ -1,6 +1,4 @@
-﻿using System.IO;
-
-namespace ChickenAPI.Plugins
+﻿namespace ChickenAPI.Core.Plugins
 {
     public interface IPlugin
     {

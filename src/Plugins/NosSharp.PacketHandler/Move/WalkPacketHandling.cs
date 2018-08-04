@@ -1,12 +1,10 @@
 ﻿using System;
 using ChickenAPI.Core.Logging;
-using ChickenAPI.ECS.Systems;
 using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Game.Systems.Movable;
-using ChickenAPI.Packets;
-using ChickenAPI.Packets.Game.Client;
-using ChickenAPI.Packets.Game.Server;
+using ChickenAPI.Game.Packets;
+using ChickenAPI.Game.Packets.Game.Client;
+using ChickenAPI.Game.Packets.Game.Server;
 
 namespace NosSharp.PacketHandler.Move
 {

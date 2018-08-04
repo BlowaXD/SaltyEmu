@@ -1,6 +1,6 @@
-﻿using ChickenAPI.Data.TransferObjects.Item;
+﻿using ChickenAPI.Game.Data.TransferObjects.Item;
 
-namespace ChickenAPI.Data.AccessLayer.Item
+namespace ChickenAPI.Game.Data.AccessLayer.Item
 {
     public interface IItemInstanceFactory
     {

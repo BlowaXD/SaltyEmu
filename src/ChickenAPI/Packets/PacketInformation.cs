@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 
-namespace ChickenAPI.Packets
+namespace ChickenAPI.Game.Packets
 {
     public class PacketInformation
     {

@@ -1,6 +1,6 @@
 ﻿using ChickenAPI.Game.Entities.Player;
 
-namespace ChickenAPI.Packets.Game.Server.Inventory
+namespace ChickenAPI.Game.Packets.Game.Server.Inventory
 {
     [PacketHeader("gold")]
     public class GoldPacket : PacketBase

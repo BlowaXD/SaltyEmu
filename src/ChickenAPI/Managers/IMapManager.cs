@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Game.Maps;
+using ChickenAPI.Game.Game.Maps;
 
-namespace ChickenAPI.Managers
+namespace ChickenAPI.Game.Managers
 {
     public interface IMapManager
     {

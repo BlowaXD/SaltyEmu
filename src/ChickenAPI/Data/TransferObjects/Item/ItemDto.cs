@@ -1,9 +1,7 @@
-﻿using System.Collections.Generic;
-using ChickenAPI.Core.Data.TransferObjects;
-using ChickenAPI.Data.AccessLayer.Repository;
+﻿using ChickenAPI.Core.Data.TransferObjects;
 using ChickenAPI.Enums.Game.Items;
 
-namespace ChickenAPI.Data.TransferObjects.Item
+namespace ChickenAPI.Game.Data.TransferObjects.Item
 {
     /// <summary>
     ///     Items

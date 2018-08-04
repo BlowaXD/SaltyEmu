@@ -6,7 +6,6 @@ using AutoMapper;
 using ChickenAPI.Core.Data.AccessLayer;
 using ChickenAPI.Core.Data.TransferObjects;
 using ChickenAPI.Core.Logging;
-using ChickenAPI.Data.AccessLayer.Repository;
 using EFCore.BulkExtensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;

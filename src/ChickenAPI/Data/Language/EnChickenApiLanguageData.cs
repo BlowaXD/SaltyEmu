@@ -1,10 +1,8 @@
 ﻿using System.Collections.Generic;
-using System.Text;
-using Autofac;
-using ChickenAPI.Data.AccessLayer.Server;
 using ChickenAPI.Enums;
+using ChickenAPI.Game.Data.Language.Base;
 
-namespace ChickenAPI.Data.Language
+namespace ChickenAPI.Game.Data.Language
 {
     public class EnChickenApiLanguageData : ChickenApiLanguageDataBase
     {

@@ -1,4 +1,4 @@
-﻿namespace ChickenAPI.Packets.Game.Client
+﻿namespace ChickenAPI.Game.Packets.Game.Client
 {
     [PacketHeader("shopping")]
     public class ShoppingPacket : PacketBase

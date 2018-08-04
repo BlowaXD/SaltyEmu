@@ -1,7 +1,7 @@
 ﻿using System;
-using ChickenAPI.ECS.Entities;
+using ChickenAPI.Core.ECS.Entities;
 
-namespace ChickenAPI.ECS.Systems
+namespace ChickenAPI.Core.ECS.Systems
 {
     public interface ISystem
     {

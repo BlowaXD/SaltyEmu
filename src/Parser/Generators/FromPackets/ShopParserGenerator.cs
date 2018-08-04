@@ -6,10 +6,9 @@ using System.Text;
 using Autofac;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Logging;
-using ChickenAPI.Data.AccessLayer.Map;
-using ChickenAPI.Data.AccessLayer.Shop;
-using ChickenAPI.Data.TransferObjects.Shop;
+using ChickenAPI.Game.Data.AccessLayer.Map;
 using ChickenAPI.Game.Data.AccessLayer.Shop;
+using ChickenAPI.Game.Data.TransferObjects.Shop;
 
 namespace Toolkit.Generators.FromPackets
 {

@@ -1,6 +1,6 @@
 ﻿using ChickenAPI.Enums.Packets;
 
-namespace ChickenAPI.Packets.Game.Client
+namespace ChickenAPI.Game.Packets.Game.Client
 {
     [PacketHeader("eff")]
     public class EffectPacket : PacketBase

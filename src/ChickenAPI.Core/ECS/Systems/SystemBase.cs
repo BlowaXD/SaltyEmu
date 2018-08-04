@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq;
 using System.Linq.Expressions;
-using ChickenAPI.ECS.Entities;
+using ChickenAPI.Core.ECS.Entities;
 
-namespace ChickenAPI.ECS.Systems
+namespace ChickenAPI.Core.ECS.Systems
 {
     public abstract class SystemBase : ISystem
     {
@@ -36,7 +36,7 @@ namespace ChickenAPI.ECS.Systems
             Entities = EntityManager.Entities.Where(Match).ToArray();
         }
 
-        public virtual void Execute(IEntity entity)
+        protected virtual void Execute(IEntity entity)
         {
         }
 
@@ -56,6 +56,8 @@ namespace ChickenAPI.ECS.Systems
             {
                 Execute(entity);
             }
+
+            _lastUpdate = DateTime.UtcNow;
         }
 
         public bool Match(IEntity entity)

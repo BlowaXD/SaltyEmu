@@ -1,6 +1,6 @@
-﻿using ChickenAPI.ECS.Entities;
+﻿using ChickenAPI.Core.ECS.Entities;
 
-namespace ChickenAPI.ECS.Components
+namespace ChickenAPI.Core.ECS.Components
 {
     /// <summary>
     ///     Define a component that can be

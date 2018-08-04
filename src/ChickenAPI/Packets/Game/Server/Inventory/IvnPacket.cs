@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
-using ChickenAPI.Enums.Game.Items;
+﻿using ChickenAPI.Enums.Game.Items;
 
-namespace ChickenAPI.Packets.Game.Server
+namespace ChickenAPI.Game.Packets.Game.Server.Inventory
 {
     [PacketHeader("ivn")]
     public class IvnPacket : PacketBase

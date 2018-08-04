@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using Autofac;
+using ChickenAPI.Core.ECS.Components;
+using ChickenAPI.Core.ECS.Entities;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Utils;
-using ChickenAPI.Data.AccessLayer.Character;
-using ChickenAPI.ECS.Components;
-using ChickenAPI.ECS.Entities;
 using ChickenAPI.Enums.Game.Entity;
+using ChickenAPI.Game.Data.AccessLayer.Character;
 using ChickenAPI.Game.Entities.Player;
 
-namespace ChickenAPI.Game.Components
+namespace ChickenAPI.Game.Game.Components
 {
     /// <summary>
     /// </summary>

@@ -1,4 +1,4 @@
-﻿namespace ChickenAPI.Game.Components
+﻿namespace ChickenAPI.Game.Game.Components
 {
     public class ChatComponent
     {

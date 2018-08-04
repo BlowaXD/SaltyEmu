@@ -2,10 +2,10 @@
 using Autofac;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Logging;
+using ChickenAPI.Core.Plugins;
 using ChickenAPI.Data.AccessLayer;
-using ChickenAPI.Data.AccessLayer.Character;
-using ChickenAPI.Data.AccessLayer.NpcMonster;
-using ChickenAPI.Plugins;
+using ChickenAPI.Game.Data.AccessLayer.Character;
+using ChickenAPI.Game.Data.AccessLayer.NpcMonster;
 
 namespace NosSharp.BasicAlgorithm
 {

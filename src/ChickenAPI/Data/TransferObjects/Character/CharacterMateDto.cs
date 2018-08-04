@@ -1,7 +1,6 @@
 ﻿using ChickenAPI.Core.Data.TransferObjects;
-using ChickenAPI.Data.AccessLayer.Repository;
 
-namespace ChickenAPI.Data.TransferObjects.Character
+namespace ChickenAPI.Game.Data.TransferObjects.Character
 {
     public class CharacterMateDto : IMappedDto
     {

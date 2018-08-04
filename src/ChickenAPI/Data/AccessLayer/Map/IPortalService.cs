@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using ChickenAPI.Core.Data.AccessLayer;
-using ChickenAPI.Data.AccessLayer.Repository;
-using ChickenAPI.Data.TransferObjects.Map;
+using ChickenAPI.Game.Data.TransferObjects.Map;
 
-namespace ChickenAPI.Data.AccessLayer.Map
+namespace ChickenAPI.Game.Data.AccessLayer.Map
 {
     /// <inheritdoc />
     public interface IPortalService : IMappedRepository<PortalDto>

@@ -1,10 +1,10 @@
 ﻿using Autofac;
 using ChickenAPI.Core.IoC;
-using ChickenAPI.Data.AccessLayer.Character;
-using ChickenAPI.Game.Components;
+using ChickenAPI.Game.Data.AccessLayer.Character;
 using ChickenAPI.Game.Entities.Player;
+using ChickenAPI.Game.Game.Components;
 
-namespace ChickenAPI.Packets.Game.Server
+namespace ChickenAPI.Game.Packets.Game.Server
 {
     /// <summary>
     /// $"lev {Level} {LevelXp} {(UseSp? SpInstance.SpLevel : JobLevel)} {(UseSp ? SpInstance.XP : JobLevelXp)} {XpLoad()} {(UseSp ? SpxpLoad() : JobXpLoad())} {Reput} {GetCp()} {HeroXp} {HeroLevel} {HeroXpLoad()}";

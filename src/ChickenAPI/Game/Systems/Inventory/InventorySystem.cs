@@ -2,22 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using Autofac;
+using ChickenAPI.Core.ECS.Entities;
+using ChickenAPI.Core.ECS.Systems;
 using ChickenAPI.Core.IoC;
-using ChickenAPI.Data.AccessLayer.Item;
-using ChickenAPI.Data.TransferObjects.Item;
-using ChickenAPI.ECS.Entities;
-using ChickenAPI.ECS.Systems;
 using ChickenAPI.Enums.Game.Items;
-using ChickenAPI.Game.Components;
-using ChickenAPI.Game.Entities;
+using ChickenAPI.Game.Data.AccessLayer.Item;
+using ChickenAPI.Game.Data.TransferObjects.Item;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Game.Network;
-using ChickenAPI.Game.Systems.Inventory.Args;
-using ChickenAPI.Packets;
-using ChickenAPI.Packets.Game.Server;
-using ChickenAPI.Packets.Game.Server.Inventory;
+using ChickenAPI.Game.Game.Components;
+using ChickenAPI.Game.Game.Systems.Inventory.Args;
+using ChickenAPI.Game.Packets.Game.Server.Inventory;
 
-namespace ChickenAPI.Game.Systems.Inventory
+namespace ChickenAPI.Game.Game.Systems.Inventory
 {
     public class InventorySystem : NotifiableSystemBase
     {

@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using ChickenAPI.Data.AccessLayer.Repository;
 using NosSharp.DatabasePlugin.Models.Map;
 
 namespace NosSharp.DatabasePlugin.Models.Drops

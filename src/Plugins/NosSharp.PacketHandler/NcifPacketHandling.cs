@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using ChickenAPI.ECS.Entities;
+using ChickenAPI.Core.ECS.Entities;
 using ChickenAPI.Enums.Game.Entity;
-using ChickenAPI.Game.Components;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Packets.Game.Client;
-using ChickenAPI.Packets.Game.Server;
+using ChickenAPI.Game.Game.Components;
+using ChickenAPI.Game.Packets.Game.Client;
+using ChickenAPI.Game.Packets.Game.Server;
 
 namespace NosSharp.PacketHandler
 {

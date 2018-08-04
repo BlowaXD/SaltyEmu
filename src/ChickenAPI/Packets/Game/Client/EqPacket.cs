@@ -1,10 +1,8 @@
-﻿using ChickenAPI.Enums.Game.Entity;
-using ChickenAPI.Enums.Game.Character;
-using ChickenAPI.Enums.Game.Items;
+﻿using ChickenAPI.Enums.Game.Character;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Packets.Game.Server.Inventory;
+using ChickenAPI.Game.Packets.Game.Server.Inventory;
 
-namespace ChickenAPI.Packets.Game.Client
+namespace ChickenAPI.Game.Packets.Game.Client
 {
     [PacketHeader("eq")]
     public class EqPacket : PacketBase

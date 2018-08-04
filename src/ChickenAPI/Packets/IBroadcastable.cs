@@ -1,6 +1,6 @@
 ﻿using ChickenAPI.Game.Entities.Player;
 
-namespace ChickenAPI.Packets
+namespace ChickenAPI.Game.Packets
 {
     public interface IBroadcastable
     {

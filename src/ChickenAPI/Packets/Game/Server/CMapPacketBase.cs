@@ -1,7 +1,7 @@
 ﻿using System;
-using ChickenAPI.Game.Maps;
+using ChickenAPI.Game.Game.Maps;
 
-namespace ChickenAPI.Packets.Game.Server
+namespace ChickenAPI.Game.Packets.Game.Server
 {
     [PacketHeader("c_map")]
     public class CMapPacketBase : PacketBase
