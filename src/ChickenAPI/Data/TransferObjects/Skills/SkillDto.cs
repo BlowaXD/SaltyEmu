@@ -42,6 +42,8 @@ namespace ChickenAPI.Game.Data.TransferObjects.Skills
 
         public byte MinimumSwordmanLevel { get; set; }
 
+        public byte MinimumWrestlerLevel { get; set; }
+
         public short MpCost { get; set; }
 
         public string Name { get; set; }

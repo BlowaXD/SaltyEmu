@@ -1,7 +1,11 @@
 ﻿using System.Linq;
 using ChickenAPI.Core.ECS.Entities;
 using ChickenAPI.Core.ECS.Systems;
+using ChickenAPI.Enums.Game.Character;
 using ChickenAPI.Game.Data.TransferObjects.Skills;
+using ChickenAPI.Game.Entities.Player;
+using ChickenAPI.Game.Features.Battle;
+using ChickenAPI.Game.Features.Leveling;
 using ChickenAPI.Game.Features.Skills.Args;
 
 namespace ChickenAPI.Game.Features.Skills
@@ -23,6 +27,7 @@ namespace ChickenAPI.Game.Features.Skills
             switch (e)
             {
                 case SkillCastArgs skillcast:
+                    TryCastSkill(component, skillcast);
                     break;
                 case PlayerAddSkillEventArgs addSkill:
                     AddSkill(component, addSkill);
@@ -30,11 +35,105 @@ namespace ChickenAPI.Game.Features.Skills
             }
         }
 
+        public static bool TryCastSkill(SkillComponent component, SkillCastArgs e)
+        {
+            var battleComponent = component.Entity.GetComponent<BattleComponent>();
+            if (battleComponent is null)
+            {
+                return false;
+            }
+
+            //todo: cooldown check
+
+            if (e.Skill.MpCost > battleComponent.Mp)
+            {
+                return false; //not enough mp
+            }
+
+            if (e.Skill.HitType != e.Skill.TargetType)
+            {
+                return false; //todo: need to ignore this check if the skill is a buff (cf: SkillDto#SkillType)
+            }
+
+            if (e.Skill.Range != e.Skill.TargetRange)
+            {
+                return false; //current entity is too far from target
+            }
+
+            //todo: ensure there are no checks to do.
+
+            return true;
+        }
+
         public static void AddSkill(SkillComponent component, PlayerAddSkillEventArgs e)
         {
             if (e.Skill is null)
             {
                 return; //the skill doesn't exist?
+            }
+
+            if (e.ForceChecks)
+            {
+                var character = component.Entity.GetComponent<CharacterComponent>();
+                var experience = component.Entity.GetComponent<ExperienceComponent>();
+
+                if (character is null)
+                {
+                    return; //we need it.
+                }
+
+                if (experience is null)
+                {
+                    return; //we need it.
+                }
+
+                if (e.Skill.CpCost > character.Cp)
+                {
+                    return; //not enough cp to learn that skill.
+                }
+
+                if (e.Skill.Price > int.MaxValue - 1) //we need to get entity's gold count.
+                {
+                    return; //not enough gold to learn that skill.
+                }
+
+                if (e.Skill.LevelMinimum > experience.JobLevel)
+                {
+                    return; //the joblevel of the entity isn't high enough.
+                }
+
+                if (e.Skill.Class != (byte)character.Class)
+                {
+                    return; //the class of the entity doesn't correspond of the skill requirements.
+                }
+
+                var classLevel = 0;
+                switch (character.Class)
+                {
+                    case CharacterClassType.Adventurer:
+                        classLevel = e.Skill.MinimumAdventurerLevel;
+                        break;
+                    case CharacterClassType.Swordman:
+                        classLevel = e.Skill.MinimumSwordmanLevel;
+                        break;
+                    case CharacterClassType.Archer:
+                        classLevel = e.Skill.MinimumArcherLevel;
+                        break;
+                    case CharacterClassType.Magician:
+                        classLevel = e.Skill.MinimumMagicianLevel;
+                        break;
+                    case CharacterClassType.Wrestler:
+                        classLevel = e.Skill.MinimumWrestlerLevel;
+                        break;
+                    case CharacterClassType.Unknown:
+                        classLevel = e.Skill.LevelMinimum;
+                        break;
+                }
+
+                if (classLevel > experience.Level)
+                {
+                    return; //the level of the entity isn't high enough.
+                }
             }
 
             if (e.Skill.Id < 200)

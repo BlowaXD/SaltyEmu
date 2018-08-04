@@ -19,7 +19,8 @@ namespace NosSharp.PacketHandler.Skill.Commands
 
             player.NotifySystem<SkillSystem>(new PlayerAddSkillEventArgs
             {
-                Skill = skill
+                Skill = skill,
+                ForceChecks = false
             });
         }
     }

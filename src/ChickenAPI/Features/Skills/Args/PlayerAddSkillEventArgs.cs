@@ -6,5 +6,7 @@ namespace ChickenAPI.Game.Features.Skills.Args
     public class PlayerAddSkillEventArgs : SystemEventArgs
     {
         public SkillDto Skill { get; set; }
+
+        public bool ForceChecks { get; set; } = true;
     }
 }
