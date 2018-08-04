@@ -8,12 +8,14 @@ using ChickenAPI.Game.Data.TransferObjects.Map;
 using ChickenAPI.Game.Data.TransferObjects.Shop;
 using ChickenAPI.Game.Entities.Monster;
 using ChickenAPI.Game.Entities.Npc;
+using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Entities.Portal;
 using ChickenAPI.Game.Game.Components;
 using ChickenAPI.Game.Game.Systems.Chat;
 using ChickenAPI.Game.Game.Systems.Inventory;
 using ChickenAPI.Game.Game.Systems.Movable;
 using ChickenAPI.Game.Game.Systems.Visibility;
+using ChickenAPI.Game.Packets;
 
 namespace ChickenAPI.Game.Game.Maps
 {
@@ -64,6 +66,25 @@ namespace ChickenAPI.Game.Game.Maps
         public IEnumerable<IEntity> GetEntitiesInRange(Position<short> pos, int range) =>
             Entities.Where(e => e.HasComponent<MovableComponent>() && PositionHelper.GetDistance(pos, e.GetComponent<MovableComponent>().Actual) < range);
 
-        public IEnumerable<IEntity> GetEntitiesByType(EntityType type) => Entities.Where(s => s.Type == type);
+        public void Broadcast<T>(T packet) where T : IPacket
+        {
+            foreach (IPlayerEntity i in GetEntitiesByType<IPlayerEntity>(EntityType.Player))
+            {
+                i.SendPacket(packet);
+            }
+        }
+
+        public void Broadcast<T>(IPlayerEntity sender, T packet) where T : IPacket
+        {
+            foreach (IPlayerEntity i in GetEntitiesByType<IPlayerEntity>(EntityType.Player))
+            {
+                if (i == sender)
+                {
+                    continue;
+                }
+
+                i.SendPacket(packet);
+            }
+        }
     }
 }

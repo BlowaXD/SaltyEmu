@@ -2,10 +2,11 @@
 using ChickenAPI.Core.Data.TransferObjects;
 using ChickenAPI.Core.ECS.Entities;
 using ChickenAPI.Core.Utils;
+using ChickenAPI.Game.Packets;
 
 namespace ChickenAPI.Game.Game.Maps
 {
-    public interface IMapLayer : ISynchronizedDto, IEntityManager
+    public interface IMapLayer : ISynchronizedDto, IEntityManager, IBroadcastable
     {
         /// <summary>
         ///     Get the base map of the layer
