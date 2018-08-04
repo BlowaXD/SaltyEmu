@@ -60,7 +60,7 @@ namespace ChickenAPI.Game.Features.Skills
                 return false; //current entity is too far from target
             }
 
-            //todo: ensure there are no checks to do.
+            //todo: ensure there are no more checks to do.
 
             return true;
         }
