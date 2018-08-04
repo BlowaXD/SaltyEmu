@@ -1,4 +1,5 @@
-﻿using ChickenAPI.Game.Game.Components;
+﻿using ChickenAPI.Game.Features.Battle;
+using ChickenAPI.Game.Game.Components;
 
 namespace ChickenAPI.Game.Entities
 {

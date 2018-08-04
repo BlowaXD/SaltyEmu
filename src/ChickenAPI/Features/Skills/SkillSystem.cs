@@ -43,7 +43,7 @@ namespace ChickenAPI.Game.Features.Skills
                 {
                     if (e.Skill.CastId == skill.CastId && skill.Id < 200)
                     {
-                        component.Skills.TryRemove(skill.Id, out _);
+                        component.Skills.Remove(skill.Id);
                     }
                 }
             }
@@ -63,13 +63,14 @@ namespace ChickenAPI.Game.Features.Skills
 
                     if (!(oldUpgrade is null))
                     {
-                        component.Skills.TryRemove(oldUpgrade.Id, out _);
+                        component.Skills.Remove(oldUpgrade.Id);
                     }
                 }
             }
 
-            if (!component.Skills.TryAdd(e.Skill.Id, e.Skill))
+            if (!component.Skills.ContainsKey(e.Skill.Id))
             {
+                component.Skills.Add(e.Skill.Id, e.Skill);
             }
 
             //todo: send different packets to add the skill.

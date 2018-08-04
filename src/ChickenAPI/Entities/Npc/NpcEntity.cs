@@ -5,7 +5,12 @@ using ChickenAPI.Core.ECS.Entities;
 using ChickenAPI.Core.Utils;
 using ChickenAPI.Game.Data.TransferObjects.Map;
 using ChickenAPI.Game.Data.TransferObjects.Shop;
+using ChickenAPI.Game.Entities.Monster;
+using ChickenAPI.Game.Features.Battle;
+using ChickenAPI.Game.Features.Movement;
 using ChickenAPI.Game.Features.Shops;
+using ChickenAPI.Game.Features.Skills;
+using ChickenAPI.Game.Features.Visibility;
 using ChickenAPI.Game.Game.Components;
 
 namespace ChickenAPI.Game.Entities.Npc
@@ -23,21 +28,21 @@ namespace ChickenAPI.Game.Entities.Npc
                 Speed = npc.NpcMonster.Speed
             };
             Shop = new Shop(shop);
-            Skills = new SkillsComponent(this);
+            Skills = new SkillComponent(this);
             Components = new Dictionary<Type, IComponent>
             {
                 { typeof(BattleComponent), Battle },
                 { typeof(VisibilityComponent), new VisibilityComponent(this) },
                 { typeof(MovableComponent), Movable },
                 { typeof(NpcMonsterComponent), new NpcMonsterComponent(this, npc) },
-                { typeof(SkillsComponent), Skills }
+                { typeof(SkillComponent), Skills }
             };
         }
 
         public MapNpcDto MapNpc { get; set; }
 
         public Shop Shop { get; set; }
-        public SkillsComponent Skills { get; }
+        public SkillComponent Skills { get; }
         public BattleComponent Battle { get; }
         public MovableComponent Movable { get; }
 

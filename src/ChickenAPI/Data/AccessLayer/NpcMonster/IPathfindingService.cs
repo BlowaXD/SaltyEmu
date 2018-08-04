@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using ChickenAPI.Core.Utils;
-using ChickenAPI.Game.Game.Maps;
+using ChickenAPI.Game.Maps;
 
 namespace ChickenAPI.Game.Data.AccessLayer.NpcMonster
 {

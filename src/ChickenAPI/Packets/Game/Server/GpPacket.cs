@@ -1,5 +1,6 @@
 ﻿using ChickenAPI.Core.ECS.Entities;
 using ChickenAPI.Enums.Game.Portals;
+using ChickenAPI.Game.Features.Portals;
 using ChickenAPI.Game.Game.Components;
 
 namespace ChickenAPI.Game.Packets.Game.Server

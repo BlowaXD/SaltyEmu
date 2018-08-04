@@ -6,8 +6,11 @@ using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Game.Data.TransferObjects.NpcMonster;
 using ChickenAPI.Game.Entities.Monster;
 using ChickenAPI.Game.Entities.Player;
+using ChickenAPI.Game.Features.Battle;
+using ChickenAPI.Game.Features.Movement;
+using ChickenAPI.Game.Features.Visibility;
 using ChickenAPI.Game.Game.Components;
-using ChickenAPI.Game.Game.Maps;
+using ChickenAPI.Game.Maps;
 using ChickenAPI.Game.Packets.Game.Server;
 
 namespace ChickenAPI.Game.Packets.Extensions
@@ -65,15 +68,15 @@ namespace ChickenAPI.Game.Packets.Extensions
             }
         }
 
-        private static InPacketBase GenerateInPlayer(IPlayerEntity entity)
+        private static InPacketBase GenerateInPlayer(IPlayerEntity player)
         {
-            CharacterComponent character = entity.Character;
-            MovableComponent movable = entity.Movable;
-            BattleComponent battle = entity.Battle;
+            CharacterComponent character = player.Character;
+            MovableComponent movable = player.Movable;
+            BattleComponent battle = player.Battle;
             return new InPacketBase
             {
                 VisualType = VisualType.Character,
-                Name = entity.GetComponent<NameComponent>().Name,
+                Name = player.GetComponent<NameComponent>().Name,
                 Unknown = "-",
                 VNum = character.Id,
                 PositionX = movable.Actual.X,
@@ -81,12 +84,12 @@ namespace ChickenAPI.Game.Packets.Extensions
                 DirectionType = movable.DirectionType,
                 InCharacterSubPacket = new InCharacterSubPacketBase
                 {
-                    Authority = entity.Session.Account.Authority > AuthorityType.GameMaster ? (byte)2 : (byte)0,
+                    Authority = player.Session.Account.Authority > AuthorityType.GameMaster ? (byte)2 : (byte)0,
                     Gender = character.Gender,
                     HairStyle = character.HairStyle,
                     HairColor = character.HairColor,
                     Class = character.Class,
-                    Equipment = new InventoryWearSubPacket(entity.Inventory),
+                    Equipment = new InventoryWearSubPacket(player.Inventory),
                     HpPercentage = battle.HpPercentage,
                     MpPercentage = battle.MpPercentage,
                     IsSitting = false,
@@ -102,16 +105,16 @@ namespace ChickenAPI.Game.Packets.Extensions
                     FamilyId = -1,
                     FamilyName = "-", // if not put -1
                     ReputationIcon = 27,
-                    Invisible = !entity.GetComponent<VisibilityComponent>().IsVisible,
+                    Invisible = !player.Visibility.IsVisible,
                     SpUpgrade = 0,
                     Faction = FactionType.Neutral, // todo faction system
                     SpDesign = 0,
-                    Level = entity.Experience.Level,
+                    Level = player.Experience.Level,
                     FamilyLevel = 0,
                     ArenaWinner = character.ArenaWinner,
                     Compliment = character.Compliment,
                     Size = 10,
-                    HeroLevel = entity.Experience.HeroLevel
+                    HeroLevel = player.Experience.HeroLevel
                 }
             };
         }
@@ -120,7 +123,7 @@ namespace ChickenAPI.Game.Packets.Extensions
         {
             if (!(entity is IPlayerEntity player))
             {
-                // error, at packet should not be used for that entity
+                // error, at packet should not be used for that player
                 return null;
             }
 

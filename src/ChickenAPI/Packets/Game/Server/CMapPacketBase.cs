@@ -1,5 +1,5 @@
 ﻿using System;
-using ChickenAPI.Game.Game.Maps;
+using ChickenAPI.Game.Maps;
 
 namespace ChickenAPI.Game.Packets.Game.Server
 {

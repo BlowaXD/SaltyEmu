@@ -2,6 +2,7 @@
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Game.Data.AccessLayer.Character;
 using ChickenAPI.Game.Entities.Player;
+using ChickenAPI.Game.Features.Leveling;
 using ChickenAPI.Game.Game.Components;
 
 namespace ChickenAPI.Game.Packets.Game.Server

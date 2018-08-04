@@ -4,8 +4,8 @@ using ChickenAPI.Enums;
 using ChickenAPI.Game.Data.AccessLayer.Item;
 using ChickenAPI.Game.Data.TransferObjects.Item;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Game.Game.Systems.Inventory;
-using ChickenAPI.Game.Game.Systems.Inventory.Args;
+using ChickenAPI.Game.Features.Inventory;
+using ChickenAPI.Game.Features.Inventory.Args;
 using ChickenAPI.Game.Packets;
 
 namespace NosSharp.PacketHandler.Inventory.Commands

@@ -4,10 +4,18 @@ using ChickenAPI.Core.ECS.Components;
 using ChickenAPI.Core.ECS.Entities;
 using ChickenAPI.Core.Utils;
 using ChickenAPI.Game.Data.TransferObjects.Character;
+using ChickenAPI.Game.Features.Battle;
+using ChickenAPI.Game.Features.Families;
+using ChickenAPI.Game.Features.Inventory;
+using ChickenAPI.Game.Features.Leveling;
+using ChickenAPI.Game.Features.Movement;
+using ChickenAPI.Game.Features.Skills;
+using ChickenAPI.Game.Features.Specialists;
+using ChickenAPI.Game.Features.Visibility;
+using ChickenAPI.Game.Features.Visibility.Args;
 using ChickenAPI.Game.Game.Components;
-using ChickenAPI.Game.Game.Maps;
 using ChickenAPI.Game.Game.Network;
-using ChickenAPI.Game.Game.Systems.Visibility;
+using ChickenAPI.Game.Maps;
 using ChickenAPI.Game.Packets;
 using ChickenAPI.Game.Packets.Extensions;
 using ChickenAPI.Game.Packets.Game.Client;
@@ -51,10 +59,11 @@ namespace ChickenAPI.Game.Entities.Player
                     Y = dto.MapY
                 }
             };
-            Skills = new SkillsComponent(this);
+            Visibility = new VisibilityComponent(this);
+            Skills = new SkillComponent(this);
             Components = new Dictionary<Type, IComponent>
             {
-                { typeof(VisibilityComponent), new VisibilityComponent(this) },
+                { typeof(VisibilityComponent), Visibility },
                 { typeof(MovableComponent), Movable },
                 { typeof(BattleComponent), Battle },
                 { typeof(CharacterComponent), Character },
@@ -63,16 +72,17 @@ namespace ChickenAPI.Game.Entities.Player
                 { typeof(InventoryComponent), Inventory },
                 { typeof(NameComponent), Name },
                 { typeof(SpecialistComponent), new SpecialistComponent(this) },
-                { typeof(SkillsComponent), Skills }
+                { typeof(SkillComponent), Skills }
             };
         }
 
-        public SkillsComponent Skills { get; }
+        public SkillComponent Skills { get; }
         public MovableComponent Movable { get; }
         public BattleComponent Battle { get; }
         public InventoryComponent Inventory { get; }
         public ExperienceComponent Experience { get; }
         public NameComponent Name { get; set; }
+        public VisibilityComponent Visibility { get; }
 
         public CharacterComponent Character { get; }
         public ISession Session { get; }

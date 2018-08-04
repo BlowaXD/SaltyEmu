@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ChickenAPI.Core.ECS.Entities;
 using ChickenAPI.Enums.Game.Entity;
+using ChickenAPI.Game.Entities.Monster;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Game.Components;
 using ChickenAPI.Game.Packets.Game.Client;

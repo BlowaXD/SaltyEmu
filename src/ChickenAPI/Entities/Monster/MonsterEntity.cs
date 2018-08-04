@@ -5,6 +5,10 @@ using ChickenAPI.Core.ECS.Entities;
 using ChickenAPI.Core.Utils;
 using ChickenAPI.Game.Data.TransferObjects.Map;
 using ChickenAPI.Game.Data.TransferObjects.NpcMonster;
+using ChickenAPI.Game.Features.Battle;
+using ChickenAPI.Game.Features.Movement;
+using ChickenAPI.Game.Features.Skills;
+using ChickenAPI.Game.Features.Visibility;
 using ChickenAPI.Game.Game.Components;
 
 namespace ChickenAPI.Game.Entities.Monster
@@ -25,7 +29,7 @@ namespace ChickenAPI.Game.Entities.Monster
                 Mp = dto.NpcMonster.MaxMp,
                 MpMax = dto.NpcMonster.MaxMp
             };
-            Skills = new SkillsComponent(this);
+            Skills = new SkillComponent(this);
             NpcMonster = dto.NpcMonster;
             MapMonster = dto;
             Components = new Dictionary<Type, IComponent>
@@ -39,11 +43,11 @@ namespace ChickenAPI.Game.Entities.Monster
                 { typeof(BattleComponent), Battle },
                 { typeof(MovableComponent), Movable },
                 { typeof(NpcMonsterComponent), new NpcMonsterComponent(this, dto) },
-                { typeof(SkillsComponent), Skills }
+                { typeof(SkillComponent), Skills }
             };
         }
 
-        public SkillsComponent Skills { get; }
+        public SkillComponent Skills { get; }
 
         public override void Dispose()
         {

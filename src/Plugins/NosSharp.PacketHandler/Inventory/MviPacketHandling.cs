@@ -1,6 +1,6 @@
 ﻿using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Game.Game.Systems.Inventory;
-using ChickenAPI.Game.Game.Systems.Inventory.Args;
+using ChickenAPI.Game.Features.Inventory;
+using ChickenAPI.Game.Features.Inventory.Args;
 using ChickenAPI.Game.Packets.Game.Client;
 
 namespace NosSharp.PacketHandler.Inventory

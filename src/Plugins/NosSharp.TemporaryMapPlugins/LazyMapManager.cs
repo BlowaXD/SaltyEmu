@@ -8,8 +8,8 @@ using ChickenAPI.Game.Data.AccessLayer.Shop;
 using ChickenAPI.Game.Data.TransferObjects.Map;
 using ChickenAPI.Game.Data.TransferObjects.Shop;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Game.Game.Maps;
 using ChickenAPI.Game.Managers;
+using ChickenAPI.Game.Maps;
 
 namespace NosSharp.TemporaryMapPlugins
 {

@@ -13,7 +13,7 @@ namespace ChickenAPI.Game.Features.Skills
         {
             Entity = entity;
 
-            Skills = new ConcurrentDictionary<long, SkillDto>();
+            Skills = new Dictionary<long, SkillDto>();
             CooldownsBySkillId = new Queue<(DateTime, long)>();
         }
 
@@ -21,11 +21,14 @@ namespace ChickenAPI.Game.Features.Skills
         {
             foreach (SkillDto skill in skills)
             {
-                Skills.TryAdd(skill.Id, skill);
+                if (!Skills.ContainsKey(skill.Id))
+                {
+                    Skills.Add(skill.Id, skill);
+                }
             }
         }
 
-        public ConcurrentDictionary<long, SkillDto> Skills { get; }
+        public Dictionary<long, SkillDto> Skills { get; }
 
         public Queue<(DateTime, long)> CooldownsBySkillId { get; }
 
