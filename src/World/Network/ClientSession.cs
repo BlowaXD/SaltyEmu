@@ -9,7 +9,7 @@ using ChickenAPI.Enums;
 using ChickenAPI.Game.Data.AccessLayer.Server;
 using ChickenAPI.Game.Data.TransferObjects.Character;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Game.Game.Network;
+using ChickenAPI.Game.Network;
 using ChickenAPI.Game.Packets;
 using DotNetty.Transport.Channels;
 using DotNetty.Transport.Channels.Groups;

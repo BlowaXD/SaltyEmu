@@ -16,7 +16,7 @@ using ChickenAPI.Game.Data.AccessLayer.Server;
 using ChickenAPI.Game.Data.TransferObjects.Character;
 using ChickenAPI.Game.Data.TransferObjects.Item;
 using ChickenAPI.Game.Data.TransferObjects.Server;
-using ChickenAPI.Game.Game.Network;
+using ChickenAPI.Game.Network;
 using ChickenAPI.Game.Packets.CharacterScreen.Client;
 using ChickenAPI.Game.Packets.CharacterScreen.Server;
 

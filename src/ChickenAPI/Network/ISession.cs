@@ -4,7 +4,7 @@ using ChickenAPI.Game.Data.TransferObjects.Character;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Packets;
 
-namespace ChickenAPI.Game.Game.Network
+namespace ChickenAPI.Game.Network
 {
     public interface ISession
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Game.Game.Network;
+using ChickenAPI.Game.Network;
 
 namespace ChickenAPI.Game.Packets
 {
