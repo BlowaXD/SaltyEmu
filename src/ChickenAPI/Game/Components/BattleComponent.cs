@@ -10,10 +10,7 @@ namespace ChickenAPI.Game.Game.Components
 {
     public class BattleComponent : IComponent
     {
-        public BattleComponent(IEntity entity)
-        {
-            Entity = entity;
-        }
+        public BattleComponent(IEntity entity) => Entity = entity;
 
         public BattleComponent(IEntity entity, CharacterDto dto) : this(entity)
         {

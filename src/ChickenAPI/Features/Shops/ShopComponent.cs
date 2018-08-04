@@ -7,10 +7,7 @@ namespace ChickenAPI.Game.Features.Shops
 {
     public class ShopComponent : IComponent
     {
-        public ShopComponent(IEntity entity, MapNpcDto npc, ShopDto dto)
-        {
-            Entity = entity;
-        }
+        public ShopComponent(IEntity entity, MapNpcDto npc, ShopDto dto) => Entity = entity;
 
         public long Id { get; set; }
 

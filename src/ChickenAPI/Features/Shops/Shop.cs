@@ -8,6 +8,9 @@ namespace ChickenAPI.Game.Features.Shops
 {
     public class Shop : ShopDto
     {
+        public readonly HashSet<ShopItemDto> Items;
+        public readonly HashSet<ShopSkillDto> Skills;
+
         public Shop(ShopDto shop)
         {
             Id = shop.Id;
@@ -19,8 +22,5 @@ namespace ChickenAPI.Game.Features.Shops
             Items = new HashSet<ShopItemDto>(Container.Instance.Resolve<IShopItemService>().GetByShopId(Id));
             Skills = new HashSet<ShopSkillDto>(Container.Instance.Resolve<IShopSkillService>().GetByShopId(Id));
         }
-
-        public readonly HashSet<ShopItemDto> Items;
-        public readonly HashSet<ShopSkillDto> Skills;
     }
 }

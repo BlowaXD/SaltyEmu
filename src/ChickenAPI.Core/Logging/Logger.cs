@@ -9,7 +9,7 @@ namespace ChickenAPI.Core.Logging
     public class Logger
     {
         private const string DefaultLayout = "[${date}][${level:uppercase=true}][${logger:shortName=true}] ${message} ${exception:format=tostring}";
-        
+
         private Logger(Type type) => Log = LogManager.GetLogger(type.ToString());
 
         private ILogger Log { get; }

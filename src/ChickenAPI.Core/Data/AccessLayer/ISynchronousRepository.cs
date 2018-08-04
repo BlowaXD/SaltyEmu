@@ -5,7 +5,7 @@ namespace ChickenAPI.Core.Data.AccessLayer
     public interface ISynchronousRepository<TObject, in TObjectId> where TObject : class
     {
         /// <summary>
-        /// Returns every objects of type TObject from data storage
+        ///     Returns every objects of type TObject from data storage
         /// </summary>
         /// <returns></returns>
         IEnumerable<TObject> Get();

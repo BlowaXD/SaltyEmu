@@ -39,7 +39,7 @@ namespace ChickenAPI.Game.Features.Skills
 
             if (e.Skill.Id < 200)
             {
-                foreach (var skill in component.Skills.Values)
+                foreach (SkillDto skill in component.Skills.Values)
                 {
                     if (e.Skill.CastId == skill.CastId && skill.Id < 200)
                     {
@@ -58,8 +58,8 @@ namespace ChickenAPI.Game.Features.Skills
                 {
                     SkillDto oldUpgrade = component.Skills.Values.FirstOrDefault(
                         s => s.UpgradeSkill == e.Skill.UpgradeSkill &&
-                             s.UpgradeType == e.Skill.UpgradeType &&
-                             s.UpgradeSkill != 0);
+                            s.UpgradeType == e.Skill.UpgradeType &&
+                            s.UpgradeSkill != 0);
 
                     if (!(oldUpgrade is null))
                     {
@@ -70,7 +70,6 @@ namespace ChickenAPI.Game.Features.Skills
 
             if (!component.Skills.TryAdd(e.Skill.Id, e.Skill))
             {
-                return; //something that shouldn't happen happened kek
             }
 
             //todo: send different packets to add the skill.

@@ -15,6 +15,8 @@ namespace ChickenAPI.Game.Game.Components
     /// </summary>
     public class MovableComponent : IComponent
     {
+        private Position<short> _actual;
+
         public MovableComponent(IEntity entity)
         {
             Entity = entity;
@@ -32,8 +34,6 @@ namespace ChickenAPI.Game.Game.Components
             Actual = new Position<short>();
             Speed = (byte)Container.Instance.Resolve<IAlgorithmService>().GetSpeed(entity.Character.Class, entity.Experience.Level);
         }
-
-        private Position<short> _actual;
 
         /// <summary>
         ///     Entity Walking Speed

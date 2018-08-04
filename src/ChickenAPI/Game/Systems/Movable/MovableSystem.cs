@@ -22,6 +22,7 @@ namespace ChickenAPI.Game.Game.Systems.Movable
             {
                 return;
             }
+
             var movable = entity.GetComponent<MovableComponent>();
 
             if (movable.Waypoints.Count <= 0 || !movable.CanMove())
@@ -47,6 +48,7 @@ namespace ChickenAPI.Game.Game.Systems.Movable
                     player.SendPacket(new MvPacket(entityy));
                 }
             }
+
             if (entity is IPlayerEntity playerEntity)
             {
                 playerEntity.SendPacket(new CondPacketBase(playerEntity));

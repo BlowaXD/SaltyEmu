@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using ChickenAPI.Core.ECS.Components;
 using ChickenAPI.Core.ECS.Entities;
 using ChickenAPI.Core.Utils;
-using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Game.Data.TransferObjects.Map;
 using ChickenAPI.Game.Data.TransferObjects.NpcMonster;
 using ChickenAPI.Game.Game.Components;
@@ -44,6 +43,8 @@ namespace ChickenAPI.Game.Entities.Monster
             };
         }
 
+        public SkillsComponent Skills { get; }
+
         public override void Dispose()
         {
             GC.SuppressFinalize(this);
@@ -51,7 +52,6 @@ namespace ChickenAPI.Game.Entities.Monster
 
         public MovableComponent Movable { get; }
         public BattleComponent Battle { get; set; }
-        public SkillsComponent Skills { get; }
         public NpcMonsterDto NpcMonster { get; }
         public MapMonsterDto MapMonster { get; }
     }

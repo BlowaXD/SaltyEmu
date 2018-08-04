@@ -5,8 +5,6 @@ namespace ChickenAPI.Game.Data.TransferObjects.Skills
 {
     public class CardDto : IMappedDto
     {
-        public long Id { get; set; }
-
         public int Duration { get; set; }
 
         public int EffectId { get; set; }
@@ -24,5 +22,6 @@ namespace ChickenAPI.Game.Data.TransferObjects.Skills
         public int Delay { get; set; }
 
         public byte Propability { get; set; }
+        public long Id { get; set; }
     }
 }

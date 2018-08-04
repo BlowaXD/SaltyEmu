@@ -17,6 +17,7 @@ namespace ChickenAPI.Game.Packets.Game.Server
             CanMove = entity.Battle.CanMove;
             Speed = entity.Movable.Speed;
         }
+
         #region Properties
 
         [PacketIndex(0)]

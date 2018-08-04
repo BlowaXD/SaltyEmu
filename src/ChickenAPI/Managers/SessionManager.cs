@@ -5,13 +5,10 @@ namespace ChickenAPI.Game.Managers
 {
     public interface INostaleSession : IClient<IPacket>
     {
-
     }
+
     public class SessionManager
     {
-        public INostaleSession GetSessionById(int id)
-        {
-            return null;
-        }
+        public INostaleSession GetSessionById(int id) => null;
     }
 }

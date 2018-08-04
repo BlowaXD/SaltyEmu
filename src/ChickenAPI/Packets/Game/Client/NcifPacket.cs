@@ -2,7 +2,6 @@
 
 namespace ChickenAPI.Game.Packets.Game.Client
 {
-
     [PacketHeader("ncif")]
     public class NcifPacket : PacketBase
     {

@@ -4,6 +4,7 @@
     public class InAliveSubPacketBase : PacketBase
     {
         #region Properties
+
         [PacketIndex(0)]
         public byte HpPercentage { get; set; }
 

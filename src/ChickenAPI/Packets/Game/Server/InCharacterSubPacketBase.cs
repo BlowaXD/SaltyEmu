@@ -6,6 +6,7 @@ namespace ChickenAPI.Game.Packets.Game.Server
     public class InCharacterSubPacketBase : PacketBase
     {
         #region Properties
+
         [PacketIndex(0)]
         public byte Authority { get; set; }
 
@@ -98,6 +99,7 @@ namespace ChickenAPI.Game.Packets.Game.Server
 
         [PacketIndex(30)]
         public short HeroLevel { get; set; }
+
         #endregion
     }
 }

@@ -47,7 +47,7 @@ namespace ChickenAPI.Core.ECS.Entities
         IEnumerable<IEntity> Entities { get; }
 
         /// <summary>
-        /// Get all entities with the given type
+        ///     Get all entities with the given type
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="type"></param>

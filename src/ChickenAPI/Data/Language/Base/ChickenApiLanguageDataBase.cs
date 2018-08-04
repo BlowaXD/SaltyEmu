@@ -9,14 +9,12 @@ namespace ChickenAPI.Game.Data.Language.Base
 {
     public abstract class ChickenApiLanguageDataBase : IChickenApiLanguageData
     {
-        protected ChickenApiLanguageDataBase(RegionType region)
-        {
-            Region = region;
-        }
+        protected static readonly Logger Log = Logger.GetLogger<ChickenApiLanguageDataBase>();
 
         protected readonly RegionType Region;
-        protected static readonly Logger Log = Logger.GetLogger<ChickenApiLanguageDataBase>();
         protected Dictionary<LanguageKeys, string> ChickenApiLanguageKeys;
+
+        protected ChickenApiLanguageDataBase(RegionType region) => Region = region;
 
         public void Initialize()
         {

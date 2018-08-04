@@ -58,8 +58,8 @@ namespace ChickenAPI.Game.Game.Components
 
         public short Morph { get; set; }
 
-        public IEntity Entity { get; }
-
         public short Cp { get; set; }
+
+        public IEntity Entity { get; }
     }
 }

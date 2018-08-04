@@ -4,6 +4,7 @@
     public class InItemSubPacketBase : PacketBase
     {
         #region Properties
+
         [PacketIndex(0)]
         public int Amount { get; set; }
 

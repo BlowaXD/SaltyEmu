@@ -23,6 +23,5 @@ namespace ChickenAPI.Game.Packets.Game.Server
 
         [PacketIndex(5)]
         public byte Unknown3 { get; set; } //Seems to be always 0
-
     }
 }

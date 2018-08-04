@@ -10,13 +10,13 @@ namespace ChickenAPI.Game.Data.AccessLayer.Item
     public interface IItemInstanceService : ISynchronizedRepository<ItemInstanceDto>
     {
         /// <summary>
-        /// Returns the inventory that is given at the character creation depending on its authority type
+        ///     Returns the inventory that is given at the character creation depending on its authority type
         /// </summary>
         /// <returns></returns>
         IEnumerable<(long, ItemDto)> GetBaseInventory(AuthorityType authorityType);
 
         /// <summary>
-        /// Returns all the weared gear of the character by character's id
+        ///     Returns all the weared gear of the character by character's id
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>

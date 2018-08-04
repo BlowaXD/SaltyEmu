@@ -31,15 +31,6 @@ namespace ChickenAPI.Core.ECS.Systems
 
         public IEntityManager EntityManager { get; }
 
-        private void UpdateCache()
-        {
-            Entities = EntityManager.Entities.Where(Match).ToArray();
-        }
-
-        protected virtual void Execute(IEntity entity)
-        {
-        }
-
         public virtual void Update(DateTime time)
         {
             if (_lastUpdate.AddMilliseconds(RefreshDelay) > time)
@@ -65,6 +56,15 @@ namespace ChickenAPI.Core.ECS.Systems
             _filter = _filter ?? Filter.Compile();
 
             return (bool)_filter?.Invoke(entity);
+        }
+
+        private void UpdateCache()
+        {
+            Entities = EntityManager.Entities.Where(Match).ToArray();
+        }
+
+        protected virtual void Execute(IEntity entity)
+        {
         }
     }
 }

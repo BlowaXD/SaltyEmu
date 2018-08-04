@@ -26,7 +26,8 @@ namespace ChickenAPI.Game.Packets
         /// </param>
         /// <param name="separatorBeforeProperty"></param>
         /// <param name="separatorNestedElements"></param>
-        public PacketIndexAttribute(int index, bool isReturnPacket = false, bool serializeToEnd = false, bool removeSeparator = false, string separatorBeforeProperty = " ", string separatorNestedElements = ".")
+        public PacketIndexAttribute(int index, bool isReturnPacket = false, bool serializeToEnd = false, bool removeSeparator = false, string separatorBeforeProperty = " ",
+            string separatorNestedElements = ".")
         {
             Index = index;
             IsReturnPacket = isReturnPacket;
@@ -49,7 +50,7 @@ namespace ChickenAPI.Game.Packets
         /// </summary>
         public bool IsReturnPacket { get; set; }
 
-        /// <summary> Removes the separator (.) for <see cref="List{T}"/> packets. </summary>
+        /// <summary> Removes the separator (.) for <see cref="List{T}" /> packets. </summary>
         public bool RemoveSeparator { get; set; }
 
         /// <summary>
@@ -63,12 +64,12 @@ namespace ChickenAPI.Game.Packets
         public bool IsOptional { get; set; }
 
         /// <summary>
-        /// Defines the separator that will be used before property (by default : " ")
+        ///     Defines the separator that will be used before property (by default : " ")
         /// </summary>
         public string SeparatorBeforeProperty { get; set; }
 
         /// <summary>
-        /// Defines the separator between every elements of an <see cref="IEnumerable{T}"/>
+        ///     Defines the separator between every elements of an <see cref="IEnumerable{T}" />
         /// </summary>
         public string SeparatorNestedElements { get; set; }
 

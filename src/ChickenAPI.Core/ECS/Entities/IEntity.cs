@@ -17,16 +17,16 @@ namespace ChickenAPI.Core.ECS.Entities
         IEntityManager EntityManager { get; }
 
         /// <summary>
+        ///     Gets the entity type
+        /// </summary>
+        EntityType Type { get; }
+
+        /// <summary>
         ///     Notify a system of the entity manager to be executed.
         /// </summary>
         /// <typeparam name="T">System type</typeparam>
         /// <param name="e">Arguments</param>
         void NotifySystem<T>(SystemEventArgs e) where T : class, INotifiableSystem;
-
-        /// <summary>
-        ///     Gets the entity type
-        /// </summary>
-        EntityType Type { get; }
 
         /// <summary>
         ///     Will transfer the Entity to another entity manager

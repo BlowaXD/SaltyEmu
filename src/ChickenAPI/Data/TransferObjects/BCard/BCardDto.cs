@@ -5,8 +5,6 @@ namespace ChickenAPI.Game.Data.TransferObjects.BCard
 {
     public class BCardDto : IMappedDto
     {
-        public long Id { get; set; }
-
         public byte SubType { get; set; }
 
         public byte Type { get; set; }
@@ -26,5 +24,6 @@ namespace ChickenAPI.Game.Data.TransferObjects.BCard
         public BCardRelationType RelationType { get; set; }
 
         public long RelationId { get; set; }
+        public long Id { get; set; }
     }
 }

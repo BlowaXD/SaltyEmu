@@ -3,10 +3,6 @@
     [PacketHeader("at")]
     public class AtPacketBase : PacketBase
     {
-        public AtPacketBase()
-        {
-        }
-
         #region Properties
 
         [PacketIndex(0)]
@@ -32,6 +28,7 @@
 
         [PacketIndex(7)]
         public short Unknown3 { get; set; }
+
         #endregion
     }
 }

@@ -8,7 +8,6 @@ using Microsoft.EntityFrameworkCore;
 using NosSharp.DatabasePlugin.Context;
 using NosSharp.DatabasePlugin.Models.Character;
 using NosSharp.DatabasePlugin.Services.Base;
-using NosSharp.DatabasePlugin.Utils;
 
 namespace NosSharp.DatabasePlugin.Services.Account
 {

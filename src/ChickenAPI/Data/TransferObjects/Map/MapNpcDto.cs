@@ -6,8 +6,6 @@ namespace ChickenAPI.Game.Data.TransferObjects.Map
 {
     public class MapNpcDto : IMappedDto
     {
-        public long Id { get; set; }
-
         public short Dialog { get; set; }
 
         public short Effect { get; set; }
@@ -31,5 +29,6 @@ namespace ChickenAPI.Game.Data.TransferObjects.Map
         public long NpcMonsterId { get; set; }
 
         public DirectionType Position { get; set; }
+        public long Id { get; set; }
     }
 }

@@ -14,6 +14,7 @@ namespace ChickenAPI.Game.Game.Components
             MapId = dto.MapId;
             IsAggressive = !dto.NpcMonster.NoAggresiveIcon;
         }
+
         public NpcMonsterComponent(IEntity entity, MapNpcDto dto)
         {
             Entity = entity;
@@ -23,11 +24,11 @@ namespace ChickenAPI.Game.Game.Components
             IsAggressive = !dto.NpcMonster.NoAggresiveIcon;
         }
 
-        public IEntity Entity { get; }
-
         public long Vnum { get; set; }
         public long MapNpcMonsterId { get; set; }
         public long MapId { get; set; }
         public bool IsAggressive { get; set; }
+
+        public IEntity Entity { get; }
     }
 }

@@ -6,7 +6,7 @@ namespace ChickenAPI.Core.Data.AccessLayer
     public interface IAsyncRepository<TObject, in TObjectId> where TObject : class
     {
         /// <summary>
-        /// Asynchronously returns all objects that are stored in data storage
+        ///     Asynchronously returns all objects that are stored in data storage
         /// </summary>
         /// <returns></returns>
         Task<IEnumerable<TObject>> GetAsync();
@@ -21,7 +21,7 @@ namespace ChickenAPI.Core.Data.AccessLayer
         Task<TObject> GetByIdAsync(TObjectId id);
 
         /// <summary>
-        /// Returns all objects with the given ids
+        ///     Returns all objects with the given ids
         /// </summary>
         /// <param name="ids"></param>
         /// <returns></returns>

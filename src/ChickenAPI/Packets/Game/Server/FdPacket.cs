@@ -1,10 +1,10 @@
 ﻿namespace ChickenAPI.Game.Packets.Game.Server
 {
-
     [PacketHeader("fd")]
     public class FdPacket : PacketBase
     {
         #region Properties
+
         [PacketIndex(0)]
         public long Reput { get; set; }
 

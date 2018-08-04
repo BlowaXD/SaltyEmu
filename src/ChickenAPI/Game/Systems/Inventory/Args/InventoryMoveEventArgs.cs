@@ -12,6 +12,5 @@ namespace ChickenAPI.Game.Game.Systems.Inventory.Args
         public short Amount { get; set; }
 
         public short DestinationSlot { get; set; }
-
     }
 }

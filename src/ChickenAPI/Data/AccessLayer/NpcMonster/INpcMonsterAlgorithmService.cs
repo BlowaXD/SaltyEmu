@@ -5,7 +5,7 @@ namespace ChickenAPI.Game.Data.AccessLayer.NpcMonster
     public interface INpcMonsterAlgorithmService
     {
         /// <summary>
-        /// Returns the MaxHp based on basic algorithm + special races stats
+        ///     Returns the MaxHp based on basic algorithm + special races stats
         /// </summary>
         /// <param name="type"></param>
         /// <param name="level"></param>
@@ -15,7 +15,7 @@ namespace ChickenAPI.Game.Data.AccessLayer.NpcMonster
 
 
         /// <summary>
-        /// Returns the MaxMp based on basic algorithm + special races stats
+        ///     Returns the MaxMp based on basic algorithm + special races stats
         /// </summary>
         /// <param name="type"></param>
         /// <param name="level"></param>
@@ -24,7 +24,7 @@ namespace ChickenAPI.Game.Data.AccessLayer.NpcMonster
         int GetMpMax(NpcMonsterRaceType type, byte level, bool isMonster);
 
         /// <summary>
-        /// Returns the Xp given by monster
+        ///     Returns the Xp given by monster
         /// </summary>
         /// <param name="type"></param>
         /// <param name="level"></param>
@@ -33,7 +33,7 @@ namespace ChickenAPI.Game.Data.AccessLayer.NpcMonster
         int GetXp(NpcMonsterRaceType type, byte level, bool isMonster);
 
         /// <summary>
-        /// Returns the JobXp given by a monster + special bonus
+        ///     Returns the JobXp given by a monster + special bonus
         /// </summary>
         /// <param name="type"></param>
         /// <param name="level"></param>
@@ -42,7 +42,6 @@ namespace ChickenAPI.Game.Data.AccessLayer.NpcMonster
         int GetJobXp(NpcMonsterRaceType type, byte level, bool isMonster);
 
         /// <summary>
-        /// 
         /// </summary>
         /// <param name="type"></param>
         /// <param name="level"></param>
@@ -51,7 +50,6 @@ namespace ChickenAPI.Game.Data.AccessLayer.NpcMonster
         int GetHeroXp(NpcMonsterRaceType type, byte level, bool isMonster);
 
         /// <summary>
-        /// 
         /// </summary>
         /// <param name="type"></param>
         /// <param name="level"></param>

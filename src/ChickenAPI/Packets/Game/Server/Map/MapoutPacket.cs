@@ -3,6 +3,5 @@
     [PacketHeader("mapout")]
     public class MapoutPacket : PacketBase
     {
-        
     }
 }

@@ -5,6 +5,5 @@ namespace ChickenAPI.Game.Data.AccessLayer.Character
 {
     public interface ICharacterSkillService : ISynchronizedRepository<CharacterSkillDto>
     {
-        
     }
 }

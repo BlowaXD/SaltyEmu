@@ -74,5 +74,5 @@
 
         [PacketIndex(23)]
         public short DarkResistance { get; set; }
-}
+    }
 }

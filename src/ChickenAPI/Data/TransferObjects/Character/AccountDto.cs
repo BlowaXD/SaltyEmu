@@ -6,11 +6,6 @@ namespace ChickenAPI.Game.Data.TransferObjects.Character
     public class AccountDto : IMappedDto
     {
         /// <summary>
-        ///     Account Id
-        /// </summary>
-        public long Id { get; set; }
-
-        /// <summary>
         /// </summary>
         public AuthorityType Authority { get; set; }
 
@@ -43,5 +38,10 @@ namespace ChickenAPI.Game.Data.TransferObjects.Character
         ///     Used for validation at registration
         /// </summary>
         public string RegistrationToken { get; set; }
+
+        /// <summary>
+        ///     Account Id
+        /// </summary>
+        public long Id { get; set; }
     }
 }

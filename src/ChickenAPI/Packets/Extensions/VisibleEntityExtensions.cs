@@ -48,7 +48,7 @@ namespace ChickenAPI.Game.Packets.Extensions
                     Unknown14 = 0,
                     Unknown15 = 0,
                     Unknown16 = 0
-                },
+                }
             };
         }
 
@@ -138,7 +138,7 @@ namespace ChickenAPI.Game.Packets.Extensions
                 Unknown1 = 2, // TODO: Find signification
                 Unknown2 = 0, // TODO: Find signification
                 Music = layer.Map.MusicId, //layer.Map.MusicId;
-                Unknown3 = -1, // TODO: Find signification
+                Unknown3 = -1 // TODO: Find signification
             };
         }
     }

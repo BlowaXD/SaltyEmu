@@ -6,8 +6,6 @@ namespace ChickenAPI.Game.Data.TransferObjects.Map
 {
     public class MapMonsterDto : IMappedDto
     {
-        public long Id { get; set; }
-
         public bool IsDisabled { get; set; }
 
         public bool IsMoving { get; set; }
@@ -23,5 +21,6 @@ namespace ChickenAPI.Game.Data.TransferObjects.Map
         public long NpcMonsterId { get; set; }
 
         public DirectionType Position { get; set; }
+        public long Id { get; set; }
     }
 }

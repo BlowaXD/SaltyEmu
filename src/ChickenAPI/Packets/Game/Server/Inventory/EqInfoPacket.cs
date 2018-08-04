@@ -1,6 +1,5 @@
 ﻿namespace ChickenAPI.Game.Packets.Game.Server.Inventory
 {
-
     [PacketHeader("eqinfo")]
     public class EquipmentInfoPacket : PacketBase
     {

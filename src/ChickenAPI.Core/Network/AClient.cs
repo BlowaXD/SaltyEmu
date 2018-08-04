@@ -8,11 +8,6 @@ namespace ChickenAPI.Core.Network
     {
         public int Id { get; set; }
 
-        public static event TypedSenderEventHandler<TClient, EventArgs> PacketReceived;
-        public static event TypedSenderEventHandler<TClient, EventArgs> PacketSent;
-        public static event TypedSenderEventHandler<TClient, EventArgs> Disconnected;
-        public static event TypedSenderEventHandler<TClient, EventArgs> Connected;
-
         public void SendPackets(IEnumerable<TPacket> packets)
         {
             foreach (TPacket packet in packets)
@@ -30,5 +25,10 @@ namespace ChickenAPI.Core.Network
         {
             PacketSent?.Invoke(this as TClient, packet as EventArgs);
         }
+
+        public static event TypedSenderEventHandler<TClient, EventArgs> PacketReceived;
+        public static event TypedSenderEventHandler<TClient, EventArgs> PacketSent;
+        public static event TypedSenderEventHandler<TClient, EventArgs> Disconnected;
+        public static event TypedSenderEventHandler<TClient, EventArgs> Connected;
     }
 }

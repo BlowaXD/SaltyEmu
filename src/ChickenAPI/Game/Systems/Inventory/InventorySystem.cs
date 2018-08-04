@@ -151,6 +151,30 @@ namespace ChickenAPI.Game.Game.Systems.Inventory
             player.SendPacket(GenerateIvnPacket(args.ItemInstance));
         }
 
+        private static void DropItem(InventoryComponent inv, InventoryDropItemEventArgs args)
+        {
+            if (!args.ItemInstance.Item.IsDroppable)
+            {
+                //Item is not droppable
+                return;
+            }
+
+            ItemInstanceDto[] subinv = GetSubInvFromItemInstance(inv, args.ItemInstance.Item);
+
+            int itemIndex = Array.FindIndex(subinv, x => x.Slot == args.ItemInstance.Slot);
+
+            subinv[itemIndex] = null;
+        }
+
+        private static void DestroyItem(InventoryComponent inv, InventoryDestroyItemEventArgs args)
+        {
+            ItemInstanceDto[] subinv = GetSubInvFromItemInstance(inv, args.ItemInstance.Item);
+
+            int itemIndex = Array.FindIndex(subinv, x => x.Slot == args.ItemInstance.Slot);
+
+            subinv[itemIndex] = null;
+        }
+
         #region MoveItems
 
         private static void MoveItem(InventoryComponent inv, InventoryMoveEventArgs args)
@@ -218,30 +242,6 @@ namespace ChickenAPI.Game.Game.Systems.Inventory
 
         #endregion
 
-        private static void DropItem(InventoryComponent inv, InventoryDropItemEventArgs args)
-        {
-            if (!args.ItemInstance.Item.IsDroppable)
-            {
-                //Item is not droppable
-                return;
-            }
-
-            ItemInstanceDto[] subinv = GetSubInvFromItemInstance(inv, args.ItemInstance.Item);
-
-            int itemIndex = Array.FindIndex(subinv, x => x.Slot == args.ItemInstance.Slot);
-
-            subinv[itemIndex] = null;
-        }
-
-        private static void DestroyItem(InventoryComponent inv, InventoryDestroyItemEventArgs args)
-        {
-            ItemInstanceDto[] subinv = GetSubInvFromItemInstance(inv, args.ItemInstance.Item);
-
-            int itemIndex = Array.FindIndex(subinv, x => x.Slot == args.ItemInstance.Slot);
-
-            subinv[itemIndex] = null;
-        }
-
         #region ItemInfos
 
         private static void GetItemInfo(InventoryComponent inventory, InventoryEqInfoEventArgs eqInfo, IPlayerEntity playerEntity)
@@ -284,10 +284,7 @@ namespace ChickenAPI.Game.Game.Systems.Inventory
             playerEntity.SendPacket(GenerateEInfoPacket(itemInstance));
         }
 
-        private static EInfoPacket GenerateEInfoPacket(ItemInstanceDto itemInstance)
-        {
-            return new EInfoPacket();
-        }
+        private static EInfoPacket GenerateEInfoPacket(ItemInstanceDto itemInstance) => new EInfoPacket();
 
         #endregion
 
@@ -326,15 +323,9 @@ namespace ChickenAPI.Game.Game.Systems.Inventory
             }
         }
 
-        private static ItemInstanceDto[] GetSubInvFromItemInstance(InventoryComponent inv, ItemDto item)
-        {
-            return GetSubInvFromInventoryType(inv, item.Type);
-        }
+        private static ItemInstanceDto[] GetSubInvFromItemInstance(InventoryComponent inv, ItemDto item) => GetSubInvFromInventoryType(inv, item.Type);
 
-        private static ItemInstanceDto[] GetSubInvFromItemInstance(InventoryComponent inv, ItemInstanceDto item)
-        {
-            return GetSubInvFromInventoryType(inv, item.Type);
-        }
+        private static ItemInstanceDto[] GetSubInvFromItemInstance(InventoryComponent inv, ItemInstanceDto item) => GetSubInvFromInventoryType(inv, item.Type);
 
         private static IvnPacket GenerateEmptyIvnPacket(InventoryType type, short slot) => new IvnPacket
         {

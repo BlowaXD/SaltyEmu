@@ -6,7 +6,7 @@ namespace ChickenAPI.Game.Game.Components
     public class ExperienceComponent : IComponent
     {
         public ExperienceComponent(IEntity entity) => Entity = entity;
-    
+
         public byte Level { get; set; }
         public int LevelXp { get; set; }
 

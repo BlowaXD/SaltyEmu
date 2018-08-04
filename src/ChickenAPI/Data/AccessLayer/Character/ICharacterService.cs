@@ -50,8 +50,8 @@ namespace ChickenAPI.Game.Data.AccessLayer.Character
         Task<CharacterDto> GetActiveByNameAsync(string characterName);
 
         /// <summary>
-        /// Returns the base character that will be used at character creation
-        /// Easily configurable by a file
+        ///     Returns the base character that will be used at character creation
+        ///     Easily configurable by a file
         /// </summary>
         /// <returns></returns>
         CharacterDto GetCreationCharacter();

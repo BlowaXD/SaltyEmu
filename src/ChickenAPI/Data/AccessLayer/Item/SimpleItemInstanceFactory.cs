@@ -7,10 +7,7 @@ namespace ChickenAPI.Game.Data.AccessLayer.Item
     {
         private readonly IItemService _itemService;
 
-        public SimpleItemInstanceFactory(IItemService itemService)
-        {
-            _itemService = itemService;
-        }
+        public SimpleItemInstanceFactory(IItemService itemService) => _itemService = itemService;
 
 
         public ItemInstanceDto CreateItem(ItemDto item, short quantity) => new ItemInstanceDto

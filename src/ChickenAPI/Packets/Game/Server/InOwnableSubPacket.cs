@@ -4,6 +4,7 @@
     public class InOwnableSubPacketBase : PacketBase
     {
         #region Properties
+
         [PacketIndex(0)]
         public short? Unknown { get; set; }
 

@@ -29,7 +29,7 @@ namespace ChickenAPI.Game.Game.Systems.Visibility
             {
                 return;
             }
-            
+
             switch (e)
             {
                 case VisibilitySetInvisibleEventArgs invisibleEvent:
@@ -106,7 +106,6 @@ namespace ChickenAPI.Game.Game.Systems.Visibility
                                     ShopType = npc.Shop.ShopType,
                                     Name = npc.Shop.Name
                                 });
-
                             }
                         }
 
@@ -125,7 +124,7 @@ namespace ChickenAPI.Game.Game.Systems.Visibility
             {
                 return;
             }
-            
+
             foreach (IEntity entityy in entity.EntityManager.Entities)
             {
                 if (entityy.Id == entity.Id || !Match(entityy))

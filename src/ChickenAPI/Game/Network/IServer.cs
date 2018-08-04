@@ -8,6 +8,7 @@ namespace ChickenAPI.Game.Game.Network
 {
     public interface IServer : IBroadcastable
     {
+        IEnumerable<IPlayerEntity> Players { get; }
         void RegiterEntityManager(IEntityManager entityManager);
         void UnregisterEntityManager(IEntityManager entityManager);
 
@@ -24,7 +25,5 @@ namespace ChickenAPI.Game.Game.Network
         void UnregisterBySessionId(long sessionId);
         void UnregisterByAccountId(long accontId);
         void UnregisterByCharacterId(long characterId);
-
-        IEnumerable<IPlayerEntity> Players { get; }
     }
 }

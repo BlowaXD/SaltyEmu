@@ -7,7 +7,7 @@ namespace ChickenAPI.Game.Data.AccessLayer.Server
     {
         /// <summary>
         ///     Will return the string by its Key & Region
-        /// Used for plugins mainly
+        ///     Used for plugins mainly
         /// </summary>
         /// <param name="key"></param>
         /// <param name="type"></param>
@@ -15,8 +15,8 @@ namespace ChickenAPI.Game.Data.AccessLayer.Server
         string GetLanguage(string key, RegionType type);
 
         /// <summary>
-        /// Will return the string by its key & region
-        /// Used for ChickenAPI mainly
+        ///     Will return the string by its key & region
+        ///     Used for ChickenAPI mainly
         /// </summary>
         /// <param name="key"></param>
         /// <param name="type"></param>
@@ -24,8 +24,8 @@ namespace ChickenAPI.Game.Data.AccessLayer.Server
         string GetLanguage(LanguageKeys key, RegionType type);
 
         /// <summary>
-        /// Will register the key and value by its region type
-        /// Used for plugins mainly
+        ///     Will register the key and value by its region type
+        ///     Used for plugins mainly
         /// </summary>
         /// <param name="key"></param>
         /// <param name="value"></param>
@@ -34,8 +34,8 @@ namespace ChickenAPI.Game.Data.AccessLayer.Server
         void SetLanguage(string key, string value, RegionType type);
 
         /// <summary>
-        /// Will register the key and value by its region type
-        /// Used for ChickenAPI mainly
+        ///     Will register the key and value by its region type
+        ///     Used for ChickenAPI mainly
         /// </summary>
         /// <param name="key"></param>
         /// <param name="value"></param>

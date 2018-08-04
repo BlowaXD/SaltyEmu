@@ -13,6 +13,5 @@ namespace ChickenAPI.Game.Packets.Game.Client
 
         [PacketIndex(2)]
         public int EffectId { get; set; }
-
     }
 }

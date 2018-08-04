@@ -4,6 +4,7 @@
     public class InNonPlayerSubPacketBase : PacketBase
     {
         #region Properties
+
         [PacketIndex(0)]
         public short Dialog { get; set; }
 

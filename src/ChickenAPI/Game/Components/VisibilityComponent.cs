@@ -9,10 +9,7 @@ namespace ChickenAPI.Game.Game.Components
     {
         private bool _isVisible;
 
-        public VisibilityComponent(IEntity entity) : base(entity)
-        {
-            _isVisible = true;
-        }
+        public VisibilityComponent(IEntity entity) : base(entity) => _isVisible = true;
 
         public bool IsVisible
         {

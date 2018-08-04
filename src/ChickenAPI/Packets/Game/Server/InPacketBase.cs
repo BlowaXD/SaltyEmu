@@ -51,8 +51,8 @@ namespace ChickenAPI.Game.Packets.Game.Server
     {
         public InPacketBase()
         {
-
         }
+
         public InPacketBase(IEntity entity)
         {
             switch (entity.Type)
@@ -112,10 +112,9 @@ namespace ChickenAPI.Game.Packets.Game.Server
                 Unknown13 = 0,
                 Unknown14 = 0,
                 Unknown15 = 0,
-                Unknown16 = 0,
+                Unknown16 = 0
             };
             //in 2 {(int)(CurrentHp / (float)Npc.MaxHP * 100)} {(int)(CurrentMp / (float)Npc.MaxMP * 100)} {Dialog} 0 0 -1 1 {(IsSitting ? 1 : 0)} -1 - 0 -1 0 0 0 0 0 0 0 0"
-
         }
 
         private void FillMate(IEntity entity)

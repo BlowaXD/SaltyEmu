@@ -19,16 +19,16 @@ namespace ChickenAPI.Game.Features.Skills
 
         public SkillComponent(IEntity entity, IEnumerable<SkillDto> skills) : this(entity)
         {
-            foreach (var skill in skills)
+            foreach (SkillDto skill in skills)
             {
                 Skills.TryAdd(skill.Id, skill);
             }
         }
 
-        public IEntity Entity { get; }
-
         public ConcurrentDictionary<long, SkillDto> Skills { get; }
 
         public Queue<(DateTime, long)> CooldownsBySkillId { get; }
+
+        public IEntity Entity { get; }
     }
 }

@@ -6,7 +6,6 @@ namespace ChickenAPI.Game.Packets.Game.Server.Inventory
     [PacketHeader("subpacket_eq_rare_info")]
     public class EqRareInfo : PacketBase
     {
-
         public EqRareInfo(InventoryComponent inventory)
         {
             WeaponUpgrade = inventory.Wear[(int)EquipmentType.MainWeapon]?.Upgrade ?? 0;

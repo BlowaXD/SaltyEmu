@@ -34,15 +34,16 @@ namespace ChickenAPI.Game.Entities.Npc
             };
         }
 
+        public MapNpcDto MapNpc { get; set; }
+
+        public Shop Shop { get; set; }
+        public SkillsComponent Skills { get; }
+        public BattleComponent Battle { get; }
+        public MovableComponent Movable { get; }
+
         public override void Dispose()
         {
             GC.SuppressFinalize(this);
         }
-        public MapNpcDto MapNpc { get; set; }
-
-        public Shop Shop { get; set; }
-        public BattleComponent Battle { get; }
-        public MovableComponent Movable { get; }
-        public SkillsComponent Skills { get; }
     }
 }

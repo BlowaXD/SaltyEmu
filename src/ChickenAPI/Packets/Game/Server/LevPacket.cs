@@ -7,10 +7,11 @@ using ChickenAPI.Game.Game.Components;
 namespace ChickenAPI.Game.Packets.Game.Server
 {
     /// <summary>
-    /// $"lev {Level} {LevelXp} {(UseSp? SpInstance.SpLevel : JobLevel)} {(UseSp ? SpInstance.XP : JobLevelXp)} {XpLoad()} {(UseSp ? SpxpLoad() : JobXpLoad())} {Reput} {GetCp()} {HeroXp} {HeroLevel} {HeroXpLoad()}";
+    ///     $"lev {Level} {LevelXp} {(UseSp? SpInstance.SpLevel : JobLevel)} {(UseSp ? SpInstance.XP : JobLevelXp)} {XpLoad()}
+    ///     {(UseSp ? SpxpLoad() : JobXpLoad())} {Reput} {GetCp()} {HeroXp} {HeroLevel} {HeroXpLoad()}";
     /// </summary>
     [PacketHeader("lev")]
-    public class LevPacket :PacketBase
+    public class LevPacket : PacketBase
     {
         public LevPacket(IPlayerEntity player)
         {

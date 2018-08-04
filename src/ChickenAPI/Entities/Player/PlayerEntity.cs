@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using ChickenAPI.Core.ECS.Components;
 using ChickenAPI.Core.ECS.Entities;
 using ChickenAPI.Core.Utils;
-using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Game.Data.TransferObjects.Character;
 using ChickenAPI.Game.Game.Components;
 using ChickenAPI.Game.Game.Maps;
@@ -20,13 +19,6 @@ namespace ChickenAPI.Game.Entities.Player
 {
     public class PlayerEntity : EntityBase, IPlayerEntity
     {
-        public MovableComponent Movable { get; }
-        public BattleComponent Battle { get; }
-        public InventoryComponent Inventory { get; }
-        public ExperienceComponent Experience { get; }
-        public NameComponent Name { get; set; }
-        public SkillsComponent Skills { get; }
-
         public PlayerEntity(ISession session, CharacterDto dto) : base(EntityType.Player)
         {
             Session = session;
@@ -74,6 +66,13 @@ namespace ChickenAPI.Game.Entities.Player
                 { typeof(SkillsComponent), Skills }
             };
         }
+
+        public SkillsComponent Skills { get; }
+        public MovableComponent Movable { get; }
+        public BattleComponent Battle { get; }
+        public InventoryComponent Inventory { get; }
+        public ExperienceComponent Experience { get; }
+        public NameComponent Name { get; set; }
 
         public CharacterComponent Character { get; }
         public ISession Session { get; }
@@ -129,15 +128,15 @@ namespace ChickenAPI.Game.Entities.Player
 
         public void SendPackets(IEnumerable<IPacket> packets) => Session.SendPackets(packets);
 
-        private void Save()
-        {
-            Log.Info($"[SAVE_START] {Session.Account.Name}");
-        }
-
         public override void Dispose()
         {
             Save();
             GC.SuppressFinalize(this);
+        }
+
+        private void Save()
+        {
+            Log.Info($"[SAVE_START] {Session.Account.Name}");
         }
     }
 }

@@ -29,7 +29,7 @@ namespace ChickenAPI.Game.Game.Maps
                 { typeof(VisibilitySystem), new VisibilitySystem(this) },
                 { typeof(ChatSystem), new ChatSystem(this) },
                 { typeof(MovableSystem), new MovableSystem(this) },
-                { typeof(InventorySystem), new InventorySystem(this) },
+                { typeof(InventorySystem), new InventorySystem(this) }
             };
             foreach (MapMonsterDto monster in monsters)
             {
@@ -44,13 +44,14 @@ namespace ChickenAPI.Game.Game.Maps
             foreach (MapNpcDto npc in npcs)
             {
                 ShopDto shop = shops?.FirstOrDefault(s => s.MapNpcId == npc.Id);
-                    RegisterEntity(new NpcEntity(npc, shop));
+                RegisterEntity(new NpcEntity(npc, shop));
             }
 
             if (portals == null)
             {
                 return;
             }
+
             foreach (PortalDto portal in portals)
             {
                 RegisterEntity(new PortalEntity(portal));
@@ -59,9 +60,10 @@ namespace ChickenAPI.Game.Game.Maps
 
         public Guid Id { get; set; }
         public IMap Map { get; }
-        public IEnumerable<IEntity> GetEntitiesByType(EntityType type) => Entities.Where(s => s.Type == type);
 
         public IEnumerable<IEntity> GetEntitiesInRange(Position<short> pos, int range) =>
             Entities.Where(e => e.HasComponent<MovableComponent>() && PositionHelper.GetDistance(pos, e.GetComponent<MovableComponent>().Actual) < range);
+
+        public IEnumerable<IEntity> GetEntitiesByType(EntityType type) => Entities.Where(s => s.Type == type);
     }
 }

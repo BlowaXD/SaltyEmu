@@ -7,13 +7,10 @@ namespace ChickenAPI.Game.Game.Components
 {
     public class SkillsComponent : IComponent
     {
-        public SkillsComponent(IEntity entity)
-        {
-            Entity = entity;
-        }
-
-        public IEntity Entity { get; }
+        public SkillsComponent(IEntity entity) => Entity = entity;
 
         public Dictionary<long, SkillDto> Skills { get; }
+
+        public IEntity Entity { get; }
     }
 }

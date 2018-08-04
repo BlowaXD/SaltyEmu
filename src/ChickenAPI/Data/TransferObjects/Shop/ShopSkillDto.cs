@@ -5,8 +5,6 @@ namespace ChickenAPI.Game.Data.TransferObjects.Shop
 {
     public class ShopSkillDto : IMappedDto
     {
-        public long Id { get; set; }
-
         public long ShopId { get; set; }
 
         public long SkillId { get; set; }
@@ -16,5 +14,6 @@ namespace ChickenAPI.Game.Data.TransferObjects.Shop
         public byte Type { get; set; }
 
         public SkillDto Skill { get; set; }
+        public long Id { get; set; }
     }
 }

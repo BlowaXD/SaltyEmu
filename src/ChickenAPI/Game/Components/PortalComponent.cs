@@ -21,8 +21,6 @@ namespace ChickenAPI.Game.Game.Components
             IsDisabled = dto.IsDisabled;
         }
 
-        public IEntity Entity { get; }
-
         public long PortalId { get; set; }
 
         public PortalType Type { get; set; }
@@ -35,5 +33,7 @@ namespace ChickenAPI.Game.Game.Components
         public short SourceX { get; set; }
         public short SourceY { get; set; }
         public bool IsDisabled { get; set; }
+
+        public IEntity Entity { get; }
     }
 }

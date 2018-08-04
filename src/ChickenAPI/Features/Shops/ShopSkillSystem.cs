@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Text;
 using ChickenAPI.Core.ECS.Entities;
 using ChickenAPI.Core.ECS.Systems;
@@ -89,7 +90,7 @@ namespace ChickenAPI.Game.Features.Shops
                 }
             }
 
-            player.SendPacket(new NInvPacket()
+            player.SendPacket(new NInvPacket
             {
                 ShopList = tmp.ToString(),
                 ShopType = typeshop,
@@ -101,12 +102,12 @@ namespace ChickenAPI.Game.Features.Shops
 
         private static void HandleBuyRequest(IEntity entity, BuyShopEventArgs buy)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         private static void HandleSellRequest(IEntity entity, SellShopEventArgs sell)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
     }
 }

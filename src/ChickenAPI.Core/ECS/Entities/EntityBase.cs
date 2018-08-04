@@ -60,14 +60,8 @@ namespace ChickenAPI.Core.ECS.Entities
             Components.Remove(typeof(T));
         }
 
-        public virtual bool HasComponent<T>() where T : IComponent
-        {
-            return Components.ContainsKey(typeof(T));
-        }
+        public virtual bool HasComponent<T>() where T : IComponent => Components.ContainsKey(typeof(T));
 
-        public virtual T GetComponent<T>() where T : class, IComponent
-        {
-            return !Components.TryGetValue(typeof(T), out IComponent component) ? null : component as T;
-        }
+        public virtual T GetComponent<T>() where T : class, IComponent => !Components.TryGetValue(typeof(T), out IComponent component) ? null : component as T;
     }
 }

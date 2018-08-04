@@ -7,8 +7,6 @@ namespace ChickenAPI.Game.Data.TransferObjects.Item
 {
     public class ItemInstanceDto : ISynchronizedDto
     {
-        public Guid Id { get; set; }
-
         public ItemDto Item { get; set; }
 
         public long ItemId { get; set; }
@@ -16,12 +14,29 @@ namespace ChickenAPI.Game.Data.TransferObjects.Item
         public long CharacterId { get; set; }
 
         public long? BoundCharacterId { get; set; }
-        
+
         public short Amount { get; set; }
 
         public short Slot { get; set; }
 
         public byte Design { get; set; }
+
+        #region Jewels
+
+        /// <summary>
+        ///     Number of inserted cellon for jewels
+        /// </summary>
+        public byte Cellon { get; set; }
+
+        #endregion
+
+        #region GlovesAndBoots
+
+        public byte Sum { get; set; }
+
+        #endregion
+
+        public Guid Id { get; set; }
 
         #region WeaponsAndArmors
 
@@ -32,7 +47,7 @@ namespace ChickenAPI.Game.Data.TransferObjects.Item
         public byte Upgrade { get; set; }
 
         /// <summary>
-        /// Remaining ammo for archers primary weapon or swordsmen secondary weapon
+        ///     Remaining ammo for archers primary weapon or swordsmen secondary weapon
         /// </summary>
         public byte Ammo { get; set; }
 
@@ -51,7 +66,7 @@ namespace ChickenAPI.Game.Data.TransferObjects.Item
         public short DamageMinimum { get; set; }
 
         public short DamageMaximum { get; set; }
-        
+
         public short Concentration { get; set; }
 
         public short HitRate { get; set; }
@@ -61,15 +76,6 @@ namespace ChickenAPI.Game.Data.TransferObjects.Item
         public short CriticalRate { get; set; }
 
         public short CriticalDamageRate { get; set; }
-
-        #endregion
-
-        #region Jewels
-
-        /// <summary>
-        /// Number of inserted cellon for jewels
-        /// </summary>
-        public byte Cellon { get; set; }
 
         #endregion
 
@@ -90,12 +96,6 @@ namespace ChickenAPI.Game.Data.TransferObjects.Item
         public byte ElementPoints { get; set; }
 
         public byte HpMpPoints { get; set; }
-
-        #endregion
-
-        #region GlovesAndBoots
-        
-        public byte Sum { get; set; }
 
         #endregion
 

@@ -46,10 +46,7 @@ namespace ChickenAPI.Game.Packets.Game.Server
             Speed = movable.Speed;
         }
 
-        public MvPacket()
-        {
-            throw new NotImplementedException();
-        }
+        public MvPacket() => throw new NotImplementedException();
 
         [PacketIndex(0)]
         public VisualType VisualType { get; set; }

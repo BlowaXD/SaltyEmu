@@ -9,18 +9,18 @@ namespace ChickenAPI.Core.ECS.Entities
     public abstract class EntityManagerBase : IEntityManager
     {
         protected static readonly Logger Log = Logger.GetLogger<EntityManagerBase>();
-        protected bool Update;
-        protected long LastEntityId;
 
         // entities
         protected readonly Dictionary<long, IEntity> EntitiesByEntityId = new Dictionary<long, IEntity>();
         protected readonly Dictionary<EntityType, HashSet<IEntity>> EntitiesByEntityType = new Dictionary<EntityType, HashSet<IEntity>>();
+        protected List<ISystem> _systems = new List<ISystem>();
 
         protected List<IEntityManager> EntityManagers = new List<IEntityManager>();
+        protected long LastEntityId;
 
         // systems
         protected Dictionary<Type, INotifiableSystem> NotifiableSystems = new Dictionary<Type, INotifiableSystem>();
-        protected List<ISystem> _systems = new List<ISystem>();
+        protected bool Update;
 
         public void Dispose()
         {
@@ -57,15 +57,9 @@ namespace ChickenAPI.Core.ECS.Entities
             return entity;
         }
 
-        public IEntity GetEntity(long id)
-        {
-            return !EntitiesByEntityId.TryGetValue(id, out IEntity entity) ? null : entity;
-        }
+        public IEntity GetEntity(long id) => !EntitiesByEntityId.TryGetValue(id, out IEntity entity) ? null : entity;
 
-        public T GetEntity<T>(long id) where T : class, IEntity
-        {
-            return !EntitiesByEntityId.TryGetValue(id, out IEntity entity) ? null : entity as T;
-        }
+        public T GetEntity<T>(long id) where T : class, IEntity => !EntitiesByEntityId.TryGetValue(id, out IEntity entity) ? null : entity as T;
 
         public void RegisterEntity<T>(T entity) where T : IEntity
         {
@@ -76,7 +70,6 @@ namespace ChickenAPI.Core.ECS.Entities
         public void UnregisterEntity<T>(T entity) where T : IEntity
         {
             EntitiesByEntityId.Remove(entity.Id);
-
         }
 
         public bool HasEntity(IEntity entity) => HasEntity(entity.Id);

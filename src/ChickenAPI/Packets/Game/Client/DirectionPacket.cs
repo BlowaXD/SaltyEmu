@@ -2,7 +2,6 @@
 
 namespace ChickenAPI.Game.Packets.Game.Client
 {
-
     [PacketHeader("dir")]
     public class DirectionPacket : PacketBase
     {
