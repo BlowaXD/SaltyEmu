@@ -47,7 +47,7 @@ namespace ChickenAPI.Game.Features.Shops
 
             var tmp = new StringBuilder();
             float percent = 1.0f;
-            foreach (ShopItemDto itemInfo in getinfos.Shop.Items.Where(s => s.Type == getinfos.Packet.Type))
+            foreach (ShopItemDto itemInfo in getinfos.Shop.Items.Where(s => s.Type == getinfos.Type))
             {
                 tmp.Append(' ');
                 float price = itemInfo.Item.ReputPrice > 0 ? itemInfo.Item.ReputPrice : itemInfo.Item.Price * percent;
@@ -71,7 +71,7 @@ namespace ChickenAPI.Game.Features.Shops
                 tmp.Append(price);
             }
 
-            foreach (ShopSkillDto skill in getinfos.Shop.Skills.Where(s => s.Type.Equals(getinfos.Packet.Type)))
+            foreach (ShopSkillDto skill in getinfos.Shop.Skills.Where(s => s.Type.Equals(getinfos.Type)))
             {
                 SkillDto skillinfo = skill.Skill;
 

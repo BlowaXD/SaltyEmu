@@ -7,6 +7,6 @@ namespace ChickenAPI.Game.Features.Shops.Args
     {
         public Shop Shop { get; set; }
 
-        public ShoppingPacket Packet { get; set; }
+        public byte Type { get; set; }
     }
 }
