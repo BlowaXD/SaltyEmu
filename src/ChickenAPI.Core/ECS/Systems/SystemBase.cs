@@ -60,6 +60,7 @@ namespace ChickenAPI.Core.ECS.Systems
 
         private void UpdateCache()
         {
+            UpdateCacheRequest = false;
             Entities = EntityManager.Entities.Where(Match).ToArray();
         }
 

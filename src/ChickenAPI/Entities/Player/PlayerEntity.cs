@@ -152,6 +152,13 @@ namespace ChickenAPI.Game.Entities.Player
         }
 
         public void SendPacket<T>(T packetBase) where T : IPacket => Session.SendPacket(packetBase);
+        public void SendPackets<T>(IEnumerable<T> packets) where T : IPacket
+        {
+            foreach (T i in packets)
+            {
+                Session.SendPacket(i);
+            }
+        }
 
         public void SendPackets(IEnumerable<IPacket> packets) => Session.SendPackets(packets);
 

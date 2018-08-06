@@ -36,7 +36,12 @@ namespace ChickenAPI.Game.Features.Groups
 
         public override void Execute(IEntity entity, SystemEventArgs e)
         {
-            throw new System.NotImplementedException();
+            switch (e)
+            {
+                case UpdateCacheEventArgs update:
+                    UpdateCacheRequest = true;
+                    break;
+            }
         }
     }
 }
