@@ -4,6 +4,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
 using Autofac;
+using ChickenAPI.Core.ECS;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Plugins;
 using ChickenAPI.Core.Utils;

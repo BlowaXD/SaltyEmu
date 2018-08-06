@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Autofac;
+using ChickenAPI.Core.ECS;
 using ChickenAPI.Core.ECS.Entities;
 using ChickenAPI.Core.ECS.Systems;
 using ChickenAPI.Core.IoC;
@@ -62,12 +63,8 @@ namespace ChickenAPI.Game.Maps
             {
                 RegisterEntity(new PortalEntity(portal));
             }
-            Container.Instance.Resolve<IEntityManagerContainer>().Register(this);
-        }
-
-        ~SimpleMapLayer()
-        {
-            Container.Instance.Resolve<IEntityManagerContainer>().Unregister(this);
+            
+            StartSystemUpdate();
         }
 
         public Guid Id { get; set; }

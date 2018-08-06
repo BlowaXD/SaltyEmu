@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using ChickenAPI.Core.ECS;
 using ChickenAPI.Core.ECS.Entities;
 
 namespace ChickenAPI.Game.Managers

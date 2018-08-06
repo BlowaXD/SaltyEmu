@@ -1,19 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Autofac;
 using ChickenAPI.Core.ECS.Systems;
+using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Logging;
 
 namespace ChickenAPI.Core.ECS.Entities
 {
     public abstract class EntityManagerBase : IEntityManager
     {
+
         protected static readonly Logger Log = Logger.GetLogger<EntityManagerBase>();
 
         // entities
         protected readonly Dictionary<long, IEntity> EntitiesByEntityId = new Dictionary<long, IEntity>();
         protected readonly Dictionary<EntityType, HashSet<IEntity>> EntitiesByEntityType = new Dictionary<EntityType, HashSet<IEntity>>();
         protected List<ISystem> _systems = new List<ISystem>();
+        protected IEntityManagerContainer _emContainer;
 
         protected List<IEntityManager> EntityManagers = new List<IEntityManager>();
         protected long LastEntityId;
@@ -24,7 +28,7 @@ namespace ChickenAPI.Core.ECS.Entities
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            StopSystemUpdate();
         }
 
         public IEntityManager ParentEntityManager { get; protected set; }
@@ -112,11 +116,13 @@ namespace ChickenAPI.Core.ECS.Entities
         {
             // todo tick system
             ShouldUpdate = true;
+            _emContainer.Register(this);
         }
 
         public void StopSystemUpdate()
         {
             ShouldUpdate = false;
+            _emContainer.Unregister(this);
         }
 
         public void AddSystem(ISystem system)
