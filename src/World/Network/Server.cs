@@ -96,8 +96,16 @@ namespace World.Network
         {
             foreach (IEntityManager manager in _container.Managers)
             {
-                DateTime tmp = DateTime.UtcNow;
-                manager.Update(tmp);
+                try
+                {
+                    DateTime tmp = DateTime.UtcNow;
+                    manager.Update(tmp);
+                }
+                catch (Exception e)
+                {
+                    Log.Error("[TICK]", e);
+                    _container.Unregister(manager);
+                }
             }
         }
 
