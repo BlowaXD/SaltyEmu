@@ -4,7 +4,9 @@ using AutoMapper;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Enums.Game.BCard;
 using ChickenAPI.Enums.Game.Drop;
+using ChickenAPI.Game.Data.AccessLayer.Item;
 using ChickenAPI.Game.Data.AccessLayer.NpcMonster;
+using ChickenAPI.Game.Data.AccessLayer.Skill;
 using ChickenAPI.Game.Data.TransferObjects.BCard;
 using ChickenAPI.Game.Data.TransferObjects.Character;
 using ChickenAPI.Game.Data.TransferObjects.Drop;
@@ -256,10 +258,12 @@ namespace NosSharp.DatabasePlugin.Utils
             cfg.CreateMap<ShopModel, ShopDto>();
 
             cfg.CreateMap<ShopItemDto, ShopItemModel>();
-            cfg.CreateMap<ShopItemModel, ShopItemDto>();
+            cfg.CreateMap<ShopItemModel, ShopItemDto>()
+                .ForMember(s => s.Item, expression => expression.ResolveUsing(origin => Container.Instance.Resolve<IItemService>().GetById(origin.ItemId)));
 
             cfg.CreateMap<ShopSkillDto, ShopSkillModel>();
-            cfg.CreateMap<ShopSkillModel, ShopSkillDto>();
+            cfg.CreateMap<ShopSkillModel, ShopSkillDto>()
+                .ForMember(s => s.Skill, expression => expression.ResolveUsing(origin => Container.Instance.Resolve<ISkillService>().GetById(origin.SkillId)));
 
             cfg.CreateMap<RecipeDto, RecipeModel>();
             cfg.CreateMap<RecipeModel, RecipeDto>();
