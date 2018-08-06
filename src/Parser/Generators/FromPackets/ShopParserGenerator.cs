@@ -14,7 +14,6 @@ namespace Toolkit.Generators.FromPackets
 {
     public class ShopParserGenerator
     {
-
         private static readonly Logger Log = Logger.GetLogger<ShopParserGenerator>();
 
         private readonly List<ShopDto> _shops = new List<ShopDto>();
@@ -31,7 +30,8 @@ namespace Toolkit.Generators.FromPackets
                 try
                 {
                     string[] currentPacket = line.Split('\t', ' ');
-                    if (currentPacket[0] != "shop" || mapNpcService.GetById(long.Parse(currentPacket[2])) == null || _shops.Any(s => s.MapNpcId == long.Parse(currentPacket[2])) || shopService.GetByMapNpcId(int.Parse(currentPacket[2])).Any())
+                    if (currentPacket[0] != "shop" || mapNpcService.GetById(long.Parse(currentPacket[2])) == null ||
+                        _shops.Any(s => s.MapNpcId == long.Parse(currentPacket[2])) || shopService.GetByMapNpcId(int.Parse(currentPacket[2])).Any())
                     {
                         continue;
                     }
@@ -42,7 +42,6 @@ namespace Toolkit.Generators.FromPackets
                         MapNpcId = int.Parse(currentPacket[2]),
                         MenuType = byte.Parse(currentPacket[4]),
                         ShopType = byte.Parse(currentPacket[5])
-
                     };
                     counter++;
                     _shops.Add(shop);
@@ -53,6 +52,7 @@ namespace Toolkit.Generators.FromPackets
                     Log.Warn(line);
                 }
             }
+
             shopService.Save(_shops);
             Log.Info(string.Format("SHOP_PARSED", counter));
         }

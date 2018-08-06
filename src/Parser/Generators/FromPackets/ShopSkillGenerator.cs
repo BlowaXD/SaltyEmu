@@ -13,7 +13,7 @@ namespace Toolkit.Generators.FromPackets
 {
     public class ShopSkillGenerator
     {
-        private static readonly Logger Log = Logger.GetLogger<ShopItemGenerator>();
+        private static readonly Logger Log = Logger.GetLogger<ShopSkillGenerator>();
 
         private readonly List<ShopSkillDto> _shopSkills = new List<ShopSkillDto>();
 
@@ -25,13 +25,19 @@ namespace Toolkit.Generators.FromPackets
             int counter = 0;
             byte type = 0;
 
-            foreach (string line in lines)
+            foreach (string line in lines.Where(s => s.StartsWith("n_inv") || s.StartsWith("shopping")))
             {
                 try
                 {
                     string[] currentPacket = line.Split('\t', ' ');
                     switch (currentPacket[0])
                     {
+                        case "shopping":
+                            if (currentPacket.Length > 3)
+                            {
+                                type = byte.Parse(currentPacket[1]);
+                            }
+                            break;
                         case "n_inv":
                             short npcId = short.Parse(currentPacket[2]);
                             if (!shopService.GetByMapNpcId(npcId).Any())
@@ -41,8 +47,7 @@ namespace Toolkit.Generators.FromPackets
 
                             for (int i = 5; i < currentPacket.Length; i++)
                             {
-                                string[] item = currentPacket[i].Split('.');
-                                if (item.Length != 5 && item.Length != 6)
+                                if (currentPacket[i].Contains("."))
                                 {
                                     continue;
                                 }
@@ -71,10 +76,6 @@ namespace Toolkit.Generators.FromPackets
                                 counter++;
                             }
 
-                            break;
-
-                        case "shopping":
-                            type = byte.Parse(currentPacket[1]);
                             break;
                     }
                 }
