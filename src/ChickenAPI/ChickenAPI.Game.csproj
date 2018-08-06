@@ -34,8 +34,4 @@
     <ProjectReference Include="..\ChickenAPI.Core\ChickenAPI.Core.csproj" />
     <ProjectReference Include="..\ChickenAPI.Enums\ChickenAPI.Enums.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Features\Groups\" />
-  </ItemGroup>
 </Project>

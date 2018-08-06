@@ -15,6 +15,9 @@ namespace ChickenAPI.Game.Entities.Player
         long LastPulse { get; }
 
         void SendPacket<T>(T packetBase) where T : IPacket;
+
+        void SendPackets<T>(IEnumerable<T> packets) where T : IPacket;
+
         void SendPackets(IEnumerable<IPacket> packets);
     }
 }
