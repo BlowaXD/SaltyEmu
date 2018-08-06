@@ -4,6 +4,7 @@ using ChickenAPI.Core.ECS.Entities;
 using ChickenAPI.Core.ECS.Systems;
 using ChickenAPI.Core.ECS.Systems.Args;
 using ChickenAPI.Game.Entities.Player;
+using ChickenAPI.Game.Features.Groups.Args;
 
 namespace ChickenAPI.Game.Features.Groups
 {
@@ -29,7 +30,6 @@ namespace ChickenAPI.Game.Features.Groups
             {
                 return;
             }
-            // send group packet
 
             player.SendPackets(player.GeneratePstPacket());
         }
@@ -41,7 +41,23 @@ namespace ChickenAPI.Game.Features.Groups
                 case UpdateCacheEventArgs update:
                     UpdateCacheRequest = true;
                     break;
+                case GroupJoinEventArgs groupJoin:
+                    JoinGroup(entity, groupJoin);
+                    break;
+                case GroupInvitEventArgs groupInvit:
+                    GroupInvit(entity, groupInvit);
+                    break;
             }
+        }
+
+        private void GroupInvit(IEntity entity, GroupInvitEventArgs groupInvit)
+        {
+            return;
+        }
+
+        private void JoinGroup(IEntity entity, GroupJoinEventArgs groupJoin)
+        {
+            throw new NotImplementedException();
         }
     }
 }
