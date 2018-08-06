@@ -21,7 +21,7 @@ namespace Toolkit.Generators.FromPackets
         public void Generate(string filePath)
         {
             var mapMonsterService = Container.Instance.Resolve<IMapMonsterService>();
-            Dictionary<long, short> effPacketsDictionary = new Dictionary<long, short>();
+            Dictionary<long, long> effPacketsDictionary = new Dictionary<long, long>();
             List<long> npcMvPacketsList = new List<long>();
             List<long> mapMonsterIds = new List<long>();
 
@@ -41,20 +41,20 @@ namespace Toolkit.Generators.FromPackets
                             break;
 
                         case "eff" when currentPacket[1].Equals("3") && !effPacketsDictionary.ContainsKey(int.Parse(currentPacket[2])):
-                            effPacketsDictionary.Add(int.Parse(currentPacket[2]), short.Parse(currentPacket[3]));
+                            effPacketsDictionary.Add(int.Parse(currentPacket[2]), long.Parse(currentPacket[3]));
                             break;
 
                         case "at":
                             map = short.Parse(currentPacket[2]);
                             break;
 
-                        case "in" when currentPacket[1] == "3" && mapMonsterService.GetById(short.Parse(currentPacket[2])) == null && mapMonsterIds.All(id => id != long.Parse(currentPacket[3])):
+                        case "in" when currentPacket[1] == "3" && mapMonsterService.GetById(long.Parse(currentPacket[2])) == null && mapMonsterIds.All(id => id != long.Parse(currentPacket[3])):
                             _monsters.Add(new MapMonsterDto
                             {
                                 MapX = short.Parse(currentPacket[4]),
                                 MapY = short.Parse(currentPacket[5]),
                                 MapId = map,
-                                NpcMonsterId = short.Parse(currentPacket[2]),
+                                NpcMonsterId = long.Parse(currentPacket[2]),
                                 Id = long.Parse(currentPacket[3]),
                                 IsMoving = npcMvPacketsList.Contains(long.Parse(currentPacket[3])),
                                 Position = (DirectionType)byte.Parse(currentPacket[6]),
