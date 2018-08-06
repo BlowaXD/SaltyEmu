@@ -20,7 +20,7 @@ namespace ChickenAPI.Core.ECS.Entities
 
         // systems
         protected Dictionary<Type, INotifiableSystem> NotifiableSystems = new Dictionary<Type, INotifiableSystem>();
-        protected bool Update;
+        protected bool ShouldUpdate;
 
         public void Dispose()
         {
@@ -95,15 +95,28 @@ namespace ChickenAPI.Core.ECS.Entities
             entity.TransferEntity(manager);
         }
 
-        public void StartSystemUpdate(int delay)
+        public void Update(DateTime date)
+        {
+            if (!ShouldUpdate)
+            {
+                return;
+            }
+
+            foreach (ISystem i in Systems)
+            {
+                i.Update(date);
+            }
+        }
+
+        public void StartSystemUpdate()
         {
             // todo tick system
-            Update = true;
+            ShouldUpdate = true;
         }
 
         public void StopSystemUpdate()
         {
-            Update = false;
+            ShouldUpdate = false;
         }
 
         public void AddSystem(ISystem system)

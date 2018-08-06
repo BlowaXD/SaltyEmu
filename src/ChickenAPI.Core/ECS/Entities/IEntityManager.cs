@@ -129,11 +129,9 @@ namespace ChickenAPI.Core.ECS.Entities
 
         #region System
 
-        /// <summary>
-        ///     Starts the context update.
-        /// </summary>
-        /// <param name="delay"></param>
-        void StartSystemUpdate(int delay);
+        void Update(DateTime date);
+        
+        void StartSystemUpdate();
 
         /// <summary>
         ///     Stops the context update.

@@ -2,6 +2,7 @@
 using System.Linq.Expressions;
 using ChickenAPI.Core.ECS.Entities;
 using ChickenAPI.Core.ECS.Systems;
+using ChickenAPI.Game.Entities;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Packets.Game.Server;
 
@@ -17,12 +18,12 @@ namespace ChickenAPI.Game.Features.Movement
 
         protected override void Execute(IEntity entity)
         {
-            if (!Match(entity))
+            if (!(entity is IMovableEntity movableEntity))
             {
                 return;
             }
 
-            var movable = entity.GetComponent<MovableComponent>();
+            MovableComponent movable = movableEntity.Movable;
 
             if (movable.Waypoints.Count <= 0 || !movable.CanMove())
             {

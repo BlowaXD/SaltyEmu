@@ -25,10 +25,10 @@ namespace ChickenAPI.Game.Features.Shops
                     SendInformations(getinfos, entity);
                     break;
                 case BuyShopEventArgs buy:
-                    HandleBuyRequest(entity, buy);
+                    HandleBuyRequest(entity as IPlayerEntity, buy);
                     break;
                 case SellShopEventArgs sell:
-                    HandleSellRequest(entity, sell);
+                    HandleSellRequest(entity as IPlayerEntity, sell);
                     break;
             }
         }
@@ -100,12 +100,12 @@ namespace ChickenAPI.Game.Features.Shops
             });
         }
 
-        private static void HandleBuyRequest(IEntity entity, BuyShopEventArgs buy)
+        private static void HandleBuyRequest(IPlayerEntity player, BuyShopEventArgs buy)
         {
             throw new NotImplementedException();
         }
 
-        private static void HandleSellRequest(IEntity entity, SellShopEventArgs sell)
+        private static void HandleSellRequest(IPlayerEntity player, SellShopEventArgs sell)
         {
             throw new NotImplementedException();
         }

@@ -10,6 +10,7 @@ using ChickenAPI.Core.Utils;
 using ChickenAPI.Enums;
 using ChickenAPI.Game.Data.AccessLayer.Account;
 using ChickenAPI.Game.Data.TransferObjects.Character;
+using ChickenAPI.Game.Managers;
 using ChickenAPI.Game.Packets;
 using NLog;
 using NosSharp.BasicAlgorithm;
@@ -55,6 +56,8 @@ namespace World
                 {
                     plugin.OnEnable();
                 }
+
+                Container.Builder.Register(s => new SimpleEntityManagerContainer()).As<IEntityManagerContainer>().SingleInstance();
             }
             catch (Exception e)
             {
