@@ -29,17 +29,22 @@ namespace Toolkit.Generators.FromPackets
             {
                 try
                 {
+                    if (!line.StartsWith("shop"))
+                    {
+                        continue;
+                    }
+
                     string[] currentPacket = line.Split('\t', ' ');
-                    if (currentPacket[0] != "shop" || mapNpcService.GetById(long.Parse(currentPacket[2])) == null ||
-                        _shops.Any(s => s.MapNpcId == long.Parse(currentPacket[2])) || shopService.GetByMapNpcId(int.Parse(currentPacket[2])).Any())
+                    long mapnpcid = long.Parse(currentPacket[2]);
+                    if (mapNpcService.GetById(mapnpcid) == null || _shops.Any(s => s.MapNpcId == mapnpcid) || shopService.GetByMapNpcId(mapnpcid).Any())
                     {
                         continue;
                     }
 
                     var shop = new ShopDto
                     {
-                        Name = string.Join(" ", currentPacket.Skip(5)),
-                        MapNpcId = int.Parse(currentPacket[2]),
+                        Name = string.Join(" ", currentPacket.Skip(5)).Trim(),
+                        MapNpcId = mapnpcid,
                         MenuType = byte.Parse(currentPacket[4]),
                         ShopType = byte.Parse(currentPacket[5])
                     };
