@@ -40,8 +40,6 @@ namespace ChickenAPI.Game.Features.Visibility
                 case VisibilitySetVisibleEventArgs visibleEvent:
                     SetVisible(entity, visibleEvent);
                     break;
-                default:
-                    throw new NotImplementedException();
             }
         }
 

@@ -5,6 +5,7 @@ using ChickenAPI.Enums.Game.Character;
 using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Game.Data.TransferObjects.NpcMonster;
 using ChickenAPI.Game.Entities.Monster;
+using ChickenAPI.Game.Entities.Npc;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Features.Battle;
 using ChickenAPI.Game.Features.Movement;
@@ -25,14 +26,14 @@ namespace ChickenAPI.Game.Packets.Extensions
             {
                 VisualType = VisualType.Monster,
                 Name = npcMonster.Id.ToString(),
-                Unknown = monster.MapMonster.ToString(),
+                Unknown = monster.MapMonster.Id.ToString(),
                 PositionX = movable.Actual.X,
                 PositionY = movable.Actual.Y,
                 DirectionType = movable.DirectionType,
                 InMonsterSubPacket = new InMonsterSubPacket
                 {
-                    HpPercentage = Convert.ToByte(Math.Ceiling(battle.Hp / (battle.HpMax * 100.0))),
-                    MpPercentage = Convert.ToByte(Math.Ceiling(battle.Mp / (battle.MpMax * 100.0))),
+                    HpPercentage = battle.HpPercentage,
+                    MpPercentage = battle.MpPercentage,
                     Unknown1 = 0,
                     Unknown2 = 0,
                     Unknown3 = -1,
@@ -62,9 +63,51 @@ namespace ChickenAPI.Game.Packets.Extensions
                     return GenerateInMonster(entity as IMonsterEntity);
                 case EntityType.Player:
                     return GenerateInPlayer(entity as IPlayerEntity);
+                case EntityType.Npc:
+                    return GenerateInNpc(entity as INpcEntity);
                 default:
                     return null;
             }
+        }
+
+        private static InPacketBase GenerateInNpc(INpcEntity npcEntity)
+        {
+            var npcMonster = npcEntity.GetComponent<NpcMonsterComponent>();
+            MovableComponent movable = npcEntity.Movable;
+            BattleComponent battle = npcEntity.Battle;
+
+            return new InPacketBase
+            {
+                VisualType = VisualType.Npc,
+                Name = npcMonster.Vnum.ToString(),
+                Unknown = npcMonster.MapNpcMonsterId.ToString(),
+                PositionX = movable.Actual.X,
+                PositionY = movable.Actual.Y,
+                DirectionType = movable.DirectionType,
+                InNpcSubPacket = new InNpcSubPacket
+                {
+                    HpPercentage = battle.HpPercentage,
+                    MpPercentage = battle.MpPercentage,
+                    Dialog = 0,
+                    Unknown1 = 0,
+                    Unknown2 = 0,
+                    Unknown3 = -1,
+                    Unknown4 = 1,
+                    IsSitting = false,
+                    Unknown5 = -1,
+                    Unknown6 = "-",
+                    Unknown7 = 0,
+                    Unknown8 = -1,
+                    Unknown9 = 0,
+                    Unknown10 = 0,
+                    Unknown11 = 0,
+                    Unknown12 = 0,
+                    Unknown13 = 0,
+                    Unknown14 = 0,
+                    Unknown15 = 0,
+                    Unknown16 = 0
+                }
+            };
         }
 
         private static InPacketBase GenerateInPlayer(IPlayerEntity player)

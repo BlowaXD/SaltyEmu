@@ -29,7 +29,7 @@ namespace ChickenAPI.Game.Maps
 
         public long Id => _map.Id;
         public int MusicId => _map.Music;
-        public IMapLayer BaseLayer => _baseMapLayer ?? (_baseMapLayer = new SimpleMapLayer(this, _monsters, _npcs, Portals));
+        public IMapLayer BaseLayer => _baseMapLayer ?? (_baseMapLayer = new SimpleMapLayer(this, _monsters, _npcs, Portals, Shops));
         public HashSet<IMapLayer> Layers { get; }
 
         public short Width => _map.Width;

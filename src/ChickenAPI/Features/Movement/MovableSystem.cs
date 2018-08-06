@@ -19,6 +19,7 @@ namespace ChickenAPI.Game.Features.Movement
 
         protected override void Execute(IEntity entity)
         {
+            /*
             if (!(entity is IMovableEntity movableEntity))
             {
                 return;
@@ -33,6 +34,7 @@ namespace ChickenAPI.Game.Features.Movement
 
             movable.Actual = movable.Waypoints.Dequeue();
             Move(entity);
+            */
         }
 
         public override void Execute(IEntity entity, SystemEventArgs e)

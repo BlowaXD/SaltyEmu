@@ -18,7 +18,13 @@ namespace ChickenAPI.Game.Entities.Npc
     {
         public NpcEntity(MapNpcDto npc, ShopDto shop) : base(EntityType.Npc)
         {
-            Battle = new BattleComponent(this);
+            Battle = new BattleComponent(this)
+            {
+                Hp = npc.NpcMonster.MaxHp,
+                HpMax = npc.NpcMonster.MaxHp,
+                Mp = npc.NpcMonster.MaxMp,
+                MpMax = npc.NpcMonster.MaxMp
+            };
             Movable = new MovableComponent(this)
             {
                 Actual = new Position<short>(npc.MapX, npc.MapY),
@@ -26,7 +32,8 @@ namespace ChickenAPI.Game.Entities.Npc
                 DirectionType = npc.Position,
                 Speed = npc.NpcMonster.Speed
             };
-            Shop = new Shop(shop);
+
+            Shop = shop != null ? new Shop(shop) : null;
             Skills = new SkillComponent(this);
             Components = new Dictionary<Type, IComponent>
             {

@@ -13,7 +13,7 @@ namespace ChickenAPI.Core.ECS.Systems
         protected SystemBase(IEntityManager entityManager) => EntityManager = entityManager;
 
 
-        protected virtual short RefreshRate { get; } = 10;
+        protected virtual short RefreshRate { get; } = 2;
         protected int RefreshDelay => 1000 / RefreshRate;
 
         /// <summary>

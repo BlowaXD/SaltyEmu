@@ -14,12 +14,13 @@ namespace ChickenAPI.Game.Packets.Game.Server
     {
         public GpPacket(IEntity entity)
         {
-            if (entity.Type != EntityType.Portal)
+            var portal = entity.GetComponent<PortalComponent>();
+
+            if (portal == null)
             {
                 return;
             }
 
-            var portal = entity.GetComponent<PortalComponent>();
             PositionX = portal.SourceX;
             PositionY = portal.SourceY;
             DestinationMapId = portal.DestinationMapLayer.Map.Id;
