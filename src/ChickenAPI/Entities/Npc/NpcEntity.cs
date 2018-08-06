@@ -11,7 +11,6 @@ using ChickenAPI.Game.Features.Movement;
 using ChickenAPI.Game.Features.Shops;
 using ChickenAPI.Game.Features.Skills;
 using ChickenAPI.Game.Features.Visibility;
-using ChickenAPI.Game.Game.Components;
 
 namespace ChickenAPI.Game.Entities.Npc
 {

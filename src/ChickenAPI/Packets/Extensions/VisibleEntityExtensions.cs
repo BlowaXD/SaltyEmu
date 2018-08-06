@@ -8,7 +8,6 @@ using ChickenAPI.Game.Entities.Monster;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Features.Battle;
 using ChickenAPI.Game.Features.Movement;
-using ChickenAPI.Game.Features.Visibility;
 using ChickenAPI.Game.Game.Components;
 using ChickenAPI.Game.Maps;
 using ChickenAPI.Game.Packets.Game.Server;
