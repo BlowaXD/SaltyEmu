@@ -36,31 +36,32 @@ namespace ChickenAPI.Game.Maps
                 { typeof(ShopSystem), new ShopSystem(this) }
             };
             AddSystem(movable);
-            foreach (MapMonsterDto monster in monsters)
+            if (monsters != null)
             {
-                RegisterEntity(new MonsterEntity(monster));
+                foreach (MapMonsterDto monster in monsters)
+                {
+                    RegisterEntity(new MonsterEntity(monster));
+                }
             }
 
-            if (npcs == null)
+            if (npcs != null)
             {
-                return;
+                foreach (MapNpcDto npc in npcs)
+                {
+                    ShopDto shop = shops?.FirstOrDefault(s => s.MapNpcId == npc.Id);
+                    RegisterEntity(new NpcEntity(npc, shop));
+                }
             }
 
-            foreach (MapNpcDto npc in npcs)
+
+            if (portals != null)
             {
-                ShopDto shop = shops?.FirstOrDefault(s => s.MapNpcId == npc.Id);
-                RegisterEntity(new NpcEntity(npc, shop));
+                foreach (PortalDto portal in portals)
+                {
+                    RegisterEntity(new PortalEntity(portal));
+                }
             }
 
-            if (portals == null)
-            {
-                return;
-            }
-
-            foreach (PortalDto portal in portals)
-            {
-                RegisterEntity(new PortalEntity(portal));
-            }
             
             StartSystemUpdate();
         }
