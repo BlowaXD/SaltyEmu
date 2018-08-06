@@ -16,7 +16,7 @@ namespace NosSharp.PacketHandler.Shops
             IEnumerable<INpcEntity> npcs = player.EntityManager.GetEntitiesByType<INpcEntity>(EntityType.Npc);
 
             INpcEntity npc = npcs.FirstOrDefault(s => s.MapNpc.Id == packet.NpcId);
-            if (npc == null || (!(npc is NpcEntity shopEntity)))
+            if (npc == null || !(npc is NpcEntity shopEntity))
             {
                 return;
             }

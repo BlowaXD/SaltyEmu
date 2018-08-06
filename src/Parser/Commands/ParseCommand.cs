@@ -18,9 +18,6 @@ namespace Toolkit.Commands
         [Value(0, Default = "all", HelpText = "Parsing type : card, skill, map, item, einfo, monster")]
         public string ParsingType { get; set; }
 
-        [Option('p', "packet", HelpText = "Packet file")]
-        public string PacketFile { get; set; }
-
         [Option('m', "map", HelpText = "Map files directory")]
         public string MapDirectory { get; set; }
 
@@ -33,43 +30,32 @@ namespace Toolkit.Commands
             {
                 return true;
             }
+
             if (!File.Exists(inputDirectory + "/dats/Monster.dat"))
             {
                 return true;
             }
+
             if (!File.Exists(inputDirectory + "/dats/Item.dat"))
             {
                 return true;
             }
-            if (!File.Exists(inputDirectory + "/dats/Card.dat"))
-            {
-                return true;
-            }
-            if (!File.Exists(inputDirectory + "/dats/Card.dat"))
-            {
-                return true;
-            }
+
             if (!File.Exists(inputDirectory + "/dats/Card.dat"))
             {
                 return true;
             }
 
-            if (!File.Exists(inputDirectory + "/packets/einfo.packet"))
+            if (!File.Exists(inputDirectory + "/packets/einfo.packets"))
             {
                 return true;
             }
-            if (!File.Exists(inputDirectory + "/packets/portals.packet"))
-            {
-                return true;
-            }
-            if (!File.Exists(inputDirectory + "/packets/monster.packet"))
-            {
-                return true;
-            }
+
             if (!File.Exists(inputDirectory + "/packets/packet.txt"))
             {
                 return true;
             }
+
             return false;
         }
 
@@ -86,9 +72,7 @@ namespace Toolkit.Commands
                 Console.WriteLine($"\t\t- Item.dat");
                 Console.WriteLine($"\t\t- Card.dat");
                 Console.WriteLine($"\t- packets");
-                Console.WriteLine($"\t\t- einfo.packet");
-                Console.WriteLine($"\t\t- portals.packet");
-                Console.WriteLine($"\t\t- monster.packet");
+                Console.WriteLine($"\t\t- einfo.packets");
                 Console.WriteLine($"\t\t- packet.txt");
                 return 1;
             }
@@ -112,6 +96,7 @@ namespace Toolkit.Commands
             var npc = new MapNpcGenerator();
             var shop = new ShopParserGenerator();
             var shopItem = new ShopItemGenerator();
+            var shopSkill = new ShopSkillGenerator();
             switch (command.ParsingType)
             {
                 case "card":
@@ -127,29 +112,25 @@ namespace Toolkit.Commands
                     item.Extract(command.InputDirectory);
                     break;
                 case "einfo":
-                    einfo.Fill(command.PacketFile);
+                    einfo.Fill(command.InputDirectory);
                     break;
                 case "monster":
                     monster.Extract(command.InputDirectory);
                     break;
                 case "all":
-                    if (string.IsNullOrEmpty(command.PacketFile))
-                    {
-                        return 1;
-                    }
-
                     Log.Info("Parsing...");
                     map.Extract(command.InputDirectory + "/maps");
                     skill.Extract(command.InputDirectory + "/dats");
                     item.Extract(command.InputDirectory + "/dats");
                     card.Extract(command.InputDirectory + "/dats");
                     monster.Extract(command.InputDirectory + "/dats");
-                    einfo.Fill(command.InputDirectory + "/packets/einfo.packet");
-                    portal.Generate(command.InputDirectory + "/packets/portals.packet");
-                    monGenerator.Generate(command.InputDirectory + "/packets/monster.packet");
-                    npc.Generate(command.InputDirectory + "/packets/monster.packet");
+                    einfo.Fill(command.InputDirectory + "/packets/einfo.packets");
+                    portal.Generate(command.InputDirectory + "/packets/packet.txt");
+                    monGenerator.Generate(command.InputDirectory + "/packets/packet.txt");
+                    npc.Generate(command.InputDirectory + "/packets/packet.txt");
                     shop.Generate(command.InputDirectory + "/packets/packet.txt");
                     shopItem.Generate(command.InputDirectory + "/packets/packet.txt");
+                    shopSkill.Generate(command.InputDirectory + "/packets/packet.txt");
                     Log.Info("Parsing done");
                     break;
             }
