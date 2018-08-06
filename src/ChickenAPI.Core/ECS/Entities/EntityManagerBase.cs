@@ -10,14 +10,20 @@ namespace ChickenAPI.Core.ECS.Entities
 {
     public abstract class EntityManagerBase : IEntityManager
     {
-
         protected static readonly Logger Log = Logger.GetLogger<EntityManagerBase>();
 
         // entities
         protected readonly Dictionary<long, IEntity> EntitiesByEntityId = new Dictionary<long, IEntity>();
         protected readonly Dictionary<EntityType, HashSet<IEntity>> EntitiesByEntityType = new Dictionary<EntityType, HashSet<IEntity>>();
         protected List<ISystem> _systems = new List<ISystem>();
-        protected IEntityManagerContainer _emContainer;
+
+        private IEntityManagerContainer _emContainer;
+
+        protected IEntityManagerContainer EmContainer
+        {
+            get => (_emContainer ?? (_emContainer = Container.Instance.Resolve<IEntityManagerContainer>()));
+            set => _emContainer = value;
+        }
 
         protected List<IEntityManager> EntityManagers = new List<IEntityManager>();
         protected long LastEntityId;
@@ -116,13 +122,13 @@ namespace ChickenAPI.Core.ECS.Entities
         {
             // todo tick system
             ShouldUpdate = true;
-            _emContainer.Register(this);
+            EmContainer.Register(this);
         }
 
         public void StopSystemUpdate()
         {
             ShouldUpdate = false;
-            _emContainer.Unregister(this);
+            EmContainer.Unregister(this);
         }
 
         public void AddSystem(ISystem system)

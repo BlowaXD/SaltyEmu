@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Autofac;
-using ChickenAPI.Core.ECS;
 using ChickenAPI.Core.ECS.Entities;
 using ChickenAPI.Core.ECS.Systems;
-using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Utils;
 using ChickenAPI.Game.Data.TransferObjects.Map;
 using ChickenAPI.Game.Data.TransferObjects.Shop;
@@ -18,7 +15,6 @@ using ChickenAPI.Game.Features.Inventory;
 using ChickenAPI.Game.Features.Movement;
 using ChickenAPI.Game.Features.Shops;
 using ChickenAPI.Game.Features.Visibility;
-using ChickenAPI.Game.Managers;
 using ChickenAPI.Game.Packets;
 
 namespace ChickenAPI.Game.Maps
