@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using ChickenAPI.Core.ECS.Systems;
+using ChickenAPI.Core.ECS.Systems.Args;
 
 namespace ChickenAPI.Core.ECS.Entities
 {

@@ -2,6 +2,7 @@
 using System.Linq.Expressions;
 using ChickenAPI.Core.ECS.Entities;
 using ChickenAPI.Core.ECS.Systems;
+using ChickenAPI.Core.ECS.Systems.Args;
 using ChickenAPI.Game.Entities;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Packets.Game.Server;
@@ -36,7 +37,12 @@ namespace ChickenAPI.Game.Features.Movement
 
         public override void Execute(IEntity entity, SystemEventArgs e)
         {
-            throw new NotImplementedException();
+            switch (e)
+            {
+                case UpdateCacheEventArgs update:
+                    UpdateCacheRequest = true;
+                    break;
+            }
         }
 
         private void Move(IEntity entity)

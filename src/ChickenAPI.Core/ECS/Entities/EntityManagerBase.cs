@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Autofac;
 using ChickenAPI.Core.ECS.Systems;
+using ChickenAPI.Core.ECS.Systems.Args;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Logging;
 
@@ -75,11 +76,13 @@ namespace ChickenAPI.Core.ECS.Entities
         {
             entity.Id = NextEntityId;
             EntitiesByEntityId[entity.Id] = entity;
+            NotifySystems(entity, new UpdateCacheEventArgs());
         }
 
         public void UnregisterEntity<T>(T entity) where T : IEntity
         {
             EntitiesByEntityId.Remove(entity.Id);
+            NotifySystems(entity, new UpdateCacheEventArgs());
         }
 
         public bool HasEntity(IEntity entity) => HasEntity(entity.Id);

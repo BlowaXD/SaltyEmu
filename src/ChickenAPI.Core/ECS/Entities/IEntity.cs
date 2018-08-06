@@ -2,6 +2,7 @@
 using ChickenAPI.Core.Data.TransferObjects;
 using ChickenAPI.Core.ECS.Components;
 using ChickenAPI.Core.ECS.Systems;
+using ChickenAPI.Core.ECS.Systems.Args;
 
 namespace ChickenAPI.Core.ECS.Entities
 {

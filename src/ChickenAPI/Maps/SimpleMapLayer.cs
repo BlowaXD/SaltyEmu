@@ -26,14 +26,16 @@ namespace ChickenAPI.Game.Maps
             Id = Guid.NewGuid();
             Map = map;
             ParentEntityManager = map;
+            var movable = new MovableSystem(this);
             NotifiableSystems = new Dictionary<Type, INotifiableSystem>
             {
                 { typeof(VisibilitySystem), new VisibilitySystem(this) },
                 { typeof(ChatSystem), new ChatSystem(this) },
-                { typeof(MovableSystem), new MovableSystem(this) },
+                { typeof(MovableSystem),  movable},
                 { typeof(InventorySystem), new InventorySystem(this) },
                 { typeof(ShopSystem), new ShopSystem(this) }
             };
+            AddSystem(movable);
             foreach (MapMonsterDto monster in monsters)
             {
                 RegisterEntity(new MonsterEntity(monster));

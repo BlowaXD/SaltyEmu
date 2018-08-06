@@ -27,7 +27,7 @@ namespace ChickenAPI.Core.ECS.Systems
         protected IEntity[] Entities { get; private set; }
 
         // todo
-        protected bool UpdateCacheRequest { get; }
+        protected bool UpdateCacheRequest { get; set; }
 
         public IEntityManager EntityManager { get; }
 

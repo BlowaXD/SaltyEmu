@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using ChickenAPI.Core.ECS.Components;
 using ChickenAPI.Core.ECS.Systems;
+using ChickenAPI.Core.ECS.Systems.Args;
 using ChickenAPI.Core.Logging;
 
 namespace ChickenAPI.Core.ECS.Entities
