@@ -25,15 +25,10 @@ namespace Toolkit.Generators.FromPackets
             string[] lines = File.ReadAllText(filePath, Encoding.Default).Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
             int counter = 0;
 
-            foreach (string line in lines)
+            foreach (string line in lines.Where(s => s.StartsWith("shop")))
             {
                 try
                 {
-                    if (!line.StartsWith("shop"))
-                    {
-                        continue;
-                    }
-
                     string[] currentPacket = line.Split('\t', ' ');
                     long mapnpcid = long.Parse(currentPacket[2]);
                     if (mapNpcService.GetById(mapnpcid) == null || _shops.Any(s => s.MapNpcId == mapnpcid) || shopService.GetByMapNpcId(mapnpcid).Any())
