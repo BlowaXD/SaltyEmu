@@ -177,12 +177,7 @@ namespace NosSharp.DatabasePlugin.Context
                 .HasOne(s => s.SourceMap)
                 .WithMany(s => s.Portals)
                 .HasForeignKey(s => s.SourceMapId);
-
-            modelBuilder.Entity<ShopModel>()
-                .HasOne(s => s.MapNpc)
-                .WithOne(s => s.Shop)
-                .HasForeignKey<ShopModel>(s => s.MapNpcId);
-
+            
             modelBuilder.Entity<MapModel>()
                 .HasMany(s => s.Npcs)
                 .WithOne(s => s.Map)

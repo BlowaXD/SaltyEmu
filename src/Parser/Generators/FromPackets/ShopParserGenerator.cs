@@ -31,7 +31,7 @@ namespace Toolkit.Generators.FromPackets
                 try
                 {
                     string[] currentPacket = line.Split('\t', ' ');
-                    if (currentPacket[0] != "shop" || mapNpcService.GetById(int.Parse(currentPacket[2])) != null || _shops.Any(s => s.MapNpcId == int.Parse(currentPacket[2])) || shopService.GetByMapNpcId(int.Parse(currentPacket[2])).Any())
+                    if (currentPacket[0] != "shop" || mapNpcService.GetById(long.Parse(currentPacket[2])) == null || _shops.Any(s => s.MapNpcId == long.Parse(currentPacket[2])) || shopService.GetByMapNpcId(int.Parse(currentPacket[2])).Any())
                     {
                         continue;
                     }
