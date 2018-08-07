@@ -25,7 +25,7 @@ namespace NosSharp.DatabasePlugin.Models.Map
 
         public MapModel Map { get; set; }
 
-        [ForeignKey("FK_MAPNPC_TO_MAP")]
+        [ForeignKey(nameof(MapId))]
         public long MapId { get; set; }
 
         public short MapX { get; set; }

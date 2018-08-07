@@ -23,7 +23,7 @@ namespace NosSharp.DatabasePlugin.Models.Map
         public MapModel SourceMap { get; set; }
 
 
-        [ForeignKey("FK_MAPPORTAL_TO_SRC_MAP")]
+        [ForeignKey(nameof(SourceMapId))]
         public long SourceMapId { get; set; }
 
         public short SourceX { get; set; }

@@ -13,19 +13,24 @@ namespace NosSharp.DatabasePlugin.Models.Map
     {
         public long Id { get; set; }
 
-        public short PositionX { get; set; }
-        public short PositionY { get; set; }
+        public short MapX { get; set; }
 
+        public short MapY { get; set; }
 
         public MapModel Map { get; set; }
 
-        [ForeignKey("FK_MAPNPCMONSTER_TO_MAPID")]
+        [ForeignKey(nameof(MapId))]
         public long MapId { get; set; }
-
 
         public NpcMonsterModel NpcMonster { get; set; }
 
-        [ForeignKey("FK_MAPNPCMONSTER_TO_NPCMONSTER")]
+        [ForeignKey(nameof(NpcMonsterId))]
         public long NpcMonsterId { get; set; }
+
+        public bool IsDisabled { get; set; }
+
+        public bool IsMoving { get; set; }
+
+        public DirectionType Position { get; set; }
     }
 }

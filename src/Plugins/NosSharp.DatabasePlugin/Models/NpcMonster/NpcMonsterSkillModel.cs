@@ -17,14 +17,14 @@ namespace NosSharp.DatabasePlugin.Models.NpcMonster
         
         public SkillModel Skill { get; set; }
         
-        [ForeignKey("FK_NPCMONSTERSKILL_TO_SKILL")]
+        [ForeignKey(nameof(SkillId))]
         public long SkillId { get; set; }
 
         public short Rate { get; set; }
 
         public NpcMonsterModel NpcMonster { get; set; }
 
-        [ForeignKey("FK_NPCMONSTERSKILL_TO_NPCMONSTER")]
+        [ForeignKey(nameof(NpcMonsterId))]
         public long NpcMonsterId { get; set; }
     }
 }
