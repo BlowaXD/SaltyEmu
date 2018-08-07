@@ -109,8 +109,7 @@ namespace World
             string logo = text.Split('\n').Select(s => string.Format("{0," + (Console.WindowWidth / 2 + s.Length / 2) + "}\n", s))
                 .Aggregate("", (current, i) => current + i);
             Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.WriteLine(separator + logo);
-            Console.WriteLine(separator);
+            Console.WriteLine(separator + logo + separator);
             Console.ForegroundColor = ConsoleColor.White;
         }
 

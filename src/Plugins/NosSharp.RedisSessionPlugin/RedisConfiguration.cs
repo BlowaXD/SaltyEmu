@@ -4,7 +4,7 @@
     {
         public RedisConfiguration()
         {
-            Host = "redis.local";
+            Host = "localhost";
             Port = 6379;
         }
 
