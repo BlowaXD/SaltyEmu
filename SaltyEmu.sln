@@ -29,6 +29,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChickenAPI.Enums", "src\Chi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Toolkit", "src\Parser\Toolkit.csproj", "{5F14B226-7842-4F6E-BE2E-1CC01C530F3B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NosSharp.Pathfinder", "src\Plugins\NosSharp.Pathfinder\NosSharp.Pathfinder.csproj", "{48D59236-CC25-497E-A98D-DAB290E4A8B7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -83,6 +85,10 @@ Global
 		{5F14B226-7842-4F6E-BE2E-1CC01C530F3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5F14B226-7842-4F6E-BE2E-1CC01C530F3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5F14B226-7842-4F6E-BE2E-1CC01C530F3B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{48D59236-CC25-497E-A98D-DAB290E4A8B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{48D59236-CC25-497E-A98D-DAB290E4A8B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{48D59236-CC25-497E-A98D-DAB290E4A8B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{48D59236-CC25-497E-A98D-DAB290E4A8B7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -93,6 +99,7 @@ Global
 		{C18EC263-D92D-4DB6-9D8C-02A6945FF5B5} = {7A7E9A02-CEFC-4E77-A495-70804348CA47}
 		{45E04475-DFC4-400A-9D35-44BAF5180ACD} = {7A7E9A02-CEFC-4E77-A495-70804348CA47}
 		{28B389E6-9863-4306-B32E-756A2C6D9E99} = {7A7E9A02-CEFC-4E77-A495-70804348CA47}
+		{48D59236-CC25-497E-A98D-DAB290E4A8B7} = {7A7E9A02-CEFC-4E77-A495-70804348CA47}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {33B1EC1B-965D-4770-B047-390647E82322}
