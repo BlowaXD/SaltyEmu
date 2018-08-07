@@ -24,16 +24,23 @@ You will need to start a Redis
 ### Enable Database
 You also need to start a MSSQL Server instance
  
-`docker run -p 1433:1433 -e ACCEPT_EULA=Y -e SA_PASSWORD=DevNos#2018 --name saltyemu-database -d mssql-server-linux:latest`
+`docker run -p 1433:1433 -e ACCEPT_EULA=Y -e SA_PASSWORD=strong_pass2018 --name saltyemu-database -d microsoft/mssql-server-linux:latest`
 
-Now create your Database & your user in MSSQL with SSMS (an tool is about to be finished to automatically create your database)
+Now create your Database, by default called `saltynos` in configs
 
 ### Parse Datas
 
 Go in SaltyEmu.Toolkit
  
-`dotnet src/SaltyEmu.Toolkit parse -i {PathToParsingDirectory}`
+`dotnet src/SaltyEmu.Toolkit parse all -i {PathToParsingDirectory}`
 
+### Run Login
+
+`dotnet bin/Debug/Login.dll`
+
+### Run World 
+
+`dotnet bin/Debug/World.dll`
 
 
 ## Credits
