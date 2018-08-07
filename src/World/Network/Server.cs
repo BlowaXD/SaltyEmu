@@ -9,7 +9,6 @@ using ChickenAPI.Core.Logging;
 using ChickenAPI.Enums.Game.Character;
 using ChickenAPI.Game.Data.AccessLayer.Server;
 using ChickenAPI.Game.Data.TransferObjects.Server;
-using ChickenAPI.Game.Managers;
 using DotNetty.Common.Concurrency;
 using DotNetty.Transport.Bootstrapping;
 using DotNetty.Transport.Channels;

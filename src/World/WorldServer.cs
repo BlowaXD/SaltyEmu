@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using Autofac;
@@ -77,15 +78,15 @@ namespace World
                 Server.Port = intPort;
             }
 
-            string tick = Environment.GetEnvironmentVariable("SERVER_REFRESH_RATE") ?? "20";
+            string tick = Environment.GetEnvironmentVariable("SERVER_REFRESH_RATE") ?? "5";
             if (!int.TryParse(tick, out int tickRate))
             {
-                tickRate = 20;
+                tickRate = 5;
             }
 
             Server.Port = intPort;
             Server.Ip = Environment.GetEnvironmentVariable("SERVER_IP") ?? "127.0.0.1";
-            Server.WorldGroup = Environment.GetEnvironmentVariable("SERVER_WORLDGROUP") ?? "ParaNosia";
+            Server.WorldGroup = Environment.GetEnvironmentVariable("SERVER_WORLDGROUP") ?? "SaltyNos";
             Server.TickRate = tickRate;
             Log.Info($"TICK-RATE : {Server.TickRate} Hz");
             Log.Info($"WORLDGROUP : {Server.WorldGroup}");
@@ -95,16 +96,20 @@ namespace World
 
         private static void PrintHeader()
         {
-            Console.Title = "WingsEmu - WORLD";
-            const string text = @" __      __.__                     ___________              
-/  \    /  \__| ____    ____  _____\_   _____/ _____  __ __ 
-\   \/\/   /  |/    \  / ___\/  ___/|    __)_ /     \|  |  \
- \        /|  |   |  \/ /_/  >___ \ |        \  Y Y  \  |  /
-  \__/\  / |__|___|  /\___  /____  >_______  /__|_|  /____/ 
-       \/          \//_____/     \/        \/      \/       ";
-            int offset = Console.WindowWidth / 2 + text.Length / 2;
+            Console.Title = "SaltyEmu - WORLD";
+            const string text = @"
+███████╗ █████╗ ██╗  ████████╗██╗   ██╗███████╗███╗   ███╗██╗   ██╗
+██╔════╝██╔══██╗██║  ╚══██╔══╝╚██╗ ██╔╝██╔════╝████╗ ████║██║   ██║
+███████╗███████║██║     ██║    ╚████╔╝ █████╗  ██╔████╔██║██║   ██║
+╚════██║██╔══██║██║     ██║     ╚██╔╝  ██╔══╝  ██║╚██╔╝██║██║   ██║
+███████║██║  ██║███████╗██║      ██║   ███████╗██║ ╚═╝ ██║╚██████╔╝
+╚══════╝╚═╝  ╚═╝╚══════╝╚═╝      ╚═╝   ╚══════╝╚═╝     ╚═╝ ╚═════╝ ";
             string separator = new string('=', Console.WindowWidth);
-            Console.WriteLine(separator + string.Format("{0," + offset + "}\n", text) + separator);
+            string logo = text.Split('\n').Select(s => string.Format("{0," + (Console.WindowWidth / 2 + s.Length / 2) + "}\n", s))
+                .Aggregate("", (current, i) => current + i);
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.WriteLine(separator + logo + separator);
+            Console.ForegroundColor = ConsoleColor.White;
         }
 
         private static void InitializeLogger()

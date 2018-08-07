@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using System;
+using System.Data;
 using NpgsqlTypes;
 
 namespace NosSharp.DatabasePlugin.Configuration
@@ -7,10 +8,10 @@ namespace NosSharp.DatabasePlugin.Configuration
     {
         public DatabaseConfiguration()
         {
-            Ip = "database.local";
-            Username = "nossharp-user";
+            Ip = "localhost";
+            Username = "db-user";
             Password = "DevNos=2018";
-            Database = "nossharp";
+            Database = "saltyemu";
             Port = 1433;
             Type = DbProviderType.MSSQL;
         }
