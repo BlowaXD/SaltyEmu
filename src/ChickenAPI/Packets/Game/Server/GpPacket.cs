@@ -16,7 +16,7 @@ namespace ChickenAPI.Game.Packets.Game.Server
         {
             PositionX = portal.SourceX;
             PositionY = portal.SourceY;
-            DestinationMapId = portal.DestinationMapLayer.Map.Id;
+            DestinationMapId = portal.DestinationMapId;
             PortalType = portal.Type;
             PortalId = portal.PortalId;
             IsDisabled = portal.IsDisabled;

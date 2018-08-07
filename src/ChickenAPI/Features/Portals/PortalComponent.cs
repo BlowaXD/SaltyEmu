@@ -1,7 +1,10 @@
-﻿using ChickenAPI.Core.ECS.Components;
+﻿using Autofac;
+using ChickenAPI.Core.ECS.Components;
 using ChickenAPI.Core.ECS.Entities;
+using ChickenAPI.Core.IoC;
 using ChickenAPI.Enums.Game.Portals;
 using ChickenAPI.Game.Data.TransferObjects.Map;
+using ChickenAPI.Game.Managers;
 using ChickenAPI.Game.Maps;
 
 namespace ChickenAPI.Game.Features.Portals
@@ -14,12 +17,15 @@ namespace ChickenAPI.Game.Features.Portals
             PortalId = dto.Id;
             Type = dto.Type;
             DestinationMapLayer = null;
+            DestinationMapId = dto.DestinationMapId;
             DestinationX = dto.DestinationX;
             DestinationY = dto.DestinationY;
             SourceX = dto.SourceX;
             SourceY = dto.SourceY;
             IsDisabled = dto.IsDisabled;
         }
+
+        public short DestinationMapId { get; set; }
 
         public long PortalId { get; set; }
 

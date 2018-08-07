@@ -1,4 +1,5 @@
-﻿using ChickenAPI.Game.Packets;
+﻿using ChickenAPI.Enums.Game.Entity;
+using ChickenAPI.Game.Packets;
 
 namespace ChickenAPI.Game.Features.Shops.Packets
 {
@@ -6,7 +7,7 @@ namespace ChickenAPI.Game.Features.Shops.Packets
     public class ShopPacket : PacketBase
     {
         [PacketIndex(0)]
-        public int Unknown { get; set; }
+        public VisualType VisualType { get; set; }
 
         [PacketIndex(1)]
         public long EntityId { get; set; }

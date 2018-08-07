@@ -20,7 +20,7 @@ namespace ChickenAPI.Game.Entities.Portal
             };
         }
 
-        public PortalComponent Portal { get; }
+        public PortalComponent Portal { get; private set; }
 
         public override void Dispose()
         {

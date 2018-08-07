@@ -4,9 +4,11 @@ using ChickenAPI.Core.ECS.Entities;
 using ChickenAPI.Core.ECS.Systems;
 using ChickenAPI.Core.ECS.Systems.Args;
 using ChickenAPI.Core.Logging;
+using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Game.Entities.Npc;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Entities.Portal;
+using ChickenAPI.Game.Features.Portals;
 using ChickenAPI.Game.Features.Shops.Packets;
 using ChickenAPI.Game.Features.Visibility.Args;
 using ChickenAPI.Game.Packets.Extensions;
@@ -103,7 +105,7 @@ namespace ChickenAPI.Game.Features.Visibility
                         {
                             session.SendPacket(new ShopPacket
                             {
-                                Unknown = 2,
+                                VisualType = VisualType.Npc,
                                 EntityId = npc.MapNpc.Id,
                                 ShopId = npc.Shop.Id,
                                 MenuType = npc.Shop.MenuType,
@@ -115,9 +117,10 @@ namespace ChickenAPI.Game.Features.Visibility
                         break;
                     case EntityType.Portal:
 
-                        if (entityy is PortalEntity portal && portal.Portal != null)
+                        if (entityy is PortalEntity portal)
                         {
-                            session.SendPacket(new GpPacket(portal.Portal));
+                            
+                            session.SendPacket(new GpPacket(portal.GetComponent<PortalComponent>()));
                         }
 
                         break;
