@@ -12,15 +12,8 @@ namespace ChickenAPI.Game.Packets.Game.Server
     [PacketHeader("gp")]
     public class GpPacket : PacketBase
     {
-        public GpPacket(IEntity entity)
+        public GpPacket(PortalComponent portal)
         {
-            var portal = entity.GetComponent<PortalComponent>();
-
-            if (portal == null)
-            {
-                return;
-            }
-
             PositionX = portal.SourceX;
             PositionY = portal.SourceY;
             DestinationMapId = portal.DestinationMapLayer.Map.Id;

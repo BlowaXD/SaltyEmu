@@ -4,6 +4,7 @@ using ChickenAPI.Core.ECS.Components;
 using ChickenAPI.Core.ECS.Entities;
 using ChickenAPI.Game.Data.TransferObjects.Map;
 using ChickenAPI.Game.Features.Portals;
+using ChickenAPI.Game.Features.Visibility;
 
 namespace ChickenAPI.Game.Entities.Portal
 {
@@ -11,11 +12,15 @@ namespace ChickenAPI.Game.Entities.Portal
     {
         public PortalEntity(PortalDto portal) : base(EntityType.Portal)
         {
+            Portal = new PortalComponent(this, portal);
             Components = new Dictionary<Type, IComponent>
             {
-                { typeof(PortalComponent), new PortalComponent(this, portal) }
+                { typeof(PortalComponent), Portal },
+                {typeof(VisibilityComponent), new VisibilityComponent(this) }
             };
         }
+
+        public PortalComponent Portal { get; }
 
         public override void Dispose()
         {

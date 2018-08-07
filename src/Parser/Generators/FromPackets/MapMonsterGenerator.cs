@@ -8,7 +8,9 @@ using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Logging;
 using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Game.Data.AccessLayer.Map;
+using ChickenAPI.Game.Data.AccessLayer.NpcMonster;
 using ChickenAPI.Game.Data.TransferObjects.Map;
+using ChickenAPI.Game.Data.TransferObjects.NpcMonster;
 
 namespace Toolkit.Generators.FromPackets
 {
@@ -21,6 +23,8 @@ namespace Toolkit.Generators.FromPackets
         public void Generate(string filePath)
         {
             var mapMonsterService = Container.Instance.Resolve<IMapMonsterService>();
+            var npcMonsterService = Container.Instance.Resolve<INpcMonsterService>();
+            Dictionary<long, NpcMonsterDto> npcMonsters = npcMonsterService.Get().ToDictionary(s => s.Id, s => s);
             Dictionary<long, long> effPacketsDictionary = new Dictionary<long, long>();
             List<long> npcMvPacketsList = new List<long>();
             List<long> mapMonsterIds = new List<long>();
@@ -48,7 +52,7 @@ namespace Toolkit.Generators.FromPackets
                             map = short.Parse(currentPacket[2]);
                             break;
 
-                        case "in" when currentPacket[1] == "3" && mapMonsterService.GetById(long.Parse(currentPacket[2])) == null && mapMonsterIds.All(id => id != long.Parse(currentPacket[3])):
+                        case "in" when currentPacket[1] == "3" && npcMonsters.ContainsKey(long.Parse(currentPacket[2])) && mapMonsterIds.All(id => id != long.Parse(currentPacket[3])):
                             _monsters.Add(new MapMonsterDto
                             {
                                 MapX = short.Parse(currentPacket[4]),
@@ -72,7 +76,6 @@ namespace Toolkit.Generators.FromPackets
                 }
             }
             mapMonsterService.Save(_monsters);
-            Log.Info(string.Format("MAPMONSTERS_PARSED", counter));
         }
     }
 }

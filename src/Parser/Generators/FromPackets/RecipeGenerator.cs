@@ -92,9 +92,7 @@ namespace Toolkit.Generators.FromPackets
             }
 
             recipeService.Save(_recipes);
-            Log.Info(string.Format("RECIPE_PARSED", counter));
             recipeItemService.Save(_recipeItems);
-            Log.Info(string.Format("RECIP_ITEMS_PARSED", counter2));
         }
     }
 }

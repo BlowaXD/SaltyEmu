@@ -24,9 +24,8 @@ namespace NosSharp.TemporaryMapPlugins
             IEnumerable<MapNpcDto> npcs = Container.Instance.Resolve<IMapNpcService>().GetByMapId(mapId);
             IEnumerable<MapMonsterDto> monsters = Container.Instance.Resolve<IMapMonsterService>().GetByMapId(mapId);
             IEnumerable<PortalDto> portals = Container.Instance.Resolve<IPortalService>().GetByMapId(mapId);
-            IEnumerable<MapNpcDto> mapNpcDtos = npcs as MapNpcDto[] ?? npcs.ToArray();
-            IEnumerable<ShopDto> shops = Container.Instance.Resolve<IShopService>().GetByMapNpcIds(mapNpcDtos.Select(s => s.Id));
-            return new SimpleMap(map, monsters, mapNpcDtos, portals, shops);
+            IEnumerable<ShopDto> shops = Container.Instance.Resolve<IShopService>().GetByMapNpcIds(npcs.Select(s => s.Id).ToList());
+            return new SimpleMap(map, monsters, npcs, portals, shops);
         }
 
         public IReadOnlyDictionary<long, IMap> Maps { get; }

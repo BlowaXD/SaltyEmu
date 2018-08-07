@@ -32,6 +32,7 @@ namespace ChickenAPI.Game.Entities.Npc
                 DirectionType = npc.Position,
                 Speed = npc.NpcMonster.Speed
             };
+            MapNpc = npc;
 
             Shop = shop != null ? new Shop(shop) : null;
             Skills = new SkillComponent(this);

@@ -24,7 +24,7 @@ namespace NosSharp.DatabasePlugin.Services.Shop
         {
             try
             {
-                return DbSet.Where(s => s.MapNpcId == mapNpcId).ToList().Select(Mapper.Map<ShopDto>);
+                return DbSet.Where(s => s.MapNpcId == mapNpcId).ToArray().Select(Mapper.Map<ShopDto>);
             }
             catch (Exception e)
             {
@@ -37,7 +37,7 @@ namespace NosSharp.DatabasePlugin.Services.Shop
         {
             try
             {
-                return (await DbSet.Where(s => s.MapNpcId == mapNpcId).ToListAsync()).Select(Mapper.Map<ShopDto>);
+                return (await DbSet.Where(s => s.MapNpcId == mapNpcId).ToArrayAsync()).Select(Mapper.Map<ShopDto>);
             }
             catch (Exception e)
             {
@@ -50,7 +50,7 @@ namespace NosSharp.DatabasePlugin.Services.Shop
         {
             try
             {
-                return DbSet.Where(s => npcIds.Contains(s.Id)).ToList().Select(Mapper.Map<ShopDto>);
+                return DbSet.Where(s => npcIds.Contains(s.MapNpcId)).ToArray().Select(s => Mapper.Map<ShopDto>(s));
             }
             catch (Exception e)
             {
@@ -63,7 +63,7 @@ namespace NosSharp.DatabasePlugin.Services.Shop
         {
             try
             {
-                return (await DbSet.Where(s => npcIds.Contains(s.Id)).ToListAsync()).Select(Mapper.Map<ShopDto>);
+                return (await DbSet.Where(s => npcIds.Contains(s.MapNpcId)).ToArrayAsync()).Select(Mapper.Map<ShopDto>);
             }
             catch (Exception e)
             {

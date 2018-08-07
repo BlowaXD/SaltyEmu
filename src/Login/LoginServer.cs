@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using Autofac;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Logging;
@@ -19,11 +20,21 @@ namespace LoginServer
 
         private static void PrintHeader()
         {
-            Console.Title = "Nos# - LoginServer";
-            const string text = "LOGIN SERVER - Nos#";
-            int offset = Console.WindowWidth / 2 + text.Length / 2;
+            Console.Title = "SaltyEmu - WORLD";
+            const string text = @"
+███████╗ █████╗ ██╗  ████████╗██╗   ██╗███████╗███╗   ███╗██╗   ██╗    ██╗      ██████╗  ██████╗ ██╗███╗   ██╗
+██╔════╝██╔══██╗██║  ╚══██╔══╝╚██╗ ██╔╝██╔════╝████╗ ████║██║   ██║    ██║     ██╔═══██╗██╔════╝ ██║████╗  ██║
+███████╗███████║██║     ██║    ╚████╔╝ █████╗  ██╔████╔██║██║   ██║    ██║     ██║   ██║██║  ███╗██║██╔██╗ ██║
+╚════██║██╔══██║██║     ██║     ╚██╔╝  ██╔══╝  ██║╚██╔╝██║██║   ██║    ██║     ██║   ██║██║   ██║██║██║╚██╗██║
+███████║██║  ██║███████╗██║      ██║   ███████╗██║ ╚═╝ ██║╚██████╔╝    ███████╗╚██████╔╝╚██████╔╝██║██║ ╚████║
+╚══════╝╚═╝  ╚═╝╚══════╝╚═╝      ╚═╝   ╚══════╝╚═╝     ╚═╝ ╚═════╝     ╚══════╝ ╚═════╝  ╚═════╝ ╚═╝╚═╝  ╚═══╝
+";
             string separator = new string('=', Console.WindowWidth);
-            Console.WriteLine(separator + string.Format("{0," + offset + "}\n", text) + separator);
+            string logo = text.Split('\n').Select(s => string.Format("{0," + (Console.WindowWidth / 2 + s.Length / 2) + "}\n", s))
+                .Aggregate("", (current, i) => current + i);
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine(separator + logo + separator);
+            Console.ForegroundColor = ConsoleColor.White;
         }
 
         private static void InitializeLogger()

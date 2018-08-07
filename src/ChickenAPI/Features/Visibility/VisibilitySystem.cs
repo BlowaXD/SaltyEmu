@@ -6,6 +6,7 @@ using ChickenAPI.Core.ECS.Systems.Args;
 using ChickenAPI.Core.Logging;
 using ChickenAPI.Game.Entities.Npc;
 using ChickenAPI.Game.Entities.Player;
+using ChickenAPI.Game.Entities.Portal;
 using ChickenAPI.Game.Features.Shops.Packets;
 using ChickenAPI.Game.Features.Visibility.Args;
 using ChickenAPI.Game.Packets.Extensions;
@@ -22,7 +23,7 @@ namespace ChickenAPI.Game.Features.Visibility
         }
 
         protected override Expression<Func<IEntity, bool>> Filter =>
-            entity => entity.Type == EntityType.Player || entity.Type == EntityType.Monster || entity.Type == EntityType.Mate || entity.Type == EntityType.Npc;
+            entity => entity.Type == EntityType.Player || entity.Type == EntityType.Monster || entity.Type == EntityType.Mate || entity.Type == EntityType.Npc || entity.Type == EntityType.Portal;
 
         public override void Execute(IEntity entity, SystemEventArgs e)
         {
@@ -93,24 +94,32 @@ namespace ChickenAPI.Game.Features.Visibility
                             player.SendPacket(inEntity);
                         }
 
-                        if (entityy.Type == EntityType.Npc && entityy is NpcEntity npc)
+                        if (entityy.Type != EntityType.Npc || !(entityy is NpcEntity npc))
                         {
-                            if (npc.Shop != null)
+                            continue;
+                        }
+
+                        if (npc.Shop != null)
+                        {
+                            session.SendPacket(new ShopPacket
                             {
-                                session.SendPacket(new ShopPacket
-                                {
-                                    EntityId = npc.MapNpc.Id,
-                                    ShopId = npc.Shop.Id,
-                                    MenuType = npc.Shop.MenuType,
-                                    ShopType = npc.Shop.ShopType,
-                                    Name = npc.Shop.Name
-                                });
-                            }
+                                Unknown = 2,
+                                EntityId = npc.MapNpc.Id,
+                                ShopId = npc.Shop.Id,
+                                MenuType = npc.Shop.MenuType,
+                                ShopType = npc.Shop.ShopType,
+                                Name = npc.Shop.Name
+                            });
                         }
 
                         break;
                     case EntityType.Portal:
-                        session.SendPacket(new GpPacket(entityy));
+
+                        if (entityy is PortalEntity portal && portal.Portal != null)
+                        {
+                            session.SendPacket(new GpPacket(portal.Portal));
+                        }
+
                         break;
                 }
             }

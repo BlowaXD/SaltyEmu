@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Autofac;
 using ChickenAPI.Core.ECS.Entities;
 using ChickenAPI.Core.ECS.Systems;
+using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Utils;
+using ChickenAPI.Game.Data.AccessLayer.Shop;
 using ChickenAPI.Game.Data.TransferObjects.Map;
 using ChickenAPI.Game.Data.TransferObjects.Shop;
 using ChickenAPI.Game.Entities.Monster;
@@ -11,6 +14,7 @@ using ChickenAPI.Game.Entities.Npc;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Entities.Portal;
 using ChickenAPI.Game.Features.Chat;
+using ChickenAPI.Game.Features.Effects;
 using ChickenAPI.Game.Features.Inventory;
 using ChickenAPI.Game.Features.Movement;
 using ChickenAPI.Game.Features.Shops;
@@ -31,9 +35,10 @@ namespace ChickenAPI.Game.Maps
             {
                 { typeof(VisibilitySystem), new VisibilitySystem(this) },
                 { typeof(ChatSystem), new ChatSystem(this) },
-                { typeof(MovableSystem),  movable},
+                { typeof(MovableSystem), movable },
                 { typeof(InventorySystem), new InventorySystem(this) },
-                { typeof(ShopSystem), new ShopSystem(this) }
+                { typeof(ShopSystem), new ShopSystem(this) },
+                { typeof(EffectSystem), new EffectSystem(this) }
             };
             AddSystem(movable);
             if (monsters != null)
@@ -48,7 +53,7 @@ namespace ChickenAPI.Game.Maps
             {
                 foreach (MapNpcDto npc in npcs)
                 {
-                    ShopDto shop = shops?.FirstOrDefault(s => s.MapNpcId == npc.Id);
+                    ShopDto shop = shops.FirstOrDefault(s => s.MapNpcId == npc.Id);
                     RegisterEntity(new NpcEntity(npc, shop));
                 }
             }
@@ -62,7 +67,7 @@ namespace ChickenAPI.Game.Maps
                 }
             }
 
-            
+
             StartSystemUpdate();
         }
 

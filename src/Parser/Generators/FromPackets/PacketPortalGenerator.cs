@@ -82,7 +82,6 @@ namespace Toolkit.Generators.FromPackets
                 .ThenBy(s => s.SourceX).ToArray();
 
             portalService.Save(portalsToSave);
-            Log.Info(string.Format("PORTALS_PARSED", portalsToSave.Count()));
         }
 
         private static bool PortalsAreSame(PortalDto p, PortalDto pp) => 
