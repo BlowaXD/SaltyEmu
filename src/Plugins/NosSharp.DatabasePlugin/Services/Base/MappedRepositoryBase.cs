@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -94,7 +95,8 @@ namespace NosSharp.DatabasePlugin.Services.Base
                 {
                     Context.BulkInsertOrUpdate(tmp, new BulkConfig
                     {
-                        PreserveInsertOrder = true
+                        PreserveInsertOrder = true,
+                        SqlBulkCopyOptions = SqlBulkCopyOptions.KeepIdentity
                     });
                     transaction.Commit();
                 }

@@ -10,8 +10,8 @@ using NosSharp.DatabasePlugin.Context;
 namespace NosSharp.DatabasePlugin.Migrations
 {
     [DbContext(typeof(NosSharpContext))]
-    [Migration("20180807131655_mapmonster")]
-    partial class mapmonster
+    [Migration("20180807140008_Basis")]
+    partial class Basis
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -736,9 +736,7 @@ namespace NosSharp.DatabasePlugin.Migrations
 
             modelBuilder.Entity("NosSharp.DatabasePlugin.Models.Map.MapMonsterModel", b =>
                 {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<long>("Id");
 
                     b.Property<bool>("IsDisabled");
 
@@ -765,9 +763,7 @@ namespace NosSharp.DatabasePlugin.Migrations
 
             modelBuilder.Entity("NosSharp.DatabasePlugin.Models.Map.MapNpcModel", b =>
                 {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<long>("Id");
 
                     b.Property<short>("Dialog");
 

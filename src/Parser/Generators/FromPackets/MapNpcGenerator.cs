@@ -21,6 +21,7 @@ namespace Toolkit.Generators.FromPackets
         public void Generate(string filePath)
         {
             var mapNpcService = Container.Instance.Resolve<IMapNpcService>();
+            Dictionary<long, MapNpcDto> npcs = mapNpcService.Get().ToDictionary(dto => dto.Id, dto => dto);
             Dictionary<long, short> effPacketsDictionary = new Dictionary<long, short>();
             List<long> npcMvPacketsList = new List<long>();
             List<long> mapNpcIds = new List<long>();
@@ -40,6 +41,25 @@ namespace Toolkit.Generators.FromPackets
             int counter = 0;
             short map = 0;
 
+            foreach (string line in lines.Where(s => s.StartsWith("eff")))
+            {
+                try
+                {
+                    string[] currentPacket = line.Split('\t', ' ');
+                    switch (currentPacket[0])
+                    {
+                        case "eff" when currentPacket[1].Equals("2") && !effPacketsDictionary.ContainsKey(int.Parse(currentPacket[2])):
+                            effPacketsDictionary.Add(int.Parse(currentPacket[2]), short.Parse(currentPacket[3]));
+                            break;
+                    }
+                }
+                catch (Exception e)
+                {
+                    Log.Error("[EFF]", e);
+                    Log.Warn(line);
+                }
+            }
+
             foreach (string line in lines.Where(s => s.StartsWith("in") || s.StartsWith("mv") || s.StartsWith("eff") || s.StartsWith("at")))
             {
                 try
@@ -51,9 +71,6 @@ namespace Toolkit.Generators.FromPackets
                             npcMvPacketsList.Add(int.Parse(currentPacket[2]));
                             break;
 
-                        case "eff" when currentPacket[1].Equals("2") && !effPacketsDictionary.ContainsKey(int.Parse(currentPacket[2])):
-                            effPacketsDictionary.Add(int.Parse(currentPacket[2]), short.Parse(currentPacket[3]));
-                            break;
 
                         case "at":
                             map = short.Parse(currentPacket[2]);
@@ -63,7 +80,7 @@ namespace Toolkit.Generators.FromPackets
                             short npcId = short.Parse(currentPacket[2]);
                             long mapNpcId = long.Parse(currentPacket[3]);
 
-                            if (long.Parse(currentPacket[3]) > 20000 || mapNpcService.GetById(mapNpcId) != null || mapNpcIds.Any(id => id == mapNpcId))
+                            if (long.Parse(currentPacket[3]) > 20000 || npcs.ContainsKey(mapNpcId) || mapNpcIds.Any(id => id == mapNpcId))
                             {
                                 continue;
                             }
@@ -83,7 +100,7 @@ namespace Toolkit.Generators.FromPackets
                                 IsDisabled = false,
                                 Effect = (short)(effPacketsDictionary.ContainsKey(mapNpcId) ? (npcId == 453 /*Lod*/ ? 855 : effPacketsDictionary[mapNpcId]) : 0)
                             });
-                            mapNpcIds.Add(npcId);
+                            mapNpcIds.Add(mapNpcId);
                             counter++;
                             break;
                     }
@@ -94,6 +111,7 @@ namespace Toolkit.Generators.FromPackets
                     Log.Warn(line);
                 }
             }
+
             mapNpcService.Save(_npcs);
             Log.Info(string.Format("MAPNPC_PARSED", counter));
         }

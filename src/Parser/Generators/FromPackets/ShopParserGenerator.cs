@@ -8,6 +8,7 @@ using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Logging;
 using ChickenAPI.Game.Data.AccessLayer.Map;
 using ChickenAPI.Game.Data.AccessLayer.Shop;
+using ChickenAPI.Game.Data.TransferObjects.Map;
 using ChickenAPI.Game.Data.TransferObjects.Shop;
 
 namespace Toolkit.Generators.FromPackets
@@ -22,16 +23,19 @@ namespace Toolkit.Generators.FromPackets
         {
             var shopService = Container.Instance.Resolve<IShopService>();
             var mapNpcService = Container.Instance.Resolve<IMapNpcService>();
+            Dictionary<long, MapNpcDto> npcs = mapNpcService.Get().ToDictionary(s => s.Id, s => s);
             string[] lines = File.ReadAllText(filePath, Encoding.Default).Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
             int counter = 0;
+            int tmpp = 0;
 
-            foreach (string line in lines.Where(s => s.StartsWith("shop ")))
+            foreach (string line in lines.Where(s => s.StartsWith("shop") && !s.StartsWith("shopping") && !s.StartsWith("shopclose")))
             {
                 try
                 {
+                    tmpp++;
                     string[] currentPacket = line.Split('\t', ' ');
                     long mapnpcid = long.Parse(currentPacket[2]);
-                    if (mapNpcService.GetById(mapnpcid) == null || _shops.Any(s => s.MapNpcId == mapnpcid) || shopService.GetByMapNpcId(mapnpcid).Any())
+                    if (!npcs.ContainsKey(mapnpcid) || _shops.Any(s => s.MapNpcId == mapnpcid) || shopService.GetByMapNpcId(mapnpcid).Any())
                     {
                         continue;
                     }
@@ -54,7 +58,6 @@ namespace Toolkit.Generators.FromPackets
             }
 
             shopService.Save(_shops);
-            Log.Info(string.Format("SHOP_PARSED", counter));
         }
     }
 }

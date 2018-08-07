@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using ChickenAPI.Core.Data.TransferObjects;
 using ChickenAPI.Enums.Game.Entity;
 using NosSharp.DatabasePlugin.Models.NpcMonster;
@@ -9,6 +10,8 @@ namespace NosSharp.DatabasePlugin.Models.Map
     [Table("map_npcs")]
     public class MapNpcModel : IMappedDto
     {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public long Id { get; set; }
 
         public short Dialog { get; set; }

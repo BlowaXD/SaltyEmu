@@ -734,9 +734,7 @@ namespace NosSharp.DatabasePlugin.Migrations
 
             modelBuilder.Entity("NosSharp.DatabasePlugin.Models.Map.MapMonsterModel", b =>
                 {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<long>("Id");
 
                     b.Property<bool>("IsDisabled");
 
@@ -763,9 +761,7 @@ namespace NosSharp.DatabasePlugin.Migrations
 
             modelBuilder.Entity("NosSharp.DatabasePlugin.Models.Map.MapNpcModel", b =>
                 {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<long>("Id");
 
                     b.Property<short>("Dialog");
 

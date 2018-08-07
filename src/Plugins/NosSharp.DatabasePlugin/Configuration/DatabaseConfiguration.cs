@@ -9,8 +9,8 @@ namespace NosSharp.DatabasePlugin.Configuration
         public DatabaseConfiguration()
         {
             Ip = "localhost";
-            Username = "db-user";
-            Password = "DevNos=2018";
+            Username = "sa";
+            Password = "strong_pass2018";
             Database = "saltyemu";
             Port = 1433;
             Type = DbProviderType.MSSQL;

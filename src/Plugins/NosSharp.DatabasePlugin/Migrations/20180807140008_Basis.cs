@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace NosSharp.DatabasePlugin.Migrations
 {
-    public partial class RecipeAndShops : Migration
+    public partial class Basis : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -411,12 +411,14 @@ namespace NosSharp.DatabasePlugin.Migrations
                 name: "map_monsters",
                 columns: table => new
                 {
-                    Id = table.Column<long>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    PositionX = table.Column<short>(nullable: false),
-                    PositionY = table.Column<short>(nullable: false),
+                    Id = table.Column<long>(nullable: false),
+                    MapX = table.Column<short>(nullable: false),
+                    MapY = table.Column<short>(nullable: false),
                     MapId = table.Column<long>(nullable: false),
-                    NpcMonsterId = table.Column<long>(nullable: false)
+                    NpcMonsterId = table.Column<long>(nullable: false),
+                    IsDisabled = table.Column<bool>(nullable: false),
+                    IsMoving = table.Column<bool>(nullable: false),
+                    Position = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -439,8 +441,7 @@ namespace NosSharp.DatabasePlugin.Migrations
                 name: "map_npcs",
                 columns: table => new
                 {
-                    Id = table.Column<long>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Id = table.Column<long>(nullable: false),
                     Dialog = table.Column<short>(nullable: false),
                     Effect = table.Column<short>(nullable: false),
                     EffectDelay = table.Column<short>(nullable: false),
@@ -818,6 +819,34 @@ namespace NosSharp.DatabasePlugin.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "shop_skill",
+                columns: table => new
+                {
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    SkillId = table.Column<long>(nullable: false),
+                    ShopId = table.Column<long>(nullable: false),
+                    Slot = table.Column<byte>(nullable: false),
+                    Type = table.Column<byte>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_shop_skill", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_shop_skill_map_npcs_shop_ShopId",
+                        column: x => x.ShopId,
+                        principalTable: "map_npcs_shop",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_shop_skill__data_skill_SkillId",
+                        column: x => x.SkillId,
+                        principalTable: "_data_skill",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "shop_recipe_item",
                 columns: table => new
                 {
@@ -984,6 +1013,16 @@ namespace NosSharp.DatabasePlugin.Migrations
                 name: "IX_shop_recipe_item_RecipeId",
                 table: "shop_recipe_item",
                 column: "RecipeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_shop_skill_ShopId",
+                table: "shop_skill",
+                column: "ShopId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_shop_skill_SkillId",
+                table: "shop_skill",
+                column: "SkillId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -1031,16 +1070,19 @@ namespace NosSharp.DatabasePlugin.Migrations
                 name: "shop_recipe_item");
 
             migrationBuilder.DropTable(
+                name: "shop_skill");
+
+            migrationBuilder.DropTable(
                 name: "_data_card");
 
             migrationBuilder.DropTable(
                 name: "character");
 
             migrationBuilder.DropTable(
-                name: "_data_skill");
+                name: "shop_recipe");
 
             migrationBuilder.DropTable(
-                name: "shop_recipe");
+                name: "_data_skill");
 
             migrationBuilder.DropTable(
                 name: "account");

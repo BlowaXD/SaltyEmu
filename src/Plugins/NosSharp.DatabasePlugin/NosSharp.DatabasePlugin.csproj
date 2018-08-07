@@ -5,27 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\20180610174009_InitialMigration.cs" />
-    <Compile Remove="Migrations\20180610175139_InitialMigration.cs" />
-    <Compile Remove="Migrations\20180617105125_MsSQLBasis.cs" />
-    <Compile Remove="Migrations\20180617113345_ModelBasis.cs" />
-    <Compile Remove="Migrations\20180617140701_FixKeys.cs" />
-    <Compile Remove="Migrations\20180617140850_FixKeys.cs" />
-    <Compile Remove="Migrations\20180617140948_Basis.cs" />
-    <Compile Remove="Migrations\20180618184828_NosSharpBasis.cs" />
-    <Compile Remove="Migrations\20180618190615_Basis.cs" />
-    <Compile Remove="Migrations\20180618191016_Basis.cs" />
-    <Compile Remove="Migrations\20180618191549_Basis.cs" />
-    <Compile Remove="Migrations\20180618192012_BasisL.cs" />
-    <Compile Remove="Migrations\20180624125604_Base.cs" />
-    <Compile Remove="Migrations\20180624162940_InventoryTypeCharacterItem.cs" />
-    <Compile Remove="Migrations\20180624165647_BoundCharacterItem.cs" />
-    <Compile Remove="Migrations\20180624165916_NpcMonsterId.cs" />
-    <Compile Remove="Migrations\20180625185353_basis.cs" />
-    <Compile Remove="Migrations\20180625185555_basis.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="7.0.1" />
     <PackageReference Include="EFCore.BulkExtensions" Version="2.1.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.1.1" />
