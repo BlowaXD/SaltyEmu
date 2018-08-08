@@ -24,7 +24,8 @@ namespace Toolkit.Generators.FromPackets
             var shopService = Container.Instance.Resolve<IShopService>();
             var mapNpcService = Container.Instance.Resolve<IMapNpcService>();
             Dictionary<long, MapNpcDto> npcs = mapNpcService.Get().ToDictionary(s => s.Id, s => s);
-            string[] lines = File.ReadAllText(filePath, Encoding.Default).Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
+            string[] splitters = { "\r\n", "\r", "\n" };
+            string[] lines = File.ReadAllText(filePath, Encoding.Default).Split(splitters, StringSplitOptions.RemoveEmptyEntries);
             int counter = 0;
             int tmpp = 0;
 
@@ -42,7 +43,7 @@ namespace Toolkit.Generators.FromPackets
 
                     var shop = new ShopDto
                     {
-                        Name = string.Join(" ", currentPacket.Skip(5)).Trim(),
+                        Name = string.Join(" ", currentPacket.Skip(6)).Trim(),
                         MapNpcId = mapnpcid,
                         MenuType = byte.Parse(currentPacket[4]),
                         ShopType = byte.Parse(currentPacket[5])
