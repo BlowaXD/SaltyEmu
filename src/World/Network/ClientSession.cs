@@ -124,6 +124,22 @@ namespace World.Network
             _channel.Flush();
         }
 
+        public void GlobalBroadcast<T>(T packet) where T : IPacket
+        {
+            string serialized = _packetFactory.Serialize(packet);
+            _group.WriteAndFlushAsync(serialized);
+        }
+
+        public void GlobalBroadcast<T>(IEnumerable<T> packets) where T : IPacket
+        {
+            foreach (var i in packets)
+            {
+                _group.WriteAsync(_packetFactory.Serialize(i));
+            }
+
+            _group.Flush();
+        }
+
         public void SendPackets(IEnumerable<IPacket> packets)
         {
             foreach (IPacket packet in packets)

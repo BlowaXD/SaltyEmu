@@ -23,10 +23,24 @@ namespace ChickenAPI.Game.Network
         void InitializeCharacterId(long id);
         void InitializeEntity(IPlayerEntity ett);
 
-        void SendPacket<T>(T packet) where T : IPacket;
+        /// <summary>
+        /// Sends to every connected clients in the server
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="packet"></param>
+        void GlobalBroadcast<T>(T packet) where T : IPacket;
 
+        /// <summary>
+        /// Sends to every connected clients in the server
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="packets"></param>
+        void GlobalBroadcast<T>(IEnumerable<T> packets) where T : IPacket;
+
+        void SendPacket<T>(T packet) where T : IPacket;
         void SendPackets<T>(IEnumerable<T> packets) where T : IPacket;
         void SendPackets(IEnumerable<IPacket> packets);
+
         void Disconnect();
     }
 }
