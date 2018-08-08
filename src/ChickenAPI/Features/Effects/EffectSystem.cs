@@ -4,8 +4,8 @@ using System.Linq.Expressions;
 using ChickenAPI.Core.ECS.Entities;
 using ChickenAPI.Core.ECS.Systems;
 using ChickenAPI.Core.ECS.Systems.Args;
+using ChickenAPI.Game.Features.Effects.Args;
 using ChickenAPI.Game.Maps;
-using ChickenAPI.Game.Packets;
 using ChickenAPI.Game.Packets.Extensions;
 using ChickenAPI.Game.Packets.Game.Client;
 
@@ -13,16 +13,17 @@ namespace ChickenAPI.Game.Features.Effects
 {
     public class EffectSystem : NotifiableSystemBase
     {
+        public EffectSystem(IEntityManager entityManager) : base(entityManager)
+        {
+        }
+
         /// <summary>
         /// Once per second
         /// </summary>
         protected override short RefreshRate => 1;
+
         protected override Expression<Func<IEntity, bool>> Filter => entity => entity.HasComponent<EffectComponent>();
 
-
-        public EffectSystem(IEntityManager entityManager) : base(entityManager)
-        {
-        }
 
         protected override void Execute(IEntity entity)
         {
@@ -50,9 +51,25 @@ namespace ChickenAPI.Game.Features.Effects
         {
             switch (e)
             {
+                case AddEffectArgument addEffect:
+                    AddEffectArgument(entity, addEffect);
+                    break;
                 default:
                     return;
             }
+        }
+
+        private void AddEffectArgument(IEntity entity, AddEffectArgument args)
+        {
+            var effects = entity.GetComponent<EffectComponent>();
+
+            if (effects == null)
+            {
+                effects = new EffectComponent(entity);
+                entity.AddComponent(effects);
+            }
+
+            effects.Effects.Add(new EffectComponent.Effect(args.EffectId, args.Cooldown));
         }
     }
 }
