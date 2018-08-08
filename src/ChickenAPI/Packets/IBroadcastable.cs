@@ -1,4 +1,5 @@
-﻿using ChickenAPI.Game.Entities.Player;
+﻿using System.Collections.Generic;
+using ChickenAPI.Game.Entities.Player;
 
 namespace ChickenAPI.Game.Packets
 {
@@ -13,6 +14,10 @@ namespace ChickenAPI.Game.Packets
         /// <param name="packet"></param>
         void Broadcast<T>(T packet) where T : IPacket;
 
+        void Broadcast<T>(IEnumerable<T> packets) where T : IPacket;
+
+        void Broadcast(IEnumerable<IPacket> packets);
+
         /// <summary>
         ///     Broadcast a packet to every entities in the context except
         /// </summary>
@@ -20,6 +25,8 @@ namespace ChickenAPI.Game.Packets
         /// <param name="sender"></param>
         /// <param name="packet"></param>
         void Broadcast<T>(IPlayerEntity sender, T packet) where T : IPacket;
+
+        void Broadcast<T>(IPlayerEntity sender, IEnumerable<T> packets) where T : IPacket;
 
         #endregion
     }

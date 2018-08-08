@@ -1,4 +1,4 @@
-﻿using ChickenAPI.Enums.Packets;
+﻿using ChickenAPI.Enums.Game.Entity;
 
 namespace ChickenAPI.Game.Packets.Game.Client
 {
@@ -6,12 +6,12 @@ namespace ChickenAPI.Game.Packets.Game.Client
     public class EffectPacket : PacketBase
     {
         [PacketIndex(0)]
-        public EffectType EffectType { get; set; }
+        public VisualType EffectType { get; set; }
 
         [PacketIndex(1)]
         public long CharacterId { get; set; }
 
         [PacketIndex(2)]
-        public int EffectId { get; set; }
+        public long EffectId { get; set; }
     }
 }

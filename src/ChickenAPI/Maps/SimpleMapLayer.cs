@@ -85,6 +85,22 @@ namespace ChickenAPI.Game.Maps
             }
         }
 
+        public void Broadcast<T>(IEnumerable<T> packets) where T : IPacket
+        {
+            foreach (IPlayerEntity i in GetEntitiesByType<IPlayerEntity>(EntityType.Player))
+            {
+                i.SendPackets(packets);
+            }
+        }
+
+        public void Broadcast(IEnumerable<IPacket> packets)
+        {
+            foreach (IPlayerEntity i in GetEntitiesByType<IPlayerEntity>(EntityType.Player))
+            {
+                i.SendPackets(packets);
+            }
+        }
+
         public void Broadcast<T>(IPlayerEntity sender, T packet) where T : IPacket
         {
             foreach (IPlayerEntity i in GetEntitiesByType<IPlayerEntity>(EntityType.Player))
@@ -95,6 +111,19 @@ namespace ChickenAPI.Game.Maps
                 }
 
                 i.SendPacket(packet);
+            }
+        }
+
+        public void Broadcast<T>(IPlayerEntity sender, IEnumerable<T> packets) where T : IPacket
+        {
+            foreach (IPlayerEntity i in GetEntitiesByType<IPlayerEntity>(EntityType.Player))
+            {
+                if (i == sender)
+                {
+                    continue;
+                }
+
+                i.SendPackets(packets);
             }
         }
     }
