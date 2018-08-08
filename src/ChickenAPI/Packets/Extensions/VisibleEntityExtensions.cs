@@ -88,7 +88,7 @@ namespace ChickenAPI.Game.Packets.Extensions
                 {
                     HpPercentage = battle.HpPercentage,
                     MpPercentage = battle.MpPercentage,
-                    Dialog = 0,
+                    Dialog = npcEntity.MapNpc.Dialog,
                     Unknown1 = 0,
                     Unknown2 = 0,
                     Unknown3 = -1,
