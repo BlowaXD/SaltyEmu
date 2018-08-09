@@ -29,6 +29,7 @@ namespace ChickenAPI.Game.Features.Effects
         public EffectComponent(IEntity entity)
         {
             Entity = entity;
+            Effects = new List<Effect>();
         }
 
         public List<Effect> Effects { get; set; }

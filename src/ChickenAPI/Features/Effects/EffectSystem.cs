@@ -4,6 +4,8 @@ using System.Linq.Expressions;
 using ChickenAPI.Core.ECS.Entities;
 using ChickenAPI.Core.ECS.Systems;
 using ChickenAPI.Core.ECS.Systems.Args;
+using ChickenAPI.Core.Logging;
+using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Features.Effects.Args;
 using ChickenAPI.Game.Maps;
 using ChickenAPI.Game.Packets.Extensions;
@@ -13,6 +15,7 @@ namespace ChickenAPI.Game.Features.Effects
 {
     public class EffectSystem : NotifiableSystemBase
     {
+        private static readonly Logger Log = Logger.GetLogger<EffectSystem>();
         public EffectSystem(IEntityManager entityManager) : base(entityManager)
         {
         }
@@ -38,8 +41,8 @@ namespace ChickenAPI.Game.Features.Effects
 
                 effect.LastCast = DateTime.UtcNow;
                 packets.Add(entity.GenerateEffectPacket(effect.Id));
-                entity.GenerateInPacket();
             }
+
 
             if (entity.EntityManager is IMapLayer mapLayer)
             {
@@ -54,6 +57,9 @@ namespace ChickenAPI.Game.Features.Effects
                 case AddEffectArgument addEffect:
                     AddEffectArgument(entity, addEffect);
                     break;
+                case UpdateCacheEventArgs updateCache:
+                    UpdateCacheRequest = true;
+                    break;
                 default:
                     return;
             }
@@ -67,6 +73,7 @@ namespace ChickenAPI.Game.Features.Effects
             {
                 effects = new EffectComponent(entity);
                 entity.AddComponent(effects);
+                UpdateCacheRequest = true;
             }
 
             effects.Effects.Add(new EffectComponent.Effect(args.EffectId, args.Cooldown));

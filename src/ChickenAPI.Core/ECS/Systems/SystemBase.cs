@@ -43,9 +43,13 @@ namespace ChickenAPI.Core.ECS.Systems
                 UpdateCache();
             }
 
+
             foreach (IEntity entity in Entities)
             {
-                Execute(entity);
+                if (entity.Type == EntityType.Player)
+                {
+                    Execute(entity);
+                }
             }
 
             _lastUpdate = DateTime.UtcNow;

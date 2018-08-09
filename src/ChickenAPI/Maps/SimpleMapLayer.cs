@@ -31,6 +31,7 @@ namespace ChickenAPI.Game.Maps
             Map = map;
             ParentEntityManager = map;
             var movable = new MovableSystem(this);
+            var effect = new EffectSystem(this);
             NotifiableSystems = new Dictionary<Type, INotifiableSystem>
             {
                 { typeof(VisibilitySystem), new VisibilitySystem(this) },
@@ -38,9 +39,10 @@ namespace ChickenAPI.Game.Maps
                 { typeof(MovableSystem), movable },
                 { typeof(InventorySystem), new InventorySystem(this) },
                 { typeof(ShopSystem), new ShopSystem(this) },
-                { typeof(EffectSystem), new EffectSystem(this) }
+                { typeof(EffectSystem), effect }
             };
-            AddSystem(movable);
+            //AddSystem(movable);
+            AddSystem(effect);
             if (monsters != null)
             {
                 foreach (MapMonsterDto monster in monsters)
