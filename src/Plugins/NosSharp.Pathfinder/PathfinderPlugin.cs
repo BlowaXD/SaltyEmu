@@ -3,6 +3,7 @@ using ChickenAPI.Core.Logging;
 using System;
 using ChickenAPI.Core.IoC;
 using Autofac;
+using ChickenAPI.Game.Maps;
 using NosSharp.Pathfinder.Pathfinder;
 
 namespace NosSharp.Pathfinder

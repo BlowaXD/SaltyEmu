@@ -1,7 +1,6 @@
 ﻿using ChickenAPI.Core.Utils;
-using ChickenAPI.Game.Maps;
 
-namespace NosSharp.Pathfinder.Pathfinder
+namespace ChickenAPI.Game.Maps
 {
     public interface IPathfinder
     {

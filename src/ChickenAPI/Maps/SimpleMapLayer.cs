@@ -30,7 +30,7 @@ namespace ChickenAPI.Game.Maps
             Id = Guid.NewGuid();
             Map = map;
             ParentEntityManager = map;
-            var movable = new MovableSystem(this);
+            var movable = new MovableSystem(this, map);
             var effect = new EffectSystem(this);
             NotifiableSystems = new Dictionary<Type, INotifiableSystem>
             {

@@ -1,24 +1,54 @@
 ﻿using System;
 using System.Linq.Expressions;
+using Autofac;
 using ChickenAPI.Core.ECS.Entities;
 using ChickenAPI.Core.ECS.Systems;
 using ChickenAPI.Core.ECS.Systems.Args;
-using ChickenAPI.Game.Entities;
+using ChickenAPI.Core.IoC;
+using ChickenAPI.Core.Utils;
 using ChickenAPI.Game.Entities.Player;
+using ChickenAPI.Game.Maps;
 using ChickenAPI.Game.Packets.Game.Server;
 
 namespace ChickenAPI.Game.Features.Movement
 {
     public class MovableSystem : NotifiableSystemBase
     {
-        public MovableSystem(IEntityManager entityManager) : base(entityManager)
+        public MovableSystem(IEntityManager entityManager, IMap map) : base(entityManager)
         {
+            _map = map;
+            _pathfinder = Container.Instance.Resolve<IPathfinder>();
         }
+
+        private readonly IMap _map;
+        private readonly IPathfinder _pathfinder;
 
         protected override Expression<Func<IEntity, bool>> Filter => entity => entity.HasComponent<MovableComponent>();
 
         protected override void Execute(IEntity entity)
         {
+            var movableComponent = entity.GetComponent<MovableComponent>();
+            if (movableComponent.Waypoints.Count == 0)
+            {
+                Random random = new Random();
+                Position<short> dest = null;
+                while (dest == null)
+                {
+                    short x = (short)random.Next(0, _map.Width),
+                        y = (short)random.Next(0, _map.Height);
+                    if (_map.IsWalkable(x, y))
+                    {
+                        dest = new Position<short> { X = x, Y = y };
+                    }
+                }
+                foreach (var pos in _pathfinder.FindPath(movableComponent.Actual, dest, _map))
+                {
+                    movableComponent.Waypoints.Enqueue(pos);
+                }
+            }
+            
+            ProcessMovement(entity, movableComponent);
+
             /*
             if (!(entity is IMovableEntity movableEntity))
             {
@@ -60,6 +90,15 @@ namespace ChickenAPI.Game.Features.Movement
             if (entity is IPlayerEntity playerEntity)
             {
                 playerEntity.SendPacket(new CondPacketBase(playerEntity));
+            }
+        }
+
+        private void ProcessMovement(IEntity entity, MovableComponent movableComponent)
+        {
+            if (movableComponent.CanMove())
+            {
+                movableComponent.Actual = movableComponent.Waypoints.Dequeue();
+                Move(entity);
             }
         }
     }
