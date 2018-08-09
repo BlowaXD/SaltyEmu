@@ -13,13 +13,19 @@ namespace NosSharp.Pathfinder.Utils
 
         public double F { get; set; }
 
-        public bool Opened { get; set; }
+        public int Distance { get; set; }
+
+        public bool Closed { get; set; }
+
+        public Position<short> Position { get; set; }
 
         public Node Parent { get; set; }
 
-        public int CompareTo(object obj)
-        {
-            return (F*10).CompareTo((obj as Node).F*10);
-        }
+        /// <summary>
+        /// Compare the F properties with another Node
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        public int CompareTo(object obj) => obj is Node node ? (F * 10).CompareTo(node.F * 10) : 0;
     }
 }

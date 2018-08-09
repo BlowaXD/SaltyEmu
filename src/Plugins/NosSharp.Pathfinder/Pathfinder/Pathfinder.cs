@@ -1,11 +1,9 @@
-﻿using ChickenAPI.Core.Utils;
+﻿using System;
+using ChickenAPI.Core.Utils;
 using ChickenAPI.Game.Maps;
 using NosSharp.Pathfinder.Utils;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace NosSharp.Pathfinder.Pathfinders
+namespace NosSharp.Pathfinder.Pathfinder
 {
     public class Pathfinder : IPathfinder
     {
@@ -18,15 +16,14 @@ namespace NosSharp.Pathfinder.Pathfinders
         /// <returns></returns> 
         public Position<short>[] FindPath(Position<short> start, Position<short> end, IMap map)
         {
-            Position<short>[] path = new Position<short>[(int)Math.Floor(Math.Sqrt(Math.Abs(start.X - end.X) ^ 2 + Math.Abs(start.Y - end.Y) ^ 2))];
+            Position<short>[] path = new Position<short>[Math.Max(Math.Abs(start.X - end.X), Math.Abs(start.Y - end.Y))];
             Position<short> node = start;
 
             short i = 0;
-            while (node != end)
+            while (!node.Equals(end))
             {
                 short x = (short)PathfinderHelper.NextCoord(node.X, end.X),
                     y = (short)PathfinderHelper.NextCoord(node.Y, end.Y);
-
                 if (!map.IsWalkable(x, y))
                 {
                     return AStar.FindPath(start, end, map);

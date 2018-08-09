@@ -8,9 +8,6 @@
         /// <param name="dx"></param>
         /// <param name="dy"></param>
         /// <returns></returns>
-        public static int Manhattan(int dx, int dy)
-        {
-            return dx + dy;
-        }
+        public static int Manhattan(int dx, int dy) => dx + dy;
     }
 }

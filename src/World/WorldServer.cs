@@ -17,6 +17,7 @@ using ChickenAPI.Game.Packets;
 using NLog;
 using NosSharp.BasicAlgorithm;
 using NosSharp.DatabasePlugin;
+using NosSharp.Pathfinder;
 using NosSharp.PacketHandler;
 using NosSharp.RedisSessionPlugin;
 using NosSharp.TemporaryMapPlugins;
@@ -36,7 +37,8 @@ namespace World
             new BasicAlgorithmPlugin(),
             new RedisPlugin(),
             new NosSharpDatabasePlugin(),
-            new TemporaryMapPlugin()
+            new TemporaryMapPlugin(),
+            new PathfinderPlugin()
         };
 
         private static void InitializePlugins()

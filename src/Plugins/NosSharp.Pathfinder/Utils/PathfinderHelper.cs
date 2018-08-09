@@ -1,8 +1,5 @@
 ﻿using ChickenAPI.Core.Utils;
 using ChickenAPI.Game.Maps;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace NosSharp.Pathfinder.Utils
 {
@@ -10,27 +7,39 @@ namespace NosSharp.Pathfinder.Utils
     {
         private static readonly sbyte[,] Neighbours =
         {
-            { -1, -1 }, { 0, -1 }, { 1, -1 },
-            { -1, 0 }, { -1, 1 },
-            { -1, 1 }, { 0, 1 }, { 1, 1 }
+            {-1, -1}, {0, -1}, {1, -1},
+            {-1, 0}, {1, 0},
+            {-1, 1}, {0, 1}, {1, 1}
         };
 
-        public static List<Position<short>> GetNeighbors(Position<short> pos, IMap map)
+        /// <summary>
+        /// Returns an Array with the neighbors of the given position
+        /// </summary>
+        /// <param name="pos"></param>
+        /// <param name="map"></param>
+        /// <returns></returns>
+        public static Position<short>[] GetNeighbors(Position<short> pos, IMap map)
         {
-            List<Position<short>> neighbors = new List<Position<short>>();
-            for (byte i = 0; i < Neighbours.Length; i++)
+            Position<short>[] neighbors = new Position<short>[8];
+            for (byte i = 0; i < 8; i++)
             {
-                short x = (short)(pos.X + Neighbours[i, 0]),
-                    y = (short)(pos.Y + Neighbours[i, 1]);
-
-                if (x > 0 && x < map.Width && y > 0 && y < map.Height && map.IsWalkable(x, y))
+                short x = (short) (pos.X + Neighbours[i, 0]),
+                    y = (short) (pos.Y + Neighbours[i, 1]);
+                if (x >= 0 && x < map.Width && y >= 0 && y < map.Height && map.IsWalkable(x, y))
                 {
-                    neighbors.Add(new Position<short> { X = x, Y = y });
+                    neighbors[i] = new Position<short> {X = x, Y = y};
                 }
             }
+
             return neighbors;
         }
 
-        public static int NextCoord(short start, short end) => start - end >= 1 ? start + 1 : end == start ? end : start - 1;
+        /// <summary>
+        /// Returns the next coordinate of a collision-free path
+        /// </summary>
+        /// <param name="s"></param>
+        /// <param name="e"></param>
+        /// <returns></returns>
+        public static int NextCoord(short s, short e) => s - e >= 1 ? s - 1 : e == s ? e : s + 1;
     }
 }

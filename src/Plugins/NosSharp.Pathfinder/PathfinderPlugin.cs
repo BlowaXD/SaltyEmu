@@ -3,6 +3,7 @@ using ChickenAPI.Core.Logging;
 using System;
 using ChickenAPI.Core.IoC;
 using Autofac;
+using NosSharp.Pathfinder.Pathfinder;
 
 namespace NosSharp.Pathfinder
 {
@@ -14,7 +15,7 @@ namespace NosSharp.Pathfinder
         public void OnLoad()
         {
             Log.Info($"Loading...");
-            Container.Builder.Register(s => new Pathfinders.Pathfinder()).As<IPathfinder>().SingleInstance();
+            Container.Builder.Register(s => new Pathfinder.Pathfinder()).As<IPathfinder>().SingleInstance();
             Log.Info($"Loaded !");
         }
 
@@ -39,7 +40,7 @@ namespace NosSharp.Pathfinder
         }
 
         public void OnEnable()
-        {
+        { 
         }
     }
 }
