@@ -42,12 +42,11 @@ namespace ChickenAPI.Game.Maps
                 { typeof(EffectSystem), effect }
             };
             AddSystem(movable);
-            AddSystem(effect);
             if (monsters != null)
             {
                 foreach (MapMonsterDto monster in monsters)
                 {
-                    RegisterEntity(new MonsterEntity(monster));
+                    TransferEntity(new MonsterEntity(monster), this);
                 }
             }
 
@@ -56,7 +55,7 @@ namespace ChickenAPI.Game.Maps
                 foreach (MapNpcDto npc in npcs)
                 {
                     ShopDto shop = shops.FirstOrDefault(s => s.MapNpcId == npc.Id);
-                    RegisterEntity(new NpcEntity(npc, shop));
+                    TransferEntity(new NpcEntity(npc, shop), this);
                 }
             }
 
@@ -65,7 +64,7 @@ namespace ChickenAPI.Game.Maps
             {
                 foreach (PortalDto portal in portals)
                 {
-                    RegisterEntity(new PortalEntity(portal));
+                    TransferEntity(new PortalEntity(portal), this);
                 }
             }
 

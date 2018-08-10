@@ -47,17 +47,12 @@ namespace ChickenAPI.Core.ECS.Systems
             }
 
 
-            try
+            Log.Info($"{GetType().Name} : Before update");
+            foreach (IEntity entity in Entities)
             {
-                foreach (IEntity entity in Entities)
-                {
-                    Execute(entity);
-                }
+                Execute(entity);
             }
-            catch (Exception e)
-            {
-                Log.Error("Update()", e);
-            }
+            Log.Info($"{GetType().Name} : After update");
 
             _lastUpdate = DateTime.UtcNow;
         }

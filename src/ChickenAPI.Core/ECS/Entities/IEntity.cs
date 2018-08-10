@@ -15,7 +15,7 @@ namespace ChickenAPI.Core.ECS.Entities
         /// <summary>
         ///     Gets the entityManager where the Entity is registered
         /// </summary>
-        IEntityManager EntityManager { get; set; }
+        IEntityManager EntityManager { get; }
 
         /// <summary>
         ///     Gets the entity type

@@ -25,7 +25,7 @@ namespace ChickenAPI.Core.ECS.Entities
 
         public abstract void Dispose();
 
-        public IEntityManager EntityManager { get; set; }
+        public IEntityManager EntityManager { get; protected set; }
 
         public void NotifySystem<T>(SystemEventArgs e) where T : class, INotifiableSystem
         {

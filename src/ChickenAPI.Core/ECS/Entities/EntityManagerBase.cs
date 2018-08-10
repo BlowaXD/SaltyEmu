@@ -31,7 +31,7 @@ namespace ChickenAPI.Core.ECS.Entities
 
         // systems
         protected Dictionary<Type, INotifiableSystem> NotifiableSystems = new Dictionary<Type, INotifiableSystem>();
-        protected bool ShouldUpdate;
+        protected bool ShouldUpdate { get; set; }
 
         public void Dispose()
         {
@@ -83,7 +83,6 @@ namespace ChickenAPI.Core.ECS.Entities
             }
             entities.Add(entity);
             NotifySystems(entity, new UpdateCacheEventArgs());
-            entity.EntityManager = this;
         }
 
         public void UnregisterEntity<T>(T entity) where T : IEntity

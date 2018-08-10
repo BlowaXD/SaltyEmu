@@ -15,31 +15,40 @@ namespace NosSharp.PacketHandler
     {
         public static void OnNcifPacket(NcifPacket packetBase, IPlayerEntity player)
         {
-            IEntity entity;
-            switch (packetBase.Type)
+            try
             {
-                case VisualType.Character:
-                    break;
-                case VisualType.Npc:
-                    entity = player.EntityManager.GetEntitiesByType<IEntity>(EntityType.Npc).FirstOrDefault(s => s.GetComponent<NpcMonsterComponent>().MapNpcMonsterId == packetBase.TargetId);
-                    if (entity == null)
-                    {
-                        return;
-                    }
-                    player.SendPacket(new StPacket(entity));
-                    break;
-                case VisualType.Monster:
-                    entity = player.EntityManager.GetEntitiesByType<IEntity>(EntityType.Monster).FirstOrDefault(s => s.GetComponent<NpcMonsterComponent>().MapNpcMonsterId == packetBase.TargetId);
-                    if (entity == null)
-                    {
-                        return;
-                    }
-                    player.SendPacket(new StPacket(entity));
-                    break;
-                case VisualType.MapObject:
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
+                IEntity entity;
+                switch (packetBase.Type)
+                {
+                    case VisualType.Character:
+                        break;
+                    case VisualType.Npc:
+                        entity = player.EntityManager.GetEntitiesByType<IEntity>(EntityType.Npc).FirstOrDefault(s => s.GetComponent<NpcMonsterComponent>().MapNpcMonsterId == packetBase.TargetId);
+                        if (entity == null)
+                        {
+                            return;
+                        }
+
+                        player.SendPacket(new StPacket(entity));
+                        break;
+                    case VisualType.Monster:
+                        entity = player.EntityManager.GetEntitiesByType<IEntity>(EntityType.Monster).FirstOrDefault(s => s.GetComponent<NpcMonsterComponent>().MapNpcMonsterId == packetBase.TargetId);
+                        if (entity == null)
+                        {
+                            return;
+                        }
+
+                        player.SendPacket(new StPacket(entity));
+                        break;
+                    case VisualType.MapObject:
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+            }
+            catch (Exception e)
+            {
+
             }
         }
     }

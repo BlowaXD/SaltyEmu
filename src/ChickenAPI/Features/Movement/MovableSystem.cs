@@ -25,17 +25,37 @@ namespace ChickenAPI.Game.Features.Movement
         private readonly IMap _map;
         private readonly IPathfinder _pathfinder;
 
-        protected override Expression<Func<IEntity, bool>> Filter => entity => entity.HasComponent<MovableComponent>();
+        protected override Expression<Func<IEntity, bool>> Filter => entity => entity.Type != EntityType.Player && entity.HasComponent<MovableComponent>();
 
         protected override void Execute(IEntity entity)
         {
-            if (entity.Type == EntityType.Player)
+            if (entity.Type != EntityType.Monster)
             {
                 return;
             }
 
+            var movable = entity.GetComponent<MovableComponent>();
+            var random = new Random();
+            Position<short> dest = null;
+            int i = 0;
+            while (dest == null && i < 5)
+            {
+                short x = (short)random.Next(0, _map.Width);
+                short y = (short)random.Next(0, _map.Height);
+                if (_map.IsWalkable(x, y))
+                {
+                    dest = new Position<short> { X = x, Y = y };
+                }
+
+                i++;
+            }
+
+            movable.Actual = dest;
+            Move(entity);
+
+            /*
             const int range = 10;
-            var i = 0;
+            int i = 0;
             var movableComponent = entity.GetComponent<MovableComponent>();
             if (movableComponent.Waypoints.Count == 0 && entity.Type != EntityType.Player)
             {
@@ -62,9 +82,7 @@ namespace ChickenAPI.Game.Features.Movement
                 {
                     movableComponent.Waypoints.Enqueue(pos);
                 }
-            }
-
-            ProcessMovement(entity, movableComponent);
+            }*/
         }
 
         public override void Execute(IEntity entity, SystemEventArgs e)
