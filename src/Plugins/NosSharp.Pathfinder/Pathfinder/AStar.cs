@@ -37,7 +37,10 @@ namespace NosSharp.Pathfinder.Pathfinder
                 node.Closed = true;
                 foreach (Position<short> n in PathfinderHelper.GetNeighbors(node.Position, map))
                 {
-                    if (n == null) { continue; }
+                    if (n == null)
+                    {
+                        break;
+                    }
                     Node neighbor = nodes.Get(no => no.Position.Equals(n)) ?? delNodes.Get(no => no.Position.Equals(n));
                     if (neighbor == null)
                     {

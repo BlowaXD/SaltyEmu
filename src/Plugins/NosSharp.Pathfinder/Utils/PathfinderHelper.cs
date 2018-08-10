@@ -21,13 +21,14 @@ namespace NosSharp.Pathfinder.Utils
         public static Position<short>[] GetNeighbors(Position<short> pos, IMap map)
         {
             Position<short>[] neighbors = new Position<short>[8];
+            byte a = 0;
             for (byte i = 0; i < 8; i++)
             {
                 short x = (short) (pos.X + Neighbours[i, 0]),
                     y = (short) (pos.Y + Neighbours[i, 1]);
                 if (x >= 0 && x < map.Width && y >= 0 && y < map.Height && map.IsWalkable(x, y))
                 {
-                    neighbors[i] = new Position<short> {X = x, Y = y};
+                    neighbors[a++] = new Position<short> {X = x, Y = y};
                 }
             }
 

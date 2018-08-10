@@ -1,7 +1,5 @@
 ﻿using ChickenAPI.Core.Utils;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace NosSharp.Pathfinder.Utils
 {
@@ -26,6 +24,6 @@ namespace NosSharp.Pathfinder.Utils
         /// </summary>
         /// <param name="obj"></param>
         /// <returns></returns>
-        public int CompareTo(object obj) => obj is Node node ? (F * 10).CompareTo(node.F * 10) : 0;
+        public int CompareTo(object obj) => obj is Node node ? (int)(F * 10 - node.F * 10) : 0;
     }
 }
