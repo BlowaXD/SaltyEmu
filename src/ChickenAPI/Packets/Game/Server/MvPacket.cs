@@ -2,6 +2,7 @@
 using ChickenAPI.Core.ECS.Entities;
 using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Game.Entities.Monster;
+using ChickenAPI.Game.Entities.Npc;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Features.Movement;
 using ChickenAPI.Game.Game.Components;
@@ -11,6 +12,34 @@ namespace ChickenAPI.Game.Packets.Game.Server
     [PacketHeader("mv")]
     public class MvPacket : PacketBase
     {
+        public MvPacket(IEntity entity)
+        {
+            switch (entity)
+            {
+                case IMonsterEntity monster:
+                    VisualType = VisualType.Monster;
+                    VisualId = monster.MapMonster.Id;
+                    Speed = monster.Movable.Speed;
+                    MapX = monster.Movable.Actual.X;
+                    MapY = monster.Movable.Actual.Y;
+                    return;
+                case INpcEntity npc:
+                    VisualType = VisualType.Character;
+                    VisualId = npc.MapNpc.Id;
+                    Speed = npc.Movable.Speed;
+                    MapX = npc.Movable.Actual.X;
+                    MapY = npc.Movable.Actual.Y;
+                    return;
+                case IPlayerEntity player:
+                    VisualType = VisualType.Character;
+                    VisualId = player.Character.Id;
+                    Speed = player.Movable.Speed;
+                    MapX = player.Movable.Actual.X;
+                    MapY = player.Movable.Actual.Y;
+                    return;
+            }
+        }
+
         public MvPacket(IPlayerEntity entity)
         {
             VisualType = VisualType.Character;
@@ -19,36 +48,6 @@ namespace ChickenAPI.Game.Packets.Game.Server
             MapX = entity.Movable.Actual.X;
             MapY = entity.Movable.Actual.Y;
         }
-
-        public MvPacket(IEntity entity)
-        {
-            switch (entity.Type)
-            {
-                case EntityType.Monster:
-                    VisualType = VisualType.Monster;
-                    VisualId = entity.GetComponent<NpcMonsterComponent>().MapNpcMonsterId;
-                    break;
-                case EntityType.Player:
-                    VisualType = VisualType.Character;
-                    VisualId = entity.GetComponent<CharacterComponent>().Id;
-                    break;
-                case EntityType.Mate:
-                    VisualType = VisualType.Npc;
-                    break;
-                case EntityType.Npc:
-                    VisualType = VisualType.Npc;
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-
-            var movable = entity.GetComponent<MovableComponent>();
-            MapX = movable.Actual.X;
-            MapY = movable.Actual.Y;
-            Speed = movable.Speed;
-        }
-
-        public MvPacket() => throw new NotImplementedException();
 
         [PacketIndex(0)]
         public VisualType VisualType { get; set; }

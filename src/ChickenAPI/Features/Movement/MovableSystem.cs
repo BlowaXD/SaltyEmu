@@ -14,7 +14,7 @@ namespace ChickenAPI.Game.Features.Movement
 {
     public class MovableSystem : NotifiableSystemBase
     {
-        protected override short RefreshRate => 1;
+        protected override short RefreshRate => 10;
 
         public MovableSystem(IEntityManager entityManager, IMap map) : base(entityManager)
         {
@@ -29,22 +29,33 @@ namespace ChickenAPI.Game.Features.Movement
 
         protected override void Execute(IEntity entity)
         {
+            if (entity.Type == EntityType.Player)
+            {
+                return;
+            }
+
             const int range = 10;
+            var i = 0;
             var movableComponent = entity.GetComponent<MovableComponent>();
             if (movableComponent.Waypoints.Count == 0 && entity.Type != EntityType.Player)
             {
                 var random = new Random();
                 Position<short> dest = null;
-                while (dest == null)
+                while (dest == null && i < 5)
                 {
-                    short x = (short)random.Next(movableComponent.Actual.X - range <= 0 ? 1 : movableComponent.Actual.X - range,
-                        movableComponent.Actual.X - range >= _map.Width ? _map.Width - 1 : movableComponent.Actual.X - range);
-                    short y = (short)random.Next(movableComponent.Actual.Y - _map.Height <= 0 ? 1 : movableComponent.Actual.Y - range,
-                        movableComponent.Actual.Y - range >= _map.Height ? _map.Height - 1 : movableComponent.Actual.Y - range);
+                    short x = (short)random.Next(0, _map.Width);
+                    short y = (short)random.Next(0, _map.Height);
                     if (_map.IsWalkable(x, y))
                     {
                         dest = new Position<short> { X = x, Y = y };
                     }
+
+                    i++;
+                }
+
+                if (dest == null)
+                {
+                    return;
                 }
 
                 foreach (Position<short> pos in _pathfinder.FindPath(movableComponent.Actual, dest, _map))
@@ -66,10 +77,10 @@ namespace ChickenAPI.Game.Features.Movement
             }
         }
 
-        private static void Move(IEntity entity)
+        private void Move(IEntity entity)
         {
             var packet = new MvPacket(entity);
-            if (entity.EntityManager is IMapLayer mapLayer)
+            if (EntityManager is IMapLayer mapLayer) // wtf ?
             {
                 mapLayer.Broadcast(packet);
             }

@@ -74,13 +74,13 @@ namespace ChickenAPI.Game.Features.Movement
         {
             if (Entity.Type != EntityType.Monster)
             {
-                return (DateTime.Now - LastMove).TotalMilliseconds > 2000 / Speed;
+                return (DateTime.UtcNow - LastMove).TotalMilliseconds > 2000 / Speed;
             }
 
             Log.Info($"Monster CanMove()");
             Speed = 20;
 
-            return (DateTime.Now - LastMove).TotalMilliseconds > 2000 / Speed;
+            return (DateTime.UtcNow - LastMove).TotalMilliseconds > 2000 / Speed;
         }
     }
 

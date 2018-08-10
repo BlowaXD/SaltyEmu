@@ -80,7 +80,7 @@ namespace World
                 Server.Port = intPort;
             }
 
-            string tick = Environment.GetEnvironmentVariable("SERVER_REFRESH_RATE") ?? "5";
+            string tick = Environment.GetEnvironmentVariable("SERVER_REFRESH_RATE") ?? "10";
             if (!int.TryParse(tick, out int tickRate))
             {
                 tickRate = 5;

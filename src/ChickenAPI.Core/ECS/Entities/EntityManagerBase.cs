@@ -83,6 +83,7 @@ namespace ChickenAPI.Core.ECS.Entities
             }
             entities.Add(entity);
             NotifySystems(entity, new UpdateCacheEventArgs());
+            entity.EntityManager = this;
         }
 
         public void UnregisterEntity<T>(T entity) where T : IEntity

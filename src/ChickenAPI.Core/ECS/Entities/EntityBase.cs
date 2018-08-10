@@ -25,7 +25,7 @@ namespace ChickenAPI.Core.ECS.Entities
 
         public abstract void Dispose();
 
-        public IEntityManager EntityManager { get; protected set; }
+        public IEntityManager EntityManager { get; set; }
 
         public void NotifySystem<T>(SystemEventArgs e) where T : class, INotifiableSystem
         {
@@ -40,7 +40,6 @@ namespace ChickenAPI.Core.ECS.Entities
             {
                 EntityManager = manager;
                 EntityManager.RegisterEntity(this);
-                Log.Info($"[ENTITY:{Id}] Initializing EntityManager");
             }
             else
             {

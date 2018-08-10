@@ -35,7 +35,7 @@ namespace NosSharp.PacketHandler
             IMapLayer mapLayer = mapManager.GetBaseMapLayer(dto.MapId);
             session.InitializeEntity(new PlayerEntity(session, dto));
             session.SendPacket(new TitPacket { ClassType = "Adventurer", Name = session.Player.GetComponent<NameComponent>().Name});
-            session.SendPacket(new SayPacket { Message = "┌------------------[NosWings]------------------┐", Type = SayColorType.Yellow, VisualType = VisualType.Character });
+            session.SendPacket(new SayPacket { Message = "┌------------------[SaltyEmu]------------------┐", Type = SayColorType.Yellow, VisualType = VisualType.Character });
             session.SendPacket(new SayPacket { Message = $"XP     : {dto.LevelXp}/{algorithm.GetLevelXp(dto.Class, dto.Level)}", Type = SayColorType.Yellow, VisualType = VisualType.Character });
             session.SendPacket(new SayPacket { Message = $"JOBXP  : {dto.JobLevelXp}/{algorithm.GetJobLevelXp(dto.Class, dto.Level)}", Type = SayColorType.Yellow, VisualType = VisualType.Character });
             session.SendPacket(new SayPacket { Message = $"HEROXP : {dto.HeroXp}/{algorithm.GetHeroLevelXp(dto.Class, dto.Level)}", Type = SayColorType.Yellow, VisualType = VisualType.Character });
@@ -46,7 +46,7 @@ namespace NosSharp.PacketHandler
             // scr 0
             for (byte i = 0; i < 10; i++)
             {
-                session.Player.SendPacket(new BnPacket { BnNumber = i, Message = $"NosWings^{i}"});
+                session.Player.SendPacket(new BnPacket { BnNumber = i, Message = $"SaltyEmu^{i}"});
             }
 
             session.Player.EntityManager.NotifySystem<InventorySystem>(session.Player, new InventoryInitializeEventArgs());
