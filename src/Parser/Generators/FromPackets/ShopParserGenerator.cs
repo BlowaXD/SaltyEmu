@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -24,6 +25,7 @@ namespace Toolkit.Generators.FromPackets
             var shopService = Container.Instance.Resolve<IShopService>();
             var mapNpcService = Container.Instance.Resolve<IMapNpcService>();
             Dictionary<long, MapNpcDto> npcs = mapNpcService.Get().ToDictionary(s => s.Id, s => s);
+            Dictionary<long, ShopDto> shops = shopService.Get().ToDictionary(s => s.Id, s => s);
             string[] splitters = { "\r\n", "\r", "\n" };
             string[] lines = File.ReadAllText(filePath, Encoding.Default).Split(splitters, StringSplitOptions.RemoveEmptyEntries);
             int counter = 0;
@@ -36,7 +38,7 @@ namespace Toolkit.Generators.FromPackets
                     tmpp++;
                     string[] currentPacket = line.Split('\t', ' ');
                     long mapnpcid = long.Parse(currentPacket[2]);
-                    if (!npcs.ContainsKey(mapnpcid) || _shops.Any(s => s.MapNpcId == mapnpcid) || shopService.GetByMapNpcId(mapnpcid).Any())
+                    if (!npcs.ContainsKey(mapnpcid) || _shops.Any(s => s.MapNpcId == mapnpcid) || shops.Any(s => s.Value.MapNpcId == mapnpcid))
                     {
                         continue;
                     }

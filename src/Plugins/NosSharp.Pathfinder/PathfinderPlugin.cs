@@ -16,7 +16,7 @@ namespace NosSharp.Pathfinder
         public void OnLoad()
         {
             Log.Info($"Loading...");
-            Container.Builder.Register(s => new Pathfinder.Pathfinder()).As<IPathfinder>().SingleInstance();
+            Container.Builder.Register(s => new Pathfinder.Pathfinder()).As<IPathfinder>();
             Log.Info($"Loaded !");
         }
 

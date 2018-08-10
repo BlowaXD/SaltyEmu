@@ -4,6 +4,7 @@ using Autofac;
 using ChickenAPI.Core.ECS.Components;
 using ChickenAPI.Core.ECS.Entities;
 using ChickenAPI.Core.IoC;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Core.Utils;
 using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Game.Data.AccessLayer.Character;
@@ -15,6 +16,7 @@ namespace ChickenAPI.Game.Features.Movement
     /// </summary>
     public class MovableComponent : IComponent
     {
+        private static readonly Logger Log = Logger.GetLogger<MovableComponent>();
         private Position<short> _actual;
 
         public MovableComponent(IEntity entity)
@@ -58,21 +60,28 @@ namespace ChickenAPI.Game.Features.Movement
 
         public DateTime LastMove { get; private set; }
 
-        public DateTime NextMove { get; set; }
-
         public IEntity Entity { get; set; }
 
         public static event TypedSenderEventHandler<IEntity, MoveEventArgs> Move;
 
         private static void OnMove(IEntity sender, MoveEventArgs e)
         {
-            e.Component.LastMove = DateTime.Now;
-            // todo tick the systems update
-            e.Component.NextMove = DateTime.Now;
+            e.Component.LastMove = DateTime.UtcNow;
             Move?.Invoke(sender, e);
         }
 
-        public bool CanMove() => (DateTime.Now - LastMove).TotalMilliseconds > 2000 / Speed;
+        public bool CanMove()
+        {
+            if (Entity.Type != EntityType.Monster)
+            {
+                return (DateTime.Now - LastMove).TotalMilliseconds > 2000 / Speed;
+            }
+
+            Log.Info($"Monster CanMove()");
+            Speed = 20;
+
+            return (DateTime.Now - LastMove).TotalMilliseconds > 2000 / Speed;
+        }
     }
 
     public class MoveEventArgs : EventArgs

@@ -85,7 +85,6 @@ namespace Toolkit.Generators.FromPackets
             }
 
             shopItemService.Save(_shopItems);
-            Log.Info(string.Format("SHOP_ITEMS_PARSED", counter));
         }
     }
 }

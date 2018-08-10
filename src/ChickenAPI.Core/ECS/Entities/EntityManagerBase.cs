@@ -76,12 +76,22 @@ namespace ChickenAPI.Core.ECS.Entities
         {
             entity.Id = NextEntityId;
             EntitiesByEntityId[entity.Id] = entity;
+            if (!EntitiesByEntityType.TryGetValue(entity.Type, out HashSet<IEntity> entities))
+            {
+                entities = new HashSet<IEntity>();
+                EntitiesByEntityType[entity.Type] = entities;
+            }
+            entities.Add(entity);
             NotifySystems(entity, new UpdateCacheEventArgs());
         }
 
         public void UnregisterEntity<T>(T entity) where T : IEntity
         {
             EntitiesByEntityId.Remove(entity.Id);
+            if (EntitiesByEntityType.TryGetValue(entity.Type, out HashSet<IEntity> entities))
+            {
+                entities.Remove(entity);
+            }
             NotifySystems(entity, new UpdateCacheEventArgs());
         }
 
@@ -133,7 +143,7 @@ namespace ChickenAPI.Core.ECS.Entities
             ShouldUpdate = false;
             EmContainer.Unregister(this);
         }
-
+        
         public void AddSystem(ISystem system)
         {
             _systems.Add(system);

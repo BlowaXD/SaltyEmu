@@ -41,7 +41,7 @@ namespace ChickenAPI.Game.Maps
                 { typeof(ShopSystem), new ShopSystem(this) },
                 { typeof(EffectSystem), effect }
             };
-            //AddSystem(movable);
+            AddSystem(movable);
             AddSystem(effect);
             if (monsters != null)
             {

@@ -14,6 +14,8 @@ namespace ChickenAPI.Game.Features.Movement
 {
     public class MovableSystem : NotifiableSystemBase
     {
+        protected override short RefreshRate => 1;
+
         public MovableSystem(IEntityManager entityManager, IMap map) : base(entityManager)
         {
             _map = map;
@@ -27,44 +29,31 @@ namespace ChickenAPI.Game.Features.Movement
 
         protected override void Execute(IEntity entity)
         {
+            const int range = 10;
             var movableComponent = entity.GetComponent<MovableComponent>();
-            if (movableComponent.Waypoints.Count == 0)
+            if (movableComponent.Waypoints.Count == 0 && entity.Type != EntityType.Player)
             {
-                Random random = new Random();
+                var random = new Random();
                 Position<short> dest = null;
                 while (dest == null)
                 {
-                    short x = (short)random.Next(0, _map.Width),
-                        y = (short)random.Next(0, _map.Height);
+                    short x = (short)random.Next(movableComponent.Actual.X - range <= 0 ? 1 : movableComponent.Actual.X - range,
+                        movableComponent.Actual.X - range >= _map.Width ? _map.Width - 1 : movableComponent.Actual.X - range);
+                    short y = (short)random.Next(movableComponent.Actual.Y - _map.Height <= 0 ? 1 : movableComponent.Actual.Y - range,
+                        movableComponent.Actual.Y - range >= _map.Height ? _map.Height - 1 : movableComponent.Actual.Y - range);
                     if (_map.IsWalkable(x, y))
                     {
                         dest = new Position<short> { X = x, Y = y };
                     }
                 }
-                foreach (var pos in _pathfinder.FindPath(movableComponent.Actual, dest, _map))
+
+                foreach (Position<short> pos in _pathfinder.FindPath(movableComponent.Actual, dest, _map))
                 {
                     movableComponent.Waypoints.Enqueue(pos);
                 }
             }
-            
+
             ProcessMovement(entity, movableComponent);
-
-            /*
-            if (!(entity is IMovableEntity movableEntity))
-            {
-                return;
-            }
-
-            MovableComponent movable = movableEntity.Movable;
-
-            if (movable.Waypoints.Count <= 0 || !movable.CanMove())
-            {
-                return;
-            }
-
-            movable.Actual = movable.Waypoints.Dequeue();
-            Move(entity);
-            */
         }
 
         public override void Execute(IEntity entity, SystemEventArgs e)
@@ -77,14 +66,12 @@ namespace ChickenAPI.Game.Features.Movement
             }
         }
 
-        private void Move(IEntity entity)
+        private static void Move(IEntity entity)
         {
-            foreach (IEntity entityy in entity.EntityManager.Entities)
+            var packet = new MvPacket(entity);
+            if (entity.EntityManager is IMapLayer mapLayer)
             {
-                if (Match(entityy) && entityy is IPlayerEntity player)
-                {
-                    player.SendPacket(new MvPacket(entityy));
-                }
+                mapLayer.Broadcast(packet);
             }
 
             if (entity is IPlayerEntity playerEntity)
@@ -95,11 +82,13 @@ namespace ChickenAPI.Game.Features.Movement
 
         private void ProcessMovement(IEntity entity, MovableComponent movableComponent)
         {
-            if (movableComponent.CanMove())
+            if (!movableComponent.CanMove() || movableComponent.Waypoints.Count <= 0)
             {
-                movableComponent.Actual = movableComponent.Waypoints.Dequeue();
-                Move(entity);
+                return;
             }
+
+            movableComponent.Actual = movableComponent.Waypoints.Dequeue();
+            Move(entity);
         }
     }
 }

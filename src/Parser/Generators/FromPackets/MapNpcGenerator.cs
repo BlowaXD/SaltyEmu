@@ -113,7 +113,6 @@ namespace Toolkit.Generators.FromPackets
             }
 
             mapNpcService.Save(_npcs);
-            Log.Info(string.Format("MAPNPC_PARSED", counter));
         }
     }
 }

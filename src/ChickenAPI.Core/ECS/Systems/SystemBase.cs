@@ -2,12 +2,15 @@
 using System.Linq;
 using System.Linq.Expressions;
 using ChickenAPI.Core.ECS.Entities;
+using ChickenAPI.Core.Logging;
 
 namespace ChickenAPI.Core.ECS.Systems
 {
     public abstract class SystemBase : ISystem
     {
+        protected static readonly Logger Log = Logger.GetLogger<SystemBase>();
         private Func<IEntity, bool> _filter;
+
         private DateTime _lastUpdate;
 
         protected SystemBase(IEntityManager entityManager) => EntityManager = entityManager;
@@ -46,9 +49,13 @@ namespace ChickenAPI.Core.ECS.Systems
 
             foreach (IEntity entity in Entities)
             {
-                if (entity.Type == EntityType.Player)
+                try
                 {
                     Execute(entity);
+                }
+                catch (Exception e)
+                {
+                    Log.Error("Update()", e);
                 }
             }
 
