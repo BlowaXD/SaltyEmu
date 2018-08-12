@@ -25,16 +25,20 @@ namespace ChickenAPI.Game.Maps
             ParentEntityManager = map;
             InitializeMonsters(monsters);
             InitializeNpcs(npcs, shops);
+            InitializePortals(portals);
+            InitializeSystems();
+        }
+
+        private void InitializePortals(IEnumerable<PortalDto> portals)
+        {
             if (portals == null)
             {
-                return;
             }
 
             foreach (PortalDto portal in portals)
             {
                 TransferEntity(new PortalEntity(portal), this);
             }
-            InitializeSystems();
         }
 
         private void InitializeSystems()

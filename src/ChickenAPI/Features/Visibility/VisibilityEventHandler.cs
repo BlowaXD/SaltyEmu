@@ -1,7 +1,4 @@
-﻿using System;
-using System.Linq.Expressions;
-using ChickenAPI.Core.ECS.Entities;
-using ChickenAPI.Core.ECS.Systems;
+﻿using ChickenAPI.Core.ECS.Entities;
 using ChickenAPI.Core.Events;
 using ChickenAPI.Core.Logging;
 using ChickenAPI.Enums.Game.Entity;
@@ -11,19 +8,15 @@ using ChickenAPI.Game.Entities.Portal;
 using ChickenAPI.Game.Features.Portals;
 using ChickenAPI.Game.Features.Shops.Packets;
 using ChickenAPI.Game.Features.Visibility.Args;
+using ChickenAPI.Game.Packets;
 using ChickenAPI.Game.Packets.Extensions;
 using ChickenAPI.Game.Packets.Game.Server;
 
 namespace ChickenAPI.Game.Features.Visibility
 {
-    public class VisibilitySystem : EventHandlerBase
+    public class VisibilityEventHandler : EventHandlerBase
     {
-        private static readonly Logger Log = Logger.GetLogger<VisibilitySystem>();
-
-        public VisibilitySystem(IEntityManager entityManager)
-        {
-        }
-
+        private static readonly Logger Log = Logger.GetLogger<VisibilityEventHandler>();
 
         public override void Execute(IEntity entity, ChickenEventArgs e)
         {
@@ -39,7 +32,7 @@ namespace ChickenAPI.Game.Features.Visibility
             }
         }
 
-        private void SetVisible(IEntity entity, VisibilitySetVisibleEventArgs args)
+        private static void SetVisible(IEntity entity, VisibilitySetVisibleEventArgs args)
         {
             entity.GetComponent<VisibilityComponent>().IsVisible = true;
             if (!args.Broadcast)
@@ -120,7 +113,7 @@ namespace ChickenAPI.Game.Features.Visibility
             }
         }
 
-        private void SetInvisible(IEntity entity, VisibilitySetInvisibleEventArgs args)
+        private static void SetInvisible(IEntity entity, VisibilitySetInvisibleEventArgs args)
         {
             entity.GetComponent<VisibilityComponent>().IsVisible = false;
             if (!args.Broadcast)
@@ -128,17 +121,14 @@ namespace ChickenAPI.Game.Features.Visibility
                 return;
             }
 
-            foreach (IEntity entityy in entity.EntityManager.Entities)
+            if (entity.EntityManager?.Entities == null)
             {
-                if (entityy.Id == entity.Id)
-                {
-                    continue;
-                }
+                return;
+            }
 
-                if (entityy is IPlayerEntity player)
-                {
-                    player.SendPacket(new OutPacketBase(player));
-                }
+            if (entity is IPlayerEntity player && player.EntityManager is IBroadcastable broadcastable)
+            {
+                broadcastable.Broadcast(player, player.GenerateOutPacket());
             }
         }
     }

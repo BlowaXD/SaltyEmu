@@ -106,7 +106,11 @@ namespace ChickenAPI.Game.Entities.Player
 
         public override void TransferEntity(IEntityManager manager)
         {
-            NotifyEventHandler<VisibilitySystem>(new VisibilitySetInvisibleEventArgs { Broadcast = true, IsChangingMapLayer = true });
+            if (EntityManager != null)
+            {
+                NotifyEventHandler<VisibilityEventHandler>(new VisibilitySetInvisibleEventArgs { Broadcast = true, IsChangingMapLayer = true });
+            }
+
             base.TransferEntity(manager);
 
             if (!(manager is IMapLayer map))
@@ -122,11 +126,9 @@ namespace ChickenAPI.Game.Entities.Player
             SendPacket(new StPacket(this));
 
             SendPacket(this.GenerateAtPacket());
-
             SendPacket(new CondPacketBase(this));
             SendPacket(new CMapPacketBase(map.Map));
             // StatChar()
-            //SendPacket(new InPacketBase(this));
             // Pairy()
             // Pst()
             // Act6() : Act()
@@ -142,11 +144,12 @@ namespace ChickenAPI.Game.Entities.Player
             // Gp()
             //SendPacket(new RsfpPacket()); // Minimap Position
             //SendPacket(new CondPacketBase(this));
-            NotifyEventHandler<VisibilitySystem>(new VisibilitySetVisibleEventArgs
+            NotifyEventHandler<VisibilityEventHandler>(new VisibilitySetVisibleEventArgs
             {
                 Broadcast = true,
                 IsChangingMapLayer = true
             });
+            SendPacket(this.GenerateInPacket());
             SendPacket(new StatPacket(this));
         }
 
