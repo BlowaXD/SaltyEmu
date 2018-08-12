@@ -6,12 +6,17 @@ using System.Runtime.InteropServices;
 using System.Text;
 using Autofac;
 using ChickenAPI.Core.ECS;
+using ChickenAPI.Core.Events;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Plugins;
 using ChickenAPI.Core.Utils;
 using ChickenAPI.Enums;
 using ChickenAPI.Game.Data.AccessLayer.Account;
 using ChickenAPI.Game.Data.TransferObjects.Character;
+using ChickenAPI.Game.Features.Chat;
+using ChickenAPI.Game.Features.Effects;
+using ChickenAPI.Game.Features.Groups;
+using ChickenAPI.Game.Features.Inventory;
 using ChickenAPI.Game.Managers;
 using ChickenAPI.Game.Packets;
 using NLog;
@@ -170,11 +175,22 @@ namespace World
             }
 
             InitializeAccounts();
+            InitializeEventHandlers();
 
             var packetHandler = new PacketHandlerPlugin();
             packetHandler.OnLoad();
             packetHandler.OnEnable();
             Server.RunServerAsync(1337).Wait();
+        }
+
+        private static void InitializeEventHandlers()
+        {
+            // first version hardcoded, next one through Plugin + Assembly Reflection
+            var eventManager = Container.Instance.Resolve<IEventManager>();
+            eventManager.Register(new EffectEventHandler());
+            eventManager.Register(new ChatSystem());
+            eventManager.Register(new GroupEventHandler());
+            eventManager.Register(new InventoryEventHandler());
         }
 
         private static void Exit(object sender, EventArgs e)

@@ -10,10 +10,6 @@ namespace ChickenAPI.Game.Features.Chat
 {
     public class ChatSystem : EventHandlerBase
     {
-        public ChatSystem(IEntityManager entityManager)
-        {
-        }
-
         public override void Execute(IEntity entity, ChickenEventArgs e)
         {
             switch (e)
