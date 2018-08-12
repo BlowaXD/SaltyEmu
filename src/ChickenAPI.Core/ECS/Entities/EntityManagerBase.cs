@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Autofac;
 using ChickenAPI.Core.ECS.Systems;
-using ChickenAPI.Core.ECS.Systems.Args;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Logging;
 
@@ -29,8 +28,6 @@ namespace ChickenAPI.Core.ECS.Entities
         protected List<IEntityManager> EntityManagers = new List<IEntityManager>();
         protected long LastEntityId;
 
-        // systems
-        protected Dictionary<Type, INotifiableSystem> NotifiableSystems = new Dictionary<Type, INotifiableSystem>();
         protected bool ShouldUpdate { get; set; }
 
         public void Dispose()
@@ -86,7 +83,7 @@ namespace ChickenAPI.Core.ECS.Entities
                 EntitiesByEntityType[entity.Type] = entities;
             }
             entities.Add(entity);
-            NotifySystems(entity, new UpdateCacheEventArgs());
+            // update cache
         }
 
         public void UnregisterEntity<T>(T entity) where T : IEntity
@@ -96,7 +93,7 @@ namespace ChickenAPI.Core.ECS.Entities
             {
                 entities.Remove(entity);
             }
-            NotifySystems(entity, new UpdateCacheEventArgs());
+            // update cache
         }
 
         public bool HasEntity(IEntity entity) => HasEntity(entity.Id);
@@ -156,35 +153,6 @@ namespace ChickenAPI.Core.ECS.Entities
         public void RemoveSystem(ISystem system)
         {
             _systems.Remove(system);
-        }
-
-        public void NotifySystem<T>(IEntity entity, SystemEventArgs e) where T : class, INotifiableSystem
-        {
-            try
-            {
-                NotifiableSystems[typeof(T)].Execute(entity, e);
-            }
-            catch (Exception exception)
-            {
-                Log.Error("[NOTIFY_SYSTEM]", exception);
-                Console.WriteLine(exception);
-            }
-        }
-
-        public void NotifySystems(IEntity entity, SystemEventArgs e)
-        {
-            foreach (INotifiableSystem system in NotifiableSystems.Values)
-            {
-                try
-                {
-                    system.Execute(entity, e);
-                }
-                catch (Exception exception)
-                {
-                    Log.Error("[NOTIFY_SYSTEM]", exception);
-                    Console.WriteLine(exception);
-                }
-            }
         }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using ChickenAPI.Core.ECS.Entities;
-using ChickenAPI.Core.ECS.Systems;
-using ChickenAPI.Core.ECS.Systems.Args;
+using ChickenAPI.Core.Events;
 using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Enums.Packets;
 using ChickenAPI.Game.Entities.Player;
@@ -9,13 +8,13 @@ using ChickenAPI.Game.Packets.Game.Server;
 
 namespace ChickenAPI.Game.Features.Chat
 {
-    public class ChatSystem : NotifiableSystemBase
+    public class ChatSystem : EventHandlerBase
     {
-        public ChatSystem(IEntityManager entityManager) : base(entityManager)
+        public ChatSystem(IEntityManager entityManager)
         {
         }
 
-        public override void Execute(IEntity entity, SystemEventArgs e)
+        public override void Execute(IEntity entity, ChickenEventArgs e)
         {
             switch (e)
             {

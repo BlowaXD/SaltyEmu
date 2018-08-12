@@ -1,8 +1,7 @@
 ﻿using System;
 using ChickenAPI.Core.Data.TransferObjects;
 using ChickenAPI.Core.ECS.Components;
-using ChickenAPI.Core.ECS.Systems;
-using ChickenAPI.Core.ECS.Systems.Args;
+using ChickenAPI.Core.Events;
 
 namespace ChickenAPI.Core.ECS.Entities
 {
@@ -27,7 +26,7 @@ namespace ChickenAPI.Core.ECS.Entities
         /// </summary>
         /// <typeparam name="T">System type</typeparam>
         /// <param name="e">Arguments</param>
-        void NotifySystem<T>(SystemEventArgs e) where T : class, INotifiableSystem;
+        void NotifyEventHandler<T>(ChickenEventArgs e) where T : class, IEventHandler;
 
         /// <summary>
         ///     Will transfer the Entity to another entity manager

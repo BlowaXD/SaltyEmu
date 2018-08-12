@@ -3,7 +3,7 @@ using System.Linq;
 using System.Text;
 using ChickenAPI.Core.ECS.Entities;
 using ChickenAPI.Core.ECS.Systems;
-using ChickenAPI.Core.ECS.Systems.Args;
+using ChickenAPI.Core.Events;
 using ChickenAPI.Game.Data.TransferObjects.Shop;
 using ChickenAPI.Game.Data.TransferObjects.Skills;
 using ChickenAPI.Game.Entities.Player;
@@ -12,13 +12,13 @@ using ChickenAPI.Game.Features.Shops.Packets;
 
 namespace ChickenAPI.Game.Features.Shops
 {
-    public class ShopSystem : NotifiableSystemBase
+    public class ShopSystem : EventHandlerBase
     {
-        public ShopSystem(IEntityManager entityManager) : base(entityManager)
+        public ShopSystem(IEntityManager entityManager)
         {
         }
 
-        public override void Execute(IEntity entity, SystemEventArgs e)
+        public override void Execute(IEntity entity, ChickenEventArgs e)
         {
             switch (e)
             {

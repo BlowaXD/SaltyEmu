@@ -1,9 +1,9 @@
-﻿using ChickenAPI.Core.ECS.Systems.Args;
+﻿using ChickenAPI.Core.Events;
 using ChickenAPI.Game.Data.TransferObjects.Skills;
 
 namespace ChickenAPI.Game.Features.Skills.Args
 {
-    public class PlayerAddSkillEventArgs : SystemEventArgs
+    public class PlayerAddSkillEventArgs : ChickenEventArgs
     {
         public SkillDto Skill { get; set; }
 

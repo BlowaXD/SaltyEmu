@@ -13,7 +13,7 @@ namespace NosSharp.PacketHandler
         {
             try
             {
-                session.EntityManager.NotifySystem<ChatSystem>(session, new PlayerChatEventArg
+                session.NotifyEventHandler<ChatSystem>(new PlayerChatEventArg
                 {
                     Message = packetBase.Message,
                     SenderId = session.Session.CharacterId,

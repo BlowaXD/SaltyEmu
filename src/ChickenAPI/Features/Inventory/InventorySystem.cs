@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Autofac;
 using ChickenAPI.Core.ECS.Entities;
-using ChickenAPI.Core.ECS.Systems;
-using ChickenAPI.Core.ECS.Systems.Args;
+using ChickenAPI.Core.Events;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Enums.Game.Items;
 using ChickenAPI.Game.Data.AccessLayer.Item;
@@ -15,15 +14,11 @@ using ChickenAPI.Game.Packets.Game.Server.Inventory;
 
 namespace ChickenAPI.Game.Features.Inventory
 {
-    public class InventorySystem : NotifiableSystemBase
+    public class InventoryEventHandler : EventHandlerBase
     {
         private const short MAX_AMOUNT_PER_SLOT = 999;
 
-        public InventorySystem(IEntityManager em) : base(em)
-        {
-        }
-
-        public override void Execute(IEntity entity, SystemEventArgs e)
+        public override void Execute(IEntity entity, ChickenEventArgs e)
         {
             var inventory = entity.GetComponent<InventoryComponent>();
             if (inventory == null)

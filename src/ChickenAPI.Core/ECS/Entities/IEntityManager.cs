@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using ChickenAPI.Core.ECS.Systems;
-using ChickenAPI.Core.ECS.Systems.Args;
 
 namespace ChickenAPI.Core.ECS.Entities
 {
@@ -150,17 +149,6 @@ namespace ChickenAPI.Core.ECS.Entities
         /// </summary>
         /// <param name="system"></param>
         void RemoveSystem(ISystem system);
-
-        /// <summary>
-        ///     Notify a system of this context to be executed.
-        /// </summary>
-        /// <typeparam name="T">System type</typeparam>
-        /// <param name="entity">Entity</param>
-        /// <param name="e">Arguments</param>
-        void NotifySystem<T>(IEntity entity, SystemEventArgs e) where T : class, INotifiableSystem;
-
-        void NotifySystems(IEntity entity, SystemEventArgs e);
-
         #endregion
     }
 }

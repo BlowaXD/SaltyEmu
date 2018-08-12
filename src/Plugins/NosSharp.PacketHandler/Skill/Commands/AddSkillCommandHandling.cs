@@ -17,7 +17,7 @@ namespace NosSharp.PacketHandler.Skill.Commands
             var skillService = Container.Instance.Resolve<ISkillService>();
             SkillDto skill = skillService.GetById(packet.SkillId);
 
-            player.NotifySystem<SkillSystem>(new PlayerAddSkillEventArgs
+            player.NotifyEventHandler<SkillEventHandler>(new PlayerAddSkillEventArgs
             {
                 Skill = skill,
                 ForceChecks = false

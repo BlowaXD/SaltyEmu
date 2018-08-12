@@ -1,8 +1,8 @@
-﻿using ChickenAPI.Core.ECS.Systems.Args;
+﻿using ChickenAPI.Core.Events;
 
 namespace ChickenAPI.Game.Features.Visibility.Args
 {
-    public class VisibilitySetVisibleEventArgs : SystemEventArgs
+    public class VisibilitySetVisibleEventArgs : ChickenEventArgs
     {
         public bool Broadcast { get; set; }
 

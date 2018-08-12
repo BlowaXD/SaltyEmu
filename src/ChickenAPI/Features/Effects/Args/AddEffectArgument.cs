@@ -1,8 +1,8 @@
-﻿using ChickenAPI.Core.ECS.Systems.Args;
+﻿using ChickenAPI.Core.Events;
 
 namespace ChickenAPI.Game.Features.Effects.Args
 {
-    public class AddEffectArgument : SystemEventArgs
+    public class AddEffectArgument : ChickenEventArgs
     {
         public long EffectId { get; set; }
 

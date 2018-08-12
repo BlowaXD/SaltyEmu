@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using ChickenAPI.Core.ECS.Entities;
 using ChickenAPI.Core.ECS.Systems;
-using ChickenAPI.Core.ECS.Systems.Args;
+using ChickenAPI.Core.Events;
 using ChickenAPI.Enums.Game.Character;
 using ChickenAPI.Game.Data.TransferObjects.Skills;
 using ChickenAPI.Game.Entities.Player;
@@ -11,13 +11,13 @@ using ChickenAPI.Game.Features.Skills.Args;
 
 namespace ChickenAPI.Game.Features.Skills
 {
-    public class SkillSystem : NotifiableSystemBase
+    public class SkillEventHandler : EventHandlerBase
     {
-        public SkillSystem(IEntityManager entityManager) : base(entityManager)
+        public SkillEventHandler(IEntityManager entityManager)
         {
         }
 
-        public override void Execute(IEntity entity, SystemEventArgs e)
+        public override void Execute(IEntity entity, ChickenEventArgs e)
         {
             var component = entity.GetComponent<SkillComponent>();
             if (component is null)

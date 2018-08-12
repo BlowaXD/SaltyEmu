@@ -21,7 +21,7 @@ namespace NosSharp.PacketHandler.Shops
                 return;
             }
 
-            player.NotifySystem<ShopSystem>(new GetShopInformationEventArgs { Shop = shopEntity.Shop, Type = packet.Type });
+            player.NotifyEventHandler<ShopSystem>(new GetShopInformationEventArgs { Shop = shopEntity.Shop, Type = packet.Type });
         }
     }
 }

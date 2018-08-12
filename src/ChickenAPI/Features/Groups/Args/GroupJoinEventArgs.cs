@@ -1,8 +1,8 @@
-﻿using ChickenAPI.Core.ECS.Systems.Args;
+﻿using ChickenAPI.Core.Events;
 
 namespace ChickenAPI.Game.Features.Groups.Args
 {
-    public class GroupJoinEventArgs : SystemEventArgs
+    public class GroupJoinEventArgs : ChickenEventArgs
     {
         public GroupComponent Group { get; set; }
     }

@@ -9,7 +9,7 @@ namespace NosSharp.PacketHandler.Inventory
     {
         public static void OnMviPacket(MviPacket packet, IPlayerEntity player)
         {
-            player.EntityManager.NotifySystem<InventorySystem>(player, new InventoryMoveEventArgs
+            player.NotifyEventHandler<InventoryEventHandler>(new InventoryMoveEventArgs
             {
                 InventoryType = packet.InventoryType,
                 Amount = packet.Amount,

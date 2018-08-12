@@ -2,13 +2,13 @@
 using System.Linq.Expressions;
 using ChickenAPI.Core.ECS.Entities;
 using ChickenAPI.Core.ECS.Systems;
-using ChickenAPI.Core.ECS.Systems.Args;
+using ChickenAPI.Core.Events;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Features.Groups.Args;
 
 namespace ChickenAPI.Game.Features.Groups
 {
-    public class GroupSystem : NotifiableSystemBase
+    public class GroupSystem : SystemBase
     {
         public GroupSystem(IEntityManager entityManager) : base(entityManager)
         {
@@ -32,31 +32,6 @@ namespace ChickenAPI.Game.Features.Groups
             }
 
             player.SendPackets(player.GeneratePstPacket());
-        }
-
-        public override void Execute(IEntity entity, SystemEventArgs e)
-        {
-            switch (e)
-            {
-                case UpdateCacheEventArgs update:
-                    UpdateCacheRequest = true;
-                    break;
-                case GroupJoinEventArgs groupJoin:
-                    JoinGroup(entity, groupJoin);
-                    break;
-                case GroupInvitEventArgs groupInvit:
-                    GroupInvit(entity, groupInvit);
-                    break;
-            }
-        }
-
-        private void GroupInvit(IEntity entity, GroupInvitEventArgs groupInvit)
-        {
-        }
-
-        private void JoinGroup(IEntity entity, GroupJoinEventArgs groupJoin)
-        {
-            throw new NotImplementedException();
         }
     }
 }

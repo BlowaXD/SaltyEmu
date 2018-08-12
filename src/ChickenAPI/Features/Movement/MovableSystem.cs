@@ -3,7 +3,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using ChickenAPI.Core.ECS.Entities;
 using ChickenAPI.Core.ECS.Systems;
-using ChickenAPI.Core.ECS.Systems.Args;
+using ChickenAPI.Core.Events;
 using ChickenAPI.Core.Utils;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Maps;
@@ -11,7 +11,7 @@ using ChickenAPI.Game.Packets.Game.Server;
 
 namespace ChickenAPI.Game.Features.Movement
 {
-    public class MovableSystem : NotifiableSystemBase
+    public class MovableSystem : SystemBase
     {
         public MovableSystem(IEntityManager entityManager) : base(entityManager)
         {
@@ -41,16 +41,6 @@ namespace ChickenAPI.Game.Features.Movement
         {
             var movableComponent = entity.GetComponent<MovableComponent>();
             ProcessMovement(entity, movableComponent);
-        }
-
-        public override void Execute(IEntity entity, SystemEventArgs e)
-        {
-            switch (e)
-            {
-                case UpdateCacheEventArgs update:
-                    UpdateCacheRequest = true;
-                    break;
-            }
         }
 
         private void Move(IEntity entity)

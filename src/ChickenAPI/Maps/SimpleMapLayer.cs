@@ -31,18 +31,21 @@ namespace ChickenAPI.Game.Maps
             var movable = new MovableSystem(this);
             var ia = new IASystem(this, map);
             var effect = new EffectSystem(this);
+            /*
             NotifiableSystems = new Dictionary<Type, INotifiableSystem>
             {
                 { typeof(VisibilitySystem), new VisibilitySystem(this) },
                 { typeof(ChatSystem), new ChatSystem(this) },
                 { typeof(MovableSystem), movable },
-                { typeof(InventorySystem), new InventorySystem(this) },
+                { typeof(InventoryEventHandler), new InventoryEventHandler(this) },
                 { typeof(ShopSystem), new ShopSystem(this) },
                 { typeof(EffectSystem), effect },
                 { typeof(IASystem), ia }
             };
-            AddSystem(movable);
+            */
+            /*AddSystem(movable);
             AddSystem(ia);
+            */
             AddSystem(effect);
             InitializeMonsters(monsters);
             InitializeNpcs(npcs, shops);

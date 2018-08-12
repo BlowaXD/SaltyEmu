@@ -49,8 +49,8 @@ namespace NosSharp.PacketHandler
                 session.Player.SendPacket(new BnPacket { BnNumber = i, Message = $"SaltyEmu^{i}"});
             }
 
-            session.Player.EntityManager.NotifySystem<InventorySystem>(session.Player, new InventoryInitializeEventArgs());
-            session.Player.EntityManager.NotifySystem<InventorySystem>(session.Player, new InventoryGeneratePacketDetailsEventArgs());
+            session.Player.NotifyEventHandler<InventoryEventHandler>(new InventoryInitializeEventArgs());
+            session.Player.NotifyEventHandler<InventoryEventHandler>(new InventoryGeneratePacketDetailsEventArgs());
             session.SendPacket(new CondPacketBase(session.Player));
         }
     }

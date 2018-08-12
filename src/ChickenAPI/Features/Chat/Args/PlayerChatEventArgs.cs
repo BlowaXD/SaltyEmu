@@ -1,9 +1,9 @@
-﻿using ChickenAPI.Core.ECS.Systems.Args;
+﻿using ChickenAPI.Core.Events;
 using ChickenAPI.Game.Entities.Player;
 
 namespace ChickenAPI.Game.Features.Chat
 {
-    public class PlayerChatEventArg : SystemEventArgs
+    public class PlayerChatEventArg : ChickenEventArgs
     {
         public IPlayerEntity Sender { get; set; }
         public long SenderId { get; set; }

@@ -1,8 +1,8 @@
-﻿using ChickenAPI.Core.ECS.Systems.Args;
+﻿using ChickenAPI.Core.Events;
 
 namespace ChickenAPI.Game.Features.Inventory.Args
 {
-    public class InventoryGeneratePacketDetailsEventArgs : SystemEventArgs
+    public class InventoryGeneratePacketDetailsEventArgs : ChickenEventArgs
     {
     }
 }

@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using Autofac;
 using ChickenAPI.Core.ECS.Components;
-using ChickenAPI.Core.ECS.Systems;
-using ChickenAPI.Core.ECS.Systems.Args;
+using ChickenAPI.Core.Events;
+using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Logging;
 
 namespace ChickenAPI.Core.ECS.Entities
@@ -11,6 +12,9 @@ namespace ChickenAPI.Core.ECS.Entities
     {
         protected static readonly Logger Log = Logger.GetLogger<EntityBase>();
         protected Dictionary<Type, IComponent> Components;
+        private static IEventManager _eventManager;
+
+        protected IEventManager EventManager => _eventManager ?? (_eventManager = Container.Instance.Resolve<IEventManager>());
 
         protected EntityBase(EntityType type, Dictionary<Type, IComponent> components)
         {
@@ -27,9 +31,9 @@ namespace ChickenAPI.Core.ECS.Entities
 
         public IEntityManager EntityManager { get; protected set; }
 
-        public void NotifySystem<T>(SystemEventArgs e) where T : class, INotifiableSystem
+        public void NotifyEventHandler<T>(ChickenEventArgs e) where T : class, IEventHandler
         {
-            EntityManager.NotifySystem<T>(this, e);
+            EventManager.Notify<T>(this, e);
         }
 
         public EntityType Type { get; }

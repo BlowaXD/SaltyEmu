@@ -2,7 +2,7 @@
 using System.Linq.Expressions;
 using ChickenAPI.Core.ECS.Entities;
 using ChickenAPI.Core.ECS.Systems;
-using ChickenAPI.Core.ECS.Systems.Args;
+using ChickenAPI.Core.Events;
 using ChickenAPI.Core.Logging;
 using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Game.Entities.Npc;
@@ -16,24 +16,17 @@ using ChickenAPI.Game.Packets.Game.Server;
 
 namespace ChickenAPI.Game.Features.Visibility
 {
-    public class VisibilitySystem : NotifiableSystemBase
+    public class VisibilitySystem : EventHandlerBase
     {
         private static readonly Logger Log = Logger.GetLogger<VisibilitySystem>();
 
-        public VisibilitySystem(IEntityManager entityManager) : base(entityManager)
+        public VisibilitySystem(IEntityManager entityManager)
         {
         }
 
-        protected override Expression<Func<IEntity, bool>> Filter =>
-            entity => entity.Type == EntityType.Player || entity.Type == EntityType.Monster || entity.Type == EntityType.Mate || entity.Type == EntityType.Npc || entity.Type == EntityType.Portal;
 
-        public override void Execute(IEntity entity, SystemEventArgs e)
+        public override void Execute(IEntity entity, ChickenEventArgs e)
         {
-            if (!Match(entity))
-            {
-                return;
-            }
-
             switch (e)
             {
                 case VisibilitySetInvisibleEventArgs invisibleEvent:
@@ -58,7 +51,7 @@ namespace ChickenAPI.Game.Features.Visibility
 
             foreach (IEntity entityy in entity.EntityManager.Entities)
             {
-                if (entityy.Id == entity.Id || !Match(entityy))
+                if (entityy.Id == entity.Id)
                 {
                     continue;
                 }
@@ -137,7 +130,7 @@ namespace ChickenAPI.Game.Features.Visibility
 
             foreach (IEntity entityy in entity.EntityManager.Entities)
             {
-                if (entityy.Id == entity.Id || !Match(entityy))
+                if (entityy.Id == entity.Id)
                 {
                     continue;
                 }

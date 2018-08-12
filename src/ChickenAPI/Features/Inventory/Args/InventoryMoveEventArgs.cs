@@ -1,9 +1,9 @@
-﻿using ChickenAPI.Core.ECS.Systems.Args;
+﻿using ChickenAPI.Core.Events;
 using ChickenAPI.Enums.Game.Items;
 
 namespace ChickenAPI.Game.Features.Inventory.Args
 {
-    public class InventoryMoveEventArgs : SystemEventArgs
+    public class InventoryMoveEventArgs : ChickenEventArgs
     {
         public InventoryType InventoryType { get; set; }
 

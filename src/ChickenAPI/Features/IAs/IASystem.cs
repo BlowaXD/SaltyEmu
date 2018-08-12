@@ -3,7 +3,7 @@ using System.Linq.Expressions;
 using Autofac;
 using ChickenAPI.Core.ECS.Entities;
 using ChickenAPI.Core.ECS.Systems;
-using ChickenAPI.Core.ECS.Systems.Args;
+using ChickenAPI.Core.Events;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Utils;
 using ChickenAPI.Game.Features.Movement;
@@ -11,7 +11,7 @@ using ChickenAPI.Game.Maps;
 
 namespace ChickenAPI.Game.Features.IAs
 {
-    public class IASystem : NotifiableSystemBase
+    public class IASystem : SystemBase
     {
         private readonly IMap _map;
         private readonly IPathfinder _pathfinder;
@@ -79,16 +79,6 @@ namespace ChickenAPI.Game.Features.IAs
             }
 
             movableComponent.Waypoints = _pathfinder.FindPath(movableComponent.Actual, dest, _map);
-        }
-
-        public override void Execute(IEntity entity, SystemEventArgs e)
-        {
-            switch (e)
-            {
-                case UpdateCacheEventArgs update:
-                    UpdateCacheRequest = true;
-                    break;
-            }
         }
     }
 }
