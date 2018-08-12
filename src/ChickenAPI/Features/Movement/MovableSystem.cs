@@ -15,18 +15,11 @@ namespace ChickenAPI.Game.Features.Movement
 {
     public class MovableSystem : NotifiableSystemBase
     {
-        protected override short RefreshRate => 2;
+        protected override double RefreshRate => 3;
 
-        public MovableSystem(IEntityManager entityManager, IMap map) : base(entityManager)
+        public MovableSystem(IEntityManager entityManager) : base(entityManager)
         {
-            _map = map;
-            _pathfinder = Container.Instance.Resolve<IPathfinder>();
         }
-
-        private readonly IMap _map;
-        private readonly IPathfinder _pathfinder;
-        private readonly Random _random = new Random();
-        private readonly Random _randomY = new Random();
 
         private static bool MovableFilter(IEntity entity)
         {
@@ -48,45 +41,8 @@ namespace ChickenAPI.Game.Features.Movement
 
         protected override void Execute(IEntity entity)
         {
-            try
-            {
-                int i = 0;
-                var movableComponent = entity.GetComponent<MovableComponent>();
-                if ((movableComponent.Waypoints == null || movableComponent.Waypoints.Length == 0) && entity.Type != EntityType.Player)
-                {
-                    var random = new Random();
-                    if (random.Next(0, 100) < 45)
-                    {
-                        movableComponent.LastMove = DateTime.UtcNow.AddMilliseconds(random.Next(2500));
-                        return;
-                    }
-
-                    Position<short> dest = null;
-                    while (dest == null && i < 25)
-                    {
-                        short xpoint = (short)_random.Next(0, 4);
-                        short ypoint = (short)_randomY.Next(0, 4);
-                        short firstX = movableComponent.Actual.X;
-                        short firstY = movableComponent.Actual.Y;
-                        dest = _map.GetFreePosition(firstX, firstY, xpoint, ypoint);
-
-                        i++;
-                    }
-
-                    if (dest == null)
-                    {
-                        return;
-                    }
-
-                    movableComponent.Waypoints = _pathfinder.FindPath(movableComponent.Actual, dest, _map);
-                }
-
-                ProcessMovement(entity, movableComponent);
-            }
-            catch (Exception e)
-            {
-                Log.Error("[MOVABLE] UPDATE()", e);
-            }
+            var movableComponent = entity.GetComponent<MovableComponent>();
+            ProcessMovement(entity, movableComponent);
         }
 
         public override void Execute(IEntity entity, SystemEventArgs e)
@@ -122,12 +78,7 @@ namespace ChickenAPI.Game.Features.Movement
 
         private void ProcessMovement(IEntity entity, MovableComponent movableComponent)
         {
-            if (movableComponent.Waypoints.Length <= 0)
-            {
-                return;
-            }
-
-            if (movableComponent.Speed == 0)
+            if (movableComponent.Waypoints == null || movableComponent.Waypoints.Length <= 0)
             {
                 return;
             }

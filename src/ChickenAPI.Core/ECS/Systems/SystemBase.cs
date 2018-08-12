@@ -16,8 +16,8 @@ namespace ChickenAPI.Core.ECS.Systems
         protected SystemBase(IEntityManager entityManager) => EntityManager = entityManager;
 
 
-        protected virtual short RefreshRate { get; } = 2;
-        protected int RefreshDelay => 1000 / RefreshRate;
+        protected virtual double RefreshRate { get; } = 2;
+        private double RefreshDelay => 1000 / RefreshRate;
 
         /// <summary>
         ///     Gets filter of the system.
@@ -29,7 +29,6 @@ namespace ChickenAPI.Core.ECS.Systems
 
         protected IEntity[] Entities { get; private set; }
 
-        // todo
         protected bool UpdateCacheRequest { get; set; }
 
         public IEntityManager EntityManager { get; }

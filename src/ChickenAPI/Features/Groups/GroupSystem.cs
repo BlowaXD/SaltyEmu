@@ -13,7 +13,7 @@ namespace ChickenAPI.Game.Features.Groups
         /// <summary>
         /// 3 ticks per second
         /// </summary>
-        protected override short RefreshRate => 3;
+        protected override double RefreshRate => 3;
 
         protected override Expression<Func<IEntity, bool>> Filter
         {

@@ -104,7 +104,7 @@ namespace World.Network
             }
 
             string tmp = _packetFactory.Serialize(packet);
-            Log.Info($"[SEND_PACKET] {SessionId} : {tmp}");
+            //Log.Info($"[SEND_PACKET] {SessionId} : {tmp}");
             _channel.WriteAsync(tmp);
             _channel.Flush();
         }

@@ -23,7 +23,7 @@ namespace ChickenAPI.Game.Features.Effects
         /// <summary>
         /// Once per second
         /// </summary>
-        protected override short RefreshRate => 1;
+        protected override double RefreshRate => 1;
 
         protected override Expression<Func<IEntity, bool>> Filter => entity => entity.HasComponent<EffectComponent>();
 

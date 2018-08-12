@@ -15,6 +15,7 @@ using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Entities.Portal;
 using ChickenAPI.Game.Features.Chat;
 using ChickenAPI.Game.Features.Effects;
+using ChickenAPI.Game.Features.IAs;
 using ChickenAPI.Game.Features.Inventory;
 using ChickenAPI.Game.Features.Movement;
 using ChickenAPI.Game.Features.Shops;
@@ -30,7 +31,8 @@ namespace ChickenAPI.Game.Maps
             Id = Guid.NewGuid();
             Map = map;
             ParentEntityManager = map;
-            var movable = new MovableSystem(this, map);
+            var movable = new MovableSystem(this);
+            var ia = new IASystem(this, map);
             var effect = new EffectSystem(this);
             NotifiableSystems = new Dictionary<Type, INotifiableSystem>
             {
@@ -39,9 +41,12 @@ namespace ChickenAPI.Game.Maps
                 { typeof(MovableSystem), movable },
                 { typeof(InventorySystem), new InventorySystem(this) },
                 { typeof(ShopSystem), new ShopSystem(this) },
-                { typeof(EffectSystem), effect }
+                { typeof(EffectSystem), effect },
+                { typeof(IASystem), ia }
             };
             AddSystem(movable);
+            AddSystem(ia);
+            AddSystem(effect);
             InitializeMonsters(monsters);
             InitializeNpcs(npcs, shops);
 
