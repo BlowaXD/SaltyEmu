@@ -1,5 +1,4 @@
-﻿using System;
-using ChickenAPI.Core.ECS.Entities;
+﻿using ChickenAPI.Core.ECS.Entities;
 using ChickenAPI.Enums;
 using ChickenAPI.Enums.Game.Character;
 using ChickenAPI.Enums.Game.Entity;

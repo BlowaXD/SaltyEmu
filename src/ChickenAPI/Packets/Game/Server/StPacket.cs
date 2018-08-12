@@ -5,8 +5,6 @@ using ChickenAPI.Game.Entities.Monster;
 using ChickenAPI.Game.Entities.Npc;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Features.Battle;
-using ChickenAPI.Game.Features.Leveling;
-using ChickenAPI.Game.Game.Components;
 
 namespace ChickenAPI.Game.Packets.Game.Server
 {
@@ -42,12 +40,14 @@ namespace ChickenAPI.Game.Packets.Game.Server
                     battle = player.Battle;
                     break;
             }
+
             CardIds = null;
 
             if (battle == null)
             {
                 return;
             }
+
             HpPercentage = battle.HpPercentage;
             MpPercentage = battle.MpPercentage;
             Hp = battle.Hp;

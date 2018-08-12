@@ -24,14 +24,14 @@ namespace ChickenAPI.Game.Network
         void InitializeEntity(IPlayerEntity ett);
 
         /// <summary>
-        /// Sends to every connected clients in the server
+        ///     Sends to every connected clients in the server
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="packet"></param>
         void GlobalBroadcast<T>(T packet) where T : IPacket;
 
         /// <summary>
-        /// Sends to every connected clients in the server
+        ///     Sends to every connected clients in the server
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="packets"></param>

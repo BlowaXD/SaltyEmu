@@ -17,13 +17,16 @@ namespace ChickenAPI.Game.Features.IAs
         private readonly IPathfinder _pathfinder;
         private readonly Random _random = new Random();
         private readonly Random _randomY = new Random();
-        protected override double RefreshRate => 0.45;
 
         public IASystem(IEntityManager entityManager, IMap map) : base(entityManager)
         {
             _map = map;
             _pathfinder = Container.Instance.Resolve<IPathfinder>();
         }
+
+        protected override double RefreshRate => 0.45;
+
+        protected override Expression<Func<IEntity, bool>> Filter => entity => MovableFilter(entity);
 
         private static bool MovableFilter(IEntity entity)
         {
@@ -40,8 +43,6 @@ namespace ChickenAPI.Game.Features.IAs
 
             return movable.Speed != 0;
         }
-
-        protected override Expression<Func<IEntity, bool>> Filter => entity => MovableFilter(entity);
 
         protected override void Execute(IEntity entity)
         {

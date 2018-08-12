@@ -13,8 +13,10 @@ namespace ChickenAPI.Game.Maps
         private readonly MapDto _map;
         private readonly IEnumerable<MapMonsterDto> _monsters;
         private readonly IEnumerable<MapNpcDto> _npcs;
-        private readonly IEnumerable<ShopDto> _shops;
         private readonly IEnumerable<PortalDto> _portals;
+        private readonly IEnumerable<ShopDto> _shops;
+
+        private readonly Position<short>[] WalkableGrid;
         private IMapLayer _baseMapLayer;
 
         public SimpleMap(MapDto map, IEnumerable<MapMonsterDto> monsters, IEnumerable<MapNpcDto> npcs, IEnumerable<PortalDto> portals, IEnumerable<ShopDto> shops)
@@ -49,13 +51,6 @@ namespace ChickenAPI.Game.Maps
         public short Height => _map.Height;
         public byte[] Grid => _map.Grid;
 
-        private readonly Position<short>[] WalkableGrid;
-
-        private static bool IsWalkable(byte cell)
-        {
-            return cell == 0 || cell == 2 || cell >= 16 && cell <= 19;
-        }
-
         public bool IsWalkable(short x, short y)
         {
             try
@@ -80,5 +75,7 @@ namespace ChickenAPI.Game.Maps
             short maxY = (short)(rangeY + minimumY);
             return WalkableGrid.Where(s => s.Y >= minY && s.Y <= maxY && s.X >= minX && s.X <= maxX).OrderBy(s => random.Next(int.MaxValue)).FirstOrDefault(cell => IsWalkable(cell.X, cell.Y));
         }
+
+        private static bool IsWalkable(byte cell) => cell == 0 || cell == 2 || cell >= 16 && cell <= 19;
     }
 }

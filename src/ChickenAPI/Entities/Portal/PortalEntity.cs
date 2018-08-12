@@ -16,11 +16,11 @@ namespace ChickenAPI.Game.Entities.Portal
             Components = new Dictionary<Type, IComponent>
             {
                 { typeof(PortalComponent), Portal },
-                {typeof(VisibilityComponent), new VisibilityComponent(this) }
+                { typeof(VisibilityComponent), new VisibilityComponent(this) }
             };
         }
 
-        public PortalComponent Portal { get; private set; }
+        public PortalComponent Portal { get; }
 
         public override void Dispose()
         {

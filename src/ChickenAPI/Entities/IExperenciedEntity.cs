@@ -1,5 +1,4 @@
 ﻿using ChickenAPI.Game.Features.Leveling;
-using ChickenAPI.Game.Game.Components;
 
 namespace ChickenAPI.Game.Entities
 {

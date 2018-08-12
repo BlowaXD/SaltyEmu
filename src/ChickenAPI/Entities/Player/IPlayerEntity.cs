@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using ChickenAPI.Core.ECS.Entities;
 using ChickenAPI.Game.Features.Visibility;
-using ChickenAPI.Game.Game.Components;
 using ChickenAPI.Game.Network;
 using ChickenAPI.Game.Packets;
 

@@ -1,6 +1,5 @@
 ﻿using ChickenAPI.Enums.Game.Items;
 using ChickenAPI.Game.Features.Inventory;
-using ChickenAPI.Game.Game.Components;
 
 namespace ChickenAPI.Game.Packets.Game.Server.Inventory
 {

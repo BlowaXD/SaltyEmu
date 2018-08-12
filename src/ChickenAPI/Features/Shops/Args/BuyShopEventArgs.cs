@@ -1,5 +1,4 @@
-﻿using ChickenAPI.Core.ECS.Systems;
-using ChickenAPI.Core.ECS.Systems.Args;
+﻿using ChickenAPI.Core.ECS.Systems.Args;
 
 namespace ChickenAPI.Game.Features.Shops.Args
 {

@@ -10,18 +10,18 @@ namespace ChickenAPI.Game.Features.Groups
 {
     public class GroupSystem : NotifiableSystemBase
     {
+        public GroupSystem(IEntityManager entityManager) : base(entityManager)
+        {
+        }
+
         /// <summary>
-        /// 3 ticks per second
+        ///     3 ticks per second
         /// </summary>
         protected override double RefreshRate => 3;
 
         protected override Expression<Func<IEntity, bool>> Filter
         {
             get { return entity => entity.HasComponent<GroupComponent>(); }
-        }
-
-        public GroupSystem(IEntityManager entityManager) : base(entityManager)
-        {
         }
 
         protected override void Execute(IEntity entity)
@@ -52,7 +52,6 @@ namespace ChickenAPI.Game.Features.Groups
 
         private void GroupInvit(IEntity entity, GroupInvitEventArgs groupInvit)
         {
-            return;
         }
 
         private void JoinGroup(IEntity entity, GroupJoinEventArgs groupJoin)

@@ -5,10 +5,8 @@ using ChickenAPI.Core.ECS.Entities;
 using ChickenAPI.Core.ECS.Systems;
 using ChickenAPI.Core.ECS.Systems.Args;
 using ChickenAPI.Core.Logging;
-using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Features.Effects.Args;
 using ChickenAPI.Game.Maps;
-using ChickenAPI.Game.Packets.Extensions;
 using ChickenAPI.Game.Packets.Game.Client;
 
 namespace ChickenAPI.Game.Features.Effects
@@ -16,12 +14,13 @@ namespace ChickenAPI.Game.Features.Effects
     public class EffectSystem : NotifiableSystemBase
     {
         private static readonly Logger Log = Logger.GetLogger<EffectSystem>();
+
         public EffectSystem(IEntityManager entityManager) : base(entityManager)
         {
         }
 
         /// <summary>
-        /// Once per second
+        ///     Once per second
         /// </summary>
         protected override double RefreshRate => 1;
 

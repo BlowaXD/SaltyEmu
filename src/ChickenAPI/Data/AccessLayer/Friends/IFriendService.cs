@@ -11,14 +11,14 @@ namespace ChickenAPI.Game.Data.AccessLayer.Friends
         void UnregisterByCharacterId(long characterId);
 
         /// <summary>
-        /// Gets all the online friends within the server group
+        ///     Gets all the online friends within the server group
         /// </summary>
         /// <param name="character"></param>
         /// <returns></returns>
         IEnumerable<PlayerSessionDto> GetFriendsOnline(CharacterDto character);
 
         /// <summary>
-        /// Sends a message to character
+        ///     Sends a message to character
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="receiverCharacterId"></param>

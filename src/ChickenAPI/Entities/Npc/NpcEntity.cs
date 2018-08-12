@@ -29,7 +29,7 @@ namespace ChickenAPI.Game.Entities.Npc
             {
                 Actual = new Position<short>(npc.MapX, npc.MapY),
                 Destination = new Position<short>(npc.MapX, npc.MapY),
-                DirectionType = npc.Position,
+                DirectionType = npc.Position
             };
             MapNpc = npc;
 
@@ -45,10 +45,10 @@ namespace ChickenAPI.Game.Entities.Npc
             };
         }
 
-        public MapNpcDto MapNpc { get; set; }
-
         public Shop Shop { get; set; }
         public SkillComponent Skills { get; }
+
+        public MapNpcDto MapNpc { get; set; }
         public BattleComponent Battle { get; }
         public MovableComponent Movable { get; }
 

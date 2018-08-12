@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using Autofac;
 using ChickenAPI.Core.ECS.Components;
 using ChickenAPI.Core.ECS.Entities;
@@ -54,7 +53,7 @@ namespace ChickenAPI.Game.Features.Movement
             set
             {
                 LastMove = DateTime.UtcNow;
-                //OnMove(Entity, new MoveEventArgs { Component = this, New = value, Old = _actual });
+                OnMove(Entity, new MoveEventArgs { Component = this, New = value, Old = _actual });
                 _actual = value;
             }
         }
@@ -71,10 +70,10 @@ namespace ChickenAPI.Game.Features.Movement
             Move?.Invoke(sender, e);
         }
 
-        private static double Octile(int iDx, int iDy)
+        private static double Octile(int x, int y)
         {
-            int min = Math.Min(iDx, iDy);
-            int max = Math.Max(iDx, iDy);
+            int min = Math.Min(x, y);
+            int max = Math.Max(x, y);
             return min * Math.Sqrt(2) + max - min;
         }
 

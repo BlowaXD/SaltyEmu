@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Linq;
 using System.Linq.Expressions;
-using Autofac;
 using ChickenAPI.Core.ECS.Entities;
 using ChickenAPI.Core.ECS.Systems;
 using ChickenAPI.Core.ECS.Systems.Args;
-using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Utils;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Maps;
@@ -15,11 +13,13 @@ namespace ChickenAPI.Game.Features.Movement
 {
     public class MovableSystem : NotifiableSystemBase
     {
-        protected override double RefreshRate => 3;
-
         public MovableSystem(IEntityManager entityManager) : base(entityManager)
         {
         }
+
+        protected override double RefreshRate => 3;
+
+        protected override Expression<Func<IEntity, bool>> Filter => entity => MovableFilter(entity);
 
         private static bool MovableFilter(IEntity entity)
         {
@@ -36,8 +36,6 @@ namespace ChickenAPI.Game.Features.Movement
 
             return movable.Speed != 0;
         }
-
-        protected override Expression<Func<IEntity, bool>> Filter => entity => MovableFilter(entity);
 
         protected override void Execute(IEntity entity)
         {

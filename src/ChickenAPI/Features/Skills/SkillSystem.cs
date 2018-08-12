@@ -108,7 +108,7 @@ namespace ChickenAPI.Game.Features.Skills
                     return; //the class of the entity doesn't correspond of the skill requirements.
                 }
 
-                var classLevel = 0;
+                int classLevel = 0;
                 switch (character.Class)
                 {
                     case CharacterClassType.Adventurer:

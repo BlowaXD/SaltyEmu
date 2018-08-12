@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using ChickenAPI.Enums.Game.Character;
+﻿using ChickenAPI.Enums.Game.Character;
 using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Game.Packets;
 

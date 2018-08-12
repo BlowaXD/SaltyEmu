@@ -1,6 +1,5 @@
 ﻿using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Game.Game.Components;
 
 namespace ChickenAPI.Game.Packets.Game.Server
 {

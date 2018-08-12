@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Autofac;
 using ChickenAPI.Core.ECS.Entities;
 using ChickenAPI.Core.ECS.Systems;
-using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Utils;
-using ChickenAPI.Game.Data.AccessLayer.Shop;
 using ChickenAPI.Game.Data.TransferObjects.Map;
 using ChickenAPI.Game.Data.TransferObjects.Shop;
 using ChickenAPI.Game.Entities.Monster;
@@ -59,33 +56,6 @@ namespace ChickenAPI.Game.Maps
             foreach (PortalDto portal in portals)
             {
                 TransferEntity(new PortalEntity(portal), this);
-            }
-        }
-
-        private void InitializeNpcs(IEnumerable<MapNpcDto> npcs, IEnumerable<ShopDto> shops)
-        {
-            if (npcs == null)
-            {
-                return;
-            }
-
-            foreach (MapNpcDto npc in npcs)
-            {
-                ShopDto shop = shops.FirstOrDefault(s => s.MapNpcId == npc.Id);
-                TransferEntity(new NpcEntity(npc, shop), this);
-            }
-        }
-
-        private void InitializeMonsters(IEnumerable<MapMonsterDto> monsters)
-        {
-            if (monsters == null)
-            {
-                return;
-            }
-
-            foreach (MapMonsterDto monster in monsters)
-            {
-                TransferEntity(new MonsterEntity(monster), this);
             }
         }
 
@@ -142,6 +112,33 @@ namespace ChickenAPI.Game.Maps
                 }
 
                 i.SendPackets(packets);
+            }
+        }
+
+        private void InitializeNpcs(IEnumerable<MapNpcDto> npcs, IEnumerable<ShopDto> shops)
+        {
+            if (npcs == null)
+            {
+                return;
+            }
+
+            foreach (MapNpcDto npc in npcs)
+            {
+                ShopDto shop = shops.FirstOrDefault(s => s.MapNpcId == npc.Id);
+                TransferEntity(new NpcEntity(npc, shop), this);
+            }
+        }
+
+        private void InitializeMonsters(IEnumerable<MapMonsterDto> monsters)
+        {
+            if (monsters == null)
+            {
+                return;
+            }
+
+            foreach (MapMonsterDto monster in monsters)
+            {
+                TransferEntity(new MonsterEntity(monster), this);
             }
         }
     }

@@ -31,19 +31,6 @@ namespace ChickenAPI.Game.Entities.Player
 {
     public class PlayerEntity : EntityBase, IPlayerEntity
     {
-        private static IItemInstanceService _itemInstance
-        {
-            get => _itemInstance ?? (_itemInstance = Container.Instance.Resolve<IItemInstanceService>());
-            set => _itemInstance = value;
-        }
-
-        private static ICharacterService _characterService
-        {
-            get => _characterService ?? (_characterService = Container.Instance.Resolve<ICharacterService>());
-            set => _characterService = value;
-        }
-
-
         public PlayerEntity(ISession session, CharacterDto dto) : base(EntityType.Player)
         {
             Session = session;
@@ -91,6 +78,18 @@ namespace ChickenAPI.Game.Entities.Player
                 { typeof(SpecialistComponent), new SpecialistComponent(this) },
                 { typeof(SkillComponent), Skills }
             };
+        }
+
+        private static IItemInstanceService _itemInstance
+        {
+            get => _itemInstance ?? (_itemInstance = Container.Instance.Resolve<IItemInstanceService>());
+            set => _itemInstance = value;
+        }
+
+        private static ICharacterService _characterService
+        {
+            get => _characterService ?? (_characterService = Container.Instance.Resolve<ICharacterService>());
+            set => _characterService = value;
         }
 
         public SkillComponent Skills { get; }
@@ -152,6 +151,7 @@ namespace ChickenAPI.Game.Entities.Player
         }
 
         public void SendPacket<T>(T packetBase) where T : IPacket => Session.SendPacket(packetBase);
+
         public void SendPackets<T>(IEnumerable<T> packets) where T : IPacket
         {
             foreach (T i in packets)

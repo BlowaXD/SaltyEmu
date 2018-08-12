@@ -7,13 +7,10 @@ namespace ChickenAPI.Game.Features.Groups
 {
     public class GroupComponent : IComponent
     {
-        public GroupComponent(IEntity entity)
-        {
-            Entity = entity;
-        }
-
-        public IEntity Entity { get; }
+        public GroupComponent(IEntity entity) => Entity = entity;
 
         public List<IPlayerEntity> Members { get; set; }
+
+        public IEntity Entity { get; }
     }
 }
