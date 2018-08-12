@@ -188,7 +188,7 @@ namespace World
             // first version hardcoded, next one through Plugin + Assembly Reflection
             var eventManager = Container.Instance.Resolve<IEventManager>();
             eventManager.Register(new EffectEventHandler());
-            eventManager.Register(new ChatSystem());
+            eventManager.Register(new ChatEventHandler());
             eventManager.Register(new GroupEventHandler());
             eventManager.Register(new InventoryEventHandler());
         }

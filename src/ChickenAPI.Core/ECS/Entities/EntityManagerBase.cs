@@ -75,6 +75,7 @@ namespace ChickenAPI.Core.ECS.Entities
             {
                 StartSystemUpdate();
             }
+
             entity.Id = NextEntityId;
             EntitiesByEntityId[entity.Id] = entity;
             if (!EntitiesByEntityType.TryGetValue(entity.Type, out HashSet<IEntity> entities))
@@ -82,8 +83,9 @@ namespace ChickenAPI.Core.ECS.Entities
                 entities = new HashSet<IEntity>();
                 EntitiesByEntityType[entity.Type] = entities;
             }
+
             entities.Add(entity);
-            // update cache
+            UpdateCache();
         }
 
         public void UnregisterEntity<T>(T entity) where T : IEntity
@@ -93,7 +95,16 @@ namespace ChickenAPI.Core.ECS.Entities
             {
                 entities.Remove(entity);
             }
-            // update cache
+
+            UpdateCache();
+        }
+
+        private void UpdateCache()
+        {
+            foreach (ISystem system in _systems)
+            {
+                system.UpdateCache();
+            }
         }
 
         public bool HasEntity(IEntity entity) => HasEntity(entity.Id);
@@ -144,7 +155,7 @@ namespace ChickenAPI.Core.ECS.Entities
             ShouldUpdate = false;
             EmContainer.Unregister(this);
         }
-        
+
         public void AddSystem(ISystem system)
         {
             _systems.Add(system);

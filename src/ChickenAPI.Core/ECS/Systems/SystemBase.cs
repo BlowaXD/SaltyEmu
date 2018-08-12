@@ -29,8 +29,6 @@ namespace ChickenAPI.Core.ECS.Systems
 
         protected IEntity[] Entities { get; private set; }
 
-        protected bool UpdateCacheRequest { get; set; }
-
         public IEntityManager EntityManager { get; }
 
         public virtual void Update(DateTime time)
@@ -40,7 +38,7 @@ namespace ChickenAPI.Core.ECS.Systems
                 return;
             }
 
-            if (Entities == null || UpdateCacheRequest)
+            if (Entities == null)
             {
                 UpdateCache();
             }
@@ -63,9 +61,8 @@ namespace ChickenAPI.Core.ECS.Systems
             return (bool)_filter?.Invoke(entity);
         }
 
-        private void UpdateCache()
+        public void UpdateCache()
         {
-            UpdateCacheRequest = false;
             Entities = EntityManager.Entities.Where(Match).ToArray();
         }
 

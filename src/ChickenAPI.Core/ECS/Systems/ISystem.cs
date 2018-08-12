@@ -7,6 +7,9 @@ namespace ChickenAPI.Core.ECS.Systems
     {
         IEntityManager EntityManager { get; }
 
+        void UpdateCache();
+
+
         void Update(DateTime time);
 
         /// <summary>

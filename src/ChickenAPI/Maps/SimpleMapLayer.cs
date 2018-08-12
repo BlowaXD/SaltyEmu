@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using ChickenAPI.Core.ECS.Entities;
-using ChickenAPI.Core.ECS.Systems;
 using ChickenAPI.Core.Utils;
 using ChickenAPI.Game.Data.TransferObjects.Map;
 using ChickenAPI.Game.Data.TransferObjects.Shop;
@@ -10,13 +9,9 @@ using ChickenAPI.Game.Entities.Monster;
 using ChickenAPI.Game.Entities.Npc;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Entities.Portal;
-using ChickenAPI.Game.Features.Chat;
 using ChickenAPI.Game.Features.Effects;
 using ChickenAPI.Game.Features.IAs;
-using ChickenAPI.Game.Features.Inventory;
 using ChickenAPI.Game.Features.Movement;
-using ChickenAPI.Game.Features.Shops;
-using ChickenAPI.Game.Features.Visibility;
 using ChickenAPI.Game.Packets;
 
 namespace ChickenAPI.Game.Maps
@@ -28,29 +23,8 @@ namespace ChickenAPI.Game.Maps
             Id = Guid.NewGuid();
             Map = map;
             ParentEntityManager = map;
-            var movable = new MovableSystem(this);
-            var ia = new IASystem(this, map);
-            var effect = new EffectSystem(this);
-            /*
-            NotifiableSystems = new Dictionary<Type, INotifiableSystem>
-            {
-                { typeof(VisibilitySystem), new VisibilitySystem(this) },
-                { typeof(ChatSystem), new ChatSystem(this) },
-                { typeof(MovableSystem), movable },
-                { typeof(InventoryEventHandler), new InventoryEventHandler(this) },
-                { typeof(ShopSystem), new ShopSystem(this) },
-                { typeof(EffectSystem), effect },
-                { typeof(IASystem), ia }
-            };
-            */
-            /*AddSystem(movable);
-            AddSystem(ia);
-            */
-            AddSystem(effect);
             InitializeMonsters(monsters);
             InitializeNpcs(npcs, shops);
-
-
             if (portals == null)
             {
                 return;
@@ -60,6 +34,14 @@ namespace ChickenAPI.Game.Maps
             {
                 TransferEntity(new PortalEntity(portal), this);
             }
+            InitializeSystems();
+        }
+
+        private void InitializeSystems()
+        {
+            AddSystem(new MovableSystem(this));
+            AddSystem(new IASystem(this, Map));
+            AddSystem(new EffectSystem(this));
         }
 
         public Guid Id { get; set; }

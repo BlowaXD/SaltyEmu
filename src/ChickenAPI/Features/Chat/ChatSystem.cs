@@ -8,7 +8,7 @@ using ChickenAPI.Game.Packets.Game.Server;
 
 namespace ChickenAPI.Game.Features.Chat
 {
-    public class ChatSystem : EventHandlerBase
+    public class ChatEventHandler : EventHandlerBase
     {
         public override void Execute(IEntity entity, ChickenEventArgs e)
         {
