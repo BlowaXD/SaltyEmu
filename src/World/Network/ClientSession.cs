@@ -132,7 +132,7 @@ namespace World.Network
 
         public void GlobalBroadcast<T>(IEnumerable<T> packets) where T : IPacket
         {
-            foreach (var i in packets)
+            foreach (T i in packets)
             {
                 _group.WriteAsync(_packetFactory.Serialize(i));
             }
@@ -316,6 +316,11 @@ namespace World.Network
             {
                 Log.Warn($"Handler for {packetHeader} not found !");
                 return;
+            }
+
+            if (packetHeader.StartsWith("npc_req"))
+            {
+                Log.Info($"packet : {packet}");
             }
 
             IPacket packetT = _packetFactory.Deserialize(packet, gameHandler.PacketType, IsAuthenticated);

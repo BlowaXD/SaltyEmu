@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Text;
 using ChickenAPI.Core.ECS.Entities;
-using ChickenAPI.Core.ECS.Systems;
 using ChickenAPI.Core.Events;
 using ChickenAPI.Game.Data.TransferObjects.Shop;
 using ChickenAPI.Game.Data.TransferObjects.Skills;
@@ -12,12 +11,8 @@ using ChickenAPI.Game.Features.Shops.Packets;
 
 namespace ChickenAPI.Game.Features.Shops
 {
-    public class ShopSystem : EventHandlerBase
+    public class ShopEventHandler : EventHandlerBase
     {
-        public ShopSystem(IEntityManager entityManager)
-        {
-        }
-
         public override void Execute(IEntity entity, ChickenEventArgs e)
         {
             switch (e)
@@ -53,10 +48,6 @@ namespace ChickenAPI.Game.Features.Shops
                 float price = itemInfo.Item.ReputPrice > 0 ? itemInfo.Item.ReputPrice : itemInfo.Item.Price * percent;
                 byte color = itemInfo.Color != 0 ? itemInfo.Item.Color : itemInfo.Item.BasicUpgrade;
                 int rare = itemInfo.Type == 0 ? itemInfo.Rare : -1;
-                if (itemInfo.Type != 0 || itemInfo.Item.ReputPrice <= 0)
-                {
-                    continue;
-                }
 
                 tmp.Append(itemInfo.Type);
                 tmp.Append('.');
