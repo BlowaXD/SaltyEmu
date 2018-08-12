@@ -57,14 +57,14 @@ namespace ChickenAPI.Game.Packets.Extensions
 
         public static InPacketBase GenerateInPacket(this IEntity entity)
         {
-            switch (entity.Type)
+            switch (entity)
             {
-                case EntityType.Monster:
-                    return GenerateInMonster(entity as IMonsterEntity);
-                case EntityType.Player:
-                    return GenerateInPlayer(entity as IPlayerEntity);
-                case EntityType.Npc:
-                    return GenerateInNpc(entity as INpcEntity);
+                case IMonsterEntity monster:
+                    return GenerateInMonster(monster);
+                case IPlayerEntity player:
+                    return GenerateInPlayer(player);
+                case INpcEntity npc:
+                    return GenerateInNpc(npc);
                 default:
                     return null;
             }

@@ -25,12 +25,11 @@ namespace ChickenAPI.Game.Entities.Npc
                 Mp = npc.NpcMonster.MaxMp,
                 MpMax = npc.NpcMonster.MaxMp
             };
-            Movable = new MovableComponent(this)
+            Movable = new MovableComponent(this, npc.IsMoving ? npc.NpcMonster.Speed : (byte)0)
             {
                 Actual = new Position<short>(npc.MapX, npc.MapY),
                 Destination = new Position<short>(npc.MapX, npc.MapY),
                 DirectionType = npc.Position,
-                Speed = npc.NpcMonster.Speed
             };
             MapNpc = npc;
 

@@ -24,7 +24,7 @@ namespace ChickenAPI.Game.Packets.Game.Server
                     MapY = monster.Movable.Actual.Y;
                     return;
                 case INpcEntity npc:
-                    VisualType = VisualType.Character;
+                    VisualType = VisualType.Npc;
                     VisualId = npc.MapNpc.Id;
                     Speed = npc.Movable.Speed;
                     MapX = npc.Movable.Actual.X;
@@ -36,6 +36,8 @@ namespace ChickenAPI.Game.Packets.Game.Server
                     Speed = player.Movable.Speed;
                     MapX = player.Movable.Actual.X;
                     MapY = player.Movable.Actual.Y;
+                    return;
+                default:
                     return;
             }
         }

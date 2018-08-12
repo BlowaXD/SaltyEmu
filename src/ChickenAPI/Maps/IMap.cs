@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using ChickenAPI.Core.ECS.Entities;
+using ChickenAPI.Core.Utils;
 
 namespace ChickenAPI.Game.Maps
 {
@@ -47,5 +48,7 @@ namespace ChickenAPI.Game.Maps
         /// <param name="y"></param>
         /// <returns></returns>
         bool IsWalkable(short x, short y);
+
+        Position<short> GetFreePosition(short minimumX, short minimumY, short maximumX, short maximumY);
     }
 }

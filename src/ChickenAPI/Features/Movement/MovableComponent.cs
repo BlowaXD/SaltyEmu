@@ -19,19 +19,19 @@ namespace ChickenAPI.Game.Features.Movement
         private static readonly Logger Log = Logger.GetLogger<MovableComponent>();
         private Position<short> _actual;
 
-        public MovableComponent(IEntity entity)
+        public MovableComponent(IEntity entity, byte speed)
         {
             Entity = entity;
-            Waypoints = new Queue<Position<short>>();
+            Waypoints = null;
             Destination = new Position<short>();
             Actual = new Position<short>();
-            Speed = 11;
+            Speed = speed;
         }
 
         public MovableComponent(IPlayerEntity entity)
         {
             Entity = entity;
-            Waypoints = new Queue<Position<short>>();
+            Waypoints = null;
             Destination = new Position<short>();
             Actual = new Position<short>();
             Speed = (byte)Container.Instance.Resolve<IAlgorithmService>().GetSpeed(entity.Character.Class, entity.Experience.Level);
@@ -44,7 +44,7 @@ namespace ChickenAPI.Game.Features.Movement
 
         public DirectionType DirectionType { get; set; }
 
-        public Queue<Position<short>> Waypoints { get; set; }
+        public Position<short>[] Waypoints { get; set; }
 
         public Position<short> Destination { get; set; }
 
@@ -53,12 +53,13 @@ namespace ChickenAPI.Game.Features.Movement
             get => _actual;
             set
             {
-                OnMove(Entity, new MoveEventArgs { Component = this, New = value, Old = _actual });
+                LastMove = DateTime.UtcNow;
+                //OnMove(Entity, new MoveEventArgs { Component = this, New = value, Old = _actual });
                 _actual = value;
             }
         }
 
-        public DateTime LastMove { get; private set; }
+        public DateTime LastMove { get; set; }
 
         public IEntity Entity { get; set; }
 
@@ -70,17 +71,24 @@ namespace ChickenAPI.Game.Features.Movement
             Move?.Invoke(sender, e);
         }
 
-        public bool CanMove()
+        private static double Octile(int iDx, int iDy)
         {
-            if (Entity.Type != EntityType.Monster)
+            int min = Math.Min(iDx, iDy);
+            int max = Math.Max(iDx, iDy);
+            return min * Math.Sqrt(2) + max - min;
+        }
+
+        private static int GetDistance(Position<short> src, Position<short> dest) => (int)Octile(Math.Abs(src.X - dest.X), Math.Abs(src.Y - dest.Y));
+
+        public bool CanMove(Position<short> newPos)
+        {
+            if (Speed == 0)
             {
-                return (DateTime.UtcNow - LastMove).TotalMilliseconds > 2000 / Speed;
+                return false;
             }
 
-            Log.Info($"Monster CanMove()");
-            Speed = 20;
-
-            return (DateTime.UtcNow - LastMove).TotalMilliseconds > 2000 / Speed;
+            double waitingtime = GetDistance(newPos, Actual) / (double)Speed;
+            return LastMove.AddMilliseconds(waitingtime) <= DateTime.UtcNow;
         }
     }
 

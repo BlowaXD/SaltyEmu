@@ -9,7 +9,6 @@ using ChickenAPI.Game.Features.Battle;
 using ChickenAPI.Game.Features.Movement;
 using ChickenAPI.Game.Features.Skills;
 using ChickenAPI.Game.Features.Visibility;
-using ChickenAPI.Game.Game.Components;
 
 namespace ChickenAPI.Game.Entities.Monster
 {
@@ -17,7 +16,7 @@ namespace ChickenAPI.Game.Entities.Monster
     {
         public MonsterEntity(MapMonsterDto dto) : base(EntityType.Monster)
         {
-            Movable = new MovableComponent(this)
+            Movable = new MovableComponent(this, dto.IsMoving ? dto.NpcMonster.Speed : (byte)0)
             {
                 Actual = new Position<short> { X = dto.MapX, Y = dto.MapY },
                 Destination = new Position<short> { X = dto.MapX, Y = dto.MapY }

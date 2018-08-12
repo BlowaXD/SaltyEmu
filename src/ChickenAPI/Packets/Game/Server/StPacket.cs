@@ -2,6 +2,7 @@
 using ChickenAPI.Core.ECS.Entities;
 using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Game.Entities.Monster;
+using ChickenAPI.Game.Entities.Npc;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Features.Battle;
 using ChickenAPI.Game.Features.Leveling;
@@ -14,29 +15,43 @@ namespace ChickenAPI.Game.Packets.Game.Server
     {
         public StPacket(IEntity entity)
         {
-            var battle = entity.GetComponent<BattleComponent>();
-            var xp = entity.GetComponent<ExperienceComponent>();
-
-            switch (entity.Type)
+            BattleComponent battle = null;
+            switch (entity)
             {
-                case EntityType.Player:
-                    VisualType = VisualType.Character;
-                    VisualId = entity.GetComponent<CharacterComponent>().Id;
+                case INpcEntity npc:
+                    VisualType = VisualType.Npc;
+                    VisualId = npc.MapNpc.Id;
+                    Level = npc.MapNpc.NpcMonster.Level;
+                    HeroLevel = npc.MapNpc.NpcMonster.HeroLevel;
+                    battle = npc.Battle;
                     break;
-                case EntityType.Npc:
-                case EntityType.Monster:
-                    VisualType = entity.Type == EntityType.Monster ? VisualType.Monster : VisualType.Npc;
-                    VisualId = entity.GetComponent<NpcMonsterComponent>().MapNpcMonsterId;
+
+                case IMonsterEntity monster:
+                    VisualType = VisualType.Npc;
+                    VisualId = monster.MapMonster.Id;
+                    Level = monster.MapMonster.NpcMonster.Level;
+                    HeroLevel = monster.MapMonster.NpcMonster.HeroLevel;
+                    battle = monster.Battle;
+                    break;
+
+                case IPlayerEntity player:
+                    VisualType = VisualType.Character;
+                    VisualId = player.Character.Id;
+                    Level = player.Experience.Level;
+                    HeroLevel = player.Experience.HeroLevel;
+                    battle = player.Battle;
                     break;
             }
+            CardIds = null;
 
-            Level = xp.Level;
-            HeroLevel = xp.HeroLevel;
+            if (battle == null)
+            {
+                return;
+            }
             HpPercentage = battle.HpPercentage;
             MpPercentage = battle.MpPercentage;
             Hp = battle.Hp;
             Mp = battle.Mp;
-            CardIds = null;
         }
 
 

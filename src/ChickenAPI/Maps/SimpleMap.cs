@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using ChickenAPI.Core.ECS.Entities;
+using ChickenAPI.Core.Utils;
 using ChickenAPI.Game.Data.TransferObjects.Map;
 using ChickenAPI.Game.Data.TransferObjects.Shop;
 
@@ -24,7 +26,20 @@ namespace ChickenAPI.Game.Maps
             _shops = shops;
             _baseMapLayer = new SimpleMapLayer(this, _monsters, _npcs, _portals, _shops);
             Layers = new HashSet<IMapLayer>();
+
+
+            List<Position<short>> cells = new List<Position<short>>();
+            for (short y = 0; y <= _map.Height; y++)
+            {
+                for (short x = 0; x <= _map.Width; x++)
+                {
+                    cells.Add(new Position<short> { X = x, Y = y });
+                }
+            }
+
+            WalkableGrid = cells.ToArray();
         }
+
         public long Id => _map.Id;
         public int MusicId => _map.Music;
         public IMapLayer BaseLayer => _baseMapLayer ?? (_baseMapLayer = new SimpleMapLayer(this, _monsters, _npcs, _portals, _shops));
@@ -34,18 +49,36 @@ namespace ChickenAPI.Game.Maps
         public short Height => _map.Height;
         public byte[] Grid => _map.Grid;
 
+        private readonly Position<short>[] WalkableGrid;
+
+        private static bool IsWalkable(byte cell)
+        {
+            return cell == 0 || cell == 2 || cell >= 16 && cell <= 19;
+        }
+
         public bool IsWalkable(short x, short y)
         {
             try
             {
                 byte gridCell = Grid[x + y * Width];
-                return gridCell == 0 || gridCell == 2 || gridCell >= 16 && gridCell <= 19;
+                return IsWalkable(gridCell);
             }
             catch (Exception)
             {
                 Log.Warn($"[IS_WALKABLE] {Id}: {x} {y}");
                 return false;
             }
+        }
+
+        public Position<short> GetFreePosition(short minimumX, short minimumY, short rangeX, short rangeY)
+        {
+            var random = new Random();
+            short minX = (short)(-rangeX + minimumX);
+            short maxX = (short)(rangeX + minimumX);
+
+            short minY = (short)(-rangeY + minimumY);
+            short maxY = (short)(rangeY + minimumY);
+            return WalkableGrid.Where(s => s.Y >= minY && s.Y <= maxY && s.X >= minX && s.X <= maxX).OrderBy(s => random.Next(int.MaxValue)).FirstOrDefault(cell => IsWalkable(cell.X, cell.Y));
         }
     }
 }

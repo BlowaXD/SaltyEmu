@@ -42,34 +42,46 @@ namespace ChickenAPI.Game.Maps
                 { typeof(EffectSystem), effect }
             };
             AddSystem(movable);
-            if (monsters != null)
+            InitializeMonsters(monsters);
+            InitializeNpcs(npcs, shops);
+
+
+            if (portals == null)
             {
-                foreach (MapMonsterDto monster in monsters)
-                {
-                    TransferEntity(new MonsterEntity(monster), this);
-                }
+                return;
             }
 
-            if (npcs != null)
+            foreach (PortalDto portal in portals)
             {
-                foreach (MapNpcDto npc in npcs)
-                {
-                    ShopDto shop = shops.FirstOrDefault(s => s.MapNpcId == npc.Id);
-                    TransferEntity(new NpcEntity(npc, shop), this);
-                }
+                TransferEntity(new PortalEntity(portal), this);
+            }
+        }
+
+        private void InitializeNpcs(IEnumerable<MapNpcDto> npcs, IEnumerable<ShopDto> shops)
+        {
+            if (npcs == null)
+            {
+                return;
             }
 
-
-            if (portals != null)
+            foreach (MapNpcDto npc in npcs)
             {
-                foreach (PortalDto portal in portals)
-                {
-                    TransferEntity(new PortalEntity(portal), this);
-                }
+                ShopDto shop = shops.FirstOrDefault(s => s.MapNpcId == npc.Id);
+                TransferEntity(new NpcEntity(npc, shop), this);
+            }
+        }
+
+        private void InitializeMonsters(IEnumerable<MapMonsterDto> monsters)
+        {
+            if (monsters == null)
+            {
+                return;
             }
 
-
-            StartSystemUpdate();
+            foreach (MapMonsterDto monster in monsters)
+            {
+                TransferEntity(new MonsterEntity(monster), this);
+            }
         }
 
         public Guid Id { get; set; }

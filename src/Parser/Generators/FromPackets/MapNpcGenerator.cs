@@ -67,8 +67,8 @@ namespace Toolkit.Generators.FromPackets
                     string[] currentPacket = line.Split('\t', ' ');
                     switch (currentPacket[0])
                     {
-                        case "mv" when currentPacket[1].Equals("2") && !npcMvPacketsList.Contains(int.Parse(currentPacket[2])):
-                            npcMvPacketsList.Add(int.Parse(currentPacket[2]));
+                        case "mv" when currentPacket[1].Equals("2") && !npcMvPacketsList.Contains(long.Parse(currentPacket[2])):
+                            npcMvPacketsList.Add(long.Parse(currentPacket[2]));
                             break;
 
 
@@ -80,7 +80,7 @@ namespace Toolkit.Generators.FromPackets
                             short npcId = short.Parse(currentPacket[2]);
                             long mapNpcId = long.Parse(currentPacket[3]);
 
-                            if (long.Parse(currentPacket[3]) > 20000 || npcs.ContainsKey(mapNpcId) || mapNpcIds.Any(id => id == mapNpcId))
+                            if (mapNpcId > 20000 || npcs.ContainsKey(mapNpcId) || mapNpcIds.Any(id => id == mapNpcId))
                             {
                                 continue;
                             }
@@ -93,7 +93,7 @@ namespace Toolkit.Generators.FromPackets
                                 NpcMonsterId = npcId,
                                 Id = mapNpcId,
                                 EffectDelay = 4750,
-                                IsMoving = npcMvPacketsList.Contains(long.Parse(currentPacket[3])),
+                                IsMoving = npcMvPacketsList.Contains(mapNpcId),
                                 Position = (DirectionType)byte.Parse(currentPacket[6]),
                                 Dialog = short.Parse(currentPacket[9]),
                                 IsSitting = currentPacket[13] != "1",

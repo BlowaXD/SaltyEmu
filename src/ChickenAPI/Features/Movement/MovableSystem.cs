@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Linq.Expressions;
 using Autofac;
 using ChickenAPI.Core.ECS.Entities;
@@ -14,7 +15,7 @@ namespace ChickenAPI.Game.Features.Movement
 {
     public class MovableSystem : NotifiableSystemBase
     {
-        protected override short RefreshRate => 10;
+        protected override short RefreshRate => 2;
 
         public MovableSystem(IEntityManager entityManager, IMap map) : base(entityManager)
         {
@@ -24,65 +25,68 @@ namespace ChickenAPI.Game.Features.Movement
 
         private readonly IMap _map;
         private readonly IPathfinder _pathfinder;
+        private readonly Random _random = new Random();
+        private readonly Random _randomY = new Random();
 
-        protected override Expression<Func<IEntity, bool>> Filter => entity => entity.Type != EntityType.Player && entity.HasComponent<MovableComponent>();
-
-        protected override void Execute(IEntity entity)
+        private static bool MovableFilter(IEntity entity)
         {
-            if (entity.Type != EntityType.Monster)
+            if (entity.Type == EntityType.Player)
             {
-                return;
+                return false;
             }
 
             var movable = entity.GetComponent<MovableComponent>();
-            var random = new Random();
-            Position<short> dest = null;
-            int i = 0;
-            while (dest == null && i < 5)
+            if (movable == null)
             {
-                short x = (short)random.Next(0, _map.Width);
-                short y = (short)random.Next(0, _map.Height);
-                if (_map.IsWalkable(x, y))
-                {
-                    dest = new Position<short> { X = x, Y = y };
-                }
-
-                i++;
+                return false;
             }
 
-            movable.Actual = dest;
-            Move(entity);
+            return movable.Speed != 0;
+        }
 
-            /*
-            const int range = 10;
-            int i = 0;
-            var movableComponent = entity.GetComponent<MovableComponent>();
-            if (movableComponent.Waypoints.Count == 0 && entity.Type != EntityType.Player)
+        protected override Expression<Func<IEntity, bool>> Filter => entity => MovableFilter(entity);
+
+        protected override void Execute(IEntity entity)
+        {
+            try
             {
-                var random = new Random();
-                Position<short> dest = null;
-                while (dest == null && i < 5)
+                int i = 0;
+                var movableComponent = entity.GetComponent<MovableComponent>();
+                if ((movableComponent.Waypoints == null || movableComponent.Waypoints.Length == 0) && entity.Type != EntityType.Player)
                 {
-                    short x = (short)random.Next(0, _map.Width);
-                    short y = (short)random.Next(0, _map.Height);
-                    if (_map.IsWalkable(x, y))
+                    var random = new Random();
+                    if (random.Next(0, 100) < 45)
                     {
-                        dest = new Position<short> { X = x, Y = y };
+                        movableComponent.LastMove = DateTime.UtcNow.AddMilliseconds(random.Next(2500));
+                        return;
                     }
 
-                    i++;
+                    Position<short> dest = null;
+                    while (dest == null && i < 25)
+                    {
+                        short xpoint = (short)_random.Next(0, 4);
+                        short ypoint = (short)_randomY.Next(0, 4);
+                        short firstX = movableComponent.Actual.X;
+                        short firstY = movableComponent.Actual.Y;
+                        dest = _map.GetFreePosition(firstX, firstY, xpoint, ypoint);
+
+                        i++;
+                    }
+
+                    if (dest == null)
+                    {
+                        return;
+                    }
+
+                    movableComponent.Waypoints = _pathfinder.FindPath(movableComponent.Actual, dest, _map);
                 }
 
-                if (dest == null)
-                {
-                    return;
-                }
-
-                foreach (Position<short> pos in _pathfinder.FindPath(movableComponent.Actual, dest, _map))
-                {
-                    movableComponent.Waypoints.Enqueue(pos);
-                }
-            }*/
+                ProcessMovement(entity, movableComponent);
+            }
+            catch (Exception e)
+            {
+                Log.Error("[MOVABLE] UPDATE()", e);
+            }
         }
 
         public override void Execute(IEntity entity, SystemEventArgs e)
@@ -97,26 +101,48 @@ namespace ChickenAPI.Game.Features.Movement
 
         private void Move(IEntity entity)
         {
-            var packet = new MvPacket(entity);
-            if (EntityManager is IMapLayer mapLayer) // wtf ?
+            try
             {
-                mapLayer.Broadcast(packet);
-            }
+                var packet = new MvPacket(entity);
+                if (EntityManager is IMapLayer mapLayer) // wtf ?
+                {
+                    mapLayer.Broadcast(packet);
+                }
 
-            if (entity is IPlayerEntity playerEntity)
+                if (entity is IPlayerEntity playerEntity)
+                {
+                    playerEntity.SendPacket(new CondPacketBase(playerEntity));
+                }
+            }
+            catch (Exception e)
             {
-                playerEntity.SendPacket(new CondPacketBase(playerEntity));
+                Log.Error("Move()", e);
             }
         }
 
         private void ProcessMovement(IEntity entity, MovableComponent movableComponent)
         {
-            if (!movableComponent.CanMove() || movableComponent.Waypoints.Count <= 0)
+            if (movableComponent.Waypoints.Length <= 0)
             {
                 return;
             }
 
-            movableComponent.Actual = movableComponent.Waypoints.Dequeue();
+            if (movableComponent.Speed == 0)
+            {
+                return;
+            }
+
+            byte speedIndex = (byte)(movableComponent.Speed / 2 < 1 ? 1 : movableComponent.Speed / 2);
+            int maxindex = movableComponent.Waypoints.Length > speedIndex ? speedIndex : movableComponent.Waypoints.Length;
+            Position<short> newPos = movableComponent.Waypoints[maxindex - 1];
+
+            if (!movableComponent.CanMove(newPos))
+            {
+                return;
+            }
+
+            movableComponent.Actual = movableComponent.Waypoints[maxindex - 1];
+            movableComponent.Waypoints = movableComponent.Waypoints.Skip(maxindex).ToArray();
             Move(entity);
         }
     }

@@ -74,6 +74,10 @@ namespace ChickenAPI.Core.ECS.Entities
 
         public void RegisterEntity<T>(T entity) where T : IEntity
         {
+            if (!ShouldUpdate && entity.Type == EntityType.Player)
+            {
+                StartSystemUpdate();
+            }
             entity.Id = NextEntityId;
             EntitiesByEntityId[entity.Id] = entity;
             if (!EntitiesByEntityType.TryGetValue(entity.Type, out HashSet<IEntity> entities))
