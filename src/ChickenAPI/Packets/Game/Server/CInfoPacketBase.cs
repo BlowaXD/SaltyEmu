@@ -1,5 +1,6 @@
 ﻿using ChickenAPI.Enums;
 using ChickenAPI.Enums.Game.Character;
+using ChickenAPI.Game.Data.TransferObjects.Character;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Features.Families;
 using ChickenAPI.Game.Features.Specialists;
@@ -13,7 +14,7 @@ namespace ChickenAPI.Game.Packets.Game.Server
     {
         public CInfoPacketBase(IPlayerEntity entity)
         {
-            var character = entity.GetComponent<CharacterComponent>();
+            CharacterDto character = entity.Character;
             var family = entity.GetComponent<FamilyComponent>();
 
             Name = entity.GetComponent<NameComponent>().Name;
@@ -22,14 +23,14 @@ namespace ChickenAPI.Game.Packets.Game.Server
             FamilyId = family.FamilyId == 0 ? -1 : family.FamilyId;
             FamilyName = family.FamilyName;
             CharacterId = character.Id;
-            Authority = character.Authority > AuthorityType.GameMaster ? (byte)2 : (byte)0;
+            Authority = entity.Session.Account.Authority > AuthorityType.GameMaster ? (byte)2 : (byte)0;
             Gender = character.Gender;
             HairStyle = character.HairStyle;
             HairColor = character.HairColor;
             Class = character.Class;
-            Icon = character.ReputIcon;
+            Icon = 0; // todo
             Compliment = character.Compliment;
-            Morph = character.Morph;
+            Morph = 0; // todo
             Invisible = !entity.GetComponent<VisibilityComponent>().IsVisible;
             FamilyLevel = family.FamilyLevel;
             SpUpgrade = entity.GetComponent<SpecialistComponent>().Upgrade;

@@ -2,6 +2,7 @@
 using ChickenAPI.Enums;
 using ChickenAPI.Enums.Game.Character;
 using ChickenAPI.Enums.Game.Entity;
+using ChickenAPI.Game.Data.TransferObjects.Character;
 using ChickenAPI.Game.Data.TransferObjects.NpcMonster;
 using ChickenAPI.Game.Entities.Monster;
 using ChickenAPI.Game.Entities.Npc;
@@ -120,7 +121,7 @@ namespace ChickenAPI.Game.Packets.Extensions
 
         private static InPacketBase GenerateInPlayer(IPlayerEntity player)
         {
-            CharacterComponent character = player.Character;
+            CharacterDto character = player.Character;
             MovableComponent movable = player.Movable;
             BattleComponent battle = player.Battle;
             return new InPacketBase

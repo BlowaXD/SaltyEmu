@@ -25,7 +25,7 @@ namespace NosSharp.DatabasePlugin.Models.Character
 
         public int Act4Points { get; set; }
 
-        public int ArenaWinner { get; set; }
+        public bool ArenaWinner { get; set; }
 
         public string Biography { get; set; }
 

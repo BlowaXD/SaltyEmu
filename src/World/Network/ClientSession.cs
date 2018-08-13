@@ -30,8 +30,6 @@ namespace World.Network
         public bool IsAuthenticated => Account != null;
 
         public int SessionId { get; set; }
-
-        public RegionType SessionRegion => RegionType.English;
         public IPEndPoint Ip { get; private set; }
         public AccountDto Account { get; private set; }
         public IPlayerEntity Player { get; private set; }
@@ -64,6 +62,7 @@ namespace World.Network
         #region Methods
 
         private static volatile IChannelGroup _group;
+        private static ISessionService _sessionService;
 
         public override void ChannelRegistered(IChannelHandlerContext context)
         {
@@ -75,6 +74,7 @@ namespace World.Network
                     if (_group == null)
                     {
                         g = _group = new DefaultChannelGroup(context.Executor);
+                        _sessionService = Container.Instance.Resolve<ISessionService>();
                     }
                 }
             }
@@ -149,10 +149,10 @@ namespace World.Network
                     continue;
                 }
 
-                _channel.WriteAsync(_packetFactory.Serialize(packet));
+                _channel?.WriteAsync(_packetFactory.Serialize(packet));
             }
 
-            _channel.Flush();
+            _channel?.Flush();
         }
 
         public void InitializeAccount(AccountDto account)
@@ -162,22 +162,24 @@ namespace World.Network
 
         public void Disconnect()
         {
-            Container.Instance.Resolve<ISessionService>().UnregisterSession(SessionId);
+            Log.Info($"[DISCONNECT] {Ip.Address}");
+            Player?.EntityManager.UnregisterEntity(Player);
+            Player?.Save();
+            _sessionService.UnregisterSession(SessionId);
             _channel.DisconnectAsync().Wait();
         }
 
 
         public override void ChannelUnregistered(IChannelHandlerContext context)
         {
-            Player?.EntityManager.UnregisterEntity(Player);
-            Log.Info($"[DISCONNECT] {Ip.Address}");
-            SessionManager.Instance.UnregisterSession(context.Channel.Id.AsLongText());
             Disconnect();
+            SessionManager.Instance.UnregisterSession(context.Channel.Id.AsLongText());
             context.CloseAsync();
         }
 
         public override void ExceptionCaught(IChannelHandlerContext context, Exception exception)
         {
+            Disconnect();
             Log.Error("[EXCEPTION]", exception);
             context.CloseAsync();
         }

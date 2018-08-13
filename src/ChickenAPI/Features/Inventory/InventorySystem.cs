@@ -135,7 +135,7 @@ namespace ChickenAPI.Game.Features.Inventory
                 //Not enough space
                 return;
             }
-
+            
             args.ItemInstance.Slot = slot;
             subinv[slot] = args.ItemInstance;
             if (!(inv.Entity is IPlayerEntity player))
@@ -143,6 +143,7 @@ namespace ChickenAPI.Game.Features.Inventory
                 return;
             }
 
+            args.ItemInstance.CharacterId = player.Character.Id;
             player.SendPacket(GenerateIvnPacket(args.ItemInstance));
         }
 

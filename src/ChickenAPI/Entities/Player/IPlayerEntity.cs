@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using ChickenAPI.Core.ECS.Entities;
+using ChickenAPI.Game.Data.TransferObjects.Character;
 using ChickenAPI.Game.Features.Visibility;
 using ChickenAPI.Game.Network;
 using ChickenAPI.Game.Packets;
@@ -8,7 +9,7 @@ namespace ChickenAPI.Game.Entities.Player
 {
     public interface IPlayerEntity : IEntity, IMovableEntity, IBattleEntity, IInventoriedEntity, IExperenciedEntity, INamedEntity, IVisibleEntity
     {
-        CharacterComponent Character { get; }
+        CharacterDto Character { get; }
         ISession Session { get; }
 
         long LastPulse { get; }
@@ -18,5 +19,6 @@ namespace ChickenAPI.Game.Entities.Player
         void SendPackets<T>(IEnumerable<T> packets) where T : IPacket;
 
         void SendPackets(IEnumerable<IPacket> packets);
+        void Save();
     }
 }

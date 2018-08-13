@@ -89,7 +89,12 @@ namespace NosSharp.DatabasePlugin.Services.Base
         {
             try
             {
-                List<TModel> tmp = objs.Select(Mapper.Map<TModel>).ToList();
+                IEnumerable<TObject> enumerable = objs as TObject[] ?? objs.ToArray();
+                if (enumerable.All(s => s == null))
+                {
+                    return;
+                }
+                List<TModel> tmp = enumerable.Where(s => s != null).Select(Mapper.Map<TModel>).ToList();
                 using (IDbContextTransaction transaction = Context.Database.BeginTransaction())
                 {
                     Context.BulkInsertOrUpdate(tmp, new BulkConfig

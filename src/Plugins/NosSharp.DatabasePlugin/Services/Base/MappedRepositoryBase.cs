@@ -71,7 +71,7 @@ namespace NosSharp.DatabasePlugin.Services.Base
                 }
                 else
                 {
-                    Context.Entry(model).CurrentValues.SetValues(obj);
+                    Context.Entry(model).CurrentValues.SetValues(Mapper.Map<TModel>(obj));
                     Context.Entry(model).State = EntityState.Modified;
                 }
 
@@ -90,7 +90,11 @@ namespace NosSharp.DatabasePlugin.Services.Base
         {
             try
             {
-                List<TModel> tmp = objs.Select(Mapper.Map<TModel>).ToList();
+                if (objs.All(s => s == null))
+                {
+                    return;
+                }
+                List<TModel> tmp = objs.Where(s => s != null).Select(Mapper.Map<TModel>).ToList();
                 using (IDbContextTransaction transaction = Context.Database.BeginTransaction())
                 {
                     Context.BulkInsertOrUpdate(tmp, new BulkConfig

@@ -35,7 +35,7 @@ namespace ChickenAPI.Game.Features.Groups
                     HpMax = member.Battle.HpMax,
                     MpPercentage = member.Battle.MpPercentage,
                     MpMax = member.Battle.MpMax,
-                    Morph = member.Character.Morph,
+                    Morph = 0,
                     Buffs = ""
                 });
             }

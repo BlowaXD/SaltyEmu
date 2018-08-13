@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Autofac;
 using ChickenAPI.Core.ECS.Components;
 using ChickenAPI.Core.ECS.Entities;
@@ -34,7 +35,7 @@ namespace ChickenAPI.Game.Entities.Player
         public PlayerEntity(ISession session, CharacterDto dto) : base(EntityType.Player)
         {
             Session = session;
-            Character = new CharacterComponent(this, dto);
+            Character = dto;
             Battle = new BattleComponent(this, dto);
             Inventory = new InventoryComponent(this);
             Experience = new ExperienceComponent(this)
@@ -70,7 +71,6 @@ namespace ChickenAPI.Game.Entities.Player
                 { typeof(VisibilityComponent), Visibility },
                 { typeof(MovableComponent), Movable },
                 { typeof(BattleComponent), Battle },
-                { typeof(CharacterComponent), Character },
                 { typeof(ExperienceComponent), Experience },
                 { typeof(FamilyComponent), new FamilyComponent(this) },
                 { typeof(InventoryComponent), Inventory },
@@ -80,17 +80,11 @@ namespace ChickenAPI.Game.Entities.Player
             };
         }
 
-        private static IItemInstanceService _itemInstance
-        {
-            get => _itemInstance ?? (_itemInstance = Container.Instance.Resolve<IItemInstanceService>());
-            set => _itemInstance = value;
-        }
+        private static IItemInstanceService _itemInstance;
+        private static IItemInstanceService ItemInstance => _itemInstance ?? (_itemInstance = Container.Instance.Resolve<IItemInstanceService>());
 
-        private static ICharacterService _characterService
-        {
-            get => _characterService ?? (_characterService = Container.Instance.Resolve<ICharacterService>());
-            set => _characterService = value;
-        }
+        private static ICharacterService _characterService;
+        private static ICharacterService CharacterService => _characterService ?? (_characterService = Container.Instance.Resolve<ICharacterService>());
 
         public SkillComponent Skills { get; }
         public MovableComponent Movable { get; }
@@ -100,7 +94,7 @@ namespace ChickenAPI.Game.Entities.Player
         public NameComponent Name { get; set; }
         public VisibilityComponent Visibility { get; }
 
-        public CharacterComponent Character { get; }
+        public CharacterDto Character { get; }
         public ISession Session { get; }
         public long LastPulse { get; }
 
@@ -167,20 +161,20 @@ namespace ChickenAPI.Game.Entities.Player
 
         public override void Dispose()
         {
-            Save();
             GC.SuppressFinalize(this);
         }
-
-        private void Save()
+        
+        public void Save()
         {
             DateTime before = DateTime.UtcNow;
-            _itemInstance.Save(Inventory.Wear);
-            _itemInstance.Save(Inventory.Equipment);
-            _itemInstance.Save(Inventory.Main);
-            _itemInstance.Save(Inventory.Etc);
-            _itemInstance.Save(Inventory.Costumes);
-            _itemInstance.Save(Inventory.Specialists);
-            Log.Info($"[SAVE] {Name} saved in {(DateTime.UtcNow - before).TotalMilliseconds} ms");
+            CharacterService.Save(Character);
+            ItemInstance.Save(Inventory.Wear);
+            ItemInstance.Save(Inventory.Equipment);
+            ItemInstance.Save(Inventory.Main);
+            ItemInstance.Save(Inventory.Etc);
+            ItemInstance.Save(Inventory.Costumes);
+            ItemInstance.Save(Inventory.Specialists);
+            Log.Info($"[SAVE] {Name.Name} saved in {(DateTime.UtcNow - before).TotalMilliseconds} ms");
         }
     }
 }

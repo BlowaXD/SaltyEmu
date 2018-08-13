@@ -9,14 +9,12 @@ namespace ChickenAPI.Game.Packets.Game.Server
     {
         public CModePacketBase(IPlayerEntity entity)
         {
-            var character = entity.GetComponent<CharacterComponent>();
-
             VisualType = VisualType.Character;
-            CharacterId = character.Id;
-            Morph = character.Morph;
+            CharacterId = entity.Character.Id;
+            Morph = 0;
             SpUpgrade = entity.GetComponent<SpecialistComponent>().Upgrade;
             SpDesign = entity.GetComponent<SpecialistComponent>().Design;
-            ArenaWinner = character.ArenaWinner;
+            ArenaWinner = entity.Character.ArenaWinner;
         }
 
         #region Properties

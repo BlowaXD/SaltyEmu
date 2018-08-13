@@ -31,7 +31,7 @@ namespace ChickenAPI.Game.Features.Skills
                     TryCastSkill(component, skillcast);
                     break;
                 case PlayerAddSkillEventArgs addSkill:
-                    AddSkill(component, addSkill);
+                    AddSkill(entity as IPlayerEntity, addSkill, component);
                     break;
             }
         }
@@ -66,7 +66,7 @@ namespace ChickenAPI.Game.Features.Skills
             return true;
         }
 
-        public static void AddSkill(SkillComponent component, PlayerAddSkillEventArgs e)
+        public static void AddSkill(IPlayerEntity player, PlayerAddSkillEventArgs e, SkillComponent component)
         {
             if (e.Skill is null)
             {
@@ -75,8 +75,8 @@ namespace ChickenAPI.Game.Features.Skills
 
             if (e.ForceChecks)
             {
-                var character = component.Entity.GetComponent<CharacterComponent>();
-                var experience = component.Entity.GetComponent<ExperienceComponent>();
+                var character = player.Character;
+                var experience = player.Experience;
 
                 if (character is null)
                 {
@@ -88,7 +88,7 @@ namespace ChickenAPI.Game.Features.Skills
                     return; //we need it.
                 }
 
-                if (e.Skill.CpCost > character.Cp)
+                if (e.Skill.CpCost > 0)
                 {
                     return; //not enough cp to learn that skill.
                 }

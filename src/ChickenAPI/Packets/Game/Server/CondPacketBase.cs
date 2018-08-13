@@ -8,10 +8,8 @@ namespace ChickenAPI.Game.Packets.Game.Server
     {
         public CondPacketBase(IPlayerEntity entity)
         {
-            var character = entity.GetComponent<CharacterComponent>();
-
             VisualType = VisualType.Character;
-            VisualId = character.Id;
+            VisualId = entity.Character.Id;
             CanAttack = entity.Battle.CanAttack;
             CanMove = entity.Battle.CanMove;
             Speed = entity.Movable.Speed;
