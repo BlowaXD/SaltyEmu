@@ -21,8 +21,8 @@ namespace ChickenAPI.Game.Features.Battle
             Mp = MpMax;
         }
 
-        public byte HpPercentage => Convert.ToByte(Math.Ceiling(Hp / (HpMax * 100.0)));
-        public byte MpPercentage => Convert.ToByte(Math.Ceiling(Mp / (MpMax * 100.0)));
+        public byte HpPercentage => Convert.ToByte((int)(Hp / (float)HpMax * 100));
+        public byte MpPercentage => Convert.ToByte((int)(Mp / (float)MpMax * 100.0));
 
         public int Hp { get; set; }
 

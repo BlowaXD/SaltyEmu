@@ -38,12 +38,16 @@ namespace ChickenAPI.Game.Features.Shops
                 return;
             }
 
-            int typeshop = 100;
+            int typeshop = 0;
 
             var tmp = new StringBuilder();
             float percent = 1.0f;
             foreach (ShopItemDto itemInfo in getinfos.Shop.Items.Where(s => s.Type == getinfos.Type))
             {
+                if (typeshop == 0)
+                {
+                    typeshop = 100;
+                }
                 tmp.Append(' ');
                 float price = itemInfo.Item.ReputPrice > 0 ? itemInfo.Item.ReputPrice : itemInfo.Item.Price * percent;
                 byte color = itemInfo.Color != 0 ? itemInfo.Item.Color : itemInfo.Item.BasicUpgrade;
@@ -84,7 +88,7 @@ namespace ChickenAPI.Game.Features.Shops
 
             player.SendPacket(new NInvPacket
             {
-                ShopList = tmp.ToString(),
+                ShopList = tmp.ToString().Trim(),
                 ShopType = typeshop,
                 Unknown = 0,
                 VisualId = getinfos.Shop.MapNpcId,
