@@ -5,9 +5,12 @@ using ChickenAPI.Enums.Packets;
 using ChickenAPI.Game.Data.AccessLayer.Character;
 using ChickenAPI.Game.Data.TransferObjects.Character;
 using ChickenAPI.Game.Entities.Player;
+using ChickenAPI.Game.Entities.Player.Extensions;
 using ChickenAPI.Game.Features.Inventory;
 using ChickenAPI.Game.Features.Inventory.Args;
+using ChickenAPI.Game.Features.Inventory.Extensions;
 using ChickenAPI.Game.Features.Movement.Extensions;
+using ChickenAPI.Game.Features.Skills.Extensions;
 using ChickenAPI.Game.Game.Components;
 using ChickenAPI.Game.Managers;
 using ChickenAPI.Game.Maps;
@@ -43,16 +46,54 @@ namespace NosSharp.PacketHandler
             session.SendPacket(new SayPacket { Message = "└----------------------------------------------┘", Type = SayColorType.Yellow, VisualType = VisualType.Character });
             session.SendPacket(new MapoutPacket());
             session.Player.TransferEntity(mapLayer);
-            session.SendPacket(new FdPacket { Dignity = (int)dto.Dignity, DignityIcon = 1, Reput = dto.Reput, ReputIcon = 1 });
+            session.SendPacket(session.Player.GenerateSkiPacket());
+            session.SendPacket(session.Player.GenerateFdPacket());
+            // rage
+            // rank_cool
+            // pet basket ? ib 1278 1
+            // cleftOfDarkness ? bc 0 0 0
+            // sppoint
             // scr 0
             for (byte i = 0; i < 10; i++)
             {
                 session.Player.SendPacket(new BnPacket { BnNumber = i, Message = $"SaltyEmu^{i}"});
             }
+            // exts
+            // MlInfo
+            // PClear
+            // PInit
+            // zzim
+            // twk 2
+            // act 6
+            // faction()
+            // scP
+            // scN
+
 
             session.Player.NotifyEventHandler<InventoryEventHandler>(new InventoryInitializeEventArgs());
             session.Player.NotifyEventHandler<InventoryEventHandler>(new InventoryGeneratePacketDetailsEventArgs());
             session.SendPacket(session.Player.GenerateCondPacket());
+
+            session.SendPacket(session.Player.GenerateGoldPacket());
+            session.SendPackets(session.Player.GenerateQuicklistPacket());
+            // finit
+            // Blinit
+            // clinit
+            // flinit
+            // kdlinit
+
+
+
+            // Session.SendPacket(Session.Character.GenerateGInfo());
+            // Session.CurrentMapInstance?.Broadcast(Session.Character.GenerateGidx());
+            // Session.SendPackets(Session.Character.GetFamilyHistory());
+            // Session.SendPacket(Session.Character.GenerateFamilyMember());
+            // Session.SendPacket(Session.Character.GenerateFamilyMemberMessage());
+            // Session.SendPacket(Session.Character.GenerateFamilyMemberExp());
+
+            // mails
+            // quests
+
         }
     }
 }
