@@ -15,7 +15,13 @@ namespace ChickenAPI.Game.Features.Skills.Extensions
 
 
             IOrderedEnumerable<SkillDto> skills = player.Skills.Skills.Values.OrderBy(s => s.CastId);
-            
+
+            // ski base
+            // if no sp
+            tmp.Append(200 + 20 * (byte)player.Character.Class);
+            tmp.Append(' ');
+            tmp.Append(201 + 20 * (byte)player.Character.Class);
+
             foreach (SkillDto i in skills)
             {
                 tmp.Append(' ');
