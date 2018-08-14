@@ -190,6 +190,7 @@ namespace ChickenAPI.Game.Features.Shops
                     return;
                 }
 
+                // generate a random rarity
                 var random = new Random();
                 byte ra = (byte)random.Next(100);
 
@@ -208,9 +209,26 @@ namespace ChickenAPI.Game.Features.Shops
                 }
             }
 
-            // check inventory space
+            bool canAddItem = buy.Slot % 3 == 0; // todo extension method for inventory
+            if (!canAddItem)
+            {
+                // no available slot
+                return;
+            }
+            
             // add item to inventory
-            // decrease gold or reputation
+
+            if (isReputBuy)
+            {
+                player.Character.Gold -= (long)(price * percent);
+                // player.SendPacket(player.GenerateGoldPacket());
+            }
+            else
+            {
+                player.Character.Reput -= price;
+                // player.SendPacket(player.GenerateFdPacket());
+                // player.SendPacket "reput decreased"
+            }
         }
 
         private static void HandlePlayerShopBuyRequest(IPlayerEntity player, BuyShopEventArgs buy, IPlayerEntity shop)
