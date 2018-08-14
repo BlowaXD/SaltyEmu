@@ -12,30 +12,6 @@ namespace ChickenAPI.Game.Packets.Game.Server
     [PacketHeader("c_info")]
     public class CInfoPacketBase : PacketBase
     {
-        public CInfoPacketBase(IPlayerEntity entity)
-        {
-            CharacterDto character = entity.Character;
-            var family = entity.GetComponent<FamilyComponent>();
-
-            Name = entity.GetComponent<NameComponent>().Name;
-            Unknown1 = "-"; //TODO: Find signification
-            GroupId = -1; //TODO: Find signification 
-            FamilyId = family.FamilyId == 0 ? -1 : family.FamilyId;
-            FamilyName = family.FamilyName;
-            CharacterId = character.Id;
-            Authority = entity.Session.Account.Authority > AuthorityType.GameMaster ? (byte)2 : (byte)0;
-            Gender = character.Gender;
-            HairStyle = character.HairStyle;
-            HairColor = character.HairColor;
-            Class = character.Class;
-            Icon = 0; // todo
-            Compliment = character.Compliment;
-            Morph = 0; // todo
-            Invisible = !entity.GetComponent<VisibilityComponent>().IsVisible;
-            FamilyLevel = family.FamilyLevel;
-            SpUpgrade = entity.GetComponent<SpecialistComponent>().Upgrade;
-            ArenaWinner = character.ArenaWinner;
-        }
 
         #region Propertiesf
 

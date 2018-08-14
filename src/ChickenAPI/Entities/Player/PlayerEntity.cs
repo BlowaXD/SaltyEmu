@@ -113,7 +113,7 @@ namespace ChickenAPI.Game.Entities.Player
                 return;
             }
 
-            SendPacket(new CInfoPacketBase(this));
+            SendPacket(this.GenerateCInfoPacket());
             SendPacket(new CModePacketBase(this));
             SendPacket(this.GenerateEqPacket());
             SendPacket(this.GenerateEquipmentPacket());
