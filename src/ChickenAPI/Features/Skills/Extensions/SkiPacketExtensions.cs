@@ -1,4 +1,6 @@
-﻿using System.Text;
+﻿using System.Linq;
+using System.Text;
+using ChickenAPI.Game.Data.TransferObjects.Skills;
 using ChickenAPI.Game.Entities.Player;
 
 namespace ChickenAPI.Game.Features.Skills.Extensions
@@ -11,6 +13,14 @@ namespace ChickenAPI.Game.Features.Skills.Extensions
 
             // check sp
 
+
+            IOrderedEnumerable<SkillDto> skills = player.Skills.Skills.Values.OrderBy(s => s.CastId);
+            
+            foreach (SkillDto i in skills)
+            {
+                tmp.Append(' ');
+                tmp.Append(i.Id);
+            }
 
             return new SkiPacket
             {
