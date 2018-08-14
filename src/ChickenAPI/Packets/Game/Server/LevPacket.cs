@@ -13,24 +13,6 @@ namespace ChickenAPI.Game.Packets.Game.Server
     [PacketHeader("lev")]
     public class LevPacket : PacketBase
     {
-        public LevPacket(IPlayerEntity player)
-        {
-            var exp = player.GetComponent<ExperienceComponent>();
-            var algo = Container.Instance.Resolve<IAlgorithmService>();
-            Level = exp.Level;
-            LevelXp = exp.LevelXp;
-            JobLevel = exp.JobLevel;
-            JobLevelXp = exp.JobLevelXp;
-            LevelXpMax = algo.GetLevelXp(player.Character.Class, exp.Level); // algorithm
-            JobLevelXpMax = algo.GetLevelXp(player.Character.Class, exp.JobLevel);
-            HeroLevel = exp.HeroLevel;
-            Reputation = player.Character.Reput;
-            Cp = 0;
-            HeroLevelXp = exp.HeroLevelXp;
-            HeroLevelXpMax = algo.GetHeroLevelXp(player.Character.Class, exp.HeroLevel); // algorithm
-        }
-
-
         [PacketIndex(0)]
         public byte Level { get; set; }
 

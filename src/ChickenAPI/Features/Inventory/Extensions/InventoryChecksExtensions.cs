@@ -9,7 +9,9 @@ namespace ChickenAPI.Game.Features.Inventory.Extensions
     {
         public static bool CanAddItem(this InventoryComponent inv, ItemDto item)
         {
-            return true;
+            ItemInstanceDto[] subinv = inv.GetSubInvFromItem(item);
+
+            return inv.GetFirstFreeSlot(subinv) != - 1;
         }
 
         public static short GetFirstFreeSlot(this InventoryComponent inv, IReadOnlyCollection<ItemInstanceDto> subinventory)

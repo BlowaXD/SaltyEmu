@@ -116,7 +116,7 @@ namespace ChickenAPI.Game.Entities.Player
             SendPacket(new CModePacketBase(this));
             SendPacket(new EqPacket(this));
             SendPacket(new EquipmentPacket(this));
-            SendPacket(new LevPacket(this));
+            SendPacket(this.GenerateLevPacket());
             SendPacket(new StPacket(this));
 
             SendPacket(this.GenerateAtPacket());

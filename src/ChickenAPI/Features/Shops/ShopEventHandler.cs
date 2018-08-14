@@ -1,4 +1,7 @@
-﻿using Autofac;
+﻿using System;
+using System.Linq;
+using System.Text;
+using Autofac;
 using ChickenAPI.Core.ECS.Entities;
 using ChickenAPI.Core.Events;
 using ChickenAPI.Core.IoC;
@@ -8,19 +11,15 @@ using ChickenAPI.Game.Data.TransferObjects.Shop;
 using ChickenAPI.Game.Data.TransferObjects.Skills;
 using ChickenAPI.Game.Entities.Npc;
 using ChickenAPI.Game.Entities.Player;
+using ChickenAPI.Game.Features.Inventory.Extensions;
 using ChickenAPI.Game.Features.Shops.Args;
 using ChickenAPI.Game.Features.Shops.Packets;
-using System;
-using System.Linq;
-using System.Text;
+using ChickenAPI.Game.Features.Skills.Extensions;
 
 namespace ChickenAPI.Game.Features.Shops
 {
     public class ShopEventHandler : EventHandlerBase
     {
-        private static IRandomGenerator _randomGenerator;
-        private static IRandomGenerator Random =>
-            _randomGenerator ?? (_randomGenerator = Container.Instance.Resolve<IRandomGenerator>());
 
         public override void Execute(IEntity entity, ChickenEventArgs e)
         {
@@ -143,7 +142,6 @@ namespace ChickenAPI.Game.Features.Shops
         {
             if (shop.Skills.All(s => s.SkillId != buy.Slot))
             {
-
             }
 
             // check use sp
@@ -157,11 +155,11 @@ namespace ChickenAPI.Game.Features.Shops
             // check skill upgrades
 
             // player.Character.Gold -= skillinfo.Price;
-            // player.SendPacket(player.GenerateGold());
-            // player.SendPacket(player.GenerateSki());
-            // player.SendPacket(player.GenerateQuicklist());
+            player.SendPacket(player.GenerateGoldPacket());
+            player.SendPacket(player.GenerateSkiPacket());
+            player.SendPackets(player.GenerateQuicklistPacket());
             // player.SendPacket(UserInterfaceHelper.Instance.GenerateMsg(Language.Instance.GetMessageFromKey("SKILL_LEARNED"), 0));
-            // player.SendPacket(Session.Character.GenerateLev());
+            player.SendPacket(player.GenerateLevPacket());
         }
 
         private static void HandleNpcItemBuyRequest(IPlayerEntity player, BuyShopEventArgs buy, Shop shop)
@@ -171,6 +169,7 @@ namespace ChickenAPI.Game.Features.Shops
             {
                 return;
             }
+
             // check diginity
             bool isReputBuy = item.Item.ReputPrice > 0;
             long price = isReputBuy ? item.Item.ReputPrice : item.Item.Price;

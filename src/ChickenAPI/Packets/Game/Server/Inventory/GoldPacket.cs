@@ -5,8 +5,6 @@ namespace ChickenAPI.Game.Packets.Game.Server.Inventory
     [PacketHeader("gold")]
     public class GoldPacket : PacketBase
     {
-        public GoldPacket(IPlayerEntity entity) => Gold = 0;
-
         [PacketIndex(0)]
         public long Gold { get; set; }
 
