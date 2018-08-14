@@ -6,18 +6,6 @@ namespace ChickenAPI.Game.Packets.Game.Server
     [PacketHeader("stat")]
     public class StatPacket : PacketBase
     {
-        public StatPacket(IPlayerEntity player)
-        {
-            var battle = player.GetComponent<BattleComponent>();
-
-            Hp = battle.Hp;
-            HpMax = battle.HpMax;
-            Mp = battle.Mp;
-            MpMax = battle.MpMax;
-            Unknown = 0;
-            CharacterOption = 0;
-        }
-
         [PacketIndex(0)]
         public long Hp { get; set; }
 

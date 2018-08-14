@@ -146,7 +146,7 @@ namespace ChickenAPI.Game.Entities.Player
                 IsChangingMapLayer = true
             });
             SendPacket(this.GenerateInPacket());
-            SendPacket(new StatPacket(this));
+            SendPacket(this.GenerateStatPacket());
         }
 
         public void SendPacket<T>(T packetBase) where T : IPacket => Session.SendPacket(packetBase);
