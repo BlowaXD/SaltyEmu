@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using ChickenAPI.Core.ECS.Entities;
 using ChickenAPI.Enums.Game.Entity;
+using ChickenAPI.Game.Entities.Extensions;
 using ChickenAPI.Game.Entities.Monster;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Game.Game.Components;
 using ChickenAPI.Game.Packets.Game.Client;
-using ChickenAPI.Game.Packets.Game.Server;
 
 namespace NosSharp.PacketHandler
 {
@@ -29,7 +27,7 @@ namespace NosSharp.PacketHandler
                             return;
                         }
 
-                        player.SendPacket(new StPacket(entity));
+                        player.SendPacket(entity.GenerateStPacket());
                         break;
                     case VisualType.Monster:
                         entity = player.EntityManager.GetEntitiesByType<IEntity>(EntityType.Monster).FirstOrDefault(s => s.GetComponent<NpcMonsterComponent>().MapNpcMonsterId == packetBase.TargetId);
@@ -38,17 +36,14 @@ namespace NosSharp.PacketHandler
                             return;
                         }
 
-                        player.SendPacket(new StPacket(entity));
-                        break;
-                    case VisualType.MapObject:
+                        player.SendPacket(entity.GenerateStPacket());
                         break;
                     default:
-                        throw new ArgumentOutOfRangeException();
+                        return;
                 }
             }
             catch (Exception e)
             {
-
             }
         }
     }

@@ -7,16 +7,6 @@ namespace ChickenAPI.Game.Packets.Game.Server
     [PacketHeader("c_mode")]
     public class CModePacketBase : PacketBase
     {
-        public CModePacketBase(IPlayerEntity entity)
-        {
-            VisualType = VisualType.Character;
-            CharacterId = entity.Character.Id;
-            Morph = 0;
-            SpUpgrade = entity.GetComponent<SpecialistComponent>().Upgrade;
-            SpDesign = entity.GetComponent<SpecialistComponent>().Design;
-            ArenaWinner = entity.Character.ArenaWinner;
-        }
-
         #region Properties
 
         [PacketIndex(0)]

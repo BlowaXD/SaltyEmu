@@ -9,6 +9,7 @@ using ChickenAPI.Core.Utils;
 using ChickenAPI.Game.Data.AccessLayer.Character;
 using ChickenAPI.Game.Data.AccessLayer.Item;
 using ChickenAPI.Game.Data.TransferObjects.Character;
+using ChickenAPI.Game.Entities.Extensions;
 using ChickenAPI.Game.Features.Battle;
 using ChickenAPI.Game.Features.Families;
 using ChickenAPI.Game.Features.Inventory;
@@ -114,11 +115,11 @@ namespace ChickenAPI.Game.Entities.Player
             }
 
             SendPacket(this.GenerateCInfoPacket());
-            SendPacket(new CModePacketBase(this));
+            SendPacket(this.GenerateCModePacket());
             SendPacket(this.GenerateEqPacket());
             SendPacket(this.GenerateEquipmentPacket());
             SendPacket(this.GenerateLevPacket());
-            SendPacket(new StPacket(this));
+            SendPacket(this.GenerateStPacket());
 
             SendPacket(this.GenerateAtPacket());
             SendPacket(this.GenerateCondPacket());

@@ -10,7 +10,7 @@ using ChickenAPI.Game.Game.Components;
 namespace ChickenAPI.Game.Packets.Game.Server
 {
     [PacketHeader("c_info")]
-    public class CInfoPacketBase : PacketBase
+    public class CInfoPacket : PacketBase
     {
 
         #region Propertiesf
