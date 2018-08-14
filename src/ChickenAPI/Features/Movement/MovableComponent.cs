@@ -11,6 +11,7 @@ using ChickenAPI.Game.Entities.Player;
 
 namespace ChickenAPI.Game.Features.Movement
 {
+    /// <inheritdoc />
     /// <summary>
     /// </summary>
     public class MovableComponent : IComponent

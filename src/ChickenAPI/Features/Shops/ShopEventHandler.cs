@@ -21,6 +21,9 @@ namespace ChickenAPI.Game.Features.Shops
     public class ShopEventHandler : EventHandlerBase
     {
 
+        private static IRandomGenerator _randomGenerator;
+        private static IRandomGenerator Random =>
+            _randomGenerator ?? (_randomGenerator = Container.Instance.Resolve<IRandomGenerator>());
         public override void Execute(IEntity entity, ChickenEventArgs e)
         {
             switch (e)

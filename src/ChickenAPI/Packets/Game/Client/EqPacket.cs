@@ -1,5 +1,4 @@
 ﻿using ChickenAPI.Enums.Game.Character;
-using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Packets.Game.Server.Inventory;
 
 namespace ChickenAPI.Game.Packets.Game.Client
@@ -7,18 +6,6 @@ namespace ChickenAPI.Game.Packets.Game.Client
     [PacketHeader("eq")]
     public class EqPacket : PacketBase
     {
-        public EqPacket(IPlayerEntity entity)
-        {
-            CharacterId = entity.Character.Id;
-            VisualType = 0;
-            GenderType = entity.Character.Gender;
-            HairStyleType = entity.Character.HairStyle;
-            HairColorType = entity.Character.HairColor;
-            CharacterClassType = entity.Character.Class;
-            EqList = new EqListInfo(entity.Inventory);
-            EqInfo = new EqRareInfo(entity.Inventory);
-        }
-
         [PacketIndex(0)]
         public long CharacterId { get; set; }
 

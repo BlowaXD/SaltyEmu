@@ -12,6 +12,7 @@ using ChickenAPI.Game.Data.TransferObjects.Character;
 using ChickenAPI.Game.Features.Battle;
 using ChickenAPI.Game.Features.Families;
 using ChickenAPI.Game.Features.Inventory;
+using ChickenAPI.Game.Features.Inventory.Extensions;
 using ChickenAPI.Game.Features.Leveling;
 using ChickenAPI.Game.Features.Movement;
 using ChickenAPI.Game.Features.Movement.Extensions;
@@ -94,7 +95,6 @@ namespace ChickenAPI.Game.Entities.Player
         public ExperienceComponent Experience { get; }
         public NameComponent Name { get; set; }
         public VisibilityComponent Visibility { get; }
-
         public CharacterDto Character { get; }
         public ISession Session { get; }
         public long LastPulse { get; }
@@ -115,8 +115,8 @@ namespace ChickenAPI.Game.Entities.Player
 
             SendPacket(new CInfoPacketBase(this));
             SendPacket(new CModePacketBase(this));
-            SendPacket(new EqPacket(this));
-            SendPacket(new EquipmentPacket(this));
+            SendPacket(this.GenerateEqPacket());
+            SendPacket(this.GenerateEquipmentPacket());
             SendPacket(this.GenerateLevPacket());
             SendPacket(new StPacket(this));
 
@@ -164,7 +164,7 @@ namespace ChickenAPI.Game.Entities.Player
         {
             GC.SuppressFinalize(this);
         }
-        
+
         public void Save()
         {
             DateTime before = DateTime.UtcNow;

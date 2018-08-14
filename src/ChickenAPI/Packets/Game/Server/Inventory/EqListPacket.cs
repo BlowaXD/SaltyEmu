@@ -6,19 +6,6 @@ namespace ChickenAPI.Game.Packets.Game.Server.Inventory
     [PacketHeader("subpacket_eq_list_info")]
     public class EqListInfo : PacketBase
     {
-        public EqListInfo(InventoryComponent inventory)
-        {
-            Hat = inventory.Wear[(int)EquipmentType.Hat]?.ItemId ?? -1;
-            Armor = inventory.Wear[(int)EquipmentType.Armor]?.ItemId ?? -1;
-            MainWeapon = inventory.Wear[(int)EquipmentType.MainWeapon]?.ItemId ?? -1;
-            SecondaryWeapon = inventory.Wear[(int)EquipmentType.SecondaryWeapon]?.ItemId ?? -1;
-            Mask = inventory.Wear[(int)EquipmentType.Mask]?.ItemId ?? -1;
-            Fairy = inventory.Wear[(int)EquipmentType.Fairy]?.ItemId ?? -1;
-            CostumeSuit = inventory.Wear[(int)EquipmentType.CostumeSuit]?.ItemId ?? -1;
-            CostumeHat = inventory.Wear[(int)EquipmentType.CostumeHat]?.ItemId ?? -1;
-            WeaponSkin = inventory.Wear[(int)EquipmentType.WeaponSkin]?.ItemId ?? -1;
-        }
-
         [PacketIndex(0)]
         public long Hat { get; set; }
 

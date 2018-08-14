@@ -1,6 +1,4 @@
-﻿using System;
-using ChickenAPI.Core.Logging;
-using ChickenAPI.Enums.Game.Entity;
+﻿using ChickenAPI.Core.Logging;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Features.Movement.Extensions;
 using ChickenAPI.Game.Packets;
