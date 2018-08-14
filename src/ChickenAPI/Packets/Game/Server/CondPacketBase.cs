@@ -6,17 +6,6 @@ namespace ChickenAPI.Game.Packets.Game.Server
     [PacketHeader("cond")]
     public class CondPacketBase : PacketBase
     {
-        public CondPacketBase(IPlayerEntity entity)
-        {
-            VisualType = VisualType.Character;
-            VisualId = entity.Character.Id;
-            CanAttack = entity.Battle.CanAttack;
-            CanMove = entity.Battle.CanMove;
-            Speed = entity.Movable.Speed;
-        }
-
-        #region Properties
-
         [PacketIndex(0)]
         public VisualType VisualType { get; set; }
 
@@ -31,7 +20,5 @@ namespace ChickenAPI.Game.Packets.Game.Server
 
         [PacketIndex(4)]
         public byte Speed { get; set; }
-
-        #endregion
     }
 }
