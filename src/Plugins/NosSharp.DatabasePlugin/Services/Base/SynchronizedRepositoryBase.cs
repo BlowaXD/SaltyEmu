@@ -103,7 +103,6 @@ namespace NosSharp.DatabasePlugin.Services.Base
                     });
                     transaction.Commit();
                 }
-                Log.Info($"[SAVE] {tmp.Count} {typeof(TObject).Name} saved");
                 Context.SaveChanges();
             }
             catch (Exception e)
