@@ -14,6 +14,7 @@ using ChickenAPI.Game.Features.Families;
 using ChickenAPI.Game.Features.Inventory;
 using ChickenAPI.Game.Features.Leveling;
 using ChickenAPI.Game.Features.Movement;
+using ChickenAPI.Game.Features.Movement.Extensions;
 using ChickenAPI.Game.Features.Skills;
 using ChickenAPI.Game.Features.Specialists;
 using ChickenAPI.Game.Features.Visibility;
@@ -120,7 +121,7 @@ namespace ChickenAPI.Game.Entities.Player
             SendPacket(new StPacket(this));
 
             SendPacket(this.GenerateAtPacket());
-            SendPacket(new CondPacketBase(this));
+            SendPacket(this.GenerateCondPacket());
             SendPacket(new CMapPacketBase(map.Map));
             // StatChar()
             // Pairy()

@@ -7,6 +7,7 @@ using ChickenAPI.Game.Data.TransferObjects.Character;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Features.Inventory;
 using ChickenAPI.Game.Features.Inventory.Args;
+using ChickenAPI.Game.Features.Movement.Extensions;
 using ChickenAPI.Game.Game.Components;
 using ChickenAPI.Game.Managers;
 using ChickenAPI.Game.Maps;
@@ -51,7 +52,7 @@ namespace NosSharp.PacketHandler
 
             session.Player.NotifyEventHandler<InventoryEventHandler>(new InventoryInitializeEventArgs());
             session.Player.NotifyEventHandler<InventoryEventHandler>(new InventoryGeneratePacketDetailsEventArgs());
-            session.SendPacket(new CondPacketBase(session.Player));
+            session.SendPacket(session.Player.GenerateCondPacket());
         }
     }
 }

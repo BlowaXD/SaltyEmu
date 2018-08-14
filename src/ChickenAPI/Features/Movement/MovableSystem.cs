@@ -6,6 +6,7 @@ using ChickenAPI.Core.ECS.Systems;
 using ChickenAPI.Core.Events;
 using ChickenAPI.Core.Utils;
 using ChickenAPI.Game.Entities.Player;
+using ChickenAPI.Game.Features.Movement.Extensions;
 using ChickenAPI.Game.Maps;
 using ChickenAPI.Game.Packets.Game.Server;
 
@@ -55,7 +56,7 @@ namespace ChickenAPI.Game.Features.Movement
 
                 if (entity is IPlayerEntity playerEntity)
                 {
-                    playerEntity.SendPacket(new CondPacketBase(playerEntity));
+                    playerEntity.SendPacket(playerEntity.GenerateCondPacket());
                 }
             }
             catch (Exception e)
