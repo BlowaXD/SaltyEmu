@@ -6,6 +6,7 @@ using ChickenAPI.Core.ECS.Entities;
 using ChickenAPI.Core.Events;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Maths;
+using ChickenAPI.Enums.Game.Character;
 using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Game.Data.TransferObjects.Shop;
 using ChickenAPI.Game.Data.TransferObjects.Skills;
@@ -143,21 +144,76 @@ namespace ChickenAPI.Game.Features.Shops
 
         private static void HandleNpcSkillBuyRequest(IPlayerEntity player, BuyShopEventArgs buy, Shop shop)
         {
-            if (shop.Skills.All(s => s.SkillId != buy.Slot))
+            ShopSkillDto skillShop = shop.Skills.FirstOrDefault(s => s.SkillId == buy.Slot);
+            if (skillShop == null)
             {
+                return;
             }
 
             // check use sp
-
+            
             // check skill cooldown
+            if (player.Skills.CooldownsBySkillId.Any(s => s.Item2 == buy.Slot))
+            {
+                return;
+            }
+
             // check skill already exists in player skills
-            // check skill price
-            // check skill cp
+            if (player.Skills.Skills.ContainsKey(buy.Slot))
+            {
+                return;
+            }
+
             // check skill class
+            if ((byte)player.Character.Class != skillShop.Skill.Class)
+            {
+                return;
+            }
+
+
+            // check skill price
+            if (player.Character.Gold < skillShop.Skill.Price)
+            {
+                return;
+            }
+
+            // check skill cp
+            if (player.GetCp() < skillShop.Skill.CpCost)
+            {
+                return;
+            }
+
             // check skill minimum level
+            byte minimumLevel = 1;
+            switch (player.Character.Class)
+            {
+                case CharacterClassType.Adventurer:
+                    minimumLevel = skillShop.Skill.MinimumAdventurerLevel;
+                    break;
+                case CharacterClassType.Swordman:
+                    minimumLevel = skillShop.Skill.MinimumSwordmanLevel;
+                    break;
+                case CharacterClassType.Archer:
+                    minimumLevel = skillShop.Skill.MinimumArcherLevel;
+                    break;
+                case CharacterClassType.Magician:
+                    minimumLevel = skillShop.Skill.MinimumMagicianLevel;
+                    break;
+                case CharacterClassType.Wrestler:
+                    minimumLevel = skillShop.Skill.MinimumWrestlerLevel;
+                    break;
+                case CharacterClassType.Unknown:
+                    break;
+            }
+
+            if (player.Character.JobLevel < minimumLevel)
+            {
+                return;
+            }
+
             // check skill upgrades
 
-            // player.Character.Gold -= skillinfo.Price;
+            player.Character.Gold -= skillShop.Skill.Price;
             player.SendPacket(player.GenerateGoldPacket());
             player.SendPacket(player.GenerateSkiPacket());
             player.SendPackets(player.GenerateQuicklistPacket());
