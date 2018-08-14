@@ -111,6 +111,11 @@ namespace World.Network
 
         public void SendPackets<T>(IEnumerable<T> packets) where T : IPacket
         {
+            if (packets == null)
+            {
+                return;
+            }
+
             foreach (T packet in packets)
             {
                 if (packet == null)
@@ -126,12 +131,22 @@ namespace World.Network
 
         public void GlobalBroadcast<T>(T packet) where T : IPacket
         {
+            if (packet == null)
+            {
+                return;
+            }
+
             string serialized = _packetFactory.Serialize(packet);
             _group.WriteAndFlushAsync(serialized);
         }
 
         public void GlobalBroadcast<T>(IEnumerable<T> packets) where T : IPacket
         {
+            if (packets == null)
+            {
+                return;
+            }
+
             foreach (T i in packets)
             {
                 _group.WriteAsync(_packetFactory.Serialize(i));

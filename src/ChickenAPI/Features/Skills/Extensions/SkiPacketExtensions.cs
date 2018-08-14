@@ -24,7 +24,7 @@ namespace ChickenAPI.Game.Features.Skills.Extensions
 
             return new SkiPacket
             {
-                SkiPacketContent = tmp.ToString()
+                SkiPacketContent = tmp.ToString().Trim()
             };
         }
     }

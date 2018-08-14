@@ -4,6 +4,7 @@ using Autofac;
 using ChickenAPI.Core.ECS.Components;
 using ChickenAPI.Core.ECS.Entities;
 using ChickenAPI.Core.IoC;
+using ChickenAPI.Enums.Game.Character;
 using ChickenAPI.Game.Data.AccessLayer.Skill;
 using ChickenAPI.Game.Data.TransferObjects.Skills;
 using ChickenAPI.Game.Entities.Player;
@@ -14,13 +15,13 @@ namespace ChickenAPI.Game.Features.Skills
     {
         private static ISkillService _skillService;
 
-        private static ISkillService Service => _skillService ?? (_skillService = Container.Instance.Resolve<ISkillService>());
+        private static ISkillService SkillService => _skillService ?? (_skillService = Container.Instance.Resolve<ISkillService>());
         public SkillComponent(IEntity entity)
         {
             Entity = entity;
 
             Skills = new Dictionary<long, SkillDto>();
-            CooldownsBySkillId = new Queue<(DateTime, long)>();
+            CooldownsBySkillId = new List<(DateTime, long)>();
 
             if (!(entity is IPlayerEntity player))
             {
@@ -28,8 +29,13 @@ namespace ChickenAPI.Game.Features.Skills
             }
 
             int tmp = 200 + 20 * (byte)player.Character.Class;
-            Skills.Add(tmp, Service.GetById(tmp));
-            Skills.Add(tmp + 1, Service.GetById(tmp + 1));
+            Skills.Add(tmp, SkillService.GetById(tmp));
+            Skills.Add(tmp + 1, SkillService.GetById(tmp + 1));
+
+            if (player.Character.Class == CharacterClassType.Adventurer)
+            {
+                Skills.Add(tmp + 9, SkillService.GetById(tmp + 9));
+            }
 
         }
 
@@ -46,7 +52,7 @@ namespace ChickenAPI.Game.Features.Skills
 
         public Dictionary<long, SkillDto> Skills { get; }
 
-        public Queue<(DateTime, long)> CooldownsBySkillId { get; }
+        public List<(DateTime, long)> CooldownsBySkillId { get; }
 
         public IEntity Entity { get; }
     }
