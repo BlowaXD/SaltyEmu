@@ -15,6 +15,9 @@ namespace ChickenAPI.Game.Features.Movement
     /// </summary>
     public class MovableComponent : IComponent
     {
+        private static IAlgorithmService _algorithmService;
+
+        private static IAlgorithmService Algorithm => _algorithmService ?? (_algorithmService = Container.Instance.Resolve<IAlgorithmService>());
         private static readonly Logger Log = Logger.GetLogger<MovableComponent>();
         private Position<short> _actual;
 
@@ -33,7 +36,7 @@ namespace ChickenAPI.Game.Features.Movement
             Waypoints = null;
             Destination = new Position<short>();
             Actual = new Position<short>();
-            Speed = (byte)Container.Instance.Resolve<IAlgorithmService>().GetSpeed(entity.Character.Class, entity.Experience.Level);
+            Speed = (byte)Algorithm.GetSpeed(entity.Character.Class, entity.Experience.Level);
         }
 
         /// <summary>
@@ -68,26 +71,6 @@ namespace ChickenAPI.Game.Features.Movement
         {
             e.Component.LastMove = DateTime.UtcNow;
             Move?.Invoke(sender, e);
-        }
-
-        private static double Octile(int x, int y)
-        {
-            int min = Math.Min(x, y);
-            int max = Math.Max(x, y);
-            return min * Math.Sqrt(2) + max - min;
-        }
-
-        private static int GetDistance(Position<short> src, Position<short> dest) => (int)Octile(Math.Abs(src.X - dest.X), Math.Abs(src.Y - dest.Y));
-
-        public bool CanMove(Position<short> newPos)
-        {
-            if (Speed == 0)
-            {
-                return false;
-            }
-
-            double waitingtime = GetDistance(newPos, Actual) / (double)Speed;
-            return LastMove.AddMilliseconds(waitingtime) <= DateTime.UtcNow;
         }
     }
 
