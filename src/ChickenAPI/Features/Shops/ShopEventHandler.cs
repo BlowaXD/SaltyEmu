@@ -209,7 +209,7 @@ namespace ChickenAPI.Game.Features.Shops
                 }
             }
 
-            bool canAddItem = buy.Slot % 3 == 0; // todo extension method for inventory
+            bool canAddItem = (buy.Slot % 3) == 0; // todo extension method for inventory
             if (!canAddItem)
             {
                 // no available slot

@@ -10,6 +10,7 @@ using ChickenAPI.Game.Data.AccessLayer.Item;
 using ChickenAPI.Game.Data.TransferObjects.Item;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Features.Inventory.Args;
+using ChickenAPI.Game.Features.Inventory.Extensions;
 using ChickenAPI.Game.Packets.Game.Server.Inventory;
 
 namespace ChickenAPI.Game.Features.Inventory
@@ -126,9 +127,9 @@ namespace ChickenAPI.Game.Features.Inventory
 
         private static void AddItem(InventoryComponent inv, InventoryAddItemEventArgs args)
         {
-            ItemInstanceDto[] subinv = GetSubInvFromItemInstance(inv, args.ItemInstance.Item);
+            ItemInstanceDto[] subinv = inv.GetSubInvFromItemInstance(args.ItemInstance);
 
-            short slot = GetFirstFreeSlot(subinv);
+            short slot = inv.GetFirstFreeSlot(subinv);
 
             if (slot == -1)
             {
@@ -155,7 +156,7 @@ namespace ChickenAPI.Game.Features.Inventory
                 return;
             }
 
-            ItemInstanceDto[] subinv = GetSubInvFromItemInstance(inv, args.ItemInstance.Item);
+            ItemInstanceDto[] subinv = inv.GetSubInvFromItem(args.ItemInstance.Item);
 
             int itemIndex = Array.FindIndex(subinv, x => x.Slot == args.ItemInstance.Slot);
 
@@ -164,7 +165,7 @@ namespace ChickenAPI.Game.Features.Inventory
 
         private static void DestroyItem(InventoryComponent inv, InventoryDestroyItemEventArgs args)
         {
-            ItemInstanceDto[] subinv = GetSubInvFromItemInstance(inv, args.ItemInstance.Item);
+            ItemInstanceDto[] subinv = inv.GetSubInvFromItemInstance(args.ItemInstance);
 
             int itemIndex = Array.FindIndex(subinv, x => x.Slot == args.ItemInstance.Slot);
 
@@ -175,8 +176,8 @@ namespace ChickenAPI.Game.Features.Inventory
 
         private static void MoveItem(InventoryComponent inv, InventoryMoveEventArgs args)
         {
-            ItemInstanceDto source = GetSubInvFromInventoryType(inv, args.InventoryType)[args.SourceSlot];
-            ItemInstanceDto dest = GetSubInvFromInventoryType(inv, args.InventoryType)[args.DestinationSlot];
+            ItemInstanceDto source = inv.GetSubInvFromInventoryType(args.InventoryType)[args.SourceSlot];
+            ItemInstanceDto dest = inv.GetSubInvFromInventoryType(args.InventoryType)[args.DestinationSlot];
 
             if (source == null)
             {
@@ -203,7 +204,7 @@ namespace ChickenAPI.Game.Features.Inventory
 
         private static void MoveItem(InventoryComponent inv, ItemInstanceDto source, InventoryMoveEventArgs args)
         {
-            ItemInstanceDto[] subInv = GetSubInvFromItemInstance(inv, source);
+            ItemInstanceDto[] subInv = inv.GetSubInvFromItemInstance(source);
             subInv[args.DestinationSlot] = source;
             subInv[args.SourceSlot] = null;
 
@@ -219,7 +220,7 @@ namespace ChickenAPI.Game.Features.Inventory
 
         private static void MoveItems(InventoryComponent inv, ItemInstanceDto source, ItemInstanceDto dest)
         {
-            ItemInstanceDto[] subInv = GetSubInvFromItemInstance(inv, source);
+            ItemInstanceDto[] subInv = inv.GetSubInvFromItemInstance(source);
             subInv[dest.Slot] = source;
             subInv[source.Slot] = dest;
 
@@ -253,7 +254,7 @@ namespace ChickenAPI.Game.Features.Inventory
             switch (eqInfo.Type)
             {
                 case 0:
-                    subInv = GetSubInvFromInventoryType(inventory, InventoryType.Wear);
+                    subInv = inventory.GetSubInvFromInventoryType(InventoryType.Wear);
                     if (eqInfo.Slot > subInv.Length)
                     {
                         return;
@@ -262,7 +263,7 @@ namespace ChickenAPI.Game.Features.Inventory
                     itemInstance = subInv[eqInfo.Slot];
                     break;
                 case 1:
-                    subInv = GetSubInvFromInventoryType(inventory, InventoryType.Equipment);
+                    subInv = inventory.GetSubInvFromInventoryType(InventoryType.Equipment);
                     if (eqInfo.Slot > subInv.Length)
                     {
                         return;
@@ -287,41 +288,6 @@ namespace ChickenAPI.Game.Features.Inventory
 
         #region Utils
 
-        private static short GetFirstFreeSlot(IReadOnlyCollection<ItemInstanceDto> subinventory)
-        {
-            for (int i = 0; i < subinventory.Count; i++)
-            {
-                ItemInstanceDto item = subinventory.FirstOrDefault(x => x == null || x.Slot == i);
-
-                if (item == null)
-                {
-                    return (short)i;
-                }
-            }
-
-            return -1;
-        }
-
-        private static ItemInstanceDto[] GetSubInvFromInventoryType(InventoryComponent inv, InventoryType type)
-        {
-            switch (type)
-            {
-                case InventoryType.Wear:
-                    return inv.Wear;
-                case InventoryType.Equipment:
-                    return inv.Equipment;
-                case InventoryType.Main:
-                    return inv.Main;
-                case InventoryType.Etc:
-                    return inv.Etc;
-                default:
-                    return null;
-            }
-        }
-
-        private static ItemInstanceDto[] GetSubInvFromItemInstance(InventoryComponent inv, ItemDto item) => GetSubInvFromInventoryType(inv, item.Type);
-
-        private static ItemInstanceDto[] GetSubInvFromItemInstance(InventoryComponent inv, ItemInstanceDto item) => GetSubInvFromInventoryType(inv, item.Type);
 
         private static IvnPacket GenerateEmptyIvnPacket(InventoryType type, short slot) => new IvnPacket
         {
