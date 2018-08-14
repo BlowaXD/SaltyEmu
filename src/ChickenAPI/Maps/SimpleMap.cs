@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Autofac;
 using ChickenAPI.Core.ECS.Entities;
+using ChickenAPI.Core.IoC;
+using ChickenAPI.Core.Maths;
 using ChickenAPI.Core.Utils;
 using ChickenAPI.Game.Data.TransferObjects.Map;
 using ChickenAPI.Game.Data.TransferObjects.Shop;
@@ -19,6 +22,8 @@ namespace ChickenAPI.Game.Maps
         private readonly Position<short>[] WalkableGrid;
         private IMapLayer _baseMapLayer;
 
+        private readonly IRandomGenerator _random;
+
         public SimpleMap(MapDto map, IEnumerable<MapMonsterDto> monsters, IEnumerable<MapNpcDto> npcs, IEnumerable<PortalDto> portals, IEnumerable<ShopDto> shops)
         {
             _map = map;
@@ -29,6 +34,7 @@ namespace ChickenAPI.Game.Maps
             _baseMapLayer = new SimpleMapLayer(this, _monsters, _npcs, _portals, _shops);
             Layers = new HashSet<IMapLayer>();
 
+            _random = Container.Instance.Resolve<IRandomGenerator>();
 
             List<Position<short>> cells = new List<Position<short>>();
             for (short y = 0; y <= _map.Height; y++)
@@ -67,13 +73,12 @@ namespace ChickenAPI.Game.Maps
 
         public Position<short> GetFreePosition(short minimumX, short minimumY, short rangeX, short rangeY)
         {
-            var random = new Random();
             short minX = (short)(-rangeX + minimumX);
             short maxX = (short)(rangeX + minimumX);
 
             short minY = (short)(-rangeY + minimumY);
             short maxY = (short)(rangeY + minimumY);
-            return WalkableGrid.Where(s => s.Y >= minY && s.Y <= maxY && s.X >= minX && s.X <= maxX).OrderBy(s => random.Next(int.MaxValue)).FirstOrDefault(cell => IsWalkable(cell.X, cell.Y));
+            return WalkableGrid.Where(s => s.Y >= minY && s.Y <= maxY && s.X >= minX && s.X <= maxX).OrderBy(s => _random.Next(int.MaxValue)).FirstOrDefault(cell => IsWalkable(cell.X, cell.Y));
         }
 
         private static bool IsWalkable(byte cell) => cell == 0 || cell == 2 || cell >= 16 && cell <= 19;

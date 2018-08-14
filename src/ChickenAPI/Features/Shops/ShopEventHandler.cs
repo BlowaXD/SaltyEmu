@@ -1,8 +1,8 @@
-﻿using System;
-using System.Linq;
-using System.Text;
+﻿using Autofac;
 using ChickenAPI.Core.ECS.Entities;
 using ChickenAPI.Core.Events;
+using ChickenAPI.Core.IoC;
+using ChickenAPI.Core.Maths;
 using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Game.Data.TransferObjects.Shop;
 using ChickenAPI.Game.Data.TransferObjects.Skills;
@@ -10,11 +10,18 @@ using ChickenAPI.Game.Entities.Npc;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Features.Shops.Args;
 using ChickenAPI.Game.Features.Shops.Packets;
+using System;
+using System.Linq;
+using System.Text;
 
 namespace ChickenAPI.Game.Features.Shops
 {
     public class ShopEventHandler : EventHandlerBase
     {
+        private static IRandomGenerator _randomGenerator;
+        private static IRandomGenerator Random =>
+            _randomGenerator ?? (_randomGenerator = Container.Instance.Resolve<IRandomGenerator>());
+
         public override void Execute(IEntity entity, ChickenEventArgs e)
         {
             switch (e)
@@ -30,7 +37,6 @@ namespace ChickenAPI.Game.Features.Shops
                     break;
             }
         }
-
 
         private static void SendInformations(GetShopInformationEventArgs getinfos, IEntity entity)
         {
@@ -191,8 +197,7 @@ namespace ChickenAPI.Game.Features.Shops
                 }
 
                 // generate a random rarity
-                var random = new Random();
-                byte ra = (byte)random.Next(100);
+                byte ra = (byte)Random.Next(100);
 
                 int[] rareprob = { 100, 100, 70, 50, 30, 15, 5, 1 };
                 if (item.Item.ReputPrice == 0)
@@ -215,7 +220,7 @@ namespace ChickenAPI.Game.Features.Shops
                 // no available slot
                 return;
             }
-            
+
             // add item to inventory
 
             if (isReputBuy)

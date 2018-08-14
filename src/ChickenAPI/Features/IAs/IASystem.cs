@@ -3,8 +3,8 @@ using System.Linq.Expressions;
 using Autofac;
 using ChickenAPI.Core.ECS.Entities;
 using ChickenAPI.Core.ECS.Systems;
-using ChickenAPI.Core.Events;
 using ChickenAPI.Core.IoC;
+using ChickenAPI.Core.Maths;
 using ChickenAPI.Core.Utils;
 using ChickenAPI.Game.Features.Movement;
 using ChickenAPI.Game.Maps;
@@ -15,13 +15,13 @@ namespace ChickenAPI.Game.Features.IAs
     {
         private readonly IMap _map;
         private readonly IPathfinder _pathfinder;
-        private readonly Random _random = new Random();
-        private readonly Random _randomY = new Random();
+        private readonly IRandomGenerator _random;
 
         public IASystem(IEntityManager entityManager, IMap map) : base(entityManager)
         {
             _map = map;
             _pathfinder = Container.Instance.Resolve<IPathfinder>();
+            _random = Container.Instance.Resolve<IRandomGenerator>();
         }
 
         protected override double RefreshRate => 0.45;
@@ -53,11 +53,10 @@ namespace ChickenAPI.Game.Features.IAs
                 return;
             }
 
-            var random = new Random();
-            if (random.Next(0, 100) < 35)
+            if (_random.Next(0, 100) < 35)
             {
                 // wait max 2500 millisecs before having a new movement
-                movableComponent.LastMove = DateTime.UtcNow.AddMilliseconds(random.Next(2500));
+                movableComponent.LastMove = DateTime.UtcNow.AddMilliseconds(_random.Next(2500));
                 return;
             }
 
@@ -65,7 +64,7 @@ namespace ChickenAPI.Game.Features.IAs
             while (dest == null && i < 25)
             {
                 short xpoint = (short)_random.Next(0, 4);
-                short ypoint = (short)_randomY.Next(0, 4);
+                short ypoint = (short)_random.Next(0, 4);
                 short firstX = movableComponent.Actual.X;
                 short firstY = movableComponent.Actual.Y;
                 dest = _map.GetFreePosition(firstX, firstY, xpoint, ypoint);
