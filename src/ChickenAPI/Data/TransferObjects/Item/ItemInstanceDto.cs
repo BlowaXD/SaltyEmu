@@ -5,7 +5,7 @@ using ElementType = ChickenAPI.Enums.Game.Entity.ElementType;
 
 namespace ChickenAPI.Game.Data.TransferObjects.Item
 {
-    public class ItemInstanceDto : ISynchronizedDto
+    public class ItemInstanceDto : ISynchronizedDto, ICloneable
     {
         public ItemDto Item { get; set; }
 
@@ -130,5 +130,16 @@ namespace ChickenAPI.Game.Data.TransferObjects.Item
         public short DarkPower { get; set; }
 
         #endregion
+
+        public object Clone()
+        {
+            object tmp = MemberwiseClone();
+            if (!(tmp is ItemInstanceDto newObject))
+            {
+                return null;
+            }
+            newObject.Id = Guid.NewGuid();
+            return newObject;
+        }
     }
 }
