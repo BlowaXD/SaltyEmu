@@ -49,7 +49,7 @@ namespace ChickenAPI.Game.Packets.Game.Server
         public CharacterClassType Class { get; set; }
 
         [PacketIndex(11)]
-        public ReputationIconType Icon { get; set; }
+        public byte Icon { get; set; }
 
         [PacketIndex(12)]
         public short Compliment { get; set; }

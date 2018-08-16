@@ -4,12 +4,14 @@ using ChickenAPI.Core.Logging;
 using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Game.Entities.Npc;
 using ChickenAPI.Game.Entities.Player;
+using ChickenAPI.Game.Entities.Player.Extensions;
 using ChickenAPI.Game.Entities.Portal;
 using ChickenAPI.Game.Features.Portals;
 using ChickenAPI.Game.Features.Shops.Packets;
 using ChickenAPI.Game.Features.Visibility.Args;
 using ChickenAPI.Game.Packets;
 using ChickenAPI.Game.Packets.Extensions;
+using ChickenAPI.Game.Packets.Game.Client;
 using ChickenAPI.Game.Packets.Game.Server;
 
 namespace ChickenAPI.Game.Features.Visibility
@@ -41,6 +43,7 @@ namespace ChickenAPI.Game.Features.Visibility
             }
 
             InPacketBase inEntity = entity.GenerateInPacket();
+            PairyPacket pairy = null;
 
             foreach (IEntity entityy in entity.EntityManager.Entities)
             {
@@ -57,6 +60,11 @@ namespace ChickenAPI.Game.Features.Visibility
                     }
 
                     continue;
+                }
+
+                if (pairy == null)
+                {
+                    pairy = session.GeneratePairyPacket();
                 }
 
 
@@ -80,6 +88,7 @@ namespace ChickenAPI.Game.Features.Visibility
                         if (entityy is IPlayerEntity player)
                         {
                             player.SendPacket(inEntity);
+                            player.SendPacket(pairy);
                         }
 
                         if (entityy.Type != EntityType.Npc || !(entityy is NpcEntity npc))

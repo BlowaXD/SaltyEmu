@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using ChickenAPI.Core.Data.TransferObjects;
+using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Enums.Game.Items;
 
 namespace NosSharp.DatabasePlugin.Models.Character

@@ -10,6 +10,7 @@ using ChickenAPI.Game.Data.AccessLayer.Character;
 using ChickenAPI.Game.Data.AccessLayer.Item;
 using ChickenAPI.Game.Data.TransferObjects.Character;
 using ChickenAPI.Game.Entities.Extensions;
+using ChickenAPI.Game.Entities.Player.Extensions;
 using ChickenAPI.Game.Features.Battle;
 using ChickenAPI.Game.Features.Families;
 using ChickenAPI.Game.Features.Inventory;
@@ -26,10 +27,8 @@ using ChickenAPI.Game.Maps;
 using ChickenAPI.Game.Network;
 using ChickenAPI.Game.Packets;
 using ChickenAPI.Game.Packets.Extensions;
-using ChickenAPI.Game.Packets.Game.Client;
 using ChickenAPI.Game.Packets.Game.Server;
 using ChickenAPI.Game.Packets.Game.Server.Group;
-using ChickenAPI.Game.Packets.Game.Server.Inventory;
 
 namespace ChickenAPI.Game.Entities.Player
 {
@@ -78,7 +77,7 @@ namespace ChickenAPI.Game.Entities.Player
                 { typeof(FamilyComponent), new FamilyComponent(this) },
                 { typeof(InventoryComponent), Inventory },
                 { typeof(NameComponent), Name },
-                { typeof(SpecialistComponent), new SpecialistComponent(this) },
+                { typeof(SpecialistComponent), Sp },
                 { typeof(SkillComponent), Skills }
             };
         }
@@ -97,6 +96,7 @@ namespace ChickenAPI.Game.Entities.Player
         public NameComponent Name { get; set; }
         public VisibilityComponent Visibility { get; }
         public CharacterDto Character { get; }
+        public SpecialistComponent Sp { get; }
         public ISession Session { get; }
         public long LastPulse { get; }
 
@@ -125,7 +125,7 @@ namespace ChickenAPI.Game.Entities.Player
             SendPacket(this.GenerateCondPacket());
             SendPacket(new CMapPacket(map.Map));
             // StatChar()
-            // Pairy()
+            SendPacket(this.GeneratePairyPacket());
             // Pst()
             // Act6() : Act()
             SendPacket(new PInitPacket());
@@ -169,13 +169,13 @@ namespace ChickenAPI.Game.Entities.Player
         public void Save()
         {
             DateTime before = DateTime.UtcNow;
-            CharacterService.Save(Character);
-            ItemInstance.Save(Inventory.Wear);
-            ItemInstance.Save(Inventory.Equipment);
-            ItemInstance.Save(Inventory.Main);
-            ItemInstance.Save(Inventory.Etc);
-            ItemInstance.Save(Inventory.Costumes);
-            ItemInstance.Save(Inventory.Specialists);
+            Task.WaitAll(CharacterService.SaveAsync(Character),
+                ItemInstance.SaveAsync(Inventory.Wear),
+                ItemInstance.SaveAsync(Inventory.Equipment),
+                ItemInstance.SaveAsync(Inventory.Main),
+                ItemInstance.SaveAsync(Inventory.Etc),
+                ItemInstance.SaveAsync(Inventory.Costumes),
+                ItemInstance.SaveAsync(Inventory.Specialists));
             Log.Info($"[SAVE] {Name.Name} saved in {(DateTime.UtcNow - before).TotalMilliseconds} ms");
         }
     }

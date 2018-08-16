@@ -13,8 +13,8 @@ namespace ChickenAPI.Game.Entities.Player
                 VisualType = VisualType.Character,
                 CharacterId = player.Character.Id,
                 Morph = 0,
-                SpUpgrade = player.GetComponent<SpecialistComponent>().Upgrade,
-                SpDesign = player.GetComponent<SpecialistComponent>().Design,
+                SpUpgrade = player.Sp?.Upgrade ?? 0,
+                SpDesign = player.Sp?.Design ?? 0,
                 ArenaWinner = player.Character.ArenaWinner,
             };
         }

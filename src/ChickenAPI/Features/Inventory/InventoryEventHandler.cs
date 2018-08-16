@@ -9,15 +9,18 @@ using ChickenAPI.Enums.Game.Items;
 using ChickenAPI.Game.Data.AccessLayer.Item;
 using ChickenAPI.Game.Data.TransferObjects.Item;
 using ChickenAPI.Game.Entities.Player;
+using ChickenAPI.Game.Entities.Player.Extensions;
+using ChickenAPI.Game.Features.Effects;
 using ChickenAPI.Game.Features.Inventory.Args;
 using ChickenAPI.Game.Features.Inventory.Extensions;
+using ChickenAPI.Game.Packets;
 using ChickenAPI.Game.Packets.Game.Server.Inventory;
 
 namespace ChickenAPI.Game.Features.Inventory
 {
     public class InventoryEventHandler : EventHandlerBase
     {
-        private const short MAX_AMOUNT_PER_SLOT = 999;
+        private const short MAX_AMOUNT_PER_SLOT = short.MaxValue;
 
         public override void Execute(IEntity entity, ChickenEventArgs e)
         {
@@ -45,6 +48,10 @@ namespace ChickenAPI.Game.Features.Inventory
                     GenerateInventoryPackets(inventory, entity as IPlayerEntity);
                     break;
 
+                case InventoryWearEventArgs inventoryWear:
+                    WearItem(inventory, entity as IPlayerEntity, inventoryWear);
+                    break;
+
                 case InventoryInitializeEventArgs initEvent:
                     InitializeInventory(inventory, entity as IPlayerEntity);
                     break;
@@ -56,6 +63,32 @@ namespace ChickenAPI.Game.Features.Inventory
                     GetItemInfo(inventory, eqInfo, entity as IPlayerEntity);
                     break;
             }
+        }
+
+        private void WearItem(InventoryComponent inventory, IPlayerEntity player, InventoryWearEventArgs inventoryWear)
+        {
+            ItemInstanceDto item = inventory.GetItemFromSlotAndType(inventoryWear.InventorySlot, InventoryType.Equipment);
+            if (item == null)
+            {
+                return;
+            }
+
+            // check shop opened
+            // check exchange
+
+            MoveItem(inventory, item, new InventoryMoveEventArgs { InventoryType = InventoryType.Wear, Amount = 1, DestinationSlot = (short)item.Item.EquipmentSlot});
+            player.SendPacket(player.GenerateEffectPacket(123));
+
+            if (!(player.EntityManager is IBroadcastable broadcastable))
+            {
+                return;
+            }
+
+            broadcastable.Broadcast(player.GenerateEqPacket());
+            player.SendPacket(player.GenerateEquipmentPacket());
+            broadcastable.Broadcast(player.GeneratePairyPacket());
+
+
         }
 
         private static void InitializeInventory(InventoryComponent inventory, IPlayerEntity player)
@@ -100,16 +133,16 @@ namespace ChickenAPI.Game.Features.Inventory
             switch (type)
             {
                 case InventoryType.Equipment:
-                    packet.Items.AddRange(items.Select(s =>
+                    packet.Items.AddRange(items.Where(s => s != null).Select(s =>
                         $"{s.Slot}.{s.ItemId}.{s.Rarity}.{(s.Item.IsColored && s.Item.EquipmentSlot == EquipmentType.Sp ? s.Design : s.Upgrade)}.{s.SpecialistUpgrade2}"));
                     break;
                 case InventoryType.Etc:
                 case InventoryType.Main:
-                    packet.Items.AddRange(items.Select(s =>
+                    packet.Items.AddRange(items.Where(s => s != null).Select(s =>
                         $"{s.Slot}.{s.ItemId}.{s.Amount}.0"));
                     break;
                 case InventoryType.Miniland:
-                    packet.Items.AddRange(items.Select(s =>
+                    packet.Items.AddRange(items.Where(s => s != null).Select(s =>
                         $"{s.Slot}.{s.ItemId}.{s.Amount}"));
                     break;
             }

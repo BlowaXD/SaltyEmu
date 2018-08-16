@@ -1,4 +1,4 @@
-﻿using ChickenAPI.Enums.Game.Items;
+﻿using ChickenAPI.Enums.Game.Entity;
 
 namespace ChickenAPI.Game.Packets.Game.Client
 {
@@ -6,10 +6,10 @@ namespace ChickenAPI.Game.Packets.Game.Client
     public class PairyPacket : PacketBase
     {
         [PacketIndex(0)]
-        public byte VisualType { get; set; }
+        public VisualType VisualType { get; set; }
 
         [PacketIndex(1)]
-        public short CharacterID { get; set; }
+        public long CharacterId { get; set; }
 
         [PacketIndex(2)]
         public byte FairyMoveType { get; set; }

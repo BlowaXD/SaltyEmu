@@ -1,5 +1,6 @@
 ﻿using ChickenAPI.Core.ECS.Components;
 using ChickenAPI.Core.ECS.Entities;
+using ChickenAPI.Enums.Game.Items;
 using ChickenAPI.Game.Data.TransferObjects.Item;
 
 namespace ChickenAPI.Game.Features.Inventory
