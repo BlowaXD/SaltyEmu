@@ -1,4 +1,4 @@
-﻿namespace ChickenAPI.Game.Packets.Game.Client
+﻿namespace ChickenAPI.Game.Packets.Game.Server
 {
     [PacketHeader("sc")]
     public class ScPacket : PacketBase

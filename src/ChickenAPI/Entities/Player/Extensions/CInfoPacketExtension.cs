@@ -1,10 +1,9 @@
 ﻿using ChickenAPI.Enums;
-using ChickenAPI.Game.Entities.Player.Extensions;
 using ChickenAPI.Game.Features.Families;
 using ChickenAPI.Game.Features.Specialists;
 using ChickenAPI.Game.Packets.Game.Server;
 
-namespace ChickenAPI.Game.Entities.Player
+namespace ChickenAPI.Game.Entities.Player.Extensions
 {
     public static class CInfoPacketExtension
     {

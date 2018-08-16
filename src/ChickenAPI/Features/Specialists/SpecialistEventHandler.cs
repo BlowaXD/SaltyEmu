@@ -3,7 +3,10 @@ using ChickenAPI.Core.ECS.Entities;
 using ChickenAPI.Core.Events;
 using ChickenAPI.Enums.Game.Items;
 using ChickenAPI.Game.Entities;
+using ChickenAPI.Game.Entities.Extensions;
 using ChickenAPI.Game.Entities.Player;
+using ChickenAPI.Game.Entities.Player.Extensions;
+using ChickenAPI.Game.Features.Movement.Extensions;
 using ChickenAPI.Game.Features.Specialists.Args;
 
 namespace ChickenAPI.Game.Features.Specialists
@@ -53,10 +56,10 @@ namespace ChickenAPI.Game.Features.Specialists
             // Broadcast Guri 6 1
             // remove buffs
             // transform
-            // GenerateLev()
-            // GenerateCond()
-            // GenerateStat()
-            // GenerateStatChar()
+            player.SendPacket(player.GenerateLevPacket());
+            player.SendPacket(player.GenerateCondPacket());
+            player.SendPacket(player.GenerateStatPacket());
+            player.SendPacket(player.GenerateStatCharPacket());
 
             // LoadSpSkills()
             // GenerateSki()
