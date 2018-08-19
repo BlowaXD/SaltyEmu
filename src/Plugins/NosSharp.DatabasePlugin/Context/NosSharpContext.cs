@@ -23,7 +23,7 @@ namespace NosSharp.DatabasePlugin.Context
 
         public DbSet<SkillModel> Skills { get; set; }
         public DbSet<SkillBCardModel> SkillBCards { get; set; }
-        public DbSet<CharacterQuikListModel> QuickList { get; set; }
+        public DbSet<CharacterQuicklistModel> QuickList { get; set; }
 
         public DbSet<CardModel> Cards { get; set; }
         public DbSet<CardBCardModel> CardBCards { get; set; }
@@ -150,7 +150,7 @@ namespace NosSharp.DatabasePlugin.Context
                 .WithMany(s => s.Skills)
                 .HasForeignKey(s => s.CharacterId);
 
-            modelBuilder.Entity<CharacterQuikListModel>()
+            modelBuilder.Entity<CharacterQuicklistModel>()
                .HasOne(s => s.Character)
                .WithMany(s => s.Quicklist)
                .HasForeignKey(s => s.CharacterId);

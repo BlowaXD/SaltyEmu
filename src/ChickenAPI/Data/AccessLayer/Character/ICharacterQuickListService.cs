@@ -7,11 +7,11 @@ using ChickenAPI.Game.Data.TransferObjects.Character;
 
 namespace ChickenAPI.Game.Data.AccessLayer.Character
 {
-    public interface ICharacterQuickListService : ISynchronizedRepository<CharacterQuickListDto>
+    public interface ICharacterQuickListService : ISynchronizedRepository<CharacterQuicklistDto>
     {
 
-        IEnumerable<CharacterQuickListDto> LoadByCharacterId(long characterId);
+        IEnumerable<CharacterQuicklistDto> LoadByCharacterId(long characterId);
 
-        Task<IEnumerable<CharacterQuickListDto>> LoadByCharacterIdAsync(long characterId);
+        Task<IEnumerable<CharacterQuicklistDto>> LoadByCharacterIdAsync(long characterId);
     }
 }

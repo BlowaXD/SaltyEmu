@@ -4,7 +4,7 @@ using System;
 
 namespace ChickenAPI.Game.Data.TransferObjects.Character
 {
-    public class CharacterQuickListDto : ISynchronizedDto
+    public class CharacterQuicklistDto : ISynchronizedDto
     {
         public Guid Id { get; set; }
 

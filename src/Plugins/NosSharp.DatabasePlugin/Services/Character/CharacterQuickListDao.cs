@@ -14,20 +14,20 @@ using NosSharp.DatabasePlugin.Services.Base;
 
 namespace NosSharp.DatabasePlugin.Services.Character
 {
-    public class CharacterQuickListDao : SynchronizedRepositoryBase<CharacterQuickListDto, CharacterQuikListModel>, ICharacterQuickListService
+    public class CharacterQuickListDao : SynchronizedRepositoryBase<CharacterQuicklistDto, CharacterQuicklistModel>, ICharacterQuickListService
     {
         #region Methods
-        private readonly CharacterQuickListDto _baseConf;
+        private readonly CharacterQuicklistDto _baseConf;
 
         public CharacterQuickListDao(NosSharpContext context, IMapper mapper) : base(context, mapper)
         {
         }
 
-        public IEnumerable<CharacterQuickListDto> LoadByCharacterId(long id)
+        public IEnumerable<CharacterQuicklistDto> LoadByCharacterId(long id)
         {
             try
             {
-                return (DbSet.Where(s => s.CharacterId == id).ToArray()).Select(Mapper.Map<CharacterQuickListDto>).ToArray();
+                return (DbSet.Where(s => s.CharacterId == id).ToArray()).Select(Mapper.Map<CharacterQuicklistDto>).ToArray();
             }
             catch (Exception e)
             {
@@ -36,11 +36,11 @@ namespace NosSharp.DatabasePlugin.Services.Character
             }
         }
         
-        public async Task<IEnumerable<CharacterQuickListDto>> LoadByCharacterIdAsync(long characterId)
+        public async Task<IEnumerable<CharacterQuicklistDto>> LoadByCharacterIdAsync(long characterId)
         {
             try
             {
-                return (await DbSet.Where(s => s.CharacterId == characterId).ToListAsync()).Select(Mapper.Map<CharacterQuickListDto>);
+                return (await DbSet.Where(s => s.CharacterId == characterId).ToListAsync()).Select(Mapper.Map<CharacterQuicklistDto>);
             }
             catch (Exception e)
             {

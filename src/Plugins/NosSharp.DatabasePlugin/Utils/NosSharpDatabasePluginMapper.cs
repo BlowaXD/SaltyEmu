@@ -185,8 +185,11 @@ namespace NosSharp.DatabasePlugin.Utils
 
             // Dto -> Model
             // Model -> Dto
-            cfg.CreateMap(typeof(CharacterSkillDto), typeof(CharacterSkillModel));
-            cfg.CreateMap(typeof(CharacterSkillModel), typeof(CharacterSkillDto));
+            cfg.CreateMap<CharacterSkillDto, CharacterSkillModel>();
+            cfg.CreateMap<CharacterSkillModel, CharacterSkillDto>();
+
+            cfg.CreateMap<CharacterQuicklistDto, CharacterQuicklistModel>();
+            cfg.CreateMap<CharacterQuicklistModel, CharacterQuicklistDto>();
         }
 
         private static void MappDrops(IProfileExpression cfg)

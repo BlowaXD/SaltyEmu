@@ -8,7 +8,7 @@ using ChickenAPI.Enums.Game.Character;
 namespace NosSharp.DatabasePlugin.Models.Character
 {
     [Table("quicklist")]
-    public class CharacterQuikListModel : ISynchronizedDto
+    public class CharacterQuicklistModel : ISynchronizedDto
     {
         [Key]
         public Guid Id { get; set; }
