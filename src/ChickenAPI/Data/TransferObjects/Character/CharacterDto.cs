@@ -29,7 +29,7 @@ namespace ChickenAPI.Game.Data.TransferObjects.Character
 
         public bool ExchangeBlocked { get; set; }
 
-        public byte Faction { get; set; }
+        public FactionType Faction { get; set; }
 
         public bool FamilyRequestBlocked { get; set; }
 
