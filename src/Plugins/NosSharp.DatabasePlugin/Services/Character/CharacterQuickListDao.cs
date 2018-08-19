@@ -35,12 +35,12 @@ namespace NosSharp.DatabasePlugin.Services.Character
                 return null;
             }
         }
-
-        public virtual async Task<IEnumerable<CharacterQuickListDto>> LoadKeysByCharacterIdAsync(IEnumerable<Guid> ids)
+        
+        public async Task<IEnumerable<CharacterQuickListDto>> LoadByCharacterIdAsync(long characterId)
         {
             try
             {
-                return (await DbSet.Where(s => ids.Contains(s.Id)).ToListAsync()).Select(Mapper.Map<CharacterQuickListDto>);
+                return (await DbSet.Where(s => s.CharacterId == characterId).ToListAsync()).Select(Mapper.Map<CharacterQuickListDto>);
             }
             catch (Exception e)
             {

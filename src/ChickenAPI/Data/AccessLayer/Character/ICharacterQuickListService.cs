@@ -12,6 +12,6 @@ namespace ChickenAPI.Game.Data.AccessLayer.Character
 
         IEnumerable<CharacterQuickListDto> LoadByCharacterId(long characterId);
 
-        Task<IEnumerable<CharacterQuickListDto>> LoadKeysByCharacterIdAsync(IEnumerable<Guid> ids);
+        Task<IEnumerable<CharacterQuickListDto>> LoadByCharacterIdAsync(long characterId);
     }
 }
