@@ -129,5 +129,7 @@ namespace NosSharp.DatabasePlugin.Models.Character
         public ICollection<CharacterItemModel> Items { get; set; }
 
         public ICollection<CharacterItemModel> BoundItems { get; set; }
+
+        public ICollection<CharacterQuikListModel> Quicklist { get; set; }
     }
 }

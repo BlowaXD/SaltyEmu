@@ -62,6 +62,7 @@ namespace NosSharp.DatabasePlugin
             Container.Builder.Register(s => new CharacterMateDao(s.Resolve<NosSharpContext>(), _mapper)).As<ICharacterMateService>().InstancePerLifetimeScope();
             Container.Builder.Register(s => new CharacterItemDao(s.Resolve<NosSharpContext>(), _mapper)).As<IItemInstanceService>().InstancePerLifetimeScope();
             Container.Builder.Register(s => new CharacterSkillDao(s.Resolve<NosSharpContext>(), _mapper)).As<ICharacterSkillService>().InstancePerLifetimeScope();
+            Container.Builder.Register(s => new CharacterQuickListDao(s.Resolve<NosSharpContext>(), _mapper)).As<ICharacterQuickListService>().InstancePerLifetimeScope();
 
             Container.Builder.Register(s => new MapMonsterDao(s.Resolve<NosSharpContext>(), _mapper)).As<IMapMonsterService>().InstancePerLifetimeScope();
             Container.Builder.Register(s => new MapNpcDao(s.Resolve<NosSharpContext>(), _mapper)).As<IMapNpcService>().InstancePerLifetimeScope();
