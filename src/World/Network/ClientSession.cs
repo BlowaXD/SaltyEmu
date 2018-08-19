@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using Autofac;
+using ChickenAPI.Core.i18n;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Logging;
 using ChickenAPI.Enums;
@@ -33,6 +34,7 @@ namespace World.Network
         public IPEndPoint Ip { get; private set; }
         public AccountDto Account { get; private set; }
         public IPlayerEntity Player { get; private set; }
+        public LanguageKey Langage => LanguageKey.EN;
 
         public int LastKeepAliveIdentity { get; set; }
 

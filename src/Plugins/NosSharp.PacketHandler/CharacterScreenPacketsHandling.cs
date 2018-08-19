@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Autofac;
+using ChickenAPI.Core.i18n;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Logging;
 using ChickenAPI.Core.Utils;
@@ -25,7 +26,15 @@ namespace NosSharp.PacketHandler
 {
     public class CharacterScreenPacketsHandling
     {
+        private static ILanguageService _languageService;
+
+        private static ILanguageService Language
+        {
+            get => _languageService ?? (_languageService = Container.Instance.Resolve<ILanguageService>());
+        }
+
         private static readonly Logger Log = Logger.GetLogger<CharacterScreenPacketsHandling>();
+
         /// <summary>
         /// Char_DEL packetBase
         /// </summary>
@@ -90,7 +99,7 @@ namespace NosSharp.PacketHandler
             {
                 session.SendPacket(new InfoPacketBase
                 {
-                    Message = "invalid_charname"
+                    Message = Language.GetLanguage(ChickenI18NKey.CHARACTER_NAME_INVALID, session.Langage)
                 });
                 Log.Warn($"[CREATE_CHARACTER] INVALID_NAME {characterName}");
                 return;
@@ -101,7 +110,7 @@ namespace NosSharp.PacketHandler
             {
                 session.SendPacket(new InfoPacketBase
                 {
-                    Message = "Already_taken"
+                    Message = Language.GetLanguage(ChickenI18NKey.CHARACTER_NAME_ALREADY_TAKEN, session.Langage)
                 });
                 Log.Warn($"[CREATE_CHARACTER] INVALID_NAME {characterName}");
                 return;
@@ -119,7 +128,7 @@ namespace NosSharp.PacketHandler
             newCharacter.MinilandMessage = "Welcome";
             newCharacter.State = CharacterState.Active;
             await characterService.SaveAsync(newCharacter);
-            Log.Info($"[CHARACTER_CREATE] {newCharacter.Name} | Account : {accountId}");
+            Log.Info($"[CHARACTER_CREATE] {newCharacter.Name} | Account : {session.Account.Name}");
             OnLoadCharacters(null, session);
         }
 
@@ -281,10 +290,11 @@ namespace NosSharp.PacketHandler
             {
                 ItemInstanceDto[] equipment = new ItemInstanceDto[16];
                 IEnumerable<ItemInstanceDto> inventory = await Container.Instance.Resolve<IItemInstanceService>().GetWearByCharacterIdAsync(character.Id);
-                 foreach (ItemInstanceDto equipmentEntry in inventory)
-                 {
-                     equipment[(short)equipmentEntry.Item.EquipmentSlot] = equipmentEntry;
-                 }
+                foreach (ItemInstanceDto equipmentEntry in inventory)
+                {
+                    equipment[(short)equipmentEntry.Item.EquipmentSlot] = equipmentEntry;
+                }
+
                 List<short?> petlist = new List<short?>();
                 CharacterMateDto[] mates = await Container.Instance.Resolve<ICharacterMateService>().GetMatesByCharacterIdAsync(character.Id);
                 for (int i = 0; i < 26; i++)

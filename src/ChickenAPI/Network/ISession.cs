@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Net;
+using ChickenAPI.Core.i18n;
 using ChickenAPI.Game.Data.TransferObjects.Character;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Packets;
@@ -18,6 +19,7 @@ namespace ChickenAPI.Game.Network
 
         AccountDto Account { get; }
         IPlayerEntity Player { get; }
+        LanguageKey Langage { get; }
 
         void InitializeAccount(AccountDto dto);
         void InitializeCharacterId(long id);
