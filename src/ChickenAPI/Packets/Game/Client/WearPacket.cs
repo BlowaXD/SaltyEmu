@@ -9,6 +9,6 @@ namespace ChickenAPI.Game.Packets.Game.Client
         public InventoryType InventoryType { get; set; }
 
         [PacketIndex(1)]
-        public short WearType { get; set; }
+        public short ItemSlot { get; set; }
     }
 }

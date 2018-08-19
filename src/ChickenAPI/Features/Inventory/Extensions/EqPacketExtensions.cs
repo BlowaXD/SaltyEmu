@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Text;
 using ChickenAPI.Enums.Game.Items;
+using ChickenAPI.Game.Data.TransferObjects.Item;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Packets.Game.Client;
 using ChickenAPI.Game.Packets.Game.Server.Inventory;
@@ -44,10 +46,31 @@ namespace ChickenAPI.Game.Features.Inventory.Extensions
 
         public static EquipmentPacket GenerateEquipmentPacket(this IPlayerEntity player)
         {
+            var tmp = new StringBuilder();
+            ItemInstanceDto[] subInventory = player.Inventory.Wear;
+
+            for (int i = 0; i < subInventory.Length; i++)
+            {
+                ItemInstanceDto item = subInventory[i];
+                if (item == null)
+                {
+                    continue;
+                }
+                tmp.Append(' ');
+                tmp.Append(i);
+                tmp.Append('.');
+                tmp.Append(item.ItemId);
+                tmp.Append('.');
+                tmp.Append(item.Rarity);
+                tmp.Append('.');
+                tmp.Append(item.Item.IsColored ? item.Design : item.Upgrade);
+                tmp.Append(".0");
+            }
+
             return new EquipmentPacket
             {
                 EqRare = player.Inventory.GenerateEqRareInfoPacket(),
-                EqList = new List<EquipmentInfoPacket>()
+                EqList = tmp.ToString().Trim()
             };
         }
     }

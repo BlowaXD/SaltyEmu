@@ -9,7 +9,7 @@ namespace ChickenAPI.Game.Packets.Game.Server.Inventory
         [PacketIndex(0, RemoveSeparator = true)]
         public EqRareInfo EqRare { get; set; }
 
-        [PacketIndex(1, SeparatorNestedElements = " ")]
-        public List<EquipmentInfoPacket> EqList { get; set; }
+        [PacketIndex(1)]
+        public string EqList { get; set; }
     }
 }

@@ -52,6 +52,9 @@ namespace ChickenAPI.Game.Features.Inventory
                     WearItem(inventory, entity as IPlayerEntity, inventoryWear);
                     break;
 
+                case InventoryUnwearEventArgs inventoryUnwear:
+                    UnequipItem(inventory, entity, inventoryUnwear);
+                    break;
                 case InventoryInitializeEventArgs initEvent:
                     InitializeInventory(inventory, entity as IPlayerEntity);
                     break;
@@ -76,7 +79,7 @@ namespace ChickenAPI.Game.Features.Inventory
             // check shop opened
             // check exchange
 
-            MoveItem(inventory, item, new InventoryMoveEventArgs { InventoryType = InventoryType.Wear, Amount = 1, DestinationSlot = (short)item.Item.EquipmentSlot});
+            EquipItem(inventory, player, item);
             player.SendPacket(player.GenerateEffectPacket(123));
 
             if (!(player.EntityManager is IBroadcastable broadcastable))
@@ -86,9 +89,75 @@ namespace ChickenAPI.Game.Features.Inventory
 
             broadcastable.Broadcast(player.GenerateEqPacket());
             player.SendPacket(player.GenerateEquipmentPacket());
+            player.SendPacket(player.GenerateStatCharPacket());
             broadcastable.Broadcast(player.GeneratePairyPacket());
+        }
 
+        /// <summary>
+        /// Equip the given item
+        /// In case the slot is actually taken, it will swap the items
+        /// </summary>
+        /// <param name="inventory"></param>
+        /// <param name="entity"></param>
+        /// <param name="item"></param>
+        private void EquipItem(InventoryComponent inventory, IEntity entity, ItemInstanceDto item)
+        {
+            // check if slot already claimed
+            ItemInstanceDto tmp = inventory.GetWeared(item.Item.EquipmentSlot);
+            var player = entity as IPlayerEntity;
 
+            if (tmp != null)
+            {
+                // todo refacto to "MoveSlot" method
+                inventory.Equipment[item.Slot] = tmp;
+                tmp.Slot = item.Slot;
+                tmp.Type = InventoryType.Equipment;
+            }
+
+            player?.SendPacket(GenerateEmptyIvnPacket(item.Type, item.Slot));
+            inventory.Wear[(int)item.Item.EquipmentSlot] = item;
+            item.Slot = (short)item.Item.EquipmentSlot;
+            item.Type = InventoryType.Wear;
+
+            if (tmp == null)
+            {
+                return;
+            }
+
+            player?.SendPacket(GenerateIvnPacket(tmp));
+        }
+
+        private void UnequipItem(InventoryComponent inventory, IEntity entity, InventoryUnwearEventArgs eventArgs)
+        {
+            short slot = inventory.GetFirstFreeSlot(InventoryType.Equipment);
+            if (slot == -1)
+            {
+                return;
+            }
+
+            ItemInstanceDto item = eventArgs.ItemToUnwear;
+
+            inventory.Wear[(int)item.Item.EquipmentSlot] = null;
+            inventory.Equipment[slot] = item;
+            item.Slot = slot;
+            item.Type = InventoryType.Equipment;
+
+            if (!(entity is IPlayerEntity player))
+            {
+                return;
+            }
+
+            player.SendPacket(GenerateIvnPacket(item));
+
+            if (!(player.EntityManager is IBroadcastable broadcastable))
+            {
+                return;
+            }
+
+            broadcastable.Broadcast(player.GenerateEqPacket());
+            player.SendPacket(player.GenerateEquipmentPacket());
+            player.SendPacket(player.GenerateStatCharPacket());
+            broadcastable.Broadcast(player.GeneratePairyPacket());
         }
 
         private static void InitializeInventory(InventoryComponent inventory, IPlayerEntity player)
@@ -169,7 +238,7 @@ namespace ChickenAPI.Game.Features.Inventory
                 //Not enough space
                 return;
             }
-            
+
             args.ItemInstance.Slot = slot;
             subinv[slot] = args.ItemInstance;
             if (!(inv.Entity is IPlayerEntity player))
@@ -320,7 +389,6 @@ namespace ChickenAPI.Game.Features.Inventory
 
 
         #region Utils
-
 
         private static IvnPacket GenerateEmptyIvnPacket(InventoryType type, short slot) => new IvnPacket
         {
