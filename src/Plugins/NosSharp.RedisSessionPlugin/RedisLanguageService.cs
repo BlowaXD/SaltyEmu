@@ -1,7 +1,6 @@
 ﻿using System;
+using ChickenAPI.Core.i18n;
 using ChickenAPI.Enums;
-using ChickenAPI.Game.Data.AccessLayer.Server;
-using ChickenAPI.Game.Data.Language;
 using ServiceStack.Redis;
 using ServiceStack.Redis.Generic;
 
@@ -24,15 +23,16 @@ namespace NosSharp.RedisSessionPlugin
             _set = _client.Sets["WorldServer"];
         }
 
-    public string GetLanguage(string key, RegionType type) => throw new NotImplementedException();
-        public string GetLanguage(LanguageKeys key, RegionType type) => throw new NotImplementedException();
+        public string GetLanguage(string key, LanguageKey language) => throw new NotImplementedException();
 
-        public void SetLanguage(string key, string value, RegionType type)
+        public string GetLanguage(ChickenI18NKey key, LanguageKey type) => throw new NotImplementedException();
+
+        public void SetLanguage(string key, string value, LanguageKey type)
         {
             throw new NotImplementedException();
         }
 
-        public void SetLanguage(LanguageKeys key, string value, RegionType type)
+        public void SetLanguage(ChickenI18NKey key, string value, LanguageKey type)
         {
             throw new NotImplementedException();
         }

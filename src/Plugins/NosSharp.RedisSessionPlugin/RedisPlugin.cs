@@ -1,5 +1,6 @@
 ﻿using System;
 using Autofac;
+using ChickenAPI.Core.i18n;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Logging;
 using ChickenAPI.Core.Plugins;

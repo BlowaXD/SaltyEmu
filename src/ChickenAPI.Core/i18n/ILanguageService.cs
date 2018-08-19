@@ -1,7 +1,4 @@
-﻿using ChickenAPI.Enums;
-using ChickenAPI.Game.Data.Language;
-
-namespace ChickenAPI.Game.Data.AccessLayer.Server
+﻿namespace ChickenAPI.Core.i18n
 {
     public interface ILanguageService
     {
@@ -10,9 +7,9 @@ namespace ChickenAPI.Game.Data.AccessLayer.Server
         ///     Used for plugins mainly
         /// </summary>
         /// <param name="key"></param>
-        /// <param name="type"></param>
+        /// <param name="language"></param>
         /// <returns></returns>
-        string GetLanguage(string key, RegionType type);
+        string GetLanguage(string key, LanguageKey language);
 
         /// <summary>
         ///     Will return the string by its key & region
@@ -21,7 +18,7 @@ namespace ChickenAPI.Game.Data.AccessLayer.Server
         /// <param name="key"></param>
         /// <param name="type"></param>
         /// <returns></returns>
-        string GetLanguage(LanguageKeys key, RegionType type);
+        string GetLanguage(ChickenI18NKey key, LanguageKey type);
 
         /// <summary>
         ///     Will register the key and value by its region type
@@ -30,8 +27,7 @@ namespace ChickenAPI.Game.Data.AccessLayer.Server
         /// <param name="key"></param>
         /// <param name="value"></param>
         /// <param name="type"></param>
-        /// <param name="encodingInfo"></param>
-        void SetLanguage(string key, string value, RegionType type);
+        void SetLanguage(string key, string value, LanguageKey type);
 
         /// <summary>
         ///     Will register the key and value by its region type
@@ -40,7 +36,6 @@ namespace ChickenAPI.Game.Data.AccessLayer.Server
         /// <param name="key"></param>
         /// <param name="value"></param>
         /// <param name="type"></param>
-        /// <param name="encodingInfo"></param>
-        void SetLanguage(LanguageKeys key, string value, RegionType type);
+        void SetLanguage(ChickenI18NKey key, string value, LanguageKey type);
     }
 }
