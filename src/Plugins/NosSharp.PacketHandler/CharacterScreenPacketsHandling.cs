@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Autofac;
@@ -73,6 +74,11 @@ namespace NosSharp.PacketHandler
 
             var characterService = Container.Instance.Resolve<ICharacterService>();
 
+            if (slot > 3)
+            {
+                return;
+            }
+
             if (await characterService.GetByAccountIdAndSlotAsync(session.Account.Id, slot) != null)
             {
                 Log.Warn($"[CREATE_CHARACTER] SLOT_ALREADY_TAKEN {slot}");
@@ -104,6 +110,88 @@ namespace NosSharp.PacketHandler
             CharacterDto newCharacter = characterService.GetCreationCharacter();
 
             newCharacter.Class = CharacterClassType.Adventurer;
+            newCharacter.Gender = characterCreatePacketBase.Gender;
+            newCharacter.HairColor = characterCreatePacketBase.HairColor;
+            newCharacter.HairStyle = characterCreatePacketBase.HairStyle;
+            newCharacter.Name = characterName;
+            newCharacter.Slot = slot;
+            newCharacter.AccountId = accountId;
+            newCharacter.MinilandMessage = "Welcome";
+            newCharacter.State = CharacterState.Active;
+            await characterService.SaveAsync(newCharacter);
+            Log.Info($"[CHARACTER_CREATE] {newCharacter.Name} | Account : {accountId}");
+            OnLoadCharacters(null, session);
+        }
+
+        /// <summary>
+        /// Char_NEW characterEntity creation characterEntity
+        /// </summary>
+        /// <param name="characterCreatePacketBase"></param>
+        /// <param name="session"></param>
+        public static async void OnCreateCharacterWrestler(CharNewWrestlerPacketBase characterCreatePacketBase, ISession session)
+        {
+            long accountId = session.Account.Id;
+            byte slot = characterCreatePacketBase.Slot;
+            string characterName = characterCreatePacketBase.Name;
+
+            var characterService = Container.Instance.Resolve<ICharacterService>();
+
+            if (slot > 3)
+            {
+                return;
+            }
+
+            if (slot != 3)
+            {
+                session.SendPacket(new InfoPacketBase
+                {
+                    Message = "invalid_slot_wrestler"
+                });
+                Log.Warn($"[CREATE_CHARACTER] INVALID_SLOT_WRESTLER {slot}");
+                return;
+            }
+
+            if (!characterService.GetActiveByAccountId(session.Account.Id).Any(s => s.Level >= 80))
+            {
+                session.SendPacket(new InfoPacketBase
+                {
+                    Message = "invalid_lvl_wrestler"
+                });
+                Log.Warn($"[CREATE_CHARACTER] INVALID_LVL_WRESTLER");
+                return;
+            }
+
+            if (await characterService.GetByAccountIdAndSlotAsync(session.Account.Id, slot) != null)
+            {
+                Log.Warn($"[CREATE_CHARACTER] SLOT_ALREADY_TAKEN {slot}");
+                return;
+            }
+
+            var rg = new Regex(@"^[\u0021-\u007E\u00A1-\u00AC\u00AE-\u00FF\u4E00-\u9FA5\u0E01-\u0E3A\u0E3F-\u0E5B\u002E]*$");
+            if (rg.Matches(characterName).Count != 1)
+            {
+                session.SendPacket(new InfoPacketBase
+                {
+                    Message = "invalid_charname"
+                });
+                Log.Warn($"[CREATE_CHARACTER] INVALID_NAME {characterName}");
+                return;
+            }
+
+            CharacterDto character = await characterService.GetActiveByNameAsync(characterName);
+            if (character != null)
+            {
+                session.SendPacket(new InfoPacketBase
+                {
+                    Message = "Already_taken"
+                });
+                Log.Warn($"[CREATE_CHARACTER] INVALID_NAME {characterName}");
+                return;
+            }
+
+            CharacterDto newCharacter = characterService.GetCreationCharacter();
+
+            newCharacter.Class = CharacterClassType.Wrestler;
             newCharacter.Gender = characterCreatePacketBase.Gender;
             newCharacter.HairColor = characterCreatePacketBase.HairColor;
             newCharacter.HairStyle = characterCreatePacketBase.HairStyle;
