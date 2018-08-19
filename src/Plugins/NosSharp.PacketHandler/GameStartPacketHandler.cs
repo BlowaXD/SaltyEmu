@@ -83,6 +83,9 @@ namespace NosSharp.PacketHandler
             // flinit
             // kdlinit
 
+            session.SendPacket(session.Player.GenerateStatCharPacket());
+            session.SendPacket(session.Player.GeneratePairyPacket());
+
 
 
             // Session.SendPacket(Session.Character.GenerateGInfo());
