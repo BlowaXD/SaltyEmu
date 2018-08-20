@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using ChickenAPI.Enums.Game.Items;
 using ChickenAPI.Game.Data.TransferObjects.Item;
@@ -26,6 +27,23 @@ namespace ChickenAPI.Game.Features.Inventory.Extensions
             }
 
             return -1;
+        }
+
+        public static IEnumerable<ItemInstanceDto> GetItems(this InventoryComponent inventory)
+        {
+            List<ItemInstanceDto> list = new List<ItemInstanceDto>();
+            list.AddRange(inventory.Wear.Where(s => s != null));
+            list.AddRange(inventory.Costumes.Where(s => s != null));
+            list.AddRange(inventory.Equipment.Where(s => s != null));
+            list.AddRange(inventory.Etc.Where(s => s != null));
+            list.AddRange(inventory.Main.Where(s => s != null));
+            list.AddRange(inventory.Specialists.Where(s => s != null));
+            return list;
+        }
+
+        public static IEnumerable<ItemInstanceDto> GetItems(this InventoryComponent inventory, Func<ItemInstanceDto, bool> predicate)
+        {
+            return GetItems(inventory).Where(predicate);
         }
 
 

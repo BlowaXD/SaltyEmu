@@ -173,18 +173,12 @@ namespace NosSharp.DatabasePlugin.Utils
 
         private static void MapCharacters(IMapperConfigurationExpression cfg)
         {
-            // Dto -> Model
-            // Model -> Dto
-            cfg.CreateMap(typeof(CharacterDto), typeof(CharacterModel));
-            cfg.CreateMap(typeof(CharacterModel), typeof(CharacterDto));
+            cfg.CreateMap<CharacterDto, CharacterModel>();
+            cfg.CreateMap<CharacterModel, CharacterDto>();
 
-            // Dto -> Model
-            // Model -> Dto
-            cfg.CreateMap(typeof(CharacterMateDto), typeof(CharacterMateModel));
-            cfg.CreateMap(typeof(CharacterMateModel), typeof(CharacterMateDto));
+            cfg.CreateMap<CharacterMateDto, CharacterMateModel>();
+            cfg.CreateMap<CharacterMateModel, CharacterMateDto>();
 
-            // Dto -> Model
-            // Model -> Dto
             cfg.CreateMap<CharacterSkillDto, CharacterSkillModel>();
             cfg.CreateMap<CharacterSkillModel, CharacterSkillDto>();
 
