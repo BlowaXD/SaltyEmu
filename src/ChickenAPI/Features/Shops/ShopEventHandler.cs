@@ -13,6 +13,7 @@ using ChickenAPI.Game.Data.TransferObjects.Shop;
 using ChickenAPI.Game.Data.TransferObjects.Skills;
 using ChickenAPI.Game.Entities.Npc;
 using ChickenAPI.Game.Entities.Player;
+using ChickenAPI.Game.Entities.Player.Extensions;
 using ChickenAPI.Game.Features.Inventory.Extensions;
 using ChickenAPI.Game.Features.Shops.Args;
 using ChickenAPI.Game.Features.Shops.Packets;
@@ -22,10 +23,11 @@ namespace ChickenAPI.Game.Features.Shops
 {
     public class ShopEventHandler : EventHandlerBase
     {
-
         private static IRandomGenerator _randomGenerator;
+
         private static IRandomGenerator Random =>
             _randomGenerator ?? (_randomGenerator = Container.Instance.Resolve<IRandomGenerator>());
+
         public override void Execute(IEntity entity, ChickenEventArgs e)
         {
             switch (e)
@@ -53,7 +55,24 @@ namespace ChickenAPI.Game.Features.Shops
             int typeshop = 0;
 
             var tmp = new StringBuilder();
-            float percent = 1.0f;
+            double percent = 1.0;
+
+            switch (player.GetDignityIcon())
+            {
+                case -3:
+                    percent = 1.1;
+                    typeshop = 110;
+                    break;
+                case -4:
+                    percent = 1.2;
+                    typeshop = 120;
+                    break;
+                case -5:
+                case -6:
+                    percent = 1.5;
+                    typeshop = 150;
+                    break;
+            }
             foreach (ShopItemDto itemInfo in getinfos.Shop.Items.Where(s => s.Type == getinfos.Type))
             {
                 if (typeshop == 0)
@@ -62,7 +81,7 @@ namespace ChickenAPI.Game.Features.Shops
                 }
 
                 tmp.Append(' ');
-                float price = itemInfo.Item.ReputPrice > 0 ? itemInfo.Item.ReputPrice : itemInfo.Item.Price * percent;
+                double price = itemInfo.Item.ReputPrice > 0 ? itemInfo.Item.ReputPrice : itemInfo.Item.Price * percent;
                 byte color = itemInfo.Color != 0 ? itemInfo.Item.Color : itemInfo.Item.BasicUpgrade;
                 int rare = itemInfo.Item.Type != InventoryType.Equipment ? -1 : itemInfo.Type == 0 && itemInfo.Item.ReputPrice > 0 ? itemInfo.Rare : -1;
 
@@ -156,7 +175,7 @@ namespace ChickenAPI.Game.Features.Shops
             }
 
             // check use sp
-            
+
             // check skill cooldown
             if (player.Skills.CooldownsBySkillId.Any(s => s.Item2 == buy.Slot))
             {
