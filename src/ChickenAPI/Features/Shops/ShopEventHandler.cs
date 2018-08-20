@@ -67,7 +67,7 @@ namespace ChickenAPI.Game.Features.Shops
 
                 tmp.Append(itemInfo.Type);
                 tmp.Append('.');
-                tmp.Append((byte)itemInfo.Item.EquipmentSlot);
+                tmp.Append(itemInfo.Slot);
                 tmp.Append('.');
                 tmp.Append(itemInfo.ItemId);
                 tmp.Append('.');
