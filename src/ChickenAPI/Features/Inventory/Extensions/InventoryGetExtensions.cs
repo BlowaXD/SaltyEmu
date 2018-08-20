@@ -31,19 +31,19 @@ namespace ChickenAPI.Game.Features.Inventory.Extensions
 
         public static IEnumerable<ItemInstanceDto> GetItems(this InventoryComponent inventory)
         {
-            List<ItemInstanceDto> list = new List<ItemInstanceDto>();
-            list.AddRange(inventory.Wear.Where(s => s != null));
-            list.AddRange(inventory.Costumes.Where(s => s != null));
-            list.AddRange(inventory.Equipment.Where(s => s != null));
-            list.AddRange(inventory.Etc.Where(s => s != null));
-            list.AddRange(inventory.Main.Where(s => s != null));
-            list.AddRange(inventory.Specialists.Where(s => s != null));
-            return list;
+            return GetItems(inventory, dto => dto != null);
         }
 
         public static IEnumerable<ItemInstanceDto> GetItems(this InventoryComponent inventory, Func<ItemInstanceDto, bool> predicate)
         {
-            return GetItems(inventory).Where(predicate);
+            List<ItemInstanceDto> list = new List<ItemInstanceDto>();
+            list.AddRange(inventory.Wear.Where(predicate));
+            list.AddRange(inventory.Costumes.Where(predicate));
+            list.AddRange(inventory.Equipment.Where(predicate));
+            list.AddRange(inventory.Etc.Where(predicate));
+            list.AddRange(inventory.Main.Where(predicate));
+            list.AddRange(inventory.Specialists.Where(predicate));
+            return list;
         }
 
 

@@ -1,6 +1,7 @@
 ﻿using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Enums.Game.Items;
 using ChickenAPI.Game.Data.TransferObjects.Item;
+using ChickenAPI.Game.Features.Inventory.Extensions;
 using ChickenAPI.Game.Packets.Game.Client;
 
 namespace ChickenAPI.Game.Entities.Player.Extensions
@@ -9,7 +10,7 @@ namespace ChickenAPI.Game.Entities.Player.Extensions
     {
         public static PairyPacket GeneratePairyPacket(this IPlayerEntity player)
         {
-            ItemInstanceDto fairy = player.Inventory.Wear[(int)EquipmentType.Fairy];
+            ItemInstanceDto fairy = player.Inventory.GetWeared(EquipmentType.Fairy);
             if (fairy == null)
             {
                 return new PairyPacket
