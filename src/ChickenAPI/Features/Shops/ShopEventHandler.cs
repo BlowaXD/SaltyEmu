@@ -8,6 +8,7 @@ using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Maths;
 using ChickenAPI.Enums.Game.Character;
 using ChickenAPI.Enums.Game.Entity;
+using ChickenAPI.Enums.Game.Items;
 using ChickenAPI.Game.Data.TransferObjects.Shop;
 using ChickenAPI.Game.Data.TransferObjects.Skills;
 using ChickenAPI.Game.Entities.Npc;
@@ -63,9 +64,9 @@ namespace ChickenAPI.Game.Features.Shops
                 tmp.Append(' ');
                 float price = itemInfo.Item.ReputPrice > 0 ? itemInfo.Item.ReputPrice : itemInfo.Item.Price * percent;
                 byte color = itemInfo.Color != 0 ? itemInfo.Item.Color : itemInfo.Item.BasicUpgrade;
-                int rare = itemInfo.Type == 0 ? itemInfo.Rare : -1;
+                int rare = itemInfo.Item.Type != InventoryType.Equipment ? -1 : itemInfo.Type == 0 && itemInfo.Item.ReputPrice > 0 ? itemInfo.Rare : -1;
 
-                tmp.Append(itemInfo.Type);
+                tmp.Append((byte)itemInfo.Item.Type);
                 tmp.Append('.');
                 tmp.Append(itemInfo.Slot);
                 tmp.Append('.');
@@ -73,8 +74,12 @@ namespace ChickenAPI.Game.Features.Shops
                 tmp.Append('.');
                 tmp.Append(rare);
                 tmp.Append('.');
-                tmp.Append(color);
-                tmp.Append('.');
+                if (itemInfo.Item.Type == InventoryType.Equipment)
+                {
+                    tmp.Append(color);
+                    tmp.Append('.');
+                }
+
                 tmp.Append(price);
             }
 
