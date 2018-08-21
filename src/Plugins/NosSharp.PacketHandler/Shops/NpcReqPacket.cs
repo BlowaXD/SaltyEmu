@@ -7,7 +7,6 @@ using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Features.Shops;
 using ChickenAPI.Game.Features.Shops.Args;
 using ChickenAPI.Game.Features.Shops.Packets;
-using ChickenAPI.Game.Packets.Game.Client;
 
 namespace NosSharp.PacketHandler.Shops
 {
@@ -28,6 +27,17 @@ namespace NosSharp.PacketHandler.Shops
                 VisualType = VisualType.Npc,
                 VisualId = npc.MapNpc.Id,
                 Dialog = npc.MapNpc.Dialog,
+            });
+        }
+
+        public static void BuyPcket(BuyPacket packet, IPlayerEntity player)
+        {
+            player.NotifyEventHandler<ShopEventHandler>(new BuyShopEventArgs
+            {
+                Amount = packet.Amount,
+                OwnerId = packet.OwnerId,
+                Slot = packet.Slot,
+                Type = packet.Type
             });
         }
     }

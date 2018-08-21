@@ -9,11 +9,15 @@ using ChickenAPI.Core.Maths;
 using ChickenAPI.Enums.Game.Character;
 using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Enums.Game.Items;
+using ChickenAPI.Game.Data.AccessLayer.Item;
+using ChickenAPI.Game.Data.TransferObjects.Item;
 using ChickenAPI.Game.Data.TransferObjects.Shop;
 using ChickenAPI.Game.Data.TransferObjects.Skills;
 using ChickenAPI.Game.Entities.Npc;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Entities.Player.Extensions;
+using ChickenAPI.Game.Features.Inventory;
+using ChickenAPI.Game.Features.Inventory.Args;
 using ChickenAPI.Game.Features.Inventory.Extensions;
 using ChickenAPI.Game.Features.Shops.Args;
 using ChickenAPI.Game.Features.Shops.Packets;
@@ -83,7 +87,7 @@ namespace ChickenAPI.Game.Features.Shops
                 tmp.Append(' ');
                 double price = itemInfo.Item.ReputPrice > 0 ? itemInfo.Item.ReputPrice : itemInfo.Item.Price * percent;
                 byte color = itemInfo.Color != 0 ? itemInfo.Item.Color : itemInfo.Item.BasicUpgrade;
-                int rare = itemInfo.Item.Type != InventoryType.Equipment ? -1 : itemInfo.Type == 0 && itemInfo.Item.ReputPrice > 0 ? itemInfo.Rare : -1;
+                int rare = itemInfo.Item.Type != InventoryType.Equipment ? -1 : itemInfo.Rare;
 
                 tmp.Append((byte)itemInfo.Item.Type);
                 tmp.Append('.');
@@ -248,17 +252,34 @@ namespace ChickenAPI.Game.Features.Shops
         private static void HandleNpcItemBuyRequest(IPlayerEntity player, BuyShopEventArgs buy, Shop shop)
         {
             ShopItemDto item = shop.Items.FirstOrDefault(s => s.Slot == buy.Slot);
-            if (item == null)
+            long amount = buy.Amount;
+
+            if (item == null || amount <= 0 || amount > 999)
             {
                 return;
             }
 
             // check diginity
+            double percent = 1.0;
+            switch (player.GetDignityIcon())
+            {
+                case 3:
+                    percent = 1.10;
+                    break;
+
+                case 4:
+                    percent = 1.20;
+                    break;
+
+                case 5:
+                case 6:
+                    percent = 1.5;
+                    break;
+            }
+
             bool isReputBuy = item.Item.ReputPrice > 0;
             long price = isReputBuy ? item.Item.ReputPrice : item.Item.Price;
             sbyte rare = item.Rare;
-            double percent = 1.0;
-            long amount = buy.Amount;
             if (item.Item.Type == 0)
             {
                 amount = 1;
@@ -304,6 +325,13 @@ namespace ChickenAPI.Game.Features.Shops
             }
 
             // add item to inventory
+            var itemFactory = Container.Instance.Resolve<IItemInstanceFactory>();
+            ItemInstanceDto newitem = itemFactory.CreateItem(item.ItemId, (short)amount);
+
+            player.NotifyEventHandler<InventoryEventHandler>(new InventoryAddItemEventArgs
+            {
+                ItemInstance = newitem
+            });
 
             if (isReputBuy)
             {
