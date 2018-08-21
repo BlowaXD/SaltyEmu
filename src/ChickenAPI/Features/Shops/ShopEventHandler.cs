@@ -63,16 +63,16 @@ namespace ChickenAPI.Game.Features.Shops
 
             switch (player.GetDignityIcon())
             {
-                case -3:
+                case (int)CharacterDignity.BluffedNameOnly:
                     percent = 1.1;
                     typeshop = 110;
                     break;
-                case -4:
+                case (int)CharacterDignity.NotQualifiedFor:
                     percent = 1.2;
                     typeshop = 120;
                     break;
-                case -5:
-                case -6:
+                case (int)CharacterDignity.Useless:
+                case (int)CharacterDignity.StupidMinded:
                     percent = 1.5;
                     typeshop = 150;
                     break;
@@ -263,16 +263,14 @@ namespace ChickenAPI.Game.Features.Shops
             double percent = 1.0;
             switch (player.GetDignityIcon())
             {
-                case 3:
+                case (int)CharacterDignity.BluffedNameOnly:
                     percent = 1.10;
                     break;
-
-                case 4:
+                case (int)CharacterDignity.NotQualifiedFor:
                     percent = 1.20;
                     break;
-
-                case 5:
-                case 6:
+                case (int)CharacterDignity.Useless:
+                case (int)CharacterDignity.StupidMinded:
                     percent = 1.5;
                     break;
             }

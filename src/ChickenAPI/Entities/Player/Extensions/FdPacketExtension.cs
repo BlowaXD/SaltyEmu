@@ -1,4 +1,5 @@
 ﻿using System;
+using ChickenAPI.Enums.Game.Character;
 using ChickenAPI.Game.Packets.Game.Server;
 
 namespace ChickenAPI.Game.Entities.Player.Extensions
@@ -9,30 +10,30 @@ namespace ChickenAPI.Game.Entities.Player.Extensions
         {
             if (character.Character.Dignity <= -100)
             {
-                return -2;
+                return (int)CharacterDignity.Suspected;
             }
 
             if (character.Character.Dignity <= -200)
             {
-                return -3;
+                return (int)CharacterDignity.BluffedNameOnly;
             }
 
             if (character.Character.Dignity <= -400)
             {
-                return -4;
+                return (int)CharacterDignity.NotQualifiedFor;
             }
 
             if (character.Character.Dignity <= -600)
             {
-                return -5;
+                return (int)CharacterDignity.Useless;
             }
 
             if (character.Character.Dignity <= -800)
             {
-                return -6;
+                return (int)CharacterDignity.StupidMinded;
             }
 
-            return -1;
+            return (int)CharacterDignity.Basic;
         }
 
         public static int GetReputIcon(this IPlayerEntity player)
