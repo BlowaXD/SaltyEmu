@@ -20,8 +20,8 @@ namespace ChickenAPI.Game.Features.IAs
         public IASystem(IEntityManager entityManager, IMap map) : base(entityManager)
         {
             _map = map;
-            _pathfinder = Container.Instance.Resolve<IPathfinder>();
-            _random = Container.Instance.Resolve<IRandomGenerator>();
+            _pathfinder = ChickenContainer.Instance.Resolve<IPathfinder>();
+            _random = ChickenContainer.Instance.Resolve<IRandomGenerator>();
         }
 
         protected override double RefreshRate => 0.45;

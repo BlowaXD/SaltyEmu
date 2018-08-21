@@ -20,11 +20,11 @@ namespace NosSharp.TemporaryMapPlugins
 
         private IMap LoadMap(long mapId)
         {
-            MapDto map = Container.Instance.Resolve<IMapService>().GetById(mapId);
-            IEnumerable<MapNpcDto> npcs = Container.Instance.Resolve<IMapNpcService>().GetByMapId(mapId);
-            IEnumerable<MapMonsterDto> monsters = Container.Instance.Resolve<IMapMonsterService>().GetByMapId(mapId);
-            IEnumerable<PortalDto> portals = Container.Instance.Resolve<IPortalService>().GetByMapId(mapId);
-            IEnumerable<ShopDto> shops = Container.Instance.Resolve<IShopService>().GetByMapNpcIds(npcs.Select(s => s.Id).ToList());
+            MapDto map = ChickenContainer.Instance.Resolve<IMapService>().GetById(mapId);
+            IEnumerable<MapNpcDto> npcs = ChickenContainer.Instance.Resolve<IMapNpcService>().GetByMapId(mapId);
+            IEnumerable<MapMonsterDto> monsters = ChickenContainer.Instance.Resolve<IMapMonsterService>().GetByMapId(mapId);
+            IEnumerable<PortalDto> portals = ChickenContainer.Instance.Resolve<IPortalService>().GetByMapId(mapId);
+            IEnumerable<ShopDto> shops = ChickenContainer.Instance.Resolve<IShopService>().GetByMapNpcIds(npcs.Select(s => s.Id).ToList());
             return new SimpleMap(map, monsters, npcs, portals, shops);
         }
 

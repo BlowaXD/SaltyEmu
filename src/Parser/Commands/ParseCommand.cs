@@ -83,7 +83,7 @@ namespace Toolkit.Commands
             var tmp = new NosSharpDatabasePlugin();
             tmp.OnLoad();
             tmp.OnEnable();
-            Container.Initialize();
+            ChickenContainer.Initialize();
 
             var card = new CardDatConverter();
             var item = new ItemDatConverter();

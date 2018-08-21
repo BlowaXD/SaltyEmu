@@ -13,6 +13,19 @@ namespace ChickenAPI.Game.Features.Inventory.Extensions
             return inv.Wear[(int)equipmentType];
         }
 
+        public static short GetFirstFreeSlot(this InventoryComponent inv, IReadOnlyCollection<ItemInstanceDto> subInventory, ItemDto source, short amount)
+        {
+            ItemInstanceDto item = subInventory.FirstOrDefault(x => x != null &&
+                x.Amount + amount <= InventoryComponent.MAX_ITEM_PER_SLOT && x.ItemId == source.Id && x.Item.Type != InventoryType.Equipment);
+
+            return item?.Slot ?? GetFirstFreeSlot(inv, subInventory);
+        }
+
+        public static short GetFirstFreeSlot(this InventoryComponent inv, IReadOnlyCollection<ItemInstanceDto> subInventory, ItemInstanceDto source)
+        {
+            return GetFirstFreeSlot(inv, subInventory, source.Item, source.Amount);
+        }
+
 
         public static short GetFirstFreeSlot(this InventoryComponent inv, IReadOnlyCollection<ItemInstanceDto> subinventory)
         {

@@ -34,7 +34,7 @@ namespace ChickenAPI.Game.Maps
             _baseMapLayer = new SimpleMapLayer(this, _monsters, _npcs, _portals, _shops);
             Layers = new HashSet<IMapLayer>();
 
-            _random = Container.Instance.Resolve<IRandomGenerator>();
+            _random = ChickenContainer.Instance.Resolve<IRandomGenerator>();
 
             List<Position<short>> cells = new List<Position<short>>();
             for (short y = 0; y <= _map.Height; y++)

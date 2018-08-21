@@ -22,8 +22,8 @@ namespace Toolkit.Generators.FromPackets
 
         public void Generate(string filePath)
         {
-            var shopService = Container.Instance.Resolve<IShopService>();
-            var mapNpcService = Container.Instance.Resolve<IMapNpcService>();
+            var shopService = ChickenContainer.Instance.Resolve<IShopService>();
+            var mapNpcService = ChickenContainer.Instance.Resolve<IMapNpcService>();
             Dictionary<long, MapNpcDto> npcs = mapNpcService.Get().ToDictionary(s => s.Id, s => s);
             Dictionary<long, ShopDto> shops = shopService.Get().ToDictionary(s => s.Id, s => s);
             string[] splitters = { "\r\n", "\r", "\n" };

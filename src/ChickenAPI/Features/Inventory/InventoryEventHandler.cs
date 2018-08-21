@@ -20,8 +20,6 @@ namespace ChickenAPI.Game.Features.Inventory
 {
     public class InventoryEventHandler : EventHandlerBase
     {
-        private const short MAX_AMOUNT_PER_SLOT = short.MaxValue;
-
         public override void Execute(IEntity entity, ChickenEventArgs e)
         {
             var inventory = entity.GetComponent<InventoryComponent>();
@@ -162,7 +160,7 @@ namespace ChickenAPI.Game.Features.Inventory
 
         private static void InitializeInventory(InventoryComponent inventory, IPlayerEntity player)
         {
-            var characterItemService = Container.Instance.Resolve<IItemInstanceService>();
+            var characterItemService = ChickenContainer.Instance.Resolve<IItemInstanceService>();
             IEnumerable<ItemInstanceDto> items = characterItemService.GetByCharacterId(player.Character.Id);
             if (items == null || !items.Any())
             {
@@ -231,7 +229,7 @@ namespace ChickenAPI.Game.Features.Inventory
         {
             ItemInstanceDto[] subinv = inv.GetSubInvFromItemInstance(args.ItemInstance);
 
-            short slot = inv.GetFirstFreeSlot(subinv);
+            short slot = inv.GetFirstFreeSlot(subinv, args.ItemInstance);
 
             if (slot == -1)
             {
@@ -239,8 +237,19 @@ namespace ChickenAPI.Game.Features.Inventory
                 return;
             }
 
-            args.ItemInstance.Slot = slot;
-            subinv[slot] = args.ItemInstance;
+            ItemInstanceDto mergeable = subinv[slot];
+
+            if (mergeable != null)
+            {
+                mergeable.Amount += args.ItemInstance.Amount;
+                args.ItemInstance = mergeable;
+            }
+            else
+            {
+                args.ItemInstance.Slot = slot;
+                subinv[slot] = args.ItemInstance;
+            }
+
             if (!(inv.Entity is IPlayerEntity player))
             {
                 return;
@@ -287,7 +296,7 @@ namespace ChickenAPI.Game.Features.Inventory
             }
 
             if (dest != null && (args.InventoryType == InventoryType.Main || args.InventoryType == InventoryType.Etc) && dest.ItemId == source.ItemId &&
-                dest.Amount + source.Amount > MAX_AMOUNT_PER_SLOT)
+                dest.Amount + source.Amount > InventoryComponent.MAX_ITEM_PER_SLOT)
             {
                 // if both source & dest are stackable && slots combined are > max slots
                 // should provide a "fill" possibility
@@ -375,10 +384,7 @@ namespace ChickenAPI.Game.Features.Inventory
                     break;
             }
 
-            if (itemInstance == null)
-            {
-                return;
-            }
+            if (itemInstance == null) return;
 
             playerEntity.SendPacket(GenerateEInfoPacket(itemInstance));
         }
@@ -400,15 +406,34 @@ namespace ChickenAPI.Game.Features.Inventory
             SpStoneUpgrade = 0
         };
 
-        private static IvnPacket GenerateIvnPacket(ItemInstanceDto itemInstance) => new IvnPacket
+        private static IvnPacket GenerateMainIvnPacket(ItemInstanceDto itemInstance) => new IvnPacket
         {
             InventoryType = itemInstance.Type,
-            ItemId = itemInstance.ItemId,
             Slot = itemInstance.Slot,
-            Rare = itemInstance.Rarity,
-            Upgrade = itemInstance.Upgrade,
-            SpStoneUpgrade = itemInstance.SpecialistUpgrade2
+            ItemId = itemInstance.ItemId,
+            Rare = itemInstance.Amount,
+            Upgrade = 0
         };
+
+        private static IvnPacket GenerateIvnPacket(ItemInstanceDto itemInstance)
+        {
+            switch (itemInstance.Type)
+            {
+                case InventoryType.Equipment:
+                    return new IvnPacket
+                    {
+                        InventoryType = itemInstance.Type,
+                        ItemId = itemInstance.ItemId,
+                        Slot = itemInstance.Slot,
+                        Rare = itemInstance.Rarity,
+                        Upgrade = itemInstance.Upgrade
+                    };
+                case InventoryType.Main:
+                case InventoryType.Etc:
+                    return GenerateMainIvnPacket(itemInstance);
+                default: return null;
+            }
+        }
 
         #endregion
     }

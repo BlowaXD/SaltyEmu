@@ -1248,8 +1248,8 @@ namespace Toolkit.Converter
 
         public void Extract(string inputDirectory)
         {
-            _itemService = Container.Instance.Resolve<IItemService>();
-            _bCardService = Container.Instance.Resolve<IBCardService>();
+            _itemService = ChickenContainer.Instance.Resolve<IItemService>();
+            _bCardService = ChickenContainer.Instance.Resolve<IBCardService>();
             DoWork(inputDirectory);
         }
     }

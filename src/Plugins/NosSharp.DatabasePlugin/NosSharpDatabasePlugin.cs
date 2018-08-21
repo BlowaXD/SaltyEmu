@@ -49,29 +49,29 @@ namespace NosSharp.DatabasePlugin
         private static void RegisterDependencies()
         {
             // data
-            Container.Builder.Register(s => new SkillDao(s.Resolve<NosSharpContext>(), _mapper)).As<ISkillService>().InstancePerLifetimeScope();
-            Container.Builder.Register(s => new BCardDao(s.Resolve<NosSharpContext>(), _mapper)).As<IBCardService>().InstancePerLifetimeScope();
-            Container.Builder.Register(s => new CardDao(s.Resolve<NosSharpContext>(), _mapper)).As<ICardService>().InstancePerLifetimeScope();
-            Container.Builder.Register(s => new ItemDao(s.Resolve<NosSharpContext>(), _mapper)).As<IItemService>().InstancePerLifetimeScope();
-            Container.Builder.Register(s => new NpcMonsterDao(s.Resolve<NosSharpContext>(), _mapper)).As<INpcMonsterService>().InstancePerLifetimeScope();
-            Container.Builder.Register(s => new NpcMonsterSkillDao(s.Resolve<NosSharpContext>(), _mapper)).As<INpcMonsterSkillService>().InstancePerLifetimeScope();
-            Container.Builder.Register(s => new MapDao(s.Resolve<NosSharpContext>(), _mapper)).As<IMapService>().InstancePerLifetimeScope();
+            ChickenContainer.Builder.Register(s => new SkillDao(s.Resolve<NosSharpContext>(), _mapper)).As<ISkillService>().InstancePerLifetimeScope();
+            ChickenContainer.Builder.Register(s => new BCardDao(s.Resolve<NosSharpContext>(), _mapper)).As<IBCardService>().InstancePerLifetimeScope();
+            ChickenContainer.Builder.Register(s => new CardDao(s.Resolve<NosSharpContext>(), _mapper)).As<ICardService>().InstancePerLifetimeScope();
+            ChickenContainer.Builder.Register(s => new ItemDao(s.Resolve<NosSharpContext>(), _mapper)).As<IItemService>().InstancePerLifetimeScope();
+            ChickenContainer.Builder.Register(s => new NpcMonsterDao(s.Resolve<NosSharpContext>(), _mapper)).As<INpcMonsterService>().InstancePerLifetimeScope();
+            ChickenContainer.Builder.Register(s => new NpcMonsterSkillDao(s.Resolve<NosSharpContext>(), _mapper)).As<INpcMonsterSkillService>().InstancePerLifetimeScope();
+            ChickenContainer.Builder.Register(s => new MapDao(s.Resolve<NosSharpContext>(), _mapper)).As<IMapService>().InstancePerLifetimeScope();
 
-            Container.Builder.Register(s => new AccountDao(s.Resolve<NosSharpContext>(), _mapper)).As<IAccountService>().InstancePerLifetimeScope();
-            Container.Builder.Register(s => new CharacterDao(s.Resolve<NosSharpContext>(), _mapper, _characterConf)).As<ICharacterService>().InstancePerLifetimeScope();
-            Container.Builder.Register(s => new CharacterMateDao(s.Resolve<NosSharpContext>(), _mapper)).As<ICharacterMateService>().InstancePerLifetimeScope();
-            Container.Builder.Register(s => new CharacterItemDao(s.Resolve<NosSharpContext>(), _mapper)).As<IItemInstanceService>().InstancePerLifetimeScope();
-            Container.Builder.Register(s => new CharacterSkillDao(s.Resolve<NosSharpContext>(), _mapper)).As<ICharacterSkillService>().InstancePerLifetimeScope();
-            Container.Builder.Register(s => new CharacterQuickListDao(s.Resolve<NosSharpContext>(), _mapper)).As<ICharacterQuickListService>().InstancePerLifetimeScope();
+            ChickenContainer.Builder.Register(s => new AccountDao(s.Resolve<NosSharpContext>(), _mapper)).As<IAccountService>().InstancePerLifetimeScope();
+            ChickenContainer.Builder.Register(s => new CharacterDao(s.Resolve<NosSharpContext>(), _mapper, _characterConf)).As<ICharacterService>().InstancePerLifetimeScope();
+            ChickenContainer.Builder.Register(s => new CharacterMateDao(s.Resolve<NosSharpContext>(), _mapper)).As<ICharacterMateService>().InstancePerLifetimeScope();
+            ChickenContainer.Builder.Register(s => new CharacterItemDao(s.Resolve<NosSharpContext>(), _mapper)).As<IItemInstanceService>().InstancePerLifetimeScope();
+            ChickenContainer.Builder.Register(s => new CharacterSkillDao(s.Resolve<NosSharpContext>(), _mapper)).As<ICharacterSkillService>().InstancePerLifetimeScope();
+            ChickenContainer.Builder.Register(s => new CharacterQuickListDao(s.Resolve<NosSharpContext>(), _mapper)).As<ICharacterQuickListService>().InstancePerLifetimeScope();
 
-            Container.Builder.Register(s => new MapMonsterDao(s.Resolve<NosSharpContext>(), _mapper)).As<IMapMonsterService>().InstancePerLifetimeScope();
-            Container.Builder.Register(s => new MapNpcDao(s.Resolve<NosSharpContext>(), _mapper)).As<IMapNpcService>().InstancePerLifetimeScope();
-            Container.Builder.Register(s => new MapPortalDao(s.Resolve<NosSharpContext>(), _mapper)).As<IPortalService>().InstancePerLifetimeScope();
-            Container.Builder.Register(s => new ShopDao(s.Resolve<NosSharpContext>(), _mapper)).As<IShopService>().InstancePerLifetimeScope();
-            Container.Builder.Register(s => new ShopItemDao(s.Resolve<NosSharpContext>(), _mapper)).As<IShopItemService>().InstancePerLifetimeScope();
-            Container.Builder.Register(s => new ShopSkillDao(s.Resolve<NosSharpContext>(), _mapper)).As<IShopSkillService>().InstancePerLifetimeScope();
-            Container.Builder.Register(s => new RecipeDao(s.Resolve<NosSharpContext>(), _mapper)).As<IRecipeService>().InstancePerLifetimeScope();
-            Container.Builder.Register(s => new RecipeItemDao(s.Resolve<NosSharpContext>(), _mapper)).As<IRecipeItemService>().InstancePerLifetimeScope();
+            ChickenContainer.Builder.Register(s => new MapMonsterDao(s.Resolve<NosSharpContext>(), _mapper)).As<IMapMonsterService>().InstancePerLifetimeScope();
+            ChickenContainer.Builder.Register(s => new MapNpcDao(s.Resolve<NosSharpContext>(), _mapper)).As<IMapNpcService>().InstancePerLifetimeScope();
+            ChickenContainer.Builder.Register(s => new MapPortalDao(s.Resolve<NosSharpContext>(), _mapper)).As<IPortalService>().InstancePerLifetimeScope();
+            ChickenContainer.Builder.Register(s => new ShopDao(s.Resolve<NosSharpContext>(), _mapper)).As<IShopService>().InstancePerLifetimeScope();
+            ChickenContainer.Builder.Register(s => new ShopItemDao(s.Resolve<NosSharpContext>(), _mapper)).As<IShopItemService>().InstancePerLifetimeScope();
+            ChickenContainer.Builder.Register(s => new ShopSkillDao(s.Resolve<NosSharpContext>(), _mapper)).As<IShopSkillService>().InstancePerLifetimeScope();
+            ChickenContainer.Builder.Register(s => new RecipeDao(s.Resolve<NosSharpContext>(), _mapper)).As<IRecipeService>().InstancePerLifetimeScope();
+            ChickenContainer.Builder.Register(s => new RecipeItemDao(s.Resolve<NosSharpContext>(), _mapper)).As<IRecipeItemService>().InstancePerLifetimeScope();
         }
 
         private bool Initialize()
@@ -126,7 +126,7 @@ namespace NosSharp.DatabasePlugin
                 return;
             }
 
-            Container.Builder.Register(s => new NosSharpContext(new DbContextOptionsBuilder<NosSharpContext>().UseSqlServer(_configuration.ToString()).Options)).As<NosSharpContext>()
+            ChickenContainer.Builder.Register(s => new NosSharpContext(new DbContextOptionsBuilder<NosSharpContext>().UseSqlServer(_configuration.ToString()).Options)).As<NosSharpContext>()
                 .InstancePerLifetimeScope();
             RegisterMapping();
             RegisterDependencies();

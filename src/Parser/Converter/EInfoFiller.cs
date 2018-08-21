@@ -19,7 +19,7 @@ namespace Toolkit.Converter
 
         public void Fill(string filePath)
         {
-            _npcMonsterService = Container.Instance.Resolve<INpcMonsterService>();
+            _npcMonsterService = ChickenContainer.Instance.Resolve<INpcMonsterService>();
             string tmp = File.ReadAllText(filePath, Encoding.GetEncoding(1252));
             string[] lines = tmp.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
 

@@ -21,7 +21,7 @@ namespace ChickenAPI.Core.ECS.Entities
 
         protected IEntityManagerContainer EmContainer
         {
-            get => _emContainer ?? (_emContainer = Container.Instance.Resolve<IEntityManagerContainer>());
+            get => _emContainer ?? (_emContainer = ChickenContainer.Instance.Resolve<IEntityManagerContainer>());
             set => _emContainer = value;
         }
 

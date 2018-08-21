@@ -68,7 +68,7 @@ namespace World
                     plugin.OnEnable();
                 }
 
-                Container.Builder.Register(s => new SimpleEntityManagerContainer()).As<IEntityManagerContainer>().SingleInstance();
+                ChickenContainer.Builder.Register(s => new SimpleEntityManagerContainer()).As<IEntityManagerContainer>().SingleInstance();
             }
             catch (Exception e)
             {
@@ -129,7 +129,7 @@ namespace World
 
         private static void InitializeAccounts()
         {
-            var acc = Container.Instance.Resolve<IAccountService>();
+            var acc = ChickenContainer.Instance.Resolve<IAccountService>();
             if (acc.GetByName("admin") != null)
             {
                 return;
@@ -166,10 +166,10 @@ namespace World
             InitializeLogger();
             InitializeConfigs();
             InitializePlugins();
-            Container.Builder.Register(s => new PacketHandler()).As<IPacketHandler>().SingleInstance();
-            Container.Initialize();
+            ChickenContainer.Builder.Register(s => new PacketHandler()).As<IPacketHandler>().SingleInstance();
+            ChickenContainer.Initialize();
             ClientSession.SetPacketFactory(new PluggablePacketFactory());
-            ClientSession.SetPacketHandler(Container.Instance.Resolve<IPacketHandler>());
+            ClientSession.SetPacketHandler(ChickenContainer.Instance.Resolve<IPacketHandler>());
             if (Server.RegisterServer())
             {
                 Log.Info($"Failed to register to ServerAPI");
@@ -188,7 +188,7 @@ namespace World
         private static void InitializeEventHandlers()
         {
             // first version hardcoded, next one through Plugin + Assembly Reflection
-            var eventManager = Container.Instance.Resolve<IEventManager>();
+            var eventManager = ChickenContainer.Instance.Resolve<IEventManager>();
             eventManager.Register(new EffectEventHandler());
             eventManager.Register(new ChatEventHandler());
             eventManager.Register(new GroupEventHandler());

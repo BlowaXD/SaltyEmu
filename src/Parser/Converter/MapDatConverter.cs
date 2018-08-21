@@ -18,7 +18,7 @@ namespace Toolkit.Converter
 
         public void Extract(string inputDirectory)
         {
-            _mapService = Container.Instance.Resolve<IMapService>();
+            _mapService = ChickenContainer.Instance.Resolve<IMapService>();
             try
             {
                 foreach (FileInfo file in new DirectoryInfo(inputDirectory).GetFiles().OrderBy(s => s.Name.Length).ThenBy(s => s.Name))

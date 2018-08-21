@@ -20,7 +20,7 @@ namespace Toolkit.Generators.FromPackets
 
         public void Generate(string filePath)
         {
-            var mapNpcService = Container.Instance.Resolve<IMapNpcService>();
+            var mapNpcService = ChickenContainer.Instance.Resolve<IMapNpcService>();
             Dictionary<long, MapNpcDto> npcs = mapNpcService.Get().ToDictionary(dto => dto.Id, dto => dto);
             Dictionary<long, short> effPacketsDictionary = new Dictionary<long, short>();
             List<long> npcMvPacketsList = new List<long>();

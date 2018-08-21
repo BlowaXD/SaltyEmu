@@ -19,8 +19,8 @@ namespace Toolkit.Generators.FromPackets
 
         public void Generate(string filePath)
         {
-            var shopService = Container.Instance.Resolve<IShopService>();
-            var shopSkillService = Container.Instance.Resolve<IShopSkillService>();
+            var shopService = ChickenContainer.Instance.Resolve<IShopService>();
+            var shopSkillService = ChickenContainer.Instance.Resolve<IShopSkillService>();
             string[] lines = File.ReadAllText(filePath, Encoding.Default).Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
             int counter = 0;
             byte type = 0;

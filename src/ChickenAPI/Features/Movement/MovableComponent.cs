@@ -18,7 +18,7 @@ namespace ChickenAPI.Game.Features.Movement
     {
         private static IAlgorithmService _algorithmService;
 
-        private static IAlgorithmService Algorithm => _algorithmService ?? (_algorithmService = Container.Instance.Resolve<IAlgorithmService>());
+        private static IAlgorithmService Algorithm => _algorithmService ?? (_algorithmService = ChickenContainer.Instance.Resolve<IAlgorithmService>());
         private static readonly Logger Log = Logger.GetLogger<MovableComponent>();
         private Position<short> _actual;
 

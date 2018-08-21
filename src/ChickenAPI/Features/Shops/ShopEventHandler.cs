@@ -30,7 +30,7 @@ namespace ChickenAPI.Game.Features.Shops
         private static IRandomGenerator _randomGenerator;
 
         private static IRandomGenerator Random =>
-            _randomGenerator ?? (_randomGenerator = Container.Instance.Resolve<IRandomGenerator>());
+            _randomGenerator ?? (_randomGenerator = ChickenContainer.Instance.Resolve<IRandomGenerator>());
 
         public override void Execute(IEntity entity, ChickenEventArgs e)
         {
@@ -252,9 +252,9 @@ namespace ChickenAPI.Game.Features.Shops
         private static void HandleNpcItemBuyRequest(IPlayerEntity player, BuyShopEventArgs buy, Shop shop)
         {
             ShopItemDto item = shop.Items.FirstOrDefault(s => s.Slot == buy.Slot);
-            long amount = buy.Amount;
+            short amount = buy.Amount;
 
-            if (item == null || amount <= 0 || amount > 999)
+            if (item == null || amount <= 0)
             {
                 return;
             }
@@ -277,6 +277,7 @@ namespace ChickenAPI.Game.Features.Shops
 
             bool isReputBuy = item.Item.ReputPrice > 0;
             long price = isReputBuy ? item.Item.ReputPrice : item.Item.Price;
+            price *= amount;
             sbyte rare = item.Rare;
             if (item.Item.Type == 0)
             {
@@ -315,7 +316,7 @@ namespace ChickenAPI.Game.Features.Shops
                 }
             }
 
-            bool canAddItem = (buy.Slot % 3) == 0; // todo extension method for inventory
+            bool canAddItem = player.Inventory.CanAddItem(item.Item, amount);
             if (!canAddItem)
             {
                 // no available slot
@@ -323,25 +324,24 @@ namespace ChickenAPI.Game.Features.Shops
             }
 
             // add item to inventory
-            var itemFactory = Container.Instance.Resolve<IItemInstanceFactory>();
-            ItemInstanceDto newitem = itemFactory.CreateItem(item.ItemId, (short)amount);
+            var itemFactory = ChickenContainer.Instance.Resolve<IItemInstanceFactory>();
+            ItemInstanceDto newitem = itemFactory.CreateItem(item.ItemId, amount, (byte)rare);
 
+            if (isReputBuy)
+            {
+                player.Character.Reput -= price;
+                player.SendPacket(player.GenerateFdPacket());
+                // player.SendPacket "reput decreased"
+            }
+            else
+            {
+                player.Character.Gold -= (long)(price * percent);
+                player.SendPacket(player.GenerateGoldPacket());
+            }
             player.NotifyEventHandler<InventoryEventHandler>(new InventoryAddItemEventArgs
             {
                 ItemInstance = newitem
             });
-
-            if (isReputBuy)
-            {
-                player.Character.Gold -= (long)(price * percent);
-                // player.SendPacket(player.GenerateGoldPacket());
-            }
-            else
-            {
-                player.Character.Reput -= price;
-                // player.SendPacket(player.GenerateFdPacket());
-                // player.SendPacket "reput decreased"
-            }
         }
 
         private static void HandlePlayerShopBuyRequest(IPlayerEntity player, BuyShopEventArgs buy, IPlayerEntity shop)

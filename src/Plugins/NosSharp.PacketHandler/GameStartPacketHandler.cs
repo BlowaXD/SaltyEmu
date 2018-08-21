@@ -1,4 +1,6 @@
-﻿using Autofac;
+﻿using System;
+using System.Collections.Generic;
+using Autofac;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Enums.Packets;
@@ -24,6 +26,12 @@ namespace NosSharp.PacketHandler
 {
     public class GameStartPacketHandler
     {
+        private static readonly IMapManager MapManager = new Lazy<IMapManager>(ChickenContainer.Instance.Resolve<IMapManager>).Value;
+        private static readonly IAlgorithmService AlgorithmService = new Lazy<IAlgorithmService>(ChickenContainer.Instance.Resolve<IAlgorithmService>).Value;
+        private static readonly ICharacterService CharacterService = new Lazy<ICharacterService>(ChickenContainer.Instance.Resolve<ICharacterService>).Value;
+        private static readonly ICharacterSkillService CharacterSkillService = new Lazy<ICharacterSkillService>(ChickenContainer.Instance.Resolve<ICharacterSkillService>).Value;
+        private static readonly ICharacterQuickListService CharacterQuicklistService = new Lazy<ICharacterQuickListService>(ChickenContainer.Instance.Resolve<ICharacterQuickListService>).Value;
+
         public static async void OnGameStart(GameStartPacketBase packetBase, ISession session)
         {
             /*
@@ -34,16 +42,16 @@ namespace NosSharp.PacketHandler
                 return;
             }
 
-            var mapManager = Container.Instance.Resolve<IMapManager>();
-            CharacterDto dto = await Container.Instance.Resolve<ICharacterService>().GetByIdAsync(session.CharacterId);
-            var algorithm = Container.Instance.Resolve<IAlgorithmService>();
-            IMapLayer mapLayer = mapManager.GetBaseMapLayer(dto.MapId);
-            session.InitializeEntity(new PlayerEntity(session, dto));
+            CharacterDto dto = await CharacterService.GetByIdAsync(session.CharacterId);
+            IEnumerable<CharacterSkillDto> skills = await CharacterSkillService.GetByCharacterIdAsync(session.CharacterId);
+            IEnumerable<CharacterQuicklistDto> quicklist = await CharacterQuicklistService.GetByCharacterIdAsync(session.CharacterId);
+            IMapLayer mapLayer = MapManager.GetBaseMapLayer(dto.MapId);
+            session.InitializeEntity(new PlayerEntity(session, dto, skills, quicklist));
             session.SendPacket(new TitPacket { ClassType = "Adventurer", Name = session.Player.GetComponent<NameComponent>().Name});
             session.SendPacket(new SayPacket { Message = "┌------------------[SaltyEmu]------------------┐", Type = SayColorType.Yellow, VisualType = VisualType.Character });
-            session.SendPacket(new SayPacket { Message = $"XP     : {dto.LevelXp}/{algorithm.GetLevelXp(dto.Class, dto.Level)}", Type = SayColorType.Yellow, VisualType = VisualType.Character });
-            session.SendPacket(new SayPacket { Message = $"JOBXP  : {dto.JobLevelXp}/{algorithm.GetJobLevelXp(dto.Class, dto.Level)}", Type = SayColorType.Yellow, VisualType = VisualType.Character });
-            session.SendPacket(new SayPacket { Message = $"HEROXP : {dto.HeroXp}/{algorithm.GetHeroLevelXp(dto.Class, dto.Level)}", Type = SayColorType.Yellow, VisualType = VisualType.Character });
+            session.SendPacket(new SayPacket { Message = $"XP     : {dto.LevelXp}/{AlgorithmService.GetLevelXp(dto.Class, dto.Level)}", Type = SayColorType.Yellow, VisualType = VisualType.Character });
+            session.SendPacket(new SayPacket { Message = $"JOBXP  : {dto.JobLevelXp}/{AlgorithmService.GetJobLevelXp(dto.Class, dto.Level)}", Type = SayColorType.Yellow, VisualType = VisualType.Character });
+            session.SendPacket(new SayPacket { Message = $"HEROXP : {dto.HeroXp}/{AlgorithmService.GetHeroLevelXp(dto.Class, dto.Level)}", Type = SayColorType.Yellow, VisualType = VisualType.Character });
             session.SendPacket(new SayPacket { Message = "└----------------------------------------------┘", Type = SayColorType.Yellow, VisualType = VisualType.Character });
             session.SendPacket(new MapoutPacket());
             session.Player.TransferEntity(mapLayer);

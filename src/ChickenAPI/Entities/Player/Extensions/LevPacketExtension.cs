@@ -10,7 +10,7 @@ namespace ChickenAPI.Game.Entities.Player
     public static class LevPacketExtension
     {
         private static IAlgorithmService _algorithmService;
-        private static IAlgorithmService Algorithm => _algorithmService ?? (_algorithmService = Container.Instance.Resolve<IAlgorithmService>());
+        private static IAlgorithmService Algorithm => _algorithmService ?? (_algorithmService = ChickenContainer.Instance.Resolve<IAlgorithmService>());
 
         public static LevPacket GenerateLevPacket(this IPlayerEntity player)
         {

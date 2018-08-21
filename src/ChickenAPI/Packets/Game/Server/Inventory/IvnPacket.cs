@@ -21,6 +21,6 @@ namespace ChickenAPI.Game.Packets.Game.Server.Inventory
         public short? Upgrade { get; set; }
 
         [PacketIndex(5, SeparatorBeforeProperty = ".", IsOptional = true)]
-        public short SpStoneUpgrade { get; set; } = 0; // seems to always be 0 
+        public short? SpStoneUpgrade { get; set; }
     }
 }

@@ -30,11 +30,11 @@ namespace NosSharp.RedisSessionPlugin
         {
             Log.Info($"Loading...");
             _configuration = ConfigurationHelper.Load<RedisConfiguration>(_configurationPath, true);
-            Container.Builder.Register(s => new RedisSessionService(_configuration)).As<ISessionService>();
+            ChickenContainer.Builder.Register(s => new RedisSessionService(_configuration)).As<ISessionService>();
             Log.Info($"ISessionService registered !");
-            Container.Builder.Register(s => new RedisServerApi(_configuration)).As<IServerApiService>();
+            ChickenContainer.Builder.Register(s => new RedisServerApi(_configuration)).As<IServerApiService>();
             Log.Info($"IServerApiService registered !");
-            Container.Builder.Register(s => new RedisLanguageService(_configuration)).As<ILanguageService>();
+            ChickenContainer.Builder.Register(s => new RedisLanguageService(_configuration)).As<ILanguageService>();
             Log.Info($"ILanguageService registered !");
         }
 

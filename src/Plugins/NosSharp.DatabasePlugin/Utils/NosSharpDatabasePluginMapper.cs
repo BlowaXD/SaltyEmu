@@ -65,7 +65,7 @@ namespace NosSharp.DatabasePlugin.Utils
 
             cfg.CreateMap<MapNpcModel, MapNpcDto>()
                 .ForSourceMember(s => s.NpcMonster, expr => expr.Ignore())
-                .ForMember(s => s.NpcMonster, expr => expr.ResolveUsing(origin => Container.Instance.Resolve<INpcMonsterService>().GetById(origin.NpcMonsterId)));
+                .ForMember(s => s.NpcMonster, expr => expr.ResolveUsing(origin => ChickenContainer.Instance.Resolve<INpcMonsterService>().GetById(origin.NpcMonsterId)));
 
             cfg.CreateMap<PortalDto, MapPortalModel>()
                 .ForMember(s => s.SourceMap, expr => expr.Ignore());
@@ -76,7 +76,7 @@ namespace NosSharp.DatabasePlugin.Utils
             cfg.CreateMap<MapMonsterDto, MapMonsterModel>()
                 .ForMember(s => s.NpcMonster, expr => expr.Ignore());
             cfg.CreateMap<MapMonsterModel, MapMonsterDto>()
-                .ForMember(s => s.NpcMonster, expr => expr.ResolveUsing(origin => Container.Instance.Resolve<INpcMonsterService>().GetById(origin.NpcMonsterId)));
+                .ForMember(s => s.NpcMonster, expr => expr.ResolveUsing(origin => ChickenContainer.Instance.Resolve<INpcMonsterService>().GetById(origin.NpcMonsterId)));
         }
 
         private static void MapNpcMonster(IMapperConfigurationExpression cfg)
@@ -168,7 +168,7 @@ namespace NosSharp.DatabasePlugin.Utils
 
             cfg.CreateMap<ItemInstanceDto, CharacterItemModel>();
             cfg.CreateMap<CharacterItemModel, ItemInstanceDto>()
-                .ForMember(s => s.Item, expr => expr.ResolveUsing(origin => Container.Instance.Resolve<INpcMonsterService>().GetById(origin.ItemId)));
+                .ForMember(s => s.Item, expr => expr.ResolveUsing(origin => ChickenContainer.Instance.Resolve<INpcMonsterService>().GetById(origin.ItemId)));
         }
 
         private static void MapCharacters(IMapperConfigurationExpression cfg)
@@ -256,11 +256,11 @@ namespace NosSharp.DatabasePlugin.Utils
 
             cfg.CreateMap<ShopItemDto, ShopItemModel>();
             cfg.CreateMap<ShopItemModel, ShopItemDto>()
-                .ForMember(s => s.Item, expression => expression.ResolveUsing(origin => Container.Instance.Resolve<IItemService>().GetById(origin.ItemId)));
+                .ForMember(s => s.Item, expression => expression.ResolveUsing(origin => ChickenContainer.Instance.Resolve<IItemService>().GetById(origin.ItemId)));
 
             cfg.CreateMap<ShopSkillDto, ShopSkillModel>();
             cfg.CreateMap<ShopSkillModel, ShopSkillDto>()
-                .ForMember(s => s.Skill, expression => expression.ResolveUsing(origin => Container.Instance.Resolve<ISkillService>().GetById(origin.SkillId)));
+                .ForMember(s => s.Skill, expression => expression.ResolveUsing(origin => ChickenContainer.Instance.Resolve<ISkillService>().GetById(origin.SkillId)));
 
             cfg.CreateMap<RecipeDto, RecipeModel>();
             cfg.CreateMap<RecipeModel, RecipeDto>();

@@ -15,7 +15,7 @@ namespace NosSharp.PacketHandler.Inventory.Commands
         public static void OnAddItemCommand(AddItemCommandPacket packet, IPlayerEntity player)
         {
             // generate item
-            var itemFactory = Container.Instance.Resolve<IItemInstanceFactory>();
+            var itemFactory = ChickenContainer.Instance.Resolve<IItemInstanceFactory>();
             ItemInstanceDto item = itemFactory.CreateItem(packet.ItemId, packet.Quantity);
 
             player.NotifyEventHandler<InventoryEventHandler>(new InventoryAddItemEventArgs

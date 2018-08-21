@@ -19,8 +19,8 @@ namespace ChickenAPI.Game.Features.Shops
             MenuType = shop.MenuType;
             ShopType = shop.ShopType;
 
-            Items = new HashSet<ShopItemDto>(Container.Instance.Resolve<IShopItemService>().GetByShopId(Id));
-            Skills = new HashSet<ShopSkillDto>(Container.Instance.Resolve<IShopSkillService>().GetByShopId(Id));
+            Items = new HashSet<ShopItemDto>(ChickenContainer.Instance.Resolve<IShopItemService>().GetByShopId(Id));
+            Skills = new HashSet<ShopSkillDto>(ChickenContainer.Instance.Resolve<IShopSkillService>().GetByShopId(Id));
         }
     }
 }

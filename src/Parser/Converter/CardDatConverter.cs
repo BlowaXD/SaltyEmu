@@ -157,8 +157,8 @@ namespace Toolkit.Converter
 
         private void ExtractFiles()
         {
-            _cardDb = Container.Instance.Resolve<ICardService>();
-            _bcardDb = Container.Instance.Resolve<IBCardService>();
+            _cardDb = ChickenContainer.Instance.Resolve<ICardService>();
+            _bcardDb = ChickenContainer.Instance.Resolve<IBCardService>();
             _cardDb.Save(_cards);
             _bcardDb.Save(_cardBcards);
         }

@@ -14,7 +14,7 @@ namespace ChickenAPI.Core.ECS.Entities
         protected Dictionary<Type, IComponent> Components;
         private static IEventManager _eventManager;
 
-        protected IEventManager EventManager => _eventManager ?? (_eventManager = Container.Instance.Resolve<IEventManager>());
+        protected IEventManager EventManager => _eventManager ?? (_eventManager = ChickenContainer.Instance.Resolve<IEventManager>());
 
         protected EntityBase(EntityType type, Dictionary<Type, IComponent> components)
         {

@@ -21,7 +21,7 @@ namespace Toolkit.Generators.FromPackets
 
         public void Generate(string filePath)
         {
-            var portalService = Container.Instance.Resolve<IPortalService>();
+            var portalService = ChickenContainer.Instance.Resolve<IPortalService>();
 
             IEnumerable<PortalDto> portals = portalService.Get();
             IEnumerable<PortalDto> portalDtos = portals as PortalDto[] ?? portals.ToArray();

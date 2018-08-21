@@ -30,7 +30,7 @@ namespace NosSharp.PacketHandler
 
         private static ILanguageService Language
         {
-            get => _languageService ?? (_languageService = Container.Instance.Resolve<ILanguageService>());
+            get => _languageService ?? (_languageService = ChickenContainer.Instance.Resolve<ILanguageService>());
         }
 
         private static readonly Logger Log = Logger.GetLogger<CharacterScreenPacketsHandling>();
@@ -42,8 +42,8 @@ namespace NosSharp.PacketHandler
         /// <param name="session"></param>
         public static async void DeleteCharacter(CharacterDeletePacketBase characterDeletePacketBase, ISession session)
         {
-            AccountDto account = await Container.Instance.Resolve<IAccountService>().GetByIdAsync(session.Account.Id);
-            var characterService = Container.Instance.Resolve<ICharacterService>();
+            AccountDto account = await ChickenContainer.Instance.Resolve<IAccountService>().GetByIdAsync(session.Account.Id);
+            var characterService = ChickenContainer.Instance.Resolve<ICharacterService>();
             if (account == null)
             {
                 return;
@@ -81,7 +81,7 @@ namespace NosSharp.PacketHandler
             byte slot = characterCreatePacketBase.Slot;
             string characterName = characterCreatePacketBase.Name;
 
-            var characterService = Container.Instance.Resolve<ICharacterService>();
+            var characterService = ChickenContainer.Instance.Resolve<ICharacterService>();
 
             if (slot > 3)
             {
@@ -143,7 +143,7 @@ namespace NosSharp.PacketHandler
             byte slot = characterCreatePacketBase.Slot;
             string characterName = characterCreatePacketBase.Name;
 
-            var characterService = Container.Instance.Resolve<ICharacterService>();
+            var characterService = ChickenContainer.Instance.Resolve<ICharacterService>();
 
             if (slot > 3)
             {
@@ -217,7 +217,7 @@ namespace NosSharp.PacketHandler
         private static async Task<bool> AccountChecks(EntryPointPacketBase packetBase, ISession session)
         {
             string name = packetBase.Name;
-            AccountDto accountDto = await Container.Instance.Resolve<IAccountService>().GetByNameAsync(name);
+            AccountDto accountDto = await ChickenContainer.Instance.Resolve<IAccountService>().GetByNameAsync(name);
 
             if (accountDto == null)
             {
@@ -234,7 +234,7 @@ namespace NosSharp.PacketHandler
                 return false;
             }
 
-            PlayerSessionDto sessionDto = Container.Instance.Resolve<ISessionService>().GetByAccountName(name);
+            PlayerSessionDto sessionDto = ChickenContainer.Instance.Resolve<ISessionService>().GetByAccountName(name);
             if (sessionDto == null || sessionDto.Id != session.SessionId)
             {
                 Log.Warn($"No session, hijacking tried by {session.Ip}");
@@ -282,21 +282,21 @@ namespace NosSharp.PacketHandler
             }
 
             Log.Info($"[LOAD_CHARACTERS] {session.Account.Name}");
-            IEnumerable<CharacterDto> characters = await Container.Instance.Resolve<ICharacterService>().GetActiveByAccountIdAsync(session.Account.Id);
+            IEnumerable<CharacterDto> characters = await ChickenContainer.Instance.Resolve<ICharacterService>().GetActiveByAccountIdAsync(session.Account.Id);
 
             // load characterlist packetBase for each characterEntity in Player
             session.SendPacket(new ClistStartPacketBase { Type = 0 });
             foreach (CharacterDto character in characters)
             {
                 ItemInstanceDto[] equipment = new ItemInstanceDto[16];
-                IEnumerable<ItemInstanceDto> inventory = await Container.Instance.Resolve<IItemInstanceService>().GetWearByCharacterIdAsync(character.Id);
+                IEnumerable<ItemInstanceDto> inventory = await ChickenContainer.Instance.Resolve<IItemInstanceService>().GetWearByCharacterIdAsync(character.Id);
                 foreach (ItemInstanceDto equipmentEntry in inventory)
                 {
                     equipment[(short)equipmentEntry.Item.EquipmentSlot] = equipmentEntry;
                 }
 
                 List<short?> petlist = new List<short?>();
-                CharacterMateDto[] mates = await Container.Instance.Resolve<ICharacterMateService>().GetMatesByCharacterIdAsync(character.Id);
+                CharacterMateDto[] mates = await ChickenContainer.Instance.Resolve<ICharacterMateService>().GetMatesByCharacterIdAsync(character.Id);
                 for (int i = 0; i < 26; i++)
                 {
                     if (mates.Length > i)
@@ -354,7 +354,7 @@ namespace NosSharp.PacketHandler
                     return;
                 }
 
-                CharacterDto characterDto = await Container.Instance.Resolve<ICharacterService>().GetByAccountIdAndSlotAsync(session.Account.Id, packetBase.Slot);
+                CharacterDto characterDto = await ChickenContainer.Instance.Resolve<ICharacterService>().GetByAccountIdAndSlotAsync(session.Account.Id, packetBase.Slot);
                 if (characterDto == null)
                 {
                     return;

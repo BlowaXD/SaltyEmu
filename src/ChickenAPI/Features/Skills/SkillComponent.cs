@@ -15,7 +15,7 @@ namespace ChickenAPI.Game.Features.Skills
     {
         private static ISkillService _skillService;
 
-        private static ISkillService SkillService => _skillService ?? (_skillService = Container.Instance.Resolve<ISkillService>());
+        private static ISkillService SkillService => _skillService ?? (_skillService = ChickenContainer.Instance.Resolve<ISkillService>());
         public SkillComponent(IEntity entity)
         {
             Entity = entity;

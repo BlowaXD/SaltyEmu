@@ -21,9 +21,9 @@ namespace Toolkit.Generators.FromPackets
 
         public void Generate(string filePath)
         {
-            var shopService = Container.Instance.Resolve<IShopService>();
-            var recipeService = Container.Instance.Resolve<IRecipeService>();
-            var recipeItemService = Container.Instance.Resolve<IRecipeItemService>();
+            var shopService = ChickenContainer.Instance.Resolve<IShopService>();
+            var recipeService = ChickenContainer.Instance.Resolve<IRecipeService>();
+            var recipeItemService = ChickenContainer.Instance.Resolve<IRecipeItemService>();
             string[] lines = File.ReadAllText(filePath, Encoding.Default).Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
             int counter = 0;
             int counter2 = 0;

@@ -34,7 +34,12 @@ namespace ChickenAPI.Game.Entities.Player
 {
     public class PlayerEntity : EntityBase, IPlayerEntity
     {
-        public PlayerEntity(ISession session, CharacterDto dto) : base(EntityType.Player)
+        private static IItemInstanceService ItemInstance => new Lazy<IItemInstanceService>(() => ChickenContainer.Instance.Resolve<IItemInstanceService>()).Value;
+        private static ICharacterService CharacterService => new Lazy<ICharacterService>(() => ChickenContainer.Instance.Resolve<ICharacterService>()).Value;
+        private static ICharacterSkillService CharacterSkillService => new Lazy<ICharacterSkillService>(() => ChickenContainer.Instance.Resolve<ICharacterSkillService>()).Value;
+        private static ICharacterQuickListService CharacterQuickListService => new Lazy<ICharacterQuickListService>(() => ChickenContainer.Instance.Resolve<ICharacterQuickListService>()).Value;
+
+        public PlayerEntity(ISession session, CharacterDto dto, IEnumerable<CharacterSkillDto> skills, IEnumerable<CharacterQuicklistDto> quicklist) : base(EntityType.Player)
         {
             Session = session;
             Character = dto;
@@ -81,12 +86,6 @@ namespace ChickenAPI.Game.Entities.Player
                 { typeof(SkillComponent), Skills }
             };
         }
-
-        private static IItemInstanceService _itemInstance;
-        private static IItemInstanceService ItemInstance => _itemInstance ?? (_itemInstance = Container.Instance.Resolve<IItemInstanceService>());
-
-        private static ICharacterService _characterService;
-        private static ICharacterService CharacterService => _characterService ?? (_characterService = Container.Instance.Resolve<ICharacterService>());
 
         public SkillComponent Skills { get; }
         public MovableComponent Movable { get; }
@@ -171,6 +170,8 @@ namespace ChickenAPI.Game.Entities.Player
             DateTime before = DateTime.UtcNow;
             Task.WaitAll(
                 CharacterService.SaveAsync(Character),
+                // CharacterSkillService.SaveAsync(Character.Skills),
+                // CharacterQuicklistService.SaveAsync(Character.Quicklist),
                 ItemInstance.SaveAsync(Inventory.GetItems())
             );
             Log.Info($"[SAVE] {Name.Name} saved in {(DateTime.UtcNow - before).TotalMilliseconds} ms");

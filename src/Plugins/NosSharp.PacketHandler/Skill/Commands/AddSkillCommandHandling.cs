@@ -14,7 +14,7 @@ namespace NosSharp.PacketHandler.Skill.Commands
     {
         public static void OnAddSkillCommand(AddSkillCommandPacket packet, IPlayerEntity player)
         {
-            var skillService = Container.Instance.Resolve<ISkillService>();
+            var skillService = ChickenContainer.Instance.Resolve<ISkillService>();
             SkillDto skill = skillService.GetById(packet.SkillId);
 
             player.NotifyEventHandler<SkillEventHandler>(new PlayerAddSkillEventArgs

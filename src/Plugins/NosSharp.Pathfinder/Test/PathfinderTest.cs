@@ -14,7 +14,7 @@ namespace NosSharp.Pathfinder.Test
 
         public void RunTest(int repetition)
         {
-            var pathfinder = Container.Instance.Resolve<IPathfinder>();
+            var pathfinder = ChickenContainer.Instance.Resolve<IPathfinder>();
             var map = new SimpleMap(new ChickenAPI.Game.Data.TransferObjects.Map.MapDto()
             {
                 Height = 5,

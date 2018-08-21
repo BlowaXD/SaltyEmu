@@ -21,7 +21,7 @@ namespace NosSharp.PacketHandler
         {
             try
             {
-                var packetHandler = Container.Instance.Resolve<IPacketHandler>();
+                var packetHandler = ChickenContainer.Instance.Resolve<IPacketHandler>();
                 foreach (CharacterScreenPacketHandler handler in PacketMethodGenerator.GetCharacterScreenPacketHandlers())
                 {
                     Log.Info($"[PACKET_ADD][CHARACTERSCREEN] {handler.Identification}...");

@@ -23,7 +23,7 @@ namespace NosSharp.DatabasePlugin.Services.Character
         {
         }
 
-        public IEnumerable<CharacterQuicklistDto> LoadByCharacterId(long id)
+        public IEnumerable<CharacterQuicklistDto> GetByCharacterId(long id)
         {
             try
             {
@@ -36,7 +36,7 @@ namespace NosSharp.DatabasePlugin.Services.Character
             }
         }
         
-        public async Task<IEnumerable<CharacterQuicklistDto>> LoadByCharacterIdAsync(long characterId)
+        public async Task<IEnumerable<CharacterQuicklistDto>> GetByCharacterIdAsync(long characterId)
         {
             try
             {

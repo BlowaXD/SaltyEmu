@@ -14,7 +14,7 @@ namespace ChickenAPI.Game.Features.Battle
 
         public BattleComponent(IEntity entity, CharacterDto dto) : this(entity)
         {
-            var algo = Container.Instance.Resolve<IAlgorithmService>();
+            var algo = ChickenContainer.Instance.Resolve<IAlgorithmService>();
             HpMax = algo.GetHpMax(dto.Class, dto.Level);
             Hp = HpMax;
             MpMax = algo.GetMpMax(dto.Class, dto.Level);

@@ -76,7 +76,7 @@ namespace World.Network
                     if (_group == null)
                     {
                         g = _group = new DefaultChannelGroup(context.Executor);
-                        _sessionService = Container.Instance.Resolve<ISessionService>();
+                        _sessionService = ChickenContainer.Instance.Resolve<ISessionService>();
                     }
                 }
             }

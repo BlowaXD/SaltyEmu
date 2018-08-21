@@ -2,7 +2,7 @@
 
 namespace ChickenAPI.Core.IoC
 {
-    public class Container
+    public static class ChickenContainer
     {
         public static ContainerBuilder Builder = new ContainerBuilder();
 

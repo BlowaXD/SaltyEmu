@@ -42,7 +42,7 @@ namespace World.Network
                 Id = Guid.Empty,
                 ChannelId = 0
             };
-            var api = Container.Instance.Resolve<IServerApiService>();
+            var api = ChickenContainer.Instance.Resolve<IServerApiService>();
             if (api?.RegisterServer(worldServer) == true)
             {
                 return true;
@@ -62,7 +62,7 @@ namespace World.Network
                 return;
             }
 
-            var api = Container.Instance.Resolve<IServerApiService>();
+            var api = ChickenContainer.Instance.Resolve<IServerApiService>();
             if (api == null)
             {
                 return;
@@ -70,7 +70,7 @@ namespace World.Network
 
             Log.Info($"Unregister server {WorldServer.Id}");
 
-            var sessionManager = Container.Instance.Resolve<ISessionService>();
+            var sessionManager = ChickenContainer.Instance.Resolve<ISessionService>();
             api.UnregisterServer(WorldServer.Id);
             sessionManager.UnregisterSessions(WorldServer.Id);
             _running = false;
@@ -78,7 +78,7 @@ namespace World.Network
 
         private static void ServerLoop()
         {
-            _container = Container.Instance.Resolve<IEntityManagerContainer>();
+            _container = ChickenContainer.Instance.Resolve<IEntityManagerContainer>();
             while (_running)
             {
                 DateTime next = DateTime.UtcNow.AddMilliseconds(DelayBetweenTicks);

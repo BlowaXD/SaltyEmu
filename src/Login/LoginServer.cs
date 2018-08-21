@@ -85,10 +85,10 @@ namespace LoginServer
             InitializeLogger();
             InitializeConfiguration();
             InitializePlugins();
-            Container.Initialize();
-            ClientSession.AccountService = Container.Instance.Resolve<IAccountService>();
-            ClientSession.ServerApi = Container.Instance.Resolve<IServerApiService>();
-            ClientSession.SessionService = Container.Instance.Resolve<ISessionService>();
+            ChickenContainer.Initialize();
+            ClientSession.AccountService = ChickenContainer.Instance.Resolve<IAccountService>();
+            ClientSession.ServerApi = ChickenContainer.Instance.Resolve<IServerApiService>();
+            ClientSession.SessionService = ChickenContainer.Instance.Resolve<ISessionService>();
             NetworkManager.RunServerAsync(_port, new LoginEncoderFactory()).Wait();
         }
     }

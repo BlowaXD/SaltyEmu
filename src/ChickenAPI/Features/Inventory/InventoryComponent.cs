@@ -6,6 +6,7 @@ namespace ChickenAPI.Game.Features.Inventory
 {
     public class InventoryComponent : IComponent
     {
+        public const short MAX_ITEM_PER_SLOT = short.MaxValue;
         public const byte WEAR_SIZE = 16;
         public const byte EQUIPMENT_SIZE = 48;
         public const byte MAIN_SIZE = 48;
@@ -17,6 +18,9 @@ namespace ChickenAPI.Game.Features.Inventory
             Equipment = new ItemInstanceDto[EQUIPMENT_SIZE];
             Main = new ItemInstanceDto[MAIN_SIZE];
             Etc = new ItemInstanceDto[ETC_SIZE];
+            // temporary
+            Specialists = new ItemInstanceDto[1];
+            Costumes = new ItemInstanceDto[1];
             Entity = entity;
         }
 

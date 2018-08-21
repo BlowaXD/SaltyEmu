@@ -442,10 +442,10 @@ namespace Toolkit.Converter
 
         private void ExtractFiles()
         {
-            _monsterDb = Container.Instance.Resolve<INpcMonsterService>();
-            _bcardDb = Container.Instance.Resolve<IBCardService>();
-            _skillsDb = Container.Instance.Resolve<INpcMonsterSkillService>();
-            //_dropsDb = Container.Instance.Resolve<IDropService>();
+            _monsterDb = ChickenContainer.Instance.Resolve<INpcMonsterService>();
+            _bcardDb = ChickenContainer.Instance.Resolve<IBCardService>();
+            _skillsDb = ChickenContainer.Instance.Resolve<INpcMonsterSkillService>();
+            //_dropsDb = ChickenContainer.Instance.Resolve<IDropService>();
 
             _monsterDb.Save(_monsters);
             _bcardDb.Save(_monsterBcards);
@@ -460,8 +460,8 @@ namespace Toolkit.Converter
             {
                 _inputDirectory = inputDirectory;
 
-                _monsterAlgorithm = Container.Instance.Resolve<INpcMonsterAlgorithmService>();
-                _skillService = Container.Instance.Resolve<ISkillService>();
+                _monsterAlgorithm = ChickenContainer.Instance.Resolve<INpcMonsterAlgorithmService>();
+                _skillService = ChickenContainer.Instance.Resolve<ISkillService>();
                 _skills = _skillService.Get().ToDictionary(dto => dto.Id);
                 ParseFile();
                 ExtractFiles();

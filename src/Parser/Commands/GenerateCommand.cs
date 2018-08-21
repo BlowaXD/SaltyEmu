@@ -42,7 +42,7 @@ namespace Toolkit.Commands
                 Logger.Initialize();
             }
 
-            Container.Initialize();
+            ChickenContainer.Initialize();
             var portal = new PacketPortalGenerator();
             var monster = new MapMonsterGenerator();
             var npc = new MapNpcGenerator();

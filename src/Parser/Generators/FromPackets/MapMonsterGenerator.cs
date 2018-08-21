@@ -22,8 +22,8 @@ namespace Toolkit.Generators.FromPackets
 
         public void Generate(string filePath)
         {
-            var mapMonsterService = Container.Instance.Resolve<IMapMonsterService>();
-            var npcMonsterService = Container.Instance.Resolve<INpcMonsterService>();
+            var mapMonsterService = ChickenContainer.Instance.Resolve<IMapMonsterService>();
+            var npcMonsterService = ChickenContainer.Instance.Resolve<INpcMonsterService>();
             Dictionary<long, NpcMonsterDto> npcMonsters = npcMonsterService.Get().ToDictionary(s => s.Id, s => s);
             Dictionary<long, long> effPacketsDictionary = new Dictionary<long, long>();
             List<long> npcMvPacketsList = new List<long>();

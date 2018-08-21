@@ -321,8 +321,8 @@ namespace Toolkit.Converter
 
         private void ExtractFiles()
         {
-            _skillService = Container.Instance.Resolve<ISkillService>();
-            _bcardService = Container.Instance.Resolve<IBCardService>();
+            _skillService = ChickenContainer.Instance.Resolve<ISkillService>();
+            _bcardService = ChickenContainer.Instance.Resolve<IBCardService>();
 
             _skillService.Save(_skills.Values);
             _bcardService.Save(_skillBCards);

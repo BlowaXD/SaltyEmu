@@ -27,10 +27,10 @@ namespace NosSharp.TemporaryMapPlugins
         public void OnLoad()
         {
             Log.Info("Loading...");
-            Container.Builder.Register(s => new LazyMapManager()).As<IMapManager>().SingleInstance();
-            Container.Builder.Register(c => new SimpleItemInstanceFactory(c.Resolve<IItemService>())).As<IItemInstanceFactory>();
-            Container.Builder.Register(s => new EventManager()).As<IEventManager>().SingleInstance();
-            Container.Builder.Register(_ => new RandomGenerator()).As<IRandomGenerator>().SingleInstance();
+            ChickenContainer.Builder.Register(s => new LazyMapManager()).As<IMapManager>().SingleInstance();
+            ChickenContainer.Builder.Register(c => new SimpleItemInstanceFactory(c.Resolve<IItemService>())).As<IItemInstanceFactory>();
+            ChickenContainer.Builder.Register(s => new EventManager()).As<IEventManager>().SingleInstance();
+            ChickenContainer.Builder.Register(_ => new RandomGenerator()).As<IRandomGenerator>().SingleInstance();
             Log.Info("Loaded !");
         }
 
