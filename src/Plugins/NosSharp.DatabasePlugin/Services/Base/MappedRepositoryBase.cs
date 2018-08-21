@@ -71,8 +71,7 @@ namespace NosSharp.DatabasePlugin.Services.Base
                 }
                 else
                 {
-                    Context.Entry(model).CurrentValues.SetValues(Mapper.Map<TModel>(obj));
-                    Context.Entry(model).State = EntityState.Modified;
+                    Context.Entry(model).CurrentValues.SetValues(obj);
                 }
 
                 Context.SaveChanges();
@@ -181,29 +180,22 @@ namespace NosSharp.DatabasePlugin.Services.Base
         {
             try
             {
-                var model = Mapper.Map<TModel>(obj);
-                EntityEntry<TModel> entry = Context.Entry(Mapper.Map<TModel>(obj));
-                switch (entry.State)
+                TModel model = DbSet.Find(obj.Id);
+                if (model == null)
                 {
-                    case EntityState.Detached:
-                        Context.Add(model);
-                        break;
-                    case EntityState.Modified:
-                        Context.Update(model);
-                        break;
-                    case EntityState.Added:
-                        Context.Add(model);
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException();
+                    model = DbSet.Add(Mapper.Map<TModel>(obj)).Entity;
+                }
+                else
+                {
+                    Context.Entry(model).CurrentValues.SetValues(obj);
                 }
 
-                obj.Id = model.Id;
                 await Context.SaveChangesAsync();
                 return Mapper.Map<TObject>(model);
             }
             catch (Exception e)
             {
+                Log.Warn($"{JsonConvert.SerializeObject(obj)}");
                 Log.Error("[SAVE]", e);
                 return null;
             }

@@ -17,7 +17,7 @@ namespace ChickenAPI.Game.Entities.Player.Extensions
                 Unknown1 = "-", //TODO: Find signification
                 GroupId = -1,
                 FamilyId = family?.FamilyId ?? -1, // todo : family system
-                FamilyName = family?.FamilyName,
+                FamilyName = family?.FamilyName ?? "-",
                 CharacterId = player.Character.Id,
                 Authority = player.Session.Account.Authority > AuthorityType.GameMaster ? (byte)2 : (byte)0,
                 Gender = player.Character.Gender,

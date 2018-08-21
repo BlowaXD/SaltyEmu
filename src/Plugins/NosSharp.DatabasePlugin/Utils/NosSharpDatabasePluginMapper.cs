@@ -168,7 +168,7 @@ namespace NosSharp.DatabasePlugin.Utils
 
             cfg.CreateMap<ItemInstanceDto, CharacterItemModel>();
             cfg.CreateMap<CharacterItemModel, ItemInstanceDto>()
-                .ForMember(s => s.Item, expr => expr.ResolveUsing(origin => ChickenContainer.Instance.Resolve<INpcMonsterService>().GetById(origin.ItemId)));
+                .ForMember(s => s.Item, expr => expr.ResolveUsing(origin => ChickenContainer.Instance.Resolve<IItemService>().GetById(origin.ItemId)));
         }
 
         private static void MapCharacters(IMapperConfigurationExpression cfg)

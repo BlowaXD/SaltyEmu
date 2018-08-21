@@ -106,7 +106,11 @@ namespace World.Network
             }
 
             string tmp = _packetFactory.Serialize(packet);
-            Log.Info($"[SEND_PACKET] {SessionId} : {tmp}");
+            if (!tmp.StartsWith("mv") && !tmp.StartsWith("cond"))
+            {
+                Log.Info($"[SEND_PACKET] {SessionId} : {tmp}");
+            }
+
             _channel.WriteAsync(tmp);
             _channel.Flush();
         }

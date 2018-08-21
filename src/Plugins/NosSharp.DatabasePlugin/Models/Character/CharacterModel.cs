@@ -30,19 +30,17 @@ namespace NosSharp.DatabasePlugin.Models.Character
         public string Biography { get; set; }
 
         public bool BuffBlocked { get; set; }
-        public byte Class { get; set; }
+        public CharacterClassType Class { get; set; }
 
         public short Compliment { get; set; }
 
         public float Dignity { get; set; }
 
-        public int Elo { get; set; }
-
         public bool EmoticonsBlocked { get; set; }
 
         public bool ExchangeBlocked { get; set; }
 
-        public byte Faction { get; set; }
+        public FactionType Faction { get; set; }
 
         public bool FamilyRequestBlocked { get; set; }
 

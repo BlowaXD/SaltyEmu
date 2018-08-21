@@ -8,13 +8,13 @@ namespace ChickenAPI.Game.Features.Leveling
         public ExperienceComponent(IEntity entity) => Entity = entity;
 
         public byte Level { get; set; }
-        public int LevelXp { get; set; }
+        public long LevelXp { get; set; }
 
         public byte HeroLevel { get; set; }
-        public int HeroLevelXp { get; set; }
+        public long HeroLevelXp { get; set; }
 
         public byte JobLevel { get; set; }
-        public int JobLevelXp { get; set; }
+        public long JobLevelXp { get; set; }
 
         public IEntity Entity { get; }
     }

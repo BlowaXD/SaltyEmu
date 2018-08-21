@@ -5,7 +5,9 @@ namespace ChickenAPI.Game.Data.TransferObjects.Character
 {
     public class CharacterDto : IMappedDto
     {
+        public long Id { get; set; }
         public long AccountId { get; set; }
+
         public int Act4Dead { get; set; }
 
         public int Act4Kill { get; set; }
@@ -22,8 +24,6 @@ namespace ChickenAPI.Game.Data.TransferObjects.Character
         public short Compliment { get; set; }
 
         public float Dignity { get; set; }
-
-        public int Elo { get; set; }
 
         public bool EmoticonsBlocked { get; set; }
 
@@ -49,7 +49,7 @@ namespace ChickenAPI.Game.Data.TransferObjects.Character
 
         public byte HeroLevel { get; set; }
 
-        public int HeroXp { get; set; }
+        public long HeroXp { get; set; }
 
         public int Hp { get; set; }
 
@@ -57,11 +57,11 @@ namespace ChickenAPI.Game.Data.TransferObjects.Character
 
         public byte JobLevel { get; set; }
 
-        public int JobLevelXp { get; set; }
+        public long JobLevelXp { get; set; }
 
         public byte Level { get; set; }
 
-        public int LevelXp { get; set; }
+        public long LevelXp { get; set; }
 
         public short MapId { get; set; }
 
@@ -111,6 +111,5 @@ namespace ChickenAPI.Game.Data.TransferObjects.Character
         public int TalentWin { get; set; }
 
         public bool WhisperBlocked { get; set; }
-        public long Id { get; set; }
     }
 }

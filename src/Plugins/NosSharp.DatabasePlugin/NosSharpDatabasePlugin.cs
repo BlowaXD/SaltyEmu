@@ -16,6 +16,7 @@ using ChickenAPI.Game.Data.AccessLayer.Shop;
 using ChickenAPI.Game.Data.AccessLayer.Skill;
 using ChickenAPI.Game.Data.TransferObjects.Character;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
 using NosSharp.DatabasePlugin.Configuration;
 using NosSharp.DatabasePlugin.Context;
 using NosSharp.DatabasePlugin.Services.Account;
@@ -126,8 +127,12 @@ namespace NosSharp.DatabasePlugin
                 return;
             }
 
-            ChickenContainer.Builder.Register(s => new NosSharpContext(new DbContextOptionsBuilder<NosSharpContext>().UseSqlServer(_configuration.ToString()).Options)).As<NosSharpContext>()
-                .InstancePerLifetimeScope();
+            ChickenContainer.Builder.Register(s =>
+            {
+                var options = new DbContextOptionsBuilder<NosSharpContext>().UseSqlServer(_configuration.ToString());
+
+                return new NosSharpContext(options.Options);
+            }).As<NosSharpContext>().InstancePerDependency();
             RegisterMapping();
             RegisterDependencies();
             Log.Info($"Loaded !");

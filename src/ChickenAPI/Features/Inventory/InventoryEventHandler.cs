@@ -212,6 +212,8 @@ namespace ChickenAPI.Game.Features.Inventory
                     packet.Items.AddRange(items.Where(s => s != null).Select(s =>
                         $"{s.Slot}.{s.ItemId}.{s.Amount}"));
                     break;
+                default:
+                    break;
             }
 
             return packet;
@@ -222,7 +224,6 @@ namespace ChickenAPI.Game.Features.Inventory
             player.SendPacket(GenerateInventoryPacket(InventoryType.Equipment, inv.Equipment));
             player.SendPacket(GenerateInventoryPacket(InventoryType.Main, inv.Main));
             player.SendPacket(GenerateInventoryPacket(InventoryType.Etc, inv.Etc));
-            player.SendPacket(GenerateInventoryPacket(InventoryType.Wear, inv.Wear));
         }
 
         private static void AddItem(InventoryComponent inv, InventoryAddItemEventArgs args)
