@@ -2,7 +2,7 @@
 {
     public enum CharacterRep : byte
     {
-        Beginer = 1, //  (0 ~ 250 Reputation)
+        Beginner = 1, //  (0 ~ 250 Reputation)
 
         IDk = 2, // IDK ?
         IDk2 = 3, // IDK ?

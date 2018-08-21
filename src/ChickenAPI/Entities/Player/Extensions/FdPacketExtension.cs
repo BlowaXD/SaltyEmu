@@ -6,37 +6,37 @@ namespace ChickenAPI.Game.Entities.Player.Extensions
 {
     public static class FdPacketExtension
     {
-        public static int GetDignityIcon(this IPlayerEntity character)
+        public static CharacterDignity GetDignityIcon(this IPlayerEntity character)
         {
             if (character.Character.Dignity <= -100)
             {
-                return (int)CharacterDignity.Suspected;
+                return CharacterDignity.Suspected;
             }
 
             if (character.Character.Dignity <= -200)
             {
-                return (int)CharacterDignity.BluffedNameOnly;
+                return CharacterDignity.BluffedNameOnly;
             }
 
             if (character.Character.Dignity <= -400)
             {
-                return (int)CharacterDignity.NotQualifiedFor;
+                return CharacterDignity.NotQualifiedFor;
             }
 
             if (character.Character.Dignity <= -600)
             {
-                return (int)CharacterDignity.Useless;
+                return CharacterDignity.Useless;
             }
 
             if (character.Character.Dignity <= -800)
             {
-                return (int)CharacterDignity.StupidMinded;
+                return CharacterDignity.StupidMinded;
             }
 
-            return (int)CharacterDignity.Basic;
+            return CharacterDignity.Basic;
         }
 
-        public static int GetReputIcon(this IPlayerEntity player)
+        public static CharacterRep GetReputIcon(this IPlayerEntity player)
         {
             /*
             if (player >= 5000001)
@@ -44,149 +44,149 @@ namespace ChickenAPI.Game.Entities.Player.Extensions
                 switch (IsReputHero())
                 {
                     case 1:
-                        return (int)CharacterRep.LegendG;
+                        return CharacterRep.LegendG;
 
                     case 2:
-                        return (int)CharacterRep.Legendb;
+                        return CharacterRep.Legendb;
 
                     case 3:
-                        return (int)CharacterRep.AncienHeros;
+                        return CharacterRep.AncienHeros;
 
                     case 4:
-                        return (int)CharacterRep.MysteriousHeros;
+                        return CharacterRep.MysteriousHeros;
 
                     case 5:
-                        return (int)CharacterRep.LegendaryHeros;
+                        return CharacterRep.LegendaryHeros;
                 }
             }
             */
 
             if (player.Character.Reput <= 50)
             {
-                return (int)CharacterRep.Beginer;
+                return CharacterRep.Beginner;
             }
 
             if (player.Character.Reput <= 150)
             {
-                return (int)CharacterRep.IDk;
+                return CharacterRep.IDk;
             }
 
             if (player.Character.Reput <= 250)
             {
-                return (int)CharacterRep.IDk2;
+                return CharacterRep.IDk2;
             }
 
             if (player.Character.Reput <= 500)
             {
-                return (int)CharacterRep.TraineeG;
+                return CharacterRep.TraineeG;
             }
 
             if (player.Character.Reput <= 750)
             {
-                return (int)CharacterRep.TraineeB;
+                return CharacterRep.TraineeB;
             }
 
             if (player.Character.Reput <= 1000)
             {
-                return (int)CharacterRep.TraineeR;
+                return CharacterRep.TraineeR;
             }
 
             if (player.Character.Reput <= 2250)
             {
-                return (int)CharacterRep.TheExperiencedG;
+                return CharacterRep.TheExperiencedG;
             }
 
             if (player.Character.Reput <= 3500)
             {
-                return (int)CharacterRep.TheExperiencedB;
+                return CharacterRep.TheExperiencedB;
             }
 
             if (player.Character.Reput <= 5000)
             {
-                return (int)CharacterRep.TheExperiencedR;
+                return CharacterRep.TheExperiencedR;
             }
 
             if (player.Character.Reput <= 9500)
             {
-                return (int)CharacterRep.BattleSoldierG;
+                return CharacterRep.BattleSoldierG;
             }
 
             if (player.Character.Reput <= 19000)
             {
-                return (int)CharacterRep.BattleSoldierB;
+                return CharacterRep.BattleSoldierB;
             }
 
             if (player.Character.Reput <= 25000)
             {
-                return (int)CharacterRep.BattleSoldierR;
+                return CharacterRep.BattleSoldierR;
             }
 
             if (player.Character.Reput <= 40000)
             {
-                return (int)CharacterRep.ExpertG;
+                return CharacterRep.ExpertG;
             }
 
             if (player.Character.Reput <= 60000)
             {
-                return (int)CharacterRep.ExpertB;
+                return CharacterRep.ExpertB;
             }
 
             if (player.Character.Reput <= 85000)
             {
-                return (int)CharacterRep.ExpertR;
+                return CharacterRep.ExpertR;
             }
 
             if (player.Character.Reput <= 115000)
             {
-                return (int)CharacterRep.LeaderG;
+                return CharacterRep.LeaderG;
             }
 
             if (player.Character.Reput <= 150000)
             {
-                return (int)CharacterRep.LeaderB;
+                return CharacterRep.LeaderB;
             }
 
             if (player.Character.Reput <= 190000)
             {
-                return (int)CharacterRep.LeaderR;
+                return CharacterRep.LeaderR;
             }
 
             if (player.Character.Reput <= 235000)
             {
-                return (int)CharacterRep.MasterG;
+                return CharacterRep.MasterG;
             }
 
             if (player.Character.Reput <= 285000)
             {
-                return (int)CharacterRep.MasterB;
+                return CharacterRep.MasterB;
             }
 
             if (player.Character.Reput <= 350000)
             {
-                return (int)CharacterRep.MasterR;
+                return CharacterRep.MasterR;
             }
 
             if (player.Character.Reput <= 500000)
             {
-                return (int)CharacterRep.NosG;
+                return CharacterRep.NosG;
             }
 
             if (player.Character.Reput <= 1500000)
             {
-                return (int)CharacterRep.NosB;
+                return CharacterRep.NosB;
             }
 
             if (player.Character.Reput <= 2500000)
             {
-                return (int)CharacterRep.NosR;
+                return CharacterRep.NosR;
             }
 
             if (player.Character.Reput <= 3750000)
             {
-                return (int)CharacterRep.EliteG;
+                return CharacterRep.EliteG;
             }
 
-            return player.Character.Reput <= 5000000 ? (int)CharacterRep.EliteB : (int)CharacterRep.EliteR;
+            return player.Character.Reput <= 5000000 ? CharacterRep.EliteB : CharacterRep.EliteR;
         }
 
         public static FdPacket GenerateFdPacket(this IPlayerEntity player)
@@ -195,8 +195,8 @@ namespace ChickenAPI.Game.Entities.Player.Extensions
             {
                 Dignity = (int)player.Character.Dignity,
                 Reput = player.Character.Reput,
-                DignityIcon = Math.Abs(player.GetDignityIcon()),
-                ReputIcon = player.GetReputIcon(),
+                DignityIcon = Math.Abs((int)player.GetDignityIcon()),
+                ReputIcon = (int)player.GetReputIcon(),
             };
         }
     }
