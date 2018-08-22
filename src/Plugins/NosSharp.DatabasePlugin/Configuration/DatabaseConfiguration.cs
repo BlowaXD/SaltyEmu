@@ -8,11 +8,16 @@ namespace NosSharp.DatabasePlugin.Configuration
     {
         public DatabaseConfiguration()
         {
-            Ip = "localhost";
-            Username = "sa";
-            Password = "strong_pass2018";
-            Database = "saltyemu";
-            Port = 1433;
+            Ip = Environment.GetEnvironmentVariable("DATABASE_IP") ?? "localhost";
+            Username = Environment.GetEnvironmentVariable("DATABASE_USER") ?? "sa";
+            Password = Environment.GetEnvironmentVariable("DATABASE_PASSWORD") ?? "strong_pass2018";
+            Database = Environment.GetEnvironmentVariable("DATABASE_NAME") ?? "saltyemu";
+            if (!ushort.TryParse(Environment.GetEnvironmentVariable("DATABASE_PORT") ?? "1433", out ushort port))
+            {
+                port = 1433;
+            }
+
+            Port = port;
             Type = DbProviderType.MSSQL;
         }
 
