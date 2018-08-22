@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using ChickenAPI.Enums.Game.Entity;
+using ChickenAPI.Packets.Attributes;
 
-namespace ChickenAPI.Game.Packets.Game.Server
+namespace ChickenAPI.Packets.Game.Server.Entities
 {
     [PacketHeader("st")]
     public class StPacket : PacketBase

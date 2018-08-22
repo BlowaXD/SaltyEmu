@@ -3,7 +3,7 @@ using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Game.Entities.Monster;
 using ChickenAPI.Game.Entities.Npc;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Game.Packets.Game.Server;
+using ChickenAPI.Packets.Game.Server.Entities;
 
 namespace ChickenAPI.Game.Packets.Extensions
 {

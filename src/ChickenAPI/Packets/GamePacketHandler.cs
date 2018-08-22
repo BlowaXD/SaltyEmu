@@ -2,6 +2,8 @@
 using System.Linq;
 using ChickenAPI.Enums;
 using ChickenAPI.Game.Entities.Player;
+using ChickenAPI.Packets;
+using ChickenAPI.Packets.Attributes;
 
 namespace ChickenAPI.Game.Packets
 {

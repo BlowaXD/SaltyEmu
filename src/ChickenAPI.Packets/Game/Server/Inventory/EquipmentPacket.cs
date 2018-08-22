@@ -1,11 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using ChickenAPI.Packets.Attributes;
 
-namespace ChickenAPI.Game.Packets.Game.Server.Inventory
+namespace ChickenAPI.Packets.Game.Server.Inventory
 {
     [PacketHeader("equip")]
     public class EquipmentPacket : PacketBase
     {
-
         [PacketIndex(0, RemoveSeparator = true)]
         public EqRareInfo EqRare { get; set; }
 

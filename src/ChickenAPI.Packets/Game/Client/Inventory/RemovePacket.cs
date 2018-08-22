@@ -1,4 +1,6 @@
-﻿namespace ChickenAPI.Game.Packets.Game.Server
+﻿using ChickenAPI.Packets.Attributes;
+
+namespace ChickenAPI.Packets.Game.Client.Inventory
 {
     [PacketHeader("remove")]
     public class RemovePacket : PacketBase

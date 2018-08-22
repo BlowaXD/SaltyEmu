@@ -1,10 +1,10 @@
-﻿namespace ChickenAPI.Game.Packets.Game.Server
+﻿using ChickenAPI.Packets.Attributes;
+
+namespace ChickenAPI.Packets.Game.Server.Inventory
 {
     [PacketHeader("eq_subpacket")]
     public class InventoryWearSubPacket : PacketBase
     {
-
-
         [PacketIndex(0)]
         public long Hat { get; set; }
 

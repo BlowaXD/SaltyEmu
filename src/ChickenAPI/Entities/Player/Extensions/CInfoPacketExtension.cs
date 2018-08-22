@@ -1,7 +1,7 @@
 ﻿using ChickenAPI.Enums;
 using ChickenAPI.Game.Features.Families;
 using ChickenAPI.Game.Features.Specialists;
-using ChickenAPI.Game.Packets.Game.Server;
+using ChickenAPI.Packets.Game.Server.Player;
 
 namespace ChickenAPI.Game.Entities.Player.Extensions
 {

@@ -6,7 +6,7 @@ using ChickenAPI.Game.Entities.Npc;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Features.Shops;
 using ChickenAPI.Game.Features.Shops.Args;
-using ChickenAPI.Game.Features.Shops.Packets;
+using ChickenAPI.Packets.Game.Client.Shops;
 
 namespace NosSharp.PacketHandler.Shops
 {

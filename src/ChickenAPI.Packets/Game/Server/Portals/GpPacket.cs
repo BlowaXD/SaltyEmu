@@ -1,6 +1,7 @@
 ﻿using ChickenAPI.Enums.Game.Portals;
+using ChickenAPI.Packets.Attributes;
 
-namespace ChickenAPI.Game.Packets.Game.Server
+namespace ChickenAPI.Packets.Game.Server.Portals
 {
     /// <summary>
     ///     gp {SourceX} {SourceY} {ServerManager.Instance.GetMapInstance(DestinationMapInstanceId)?.Map.MapId ?? 0} {Type}

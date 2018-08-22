@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Game.Entities.Player;
+using ChickenAPI.Packets.Game.Server.Group;
 
 namespace ChickenAPI.Game.Features.Groups
 {

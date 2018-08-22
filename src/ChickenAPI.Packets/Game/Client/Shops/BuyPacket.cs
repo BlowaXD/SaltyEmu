@@ -1,7 +1,7 @@
 ﻿using ChickenAPI.Enums.Game.Entity;
-using ChickenAPI.Game.Packets;
+using ChickenAPI.Packets.Attributes;
 
-namespace ChickenAPI.Game.Features.Shops.Packets
+namespace ChickenAPI.Packets.Game.Client.Shops
 {
     [PacketHeader("buy")]
     public class BuyPacket : PacketBase

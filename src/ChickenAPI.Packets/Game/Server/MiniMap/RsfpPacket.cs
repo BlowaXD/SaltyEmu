@@ -1,4 +1,6 @@
-﻿namespace ChickenAPI.Game.Packets.Game.Server.MiniMap
+﻿using ChickenAPI.Packets.Attributes;
+
+namespace ChickenAPI.Packets.Game.Server.MiniMap
 {
     [PacketHeader("rsfp")]
     public class RsfpPacket : PacketBase

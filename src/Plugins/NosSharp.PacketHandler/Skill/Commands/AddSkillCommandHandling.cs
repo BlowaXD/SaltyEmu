@@ -7,6 +7,8 @@ using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Features.Skills;
 using ChickenAPI.Game.Features.Skills.Args;
 using ChickenAPI.Game.Packets;
+using ChickenAPI.Packets;
+using ChickenAPI.Packets.Attributes;
 
 namespace NosSharp.PacketHandler.Skill.Commands
 {

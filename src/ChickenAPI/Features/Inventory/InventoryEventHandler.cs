@@ -14,7 +14,7 @@ using ChickenAPI.Game.Features.Effects;
 using ChickenAPI.Game.Features.Inventory.Args;
 using ChickenAPI.Game.Features.Inventory.Extensions;
 using ChickenAPI.Game.Packets;
-using ChickenAPI.Game.Packets.Game.Server.Inventory;
+using ChickenAPI.Packets.Game.Server.Inventory;
 
 namespace ChickenAPI.Game.Features.Inventory
 {

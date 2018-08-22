@@ -1,4 +1,6 @@
-﻿namespace ChickenAPI.Game.Packets.Game.Client
+﻿using ChickenAPI.Packets.Attributes;
+
+namespace ChickenAPI.Packets.Game.Client._NotYetSorted
 {
     [PacketHeader("say")]
     public class ClientSayPacket : PacketBase

@@ -3,7 +3,7 @@ using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Game.Entities.Monster;
 using ChickenAPI.Game.Entities.Npc;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Game.Packets.Game.Client;
+using ChickenAPI.Packets.Game.Client._NotYetSorted;
 
 namespace ChickenAPI.Game.Features.Effects
 {

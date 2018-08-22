@@ -3,6 +3,8 @@ using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Features.Effects;
 using ChickenAPI.Game.Features.Effects.Args;
 using ChickenAPI.Game.Packets;
+using ChickenAPI.Packets;
+using ChickenAPI.Packets.Attributes;
 
 namespace NosSharp.PacketHandler.Effects
 {

@@ -3,9 +3,7 @@ using System.Text;
 using ChickenAPI.Enums.Game.Items;
 using ChickenAPI.Game.Data.TransferObjects.Item;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Game.Packets.Game.Client;
-using ChickenAPI.Game.Packets.Game.Server.Inventory;
-using EquipmentInfoPacket = ChickenAPI.Game.Packets.Game.Server.Inventory.EquipmentInfoPacket;
+using ChickenAPI.Packets.Game.Server.Inventory;
 
 namespace ChickenAPI.Game.Features.Inventory.Extensions
 {

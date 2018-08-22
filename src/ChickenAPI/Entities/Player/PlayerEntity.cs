@@ -26,7 +26,8 @@ using ChickenAPI.Game.Maps;
 using ChickenAPI.Game.Network;
 using ChickenAPI.Game.Packets;
 using ChickenAPI.Game.Packets.Extensions;
-using ChickenAPI.Game.Packets.Game.Server.Group;
+using ChickenAPI.Packets;
+using ChickenAPI.Packets.Game.Server.Group;
 
 namespace ChickenAPI.Game.Entities.Player
 {

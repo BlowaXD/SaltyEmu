@@ -1,12 +1,11 @@
-﻿using ChickenAPI.Enums;
-using ChickenAPI.Enums.Game.Character;
+﻿using ChickenAPI.Enums.Game.Character;
+using ChickenAPI.Packets.Attributes;
 
-namespace ChickenAPI.Game.Packets.Game.Server
+namespace ChickenAPI.Packets.Game.Server.Player
 {
     [PacketHeader("c_info")]
     public class CInfoPacket : PacketBase
     {
-
         #region Propertiesf
 
         [PacketIndex(0)]

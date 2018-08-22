@@ -5,7 +5,7 @@ using ChickenAPI.Core.ECS.Entities;
 using ChickenAPI.Core.ECS.Systems;
 using ChickenAPI.Core.Logging;
 using ChickenAPI.Game.Maps;
-using ChickenAPI.Game.Packets.Game.Client;
+using ChickenAPI.Packets.Game.Client._NotYetSorted;
 
 namespace ChickenAPI.Game.Features.Effects
 {

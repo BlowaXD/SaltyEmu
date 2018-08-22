@@ -10,7 +10,9 @@ using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Features.Battle;
 using ChickenAPI.Game.Features.Movement;
 using ChickenAPI.Game.Maps;
-using ChickenAPI.Game.Packets.Game.Server;
+using ChickenAPI.Packets.Game.Server.Entities;
+using ChickenAPI.Packets.Game.Server.MiniMap;
+using ChickenAPI.Packets.Game.Server._NotYetSorted;
 
 namespace ChickenAPI.Game.Packets.Extensions
 {

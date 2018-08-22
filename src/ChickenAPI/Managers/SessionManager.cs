@@ -1,5 +1,6 @@
 ﻿using ChickenAPI.Core.Network;
 using ChickenAPI.Game.Packets;
+using ChickenAPI.Packets;
 
 namespace ChickenAPI.Game.Managers
 {

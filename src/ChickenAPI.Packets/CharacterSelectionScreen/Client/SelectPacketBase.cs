@@ -1,4 +1,6 @@
-﻿namespace ChickenAPI.Game.Packets.CharacterScreen.Client
+﻿using ChickenAPI.Packets.Attributes;
+
+namespace ChickenAPI.Packets.CharacterSelectionScreen.Client
 {
     [PacketHeader("select", NeedCharacter = false)]
     public class SelectPacketBase : PacketBase

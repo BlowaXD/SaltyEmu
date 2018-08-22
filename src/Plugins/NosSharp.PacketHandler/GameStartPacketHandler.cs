@@ -17,9 +17,10 @@ using ChickenAPI.Game.Features.Skills.Extensions;
 using ChickenAPI.Game.Managers;
 using ChickenAPI.Game.Maps;
 using ChickenAPI.Game.Network;
-using ChickenAPI.Game.Packets.CharacterScreen.Client;
-using ChickenAPI.Game.Packets.Game.Server;
-using ChickenAPI.Game.Packets.Game.Server.Map;
+using ChickenAPI.Packets.CharacterSelectionScreen.Client;
+using ChickenAPI.Packets.Game.Server.Map;
+using ChickenAPI.Packets.Game.Server.Player;
+
 
 namespace NosSharp.PacketHandler
 {

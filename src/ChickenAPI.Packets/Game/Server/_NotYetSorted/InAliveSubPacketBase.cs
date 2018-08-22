@@ -1,4 +1,6 @@
-﻿namespace ChickenAPI.Game.Packets.Game.Server
+﻿using ChickenAPI.Packets.Attributes;
+
+namespace ChickenAPI.Packets.Game.Server._NotYetSorted
 {
     [PacketHeader("in_alive_subpacket")]
     public class InAliveSubPacketBase : PacketBase

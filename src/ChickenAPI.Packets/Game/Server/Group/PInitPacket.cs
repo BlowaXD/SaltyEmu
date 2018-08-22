@@ -1,4 +1,6 @@
-﻿namespace ChickenAPI.Game.Packets.Game.Server.Group
+﻿using ChickenAPI.Packets.Attributes;
+
+namespace ChickenAPI.Packets.Game.Server.Group
 {
     [PacketHeader("pinit")]
     public class PInitPacket : PacketBase

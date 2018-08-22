@@ -4,6 +4,7 @@ using ChickenAPI.Game.Data.TransferObjects.Character;
 using ChickenAPI.Game.Features.Visibility;
 using ChickenAPI.Game.Network;
 using ChickenAPI.Game.Packets;
+using ChickenAPI.Packets;
 
 namespace ChickenAPI.Game.Entities.Player
 {

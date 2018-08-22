@@ -1,4 +1,6 @@
-﻿namespace ChickenAPI.Game.Packets.Game.Server.Inventory
+﻿using ChickenAPI.Packets.Attributes;
+
+namespace ChickenAPI.Packets.Game.Server.Inventory
 {
     [PacketHeader("gold")]
     public class GoldPacket : PacketBase

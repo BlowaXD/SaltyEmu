@@ -1,6 +1,6 @@
-﻿using ChickenAPI.Game.Packets;
+﻿using ChickenAPI.Packets.Attributes;
 
-namespace ChickenAPI.Game.Features.Specialists.Packets
+namespace ChickenAPI.Packets.Game.Client.Specialists
 {
     [PacketHeader("sl")]
     public class SlPacket : PacketBase

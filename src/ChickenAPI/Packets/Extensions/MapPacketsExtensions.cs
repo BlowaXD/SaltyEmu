@@ -1,6 +1,6 @@
 ﻿using System;
 using ChickenAPI.Game.Maps;
-using ChickenAPI.Game.Packets.Game.Server;
+using ChickenAPI.Packets.Game.Server.MiniMap;
 
 namespace ChickenAPI.Game.Packets.Extensions
 {

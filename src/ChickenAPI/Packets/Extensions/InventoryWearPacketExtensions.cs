@@ -1,7 +1,7 @@
 ﻿using ChickenAPI.Enums.Game.Items;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Features.Inventory;
-using ChickenAPI.Game.Packets.Game.Server;
+using ChickenAPI.Packets.Game.Server.Inventory;
 
 namespace ChickenAPI.Game.Packets.Extensions
 {

@@ -1,8 +1,8 @@
 ﻿using ChickenAPI.Enums.Game.Character;
 using ChickenAPI.Enums.Game.Entity;
-using ChickenAPI.Game.Packets;
+using ChickenAPI.Packets.Attributes;
 
-namespace ChickenAPI.Game.Features.Groups
+namespace ChickenAPI.Packets.Game.Server.Group
 {
     [PacketHeader("pst")]
     public class PstPacket : PacketBase

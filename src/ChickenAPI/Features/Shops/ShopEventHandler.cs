@@ -20,8 +20,8 @@ using ChickenAPI.Game.Features.Inventory;
 using ChickenAPI.Game.Features.Inventory.Args;
 using ChickenAPI.Game.Features.Inventory.Extensions;
 using ChickenAPI.Game.Features.Shops.Args;
-using ChickenAPI.Game.Features.Shops.Packets;
 using ChickenAPI.Game.Features.Skills.Extensions;
+using ChickenAPI.Packets.Game.Client.Shops;
 
 namespace ChickenAPI.Game.Features.Shops
 {

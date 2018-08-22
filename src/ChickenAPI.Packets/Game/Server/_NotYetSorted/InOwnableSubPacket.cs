@@ -1,4 +1,6 @@
-﻿namespace ChickenAPI.Game.Packets.Game.Server
+﻿using ChickenAPI.Packets.Attributes;
+
+namespace ChickenAPI.Packets.Game.Server._NotYetSorted
 {
     [PacketHeader("in_ownable_subpacket")]
     public class InOwnableSubPacketBase : PacketBase

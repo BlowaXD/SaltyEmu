@@ -13,6 +13,7 @@ using ChickenAPI.Game.Features.Effects;
 using ChickenAPI.Game.Features.IAs;
 using ChickenAPI.Game.Features.Movement;
 using ChickenAPI.Game.Packets;
+using ChickenAPI.Packets;
 
 namespace ChickenAPI.Game.Maps
 {

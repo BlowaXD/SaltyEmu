@@ -1,6 +1,7 @@
 using ChickenAPI.Enums.Game.Entity;
+using ChickenAPI.Packets.Attributes;
 
-namespace ChickenAPI.Game.Packets.Game.Client
+namespace ChickenAPI.Packets.Game.Client._NotYetSorted
 {
     [PacketHeader("u_s")]
     public class UseSkillPacket : PacketBase

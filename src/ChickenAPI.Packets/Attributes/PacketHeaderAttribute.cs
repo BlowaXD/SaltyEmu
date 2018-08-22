@@ -1,7 +1,7 @@
 ﻿using System;
 using ChickenAPI.Enums;
 
-namespace ChickenAPI.Game.Packets
+namespace ChickenAPI.Packets.Attributes
 {
     public class PacketHeaderAttribute : Attribute
     {

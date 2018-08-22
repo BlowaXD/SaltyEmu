@@ -3,7 +3,7 @@ using ChickenAPI.Core.IoC;
 using ChickenAPI.Game.Data.AccessLayer.Character;
 using ChickenAPI.Game.Features.Leveling;
 using ChickenAPI.Game.Features.Skills.Extensions;
-using ChickenAPI.Game.Packets.Game.Server;
+using ChickenAPI.Packets.Game.Server.Player;
 
 namespace ChickenAPI.Game.Entities.Player
 {

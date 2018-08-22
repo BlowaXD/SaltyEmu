@@ -1,6 +1,7 @@
 ﻿using ChickenAPI.Enums.Game.Entity;
+using ChickenAPI.Packets.Attributes;
 
-namespace ChickenAPI.Game.Packets.Game.Client
+namespace ChickenAPI.Packets.Game.Server.Inventory
 {
     [PacketHeader("pairy")]
     public class PairyPacket : PacketBase

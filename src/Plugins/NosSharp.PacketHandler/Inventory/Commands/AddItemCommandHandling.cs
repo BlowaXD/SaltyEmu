@@ -7,6 +7,8 @@ using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Features.Inventory;
 using ChickenAPI.Game.Features.Inventory.Args;
 using ChickenAPI.Game.Packets;
+using ChickenAPI.Packets;
+using ChickenAPI.Packets.Attributes;
 
 namespace NosSharp.PacketHandler.Inventory.Commands
 {

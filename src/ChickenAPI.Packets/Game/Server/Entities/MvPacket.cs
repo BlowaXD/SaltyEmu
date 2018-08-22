@@ -1,6 +1,7 @@
 ﻿using ChickenAPI.Enums.Game.Entity;
+using ChickenAPI.Packets.Attributes;
 
-namespace ChickenAPI.Game.Packets.Game.Server
+namespace ChickenAPI.Packets.Game.Server.Entities
 {
     [PacketHeader("mv")]
     public class MvPacket : PacketBase

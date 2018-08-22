@@ -1,4 +1,6 @@
 ﻿using ChickenAPI.Game.Packets;
+using ChickenAPI.Packets;
+using ChickenAPI.Packets.Attributes;
 
 namespace ChickenAPI.Game.Features.Skills
 {

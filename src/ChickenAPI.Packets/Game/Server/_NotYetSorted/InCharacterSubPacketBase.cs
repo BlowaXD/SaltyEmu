@@ -1,6 +1,8 @@
 ﻿using ChickenAPI.Enums.Game.Character;
+using ChickenAPI.Packets.Attributes;
+using ChickenAPI.Packets.Game.Server.Inventory;
 
-namespace ChickenAPI.Game.Packets.Game.Server
+namespace ChickenAPI.Packets.Game.Server._NotYetSorted
 {
     [PacketHeader("in_character_subpacket")]
     public class InCharacterSubPacketBase : PacketBase

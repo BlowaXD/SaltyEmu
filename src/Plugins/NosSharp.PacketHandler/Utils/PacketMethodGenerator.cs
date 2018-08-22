@@ -4,6 +4,7 @@ using System.Linq;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Network;
 using ChickenAPI.Game.Packets;
+using ChickenAPI.Packets;
 
 namespace NosSharp.PacketHandler.Utils
 {

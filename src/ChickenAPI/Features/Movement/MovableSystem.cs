@@ -8,7 +8,7 @@ using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Features.Movement.Extensions;
 using ChickenAPI.Game.Maps;
 using ChickenAPI.Game.Packets.Extensions;
-using ChickenAPI.Game.Packets.Game.Server;
+using ChickenAPI.Packets.Game.Server.Entities;
 
 namespace ChickenAPI.Game.Features.Movement
 {
