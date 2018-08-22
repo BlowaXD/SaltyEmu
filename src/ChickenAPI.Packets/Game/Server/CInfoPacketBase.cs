@@ -1,11 +1,5 @@
 ﻿using ChickenAPI.Enums;
 using ChickenAPI.Enums.Game.Character;
-using ChickenAPI.Game.Data.TransferObjects.Character;
-using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Game.Features.Families;
-using ChickenAPI.Game.Features.Specialists;
-using ChickenAPI.Game.Features.Visibility;
-using ChickenAPI.Game.Game.Components;
 
 namespace ChickenAPI.Game.Packets.Game.Server
 {

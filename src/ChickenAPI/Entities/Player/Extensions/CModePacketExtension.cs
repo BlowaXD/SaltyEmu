@@ -1,5 +1,4 @@
 ﻿using ChickenAPI.Enums.Game.Entity;
-using ChickenAPI.Game.Features.Specialists;
 using ChickenAPI.Game.Packets.Game.Server;
 
 namespace ChickenAPI.Game.Entities.Player

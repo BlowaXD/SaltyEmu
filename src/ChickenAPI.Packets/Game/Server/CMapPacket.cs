@@ -1,18 +1,10 @@
 ﻿using System;
-using ChickenAPI.Game.Maps;
 
 namespace ChickenAPI.Game.Packets.Game.Server
 {
     [PacketHeader("c_map")]
     public class CMapPacket : PacketBase
     {
-        public CMapPacket(IMap map)
-        {
-            Type = 0;
-            Id = Convert.ToInt16(map.Id);
-            MapType = 1;
-        }
-
         #region Properties
 
         [PacketIndex(0)]

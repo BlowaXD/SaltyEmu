@@ -1,7 +1,4 @@
-﻿using ChickenAPI.Enums.Game.Items;
-using ChickenAPI.Game.Features.Inventory;
-
-namespace ChickenAPI.Game.Packets.Game.Server.Inventory
+﻿namespace ChickenAPI.Game.Packets.Game.Server.Inventory
 {
     [PacketHeader("subpacket_eq_list_info")]
     public class EqListInfo : PacketBase

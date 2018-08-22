@@ -1,5 +1,4 @@
 ﻿using ChickenAPI.Enums.Game.Portals;
-using ChickenAPI.Game.Features.Portals;
 
 namespace ChickenAPI.Game.Packets.Game.Server
 {
@@ -10,16 +9,6 @@ namespace ChickenAPI.Game.Packets.Game.Server
     [PacketHeader("gp")]
     public class GpPacket : PacketBase
     {
-        public GpPacket(PortalComponent portal)
-        {
-            PositionX = portal.SourceX;
-            PositionY = portal.SourceY;
-            DestinationMapId = portal.DestinationMapId;
-            PortalType = portal.Type;
-            PortalId = portal.PortalId;
-            IsDisabled = portal.IsDisabled;
-        }
-
         [PacketIndex(0)]
         public short PositionX { get; set; }
 

@@ -1,7 +1,4 @@
-﻿using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Game.Features.Battle;
-
-namespace ChickenAPI.Game.Packets.Game.Server
+﻿namespace ChickenAPI.Game.Packets.Game.Server
 {
     [PacketHeader("stat")]
     public class StatPacket : PacketBase

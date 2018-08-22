@@ -140,7 +140,7 @@ namespace ChickenAPI.Game.Packets.Extensions
                     HairStyle = character.HairStyle,
                     HairColor = character.HairColor,
                     Class = character.Class,
-                    Equipment = new InventoryWearSubPacket(player.Inventory),
+                    Equipment = player.GenerateInventoryWearPacket(),
                     HpPercentage = battle.HpPercentage,
                     MpPercentage = battle.MpPercentage,
                     IsSitting = false,

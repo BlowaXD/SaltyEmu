@@ -2,6 +2,7 @@
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Features.Movement.Extensions;
 using ChickenAPI.Game.Packets;
+using ChickenAPI.Game.Packets.Extensions;
 using ChickenAPI.Game.Packets.Game.Client;
 using ChickenAPI.Game.Packets.Game.Server;
 
@@ -30,7 +31,7 @@ namespace NosSharp.PacketHandler.Move
             session.SendPacket(session.GenerateCondPacket());
             if (session.EntityManager is IBroadcastable broadcastable)
             {
-                broadcastable.Broadcast(new MvPacket(session));
+                broadcastable.Broadcast(session.GenerateMvPacket());
             }
         }
     }

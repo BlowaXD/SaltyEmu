@@ -114,7 +114,7 @@ namespace ChickenAPI.Game.Features.Visibility
 
                         if (entityy is PortalEntity portal)
                         {
-                            session.SendPacket(new GpPacket(portal.GetComponent<PortalComponent>()));
+                            session.SendPacket(portal.GetComponent<PortalComponent>().GenerateGpPacket());
                         }
 
                         break;

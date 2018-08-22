@@ -3,11 +3,11 @@ using System.Linq;
 using System.Linq.Expressions;
 using ChickenAPI.Core.ECS.Entities;
 using ChickenAPI.Core.ECS.Systems;
-using ChickenAPI.Core.Events;
 using ChickenAPI.Core.Utils;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Features.Movement.Extensions;
 using ChickenAPI.Game.Maps;
+using ChickenAPI.Game.Packets.Extensions;
 using ChickenAPI.Game.Packets.Game.Server;
 
 namespace ChickenAPI.Game.Features.Movement
@@ -48,7 +48,7 @@ namespace ChickenAPI.Game.Features.Movement
         {
             try
             {
-                var packet = new MvPacket(entity);
+                MvPacket packet = entity.GenerateMvPacket();
                 if (EntityManager is IMapLayer mapLayer) // wtf ?
                 {
                     mapLayer.Broadcast(packet);

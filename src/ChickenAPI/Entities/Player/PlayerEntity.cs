@@ -122,7 +122,7 @@ namespace ChickenAPI.Game.Entities.Player
 
             SendPacket(this.GenerateAtPacket());
             SendPacket(this.GenerateCondPacket());
-            SendPacket(new CMapPacket(map.Map));
+            SendPacket(map.Map.GenerateCMapPacket());
             SendPacket(this.GenerateStatCharPacket());
             SendPacket(this.GeneratePairyPacket());
             // Pst()

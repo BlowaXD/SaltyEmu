@@ -8,4 +8,9 @@
     <ProjectReference Include="..\ChickenAPI.Enums\ChickenAPI.Enums.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Login\Client\" />
+    <Folder Include="Login\Server\" />
+  </ItemGroup>
+
 </Project>
