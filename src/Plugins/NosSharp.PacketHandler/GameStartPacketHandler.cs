@@ -14,7 +14,6 @@ using ChickenAPI.Game.Features.Inventory.Extensions;
 using ChickenAPI.Game.Features.Movement.Extensions;
 using ChickenAPI.Game.Features.Player.Extensions;
 using ChickenAPI.Game.Features.Skills.Extensions;
-using ChickenAPI.Game.Game.Components;
 using ChickenAPI.Game.Managers;
 using ChickenAPI.Game.Maps;
 using ChickenAPI.Game.Network;
@@ -47,7 +46,7 @@ namespace NosSharp.PacketHandler
             IEnumerable<CharacterQuicklistDto> quicklist = await CharacterQuicklistService.GetByCharacterIdAsync(session.CharacterId);
             IMapLayer mapLayer = MapManager.GetBaseMapLayer(dto.MapId);
             session.InitializeEntity(new PlayerEntity(session, dto, skills, quicklist));
-            session.SendPacket(new TitPacket { ClassType = "Adventurer", Name = session.Player.GetComponent<NameComponent>().Name});
+            session.SendPacket(new TitPacket { ClassType = "Adventurer", Name = dto.Name});
             session.SendPacket(new SayPacket { Message = "┌------------------[SaltyEmu]------------------┐", Type = SayColorType.Yellow, VisualType = VisualType.Character });
             session.SendPacket(new SayPacket { Message = $"XP     : {dto.LevelXp}/{AlgorithmService.GetLevelXp(dto.Class, dto.Level)}", Type = SayColorType.Yellow, VisualType = VisualType.Character });
             session.SendPacket(new SayPacket { Message = $"JOBXP  : {dto.JobLevelXp}/{AlgorithmService.GetJobLevelXp(dto.Class, dto.Level)}", Type = SayColorType.Yellow, VisualType = VisualType.Character });

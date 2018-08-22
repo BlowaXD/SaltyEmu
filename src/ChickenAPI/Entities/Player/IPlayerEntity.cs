@@ -7,7 +7,7 @@ using ChickenAPI.Game.Packets;
 
 namespace ChickenAPI.Game.Entities.Player
 {
-    public interface IPlayerEntity : IEntity, IMovableEntity, IBattleEntity, IInventoriedEntity, IExperenciedEntity, INamedEntity, IVisibleEntity, ISkillEntity, ISpecialistEntity
+    public interface IPlayerEntity : IEntity, IMovableEntity, IBattleEntity, IInventoriedEntity, IExperenciedEntity, IVisibleEntity, ISkillEntity, ISpecialistEntity
     {
         CharacterDto Character { get; }
         ISession Session { get; }

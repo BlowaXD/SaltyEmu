@@ -37,7 +37,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Features\Inventory\Packets\" />
     <Folder Include="Features\Specialists\Extensions\" />
   </ItemGroup>
 </Project>

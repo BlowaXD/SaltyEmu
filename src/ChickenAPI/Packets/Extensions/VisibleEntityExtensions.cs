@@ -9,7 +9,6 @@ using ChickenAPI.Game.Entities.Npc;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Features.Battle;
 using ChickenAPI.Game.Features.Movement;
-using ChickenAPI.Game.Game.Components;
 using ChickenAPI.Game.Maps;
 using ChickenAPI.Game.Packets.Game.Server;
 
@@ -127,7 +126,7 @@ namespace ChickenAPI.Game.Packets.Extensions
             return new InPacketBase
             {
                 VisualType = VisualType.Character,
-                Name = player.GetComponent<NameComponent>().Name,
+                Name = player.Character.Name,
                 Unknown = "-",
                 VNum = character.Id,
                 PositionX = movable.Actual.X,

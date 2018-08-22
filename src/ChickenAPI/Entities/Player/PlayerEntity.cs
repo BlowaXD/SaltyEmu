@@ -22,12 +22,10 @@ using ChickenAPI.Game.Features.Skills;
 using ChickenAPI.Game.Features.Specialists;
 using ChickenAPI.Game.Features.Visibility;
 using ChickenAPI.Game.Features.Visibility.Args;
-using ChickenAPI.Game.Game.Components;
 using ChickenAPI.Game.Maps;
 using ChickenAPI.Game.Network;
 using ChickenAPI.Game.Packets;
 using ChickenAPI.Game.Packets.Extensions;
-using ChickenAPI.Game.Packets.Game.Server;
 using ChickenAPI.Game.Packets.Game.Server.Group;
 
 namespace ChickenAPI.Game.Entities.Player
@@ -54,10 +52,6 @@ namespace ChickenAPI.Game.Entities.Player
                 HeroLevel = dto.HeroLevel,
                 HeroLevelXp = dto.HeroXp
             };
-            Name = new NameComponent(this)
-            {
-                Name = dto.Name
-            };
             Movable = new MovableComponent(this)
             {
                 Actual = new Position<short>
@@ -81,7 +75,6 @@ namespace ChickenAPI.Game.Entities.Player
                 { typeof(ExperienceComponent), Experience },
                 { typeof(FamilyComponent), new FamilyComponent(this) },
                 { typeof(InventoryComponent), Inventory },
-                { typeof(NameComponent), Name },
                 { typeof(SpecialistComponent), Sp },
                 { typeof(SkillComponent), Skills }
             };
@@ -92,7 +85,6 @@ namespace ChickenAPI.Game.Entities.Player
         public BattleComponent Battle { get; }
         public InventoryComponent Inventory { get; }
         public ExperienceComponent Experience { get; }
-        public NameComponent Name { get; set; }
         public VisibilityComponent Visibility { get; }
         public CharacterDto Character { get; }
         public SpecialistComponent Sp { get; }
@@ -174,7 +166,7 @@ namespace ChickenAPI.Game.Entities.Player
                 // CharacterQuicklistService.SaveAsync(Character.Quicklist),
                 ItemInstance.SaveAsync(Inventory.GetItems())
             );
-            Log.Info($"[SAVE] {Name.Name} saved in {(DateTime.UtcNow - before).TotalMilliseconds} ms");
+            Log.Info($"[SAVE] {Character.Name} saved in {(DateTime.UtcNow - before).TotalMilliseconds} ms");
         }
     }
 }
