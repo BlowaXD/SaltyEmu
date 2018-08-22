@@ -3,12 +3,11 @@ using ChickenAPI.Core.ECS.Entities;
 using ChickenAPI.Game.Data.TransferObjects.Character;
 using ChickenAPI.Game.Features.Visibility;
 using ChickenAPI.Game.Network;
-using ChickenAPI.Game.Packets;
 using ChickenAPI.Packets;
 
 namespace ChickenAPI.Game.Entities.Player
 {
-    public interface IPlayerEntity : IEntity, IMovableEntity, IBattleEntity, IInventoriedEntity, IExperenciedEntity, IVisibleEntity, ISkillEntity, ISpecialistEntity
+    public interface IPlayerEntity : IEntity, IMovableEntity, IBattleEntity, IInventoriedEntity, IExperenciedEntity, IVisibleEntity, ISkillEntity, ISpecialistEntity, IQuicklistEntity
     {
         CharacterDto Character { get; }
         ISession Session { get; }

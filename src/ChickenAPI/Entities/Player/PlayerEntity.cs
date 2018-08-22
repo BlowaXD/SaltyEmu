@@ -18,6 +18,7 @@ using ChickenAPI.Game.Features.Inventory.Extensions;
 using ChickenAPI.Game.Features.Leveling;
 using ChickenAPI.Game.Features.Movement;
 using ChickenAPI.Game.Features.Movement.Extensions;
+using ChickenAPI.Game.Features.Quicklist;
 using ChickenAPI.Game.Features.Skills;
 using ChickenAPI.Game.Features.Specialists;
 using ChickenAPI.Game.Features.Visibility;
@@ -42,6 +43,7 @@ namespace ChickenAPI.Game.Entities.Player
         {
             Session = session;
             Character = dto;
+            Quicklist = new QuicklistComponent(this, quicklist);
             Battle = new BattleComponent(this, dto);
             Inventory = new InventoryComponent(this);
             Experience = new ExperienceComponent(this)
@@ -88,6 +90,7 @@ namespace ChickenAPI.Game.Entities.Player
         public ExperienceComponent Experience { get; }
         public VisibilityComponent Visibility { get; }
         public CharacterDto Character { get; }
+        public QuicklistComponent Quicklist { get; }
         public SpecialistComponent Sp { get; }
         public ISession Session { get; }
         public long LastPulse { get; }
@@ -169,5 +172,6 @@ namespace ChickenAPI.Game.Entities.Player
             );
             Log.Info($"[SAVE] {Character.Name} saved in {(DateTime.UtcNow - before).TotalMilliseconds} ms");
         }
+
     }
 }
