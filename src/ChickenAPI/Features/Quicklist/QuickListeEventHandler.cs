@@ -35,51 +35,24 @@ namespace ChickenAPI.Game.Features.Quicklist
 
         private static void SetQslot(IPlayerEntity player, GenerateQuickListArgs args)
         {
-            //     List<CharacterQuicklistDto> Quicklist { get; set; }
-            // qset 0 0 0 0 0
-            // qset 1 0 1 1 0
-            // qset 1 0 2 3 1
-            // Type Q1Slot Q2Slot DATA1 DATA2
-            // Type = IsSkill
-            // Q1Slot = if is QuickL 1 if is Yes = Slot
-            // Q2 = Same q1
-            // DATA 1 = EnumType 
-            // DATA 2 = SlotEntity
-            // IsSkill IsQ1 IsQ1 EnumType SlotEntity
-            bool type = args.IsSkill;// , q1 = args.Q1;
-            short q1 = args.Q1, q2 = args.Q2, data1 = args.Data1, data2 = args.Data2;
+            bool type = args.IsSkill;
+            short q1 = args.Q1;
+            short q2 = args.Q2;
+            short data1 = args.Data1;
+            short data2 = args.Data2;
 
-            if (q1 != 0)
+            player.Quicklist.Quicklist.Add(new CharacterQuicklistDto
             {
-                player.Quicklist.Quicklist.Add(new CharacterQuicklistDto
-                {
-                    CharacterId = player.Character.Id,
-                    IsSkill = type,
-                    IsQ1 = true,
-                    Slot = q1,
-                    EnumType = data1,
-                    Position = data2,
-                    // Morph = player.Character.UseSp ? (short)player.Character.Morph : (short)0
-                    Morph = 0
-                });
-            }
-
-            if (q2 != 0)
-            {
-                player.Quicklist.Quicklist.Add(new CharacterQuicklistDto
-                {
-                    CharacterId = player.Character.Id,
-                    IsSkill = type,
-                    IsQ1 = false,
-                    Slot = q2,
-                    EnumType = data1,
-                    Position = data2,
-                    // Morph = player.Character.UseSp ? (short)player.Character.Morph : (short)0
-                    Morph = 0
-                });
-            }
-
-            // player.SendPacket($"qset {q1} {q2} {type}.{data1}.{data2}.0");
+                CharacterId = player.Character.Id,
+                IsSkill = type,
+                IsQ1 = q1 != 0,
+                Slot = q1 != 0 ? q1 : q2,
+                EnumType = data1,
+                Position = data2,
+                // Morph = player.Character.UseSp ? (short)player.Character.Morph : (short)0
+                Morph = 0
+            });
+            
             player.SendPacket(GenerateQset(q1, q2, type, data1, data2));
         }
 
@@ -95,6 +68,7 @@ namespace ChickenAPI.Game.Features.Quicklist
                     value = 0;
                     break;
             }
+
             var tmp = new StringBuilder();
 
             tmp.Append(' ');
@@ -114,5 +88,4 @@ namespace ChickenAPI.Game.Features.Quicklist
             };
         }
     }
-
 }
