@@ -12,7 +12,7 @@ using ChickenAPI.Game.Features.Inventory;
 using ChickenAPI.Game.Features.Inventory.Args;
 using ChickenAPI.Game.Features.Inventory.Extensions;
 using ChickenAPI.Game.Features.Movement.Extensions;
-using ChickenAPI.Game.Features.Player.Extensions;
+using ChickenAPI.Game.Features.Player;
 using ChickenAPI.Game.Features.Skills.Extensions;
 using ChickenAPI.Game.Managers;
 using ChickenAPI.Game.Maps;

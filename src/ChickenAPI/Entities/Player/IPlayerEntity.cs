@@ -3,6 +3,7 @@ using ChickenAPI.Core.ECS.Entities;
 using ChickenAPI.Game.Data.TransferObjects.Character;
 using ChickenAPI.Game.Features.Visibility;
 using ChickenAPI.Game.Network;
+using ChickenAPI.Game.Permissions;
 using ChickenAPI.Packets;
 
 namespace ChickenAPI.Game.Entities.Player
@@ -11,6 +12,9 @@ namespace ChickenAPI.Game.Entities.Player
     {
         CharacterDto Character { get; }
         ISession Session { get; }
+
+        bool HasPermission(PermissionType permission);
+        bool HasPermission(string permissionKey);
 
         long LastPulse { get; }
 

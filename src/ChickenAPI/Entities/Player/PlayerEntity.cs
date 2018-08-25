@@ -26,6 +26,7 @@ using ChickenAPI.Game.Features.Visibility.Args;
 using ChickenAPI.Game.Maps;
 using ChickenAPI.Game.Network;
 using ChickenAPI.Game.Packets.Extensions;
+using ChickenAPI.Game.Permissions;
 using ChickenAPI.Packets;
 using ChickenAPI.Packets.Game.Server.Group;
 
@@ -92,6 +93,10 @@ namespace ChickenAPI.Game.Entities.Player
         public QuicklistComponent Quicklist { get; }
         public SpecialistComponent Sp { get; }
         public ISession Session { get; }
+        public bool HasPermission(PermissionType permission) => throw new NotImplementedException();
+
+        public bool HasPermission(string permissionKey) => throw new NotImplementedException();
+
         public long LastPulse { get; }
 
         public override void TransferEntity(IEntityManager manager)

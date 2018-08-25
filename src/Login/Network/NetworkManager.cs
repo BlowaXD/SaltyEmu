@@ -7,6 +7,7 @@ using DotNetty.Codecs;
 using DotNetty.Transport.Bootstrapping;
 using DotNetty.Transport.Channels;
 using DotNetty.Transport.Channels.Sockets;
+using Login.Network;
 using LoginServer.Cryptography.Factories;
 
 namespace LoginServer.Network

@@ -13,7 +13,7 @@ using DotNetty.Transport.Channels;
 using DotNetty.Transport.Channels.Groups;
 using DotNetty.Transport.Channels.Sockets;
 
-namespace LoginServer.Network
+namespace Login.Network
 {
     public class ClientSession : ChannelHandlerAdapter
     {
@@ -82,6 +82,7 @@ namespace LoginServer.Network
         {
             Log.Info($"[{_endPoint.Address}][SOCKET_RELEASE] Client has been released");
             _channel.DisconnectAsync().Wait();
+            _channel.CloseAsync().Wait();
         }
 
         private void SendPacket(string packet)

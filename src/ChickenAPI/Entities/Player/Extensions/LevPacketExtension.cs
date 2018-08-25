@@ -5,7 +5,7 @@ using ChickenAPI.Game.Features.Leveling;
 using ChickenAPI.Game.Features.Skills.Extensions;
 using ChickenAPI.Packets.Game.Server.Player;
 
-namespace ChickenAPI.Game.Entities.Player
+namespace ChickenAPI.Game.Entities.Player.Extensions
 {
     public static class LevPacketExtension
     {

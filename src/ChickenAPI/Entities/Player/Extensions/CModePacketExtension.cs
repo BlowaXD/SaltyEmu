@@ -1,7 +1,7 @@
 ﻿using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Packets.Game.Server.Player;
 
-namespace ChickenAPI.Game.Entities.Player
+namespace ChickenAPI.Game.Entities.Player.Extensions
 {
     public static class CModePacketExtension
     {

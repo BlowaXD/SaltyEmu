@@ -1,12 +1,18 @@
 ﻿using ChickenAPI.Core.Data.TransferObjects;
 using ChickenAPI.Enums;
+using ChickenAPI.Game.Permissions;
 
 namespace ChickenAPI.Game.Data.TransferObjects.Character
 {
     public class AccountDto : IMappedDto
     {
         /// <summary>
+        ///     Account Id
         /// </summary>
+        public long Id { get; set; }
+
+        public IRank Rank { get; set; }
+
         public AuthorityType Authority { get; set; }
 
         /// <summary>
@@ -38,10 +44,5 @@ namespace ChickenAPI.Game.Data.TransferObjects.Character
         ///     Used for validation at registration
         /// </summary>
         public string RegistrationToken { get; set; }
-
-        /// <summary>
-        ///     Account Id
-        /// </summary>
-        public long Id { get; set; }
     }
 }

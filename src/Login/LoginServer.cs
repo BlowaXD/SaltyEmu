@@ -7,6 +7,7 @@ using ChickenAPI.Core.Logging;
 using ChickenAPI.Core.Plugins;
 using ChickenAPI.Game.Data.AccessLayer.Account;
 using ChickenAPI.Game.Data.AccessLayer.Server;
+using Login.Network;
 using LoginServer.Cryptography.Factories;
 using LoginServer.Network;
 using NosSharp.DatabasePlugin;
