@@ -38,7 +38,7 @@ namespace LoginServer.Network
                 Log.Info($"[LISTENING] Server is listening");
                 Log.Info($"-> PORT : {port}");
 
-                Console.ReadLine();
+                while (Console.ReadLine() != "quit");
                 await bootstrapChannel.CloseAsync().ConfigureAwait(false);
             }
             catch (Exception ex)
