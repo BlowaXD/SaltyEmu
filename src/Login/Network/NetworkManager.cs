@@ -35,6 +35,9 @@ namespace LoginServer.Network
 
                 IChannel bootstrapChannel = await bootstrap.BindAsync(port).ConfigureAwait(false);
 
+                Log.Info($"[LISTENING] Server is listening");
+                Log.Info($"-> PORT : {port}");
+
                 Console.ReadLine();
                 await bootstrapChannel.CloseAsync().ConfigureAwait(false);
             }

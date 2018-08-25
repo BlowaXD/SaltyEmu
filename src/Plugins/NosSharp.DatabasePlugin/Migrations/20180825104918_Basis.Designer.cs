@@ -10,8 +10,8 @@ using NosSharp.DatabasePlugin.Context;
 namespace NosSharp.DatabasePlugin.Migrations
 {
     [DbContext(typeof(NosSharpContext))]
-    [Migration("20180813160538_ArenaWinnerToBool")]
-    partial class ArenaWinnerToBool
+    [Migration("20180825104918_Basis")]
+    partial class Basis
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -254,7 +254,7 @@ namespace NosSharp.DatabasePlugin.Migrations
 
                     b.Property<short>("ElementRate");
 
-                    b.Property<byte>("ElementType");
+                    b.Property<int>("ElementType");
 
                     b.Property<short>("FirePower");
 
@@ -390,8 +390,6 @@ namespace NosSharp.DatabasePlugin.Migrations
 
                     b.Property<float>("Dignity");
 
-                    b.Property<int>("Elo");
-
                     b.Property<bool>("EmoticonsBlocked");
 
                     b.Property<bool>("ExchangeBlocked");
@@ -488,6 +486,30 @@ namespace NosSharp.DatabasePlugin.Migrations
                     b.ToTable("character");
                 });
 
+            modelBuilder.Entity("NosSharp.DatabasePlugin.Models.Character.CharacterQuicklistModel", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<long>("CharacterId");
+
+                    b.Property<short>("EnumType");
+
+                    b.Property<bool>("IsQ1");
+
+                    b.Property<bool>("IsSkill");
+
+                    b.Property<short>("Position");
+
+                    b.Property<short>("RelatedSlot");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CharacterId");
+
+                    b.ToTable("quicklist");
+                });
+
             modelBuilder.Entity("NosSharp.DatabasePlugin.Models.Character.CharacterSkillModel", b =>
                 {
                     b.Property<Guid>("Id")
@@ -548,7 +570,7 @@ namespace NosSharp.DatabasePlugin.Migrations
                     b.ToTable("_data_npc_monster_drops");
                 });
 
-            modelBuilder.Entity("NosSharp.DatabasePlugin.Models.ItemModel", b =>
+            modelBuilder.Entity("NosSharp.DatabasePlugin.Models.Item.ItemModel", b =>
                 {
                     b.Property<long>("Id");
 
@@ -697,6 +719,8 @@ namespace NosSharp.DatabasePlugin.Migrations
                     b.Property<byte>("Speed");
 
                     b.Property<byte>("Type");
+
+                    b.Property<long>("Vnum");
 
                     b.Property<short>("WaitDelay");
 
@@ -1152,7 +1176,7 @@ namespace NosSharp.DatabasePlugin.Migrations
 
             modelBuilder.Entity("NosSharp.DatabasePlugin.Models.BCard.ItemBCardModel", b =>
                 {
-                    b.HasOne("NosSharp.DatabasePlugin.Models.ItemModel", "Item")
+                    b.HasOne("NosSharp.DatabasePlugin.Models.Item.ItemModel", "Item")
                         .WithMany("BCards")
                         .HasForeignKey("RelationId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -1185,7 +1209,7 @@ namespace NosSharp.DatabasePlugin.Migrations
                         .HasForeignKey("CharacterId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("NosSharp.DatabasePlugin.Models.ItemModel", "Item")
+                    b.HasOne("NosSharp.DatabasePlugin.Models.Item.ItemModel", "Item")
                         .WithMany("CharacterItems")
                         .HasForeignKey("ItemId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -1209,6 +1233,14 @@ namespace NosSharp.DatabasePlugin.Migrations
                     b.HasOne("NosSharp.DatabasePlugin.Models.Character.AccountModel", "Account")
                         .WithMany("Characters")
                         .HasForeignKey("AccountId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("NosSharp.DatabasePlugin.Models.Character.CharacterQuicklistModel", b =>
+                {
+                    b.HasOne("NosSharp.DatabasePlugin.Models.Character.CharacterModel", "Character")
+                        .WithMany("Quicklist")
+                        .HasForeignKey("CharacterId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
@@ -1290,7 +1322,7 @@ namespace NosSharp.DatabasePlugin.Migrations
 
             modelBuilder.Entity("NosSharp.DatabasePlugin.Models.Shop.RecipeItemModel", b =>
                 {
-                    b.HasOne("NosSharp.DatabasePlugin.Models.ItemModel", "Item")
+                    b.HasOne("NosSharp.DatabasePlugin.Models.Item.ItemModel", "Item")
                         .WithMany("RecipeItems")
                         .HasForeignKey("ItemId")
                         .OnDelete(DeleteBehavior.Restrict);
@@ -1303,7 +1335,7 @@ namespace NosSharp.DatabasePlugin.Migrations
 
             modelBuilder.Entity("NosSharp.DatabasePlugin.Models.Shop.RecipeModel", b =>
                 {
-                    b.HasOne("NosSharp.DatabasePlugin.Models.ItemModel", "Item")
+                    b.HasOne("NosSharp.DatabasePlugin.Models.Item.ItemModel", "Item")
                         .WithMany()
                         .HasForeignKey("ItemId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -1316,7 +1348,7 @@ namespace NosSharp.DatabasePlugin.Migrations
 
             modelBuilder.Entity("NosSharp.DatabasePlugin.Models.Shop.ShopItemModel", b =>
                 {
-                    b.HasOne("NosSharp.DatabasePlugin.Models.ItemModel", "Item")
+                    b.HasOne("NosSharp.DatabasePlugin.Models.Item.ItemModel", "Item")
                         .WithMany("ShopItems")
                         .HasForeignKey("ItemId")
                         .OnDelete(DeleteBehavior.Cascade);

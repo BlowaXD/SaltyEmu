@@ -9,10 +9,9 @@ namespace NosSharp.DatabasePlugin.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                "_data_card",
-                table => new
+                name: "_data_card",
+                columns: table => new
                 {
-                    Id = table.Column<long>(nullable: false),
                     Duration = table.Column<int>(nullable: false),
                     EffectId = table.Column<int>(nullable: false),
                     Level = table.Column<byte>(nullable: false),
@@ -21,15 +20,19 @@ namespace NosSharp.DatabasePlugin.Migrations
                     BuffType = table.Column<int>(nullable: false),
                     TimeoutBuffChance = table.Column<byte>(nullable: false),
                     Delay = table.Column<int>(nullable: false),
-                    Propability = table.Column<byte>(nullable: false)
+                    Propability = table.Column<byte>(nullable: false),
+                    Id = table.Column<long>(nullable: false)
                 },
-                constraints: table => { table.PrimaryKey("PK__data_card", x => x.Id); });
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK__data_card", x => x.Id);
+                });
 
             migrationBuilder.CreateTable(
-                "_data_item",
-                table => new
+                name: "_data_item",
+                columns: table => new
                 {
-                    Id = table.Column<long>(nullable: false),
+                    Vnum = table.Column<long>(nullable: false),
                     BasicUpgrade = table.Column<byte>(nullable: false),
                     CellonLvl = table.Column<byte>(nullable: false),
                     Class = table.Column<byte>(nullable: false),
@@ -106,30 +109,36 @@ namespace NosSharp.DatabasePlugin.Migrations
                     WaitDelay = table.Column<short>(nullable: false),
                     WaterElement = table.Column<byte>(nullable: false),
                     WaterResistance = table.Column<short>(nullable: false),
-                    Width = table.Column<byte>(nullable: false)
+                    Width = table.Column<byte>(nullable: false),
+                    Id = table.Column<long>(nullable: false)
                 },
-                constraints: table => { table.PrimaryKey("PK__data_item", x => x.Id); });
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK__data_item", x => x.Id);
+                });
 
             migrationBuilder.CreateTable(
-                "_data_map",
-                table => new
+                name: "_data_map",
+                columns: table => new
                 {
-                    Id = table.Column<long>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     AllowShop = table.Column<bool>(nullable: false),
                     AllowPvp = table.Column<bool>(nullable: false),
                     Music = table.Column<int>(nullable: false),
                     Height = table.Column<short>(nullable: false),
                     Width = table.Column<short>(nullable: false),
-                    Grid = table.Column<byte[]>(nullable: true)
+                    Grid = table.Column<byte[]>(nullable: true),
+                    Id = table.Column<long>(nullable: false)
                 },
-                constraints: table => { table.PrimaryKey("PK__data_map", x => x.Id); });
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK__data_map", x => x.Id);
+                });
 
             migrationBuilder.CreateTable(
-                "_data_npc_monster",
-                table => new
+                name: "_data_npc_monster",
+                columns: table => new
                 {
-                    Id = table.Column<long>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     CantWalk = table.Column<bool>(nullable: false),
                     CanCollect = table.Column<bool>(nullable: false),
@@ -181,15 +190,18 @@ namespace NosSharp.DatabasePlugin.Migrations
                     Xp = table.Column<int>(nullable: false),
                     IsPercent = table.Column<bool>(nullable: false),
                     TakeDamages = table.Column<int>(nullable: false),
-                    GiveDamagePercentage = table.Column<int>(nullable: false)
+                    GiveDamagePercentage = table.Column<int>(nullable: false),
+                    Id = table.Column<long>(nullable: false)
                 },
-                constraints: table => { table.PrimaryKey("PK__data_npc_monster", x => x.Id); });
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK__data_npc_monster", x => x.Id);
+                });
 
             migrationBuilder.CreateTable(
-                "_data_skill",
-                table => new
+                name: "_data_skill",
+                columns: table => new
                 {
-                    Id = table.Column<long>(nullable: false),
                     AttackAnimation = table.Column<short>(nullable: false),
                     CastAnimation = table.Column<short>(nullable: false),
                     CastEffect = table.Column<short>(nullable: false),
@@ -218,32 +230,37 @@ namespace NosSharp.DatabasePlugin.Migrations
                     TargetType = table.Column<byte>(nullable: false),
                     Type = table.Column<byte>(nullable: false),
                     UpgradeSkill = table.Column<short>(nullable: false),
-                    UpgradeType = table.Column<short>(nullable: false)
+                    UpgradeType = table.Column<short>(nullable: false),
+                    Id = table.Column<long>(nullable: false)
                 },
-                constraints: table => { table.PrimaryKey("PK__data_skill", x => x.Id); });
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK__data_skill", x => x.Id);
+                });
 
             migrationBuilder.CreateTable(
-                "account",
-                table => new
+                name: "account",
+                columns: table => new
                 {
-                    Id = table.Column<long>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Authority = table.Column<short>(nullable: false),
                     Name = table.Column<string>(maxLength: 50, nullable: false),
                     Password = table.Column<string>(nullable: false),
                     Email = table.Column<string>(maxLength: 50, nullable: true),
                     RegistrationEmail = table.Column<string>(maxLength: 50, nullable: true),
                     RegistrationIp = table.Column<string>(maxLength: 50, nullable: true),
-                    RegistrationToken = table.Column<string>(maxLength: 32, nullable: true)
+                    RegistrationToken = table.Column<string>(maxLength: 32, nullable: true),
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn)
                 },
-                constraints: table => { table.PrimaryKey("PK_account", x => x.Id); });
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_account", x => x.Id);
+                });
 
             migrationBuilder.CreateTable(
-                "_data_card_bcard",
-                table => new
+                name: "_data_card_bcard",
+                columns: table => new
                 {
-                    Id = table.Column<long>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     SubType = table.Column<byte>(nullable: false),
                     Type = table.Column<byte>(nullable: false),
                     FirstData = table.Column<int>(nullable: false),
@@ -252,25 +269,25 @@ namespace NosSharp.DatabasePlugin.Migrations
                     CastType = table.Column<byte>(nullable: false),
                     IsLevelScaled = table.Column<bool>(nullable: false),
                     IsLevelDivided = table.Column<bool>(nullable: false),
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     CardId = table.Column<long>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK__data_card_bcard", x => x.Id);
                     table.ForeignKey(
-                        "FK__data_card_bcard__data_card_CardId",
-                        x => x.CardId,
-                        "_data_card",
-                        "Id",
+                        name: "FK__data_card_bcard__data_card_CardId",
+                        column: x => x.CardId,
+                        principalTable: "_data_card",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                "_data_item_bcard",
-                table => new
+                name: "_data_item_bcard",
+                columns: table => new
                 {
-                    Id = table.Column<long>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     SubType = table.Column<byte>(nullable: false),
                     Type = table.Column<byte>(nullable: false),
                     FirstData = table.Column<int>(nullable: false),
@@ -279,47 +296,47 @@ namespace NosSharp.DatabasePlugin.Migrations
                     CastType = table.Column<byte>(nullable: false),
                     IsLevelScaled = table.Column<bool>(nullable: false),
                     IsLevelDivided = table.Column<bool>(nullable: false),
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     ItemId = table.Column<long>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK__data_item_bcard", x => x.Id);
                     table.ForeignKey(
-                        "FK__data_item_bcard__data_item_ItemId",
-                        x => x.ItemId,
-                        "_data_item",
-                        "Id",
+                        name: "FK__data_item_bcard__data_item_ItemId",
+                        column: x => x.ItemId,
+                        principalTable: "_data_item",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                "map_drop",
-                table => new
+                name: "map_drop",
+                columns: table => new
                 {
-                    Id = table.Column<long>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     ItemId = table.Column<long>(nullable: false),
                     Amount = table.Column<int>(nullable: false),
                     DropChance = table.Column<int>(nullable: false),
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     TypedId = table.Column<long>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_map_drop", x => x.Id);
                     table.ForeignKey(
-                        "FK_map_drop__data_map_TypedId",
-                        x => x.TypedId,
-                        "_data_map",
-                        "Id",
+                        name: "FK_map_drop__data_map_TypedId",
+                        column: x => x.TypedId,
+                        principalTable: "_data_map",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                "map_portals",
-                table => new
+                name: "map_portals",
+                columns: table => new
                 {
-                    Id = table.Column<long>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Type = table.Column<short>(nullable: false),
                     DestinationMapId = table.Column<long>(nullable: false),
                     DestinationX = table.Column<short>(nullable: false),
@@ -327,25 +344,25 @@ namespace NosSharp.DatabasePlugin.Migrations
                     IsDisabled = table.Column<bool>(nullable: false),
                     SourceMapId = table.Column<long>(nullable: false),
                     SourceX = table.Column<short>(nullable: false),
-                    SourceY = table.Column<short>(nullable: false)
+                    SourceY = table.Column<short>(nullable: false),
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_map_portals", x => x.Id);
                     table.ForeignKey(
-                        "FK_map_portals__data_map_SourceMapId",
-                        x => x.SourceMapId,
-                        "_data_map",
-                        "Id",
+                        name: "FK_map_portals__data_map_SourceMapId",
+                        column: x => x.SourceMapId,
+                        principalTable: "_data_map",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                "_data_npc_monster_bcard",
-                table => new
+                name: "_data_npc_monster_bcard",
+                columns: table => new
                 {
-                    Id = table.Column<long>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     SubType = table.Column<byte>(nullable: false),
                     Type = table.Column<byte>(nullable: false),
                     FirstData = table.Column<int>(nullable: false),
@@ -354,76 +371,77 @@ namespace NosSharp.DatabasePlugin.Migrations
                     CastType = table.Column<byte>(nullable: false),
                     IsLevelScaled = table.Column<bool>(nullable: false),
                     IsLevelDivided = table.Column<bool>(nullable: false),
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     NpcMonsterId = table.Column<long>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK__data_npc_monster_bcard", x => x.Id);
                     table.ForeignKey(
-                        "FK__data_npc_monster_bcard__data_npc_monster_NpcMonsterId",
-                        x => x.NpcMonsterId,
-                        "_data_npc_monster",
-                        "Id",
+                        name: "FK__data_npc_monster_bcard__data_npc_monster_NpcMonsterId",
+                        column: x => x.NpcMonsterId,
+                        principalTable: "_data_npc_monster",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                "_data_npc_monster_drops",
-                table => new
+                name: "_data_npc_monster_drops",
+                columns: table => new
                 {
-                    Id = table.Column<long>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     ItemId = table.Column<long>(nullable: false),
                     Amount = table.Column<int>(nullable: false),
                     DropChance = table.Column<int>(nullable: false),
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     TypedId = table.Column<long>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK__data_npc_monster_drops", x => x.Id);
                     table.ForeignKey(
-                        "FK__data_npc_monster_drops__data_npc_monster_TypedId",
-                        x => x.TypedId,
-                        "_data_npc_monster",
-                        "Id",
+                        name: "FK__data_npc_monster_drops__data_npc_monster_TypedId",
+                        column: x => x.TypedId,
+                        principalTable: "_data_npc_monster",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                "map_monsters",
-                table => new
+                name: "map_monsters",
+                columns: table => new
                 {
-                    Id = table.Column<long>(nullable: false),
                     MapX = table.Column<short>(nullable: false),
                     MapY = table.Column<short>(nullable: false),
                     MapId = table.Column<long>(nullable: false),
                     NpcMonsterId = table.Column<long>(nullable: false),
                     IsDisabled = table.Column<bool>(nullable: false),
                     IsMoving = table.Column<bool>(nullable: false),
-                    Position = table.Column<int>(nullable: false)
+                    Position = table.Column<int>(nullable: false),
+                    Id = table.Column<long>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_map_monsters", x => x.Id);
                     table.ForeignKey(
-                        "FK_map_monsters__data_map_MapId",
-                        x => x.MapId,
-                        "_data_map",
-                        "Id",
+                        name: "FK_map_monsters__data_map_MapId",
+                        column: x => x.MapId,
+                        principalTable: "_data_map",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        "FK_map_monsters__data_npc_monster_NpcMonsterId",
-                        x => x.NpcMonsterId,
-                        "_data_npc_monster",
-                        "Id",
+                        name: "FK_map_monsters__data_npc_monster_NpcMonsterId",
+                        column: x => x.NpcMonsterId,
+                        principalTable: "_data_npc_monster",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                "map_npcs",
-                table => new
+                name: "map_npcs",
+                columns: table => new
                 {
-                    Id = table.Column<long>(nullable: false),
                     Dialog = table.Column<short>(nullable: false),
                     Effect = table.Column<short>(nullable: false),
                     EffectDelay = table.Column<short>(nullable: false),
@@ -434,58 +452,57 @@ namespace NosSharp.DatabasePlugin.Migrations
                     MapX = table.Column<short>(nullable: false),
                     MapY = table.Column<short>(nullable: false),
                     NpcMonsterId = table.Column<long>(nullable: false),
-                    Direction = table.Column<int>(nullable: false)
+                    Direction = table.Column<int>(nullable: false),
+                    Id = table.Column<long>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_map_npcs", x => x.Id);
                     table.ForeignKey(
-                        "FK_map_npcs__data_map_MapId",
-                        x => x.MapId,
-                        "_data_map",
-                        "Id",
+                        name: "FK_map_npcs__data_map_MapId",
+                        column: x => x.MapId,
+                        principalTable: "_data_map",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        "FK_map_npcs__data_npc_monster_NpcMonsterId",
-                        x => x.NpcMonsterId,
-                        "_data_npc_monster",
-                        "Id",
+                        name: "FK_map_npcs__data_npc_monster_NpcMonsterId",
+                        column: x => x.NpcMonsterId,
+                        principalTable: "_data_npc_monster",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                "_data_npc_monster_skill",
-                table => new
+                name: "_data_npc_monster_skill",
+                columns: table => new
                 {
-                    Id = table.Column<long>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     SkillId = table.Column<long>(nullable: false),
                     Rate = table.Column<short>(nullable: false),
-                    NpcMonsterId = table.Column<long>(nullable: false)
+                    NpcMonsterId = table.Column<long>(nullable: false),
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK__data_npc_monster_skill", x => x.Id);
                     table.ForeignKey(
-                        "FK__data_npc_monster_skill__data_npc_monster_NpcMonsterId",
-                        x => x.NpcMonsterId,
-                        "_data_npc_monster",
-                        "Id",
+                        name: "FK__data_npc_monster_skill__data_npc_monster_NpcMonsterId",
+                        column: x => x.NpcMonsterId,
+                        principalTable: "_data_npc_monster",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        "FK__data_npc_monster_skill__data_skill_SkillId",
-                        x => x.SkillId,
-                        "_data_skill",
-                        "Id",
+                        name: "FK__data_npc_monster_skill__data_skill_SkillId",
+                        column: x => x.SkillId,
+                        principalTable: "_data_skill",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                "_data_skill_bcard",
-                table => new
+                name: "_data_skill_bcard",
+                columns: table => new
                 {
-                    Id = table.Column<long>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     SubType = table.Column<byte>(nullable: false),
                     Type = table.Column<byte>(nullable: false),
                     FirstData = table.Column<int>(nullable: false),
@@ -494,37 +511,36 @@ namespace NosSharp.DatabasePlugin.Migrations
                     CastType = table.Column<byte>(nullable: false),
                     IsLevelScaled = table.Column<bool>(nullable: false),
                     IsLevelDivided = table.Column<bool>(nullable: false),
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     SkillId = table.Column<long>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK__data_skill_bcard", x => x.Id);
                     table.ForeignKey(
-                        "FK__data_skill_bcard__data_skill_SkillId",
-                        x => x.SkillId,
-                        "_data_skill",
-                        "Id",
+                        name: "FK__data_skill_bcard__data_skill_SkillId",
+                        column: x => x.SkillId,
+                        principalTable: "_data_skill",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                "character",
-                table => new
+                name: "character",
+                columns: table => new
                 {
-                    Id = table.Column<long>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     AccountId = table.Column<long>(nullable: false),
                     Name = table.Column<string>(nullable: false),
                     Act4Dead = table.Column<int>(nullable: false),
                     Act4Kill = table.Column<int>(nullable: false),
                     Act4Points = table.Column<int>(nullable: false),
-                    ArenaWinner = table.Column<int>(nullable: false),
+                    ArenaWinner = table.Column<bool>(nullable: false),
                     Biography = table.Column<string>(nullable: true),
                     BuffBlocked = table.Column<bool>(nullable: false),
                     Class = table.Column<byte>(nullable: false),
                     Compliment = table.Column<short>(nullable: false),
                     Dignity = table.Column<float>(nullable: false),
-                    Elo = table.Column<int>(nullable: false),
                     EmoticonsBlocked = table.Column<bool>(nullable: false),
                     ExchangeBlocked = table.Column<bool>(nullable: false),
                     Faction = table.Column<byte>(nullable: false),
@@ -567,46 +583,47 @@ namespace NosSharp.DatabasePlugin.Migrations
                     TalentLose = table.Column<int>(nullable: false),
                     TalentSurrender = table.Column<int>(nullable: false),
                     TalentWin = table.Column<int>(nullable: false),
-                    WhisperBlocked = table.Column<bool>(nullable: false)
+                    WhisperBlocked = table.Column<bool>(nullable: false),
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_character", x => x.Id);
                     table.ForeignKey(
-                        "FK_character_account_AccountId",
-                        x => x.AccountId,
-                        "account",
-                        "Id",
+                        name: "FK_character_account_AccountId",
+                        column: x => x.AccountId,
+                        principalTable: "account",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                "map_npcs_shop",
-                table => new
+                name: "map_npcs_shop",
+                columns: table => new
                 {
-                    Id = table.Column<long>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     MapNpcId = table.Column<long>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     MenuType = table.Column<byte>(nullable: false),
-                    ShopType = table.Column<byte>(nullable: false)
+                    ShopType = table.Column<byte>(nullable: false),
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_map_npcs_shop", x => x.Id);
                     table.ForeignKey(
-                        "FK_map_npcs_shop_map_npcs_MapNpcId",
-                        x => x.MapNpcId,
-                        "map_npcs",
-                        "Id",
+                        name: "FK_map_npcs_shop_map_npcs_MapNpcId",
+                        column: x => x.MapNpcId,
+                        principalTable: "map_npcs",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                "character_item",
-                table => new
+                name: "character_item",
+                columns: table => new
                 {
-                    Id = table.Column<Guid>(nullable: false),
                     CharacterId = table.Column<long>(nullable: false),
                     BoundCharacterId = table.Column<long>(nullable: true),
                     ItemId = table.Column<long>(nullable: false),
@@ -614,6 +631,9 @@ namespace NosSharp.DatabasePlugin.Migrations
                     Slot = table.Column<short>(nullable: false),
                     Type = table.Column<byte>(nullable: false),
                     Design = table.Column<byte>(nullable: false),
+                    Cellon = table.Column<byte>(nullable: false),
+                    Sum = table.Column<byte>(nullable: false),
+                    Id = table.Column<Guid>(nullable: false),
                     Rarity = table.Column<byte>(nullable: false),
                     Upgrade = table.Column<byte>(nullable: false),
                     Ammo = table.Column<byte>(nullable: false),
@@ -630,7 +650,6 @@ namespace NosSharp.DatabasePlugin.Migrations
                     CriticalDodge = table.Column<short>(nullable: false),
                     CriticalRate = table.Column<short>(nullable: false),
                     CriticalDamageRate = table.Column<short>(nullable: false),
-                    Cellon = table.Column<byte>(nullable: false),
                     Level = table.Column<byte>(nullable: false),
                     Xp = table.Column<long>(nullable: false),
                     SpecialistUpgrade = table.Column<byte>(nullable: false),
@@ -639,8 +658,7 @@ namespace NosSharp.DatabasePlugin.Migrations
                     DefensePoints = table.Column<byte>(nullable: false),
                     ElementPoints = table.Column<byte>(nullable: false),
                     HpMpPoints = table.Column<byte>(nullable: false),
-                    Sum = table.Column<byte>(nullable: false),
-                    ElementType = table.Column<byte>(nullable: false),
+                    ElementType = table.Column<int>(nullable: false),
                     ElementRate = table.Column<short>(nullable: false),
                     Hp = table.Column<short>(nullable: false),
                     Mp = table.Column<short>(nullable: false),
@@ -657,31 +675,29 @@ namespace NosSharp.DatabasePlugin.Migrations
                 {
                     table.PrimaryKey("PK_character_item", x => x.Id);
                     table.ForeignKey(
-                        "FK_character_item_character_BoundCharacterId",
-                        x => x.BoundCharacterId,
-                        "character",
-                        "Id",
+                        name: "FK_character_item_character_BoundCharacterId",
+                        column: x => x.BoundCharacterId,
+                        principalTable: "character",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        "FK_character_item_character_CharacterId",
-                        x => x.CharacterId,
-                        "character",
-                        "Id",
+                        name: "FK_character_item_character_CharacterId",
+                        column: x => x.CharacterId,
+                        principalTable: "character",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        "FK_character_item__data_item_ItemId",
-                        x => x.ItemId,
-                        "_data_item",
-                        "Id",
+                        name: "FK_character_item__data_item_ItemId",
+                        column: x => x.ItemId,
+                        principalTable: "_data_item",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                "character_mate",
-                table => new
+                name: "character_mate",
+                columns: table => new
                 {
-                    Id = table.Column<long>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     CharacterId = table.Column<long>(nullable: false),
                     Attack = table.Column<byte>(nullable: false),
                     CanPickUp = table.Column<bool>(nullable: false),
@@ -698,391 +714,424 @@ namespace NosSharp.DatabasePlugin.Migrations
                     Mp = table.Column<int>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     NpcMonsterId = table.Column<long>(nullable: false),
-                    Skin = table.Column<short>(nullable: false)
+                    Skin = table.Column<short>(nullable: false),
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_character_mate", x => x.Id);
                     table.ForeignKey(
-                        "FK_character_mate_character_CharacterId",
-                        x => x.CharacterId,
-                        "character",
-                        "Id",
+                        name: "FK_character_mate_character_CharacterId",
+                        column: x => x.CharacterId,
+                        principalTable: "character",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        "FK_character_mate__data_npc_monster_NpcMonsterId",
-                        x => x.NpcMonsterId,
-                        "_data_npc_monster",
-                        "Id",
+                        name: "FK_character_mate__data_npc_monster_NpcMonsterId",
+                        column: x => x.NpcMonsterId,
+                        principalTable: "_data_npc_monster",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                "character_skill",
-                table => new
+                name: "character_skill",
+                columns: table => new
                 {
-                    Id = table.Column<Guid>(nullable: false),
                     CharacterId = table.Column<long>(nullable: false),
-                    SkillId = table.Column<long>(nullable: false)
+                    SkillId = table.Column<long>(nullable: false),
+                    Id = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_character_skill", x => x.Id);
                     table.ForeignKey(
-                        "FK_character_skill_character_CharacterId",
-                        x => x.CharacterId,
-                        "character",
-                        "Id",
+                        name: "FK_character_skill_character_CharacterId",
+                        column: x => x.CharacterId,
+                        principalTable: "character",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        "FK_character_skill__data_skill_SkillId",
-                        x => x.SkillId,
-                        "_data_skill",
-                        "Id",
+                        name: "FK_character_skill__data_skill_SkillId",
+                        column: x => x.SkillId,
+                        principalTable: "_data_skill",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                "shop_item",
-                table => new
+                name: "quicklist",
+                columns: table => new
                 {
-                    Id = table.Column<long>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CharacterId = table.Column<long>(nullable: false),
+                    IsSkill = table.Column<bool>(nullable: false),
+                    RelatedSlot = table.Column<short>(nullable: false),
+                    Position = table.Column<short>(nullable: false),
+                    EnumType = table.Column<short>(nullable: false),
+                    IsQ1 = table.Column<bool>(nullable: false),
+                    Id = table.Column<Guid>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_quicklist", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_quicklist_character_CharacterId",
+                        column: x => x.CharacterId,
+                        principalTable: "character",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "shop_item",
+                columns: table => new
+                {
                     Color = table.Column<byte>(nullable: false),
                     ItemId = table.Column<long>(nullable: false),
                     Rare = table.Column<short>(nullable: false),
                     ShopId = table.Column<long>(nullable: false),
                     Slot = table.Column<byte>(nullable: false),
                     Type = table.Column<byte>(nullable: false),
-                    Upgrade = table.Column<byte>(nullable: false)
+                    Upgrade = table.Column<byte>(nullable: false),
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_shop_item", x => x.Id);
                     table.ForeignKey(
-                        "FK_shop_item__data_item_ItemId",
-                        x => x.ItemId,
-                        "_data_item",
-                        "Id",
+                        name: "FK_shop_item__data_item_ItemId",
+                        column: x => x.ItemId,
+                        principalTable: "_data_item",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        "FK_shop_item_map_npcs_shop_ShopId",
-                        x => x.ShopId,
-                        "map_npcs_shop",
-                        "Id",
+                        name: "FK_shop_item_map_npcs_shop_ShopId",
+                        column: x => x.ShopId,
+                        principalTable: "map_npcs_shop",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                "shop_recipe",
-                table => new
+                name: "shop_recipe",
+                columns: table => new
                 {
-                    Id = table.Column<long>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Amount = table.Column<byte>(nullable: false),
                     ItemId = table.Column<long>(nullable: false),
-                    ShopId = table.Column<long>(nullable: false)
+                    ShopId = table.Column<long>(nullable: false),
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_shop_recipe", x => x.Id);
                     table.ForeignKey(
-                        "FK_shop_recipe__data_item_ItemId",
-                        x => x.ItemId,
-                        "_data_item",
-                        "Id",
+                        name: "FK_shop_recipe__data_item_ItemId",
+                        column: x => x.ItemId,
+                        principalTable: "_data_item",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        "FK_shop_recipe_map_npcs_shop_ShopId",
-                        x => x.ShopId,
-                        "map_npcs_shop",
-                        "Id",
+                        name: "FK_shop_recipe_map_npcs_shop_ShopId",
+                        column: x => x.ShopId,
+                        principalTable: "map_npcs_shop",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                "shop_skill",
-                table => new
+                name: "shop_skill",
+                columns: table => new
                 {
-                    Id = table.Column<long>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     SkillId = table.Column<long>(nullable: false),
                     ShopId = table.Column<long>(nullable: false),
                     Slot = table.Column<byte>(nullable: false),
-                    Type = table.Column<byte>(nullable: false)
+                    Type = table.Column<byte>(nullable: false),
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_shop_skill", x => x.Id);
                     table.ForeignKey(
-                        "FK_shop_skill_map_npcs_shop_ShopId",
-                        x => x.ShopId,
-                        "map_npcs_shop",
-                        "Id",
+                        name: "FK_shop_skill_map_npcs_shop_ShopId",
+                        column: x => x.ShopId,
+                        principalTable: "map_npcs_shop",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        "FK_shop_skill__data_skill_SkillId",
-                        x => x.SkillId,
-                        "_data_skill",
-                        "Id",
+                        name: "FK_shop_skill__data_skill_SkillId",
+                        column: x => x.SkillId,
+                        principalTable: "_data_skill",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                "shop_recipe_item",
-                table => new
+                name: "shop_recipe_item",
+                columns: table => new
                 {
-                    Id = table.Column<long>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Amount = table.Column<byte>(nullable: false),
                     ItemId = table.Column<long>(nullable: false),
-                    RecipeId = table.Column<long>(nullable: false)
+                    RecipeId = table.Column<long>(nullable: false),
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_shop_recipe_item", x => x.Id);
                     table.ForeignKey(
-                        "FK_shop_recipe_item__data_item_ItemId",
-                        x => x.ItemId,
-                        "_data_item",
-                        "Id",
+                        name: "FK_shop_recipe_item__data_item_ItemId",
+                        column: x => x.ItemId,
+                        principalTable: "_data_item",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        "FK_shop_recipe_item_shop_recipe_RecipeId",
-                        x => x.RecipeId,
-                        "shop_recipe",
-                        "Id",
+                        name: "FK_shop_recipe_item_shop_recipe_RecipeId",
+                        column: x => x.RecipeId,
+                        principalTable: "shop_recipe",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
-                "IX__data_card_bcard_CardId",
-                "_data_card_bcard",
-                "CardId");
+                name: "IX__data_card_bcard_CardId",
+                table: "_data_card_bcard",
+                column: "CardId");
 
             migrationBuilder.CreateIndex(
-                "IX__data_item_bcard_ItemId",
-                "_data_item_bcard",
-                "ItemId");
+                name: "IX__data_item_bcard_ItemId",
+                table: "_data_item_bcard",
+                column: "ItemId");
 
             migrationBuilder.CreateIndex(
-                "IX__data_npc_monster_bcard_NpcMonsterId",
-                "_data_npc_monster_bcard",
-                "NpcMonsterId");
+                name: "IX__data_npc_monster_bcard_NpcMonsterId",
+                table: "_data_npc_monster_bcard",
+                column: "NpcMonsterId");
 
             migrationBuilder.CreateIndex(
-                "IX__data_npc_monster_drops_TypedId",
-                "_data_npc_monster_drops",
-                "TypedId");
+                name: "IX__data_npc_monster_drops_TypedId",
+                table: "_data_npc_monster_drops",
+                column: "TypedId");
 
             migrationBuilder.CreateIndex(
-                "IX__data_npc_monster_skill_NpcMonsterId",
-                "_data_npc_monster_skill",
-                "NpcMonsterId");
+                name: "IX__data_npc_monster_skill_NpcMonsterId",
+                table: "_data_npc_monster_skill",
+                column: "NpcMonsterId");
 
             migrationBuilder.CreateIndex(
-                "IX__data_npc_monster_skill_SkillId",
-                "_data_npc_monster_skill",
-                "SkillId");
+                name: "IX__data_npc_monster_skill_SkillId",
+                table: "_data_npc_monster_skill",
+                column: "SkillId");
 
             migrationBuilder.CreateIndex(
-                "IX__data_skill_bcard_SkillId",
-                "_data_skill_bcard",
-                "SkillId");
+                name: "IX__data_skill_bcard_SkillId",
+                table: "_data_skill_bcard",
+                column: "SkillId");
 
             migrationBuilder.CreateIndex(
-                "IX_character_AccountId",
-                "character",
-                "AccountId");
+                name: "IX_character_AccountId",
+                table: "character",
+                column: "AccountId");
 
             migrationBuilder.CreateIndex(
-                "IX_character_item_BoundCharacterId",
-                "character_item",
-                "BoundCharacterId");
+                name: "IX_character_item_BoundCharacterId",
+                table: "character_item",
+                column: "BoundCharacterId");
 
             migrationBuilder.CreateIndex(
-                "IX_character_item_CharacterId",
-                "character_item",
-                "CharacterId");
+                name: "IX_character_item_CharacterId",
+                table: "character_item",
+                column: "CharacterId");
 
             migrationBuilder.CreateIndex(
-                "IX_character_item_ItemId",
-                "character_item",
-                "ItemId");
+                name: "IX_character_item_ItemId",
+                table: "character_item",
+                column: "ItemId");
 
             migrationBuilder.CreateIndex(
-                "IX_character_mate_CharacterId",
-                "character_mate",
-                "CharacterId");
+                name: "IX_character_mate_CharacterId",
+                table: "character_mate",
+                column: "CharacterId");
 
             migrationBuilder.CreateIndex(
-                "IX_character_mate_NpcMonsterId",
-                "character_mate",
-                "NpcMonsterId");
+                name: "IX_character_mate_NpcMonsterId",
+                table: "character_mate",
+                column: "NpcMonsterId");
 
             migrationBuilder.CreateIndex(
-                "IX_character_skill_CharacterId",
-                "character_skill",
-                "CharacterId");
+                name: "IX_character_skill_CharacterId",
+                table: "character_skill",
+                column: "CharacterId");
 
             migrationBuilder.CreateIndex(
-                "IX_character_skill_SkillId",
-                "character_skill",
-                "SkillId");
+                name: "IX_character_skill_SkillId",
+                table: "character_skill",
+                column: "SkillId");
 
             migrationBuilder.CreateIndex(
-                "IX_map_drop_TypedId",
-                "map_drop",
-                "TypedId");
+                name: "IX_map_drop_TypedId",
+                table: "map_drop",
+                column: "TypedId");
 
             migrationBuilder.CreateIndex(
-                "IX_map_monsters_MapId",
-                "map_monsters",
-                "MapId");
+                name: "IX_map_monsters_MapId",
+                table: "map_monsters",
+                column: "MapId");
 
             migrationBuilder.CreateIndex(
-                "IX_map_monsters_NpcMonsterId",
-                "map_monsters",
-                "NpcMonsterId");
+                name: "IX_map_monsters_NpcMonsterId",
+                table: "map_monsters",
+                column: "NpcMonsterId");
 
             migrationBuilder.CreateIndex(
-                "IX_map_npcs_MapId",
-                "map_npcs",
-                "MapId");
+                name: "IX_map_npcs_MapId",
+                table: "map_npcs",
+                column: "MapId");
 
             migrationBuilder.CreateIndex(
-                "IX_map_npcs_NpcMonsterId",
-                "map_npcs",
-                "NpcMonsterId");
+                name: "IX_map_npcs_NpcMonsterId",
+                table: "map_npcs",
+                column: "NpcMonsterId");
 
             migrationBuilder.CreateIndex(
-                "IX_map_npcs_shop_MapNpcId",
-                "map_npcs_shop",
-                "MapNpcId",
+                name: "IX_map_npcs_shop_MapNpcId",
+                table: "map_npcs_shop",
+                column: "MapNpcId",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                "IX_map_portals_SourceMapId",
-                "map_portals",
-                "SourceMapId");
+                name: "IX_map_portals_SourceMapId",
+                table: "map_portals",
+                column: "SourceMapId");
 
             migrationBuilder.CreateIndex(
-                "IX_shop_item_ItemId",
-                "shop_item",
-                "ItemId");
+                name: "IX_quicklist_CharacterId",
+                table: "quicklist",
+                column: "CharacterId");
 
             migrationBuilder.CreateIndex(
-                "IX_shop_item_ShopId",
-                "shop_item",
-                "ShopId");
+                name: "IX_shop_item_ItemId",
+                table: "shop_item",
+                column: "ItemId");
 
             migrationBuilder.CreateIndex(
-                "IX_shop_recipe_ItemId",
-                "shop_recipe",
-                "ItemId");
+                name: "IX_shop_item_ShopId",
+                table: "shop_item",
+                column: "ShopId");
 
             migrationBuilder.CreateIndex(
-                "IX_shop_recipe_ShopId",
-                "shop_recipe",
-                "ShopId");
+                name: "IX_shop_recipe_ItemId",
+                table: "shop_recipe",
+                column: "ItemId");
 
             migrationBuilder.CreateIndex(
-                "IX_shop_recipe_item_ItemId",
-                "shop_recipe_item",
-                "ItemId");
+                name: "IX_shop_recipe_ShopId",
+                table: "shop_recipe",
+                column: "ShopId");
 
             migrationBuilder.CreateIndex(
-                "IX_shop_recipe_item_RecipeId",
-                "shop_recipe_item",
-                "RecipeId");
+                name: "IX_shop_recipe_item_ItemId",
+                table: "shop_recipe_item",
+                column: "ItemId");
 
             migrationBuilder.CreateIndex(
-                "IX_shop_skill_ShopId",
-                "shop_skill",
-                "ShopId");
+                name: "IX_shop_recipe_item_RecipeId",
+                table: "shop_recipe_item",
+                column: "RecipeId");
 
             migrationBuilder.CreateIndex(
-                "IX_shop_skill_SkillId",
-                "shop_skill",
-                "SkillId");
+                name: "IX_shop_skill_ShopId",
+                table: "shop_skill",
+                column: "ShopId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_shop_skill_SkillId",
+                table: "shop_skill",
+                column: "SkillId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                "_data_card_bcard");
+                name: "_data_card_bcard");
 
             migrationBuilder.DropTable(
-                "_data_item_bcard");
+                name: "_data_item_bcard");
 
             migrationBuilder.DropTable(
-                "_data_npc_monster_bcard");
+                name: "_data_npc_monster_bcard");
 
             migrationBuilder.DropTable(
-                "_data_npc_monster_drops");
+                name: "_data_npc_monster_drops");
 
             migrationBuilder.DropTable(
-                "_data_npc_monster_skill");
+                name: "_data_npc_monster_skill");
 
             migrationBuilder.DropTable(
-                "_data_skill_bcard");
+                name: "_data_skill_bcard");
 
             migrationBuilder.DropTable(
-                "character_item");
+                name: "character_item");
 
             migrationBuilder.DropTable(
-                "character_mate");
+                name: "character_mate");
 
             migrationBuilder.DropTable(
-                "character_skill");
+                name: "character_skill");
 
             migrationBuilder.DropTable(
-                "map_drop");
+                name: "map_drop");
 
             migrationBuilder.DropTable(
-                "map_monsters");
+                name: "map_monsters");
 
             migrationBuilder.DropTable(
-                "map_portals");
+                name: "map_portals");
 
             migrationBuilder.DropTable(
-                "shop_item");
+                name: "quicklist");
 
             migrationBuilder.DropTable(
-                "shop_recipe_item");
+                name: "shop_item");
 
             migrationBuilder.DropTable(
-                "shop_skill");
+                name: "shop_recipe_item");
 
             migrationBuilder.DropTable(
-                "_data_card");
+                name: "shop_skill");
 
             migrationBuilder.DropTable(
-                "character");
+                name: "_data_card");
 
             migrationBuilder.DropTable(
-                "shop_recipe");
+                name: "character");
 
             migrationBuilder.DropTable(
-                "_data_skill");
+                name: "shop_recipe");
 
             migrationBuilder.DropTable(
-                "account");
+                name: "_data_skill");
 
             migrationBuilder.DropTable(
-                "_data_item");
+                name: "account");
 
             migrationBuilder.DropTable(
-                "map_npcs_shop");
+                name: "_data_item");
 
             migrationBuilder.DropTable(
-                "map_npcs");
+                name: "map_npcs_shop");
 
             migrationBuilder.DropTable(
-                "_data_map");
+                name: "map_npcs");
 
             migrationBuilder.DropTable(
-                "_data_npc_monster");
+                name: "_data_map");
+
+            migrationBuilder.DropTable(
+                name: "_data_npc_monster");
         }
     }
 }
