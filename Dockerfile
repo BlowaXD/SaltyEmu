@@ -22,7 +22,7 @@ FROM microsoft/dotnet:2.1-runtime-alpine
 # Output Server Port (that will be sent to IServerApiService)
 ENV SERVER_PORT=7777 \
     SERVER_IP=127.0.0.1 \
-    SERVER_WORLDGROUP=NosWings
+    SERVER_WORLDGROUP=SaltyNos
 
 LABEL name="saltyemu-world" \
     author="BlowaXD" \
