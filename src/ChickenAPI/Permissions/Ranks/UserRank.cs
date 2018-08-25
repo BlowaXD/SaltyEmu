@@ -8,7 +8,7 @@
         {
             #region Inventory
 
-            AddPermission(
+            GrantPermission(
                 PermissionType.INVENTORY_ADD_ITEM,
                 PermissionType.INVENTORY_DELETE_ITEM,
                 PermissionType.INVENTORY_MERGE_ITEM,
@@ -19,7 +19,7 @@
 
             #region Friend / Blocked List
 
-            AddPermission(
+            GrantPermission(
                 PermissionType.RELATION_ADD_FRIEND,
                 PermissionType.RELATION_REMOVE_FRIEND,
                 PermissionType.RELATION_TELEPORT_FRIEND,
@@ -32,7 +32,7 @@
 
             #region Movement
 
-            AddPermission(
+            GrantPermission(
                 PermissionType.MOVEMENT_MOVE_SELF,
                 PermissionType.MOVEMENT_MOVE_PETS);
 
@@ -40,7 +40,7 @@
 
             #region Quicklist
 
-            AddPermission(
+            GrantPermission(
                 PermissionType.QUICKLIST_ADD_ELEMENT,
                 PermissionType.QUICKLIST_MOVE_ELEMENT,
                 PermissionType.QUICKLIST_REMOVE_ELEMENT);

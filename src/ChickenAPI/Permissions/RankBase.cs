@@ -18,40 +18,56 @@ namespace ChickenAPI.Game.Permissions
             return PermissionsString.Contains(permissionKey);
         }
 
-        public void AddPermission(PermissionType permission)
+        public void GrantPermission(PermissionType permission)
         {
             PermissionsTypes.Add(permission);
         }
 
-        public void AddPermission(params PermissionType[] permissions)
+        public void GrantPermission(params PermissionType[] permissions)
         {
             foreach (PermissionType permission in permissions)
             {
-                AddPermission(permission);
+                GrantPermission(permission);
             }
         }
 
-        public void AddPermission(string permissionKey)
+        public void GrantPermission(string permissionKey)
         {
             PermissionsString.Add(permissionKey);
         }
 
-        public void AddPermission(params string[] permissions)
+        public void GrantPermission(params string[] permissions)
         {
             foreach (string permission in permissions)
             {
-                AddPermission(permission);
+                GrantPermission(permission);
             }
         }
 
-        public void RemovePermission(PermissionType permission)
+        public void RevokePermission(PermissionType permission)
         {
             PermissionsTypes.Remove(permission);
         }
 
-        public void RemovePermission(string permissionKey)
+        public void RevokePermission(params PermissionType[] permissions)
+        {
+            foreach (PermissionType permission in permissions)
+            {
+                RevokePermission(permission);
+            }
+        }
+
+        public void RevokePermission(string permissionKey)
         {
             PermissionsString.Remove(permissionKey);
+        }
+
+        public void RevokePermission(params string[] permissions)
+        {
+            foreach (string permission in permissions)
+            {
+                RevokePermission(permission);
+            }
         }
     }
 }

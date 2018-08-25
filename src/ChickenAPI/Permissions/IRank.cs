@@ -17,22 +17,25 @@
         bool HasPermission(string permission);
 
         /// <summary>
-        /// Adds the permission to the rank
+        /// Grant the permission to the actual rank
         /// </summary>
         /// <param name="permission"></param>
-        void AddPermission(PermissionType permission);
+        void GrantPermission(PermissionType permission);
 
-        void AddPermission(params PermissionType[] permission);
-        void AddPermission(string permission);
-        void AddPermission(params string[] permission);
+        void GrantPermission(params PermissionType[] permissions);
+        void GrantPermission(string permission);
+        void GrantPermission(params string[] permissions);
 
         /// <summary>
-        /// Removes the permission from the Rank
+        /// Revokes the permission from the actual rank
         /// </summary>
         /// <param name="permission"></param>
         /// <returns></returns>
-        void RemovePermission(PermissionType permission);
+        void RevokePermission(PermissionType permission);
 
-        void RemovePermission(string permission);
+        void RevokePermission(params PermissionType[] permissions);
+
+        void RevokePermission(string permission);
+        void RevokePermission(params string[] permissions);
     }
 }

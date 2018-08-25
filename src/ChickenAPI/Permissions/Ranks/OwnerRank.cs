@@ -7,27 +7,35 @@
 
         public bool HasPermission(string permission) => true;
 
-        public void AddPermission(PermissionType permission)
+        public void GrantPermission(PermissionType permission)
         {
         }
 
-        public void AddPermission(params PermissionType[] permission)
+        public void GrantPermission(params PermissionType[] permission)
         {
         }
 
-        public void AddPermission(string permission)
+        public void GrantPermission(string permission)
         {
         }
 
-        public void AddPermission(params string[] permission)
+        public void GrantPermission(params string[] permission)
         {
         }
 
-        public void RemovePermission(PermissionType permission)
+        public void RevokePermission(PermissionType permission)
         {
         }
 
-        public void RemovePermission(string permission)
+        public void RevokePermission(params PermissionType[] permissions)
+        {
+        }
+
+        public void RevokePermission(string permission)
+        {
+        }
+
+        public void RevokePermission(params string[] permissions)
         {
         }
     }
