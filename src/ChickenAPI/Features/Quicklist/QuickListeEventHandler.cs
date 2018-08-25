@@ -1,4 +1,5 @@
-﻿using ChickenAPI.Core.ECS.Entities;
+﻿using System;
+using ChickenAPI.Core.ECS.Entities;
 using ChickenAPI.Core.Events;
 using ChickenAPI.Core.Logging;
 using ChickenAPI.Enums.Game.Entity;
@@ -43,6 +44,7 @@ namespace ChickenAPI.Game.Features.Quicklist
 
             player.Quicklist.Quicklist.Add(new CharacterQuicklistDto
             {
+                Id = Guid.NewGuid(),
                 CharacterId = player.Character.Id,
                 IsSkill = type,
                 IsQ1 = q1 != 0,
