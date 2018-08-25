@@ -24,10 +24,6 @@ namespace NosSharp.RedisSessionPlugin.Redis
             _cache = new RedisCacheClient(options);
         }
 
-        private static string ToKey(int sessionId) => KeyPrefix + sessionId;
-
-        private static string ToKey(PlayerSessionDto obj) => KeyPrefix + obj.Id;
-
         public void RegisterSession(PlayerSessionDto dto)
         {
             _cache.AddAsync(ToKey(dto), dto).GetAwaiter().GetResult();
@@ -49,10 +45,7 @@ namespace NosSharp.RedisSessionPlugin.Redis
             return tmp.Values.FirstOrDefault(s => s.Value.Username == accountName)?.Value;
         }
 
-        public PlayerSessionDto GetBySessionId(int id)
-        {
-            return _cache.GetAsync<PlayerSessionDto>(ToKey(id)).GetAwaiter().GetResult().Value;
-        }
+        public PlayerSessionDto GetBySessionId(int id) => _cache.GetAsync<PlayerSessionDto>(ToKey(id)).GetAwaiter().GetResult().Value;
 
         public void UnregisterSession(int sessionId)
         {
@@ -72,5 +65,9 @@ namespace NosSharp.RedisSessionPlugin.Redis
                 _cache.ReplaceAsync(pair.Key, pair.Value);
             }
         }
+
+        private static string ToKey(int sessionId) => KeyPrefix + sessionId;
+
+        private static string ToKey(PlayerSessionDto obj) => KeyPrefix + obj.Id;
     }
 }

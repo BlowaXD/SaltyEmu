@@ -16,10 +16,8 @@ namespace NosSharp.DatabasePlugin.Services.Character
     public class CharacterDao : MappedRepositoryBase<CharacterDto, CharacterModel>, ICharacterService
     {
         private readonly CharacterDto _baseConf;
-        public CharacterDao(NosSharpContext context, IMapper mapper, CharacterDto baseConf) : base(context, mapper)
-        {
-            _baseConf = baseConf;
-        }
+
+        public CharacterDao(NosSharpContext context, IMapper mapper, CharacterDto baseConf) : base(context, mapper) => _baseConf = baseConf;
 
         public IEnumerable<CharacterDto> GetActiveByAccountId(long accountId)
         {
@@ -108,7 +106,6 @@ namespace NosSharp.DatabasePlugin.Services.Character
 
         public override async Task DeleteByIdAsync(long id)
         {
-
             try
             {
                 CharacterModel model = await DbSet.FindAsync(id);
@@ -127,9 +124,6 @@ namespace NosSharp.DatabasePlugin.Services.Character
             }
         }
 
-        public CharacterDto GetCreationCharacter()
-        {
-            return Mapper.Map<CharacterDto>(Mapper.Map<CharacterModel>(_baseConf));
-        }
+        public CharacterDto GetCreationCharacter() => Mapper.Map<CharacterDto>(Mapper.Map<CharacterModel>(_baseConf));
     }
 }

@@ -37,7 +37,6 @@ namespace NosSharp.PacketHandler.Utils
                         methodInfo =>
                             new GamePacketHandler(DelegateBuilder.BuildDelegate<Action<IPacket, IPlayerEntity>>(methodInfo),
                                 methodInfo.GetParameters().FirstOrDefault()?.ParameterType)));
-
             }
 
             return references;

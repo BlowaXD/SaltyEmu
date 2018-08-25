@@ -71,14 +71,11 @@ namespace ChickenAPI.Game.Packets.Extensions
             }
         }
 
-        public static OutPacketBase GenerateOutPacket(this IPlayerEntity player)
+        public static OutPacketBase GenerateOutPacket(this IPlayerEntity player) => new OutPacketBase
         {
-            return new OutPacketBase
-            {
-                Type = VisualType.Character,
-                EntityId = player.Character.Id
-            };
-        }
+            Type = VisualType.Character,
+            EntityId = player.Character.Id
+        };
 
         private static InPacketBase GenerateInNpc(INpcEntity npcEntity)
         {

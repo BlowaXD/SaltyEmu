@@ -20,14 +20,14 @@ namespace Toolkit.Converter
         private const string FILE = "Skill.dat";
         private static readonly Logger Log = Logger.GetLogger<CardDatConverter>();
         private static string _inputDirectory;
+        private readonly List<BCardDto> _skillBCards = new List<BCardDto>();
 
         private readonly Dictionary<long, SkillDto> _skills = new Dictionary<long, SkillDto>();
-        private readonly List<BCardDto> _skillBCards = new List<BCardDto>();
-        private int _skillCount;
+        private IBCardService _bcardService;
         private int _skillBCardsCount;
+        private int _skillCount;
 
         private ISkillService _skillService;
-        private IBCardService _bcardService;
 
         private void ParseFile()
         {

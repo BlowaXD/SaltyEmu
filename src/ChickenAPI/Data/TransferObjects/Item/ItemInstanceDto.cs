@@ -1,7 +1,7 @@
 ﻿using System;
 using ChickenAPI.Core.Data.TransferObjects;
+using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Enums.Game.Items;
-using ElementType = ChickenAPI.Enums.Game.Entity.ElementType;
 
 namespace ChickenAPI.Game.Data.TransferObjects.Item
 {
@@ -35,6 +35,18 @@ namespace ChickenAPI.Game.Data.TransferObjects.Item
         public byte Sum { get; set; }
 
         #endregion
+
+        public object Clone()
+        {
+            object tmp = MemberwiseClone();
+            if (!(tmp is ItemInstanceDto newObject))
+            {
+                return null;
+            }
+
+            newObject.Id = Guid.NewGuid();
+            return newObject;
+        }
 
         public Guid Id { get; set; }
 
@@ -130,16 +142,5 @@ namespace ChickenAPI.Game.Data.TransferObjects.Item
         public short DarkPower { get; set; }
 
         #endregion
-
-        public object Clone()
-        {
-            object tmp = MemberwiseClone();
-            if (!(tmp is ItemInstanceDto newObject))
-            {
-                return null;
-            }
-            newObject.Id = Guid.NewGuid();
-            return newObject;
-        }
     }
 }

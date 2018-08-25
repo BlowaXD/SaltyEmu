@@ -22,11 +22,11 @@ namespace NosSharp.PacketHandler.Shops
                 return;
             }
 
-            player.SendPacket(new SentNpcReqPacket()
+            player.SendPacket(new SentNpcReqPacket
             {
                 VisualType = VisualType.Npc,
                 VisualId = npc.MapNpc.Id,
-                Dialog = npc.MapNpc.Dialog,
+                Dialog = npc.MapNpc.Dialog
             });
         }
 

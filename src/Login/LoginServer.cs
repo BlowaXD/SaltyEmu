@@ -18,6 +18,8 @@ namespace LoginServer
     {
         private static readonly Logger Log = Logger.GetLogger<LoginServer>();
 
+        private static ushort _port;
+
         private static void PrintHeader()
         {
             Console.Title = "SaltyEmu - WORLD";
@@ -50,6 +52,7 @@ namespace LoginServer
                 _port = 4000;
                 return;
             }
+
             _port = Convert.ToUInt16(port);
         }
 
@@ -68,7 +71,6 @@ namespace LoginServer
 
                 if (plugins == null)
                 {
-                    return;
                 }
             }
             catch (Exception e)
@@ -76,8 +78,6 @@ namespace LoginServer
                 Log.Error("[PLUGINS]", e);
             }
         }
-
-        private static ushort _port;
 
         private static void Main(string[] args)
         {

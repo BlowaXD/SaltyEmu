@@ -22,9 +22,6 @@ namespace NosSharp.BasicAlgorithm.CharacterAlgorithms.Close
             }
         }
 
-        public int GetStat(CharacterClassType type, byte level)
-        {
-            return _stats[(int)type, level];
-        }
+        public int GetStat(CharacterClassType type, byte level) => _stats[(int)type, level];
     }
 }

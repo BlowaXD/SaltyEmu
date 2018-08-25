@@ -6,8 +6,6 @@ namespace NosSharp.DatabasePlugin.Models.BCard
     [Table("global_bcard")]
     public class BCardModel : IMappedDto
     {
-        public long Id { get; set; }
-
         public byte SubType { get; set; }
 
         public byte Type { get; set; }
@@ -23,5 +21,6 @@ namespace NosSharp.DatabasePlugin.Models.BCard
         public bool IsLevelScaled { get; set; }
 
         public bool IsLevelDivided { get; set; }
+        public long Id { get; set; }
     }
 }

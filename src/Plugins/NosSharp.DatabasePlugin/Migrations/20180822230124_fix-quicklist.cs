@@ -7,45 +7,45 @@ namespace NosSharp.DatabasePlugin.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "Morph",
-                table: "quicklist");
+                "Morph",
+                "quicklist");
 
             migrationBuilder.DropColumn(
-                name: "Pos",
-                table: "quicklist");
+                "Pos",
+                "quicklist");
 
             migrationBuilder.DropColumn(
-                name: "Q1",
-                table: "quicklist");
+                "Q1",
+                "quicklist");
 
             migrationBuilder.DropColumn(
-                name: "Elo",
-                table: "character");
+                "Elo",
+                "character");
 
             migrationBuilder.RenameColumn(
-                name: "Type",
-                table: "quicklist",
-                newName: "RelatedSlot");
+                "Type",
+                "quicklist",
+                "RelatedSlot");
 
             migrationBuilder.RenameColumn(
-                name: "Slot",
-                table: "quicklist",
-                newName: "Position");
+                "Slot",
+                "quicklist",
+                "Position");
 
             migrationBuilder.RenameColumn(
-                name: "Q2",
-                table: "quicklist",
-                newName: "EnumType");
+                "Q2",
+                "quicklist",
+                "EnumType");
 
             migrationBuilder.AddColumn<bool>(
-                name: "IsQ1",
-                table: "quicklist",
+                "IsQ1",
+                "quicklist",
                 nullable: false,
                 defaultValue: false);
 
             migrationBuilder.AddColumn<bool>(
-                name: "IsSkill",
-                table: "quicklist",
+                "IsSkill",
+                "quicklist",
                 nullable: false,
                 defaultValue: false);
         }
@@ -53,49 +53,49 @@ namespace NosSharp.DatabasePlugin.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "IsQ1",
-                table: "quicklist");
+                "IsQ1",
+                "quicklist");
 
             migrationBuilder.DropColumn(
-                name: "IsSkill",
-                table: "quicklist");
+                "IsSkill",
+                "quicklist");
 
             migrationBuilder.RenameColumn(
-                name: "RelatedSlot",
-                table: "quicklist",
-                newName: "Type");
+                "RelatedSlot",
+                "quicklist",
+                "Type");
 
             migrationBuilder.RenameColumn(
-                name: "Position",
-                table: "quicklist",
-                newName: "Slot");
+                "Position",
+                "quicklist",
+                "Slot");
 
             migrationBuilder.RenameColumn(
-                name: "EnumType",
-                table: "quicklist",
-                newName: "Q2");
+                "EnumType",
+                "quicklist",
+                "Q2");
 
             migrationBuilder.AddColumn<short>(
-                name: "Morph",
-                table: "quicklist",
+                "Morph",
+                "quicklist",
                 nullable: false,
                 defaultValue: (short)0);
 
             migrationBuilder.AddColumn<short>(
-                name: "Pos",
-                table: "quicklist",
+                "Pos",
+                "quicklist",
                 nullable: false,
                 defaultValue: (short)0);
 
             migrationBuilder.AddColumn<short>(
-                name: "Q1",
-                table: "quicklist",
+                "Q1",
+                "quicklist",
                 nullable: false,
                 defaultValue: (short)0);
 
             migrationBuilder.AddColumn<int>(
-                name: "Elo",
-                table: "character",
+                "Elo",
+                "character",
                 nullable: false,
                 defaultValue: 0);
         }

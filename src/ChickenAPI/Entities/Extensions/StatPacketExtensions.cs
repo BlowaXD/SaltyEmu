@@ -16,7 +16,7 @@ namespace ChickenAPI.Game.Entities.Extensions
                 Mp = battle.Mp,
                 MpMax = battle.MpMax,
                 Unknown = 0,
-                CharacterOption = 0,
+                CharacterOption = 0
             };
         }
     }

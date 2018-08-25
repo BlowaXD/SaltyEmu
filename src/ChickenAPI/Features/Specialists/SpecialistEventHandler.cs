@@ -1,8 +1,8 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using ChickenAPI.Core.ECS.Entities;
 using ChickenAPI.Core.Events;
 using ChickenAPI.Enums.Game.Items;
-using ChickenAPI.Game.Entities;
 using ChickenAPI.Game.Entities.Extensions;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Entities.Player.Extensions;
@@ -70,7 +70,7 @@ namespace ChickenAPI.Game.Features.Specialists
 
         private static void ChangePoints(IEntity entity, SpChangePointsEvent spChangePoints)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
     }
 }

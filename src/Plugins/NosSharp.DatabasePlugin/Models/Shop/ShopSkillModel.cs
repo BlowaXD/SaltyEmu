@@ -8,9 +8,6 @@ namespace NosSharp.DatabasePlugin.Models.Shop
     [Table("shop_skill")]
     public class ShopSkillModel : IMappedDto
     {
-        [Key]
-        public long Id { get; set; }
-
         public SkillModel Skill { get; set; }
 
         [ForeignKey(nameof(SkillId))]
@@ -24,5 +21,8 @@ namespace NosSharp.DatabasePlugin.Models.Shop
         public byte Slot { get; set; }
 
         public byte Type { get; set; }
+
+        [Key]
+        public long Id { get; set; }
     }
 }

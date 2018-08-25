@@ -10,10 +10,6 @@ namespace NosSharp.DatabasePlugin.Models.Skill
     [Table("_data_skill")]
     public class SkillModel : IMappedDto
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public long Id { get; set; }
-
         public short AttackAnimation { get; set; }
 
         public short CastAnimation { get; set; }
@@ -74,5 +70,9 @@ namespace NosSharp.DatabasePlugin.Models.Skill
 
         public ICollection<SkillBCardModel> BCards { get; set; }
         public IEnumerable<NpcMonsterSkillModel> NpcMonsterSkills { get; set; }
+
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public long Id { get; set; }
     }
 }

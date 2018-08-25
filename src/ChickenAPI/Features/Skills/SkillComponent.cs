@@ -15,7 +15,6 @@ namespace ChickenAPI.Game.Features.Skills
     {
         private static ISkillService _skillService;
 
-        private static ISkillService SkillService => _skillService ?? (_skillService = ChickenContainer.Instance.Resolve<ISkillService>());
         public SkillComponent(IEntity entity)
         {
             Entity = entity;
@@ -36,7 +35,6 @@ namespace ChickenAPI.Game.Features.Skills
             {
                 Skills.Add(tmp + 9, SkillService.GetById(tmp + 9));
             }
-
         }
 
         public SkillComponent(IEntity entity, IEnumerable<SkillDto> skills) : this(entity)
@@ -49,6 +47,8 @@ namespace ChickenAPI.Game.Features.Skills
                 }
             }
         }
+
+        private static ISkillService SkillService => _skillService ?? (_skillService = ChickenContainer.Instance.Resolve<ISkillService>());
 
         public Dictionary<long, SkillDto> Skills { get; }
 

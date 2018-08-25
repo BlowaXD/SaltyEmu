@@ -8,7 +8,7 @@
         IDk2 = 3, // IDK ?
 
         TraineeG = 4, // (Reputation: 251 ~ 500)
-        TraineeB = 5,  //(Reputation:501 ~ 750)
+        TraineeB = 5, //(Reputation:501 ~ 750)
         TraineeR = 6, //(Reputation: 750 ~ 1.000)
 
         TheExperiencedG = 7, // (Reputation: 1.001 ~ 2.250)
@@ -44,6 +44,6 @@
 
         AncienHeros = 30, // (3 rd place at the reputation ranking : 5.000.000 and more)
         MysteriousHeros = 31, // (2 nd place in the reputation ranking : 5.000.000 and more)
-        LegendaryHeros = 32, // (1 st place in the reputation ranking : 5.000.000 and more)
+        LegendaryHeros = 32 // (1 st place in the reputation ranking : 5.000.000 and more)
     }
 }

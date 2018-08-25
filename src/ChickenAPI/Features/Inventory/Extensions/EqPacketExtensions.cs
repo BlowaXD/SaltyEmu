@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Text;
+﻿using System.Text;
 using ChickenAPI.Enums.Game.Items;
 using ChickenAPI.Game.Data.TransferObjects.Item;
 using ChickenAPI.Game.Entities.Player;
@@ -19,7 +18,7 @@ namespace ChickenAPI.Game.Features.Inventory.Extensions
             Fairy = inventory.Wear[(int)EquipmentType.Fairy]?.ItemId ?? -1,
             CostumeSuit = inventory.Wear[(int)EquipmentType.CostumeSuit]?.ItemId ?? -1,
             CostumeHat = inventory.Wear[(int)EquipmentType.CostumeHat]?.ItemId ?? -1,
-            WeaponSkin = inventory.Wear[(int)EquipmentType.WeaponSkin]?.ItemId ?? -1,
+            WeaponSkin = inventory.Wear[(int)EquipmentType.WeaponSkin]?.ItemId ?? -1
         };
 
         public static EqRareInfo GenerateEqRareInfoPacket(this InventoryComponent inventory) => new EqRareInfo
@@ -27,7 +26,7 @@ namespace ChickenAPI.Game.Features.Inventory.Extensions
             WeaponUpgrade = inventory.Wear[(int)EquipmentType.MainWeapon]?.Upgrade ?? 0,
             WeaponRarity = (sbyte)(inventory.Wear[(int)EquipmentType.MainWeapon]?.Rarity ?? 0),
             ArmorUpgrade = inventory.Wear[(int)EquipmentType.Armor]?.Upgrade ?? 0,
-            ArmorRarity = (sbyte)(inventory.Wear[(int)EquipmentType.MainWeapon]?.Rarity ?? 0),
+            ArmorRarity = (sbyte)(inventory.Wear[(int)EquipmentType.MainWeapon]?.Rarity ?? 0)
         };
 
         public static EqPacket GenerateEqPacket(this IPlayerEntity player) => new EqPacket
@@ -39,7 +38,7 @@ namespace ChickenAPI.Game.Features.Inventory.Extensions
             HairColorType = player.Character.HairColor,
             CharacterClassType = player.Character.Class,
             EqList = player.Inventory.GenerateEqListInfoPacket(),
-            EqInfo = player.Inventory.GenerateEqRareInfoPacket(),
+            EqInfo = player.Inventory.GenerateEqRareInfoPacket()
         };
 
         public static EquipmentPacket GenerateEquipmentPacket(this IPlayerEntity player)
@@ -54,6 +53,7 @@ namespace ChickenAPI.Game.Features.Inventory.Extensions
                 {
                     continue;
                 }
+
                 tmp.Append(' ');
                 tmp.Append(i);
                 tmp.Append('.');

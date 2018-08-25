@@ -1,15 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using ChickenAPI.Core.Data.TransferObjects;
+using NosSharp.DatabasePlugin.Models.Item;
 
 namespace NosSharp.DatabasePlugin.Models.Shop
 {
     [Table("shop_item")]
     public class ShopItemModel : IMappedDto
     {
-        [Key]
-        public long Id { get; set; }
-
         public byte Color { get; set; }
 
         public ItemModel Item { get; set; }
@@ -29,5 +27,8 @@ namespace NosSharp.DatabasePlugin.Models.Shop
         public byte Type { get; set; }
 
         public byte Upgrade { get; set; }
+
+        [Key]
+        public long Id { get; set; }
     }
 }

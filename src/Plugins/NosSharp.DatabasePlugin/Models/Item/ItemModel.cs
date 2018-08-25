@@ -7,14 +7,12 @@ using NosSharp.DatabasePlugin.Models.BCard;
 using NosSharp.DatabasePlugin.Models.Character;
 using NosSharp.DatabasePlugin.Models.Shop;
 
-namespace NosSharp.DatabasePlugin.Models
+namespace NosSharp.DatabasePlugin.Models.Item
 {
     [Table("_data_item")]
     public class ItemModel : IMappedDto
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public long Id { get; set; }
+        public long Vnum { get; set; }
 
         public byte BasicUpgrade { get; set; }
 
@@ -175,5 +173,9 @@ namespace NosSharp.DatabasePlugin.Models
 
         public IEnumerable<ShopItemModel> ShopItems { get; set; }
         public IEnumerable<RecipeItemModel> RecipeItems { get; set; }
+
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public long Id { get; set; }
     }
 }

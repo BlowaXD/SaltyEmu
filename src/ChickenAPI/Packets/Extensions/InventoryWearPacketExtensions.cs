@@ -20,7 +20,7 @@ namespace ChickenAPI.Game.Packets.Extensions
                 Fairy = inventory.Wear[(int)EquipmentType.Fairy]?.ItemId ?? -1,
                 CostumeSuit = inventory.Wear[(int)EquipmentType.CostumeSuit]?.ItemId ?? -1,
                 CostumeHat = inventory.Wear[(int)EquipmentType.CostumeHat]?.ItemId ?? -1,
-                WeaponSkin = inventory.Wear[(int)EquipmentType.WeaponSkin]?.ItemId ?? -1,
+                WeaponSkin = inventory.Wear[(int)EquipmentType.WeaponSkin]?.ItemId ?? -1
             };
         }
     }

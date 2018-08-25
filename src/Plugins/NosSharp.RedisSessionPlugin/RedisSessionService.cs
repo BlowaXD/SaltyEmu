@@ -14,15 +14,12 @@ namespace NosSharp.RedisSessionPlugin
         private static readonly Logger Log = Logger.GetLogger<RedisPlugin>();
         private readonly IRedisTypedClient<PlayerSessionDto> _client;
 
-        public RedisSessionService(RedisConfiguration configuration)
+        public RedisSessionService(RedisConfiguration configuration) => _client = new RedisClient(new RedisEndpoint
         {
-            _client = new RedisClient(new RedisEndpoint
-            {
-                Host = configuration.Host,
-                Port = configuration.Port,
-                Password = configuration.Password
-            }).As<PlayerSessionDto>();
-        }
+            Host = configuration.Host,
+            Port = configuration.Port,
+            Password = configuration.Password
+        }).As<PlayerSessionDto>();
 
         public void RegisterSession(PlayerSessionDto dto)
         {
@@ -55,16 +52,7 @@ namespace NosSharp.RedisSessionPlugin
             return _client.GetAll().FirstOrDefault(s => s.Username == accountName);
         }
 
-        public PlayerSessionDto GetBySessionId(int id)
-        {
-            return _client.GetById(id);
-        }
-
-        public void UnregisterSession(PlayerSessionDto dto)
-        {
-            dto.State = PlayerSessionState.Unauthed;
-            _client.Store(dto);
-        }
+        public PlayerSessionDto GetBySessionId(int id) => _client.GetById(id);
 
         public void UnregisterSession(int sessionId)
         {
@@ -80,6 +68,12 @@ namespace NosSharp.RedisSessionPlugin
                 i.State = PlayerSessionState.Unauthed;
                 _client.Store(i);
             }
+        }
+
+        public void UnregisterSession(PlayerSessionDto dto)
+        {
+            dto.State = PlayerSessionState.Unauthed;
+            _client.Store(dto);
         }
     }
 }

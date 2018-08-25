@@ -6,11 +6,11 @@ namespace NosSharp.BasicAlgorithm
 {
     public class NpcMonsterAlgorithmService : INpcMonsterAlgorithmService
     {
+        private readonly IMonsterRaceStatAlgorithm _heroXp;
         private readonly IMonsterRaceStatAlgorithm _hpMax;
+        private readonly IMonsterRaceStatAlgorithm _jobXp;
         private readonly IMonsterRaceStatAlgorithm _mpMax;
         private readonly IMonsterRaceStatAlgorithm _xp;
-        private readonly IMonsterRaceStatAlgorithm _jobXp;
-        private readonly IMonsterRaceStatAlgorithm _heroXp;
 
         public NpcMonsterAlgorithmService()
         {

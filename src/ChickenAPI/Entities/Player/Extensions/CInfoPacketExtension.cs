@@ -30,7 +30,7 @@ namespace ChickenAPI.Game.Entities.Player.Extensions
                 Invisible = !player.Visibility.IsVisible,
                 FamilyLevel = 0,
                 SpUpgrade = sp?.Upgrade ?? 0,
-                ArenaWinner = player.Character.ArenaWinner,
+                ArenaWinner = player.Character.ArenaWinner
             };
         }
     }

@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 using ChickenAPI.Core.Data.TransferObjects;
 using ChickenAPI.Enums.Game.Portals;
 
@@ -8,9 +7,6 @@ namespace NosSharp.DatabasePlugin.Models.Map
     [Table("map_portals")]
     public class MapPortalModel : IMappedDto
     {
-        public long Id { get; set; }
-
-
         public PortalType Type { get; set; }
 
         public long DestinationMapId { get; set; }
@@ -30,5 +26,6 @@ namespace NosSharp.DatabasePlugin.Models.Map
         public short SourceX { get; set; }
 
         public short SourceY { get; set; }
+        public long Id { get; set; }
     }
 }

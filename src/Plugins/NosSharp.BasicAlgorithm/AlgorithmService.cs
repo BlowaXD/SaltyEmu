@@ -12,28 +12,28 @@ namespace NosSharp.BasicAlgorithm
 {
     public class AlgorithmService : IAlgorithmService
     {
-        private readonly ILevelBasedDataAlgorithm _levelBasedAlgorithm;
-        private readonly JobLevelBasedAlgorithm _jobLevelBasedAlgorithm;
-        private readonly ILevelBasedDataAlgorithm _spLevelBasedAlgorithm;
-        private readonly ILevelBasedDataAlgorithm _heroLevelBasedAlgorithm;
+        private readonly ICharacterStatAlgorithm _closeDefenceAlgorithm;
+        private readonly ICharacterStatAlgorithm _closeDodgeAlgorithm;
         private readonly ILevelBasedDataAlgorithm _fairyLevelBasedAlgorithm;
         private readonly ILevelBasedDataAlgorithm _familyLevelBasedAlgorithm;
-
-        private readonly ICharacterStatAlgorithm _speedAlgorithm;
-        private readonly ICharacterStatAlgorithm _closeDefenceAlgorithm;
-        private readonly ICharacterStatAlgorithm _magicDefenceAlgorithm;
-        private readonly ICharacterStatAlgorithm _rangedDefenceAlgorithm;
-        private readonly ICharacterStatAlgorithm _closeDodgeAlgorithm;
-        private readonly ICharacterStatAlgorithm _magicDodgeAlgorithm;
-        private readonly ICharacterStatAlgorithm _rangedDodgeAlgorithm;
-        private readonly ICharacterStatAlgorithm _minimumAttackRange;
+        private readonly ILevelBasedDataAlgorithm _heroLevelBasedAlgorithm;
 
         private readonly ICharacterStatAlgorithm _hpMax;
         private readonly ICharacterStatAlgorithm _hpRegen;
         private readonly ICharacterStatAlgorithm _hpRegenSitting;
+        private readonly JobLevelBasedAlgorithm _jobLevelBasedAlgorithm;
+        private readonly ILevelBasedDataAlgorithm _levelBasedAlgorithm;
+        private readonly ICharacterStatAlgorithm _magicDefenceAlgorithm;
+        private readonly ICharacterStatAlgorithm _magicDodgeAlgorithm;
+        private readonly ICharacterStatAlgorithm _minimumAttackRange;
         private readonly ICharacterStatAlgorithm _mpMax;
         private readonly ICharacterStatAlgorithm _mpRegen;
         private readonly ICharacterStatAlgorithm _mpRegenSitting;
+        private readonly ICharacterStatAlgorithm _rangedDefenceAlgorithm;
+        private readonly ICharacterStatAlgorithm _rangedDodgeAlgorithm;
+
+        private readonly ICharacterStatAlgorithm _speedAlgorithm;
+        private readonly ILevelBasedDataAlgorithm _spLevelBasedAlgorithm;
 
         public AlgorithmService()
         {

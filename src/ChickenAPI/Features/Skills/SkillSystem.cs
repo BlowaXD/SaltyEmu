@@ -1,8 +1,8 @@
 ﻿using System.Linq;
 using ChickenAPI.Core.ECS.Entities;
-using ChickenAPI.Core.ECS.Systems;
 using ChickenAPI.Core.Events;
 using ChickenAPI.Enums.Game.Character;
+using ChickenAPI.Game.Data.TransferObjects.Character;
 using ChickenAPI.Game.Data.TransferObjects.Skills;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Features.Battle;
@@ -75,8 +75,8 @@ namespace ChickenAPI.Game.Features.Skills
 
             if (e.ForceChecks)
             {
-                var character = player.Character;
-                var experience = player.Experience;
+                CharacterDto character = player.Character;
+                ExperienceComponent experience = player.Experience;
 
                 if (character is null)
                 {

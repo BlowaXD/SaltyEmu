@@ -17,8 +17,6 @@ namespace ChickenAPI.Game.Features.Movement
     public class MovableComponent : IComponent
     {
         private static IAlgorithmService _algorithmService;
-
-        private static IAlgorithmService Algorithm => _algorithmService ?? (_algorithmService = ChickenContainer.Instance.Resolve<IAlgorithmService>());
         private static readonly Logger Log = Logger.GetLogger<MovableComponent>();
         private Position<short> _actual;
 
@@ -39,6 +37,8 @@ namespace ChickenAPI.Game.Features.Movement
             Actual = new Position<short>();
             Speed = (byte)Algorithm.GetSpeed(entity.Character.Class, entity.Experience.Level);
         }
+
+        private static IAlgorithmService Algorithm => _algorithmService ?? (_algorithmService = ChickenContainer.Instance.Resolve<IAlgorithmService>());
 
         /// <summary>
         ///     Entity Walking Speed

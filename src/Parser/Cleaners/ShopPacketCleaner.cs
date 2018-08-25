@@ -8,7 +8,6 @@ namespace Toolkit.Cleaners
 {
     public class ShopPacketCleaner
     {
-
         private static readonly Logger Log = Logger.GetLogger<PortalPacketCleaner>();
         private readonly Queue<string> _packetList = new Queue<string>();
 

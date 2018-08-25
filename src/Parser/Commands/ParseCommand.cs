@@ -65,15 +65,15 @@ namespace Toolkit.Commands
             {
                 Log.Warn("Respect the following parsing directory layer : ");
                 Console.WriteLine($"{command.InputDirectory}/");
-                Console.WriteLine($"\t- maps");
-                Console.WriteLine($"\t- dats");
-                Console.WriteLine($"\t\t- Skill.dat");
-                Console.WriteLine($"\t\t- Monster.dat");
-                Console.WriteLine($"\t\t- Item.dat");
-                Console.WriteLine($"\t\t- Card.dat");
-                Console.WriteLine($"\t- packets");
-                Console.WriteLine($"\t\t- einfo.packets");
-                Console.WriteLine($"\t\t- packet.txt");
+                Console.WriteLine("\t- maps");
+                Console.WriteLine("\t- dats");
+                Console.WriteLine("\t\t- Skill.dat");
+                Console.WriteLine("\t\t- Monster.dat");
+                Console.WriteLine("\t\t- Item.dat");
+                Console.WriteLine("\t\t- Card.dat");
+                Console.WriteLine("\t- packets");
+                Console.WriteLine("\t\t- einfo.packets");
+                Console.WriteLine("\t\t- packet.txt");
                 return 1;
             }
 

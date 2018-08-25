@@ -19,10 +19,10 @@ namespace Toolkit.Converter
     {
         private static readonly Logger Log = Logger.GetLogger<ItemDatConverter>();
         private static readonly string _file = "Item.dat";
-        private IItemService _itemService;
-        private IBCardService _bCardService;
-        private readonly List<ItemDto> _items = new List<ItemDto>();
         private readonly List<BCardDto> _itemCards = new List<BCardDto>();
+        private readonly List<ItemDto> _items = new List<ItemDto>();
+        private IBCardService _bCardService;
+        private IItemService _itemService;
 
         private void DoWork(string inputDirectory)
         {

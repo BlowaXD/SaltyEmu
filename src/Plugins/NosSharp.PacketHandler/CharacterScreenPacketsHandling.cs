@@ -28,15 +28,12 @@ namespace NosSharp.PacketHandler
     {
         private static ILanguageService _languageService;
 
-        private static ILanguageService Language
-        {
-            get => _languageService ?? (_languageService = ChickenContainer.Instance.Resolve<ILanguageService>());
-        }
-
         private static readonly Logger Log = Logger.GetLogger<CharacterScreenPacketsHandling>();
 
+        private static ILanguageService Language => _languageService ?? (_languageService = ChickenContainer.Instance.Resolve<ILanguageService>());
+
         /// <summary>
-        /// Char_DEL packetBase
+        ///     Char_DEL packetBase
         /// </summary>
         /// <param name="characterDeletePacketBase"></param>
         /// <param name="session"></param>
@@ -71,7 +68,7 @@ namespace NosSharp.PacketHandler
 
 
         /// <summary>
-        /// Char_NEW characterEntity creation characterEntity
+        ///     Char_NEW characterEntity creation characterEntity
         /// </summary>
         /// <param name="characterCreatePacketBase"></param>
         /// <param name="session"></param>
@@ -133,7 +130,7 @@ namespace NosSharp.PacketHandler
         }
 
         /// <summary>
-        /// Char_NEW characterEntity creation characterEntity
+        ///     Char_NEW characterEntity creation characterEntity
         /// </summary>
         /// <param name="characterCreatePacketBase"></param>
         /// <param name="session"></param>
@@ -166,7 +163,7 @@ namespace NosSharp.PacketHandler
                 {
                     Message = "invalid_lvl_wrestler"
                 });
-                Log.Warn($"[CREATE_CHARACTER] INVALID_LVL_WRESTLER");
+                Log.Warn("[CREATE_CHARACTER] INVALID_LVL_WRESTLER");
                 return;
             }
 
@@ -269,7 +266,7 @@ namespace NosSharp.PacketHandler
         }
 
         /// <summary>
-        /// Load Characters, this is the Entrypoint for the Client, Wait for 3 Packets.
+        ///     Load Characters, this is the Entrypoint for the Client, Wait for 3 Packets.
         /// </summary>
         /// <param name="packetBase"></param>
         /// <param name="session"></param>
@@ -324,14 +321,14 @@ namespace NosSharp.PacketHandler
                     HeroLevel = character.HeroLevel,
                     Equipments = new List<short?>
                     {
-                        (short?)(equipment[(byte)EquipmentType.Hat]?.ItemId ?? -1),
-                        (short?)(equipment[(byte)EquipmentType.Armor]?.ItemId ?? -1),
-                        (short?)(equipment[(byte)EquipmentType.WeaponSkin]?.ItemId ?? (equipment[(byte)EquipmentType.MainWeapon]?.ItemId ?? -1)),
-                        (short?)(equipment[(byte)EquipmentType.SecondaryWeapon]?.ItemId ?? -1),
-                        (short?)(equipment[(byte)EquipmentType.Mask]?.ItemId ?? -1),
-                        (short?)(equipment[(byte)EquipmentType.Fairy]?.ItemId ?? -1),
-                        (short?)(equipment[(byte)EquipmentType.CostumeSuit]?.ItemId ?? -1),
-                        (short?)(equipment[(byte)EquipmentType.CostumeHat]?.ItemId ?? -1)
+                        (short?)(equipment[(byte)EquipmentType.Hat]?.Item.Vnum ?? -1),
+                        (short?)(equipment[(byte)EquipmentType.Armor]?.Item.Vnum ?? -1),
+                        (short?)(equipment[(byte)EquipmentType.WeaponSkin]?.ItemId ?? (equipment[(byte)EquipmentType.MainWeapon]?.Item.Vnum ?? -1)),
+                        (short?)(equipment[(byte)EquipmentType.SecondaryWeapon]?.Item.Vnum ?? -1),
+                        (short?)(equipment[(byte)EquipmentType.Mask]?.Item.Vnum ?? -1),
+                        (short?)(equipment[(byte)EquipmentType.Fairy]?.Item.Vnum ?? -1),
+                        (short?)(equipment[(byte)EquipmentType.CostumeSuit]?.Item.Vnum ?? -1),
+                        (short?)(equipment[(byte)EquipmentType.CostumeHat]?.Item.Vnum ?? -1)
                     },
                     JobLevel = character.JobLevel,
                     QuestCompletion = 1,

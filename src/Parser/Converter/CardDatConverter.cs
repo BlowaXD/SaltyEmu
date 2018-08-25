@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using Autofac;
 using ChickenAPI.Core.IoC;
@@ -15,18 +16,18 @@ namespace Toolkit.Converter
 {
     public class CardDatConverter
     {
-        private static readonly Logger Log = Logger.GetLogger<CardDatConverter>();
         private const string FILE = "Card.dat";
+        private static readonly Logger Log = Logger.GetLogger<CardDatConverter>();
         private static string _inputDirectory;
         private static string _outputDirectory;
+        private readonly Queue<BCardDto> _cardBcards = new Queue<BCardDto>();
 
         private readonly Queue<CardDto> _cards = new Queue<CardDto>();
-        private readonly Queue<BCardDto> _cardBcards = new Queue<BCardDto>();
-        private int _cardCount;
+        private IBCardService _bcardDb;
         private int _cardBCardsCount;
+        private int _cardCount;
 
         private ICardService _cardDb;
-        private IBCardService _bcardDb;
 
         private static void GetVnum(string[] currentLine, CardDto card)
         {
@@ -37,7 +38,7 @@ namespace Toolkit.Converter
         {
             bool itemAreaBegin = false;
             string path = _inputDirectory + '/' + FILE;
-            string tmp = System.IO.File.ReadAllText(path, Encoding.GetEncoding(1252));
+            string tmp = File.ReadAllText(path, Encoding.GetEncoding(1252));
             string[] lines = tmp.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
             var card = new CardDto();
 
@@ -116,7 +117,7 @@ namespace Toolkit.Converter
                     SecondData = int.Parse(currentLine[7 + i * 6]) / 4,
                     ThirdData = int.Parse(currentLine[5 + i * 6]),
                     IsLevelScaled = Convert.ToBoolean(first % 4),
-                    IsLevelDivided = (first % 4) == 2,
+                    IsLevelDivided = (first % 4) == 2
                 };
                 _cardBCardsCount++;
                 _cardBcards.Enqueue(bcard);

@@ -8,6 +8,11 @@ namespace ChickenAPI.Game.Data.TransferObjects.Item
     /// </summary>
     public class ItemDto : IMappedDto
     {
+        /// <summary>
+        ///     Used for client Display
+        /// </summary>
+        public long Vnum { get; set; }
+
         public byte BasicUpgrade { get; set; }
 
         public byte CellonLvl { get; set; }
@@ -161,6 +166,10 @@ namespace ChickenAPI.Game.Data.TransferObjects.Item
         public short WaterResistance { get; set; }
 
         public byte Width { get; set; }
+
+        /// <summary>
+        ///     Unique Item Id (can have 3 items for 1 VNum)
+        /// </summary>
         public long Id { get; set; }
     }
 }

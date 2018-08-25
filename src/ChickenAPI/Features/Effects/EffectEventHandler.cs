@@ -6,8 +6,6 @@ namespace ChickenAPI.Game.Features.Effects
 {
     public class EffectEventHandler : EventHandlerBase
     {
-
-
         public override void Execute(IEntity entity, ChickenEventArgs e)
         {
             switch (e)

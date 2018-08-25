@@ -12,8 +12,8 @@ namespace NosSharp.RedisSessionPlugin
     public class RedisServerApi : IServerApiService
     {
         private static readonly Logger Log = Logger.GetLogger<RedisServerApi>();
-        private readonly IRedisSet<WorldServerDto> _set;
         private readonly IRedisTypedClient<WorldServerDto> _client;
+        private readonly IRedisSet<WorldServerDto> _set;
 
         public RedisServerApi(RedisConfiguration configuration)
         {
@@ -44,9 +44,6 @@ namespace NosSharp.RedisSessionPlugin
             }
         }
 
-        public IEnumerable<WorldServerDto> GetServers()
-        {
-            return _client.Sets["WorldServer"].GetAll();
-        }
+        public IEnumerable<WorldServerDto> GetServers() => _client.Sets["WorldServer"].GetAll();
     }
 }

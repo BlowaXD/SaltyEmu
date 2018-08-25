@@ -5,12 +5,9 @@ namespace ChickenAPI.Game.Features.Player.Extensions
 {
     public static class FsPacketExtension
     {
-        public static FsPacket GenerateFsPacket(this IPlayerEntity player)
+        public static FsPacket GenerateFsPacket(this IPlayerEntity player) => new FsPacket
         {
-            return new FsPacket
-            {
-                Faction = player.Character.Faction
-            };
-        }
+            Faction = player.Character.Faction
+        };
     }
 }

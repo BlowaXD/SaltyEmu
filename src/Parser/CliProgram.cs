@@ -9,11 +9,11 @@ namespace Toolkit
     {
         private static readonly Logger Log = Logger.GetLogger<CliProgram>();
 
-        static int Main(string[] args)
+        private static int Main(string[] args)
         {
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
             Logger.Initialize();
-            return CommandLine.Parser.Default.ParseArguments<GenerateCommand, ParseCommand, CleanCommand>(args)
+            return Parser.Default.ParseArguments<GenerateCommand, ParseCommand, CleanCommand>(args)
                 .MapResult(
                     (GenerateCommand opts) => GenerateCommand.Handle(opts),
                     (ParseCommand opts) => ParseCommand.Handle(opts),

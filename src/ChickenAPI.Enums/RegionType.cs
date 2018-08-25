@@ -7,6 +7,6 @@
         Spanish,
         German,
         Italian,
-        Polish,
+        Polish
     }
 }

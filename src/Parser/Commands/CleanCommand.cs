@@ -41,6 +41,7 @@ namespace Toolkit.Commands
                     new InPacketCleaner().Filter(opts.Input, opts.Output);
                     break;
             }
+
             return 0;
         }
     }

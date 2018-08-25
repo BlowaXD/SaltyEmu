@@ -5,17 +5,14 @@ namespace ChickenAPI.Game.Entities.Player
 {
     public static class CModePacketExtension
     {
-        public static CModePacketBase GenerateCModePacket(this IPlayerEntity player)
+        public static CModePacketBase GenerateCModePacket(this IPlayerEntity player) => new CModePacketBase
         {
-            return new CModePacketBase
-            {
-                VisualType = VisualType.Character,
-                CharacterId = player.Character.Id,
-                Morph = 0,
-                SpUpgrade = player.Sp?.Upgrade ?? 0,
-                SpDesign = player.Sp?.Design ?? 0,
-                ArenaWinner = player.Character.ArenaWinner,
-            };
-        }
+            VisualType = VisualType.Character,
+            CharacterId = player.Character.Id,
+            Morph = 0,
+            SpUpgrade = player.Sp?.Upgrade ?? 0,
+            SpDesign = player.Sp?.Design ?? 0,
+            ArenaWinner = player.Character.ArenaWinner
+        };
     }
 }

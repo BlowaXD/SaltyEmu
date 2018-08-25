@@ -12,9 +12,8 @@ namespace NosSharp.PacketHandler.Inventory
             player.NotifyEventHandler<InventoryEventHandler>(new InventoryWearEventArgs
             {
                 InventoryType = packet.InventoryType,
-                InventorySlot = packet.ItemSlot,
+                InventorySlot = packet.ItemSlot
             });
         }
-
     }
 }

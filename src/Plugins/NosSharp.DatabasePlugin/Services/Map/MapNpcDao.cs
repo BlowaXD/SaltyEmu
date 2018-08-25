@@ -29,7 +29,6 @@ namespace NosSharp.DatabasePlugin.Services.Map
                 Log.Error("[GET_BY_MAP_ID]", e);
                 throw;
             }
-
         }
 
         public async Task<IEnumerable<MapNpcDto>> GetByMapIdAsync(long mapId)
@@ -43,7 +42,6 @@ namespace NosSharp.DatabasePlugin.Services.Map
                 Log.Error("[GET_BY_MAP_ID]", e);
                 throw;
             }
-
         }
     }
 }

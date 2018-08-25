@@ -26,23 +26,23 @@ namespace Toolkit.Converter
         private static readonly Logger Log = Logger.GetLogger<MonsterDatConverter>();
         private static readonly string _file = "Monster.dat";
         private static string _inputDirectory;
+        private readonly Queue<BCardDto> _monsterBcards = new Queue<BCardDto>();
+        private readonly Queue<DropDto> _monsterDrops = new Queue<DropDto>();
 
 
         private readonly Queue<NpcMonsterDto> _monsters = new Queue<NpcMonsterDto>();
         private readonly Queue<NpcMonsterSkillDto> _monsterSkills = new Queue<NpcMonsterSkillDto>();
-        private readonly Queue<BCardDto> _monsterBcards = new Queue<BCardDto>();
-        private readonly Queue<DropDto> _monsterDrops = new Queue<DropDto>();
-        private int _monsterDropsCount;
-        private int _monsterSkillsCount;
-        private int _monsterBCardsCount;
+        private IBCardService _bcardDb;
+        private IDropService _dropsDb;
 
         private INpcMonsterAlgorithmService _monsterAlgorithm;
+        private int _monsterBCardsCount;
         private INpcMonsterService _monsterDb;
-        private IBCardService _bcardDb;
-        private INpcMonsterSkillService _skillsDb;
-        private IDropService _dropsDb;
-        private ISkillService _skillService;
+        private int _monsterDropsCount;
+        private int _monsterSkillsCount;
         private Dictionary<long, SkillDto> _skills;
+        private INpcMonsterSkillService _skillsDb;
+        private ISkillService _skillService;
 
         private static void GetVnum(IReadOnlyList<string> currentLine, IMappedDto monster)
         {
@@ -342,8 +342,6 @@ namespace Toolkit.Converter
                         monster.NoAggresiveIcon = false;
                     }
 
-                    break;
-                default:
                     break;
             }
 

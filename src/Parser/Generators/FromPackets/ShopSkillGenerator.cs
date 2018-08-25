@@ -37,6 +37,7 @@ namespace Toolkit.Generators.FromPackets
                             {
                                 type = byte.Parse(currentPacket[1]);
                             }
+
                             break;
                         case "n_inv":
                             short npcId = short.Parse(currentPacket[2]);

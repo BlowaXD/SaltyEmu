@@ -2,9 +2,10 @@
 {
     public class JobLevelBasedAlgorithm : ILevelBasedDataAlgorithm
     {
+        public long[] FirstJobXpData { get; set; }
+
         public void Initialize()
         {
-
             // Load JobData
             FirstJobXpData = new long[21];
             Data = new long[256];
@@ -31,8 +32,6 @@
                 Data[i] = Data[i - 1] + var2;
             }
         }
-
-        public long[] FirstJobXpData { get; set; }
 
         public long[] Data { get; set; }
     }

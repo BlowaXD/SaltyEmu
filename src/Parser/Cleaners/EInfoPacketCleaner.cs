@@ -22,6 +22,7 @@ namespace Toolkit.Cleaners
                     _packetList.Add(line);
                 }
             }
+
             var builder = new StringBuilder();
             foreach (string packet in _packetList)
             {

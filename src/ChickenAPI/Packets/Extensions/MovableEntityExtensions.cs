@@ -20,7 +20,7 @@ namespace ChickenAPI.Game.Packets.Extensions
                         VisualId = monster.MapMonster.Id,
                         Speed = monster.Movable.Speed,
                         MapX = monster.Movable.Actual.X,
-                        MapY = monster.Movable.Actual.Y,
+                        MapY = monster.Movable.Actual.Y
                     };
 
                 case INpcEntity npc:
@@ -30,7 +30,7 @@ namespace ChickenAPI.Game.Packets.Extensions
                         VisualId = npc.MapNpc.Id,
                         Speed = npc.Movable.Speed,
                         MapX = npc.Movable.Actual.X,
-                        MapY = npc.Movable.Actual.Y,
+                        MapY = npc.Movable.Actual.Y
                     };
                 case IPlayerEntity player:
                     return new MvPacket
@@ -39,7 +39,7 @@ namespace ChickenAPI.Game.Packets.Extensions
                         VisualId = player.Character.Id,
                         Speed = player.Movable.Speed,
                         MapX = player.Movable.Actual.X,
-                        MapY = player.Movable.Actual.Y,
+                        MapY = player.Movable.Actual.Y
                     };
                 default:
                     return null;

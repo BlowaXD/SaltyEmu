@@ -5,12 +5,9 @@ namespace ChickenAPI.Game.Features.Inventory.Extensions
 {
     public static class GoldPacketExtension
     {
-        public static GoldPacket GenerateGoldPacket(this IPlayerEntity player)
+        public static GoldPacket GenerateGoldPacket(this IPlayerEntity player) => new GoldPacket
         {
-            return new GoldPacket
-            {
-                Gold = player.Character.Gold
-            };
-        }
+            Gold = player.Character.Gold
+        };
     }
 }

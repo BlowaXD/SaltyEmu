@@ -5,10 +5,8 @@ namespace NosSharp.BasicAlgorithm.CharacterAlgorithms.HpMp
 {
     public class MpRegenSitting : ICharacterStatAlgorithm
     {
-
         public void Initialize()
         {
-            return;
         }
 
         public int GetStat(CharacterClassType type, byte level)

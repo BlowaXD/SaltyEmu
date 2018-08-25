@@ -9,6 +9,7 @@ namespace NosSharp.PacketHandler
     public class SayPacketHandling
     {
         private static readonly Logger Log = Logger.GetLogger<SayPacketHandling>();
+
         public static void OnSayPacket(ClientSayPacket packetBase, IPlayerEntity session)
         {
             try
@@ -17,7 +18,7 @@ namespace NosSharp.PacketHandler
                 {
                     Message = packetBase.Message,
                     SenderId = session.Session.CharacterId,
-                    Sender = session,
+                    Sender = session
                 });
             }
             catch (Exception e)

@@ -11,9 +11,6 @@ namespace LoginServer
     public class SimplePluginManager : IPluginManager
     {
         private static readonly Logger Log = Logger.GetLogger<SimplePluginManager>();
-        public DirectoryInfo GetPluginDirectory() => null;
-
-        public DirectoryInfo GetConfigDirectory() => null;
 
         public IPlugin[] LoadPlugin(FileInfo file)
         {
@@ -70,5 +67,9 @@ namespace LoginServer
             directory.Create();
             return null;
         }
+
+        public DirectoryInfo GetPluginDirectory() => null;
+
+        public DirectoryInfo GetConfigDirectory() => null;
     }
 }

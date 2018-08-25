@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using ChickenAPI.Core.Data.TransferObjects;
 using ChickenAPI.Enums.Game.Entity;
@@ -13,12 +12,6 @@ namespace NosSharp.DatabasePlugin.Models.NpcMonster
     [Table("_data_npc_monster")]
     public class NpcMonsterModel : IMappedDto
     {
-        /// <summary>
-        ///     Also associated to "Vnum"
-        /// </summary>
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public long Id { get; set; }
-
         public string Name { get; set; }
 
         /// <summary>
@@ -156,5 +149,11 @@ namespace NosSharp.DatabasePlugin.Models.NpcMonster
         public IEnumerable<MapMonsterModel> MapNpcMonsters { get; set; }
         public IEnumerable<NpcMonsterDropModel> Drops { get; set; }
         public IEnumerable<CharacterMateModel> CharacterMates { get; set; }
+
+        /// <summary>
+        ///     Also associated to "Vnum"
+        /// </summary>
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public long Id { get; set; }
     }
 }

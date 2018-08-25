@@ -9,7 +9,7 @@ namespace ChickenAPI.Game.Data.AccessLayer.Item
         ItemInstanceDto CreateItem(ItemDto item, short quantity, byte rarity, byte upgrade);
 
         /// <summary>
-        /// Creates an item
+        ///     Creates an item
         /// </summary>
         /// <param name="itemId"></param>
         /// <param name="quantity"></param>
@@ -20,7 +20,7 @@ namespace ChickenAPI.Game.Data.AccessLayer.Item
         ItemInstanceDto CreateItem(long itemId, short quantity, byte rarity, byte upgrade);
 
         /// <summary>
-        /// Generates a new item with the exact same stats as the original item
+        ///     Generates a new item with the exact same stats as the original item
         /// </summary>
         /// <param name="original"></param>
         /// <returns></returns>

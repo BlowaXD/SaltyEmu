@@ -9,9 +9,6 @@ namespace NosSharp.DatabasePlugin.Models.Character
     [Table("character_skill")]
     public class CharacterSkillModel : ISynchronizedDto
     {
-        [Key]
-        public Guid Id { get; set; }
-
         public CharacterModel Character { get; set; }
 
         [ForeignKey("FK_CHARACTERSKILL_TO_CHARACTER")]
@@ -21,5 +18,8 @@ namespace NosSharp.DatabasePlugin.Models.Character
 
         [ForeignKey("FK_CHARACTERSKILL_TO_SKILL")]
         public long SkillId { get; set; }
+
+        [Key]
+        public Guid Id { get; set; }
     }
 }

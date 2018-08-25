@@ -9,10 +9,8 @@ namespace NosSharp.DatabasePlugin.Models.Character
     [Table("character")]
     public class CharacterModel : IMappedDto
     {
-        [Key]
-        public long Id { get; set; }
-
         public AccountModel Account { get; set; }
+
         [ForeignKey("FK_CHARACTER_TO_ACCOUNT")]
         public long AccountId { get; set; }
 
@@ -129,5 +127,8 @@ namespace NosSharp.DatabasePlugin.Models.Character
         public ICollection<CharacterItemModel> BoundItems { get; set; }
 
         public ICollection<CharacterQuicklistModel> Quicklist { get; set; }
+
+        [Key]
+        public long Id { get; set; }
     }
 }

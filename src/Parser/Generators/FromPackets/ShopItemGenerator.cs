@@ -52,7 +52,7 @@ namespace Toolkit.Generators.FromPackets
                                     ShopId = shopService.GetByMapNpcId(npcId).FirstOrDefault()?.Id ?? 0,
                                     Type = type,
                                     Slot = byte.Parse(item[1]),
-                                    ItemId = long.Parse(item[2]),
+                                    ItemId = long.Parse(item[2])
                                 };
                                 if (item.Length == 6)
                                 {

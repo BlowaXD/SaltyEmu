@@ -171,7 +171,7 @@ namespace World.Packets
             bool shouldRemoveSeparator)
         {
             string serializedSubpacket = isReturnPacket ? $" #{subpacketSerializationInfo.Header}^" : " ";
-            
+
             // iterate thru configure subpacket properties
             foreach (KeyValuePair<PacketIndexAttribute, PropertyInfo> subpacketPropertyInfo in subpacketSerializationInfo.PacketProperties)
             {

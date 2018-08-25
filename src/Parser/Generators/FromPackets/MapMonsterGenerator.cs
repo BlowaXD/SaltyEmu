@@ -75,6 +75,7 @@ namespace Toolkit.Generators.FromPackets
                     Log.Warn(line);
                 }
             }
+
             mapMonsterService.Save(_monsters);
         }
     }

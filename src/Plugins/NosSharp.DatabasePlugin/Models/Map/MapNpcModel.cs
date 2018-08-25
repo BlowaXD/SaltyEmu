@@ -10,10 +10,6 @@ namespace NosSharp.DatabasePlugin.Models.Map
     [Table("map_npcs")]
     public class MapNpcModel : IMappedDto
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public long Id { get; set; }
-
         public short Dialog { get; set; }
 
         public short Effect { get; set; }
@@ -41,5 +37,9 @@ namespace NosSharp.DatabasePlugin.Models.Map
 
         public DirectionType Direction { get; set; }
         public ShopModel Shop { get; set; }
+
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public long Id { get; set; }
     }
 }

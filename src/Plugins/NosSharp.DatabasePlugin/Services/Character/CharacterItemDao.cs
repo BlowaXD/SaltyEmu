@@ -20,10 +20,7 @@ namespace NosSharp.DatabasePlugin.Services.Item
         {
         }
 
-        public IEnumerable<(long, ItemDto)> GetBaseInventory(AuthorityType authorityType)
-        {
-            return null;
-        }
+        public IEnumerable<(long, ItemDto)> GetBaseInventory(AuthorityType authorityType) => null;
 
         public IEnumerable<ItemInstanceDto> GetWearByCharacterId(long id)
         {
@@ -49,20 +46,19 @@ namespace NosSharp.DatabasePlugin.Services.Item
                 Log.Error("[GET_WEAR_BY_CHARACTER_ID]", e);
                 return null;
             }
-
         }
+
         public IEnumerable<ItemInstanceDto> GetByCharacterId(long characterId)
         {
             try
             {
-                return (DbSet.Where(s => s.CharacterId == characterId).ToArray()).Select(Mapper.Map<ItemInstanceDto>).ToArray();
+                return DbSet.Where(s => s.CharacterId == characterId).ToArray().Select(Mapper.Map<ItemInstanceDto>).ToArray();
             }
             catch (Exception e)
             {
                 Log.Error("[GET_BY_CHARACTER_ID]", e);
                 return null;
             }
-
         }
 
         public async Task<IEnumerable<ItemInstanceDto>> GetByCharacterIdAsync(long characterId)
@@ -76,7 +72,6 @@ namespace NosSharp.DatabasePlugin.Services.Item
                 Log.Error("[GET_BY_CHARACTER_ID]", e);
                 return null;
             }
-
         }
     }
 }

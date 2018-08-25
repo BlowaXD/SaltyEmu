@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using NosSharp.DatabasePlugin.Models.Item;
 
 namespace NosSharp.DatabasePlugin.Models.BCard
 {

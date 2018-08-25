@@ -42,7 +42,6 @@ namespace NosSharp.DatabasePlugin.Services.Character
                 Log.Error("[GET_BY_CHARACTER_ID]", e);
                 return null;
             }
-
         }
     }
 }

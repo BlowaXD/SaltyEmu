@@ -13,8 +13,8 @@ namespace Toolkit.Converter
     public class MapDatConverter
     {
         private static readonly Logger Log = Logger.GetLogger<MapDatConverter>();
-        private IMapService _mapService;
         private readonly List<MapDto> _maps = new List<MapDto>();
+        private IMapService _mapService;
 
         public void Extract(string inputDirectory)
         {
@@ -25,7 +25,6 @@ namespace Toolkit.Converter
                 {
                     try
                     {
-
                         byte[] data = File.ReadAllBytes(file.FullName);
                         var map = new MapDto
                         {
@@ -35,7 +34,7 @@ namespace Toolkit.Converter
                             Height = BitConverter.ToInt16(data.AsSpan().Slice(2, 2).ToArray(), 0),
                             AllowPvp = false,
                             AllowShop = false,
-                            Grid = data.AsSpan().Slice(4).ToArray(),
+                            Grid = data.AsSpan().Slice(4).ToArray()
                         };
                         _maps.Add(map);
                     }
@@ -44,6 +43,7 @@ namespace Toolkit.Converter
                         Log.Error("[ADD]", e);
                     }
                 }
+
                 _mapService.Save(_maps);
             }
             catch (Exception e)

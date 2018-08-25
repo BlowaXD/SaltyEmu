@@ -7,7 +7,6 @@ namespace NosSharp.BasicAlgorithm.CharacterAlgorithms
     {
         public void Initialize()
         {
-            return;
         }
 
         public int GetStat(CharacterClassType type, byte level)

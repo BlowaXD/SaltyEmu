@@ -7,13 +7,13 @@ namespace NosSharp.Pathfinder.Utils
     {
         private static readonly sbyte[,] Neighbours =
         {
-            {-1, -1}, {0, -1}, {1, -1},
-            {-1, 0}, {1, 0},
-            {-1, 1}, {0, 1}, {1, 1}
+            { -1, -1 }, { 0, -1 }, { 1, -1 },
+            { -1, 0 }, { 1, 0 },
+            { -1, 1 }, { 0, 1 }, { 1, 1 }
         };
 
         /// <summary>
-        /// Returns an Array with the neighbors of the given position
+        ///     Returns an Array with the neighbors of the given position
         /// </summary>
         /// <param name="pos"></param>
         /// <param name="map"></param>
@@ -24,11 +24,11 @@ namespace NosSharp.Pathfinder.Utils
             byte a = 0;
             for (byte i = 0; i < 8; i++)
             {
-                short x = (short) (pos.X + Neighbours[i, 0]),
-                    y = (short) (pos.Y + Neighbours[i, 1]);
+                short x = (short)(pos.X + Neighbours[i, 0]),
+                    y = (short)(pos.Y + Neighbours[i, 1]);
                 if (x >= 0 && x < map.Width && y >= 0 && y < map.Height && map.IsWalkable(x, y))
                 {
-                    neighbors[a++] = new Position<short> {X = x, Y = y};
+                    neighbors[a++] = new Position<short> { X = x, Y = y };
                 }
             }
 
@@ -36,7 +36,7 @@ namespace NosSharp.Pathfinder.Utils
         }
 
         /// <summary>
-        /// Returns the next coordinate of a collision-free path
+        ///     Returns the next coordinate of a collision-free path
         /// </summary>
         /// <param name="s"></param>
         /// <param name="e"></param>

@@ -11,9 +11,6 @@ namespace World.Utils
     public class SimplePluginManager : IPluginManager
     {
         private static readonly Logger Log = Logger.GetLogger<SimplePluginManager>();
-        public DirectoryInfo GetPluginDirectory() => new DirectoryInfo("plugins");
-
-        public DirectoryInfo GetConfigDirectory() => new DirectoryInfo("config");
 
         public IPlugin[] LoadPlugin(FileInfo file)
         {
@@ -71,5 +68,9 @@ namespace World.Utils
             directory.Create();
             return null;
         }
+
+        public DirectoryInfo GetPluginDirectory() => new DirectoryInfo("plugins");
+
+        public DirectoryInfo GetConfigDirectory() => new DirectoryInfo("config");
     }
 }

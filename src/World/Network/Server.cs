@@ -21,13 +21,13 @@ namespace World.Network
         // Server Tick config 
         private static readonly Logger Log = Logger.GetLogger<Server>();
         public static WorldServerDto WorldServer;
+
+        private static IEntityManagerContainer _container;
         private static bool _running { get; set; }
         public static string WorldGroup { get; set; }
         public static string Ip { get; set; }
         public static int Port { get; set; }
         public static int TickRate { get; set; }
-
-        private static IEntityManagerContainer _container;
 
         private static long DelayBetweenTicks => 1000 / TickRate;
 

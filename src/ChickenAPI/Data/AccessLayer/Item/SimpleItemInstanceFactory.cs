@@ -14,19 +14,16 @@ namespace ChickenAPI.Game.Data.AccessLayer.Item
 
         public ItemInstanceDto CreateItem(ItemDto item, short quantity, byte rarity) => CreateItem(item, quantity, rarity, 0);
 
-        public ItemInstanceDto CreateItem(ItemDto item, short quantity, byte rarity, byte upgrade)
+        public ItemInstanceDto CreateItem(ItemDto item, short quantity, byte rarity, byte upgrade) => new ItemInstanceDto
         {
-            return new ItemInstanceDto
-            {
-                Id = Guid.NewGuid(),
-                Item = item,
-                ItemId = item.Id,
-                Amount = quantity,
-                Type = item.Type,
-                Rarity = rarity,
-                Upgrade = upgrade
-            };
-        }
+            Id = Guid.NewGuid(),
+            Item = item,
+            ItemId = item.Id,
+            Amount = quantity,
+            Type = item.Type,
+            Rarity = rarity,
+            Upgrade = upgrade
+        };
 
         public ItemInstanceDto CreateItem(long itemId, short quantity) => CreateItem(_itemService.GetById(itemId), quantity, 0, 0);
         public ItemInstanceDto CreateItem(long itemId, short quantity, byte rarity) => CreateItem(_itemService.GetById(itemId), quantity, rarity, 0);

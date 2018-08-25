@@ -16,7 +16,7 @@ namespace NosSharp.DatabasePlugin.Services.Account
         public AccountDao(NosSharpContext dbFactory, IMapper mapper) : base(dbFactory, mapper)
         {
         }
-        
+
         public AccountDto GetByName(string name)
         {
             try

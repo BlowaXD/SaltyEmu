@@ -7,9 +7,8 @@ namespace NosSharp.Pathfinder.Pathfinder
 {
     public static class AStar
     {
-
         /// <summary>
-        /// Find a path using the AStar algorithm 
+        ///     Find a path using the AStar algorithm
         /// </summary>
         /// <param name="start"></param>
         /// <param name="end"></param>
@@ -32,8 +31,10 @@ namespace NosSharp.Pathfinder.Pathfinder
                         path[--i] = node.Position;
                         node = node.Parent;
                     }
+
                     return path;
                 }
+
                 node.Closed = true;
                 foreach (Position<short> n in PathfinderHelper.GetNeighbors(node.Position, map))
                 {
@@ -41,6 +42,7 @@ namespace NosSharp.Pathfinder.Pathfinder
                     {
                         break;
                     }
+
                     Node neighbor = nodes.Get(no => no.Position.Equals(n)) ?? delNodes.Get(no => no.Position.Equals(n));
                     if (neighbor == null)
                     {
@@ -62,14 +64,17 @@ namespace NosSharp.Pathfinder.Pathfinder
                         {
                             continue;
                         }
+
                         neighbor.G = gScore;
                         neighbor.F = neighbor.G + neighbor.H;
                         neighbor.Parent = node;
                         neighbor.Distance = node.Distance + 1;
                     }
                 }
+
                 delNodes.Add(node, false);
             }
+
             return null;
         }
     }

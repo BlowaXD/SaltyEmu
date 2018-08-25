@@ -24,8 +24,8 @@ using ChickenAPI.Game.Packets;
 using NLog;
 using NosSharp.BasicAlgorithm;
 using NosSharp.DatabasePlugin;
-using NosSharp.Pathfinder;
 using NosSharp.PacketHandler;
+using NosSharp.Pathfinder;
 using NosSharp.RedisSessionPlugin;
 using NosSharp.TemporaryMapPlugins;
 using World.Network;
@@ -172,7 +172,7 @@ namespace World
             ClientSession.SetPacketHandler(ChickenContainer.Instance.Resolve<IPacketHandler>());
             if (Server.RegisterServer())
             {
-                Log.Info($"Failed to register to ServerAPI");
+                Log.Info("Failed to register to ServerAPI");
                 return;
             }
 

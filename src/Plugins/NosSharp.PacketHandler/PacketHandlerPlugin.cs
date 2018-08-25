@@ -27,6 +27,7 @@ namespace NosSharp.PacketHandler
                     Log.Info($"[PACKET_ADD][CHARACTERSCREEN] {handler.Identification}...");
                     packetHandler.Register(handler);
                 }
+
                 foreach (GamePacketHandler handler in PacketMethodGenerator.GetGamePacketHandlers())
                 {
                     Log.Info($"[PACKET_ADD][GAME] {handler.Identification}...");

@@ -23,31 +23,6 @@ namespace NosSharp.DatabasePlugin.Services.BCard
         {
         }
 
-        private TObject SubSave<TObject, TModel>(DbSet<TModel> toInsert, TObject obj) where TObject : class, IMappedDto where TModel : class, IMappedDto
-        {
-            try
-            {
-                TModel model = toInsert.Find(obj.Id);
-                if (model == null)
-                {
-                    Log.Info($"Not found : {obj.Id}");
-                    model = toInsert.Add(Mapper.Map<TModel>(obj)).Entity;
-                }
-                else
-                {
-                    Context.Entry(model).CurrentValues.SetValues(obj);
-                    Context.Entry(model).State = EntityState.Modified;
-                }
-                Context.SaveChanges();
-                return Mapper.Map<TObject>(model);
-            }
-            catch (Exception e)
-            {
-                Log.Error("[SAVE]", e);
-                return null;
-            }
-        }
-
         public override BCardDto Save(BCardDto obj)
         {
             switch (obj.RelationType)
@@ -64,28 +39,6 @@ namespace NosSharp.DatabasePlugin.Services.BCard
                     return base.Save(obj);
                 default:
                     throw new ArgumentOutOfRangeException();
-            }
-        }
-
-
-        private void SubSaveMultiple<TModel>(IList<TModel> objs) where TModel : BCardModel
-        {
-            try
-            {
-                using (IDbContextTransaction transaction = Context.Database.BeginTransaction())
-                {
-                    Context.BulkInsertOrUpdate(objs, new BulkConfig
-                    {
-                        PreserveInsertOrder = true
-                    });
-                    transaction.Commit();
-                }
-
-                Log.Info($"[SAVE] {objs.Count} {typeof(TModel).Name} saved");
-            }
-            catch (Exception e)
-            {
-                Log.Error("[SAVE]", e);
             }
         }
 
@@ -118,22 +71,6 @@ namespace NosSharp.DatabasePlugin.Services.BCard
             }
         }
 
-        private async Task<TObject> SubSaveAsync<TObject, TModel>(DbSet<TModel> toInsert, TObject obj) where TObject : class, IMappedDto where TModel : class, IMappedDto
-        {
-            try
-            {
-                var tmp = Mapper.Map<TModel>(obj);
-                EntityEntry<TModel> lol = toInsert.Update(tmp);
-                await Context.SaveChangesAsync();
-                return Mapper.Map<TObject>(lol.Entity);
-            }
-            catch (Exception e)
-            {
-                Log.Error("[UPDATE]", e);
-                return null;
-            }
-        }
-
         public override async Task<BCardDto> SaveAsync(BCardDto obj)
         {
             switch (obj.RelationType)
@@ -150,21 +87,6 @@ namespace NosSharp.DatabasePlugin.Services.BCard
                     return await base.SaveAsync(obj);
                 default:
                     throw new ArgumentOutOfRangeException();
-            }
-        }
-
-        public async Task<TObject> SubGetByIdAsync<TObject, TModel>(DbSet<TModel> dbSet, long id) where TModel : class where TObject : class
-        {
-            try
-            {
-                TModel lol = await dbSet.FindAsync(id);
-                await Context.SaveChangesAsync();
-                return Mapper.Map<TObject>(lol);
-            }
-            catch (Exception e)
-            {
-                Log.Error("[UPDATE]", e);
-                return null;
             }
         }
 
@@ -235,6 +157,85 @@ namespace NosSharp.DatabasePlugin.Services.BCard
             catch (Exception e)
             {
                 Log.Error("[GET_BY_ITEM_ID]", e);
+                return null;
+            }
+        }
+
+        private TObject SubSave<TObject, TModel>(DbSet<TModel> toInsert, TObject obj) where TObject : class, IMappedDto where TModel : class, IMappedDto
+        {
+            try
+            {
+                TModel model = toInsert.Find(obj.Id);
+                if (model == null)
+                {
+                    Log.Info($"Not found : {obj.Id}");
+                    model = toInsert.Add(Mapper.Map<TModel>(obj)).Entity;
+                }
+                else
+                {
+                    Context.Entry(model).CurrentValues.SetValues(obj);
+                    Context.Entry(model).State = EntityState.Modified;
+                }
+
+                Context.SaveChanges();
+                return Mapper.Map<TObject>(model);
+            }
+            catch (Exception e)
+            {
+                Log.Error("[SAVE]", e);
+                return null;
+            }
+        }
+
+
+        private void SubSaveMultiple<TModel>(IList<TModel> objs) where TModel : BCardModel
+        {
+            try
+            {
+                using (IDbContextTransaction transaction = Context.Database.BeginTransaction())
+                {
+                    Context.BulkInsertOrUpdate(objs, new BulkConfig
+                    {
+                        PreserveInsertOrder = true
+                    });
+                    transaction.Commit();
+                }
+
+                Log.Info($"[SAVE] {objs.Count} {typeof(TModel).Name} saved");
+            }
+            catch (Exception e)
+            {
+                Log.Error("[SAVE]", e);
+            }
+        }
+
+        private async Task<TObject> SubSaveAsync<TObject, TModel>(DbSet<TModel> toInsert, TObject obj) where TObject : class, IMappedDto where TModel : class, IMappedDto
+        {
+            try
+            {
+                var tmp = Mapper.Map<TModel>(obj);
+                EntityEntry<TModel> lol = toInsert.Update(tmp);
+                await Context.SaveChangesAsync();
+                return Mapper.Map<TObject>(lol.Entity);
+            }
+            catch (Exception e)
+            {
+                Log.Error("[UPDATE]", e);
+                return null;
+            }
+        }
+
+        public async Task<TObject> SubGetByIdAsync<TObject, TModel>(DbSet<TModel> dbSet, long id) where TModel : class where TObject : class
+        {
+            try
+            {
+                TModel lol = await dbSet.FindAsync(id);
+                await Context.SaveChangesAsync();
+                return Mapper.Map<TObject>(lol);
+            }
+            catch (Exception e)
+            {
+                Log.Error("[UPDATE]", e);
                 return null;
             }
         }

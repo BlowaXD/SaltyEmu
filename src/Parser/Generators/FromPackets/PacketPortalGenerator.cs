@@ -15,9 +15,9 @@ namespace Toolkit.Generators.FromPackets
     public class PacketPortalGenerator
     {
         private static readonly Logger Log = Logger.GetLogger<PacketPortalGenerator>();
+        private readonly List<PortalDto> _destinationPortals = new List<PortalDto>();
 
         private readonly List<PortalDto> _sourcePortals = new List<PortalDto>();
-        private readonly List<PortalDto> _destinationPortals = new List<PortalDto>();
 
         public void Generate(string filePath)
         {
@@ -84,7 +84,7 @@ namespace Toolkit.Generators.FromPackets
             portalService.Save(portalsToSave);
         }
 
-        private static bool PortalsAreSame(PortalDto p, PortalDto pp) => 
+        private static bool PortalsAreSame(PortalDto p, PortalDto pp) =>
             p.DestinationMapId == pp.DestinationMapId &&
             p.SourceMapId == pp.SourceMapId &&
             p.SourceX == pp.SourceX &&

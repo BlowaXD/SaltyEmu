@@ -2,9 +2,7 @@
 using System.Linq.Expressions;
 using ChickenAPI.Core.ECS.Entities;
 using ChickenAPI.Core.ECS.Systems;
-using ChickenAPI.Core.Events;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Game.Features.Groups.Args;
 
 namespace ChickenAPI.Game.Features.Groups
 {

@@ -6,16 +6,13 @@ namespace ChickenAPI.Game.Features.Movement.Extensions
 {
     public static class MovablePlayerExtensions
     {
-        public static CondPacketBase GenerateCondPacket(this IPlayerEntity entity)
+        public static CondPacketBase GenerateCondPacket(this IPlayerEntity entity) => new CondPacketBase
         {
-            return new CondPacketBase
-            {
-                CanAttack = entity.Battle.CanAttack,
-                CanMove = entity.Battle.CanMove,
-                VisualType = VisualType.Character,
-                VisualId = entity.Character.Id,
-                Speed = entity.Movable.Speed
-            };
-        }
+            CanAttack = entity.Battle.CanAttack,
+            CanMove = entity.Battle.CanMove,
+            VisualType = VisualType.Character,
+            VisualId = entity.Character.Id,
+            Speed = entity.Movable.Speed
+        };
     }
 }

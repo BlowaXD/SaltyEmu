@@ -14,8 +14,8 @@ namespace Toolkit.Converter
     public class EInfoFiller
     {
         private static readonly Logger Log = Logger.GetLogger<EInfoFiller>();
-        private INpcMonsterService _npcMonsterService;
         private readonly List<NpcMonsterDto> _npcMonsters = new List<NpcMonsterDto>();
+        private INpcMonsterService _npcMonsterService;
 
         public void Fill(string filePath)
         {
@@ -59,6 +59,7 @@ namespace Toolkit.Converter
                 {
                     continue;
                 }
+
                 _npcMonsters.Add(npcMonster);
             }
 

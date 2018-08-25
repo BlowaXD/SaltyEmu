@@ -12,7 +12,6 @@ using ChickenAPI.Game.Entities.Portal;
 using ChickenAPI.Game.Features.Effects;
 using ChickenAPI.Game.Features.IAs;
 using ChickenAPI.Game.Features.Movement;
-using ChickenAPI.Game.Packets;
 using ChickenAPI.Packets;
 
 namespace ChickenAPI.Game.Maps
@@ -28,25 +27,6 @@ namespace ChickenAPI.Game.Maps
             InitializeNpcs(npcs, shops);
             InitializePortals(portals);
             InitializeSystems();
-        }
-
-        private void InitializePortals(IEnumerable<PortalDto> portals)
-        {
-            if (portals == null)
-            {
-            }
-
-            foreach (PortalDto portal in portals)
-            {
-                TransferEntity(new PortalEntity(portal), this);
-            }
-        }
-
-        private void InitializeSystems()
-        {
-            AddSystem(new MovableSystem(this));
-            AddSystem(new IASystem(this, Map));
-            AddSystem(new EffectSystem(this));
         }
 
         public Guid Id { get; set; }
@@ -103,6 +83,25 @@ namespace ChickenAPI.Game.Maps
 
                 i.SendPackets(packets);
             }
+        }
+
+        private void InitializePortals(IEnumerable<PortalDto> portals)
+        {
+            if (portals == null)
+            {
+            }
+
+            foreach (PortalDto portal in portals)
+            {
+                TransferEntity(new PortalEntity(portal), this);
+            }
+        }
+
+        private void InitializeSystems()
+        {
+            AddSystem(new MovableSystem(this));
+            AddSystem(new IASystem(this, Map));
+            AddSystem(new EffectSystem(this));
         }
 
         private void InitializeNpcs(IEnumerable<MapNpcDto> npcs, IEnumerable<ShopDto> shops)

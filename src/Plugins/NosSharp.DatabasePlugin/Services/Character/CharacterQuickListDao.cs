@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using ChickenAPI.Core.Data.AccessLayer;
-using ChickenAPI.Enums.Game.Character;
 using ChickenAPI.Game.Data.AccessLayer.Character;
 using ChickenAPI.Game.Data.TransferObjects.Character;
 using Microsoft.EntityFrameworkCore;
@@ -17,6 +15,7 @@ namespace NosSharp.DatabasePlugin.Services.Character
     public class CharacterQuickListDao : SynchronizedRepositoryBase<CharacterQuicklistDto, CharacterQuicklistModel>, ICharacterQuickListService
     {
         #region Methods
+
         private readonly CharacterQuicklistDto _baseConf;
 
         public CharacterQuickListDao(NosSharpContext context, IMapper mapper) : base(context, mapper)
@@ -27,7 +26,7 @@ namespace NosSharp.DatabasePlugin.Services.Character
         {
             try
             {
-                return (DbSet.Where(s => s.CharacterId == id).ToArray()).Select(Mapper.Map<CharacterQuicklistDto>).ToArray();
+                return DbSet.Where(s => s.CharacterId == id).ToArray().Select(Mapper.Map<CharacterQuicklistDto>).ToArray();
             }
             catch (Exception e)
             {
@@ -35,7 +34,7 @@ namespace NosSharp.DatabasePlugin.Services.Character
                 return null;
             }
         }
-        
+
         public async Task<IEnumerable<CharacterQuicklistDto>> GetByCharacterIdAsync(long characterId)
         {
             try
@@ -50,6 +49,5 @@ namespace NosSharp.DatabasePlugin.Services.Character
         }
 
         #endregion
-
     }
 }

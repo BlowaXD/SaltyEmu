@@ -9,12 +9,11 @@ namespace Toolkit.Cleaners
 {
     public class InPacketCleaner
     {
-        private readonly List<string> _packetList = new List<string>();
         private static readonly Logger Log = Logger.GetLogger<InPacketCleaner>();
+        private readonly List<string> _packetList = new List<string>();
 
         public void Filter(string filePath, string outputPath)
         {
-
             string path = filePath;
             string tmp = File.ReadAllText(path, Encoding.GetEncoding(1252));
             string[] lines = tmp.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
@@ -30,7 +29,7 @@ namespace Toolkit.Cleaners
                     {
                         continue;
                     }
-                    
+
                     moverIds.Add(moverId);
                 }
 

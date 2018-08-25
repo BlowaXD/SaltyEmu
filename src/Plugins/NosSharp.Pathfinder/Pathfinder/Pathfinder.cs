@@ -7,13 +7,13 @@ namespace NosSharp.Pathfinder.Pathfinder
 {
     public class Pathfinder : IPathfinder
     {
-        /// <summary> 
-        /// Search if the path can be reached without collision, if not launches the search for the Astar 
-        /// </summary> 
-        /// <param name="start"></param> 
-        /// <param name="end"></param> 
-        /// <param name="map"></param> 
-        /// <returns></returns> 
+        /// <summary>
+        ///     Search if the path can be reached without collision, if not launches the search for the Astar
+        /// </summary>
+        /// <param name="start"></param>
+        /// <param name="end"></param>
+        /// <param name="map"></param>
+        /// <returns></returns>
         public Position<short>[] FindPath(Position<short> start, Position<short> end, IMap map)
         {
             Position<short>[] path = new Position<short>[Math.Max(Math.Abs(start.X - end.X), Math.Abs(start.Y - end.Y))];
@@ -28,11 +28,12 @@ namespace NosSharp.Pathfinder.Pathfinder
                 {
                     return AStar.FindPath(start, end, map);
                 }
+
                 node = new Position<short> { X = x, Y = y };
                 path[i++] = node;
             }
+
             return path;
         }
-
     }
 }

@@ -130,7 +130,7 @@ namespace ChickenAPI.Core.ECS.Entities
         #region System
 
         void Update(DateTime date);
-        
+
         void StartSystemUpdate();
 
         /// <summary>
@@ -149,6 +149,7 @@ namespace ChickenAPI.Core.ECS.Entities
         /// </summary>
         /// <param name="system"></param>
         void RemoveSystem(ISystem system);
+
         #endregion
     }
 }

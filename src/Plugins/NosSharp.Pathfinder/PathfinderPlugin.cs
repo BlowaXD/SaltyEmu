@@ -1,10 +1,9 @@
-﻿using ChickenAPI.Core.Plugins;
-using ChickenAPI.Core.Logging;
-using System;
-using ChickenAPI.Core.IoC;
+﻿using System;
 using Autofac;
+using ChickenAPI.Core.IoC;
+using ChickenAPI.Core.Logging;
+using ChickenAPI.Core.Plugins;
 using ChickenAPI.Game.Maps;
-using NosSharp.Pathfinder.Pathfinder;
 
 namespace NosSharp.Pathfinder
 {
@@ -15,9 +14,9 @@ namespace NosSharp.Pathfinder
 
         public void OnLoad()
         {
-            Log.Info($"Loading...");
+            Log.Info("Loading...");
             ChickenContainer.Builder.Register(s => new Pathfinder.Pathfinder()).As<IPathfinder>();
-            Log.Info($"Loaded !");
+            Log.Info("Loaded !");
         }
 
         public void ReloadConfig()
@@ -41,7 +40,7 @@ namespace NosSharp.Pathfinder
         }
 
         public void OnEnable()
-        { 
+        {
         }
     }
 }

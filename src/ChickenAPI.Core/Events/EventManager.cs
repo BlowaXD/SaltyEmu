@@ -45,7 +45,7 @@ namespace ChickenAPI.Core.Events
                 }
                 catch (Exception e)
                 {
-                    Log.Error($"Notify()", e);
+                    Log.Error("Notify()", e);
                 }
             }
         }

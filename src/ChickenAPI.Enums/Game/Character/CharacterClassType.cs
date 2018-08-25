@@ -7,6 +7,6 @@
         Archer = 2,
         Magician = 3,
         Wrestler = 4,
-        Unknown = 5,
+        Unknown = 5
     }
 }

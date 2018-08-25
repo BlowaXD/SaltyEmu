@@ -6,7 +6,6 @@ using ChickenAPI.Game.Data.TransferObjects.Item;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Features.Inventory;
 using ChickenAPI.Game.Features.Inventory.Args;
-using ChickenAPI.Game.Packets;
 using ChickenAPI.Packets;
 using ChickenAPI.Packets.Attributes;
 

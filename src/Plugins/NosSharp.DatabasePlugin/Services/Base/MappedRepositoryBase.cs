@@ -9,7 +9,6 @@ using ChickenAPI.Core.Data.TransferObjects;
 using ChickenAPI.Core.Logging;
 using EFCore.BulkExtensions;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Storage;
 using Newtonsoft.Json;
 using NosSharp.DatabasePlugin.Context;
@@ -19,9 +18,9 @@ namespace NosSharp.DatabasePlugin.Services.Base
     public class MappedRepositoryBase<TObject, TModel> : IMappedRepository<TObject> where TObject : class, IMappedDto where TModel : class, IMappedDto, new()
     {
         protected static readonly Logger Log = Logger.GetLogger<TObject>();
-        protected readonly IMapper Mapper;
         protected readonly NosSharpContext Context;
         protected readonly DbSet<TModel> DbSet;
+        protected readonly IMapper Mapper;
 
         public MappedRepositoryBase(NosSharpContext context, IMapper mapper)
         {
@@ -93,6 +92,7 @@ namespace NosSharp.DatabasePlugin.Services.Base
                 {
                     return;
                 }
+
                 List<TModel> tmp = objs.Where(s => s != null).Select(Mapper.Map<TModel>).ToList();
                 using (IDbContextTransaction transaction = Context.Database.BeginTransaction())
                 {
@@ -103,6 +103,7 @@ namespace NosSharp.DatabasePlugin.Services.Base
                     });
                     transaction.Commit();
                 }
+
                 Log.Info($"[SAVE] {tmp.Count} {typeof(TObject).Name} saved");
                 Context.SaveChanges();
             }
@@ -140,6 +141,7 @@ namespace NosSharp.DatabasePlugin.Services.Base
                     });
                     transaction.Commit();
                 }
+
                 Context.SaveChanges();
             }
             catch (Exception e)
@@ -214,6 +216,7 @@ namespace NosSharp.DatabasePlugin.Services.Base
                     });
                     transaction.Commit();
                 }
+
                 Context.SaveChanges();
                 Log.Info($"[SAVE] {tmp.Count} {typeof(TObject).Name} saved");
             }
@@ -251,6 +254,7 @@ namespace NosSharp.DatabasePlugin.Services.Base
                     });
                     transaction.Commit();
                 }
+
                 Context.SaveChanges();
             }
             catch (Exception e)

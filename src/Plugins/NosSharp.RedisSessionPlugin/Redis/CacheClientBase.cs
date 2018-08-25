@@ -9,14 +9,11 @@ namespace NosSharp.RedisSessionPlugin.Redis
     {
         protected static string KeyPrefix = nameof(T) + '_';
         protected static string AllKeys = KeyPrefix + '*';
-
-        private readonly RedisConfiguration _config;
         private readonly ICacheClient _cache;
 
-        protected CacheClientBase(RedisConfiguration configuration)
-        {
-            _config = configuration;
-        }
+        private readonly RedisConfiguration _config;
+
+        protected CacheClientBase(RedisConfiguration configuration) => _config = configuration;
 
         protected string ToKey(long id) => KeyPrefix + id;
 
@@ -32,10 +29,7 @@ namespace NosSharp.RedisSessionPlugin.Redis
             return _cache.GetAllAsync<T>(ids.Select(ToKey)).GetAwaiter().GetResult().Where(s => s.Value.HasValue).Select(s => s.Value.Value);
         }
 
-        protected T Get(long id)
-        {
-            return _cache.GetAsync<T>(ToKey(id)).GetAwaiter().GetResult().Value;
-        }
+        protected T Get(long id) => _cache.GetAsync<T>(ToKey(id)).GetAwaiter().GetResult().Value;
 
         protected void Save(T obj)
         {

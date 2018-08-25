@@ -51,7 +51,7 @@ namespace NosSharp.BasicAlgorithm.CharacterAlgorithms.HpMp
 
                 _stats[(int)CharacterClassType.Adventurer, i] = (int)(1 / 2.0 * i * i + 31 / 2.0 * i + 205); // approx
                 _stats[(int)CharacterClassType.Swordman, i] = hpSwordman;
-                _stats[(int)CharacterClassType.Magician, i] = (int)(((i + 15) * (i + 15) + i + 15.0) - 465 + 550); // approx
+                _stats[(int)CharacterClassType.Magician, i] = (int)((i + 15) * (i + 15) + i + 15.0 - 465 + 550); // approx
                 _stats[(int)CharacterClassType.Archer, i] = hpArcher; // approx
                 _stats[(int)CharacterClassType.Wrestler, i] = hpSwordman; // approx
             }

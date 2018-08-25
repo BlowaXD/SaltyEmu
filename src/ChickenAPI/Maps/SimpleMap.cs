@@ -17,12 +17,12 @@ namespace ChickenAPI.Game.Maps
         private readonly IEnumerable<MapMonsterDto> _monsters;
         private readonly IEnumerable<MapNpcDto> _npcs;
         private readonly IEnumerable<PortalDto> _portals;
+
+        private readonly IRandomGenerator _random;
         private readonly IEnumerable<ShopDto> _shops;
 
         private readonly Position<short>[] WalkableGrid;
         private IMapLayer _baseMapLayer;
-
-        private readonly IRandomGenerator _random;
 
         public SimpleMap(MapDto map, IEnumerable<MapMonsterDto> monsters, IEnumerable<MapNpcDto> npcs, IEnumerable<PortalDto> portals, IEnumerable<ShopDto> shops)
         {

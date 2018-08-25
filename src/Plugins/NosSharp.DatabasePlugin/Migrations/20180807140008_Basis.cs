@@ -9,8 +9,8 @@ namespace NosSharp.DatabasePlugin.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "_data_card",
-                columns: table => new
+                "_data_card",
+                table => new
                 {
                     Id = table.Column<long>(nullable: false),
                     Duration = table.Column<int>(nullable: false),
@@ -23,14 +23,11 @@ namespace NosSharp.DatabasePlugin.Migrations
                     Delay = table.Column<int>(nullable: false),
                     Propability = table.Column<byte>(nullable: false)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK__data_card", x => x.Id);
-                });
+                constraints: table => { table.PrimaryKey("PK__data_card", x => x.Id); });
 
             migrationBuilder.CreateTable(
-                name: "_data_item",
-                columns: table => new
+                "_data_item",
+                table => new
                 {
                     Id = table.Column<long>(nullable: false),
                     BasicUpgrade = table.Column<byte>(nullable: false),
@@ -111,14 +108,11 @@ namespace NosSharp.DatabasePlugin.Migrations
                     WaterResistance = table.Column<short>(nullable: false),
                     Width = table.Column<byte>(nullable: false)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK__data_item", x => x.Id);
-                });
+                constraints: table => { table.PrimaryKey("PK__data_item", x => x.Id); });
 
             migrationBuilder.CreateTable(
-                name: "_data_map",
-                columns: table => new
+                "_data_map",
+                table => new
                 {
                     Id = table.Column<long>(nullable: false),
                     Name = table.Column<string>(nullable: true),
@@ -129,14 +123,11 @@ namespace NosSharp.DatabasePlugin.Migrations
                     Width = table.Column<short>(nullable: false),
                     Grid = table.Column<byte[]>(nullable: true)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK__data_map", x => x.Id);
-                });
+                constraints: table => { table.PrimaryKey("PK__data_map", x => x.Id); });
 
             migrationBuilder.CreateTable(
-                name: "_data_npc_monster",
-                columns: table => new
+                "_data_npc_monster",
+                table => new
                 {
                     Id = table.Column<long>(nullable: false),
                     Name = table.Column<string>(nullable: true),
@@ -192,14 +183,11 @@ namespace NosSharp.DatabasePlugin.Migrations
                     TakeDamages = table.Column<int>(nullable: false),
                     GiveDamagePercentage = table.Column<int>(nullable: false)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK__data_npc_monster", x => x.Id);
-                });
+                constraints: table => { table.PrimaryKey("PK__data_npc_monster", x => x.Id); });
 
             migrationBuilder.CreateTable(
-                name: "_data_skill",
-                columns: table => new
+                "_data_skill",
+                table => new
                 {
                     Id = table.Column<long>(nullable: false),
                     AttackAnimation = table.Column<short>(nullable: false),
@@ -232,14 +220,11 @@ namespace NosSharp.DatabasePlugin.Migrations
                     UpgradeSkill = table.Column<short>(nullable: false),
                     UpgradeType = table.Column<short>(nullable: false)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK__data_skill", x => x.Id);
-                });
+                constraints: table => { table.PrimaryKey("PK__data_skill", x => x.Id); });
 
             migrationBuilder.CreateTable(
-                name: "account",
-                columns: table => new
+                "account",
+                table => new
                 {
                     Id = table.Column<long>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
@@ -251,14 +236,11 @@ namespace NosSharp.DatabasePlugin.Migrations
                     RegistrationIp = table.Column<string>(maxLength: 50, nullable: true),
                     RegistrationToken = table.Column<string>(maxLength: 32, nullable: true)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_account", x => x.Id);
-                });
+                constraints: table => { table.PrimaryKey("PK_account", x => x.Id); });
 
             migrationBuilder.CreateTable(
-                name: "_data_card_bcard",
-                columns: table => new
+                "_data_card_bcard",
+                table => new
                 {
                     Id = table.Column<long>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
@@ -276,16 +258,16 @@ namespace NosSharp.DatabasePlugin.Migrations
                 {
                     table.PrimaryKey("PK__data_card_bcard", x => x.Id);
                     table.ForeignKey(
-                        name: "FK__data_card_bcard__data_card_CardId",
-                        column: x => x.CardId,
-                        principalTable: "_data_card",
-                        principalColumn: "Id",
+                        "FK__data_card_bcard__data_card_CardId",
+                        x => x.CardId,
+                        "_data_card",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "_data_item_bcard",
-                columns: table => new
+                "_data_item_bcard",
+                table => new
                 {
                     Id = table.Column<long>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
@@ -303,16 +285,16 @@ namespace NosSharp.DatabasePlugin.Migrations
                 {
                     table.PrimaryKey("PK__data_item_bcard", x => x.Id);
                     table.ForeignKey(
-                        name: "FK__data_item_bcard__data_item_ItemId",
-                        column: x => x.ItemId,
-                        principalTable: "_data_item",
-                        principalColumn: "Id",
+                        "FK__data_item_bcard__data_item_ItemId",
+                        x => x.ItemId,
+                        "_data_item",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "map_drop",
-                columns: table => new
+                "map_drop",
+                table => new
                 {
                     Id = table.Column<long>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
@@ -325,16 +307,16 @@ namespace NosSharp.DatabasePlugin.Migrations
                 {
                     table.PrimaryKey("PK_map_drop", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_map_drop__data_map_TypedId",
-                        column: x => x.TypedId,
-                        principalTable: "_data_map",
-                        principalColumn: "Id",
+                        "FK_map_drop__data_map_TypedId",
+                        x => x.TypedId,
+                        "_data_map",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "map_portals",
-                columns: table => new
+                "map_portals",
+                table => new
                 {
                     Id = table.Column<long>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
@@ -351,16 +333,16 @@ namespace NosSharp.DatabasePlugin.Migrations
                 {
                     table.PrimaryKey("PK_map_portals", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_map_portals__data_map_SourceMapId",
-                        column: x => x.SourceMapId,
-                        principalTable: "_data_map",
-                        principalColumn: "Id",
+                        "FK_map_portals__data_map_SourceMapId",
+                        x => x.SourceMapId,
+                        "_data_map",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "_data_npc_monster_bcard",
-                columns: table => new
+                "_data_npc_monster_bcard",
+                table => new
                 {
                     Id = table.Column<long>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
@@ -378,16 +360,16 @@ namespace NosSharp.DatabasePlugin.Migrations
                 {
                     table.PrimaryKey("PK__data_npc_monster_bcard", x => x.Id);
                     table.ForeignKey(
-                        name: "FK__data_npc_monster_bcard__data_npc_monster_NpcMonsterId",
-                        column: x => x.NpcMonsterId,
-                        principalTable: "_data_npc_monster",
-                        principalColumn: "Id",
+                        "FK__data_npc_monster_bcard__data_npc_monster_NpcMonsterId",
+                        x => x.NpcMonsterId,
+                        "_data_npc_monster",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "_data_npc_monster_drops",
-                columns: table => new
+                "_data_npc_monster_drops",
+                table => new
                 {
                     Id = table.Column<long>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
@@ -400,16 +382,16 @@ namespace NosSharp.DatabasePlugin.Migrations
                 {
                     table.PrimaryKey("PK__data_npc_monster_drops", x => x.Id);
                     table.ForeignKey(
-                        name: "FK__data_npc_monster_drops__data_npc_monster_TypedId",
-                        column: x => x.TypedId,
-                        principalTable: "_data_npc_monster",
-                        principalColumn: "Id",
+                        "FK__data_npc_monster_drops__data_npc_monster_TypedId",
+                        x => x.TypedId,
+                        "_data_npc_monster",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "map_monsters",
-                columns: table => new
+                "map_monsters",
+                table => new
                 {
                     Id = table.Column<long>(nullable: false),
                     MapX = table.Column<short>(nullable: false),
@@ -424,22 +406,22 @@ namespace NosSharp.DatabasePlugin.Migrations
                 {
                     table.PrimaryKey("PK_map_monsters", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_map_monsters__data_map_MapId",
-                        column: x => x.MapId,
-                        principalTable: "_data_map",
-                        principalColumn: "Id",
+                        "FK_map_monsters__data_map_MapId",
+                        x => x.MapId,
+                        "_data_map",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_map_monsters__data_npc_monster_NpcMonsterId",
-                        column: x => x.NpcMonsterId,
-                        principalTable: "_data_npc_monster",
-                        principalColumn: "Id",
+                        "FK_map_monsters__data_npc_monster_NpcMonsterId",
+                        x => x.NpcMonsterId,
+                        "_data_npc_monster",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "map_npcs",
-                columns: table => new
+                "map_npcs",
+                table => new
                 {
                     Id = table.Column<long>(nullable: false),
                     Dialog = table.Column<short>(nullable: false),
@@ -458,22 +440,22 @@ namespace NosSharp.DatabasePlugin.Migrations
                 {
                     table.PrimaryKey("PK_map_npcs", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_map_npcs__data_map_MapId",
-                        column: x => x.MapId,
-                        principalTable: "_data_map",
-                        principalColumn: "Id",
+                        "FK_map_npcs__data_map_MapId",
+                        x => x.MapId,
+                        "_data_map",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_map_npcs__data_npc_monster_NpcMonsterId",
-                        column: x => x.NpcMonsterId,
-                        principalTable: "_data_npc_monster",
-                        principalColumn: "Id",
+                        "FK_map_npcs__data_npc_monster_NpcMonsterId",
+                        x => x.NpcMonsterId,
+                        "_data_npc_monster",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "_data_npc_monster_skill",
-                columns: table => new
+                "_data_npc_monster_skill",
+                table => new
                 {
                     Id = table.Column<long>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
@@ -485,22 +467,22 @@ namespace NosSharp.DatabasePlugin.Migrations
                 {
                     table.PrimaryKey("PK__data_npc_monster_skill", x => x.Id);
                     table.ForeignKey(
-                        name: "FK__data_npc_monster_skill__data_npc_monster_NpcMonsterId",
-                        column: x => x.NpcMonsterId,
-                        principalTable: "_data_npc_monster",
-                        principalColumn: "Id",
+                        "FK__data_npc_monster_skill__data_npc_monster_NpcMonsterId",
+                        x => x.NpcMonsterId,
+                        "_data_npc_monster",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK__data_npc_monster_skill__data_skill_SkillId",
-                        column: x => x.SkillId,
-                        principalTable: "_data_skill",
-                        principalColumn: "Id",
+                        "FK__data_npc_monster_skill__data_skill_SkillId",
+                        x => x.SkillId,
+                        "_data_skill",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "_data_skill_bcard",
-                columns: table => new
+                "_data_skill_bcard",
+                table => new
                 {
                     Id = table.Column<long>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
@@ -518,16 +500,16 @@ namespace NosSharp.DatabasePlugin.Migrations
                 {
                     table.PrimaryKey("PK__data_skill_bcard", x => x.Id);
                     table.ForeignKey(
-                        name: "FK__data_skill_bcard__data_skill_SkillId",
-                        column: x => x.SkillId,
-                        principalTable: "_data_skill",
-                        principalColumn: "Id",
+                        "FK__data_skill_bcard__data_skill_SkillId",
+                        x => x.SkillId,
+                        "_data_skill",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "character",
-                columns: table => new
+                "character",
+                table => new
                 {
                     Id = table.Column<long>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
@@ -591,16 +573,16 @@ namespace NosSharp.DatabasePlugin.Migrations
                 {
                     table.PrimaryKey("PK_character", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_character_account_AccountId",
-                        column: x => x.AccountId,
-                        principalTable: "account",
-                        principalColumn: "Id",
+                        "FK_character_account_AccountId",
+                        x => x.AccountId,
+                        "account",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "map_npcs_shop",
-                columns: table => new
+                "map_npcs_shop",
+                table => new
                 {
                     Id = table.Column<long>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
@@ -613,16 +595,16 @@ namespace NosSharp.DatabasePlugin.Migrations
                 {
                     table.PrimaryKey("PK_map_npcs_shop", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_map_npcs_shop_map_npcs_MapNpcId",
-                        column: x => x.MapNpcId,
-                        principalTable: "map_npcs",
-                        principalColumn: "Id",
+                        "FK_map_npcs_shop_map_npcs_MapNpcId",
+                        x => x.MapNpcId,
+                        "map_npcs",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "character_item",
-                columns: table => new
+                "character_item",
+                table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
                     CharacterId = table.Column<long>(nullable: false),
@@ -675,28 +657,28 @@ namespace NosSharp.DatabasePlugin.Migrations
                 {
                     table.PrimaryKey("PK_character_item", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_character_item_character_BoundCharacterId",
-                        column: x => x.BoundCharacterId,
-                        principalTable: "character",
-                        principalColumn: "Id",
+                        "FK_character_item_character_BoundCharacterId",
+                        x => x.BoundCharacterId,
+                        "character",
+                        "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_character_item_character_CharacterId",
-                        column: x => x.CharacterId,
-                        principalTable: "character",
-                        principalColumn: "Id",
+                        "FK_character_item_character_CharacterId",
+                        x => x.CharacterId,
+                        "character",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_character_item__data_item_ItemId",
-                        column: x => x.ItemId,
-                        principalTable: "_data_item",
-                        principalColumn: "Id",
+                        "FK_character_item__data_item_ItemId",
+                        x => x.ItemId,
+                        "_data_item",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "character_mate",
-                columns: table => new
+                "character_mate",
+                table => new
                 {
                     Id = table.Column<long>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
@@ -722,22 +704,22 @@ namespace NosSharp.DatabasePlugin.Migrations
                 {
                     table.PrimaryKey("PK_character_mate", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_character_mate_character_CharacterId",
-                        column: x => x.CharacterId,
-                        principalTable: "character",
-                        principalColumn: "Id",
+                        "FK_character_mate_character_CharacterId",
+                        x => x.CharacterId,
+                        "character",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_character_mate__data_npc_monster_NpcMonsterId",
-                        column: x => x.NpcMonsterId,
-                        principalTable: "_data_npc_monster",
-                        principalColumn: "Id",
+                        "FK_character_mate__data_npc_monster_NpcMonsterId",
+                        x => x.NpcMonsterId,
+                        "_data_npc_monster",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "character_skill",
-                columns: table => new
+                "character_skill",
+                table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
                     CharacterId = table.Column<long>(nullable: false),
@@ -747,22 +729,22 @@ namespace NosSharp.DatabasePlugin.Migrations
                 {
                     table.PrimaryKey("PK_character_skill", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_character_skill_character_CharacterId",
-                        column: x => x.CharacterId,
-                        principalTable: "character",
-                        principalColumn: "Id",
+                        "FK_character_skill_character_CharacterId",
+                        x => x.CharacterId,
+                        "character",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_character_skill__data_skill_SkillId",
-                        column: x => x.SkillId,
-                        principalTable: "_data_skill",
-                        principalColumn: "Id",
+                        "FK_character_skill__data_skill_SkillId",
+                        x => x.SkillId,
+                        "_data_skill",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "shop_item",
-                columns: table => new
+                "shop_item",
+                table => new
                 {
                     Id = table.Column<long>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
@@ -778,22 +760,22 @@ namespace NosSharp.DatabasePlugin.Migrations
                 {
                     table.PrimaryKey("PK_shop_item", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_shop_item__data_item_ItemId",
-                        column: x => x.ItemId,
-                        principalTable: "_data_item",
-                        principalColumn: "Id",
+                        "FK_shop_item__data_item_ItemId",
+                        x => x.ItemId,
+                        "_data_item",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_shop_item_map_npcs_shop_ShopId",
-                        column: x => x.ShopId,
-                        principalTable: "map_npcs_shop",
-                        principalColumn: "Id",
+                        "FK_shop_item_map_npcs_shop_ShopId",
+                        x => x.ShopId,
+                        "map_npcs_shop",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "shop_recipe",
-                columns: table => new
+                "shop_recipe",
+                table => new
                 {
                     Id = table.Column<long>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
@@ -805,22 +787,22 @@ namespace NosSharp.DatabasePlugin.Migrations
                 {
                     table.PrimaryKey("PK_shop_recipe", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_shop_recipe__data_item_ItemId",
-                        column: x => x.ItemId,
-                        principalTable: "_data_item",
-                        principalColumn: "Id",
+                        "FK_shop_recipe__data_item_ItemId",
+                        x => x.ItemId,
+                        "_data_item",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_shop_recipe_map_npcs_shop_ShopId",
-                        column: x => x.ShopId,
-                        principalTable: "map_npcs_shop",
-                        principalColumn: "Id",
+                        "FK_shop_recipe_map_npcs_shop_ShopId",
+                        x => x.ShopId,
+                        "map_npcs_shop",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "shop_skill",
-                columns: table => new
+                "shop_skill",
+                table => new
                 {
                     Id = table.Column<long>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
@@ -833,22 +815,22 @@ namespace NosSharp.DatabasePlugin.Migrations
                 {
                     table.PrimaryKey("PK_shop_skill", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_shop_skill_map_npcs_shop_ShopId",
-                        column: x => x.ShopId,
-                        principalTable: "map_npcs_shop",
-                        principalColumn: "Id",
+                        "FK_shop_skill_map_npcs_shop_ShopId",
+                        x => x.ShopId,
+                        "map_npcs_shop",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_shop_skill__data_skill_SkillId",
-                        column: x => x.SkillId,
-                        principalTable: "_data_skill",
-                        principalColumn: "Id",
+                        "FK_shop_skill__data_skill_SkillId",
+                        x => x.SkillId,
+                        "_data_skill",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "shop_recipe_item",
-                columns: table => new
+                "shop_recipe_item",
+                table => new
                 {
                     Id = table.Column<long>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
@@ -860,247 +842,247 @@ namespace NosSharp.DatabasePlugin.Migrations
                 {
                     table.PrimaryKey("PK_shop_recipe_item", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_shop_recipe_item__data_item_ItemId",
-                        column: x => x.ItemId,
-                        principalTable: "_data_item",
-                        principalColumn: "Id",
+                        "FK_shop_recipe_item__data_item_ItemId",
+                        x => x.ItemId,
+                        "_data_item",
+                        "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_shop_recipe_item_shop_recipe_RecipeId",
-                        column: x => x.RecipeId,
-                        principalTable: "shop_recipe",
-                        principalColumn: "Id",
+                        "FK_shop_recipe_item_shop_recipe_RecipeId",
+                        x => x.RecipeId,
+                        "shop_recipe",
+                        "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX__data_card_bcard_CardId",
-                table: "_data_card_bcard",
-                column: "CardId");
+                "IX__data_card_bcard_CardId",
+                "_data_card_bcard",
+                "CardId");
 
             migrationBuilder.CreateIndex(
-                name: "IX__data_item_bcard_ItemId",
-                table: "_data_item_bcard",
-                column: "ItemId");
+                "IX__data_item_bcard_ItemId",
+                "_data_item_bcard",
+                "ItemId");
 
             migrationBuilder.CreateIndex(
-                name: "IX__data_npc_monster_bcard_NpcMonsterId",
-                table: "_data_npc_monster_bcard",
-                column: "NpcMonsterId");
+                "IX__data_npc_monster_bcard_NpcMonsterId",
+                "_data_npc_monster_bcard",
+                "NpcMonsterId");
 
             migrationBuilder.CreateIndex(
-                name: "IX__data_npc_monster_drops_TypedId",
-                table: "_data_npc_monster_drops",
-                column: "TypedId");
+                "IX__data_npc_monster_drops_TypedId",
+                "_data_npc_monster_drops",
+                "TypedId");
 
             migrationBuilder.CreateIndex(
-                name: "IX__data_npc_monster_skill_NpcMonsterId",
-                table: "_data_npc_monster_skill",
-                column: "NpcMonsterId");
+                "IX__data_npc_monster_skill_NpcMonsterId",
+                "_data_npc_monster_skill",
+                "NpcMonsterId");
 
             migrationBuilder.CreateIndex(
-                name: "IX__data_npc_monster_skill_SkillId",
-                table: "_data_npc_monster_skill",
-                column: "SkillId");
+                "IX__data_npc_monster_skill_SkillId",
+                "_data_npc_monster_skill",
+                "SkillId");
 
             migrationBuilder.CreateIndex(
-                name: "IX__data_skill_bcard_SkillId",
-                table: "_data_skill_bcard",
-                column: "SkillId");
+                "IX__data_skill_bcard_SkillId",
+                "_data_skill_bcard",
+                "SkillId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_character_AccountId",
-                table: "character",
-                column: "AccountId");
+                "IX_character_AccountId",
+                "character",
+                "AccountId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_character_item_BoundCharacterId",
-                table: "character_item",
-                column: "BoundCharacterId");
+                "IX_character_item_BoundCharacterId",
+                "character_item",
+                "BoundCharacterId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_character_item_CharacterId",
-                table: "character_item",
-                column: "CharacterId");
+                "IX_character_item_CharacterId",
+                "character_item",
+                "CharacterId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_character_item_ItemId",
-                table: "character_item",
-                column: "ItemId");
+                "IX_character_item_ItemId",
+                "character_item",
+                "ItemId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_character_mate_CharacterId",
-                table: "character_mate",
-                column: "CharacterId");
+                "IX_character_mate_CharacterId",
+                "character_mate",
+                "CharacterId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_character_mate_NpcMonsterId",
-                table: "character_mate",
-                column: "NpcMonsterId");
+                "IX_character_mate_NpcMonsterId",
+                "character_mate",
+                "NpcMonsterId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_character_skill_CharacterId",
-                table: "character_skill",
-                column: "CharacterId");
+                "IX_character_skill_CharacterId",
+                "character_skill",
+                "CharacterId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_character_skill_SkillId",
-                table: "character_skill",
-                column: "SkillId");
+                "IX_character_skill_SkillId",
+                "character_skill",
+                "SkillId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_map_drop_TypedId",
-                table: "map_drop",
-                column: "TypedId");
+                "IX_map_drop_TypedId",
+                "map_drop",
+                "TypedId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_map_monsters_MapId",
-                table: "map_monsters",
-                column: "MapId");
+                "IX_map_monsters_MapId",
+                "map_monsters",
+                "MapId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_map_monsters_NpcMonsterId",
-                table: "map_monsters",
-                column: "NpcMonsterId");
+                "IX_map_monsters_NpcMonsterId",
+                "map_monsters",
+                "NpcMonsterId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_map_npcs_MapId",
-                table: "map_npcs",
-                column: "MapId");
+                "IX_map_npcs_MapId",
+                "map_npcs",
+                "MapId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_map_npcs_NpcMonsterId",
-                table: "map_npcs",
-                column: "NpcMonsterId");
+                "IX_map_npcs_NpcMonsterId",
+                "map_npcs",
+                "NpcMonsterId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_map_npcs_shop_MapNpcId",
-                table: "map_npcs_shop",
-                column: "MapNpcId",
+                "IX_map_npcs_shop_MapNpcId",
+                "map_npcs_shop",
+                "MapNpcId",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_map_portals_SourceMapId",
-                table: "map_portals",
-                column: "SourceMapId");
+                "IX_map_portals_SourceMapId",
+                "map_portals",
+                "SourceMapId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_shop_item_ItemId",
-                table: "shop_item",
-                column: "ItemId");
+                "IX_shop_item_ItemId",
+                "shop_item",
+                "ItemId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_shop_item_ShopId",
-                table: "shop_item",
-                column: "ShopId");
+                "IX_shop_item_ShopId",
+                "shop_item",
+                "ShopId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_shop_recipe_ItemId",
-                table: "shop_recipe",
-                column: "ItemId");
+                "IX_shop_recipe_ItemId",
+                "shop_recipe",
+                "ItemId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_shop_recipe_ShopId",
-                table: "shop_recipe",
-                column: "ShopId");
+                "IX_shop_recipe_ShopId",
+                "shop_recipe",
+                "ShopId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_shop_recipe_item_ItemId",
-                table: "shop_recipe_item",
-                column: "ItemId");
+                "IX_shop_recipe_item_ItemId",
+                "shop_recipe_item",
+                "ItemId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_shop_recipe_item_RecipeId",
-                table: "shop_recipe_item",
-                column: "RecipeId");
+                "IX_shop_recipe_item_RecipeId",
+                "shop_recipe_item",
+                "RecipeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_shop_skill_ShopId",
-                table: "shop_skill",
-                column: "ShopId");
+                "IX_shop_skill_ShopId",
+                "shop_skill",
+                "ShopId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_shop_skill_SkillId",
-                table: "shop_skill",
-                column: "SkillId");
+                "IX_shop_skill_SkillId",
+                "shop_skill",
+                "SkillId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "_data_card_bcard");
+                "_data_card_bcard");
 
             migrationBuilder.DropTable(
-                name: "_data_item_bcard");
+                "_data_item_bcard");
 
             migrationBuilder.DropTable(
-                name: "_data_npc_monster_bcard");
+                "_data_npc_monster_bcard");
 
             migrationBuilder.DropTable(
-                name: "_data_npc_monster_drops");
+                "_data_npc_monster_drops");
 
             migrationBuilder.DropTable(
-                name: "_data_npc_monster_skill");
+                "_data_npc_monster_skill");
 
             migrationBuilder.DropTable(
-                name: "_data_skill_bcard");
+                "_data_skill_bcard");
 
             migrationBuilder.DropTable(
-                name: "character_item");
+                "character_item");
 
             migrationBuilder.DropTable(
-                name: "character_mate");
+                "character_mate");
 
             migrationBuilder.DropTable(
-                name: "character_skill");
+                "character_skill");
 
             migrationBuilder.DropTable(
-                name: "map_drop");
+                "map_drop");
 
             migrationBuilder.DropTable(
-                name: "map_monsters");
+                "map_monsters");
 
             migrationBuilder.DropTable(
-                name: "map_portals");
+                "map_portals");
 
             migrationBuilder.DropTable(
-                name: "shop_item");
+                "shop_item");
 
             migrationBuilder.DropTable(
-                name: "shop_recipe_item");
+                "shop_recipe_item");
 
             migrationBuilder.DropTable(
-                name: "shop_skill");
+                "shop_skill");
 
             migrationBuilder.DropTable(
-                name: "_data_card");
+                "_data_card");
 
             migrationBuilder.DropTable(
-                name: "character");
+                "character");
 
             migrationBuilder.DropTable(
-                name: "shop_recipe");
+                "shop_recipe");
 
             migrationBuilder.DropTable(
-                name: "_data_skill");
+                "_data_skill");
 
             migrationBuilder.DropTable(
-                name: "account");
+                "account");
 
             migrationBuilder.DropTable(
-                name: "_data_item");
+                "_data_item");
 
             migrationBuilder.DropTable(
-                name: "map_npcs_shop");
+                "map_npcs_shop");
 
             migrationBuilder.DropTable(
-                name: "map_npcs");
+                "map_npcs");
 
             migrationBuilder.DropTable(
-                name: "_data_map");
+                "_data_map");
 
             migrationBuilder.DropTable(
-                name: "_data_npc_monster");
+                "_data_npc_monster");
         }
     }
 }

@@ -16,7 +16,6 @@ using ChickenAPI.Game.Data.AccessLayer.Shop;
 using ChickenAPI.Game.Data.AccessLayer.Skill;
 using ChickenAPI.Game.Data.TransferObjects.Character;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Caching.Memory;
 using NosSharp.DatabasePlugin.Configuration;
 using NosSharp.DatabasePlugin.Context;
 using NosSharp.DatabasePlugin.Services.Account;
@@ -35,12 +34,79 @@ namespace NosSharp.DatabasePlugin
     public class NosSharpDatabasePlugin : IPlugin
     {
         private static readonly Logger Log = Logger.GetLogger<NosSharpDatabasePlugin>();
-        private readonly string _configurationFilePath = $"plugins/config/{nameof(NosSharpDatabasePlugin)}/conf.json";
-        private readonly string _characterConfPath = $"plugins/config/{nameof(NosSharpDatabasePlugin)}/character_on_creation.json";
-        private DatabaseConfiguration _configuration;
         private static IMapper _mapper;
         private static CharacterDto _characterConf;
+        private readonly string _characterConfPath = $"plugins/config/{nameof(NosSharpDatabasePlugin)}/character_on_creation.json";
+        private readonly string _configurationFilePath = $"plugins/config/{nameof(NosSharpDatabasePlugin)}/conf.json";
+        private DatabaseConfiguration _configuration;
         public string Name => nameof(NosSharpDatabasePlugin);
+
+        public void OnLoad()
+        {
+            Log.Info("Loading...");
+            _configuration = ConfigurationHelper.Load<DatabaseConfiguration>(_configurationFilePath, true); // database configuration
+            _characterConf = new CharacterDto
+            {
+                Class = CharacterClassType.Adventurer,
+                Gender = GenderType.Male,
+                HairColor = HairColorType.Black,
+                HairStyle = HairStyleType.HairStyleA,
+                Hp = 221,
+                JobLevel = 20,
+                Level = 15,
+                MapId = 1,
+                MapX = 78,
+                MapY = 109,
+                Mp = 221,
+                MaxMateCount = 10,
+                Gold = 15000,
+                SpPoint = 10000,
+                SpAdditionPoint = 0,
+                Name = "template",
+                Slot = 0,
+                AccountId = 0,
+                MinilandMessage = "Welcome",
+                State = CharacterState.Active
+            };
+            if (!Initialize())
+            {
+                return;
+            }
+
+            ChickenContainer.Builder.Register(s =>
+            {
+                DbContextOptionsBuilder<NosSharpContext> options = new DbContextOptionsBuilder<NosSharpContext>().UseSqlServer(_configuration.ToString());
+
+                return new NosSharpContext(options.Options);
+            }).As<NosSharpContext>().InstancePerDependency();
+            RegisterMapping();
+            RegisterDependencies();
+            Log.Info("Loaded !");
+        }
+
+        public void ReloadConfig()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SaveConfig()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SaveDefaultConfig()
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public void OnDisable()
+        {
+        }
+
+        public void OnEnable()
+        {
+        }
 
         private static void RegisterMapping()
         {
@@ -77,7 +143,6 @@ namespace NosSharp.DatabasePlugin
 
         private bool Initialize()
         {
-
             using (var context = new NosSharpContext(new DbContextOptionsBuilder<NosSharpContext>().UseSqlServer(_configuration.ToString()).Options))
             {
                 try
@@ -93,73 +158,6 @@ namespace NosSharp.DatabasePlugin
 
                 return true;
             }
-        }
-
-        public void OnLoad()
-        {
-            Log.Info($"Loading...");
-            _configuration = ConfigurationHelper.Load<DatabaseConfiguration>(_configurationFilePath, true); // database configuration
-            _characterConf = new CharacterDto
-            {
-                Class = CharacterClassType.Adventurer,
-                Gender = GenderType.Male,
-                HairColor = HairColorType.Black,
-                HairStyle = HairStyleType.HairStyleA,
-                Hp = 221,
-                JobLevel = 20,
-                Level = 15,
-                MapId = 1,
-                MapX = 78,
-                MapY = 109,
-                Mp = 221,
-                MaxMateCount = 10,
-                Gold = 15000,
-                SpPoint = 10000,
-                SpAdditionPoint = 0,
-                Name = "template",
-                Slot = 0,
-                AccountId = 0,
-                MinilandMessage = "Welcome",
-                State = CharacterState.Active
-            };
-            if (!Initialize())
-            {
-                return;
-            }
-
-            ChickenContainer.Builder.Register(s =>
-            {
-                var options = new DbContextOptionsBuilder<NosSharpContext>().UseSqlServer(_configuration.ToString());
-
-                return new NosSharpContext(options.Options);
-            }).As<NosSharpContext>().InstancePerDependency();
-            RegisterMapping();
-            RegisterDependencies();
-            Log.Info($"Loaded !");
-        }
-
-        public void ReloadConfig()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void SaveConfig()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void SaveDefaultConfig()
-        {
-            throw new NotImplementedException();
-        }
-
-
-        public void OnDisable()
-        {
-        }
-
-        public void OnEnable()
-        {
         }
     }
 }

@@ -92,8 +92,8 @@ namespace ChickenAPI.Game.Features.Inventory
         }
 
         /// <summary>
-        /// Equip the given item
-        /// In case the slot is actually taken, it will swap the items
+        ///     Equip the given item
+        ///     In case the slot is actually taken, it will swap the items
         /// </summary>
         /// <param name="inventory"></param>
         /// <param name="entity"></param>
@@ -211,8 +211,6 @@ namespace ChickenAPI.Game.Features.Inventory
                 case InventoryType.Miniland:
                     packet.Items.AddRange(items.Where(s => s != null).Select(s =>
                         $"{s.Slot}.{s.ItemId}.{s.Amount}"));
-                    break;
-                default:
                     break;
             }
 

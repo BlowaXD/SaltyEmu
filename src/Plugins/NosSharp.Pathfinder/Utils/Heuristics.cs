@@ -3,7 +3,7 @@
     public static class Heuristics
     {
         /// <summary>
-        /// returns the addition of the x and y distances
+        ///     returns the addition of the x and y distances
         /// </summary>
         /// <param name="dx"></param>
         /// <param name="dy"></param>

@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 using NosSharp.DatabasePlugin.Models.Map;
 
 namespace NosSharp.DatabasePlugin.Models.Drops
@@ -8,12 +7,11 @@ namespace NosSharp.DatabasePlugin.Models.Drops
     public class MapDropModel : DropModel
     {
         /// <summary>
-        /// 
         /// </summary>
         public MapModel Map { get; set; }
 
         /// <summary>
-        /// This can be MapTypeId, NpcMonsterId...
+        ///     This can be MapTypeId, NpcMonsterId...
         /// </summary>
         [ForeignKey("FK_MAPDROP_TO_MAP")]
         public long TypedId { get; set; }

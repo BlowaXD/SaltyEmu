@@ -77,6 +77,7 @@ namespace ChickenAPI.Game.Features.Shops
                     typeshop = 150;
                     break;
             }
+
             foreach (ShopItemDto itemInfo in getinfos.Shop.Items.Where(s => s.Type == getinfos.Type))
             {
                 if (typeshop == 0)
@@ -338,6 +339,7 @@ namespace ChickenAPI.Game.Features.Shops
                 player.Character.Gold -= (long)(price * percent);
                 player.SendPacket(player.GenerateGoldPacket());
             }
+
             player.NotifyEventHandler<InventoryEventHandler>(new InventoryAddItemEventArgs
             {
                 ItemInstance = newitem

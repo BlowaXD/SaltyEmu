@@ -9,9 +9,6 @@ namespace NosSharp.DatabasePlugin.Models.Shop
     [Table("map_npcs_shop")]
     public class ShopModel : IMappedDto
     {
-        [Key]
-        public long Id { get; set; }
-
         public MapNpcModel MapNpc { get; set; }
 
         [ForeignKey(nameof(MapNpcId))]
@@ -27,5 +24,8 @@ namespace NosSharp.DatabasePlugin.Models.Shop
 
         public IEnumerable<RecipeModel> Recipes { get; set; }
         public IEnumerable<ShopSkillModel> ShopSkills { get; set; }
+
+        [Key]
+        public long Id { get; set; }
     }
 }

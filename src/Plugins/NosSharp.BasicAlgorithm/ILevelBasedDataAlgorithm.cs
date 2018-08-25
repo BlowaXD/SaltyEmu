@@ -2,8 +2,7 @@
 {
     public interface ILevelBasedDataAlgorithm
     {
-        void Initialize();
-
         long[] Data { get; set; }
+        void Initialize();
     }
 }

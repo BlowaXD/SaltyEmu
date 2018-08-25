@@ -25,7 +25,6 @@ using ChickenAPI.Game.Features.Visibility;
 using ChickenAPI.Game.Features.Visibility.Args;
 using ChickenAPI.Game.Maps;
 using ChickenAPI.Game.Network;
-using ChickenAPI.Game.Packets;
 using ChickenAPI.Game.Packets.Extensions;
 using ChickenAPI.Packets;
 using ChickenAPI.Packets.Game.Server.Group;
@@ -34,11 +33,6 @@ namespace ChickenAPI.Game.Entities.Player
 {
     public class PlayerEntity : EntityBase, IPlayerEntity
     {
-        private static IItemInstanceService ItemInstance => new Lazy<IItemInstanceService>(() => ChickenContainer.Instance.Resolve<IItemInstanceService>()).Value;
-        private static ICharacterService CharacterService => new Lazy<ICharacterService>(() => ChickenContainer.Instance.Resolve<ICharacterService>()).Value;
-        private static ICharacterSkillService CharacterSkillService => new Lazy<ICharacterSkillService>(() => ChickenContainer.Instance.Resolve<ICharacterSkillService>()).Value;
-        private static ICharacterQuickListService CharacterQuickListService => new Lazy<ICharacterQuickListService>(() => ChickenContainer.Instance.Resolve<ICharacterQuickListService>()).Value;
-
         public PlayerEntity(ISession session, CharacterDto dto, IEnumerable<CharacterSkillDto> skills, IEnumerable<CharacterQuicklistDto> quicklist) : base(EntityType.Player)
         {
             Session = session;
@@ -82,6 +76,11 @@ namespace ChickenAPI.Game.Entities.Player
                 { typeof(SkillComponent), Skills }
             };
         }
+
+        private static IItemInstanceService ItemInstance => new Lazy<IItemInstanceService>(() => ChickenContainer.Instance.Resolve<IItemInstanceService>()).Value;
+        private static ICharacterService CharacterService => new Lazy<ICharacterService>(() => ChickenContainer.Instance.Resolve<ICharacterService>()).Value;
+        private static ICharacterSkillService CharacterSkillService => new Lazy<ICharacterSkillService>(() => ChickenContainer.Instance.Resolve<ICharacterSkillService>()).Value;
+        private static ICharacterQuickListService CharacterQuickListService => new Lazy<ICharacterQuickListService>(() => ChickenContainer.Instance.Resolve<ICharacterQuickListService>()).Value;
 
         public SkillComponent Skills { get; }
         public MovableComponent Movable { get; }
@@ -172,6 +171,5 @@ namespace ChickenAPI.Game.Entities.Player
             );
             Log.Info($"[SAVE] {Character.Name} saved in {(DateTime.UtcNow - before).TotalMilliseconds} ms");
         }
-
     }
 }

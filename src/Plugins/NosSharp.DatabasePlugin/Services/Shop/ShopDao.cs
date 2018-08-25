@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using ChickenAPI.Game.Data.AccessLayer.Shop;
 using ChickenAPI.Game.Data.TransferObjects.Shop;
 using Microsoft.EntityFrameworkCore;
 using NosSharp.DatabasePlugin.Context;
-using NosSharp.DatabasePlugin.Models.NpcMonster;
 using NosSharp.DatabasePlugin.Models.Shop;
 using NosSharp.DatabasePlugin.Services.Base;
 

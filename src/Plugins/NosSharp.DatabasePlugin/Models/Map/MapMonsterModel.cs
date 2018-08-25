@@ -9,10 +9,6 @@ namespace NosSharp.DatabasePlugin.Models.Map
     [Table("map_monsters")]
     public class MapMonsterModel : IMappedDto
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public long Id { get; set; }
-
         public short MapX { get; set; }
 
         public short MapY { get; set; }
@@ -32,5 +28,9 @@ namespace NosSharp.DatabasePlugin.Models.Map
         public bool IsMoving { get; set; }
 
         public DirectionType Position { get; set; }
+
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public long Id { get; set; }
     }
 }

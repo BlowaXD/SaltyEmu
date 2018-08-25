@@ -11,10 +11,8 @@ namespace ChickenAPI.Core.ECS.Entities
     public abstract class EntityBase : IEntity
     {
         protected static readonly Logger Log = Logger.GetLogger<EntityBase>();
-        protected Dictionary<Type, IComponent> Components;
         private static IEventManager _eventManager;
-
-        protected IEventManager EventManager => _eventManager ?? (_eventManager = ChickenContainer.Instance.Resolve<IEventManager>());
+        protected Dictionary<Type, IComponent> Components;
 
         protected EntityBase(EntityType type, Dictionary<Type, IComponent> components)
         {
@@ -23,6 +21,8 @@ namespace ChickenAPI.Core.ECS.Entities
         }
 
         protected EntityBase(EntityType type) => Type = type;
+
+        protected IEventManager EventManager => _eventManager ?? (_eventManager = ChickenContainer.Instance.Resolve<IEventManager>());
 
 
         public long Id { get; set; }

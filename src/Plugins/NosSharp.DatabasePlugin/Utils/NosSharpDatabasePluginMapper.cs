@@ -19,6 +19,7 @@ using NosSharp.DatabasePlugin.Models;
 using NosSharp.DatabasePlugin.Models.BCard;
 using NosSharp.DatabasePlugin.Models.Character;
 using NosSharp.DatabasePlugin.Models.Drops;
+using NosSharp.DatabasePlugin.Models.Item;
 using NosSharp.DatabasePlugin.Models.Map;
 using NosSharp.DatabasePlugin.Models.NpcMonster;
 using NosSharp.DatabasePlugin.Models.Shop;

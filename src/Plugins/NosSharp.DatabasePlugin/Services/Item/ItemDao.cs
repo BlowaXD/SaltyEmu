@@ -4,7 +4,7 @@ using AutoMapper;
 using ChickenAPI.Game.Data.AccessLayer.Item;
 using ChickenAPI.Game.Data.TransferObjects.Item;
 using NosSharp.DatabasePlugin.Context;
-using NosSharp.DatabasePlugin.Models;
+using NosSharp.DatabasePlugin.Models.Item;
 using NosSharp.DatabasePlugin.Services.Base;
 
 namespace NosSharp.DatabasePlugin.Services.Item

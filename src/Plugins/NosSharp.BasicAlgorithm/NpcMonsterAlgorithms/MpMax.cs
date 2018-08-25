@@ -39,6 +39,18 @@ namespace NosSharp.BasicAlgorithm.NpcMonsterAlgorithms
             }
         }
 
+        public int GetStat(NpcMonsterRaceType type, byte level, bool isMonster)
+        {
+            int hpSupp = 0;
+            switch (type)
+            {
+                case NpcMonsterRaceType.Race0UnknownYet:
+                    return RaceZeroStats(level, isMonster);
+            }
+
+            return _stats[level] + hpSupp;
+        }
+
         private int RaceZeroStats(byte level, bool isMonster)
         {
             double hp = 1;
@@ -64,12 +76,12 @@ namespace NosSharp.BasicAlgorithm.NpcMonsterAlgorithms
 
                 if (level > 51)
                 {
-                    hp += (hp / 4.0);
+                    hp += hp / 4.0;
                 }
 
                 if (level > 61)
                 {
-                    hp += (hp / 5.0);
+                    hp += hp / 5.0;
                 }
             }
             else if (level > 71 && level <= 81)
@@ -82,19 +94,6 @@ namespace NosSharp.BasicAlgorithm.NpcMonsterAlgorithms
             }
 
             return (int)hp;
-        }
-
-        public int GetStat(NpcMonsterRaceType type, byte level, bool isMonster)
-        {
-            int hpSupp = 0;
-            switch (type)
-            {
-                case NpcMonsterRaceType.Race0UnknownYet:
-                    return RaceZeroStats(level, isMonster);
-                default:
-                    break;
-            }
-            return _stats[level] + hpSupp;
         }
     }
 }

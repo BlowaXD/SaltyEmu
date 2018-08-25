@@ -11,11 +11,11 @@ namespace NosSharp.RedisSessionPlugin.Redis
 {
     public class ServerApiService : IServerApiService
     {
-        private static readonly Logger Log = Logger.GetLogger<ServerApiService>();
         private const string Prefix = nameof(WorldServerDto) + "_";
         private const string AllKeys = Prefix + "*";
-        private RedisConfiguration _configuration;
+        private static readonly Logger Log = Logger.GetLogger<ServerApiService>();
         private readonly ICacheClient _cache;
+        private RedisConfiguration _configuration;
 
         public ServerApiService(RedisConfiguration config)
         {
@@ -27,10 +27,6 @@ namespace NosSharp.RedisSessionPlugin.Redis
             };
             _cache = new RedisCacheClient(options);
         }
-
-        private static string ToKey(WorldServerDto dto) => ToKey(dto.Id);
-
-        private static string ToKey(Guid id) => Prefix + id;
 
 
         public bool RegisterServer(WorldServerDto dto)
@@ -55,5 +51,9 @@ namespace NosSharp.RedisSessionPlugin.Redis
         {
             return _cache.GetAllAsync<WorldServerDto>(AllKeys).GetAwaiter().GetResult().Where(s => s.Value.HasValue).Select(s => s.Value.Value);
         }
+
+        private static string ToKey(WorldServerDto dto) => ToKey(dto.Id);
+
+        private static string ToKey(Guid id) => Prefix + id;
     }
 }

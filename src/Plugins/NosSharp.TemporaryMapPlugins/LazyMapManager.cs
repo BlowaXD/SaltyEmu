@@ -18,17 +18,8 @@ namespace NosSharp.TemporaryMapPlugins
         private readonly Dictionary<Guid, IMapLayer> _mapLayers = new Dictionary<Guid, IMapLayer>();
         private readonly Dictionary<long, IMap> _maps = new Dictionary<long, IMap>();
 
-        private IMap LoadMap(long mapId)
-        {
-            MapDto map = ChickenContainer.Instance.Resolve<IMapService>().GetById(mapId);
-            IEnumerable<MapNpcDto> npcs = ChickenContainer.Instance.Resolve<IMapNpcService>().GetByMapId(mapId);
-            IEnumerable<MapMonsterDto> monsters = ChickenContainer.Instance.Resolve<IMapMonsterService>().GetByMapId(mapId);
-            IEnumerable<PortalDto> portals = ChickenContainer.Instance.Resolve<IPortalService>().GetByMapId(mapId);
-            IEnumerable<ShopDto> shops = ChickenContainer.Instance.Resolve<IShopService>().GetByMapNpcIds(npcs.Select(s => s.Id).ToList());
-            return new SimpleMap(map, monsters, npcs, portals, shops);
-        }
-
         public IReadOnlyDictionary<long, IMap> Maps { get; }
+
         public void ChangeMap(IPlayerEntity player, long mapId)
         {
             throw new NotImplementedException();
@@ -58,9 +49,16 @@ namespace NosSharp.TemporaryMapPlugins
             return map.BaseLayer;
         }
 
-        public IMapLayer GetBaseMapLayer(IMap map)
+        public IMapLayer GetBaseMapLayer(IMap map) => map.BaseLayer;
+
+        private IMap LoadMap(long mapId)
         {
-            return map.BaseLayer;
+            MapDto map = ChickenContainer.Instance.Resolve<IMapService>().GetById(mapId);
+            IEnumerable<MapNpcDto> npcs = ChickenContainer.Instance.Resolve<IMapNpcService>().GetByMapId(mapId);
+            IEnumerable<MapMonsterDto> monsters = ChickenContainer.Instance.Resolve<IMapMonsterService>().GetByMapId(mapId);
+            IEnumerable<PortalDto> portals = ChickenContainer.Instance.Resolve<IPortalService>().GetByMapId(mapId);
+            IEnumerable<ShopDto> shops = ChickenContainer.Instance.Resolve<IShopService>().GetByMapNpcIds(npcs.Select(s => s.Id).ToList());
+            return new SimpleMap(map, monsters, npcs, portals, shops);
         }
     }
 }

@@ -87,7 +87,7 @@ namespace World.Packets
         {
             if (handlingInfo.Item1 == null)
             {
-                Log.Warn($"[HANDLE][GAME] Wrong packet");
+                Log.Warn("[HANDLE][GAME] Wrong packet");
                 return;
             }
 

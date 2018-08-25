@@ -15,12 +15,10 @@ namespace NosSharp.BasicAlgorithm
 
         public void OnDisable()
         {
-            return;
         }
 
         public void OnEnable()
         {
-            return;
         }
 
         public void OnLoad()
@@ -33,7 +31,6 @@ namespace NosSharp.BasicAlgorithm
 
         public void ReloadConfig()
         {
-            return;
         }
 
         public void SaveConfig()

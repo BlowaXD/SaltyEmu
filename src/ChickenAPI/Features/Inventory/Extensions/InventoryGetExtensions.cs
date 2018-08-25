@@ -8,10 +8,7 @@ namespace ChickenAPI.Game.Features.Inventory.Extensions
 {
     public static class InventoryGetExtensions
     {
-        public static ItemInstanceDto GetWeared(this InventoryComponent inv, EquipmentType equipmentType)
-        {
-            return inv.Wear[(int)equipmentType];
-        }
+        public static ItemInstanceDto GetWeared(this InventoryComponent inv, EquipmentType equipmentType) => inv.Wear[(int)equipmentType];
 
         public static short GetFirstFreeSlot(this InventoryComponent inv, IReadOnlyCollection<ItemInstanceDto> subInventory, ItemDto source, short amount)
         {
@@ -21,10 +18,8 @@ namespace ChickenAPI.Game.Features.Inventory.Extensions
             return item?.Slot ?? GetFirstFreeSlot(inv, subInventory);
         }
 
-        public static short GetFirstFreeSlot(this InventoryComponent inv, IReadOnlyCollection<ItemInstanceDto> subInventory, ItemInstanceDto source)
-        {
-            return GetFirstFreeSlot(inv, subInventory, source.Item, source.Amount);
-        }
+        public static short GetFirstFreeSlot(this InventoryComponent inv, IReadOnlyCollection<ItemInstanceDto> subInventory, ItemInstanceDto source) =>
+            GetFirstFreeSlot(inv, subInventory, source.Item, source.Amount);
 
 
         public static short GetFirstFreeSlot(this InventoryComponent inv, IReadOnlyCollection<ItemInstanceDto> subinventory)
@@ -61,15 +56,12 @@ namespace ChickenAPI.Game.Features.Inventory.Extensions
 
 
         /// <summary>
-        /// Gets the first available slot by it's inventory type
+        ///     Gets the first available slot by it's inventory type
         /// </summary>
         /// <param name="inv"></param>
         /// <param name="inventoryType"></param>
         /// <returns>Returns -1 in case it could not find any available slot</returns>
-        public static short GetFirstFreeSlot(this InventoryComponent inv, InventoryType inventoryType)
-        {
-            return GetFirstFreeSlot(inv, GetSubInvFromInventoryType(inv, inventoryType));
-        }
+        public static short GetFirstFreeSlot(this InventoryComponent inv, InventoryType inventoryType) => GetFirstFreeSlot(inv, GetSubInvFromInventoryType(inv, inventoryType));
 
         public static ItemInstanceDto[] GetSubInvFromInventoryType(this InventoryComponent inv, InventoryType type)
         {

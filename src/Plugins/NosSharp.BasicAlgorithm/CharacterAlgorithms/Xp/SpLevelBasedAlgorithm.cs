@@ -12,6 +12,7 @@
             {
                 Data[i] = Data[i - 1] + 10000;
             }
+
             for (int i = 20; i < Data.Length; i++)
             {
                 Data[i] = Data[i - 1] + 6 * (3 * i * (i + 1) + 1);

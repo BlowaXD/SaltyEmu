@@ -8,24 +8,24 @@ namespace NosSharp.DatabasePlugin.Models
     public class DropModel : IMappedDto
     {
         /// <summary>
-        /// Drop Id
-        /// </summary>
-        [Key]
-        public long Id { get; set; }
-
-        /// <summary>
-        /// Item that will be dropped
+        ///     Item that will be dropped
         /// </summary>
         public long ItemId { get; set; }
 
         /// <summary>
-        /// Amount of Item that have to be dropped
+        ///     Amount of Item that have to be dropped
         /// </summary>
         public int Amount { get; set; }
 
         /// <summary>
-        /// Drop chance
+        ///     Drop chance
         /// </summary>
         public int DropChance { get; set; }
+
+        /// <summary>
+        ///     Drop Id
+        /// </summary>
+        [Key]
+        public long Id { get; set; }
     }
 }

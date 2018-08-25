@@ -2,7 +2,6 @@
 using ChickenAPI.Core.ECS.Components;
 using ChickenAPI.Core.ECS.Entities;
 using ChickenAPI.Game.Data.TransferObjects.Character;
-using ChickenAPI.Game.Entities.Player;
 
 namespace ChickenAPI.Game.Features.Quicklist
 {
@@ -24,9 +23,9 @@ namespace ChickenAPI.Game.Features.Quicklist
             }
         }
 
-        public IEntity Entity { get; }
-
         public Dictionary<long, CharacterQuicklistDto> Q1 { get; } = new Dictionary<long, CharacterQuicklistDto>();
         public Dictionary<long, CharacterQuicklistDto> Q2 { get; } = new Dictionary<long, CharacterQuicklistDto>();
+
+        public IEntity Entity { get; }
     }
 }

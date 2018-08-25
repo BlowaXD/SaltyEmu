@@ -21,6 +21,9 @@ namespace LoginServer.Network
         public static ISessionService SessionService;
         public static IAccountService AccountService;
         public static IServerApiService ServerApi;
+
+
+        private static volatile IChannelGroup _group;
         private readonly ISocketChannel _channel;
         private IPEndPoint _endPoint;
 
@@ -30,15 +33,12 @@ namespace LoginServer.Network
             _endPoint = channel.RemoteAddress as IPEndPoint;
         }
 
-
-        private static volatile IChannelGroup _group;
-
         public override void ChannelRegistered(IChannelHandlerContext context)
         {
             IChannelGroup g = _group;
             if (g == null)
             {
-                lock (_channel)
+                lock(_channel)
                 {
                     if (_group == null)
                     {
@@ -76,7 +76,7 @@ namespace LoginServer.Network
             return packetBuilder.ToString();
         }
 
-        private string GetFailPacket(AuthResponse response) => $"";
+        private string GetFailPacket(AuthResponse response) => "";
 
         public override void ChannelRead(IChannelHandlerContext context, object message)
         {
@@ -135,7 +135,7 @@ namespace LoginServer.Network
                 PlayerSessionDto session = SessionService.GetByAccountName(accountName);
                 if (session != null && session.State == PlayerSessionState.Connected)
                 {
-                    Log.Info($"session already claimed");
+                    Log.Info("session already claimed");
                     _channel.WriteAndFlushAsync(GetFailPacket(AuthResponse.AlreadyConnected)).Wait();
                     _channel.Flush();
                     _channel.DisconnectAsync().Wait();
@@ -151,7 +151,7 @@ namespace LoginServer.Network
                     {
                         Password = passwordHash,
                         Username = accountName,
-                        State = PlayerSessionState.Unauthed,
+                        State = PlayerSessionState.Unauthed
                     };
                     SessionService.RegisterSession(session);
                 }

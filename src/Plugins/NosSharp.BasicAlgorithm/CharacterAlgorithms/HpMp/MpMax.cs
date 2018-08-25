@@ -25,6 +25,7 @@ namespace NosSharp.BasicAlgorithm.CharacterAlgorithms.HpMp
                 {
                     baseAdventurer++;
                 }
+
                 actual += baseAdventurer;
 
                 _stats[(int)CharacterClassType.Adventurer, i] = actual; // approx

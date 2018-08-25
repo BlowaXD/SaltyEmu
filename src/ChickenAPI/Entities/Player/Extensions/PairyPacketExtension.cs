@@ -19,7 +19,7 @@ namespace ChickenAPI.Game.Entities.Player.Extensions
                     CharacterId = player.Character.Id,
                     FairyMoveType = 0,
                     ElementType = 0,
-                    FairyLevel = 0,
+                    FairyLevel = 0
                 };
             }
 
@@ -31,7 +31,7 @@ namespace ChickenAPI.Game.Entities.Player.Extensions
                 CharacterId = player.Character.Id,
                 ElementType = fairy.ElementType,
                 FairyLevel = fairy.Upgrade,
-                FairyMoveType = 4, // todo enum 
+                FairyMoveType = 4 // todo enum 
             };
         }
     }

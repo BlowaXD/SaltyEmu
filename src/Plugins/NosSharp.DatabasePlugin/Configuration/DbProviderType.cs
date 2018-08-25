@@ -4,6 +4,6 @@
     {
         MSSQL,
         MySQL,
-        PostgreSQL,
+        PostgreSQL
     }
 }

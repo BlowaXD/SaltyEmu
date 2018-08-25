@@ -15,18 +15,18 @@ namespace ChickenAPI.Core.ECS.Entities
         // entities
         protected readonly Dictionary<long, IEntity> EntitiesByEntityId = new Dictionary<long, IEntity>();
         protected readonly Dictionary<EntityType, HashSet<IEntity>> EntitiesByEntityType = new Dictionary<EntityType, HashSet<IEntity>>();
-        protected List<ISystem> _systems = new List<ISystem>();
 
         private IEntityManagerContainer _emContainer;
+        protected List<ISystem> _systems = new List<ISystem>();
+
+        protected List<IEntityManager> EntityManagers = new List<IEntityManager>();
+        protected long LastEntityId;
 
         protected IEntityManagerContainer EmContainer
         {
             get => _emContainer ?? (_emContainer = ChickenContainer.Instance.Resolve<IEntityManagerContainer>());
             set => _emContainer = value;
         }
-
-        protected List<IEntityManager> EntityManagers = new List<IEntityManager>();
-        protected long LastEntityId;
 
         protected bool ShouldUpdate { get; set; }
 
@@ -99,14 +99,6 @@ namespace ChickenAPI.Core.ECS.Entities
             UpdateCache();
         }
 
-        private void UpdateCache()
-        {
-            foreach (ISystem system in _systems)
-            {
-                system.UpdateCache();
-            }
-        }
-
         public bool HasEntity(IEntity entity) => HasEntity(entity.Id);
 
         public bool HasEntity(long id) => EntitiesByEntityId.ContainsKey(id);
@@ -164,6 +156,14 @@ namespace ChickenAPI.Core.ECS.Entities
         public void RemoveSystem(ISystem system)
         {
             _systems.Remove(system);
+        }
+
+        private void UpdateCache()
+        {
+            foreach (ISystem system in _systems)
+            {
+                system.UpdateCache();
+            }
         }
     }
 }

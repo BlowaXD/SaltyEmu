@@ -8,15 +8,8 @@ namespace NosSharp.DatabasePlugin.Models.NpcMonster
     [Table("_data_npc_monster_skill")]
     public class NpcMonsterSkillModel : IMappedDto
     {
-        /// <summary>
-        /// Can be considered as the skill vnum
-        /// </summary>
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public long Id { get; set; }
-        
         public SkillModel Skill { get; set; }
-        
+
         [ForeignKey(nameof(SkillId))]
         public long SkillId { get; set; }
 
@@ -26,5 +19,12 @@ namespace NosSharp.DatabasePlugin.Models.NpcMonster
 
         [ForeignKey(nameof(NpcMonsterId))]
         public long NpcMonsterId { get; set; }
+
+        /// <summary>
+        ///     Can be considered as the skill vnum
+        /// </summary>
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public long Id { get; set; }
     }
 }

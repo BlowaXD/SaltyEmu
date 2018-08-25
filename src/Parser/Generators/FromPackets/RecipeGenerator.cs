@@ -13,11 +13,10 @@ namespace Toolkit.Generators.FromPackets
 {
     public class RecipeGenerator
     {
-
         private static readonly Logger Log = Logger.GetLogger<RecipeGenerator>();
+        private readonly List<RecipeItemDto> _recipeItems = new List<RecipeItemDto>();
 
         private readonly List<RecipeDto> _recipes = new List<RecipeDto>();
-        private readonly List<RecipeItemDto> _recipeItems = new List<RecipeItemDto>();
 
         public void Generate(string filePath)
         {
@@ -77,6 +76,7 @@ namespace Toolkit.Generators.FromPackets
                                 });
                                 counter2++;
                             }
+
                             itemId = -1;
                             break;
                         case "pdtse":

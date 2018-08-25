@@ -10,10 +10,6 @@ namespace NosSharp.DatabasePlugin.Models
     [Table("_data_card")]
     public class CardModel : IMappedDto
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public long Id { get; set; }
-
         public int Duration { get; set; }
 
         public int EffectId { get; set; }
@@ -33,5 +29,9 @@ namespace NosSharp.DatabasePlugin.Models
 
         public byte Propability { get; set; }
         public IEnumerable<CardBCardModel> BCards { get; set; }
+
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public long Id { get; set; }
     }
 }

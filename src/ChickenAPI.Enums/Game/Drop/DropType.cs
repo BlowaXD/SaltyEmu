@@ -4,6 +4,6 @@
     {
         NpcMonster,
         MapType,
-        Global,
+        Global
     }
 }

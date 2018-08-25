@@ -21,7 +21,6 @@ using ChickenAPI.Packets.CharacterSelectionScreen.Client;
 using ChickenAPI.Packets.Game.Server.Map;
 using ChickenAPI.Packets.Game.Server.Player;
 
-
 namespace NosSharp.PacketHandler
 {
     public class GameStartPacketHandler
@@ -47,11 +46,14 @@ namespace NosSharp.PacketHandler
             IEnumerable<CharacterQuicklistDto> quicklist = await CharacterQuicklistService.GetByCharacterIdAsync(session.CharacterId);
             IMapLayer mapLayer = MapManager.GetBaseMapLayer(dto.MapId);
             session.InitializeEntity(new PlayerEntity(session, dto, skills, quicklist));
-            session.SendPacket(new TitPacket { ClassType = "Adventurer", Name = dto.Name});
+            session.SendPacket(new TitPacket { ClassType = "Adventurer", Name = dto.Name });
             session.SendPacket(new SayPacket { Message = "┌------------------[SaltyEmu]------------------┐", Type = SayColorType.Yellow, VisualType = VisualType.Character });
-            session.SendPacket(new SayPacket { Message = $"XP     : {dto.LevelXp}/{AlgorithmService.GetLevelXp(dto.Class, dto.Level)}", Type = SayColorType.Yellow, VisualType = VisualType.Character });
-            session.SendPacket(new SayPacket { Message = $"JOBXP  : {dto.JobLevelXp}/{AlgorithmService.GetJobLevelXp(dto.Class, dto.Level)}", Type = SayColorType.Yellow, VisualType = VisualType.Character });
-            session.SendPacket(new SayPacket { Message = $"HEROXP : {dto.HeroXp}/{AlgorithmService.GetHeroLevelXp(dto.Class, dto.Level)}", Type = SayColorType.Yellow, VisualType = VisualType.Character });
+            session.SendPacket(new SayPacket
+                { Message = $"XP     : {dto.LevelXp}/{AlgorithmService.GetLevelXp(dto.Class, dto.Level)}", Type = SayColorType.Yellow, VisualType = VisualType.Character });
+            session.SendPacket(new SayPacket
+                { Message = $"JOBXP  : {dto.JobLevelXp}/{AlgorithmService.GetJobLevelXp(dto.Class, dto.Level)}", Type = SayColorType.Yellow, VisualType = VisualType.Character });
+            session.SendPacket(new SayPacket
+                { Message = $"HEROXP : {dto.HeroXp}/{AlgorithmService.GetHeroLevelXp(dto.Class, dto.Level)}", Type = SayColorType.Yellow, VisualType = VisualType.Character });
             session.SendPacket(new SayPacket { Message = "└----------------------------------------------┘", Type = SayColorType.Yellow, VisualType = VisualType.Character });
             session.SendPacket(new MapoutPacket());
             session.Player.TransferEntity(mapLayer);
@@ -65,8 +67,9 @@ namespace NosSharp.PacketHandler
             // scr 0
             for (byte i = 0; i < 10; i++)
             {
-                session.Player.SendPacket(new BnPacket { BnNumber = i, Message = $"SaltyEmu^{i}"});
+                session.Player.SendPacket(new BnPacket { BnNumber = i, Message = $"SaltyEmu^{i}" });
             }
+
             // exts
             // MlInfo
             // PClear
@@ -95,7 +98,6 @@ namespace NosSharp.PacketHandler
             session.SendPacket(session.Player.GeneratePairyPacket());
 
 
-
             // Session.SendPacket(Session.Character.GenerateGInfo());
             // Session.CurrentMapInstance?.Broadcast(Session.Character.GenerateGidx());
             // Session.SendPackets(Session.Character.GetFamilyHistory());
@@ -105,7 +107,6 @@ namespace NosSharp.PacketHandler
 
             // mails
             // quests
-
         }
     }
 }

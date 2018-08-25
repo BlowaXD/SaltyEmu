@@ -3,6 +3,6 @@
     public enum SlPacketType
     {
         WearSp = 0,
-        ChangePoints = 10,
+        ChangePoints = 10
     }
 }

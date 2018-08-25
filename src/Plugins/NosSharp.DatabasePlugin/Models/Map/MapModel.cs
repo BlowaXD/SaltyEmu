@@ -9,9 +9,6 @@ namespace NosSharp.DatabasePlugin.Models.Map
     [Table("_data_map")]
     public class MapModel : IMappedDto
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public long Id { get; set; }
         public string Name { get; set; }
         public bool AllowShop { get; set; }
         public bool AllowPvp { get; set; }
@@ -27,5 +24,9 @@ namespace NosSharp.DatabasePlugin.Models.Map
         public ICollection<MapDropModel> Drops { get; set; }
 
         public IEnumerable<MapNpcModel> Npcs { get; set; }
+
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public long Id { get; set; }
     }
 }

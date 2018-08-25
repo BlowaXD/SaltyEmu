@@ -1,6 +1,5 @@
 ﻿using System;
 using ChickenAPI.Core.i18n;
-using ChickenAPI.Enums;
 using ServiceStack.Redis;
 using ServiceStack.Redis.Generic;
 
@@ -8,12 +7,11 @@ namespace NosSharp.RedisSessionPlugin
 {
     public class RedisLanguageService : ILanguageService
     {
-        private readonly IRedisSet<string> _set;
         private readonly IRedisTypedClient<string> _client;
+        private readonly IRedisSet<string> _set;
 
         public RedisLanguageService(RedisConfiguration configuration)
         {
-
             _client = new RedisClient(new RedisEndpoint
             {
                 Host = configuration.Host,

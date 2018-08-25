@@ -17,9 +17,9 @@ namespace NosSharp.DatabasePlugin.Services.Base
     where TObject : class, ISynchronizedDto where TModel : class, ISynchronizedDto, new()
     {
         protected static readonly Logger Log = Logger.GetLogger<TModel>();
-        protected readonly IMapper Mapper;
         protected readonly NosSharpContext Context;
         protected readonly DbSet<TModel> DbSet;
+        protected readonly IMapper Mapper;
 
         public SynchronizedRepositoryBase(NosSharpContext context, IMapper mapper)
         {
@@ -94,6 +94,7 @@ namespace NosSharp.DatabasePlugin.Services.Base
                 {
                     return;
                 }
+
                 List<TModel> tmp = enumerable.Where(s => s != null).Select(Mapper.Map<TModel>).ToList();
                 using (IDbContextTransaction transaction = Context.Database.BeginTransaction())
                 {
@@ -103,6 +104,7 @@ namespace NosSharp.DatabasePlugin.Services.Base
                     });
                     transaction.Commit();
                 }
+
                 Context.SaveChanges();
             }
             catch (Exception e)
@@ -139,6 +141,7 @@ namespace NosSharp.DatabasePlugin.Services.Base
                     });
                     transaction.Commit();
                 }
+
                 Context.SaveChanges();
             }
             catch (Exception e)
@@ -217,6 +220,7 @@ namespace NosSharp.DatabasePlugin.Services.Base
                     });
                     transaction.Commit();
                 }
+
                 Context.SaveChanges();
                 Log.Info($"[SAVE] {tmp.Count} {typeof(TObject).Name} saved");
             }
@@ -254,6 +258,7 @@ namespace NosSharp.DatabasePlugin.Services.Base
                     });
                     transaction.Commit();
                 }
+
                 Context.SaveChanges();
             }
             catch (Exception e)

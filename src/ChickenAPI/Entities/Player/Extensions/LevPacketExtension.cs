@@ -27,7 +27,7 @@ namespace ChickenAPI.Game.Entities.Player
                 Reputation = player.Character.Reput,
                 Cp = player.GetCp(),
                 HeroLevelXp = (int)exp.HeroLevelXp,
-                HeroLevelXpMax = Algorithm.GetHeroLevelXp(player.Character.Class, exp.HeroLevel),
+                HeroLevelXpMax = Algorithm.GetHeroLevelXp(player.Character.Class, exp.HeroLevel)
             };
         }
     }

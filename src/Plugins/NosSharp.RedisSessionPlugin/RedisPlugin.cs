@@ -28,14 +28,14 @@ namespace NosSharp.RedisSessionPlugin
 
         public void OnLoad()
         {
-            Log.Info($"Loading...");
+            Log.Info("Loading...");
             _configuration = ConfigurationHelper.Load<RedisConfiguration>(_configurationPath, true);
             ChickenContainer.Builder.Register(s => new RedisSessionService(_configuration)).As<ISessionService>();
-            Log.Info($"ISessionService registered !");
+            Log.Info("ISessionService registered !");
             ChickenContainer.Builder.Register(s => new RedisServerApi(_configuration)).As<IServerApiService>();
-            Log.Info($"IServerApiService registered !");
+            Log.Info("IServerApiService registered !");
             ChickenContainer.Builder.Register(s => new RedisLanguageService(_configuration)).As<ILanguageService>();
-            Log.Info($"ILanguageService registered !");
+            Log.Info("ILanguageService registered !");
         }
 
         public void ReloadConfig()

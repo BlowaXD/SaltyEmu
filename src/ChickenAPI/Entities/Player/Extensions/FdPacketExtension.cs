@@ -189,15 +189,12 @@ namespace ChickenAPI.Game.Entities.Player.Extensions
             return player.Character.Reput <= 5000000 ? CharacterRep.EliteB : CharacterRep.EliteR;
         }
 
-        public static FdPacket GenerateFdPacket(this IPlayerEntity player)
+        public static FdPacket GenerateFdPacket(this IPlayerEntity player) => new FdPacket
         {
-            return new FdPacket
-            {
-                Dignity = (int)player.Character.Dignity,
-                Reput = player.Character.Reput,
-                DignityIcon = Math.Abs((int)player.GetDignityIcon()),
-                ReputIcon = (int)player.GetReputIcon(),
-            };
-        }
+            Dignity = (int)player.Character.Dignity,
+            Reput = player.Character.Reput,
+            DignityIcon = Math.Abs((int)player.GetDignityIcon()),
+            ReputIcon = (int)player.GetReputIcon()
+        };
     }
 }

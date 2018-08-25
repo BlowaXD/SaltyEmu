@@ -1,5 +1,5 @@
-﻿using ChickenAPI.Core.Utils;
-using System;
+﻿using System;
+using ChickenAPI.Core.Utils;
 
 namespace NosSharp.Pathfinder.Utils
 {
@@ -20,7 +20,7 @@ namespace NosSharp.Pathfinder.Utils
         public Node Parent { get; set; }
 
         /// <summary>
-        /// Compare the F properties with another Node
+        ///     Compare the F properties with another Node
         /// </summary>
         /// <param name="obj"></param>
         /// <returns></returns>

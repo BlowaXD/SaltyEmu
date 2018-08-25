@@ -4,15 +4,13 @@ using System.ComponentModel.DataAnnotations.Schema;
 using ChickenAPI.Core.Data.TransferObjects;
 using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Enums.Game.Items;
+using NosSharp.DatabasePlugin.Models.Item;
 
 namespace NosSharp.DatabasePlugin.Models.Character
 {
     [Table("character_item")]
     public class CharacterItemModel : ISynchronizedDto
     {
-        [Key]
-        public Guid Id { get; set; }
-
         public CharacterModel Character { get; set; }
 
         [ForeignKey(nameof(CharacterId))]
@@ -37,6 +35,24 @@ namespace NosSharp.DatabasePlugin.Models.Character
 
         public byte Design { get; set; }
 
+        #region Jewels
+
+        /// <summary>
+        ///     Number of inserted cellon for jewels
+        /// </summary>
+        public byte Cellon { get; set; }
+
+        #endregion
+
+        #region GlovesAndBoots
+
+        public byte Sum { get; set; }
+
+        #endregion
+
+        [Key]
+        public Guid Id { get; set; }
+
         #region WeaponsAndArmors
 
         public byte Rarity { get; set; }
@@ -44,7 +60,7 @@ namespace NosSharp.DatabasePlugin.Models.Character
         public byte Upgrade { get; set; }
 
         /// <summary>
-        /// Remaining ammo for archers primary weapon or swordsmen secondary weapon
+        ///     Remaining ammo for archers primary weapon or swordsmen secondary weapon
         /// </summary>
         public byte Ammo { get; set; }
 
@@ -76,15 +92,6 @@ namespace NosSharp.DatabasePlugin.Models.Character
 
         #endregion
 
-        #region Jewels
-
-        /// <summary>
-        /// Number of inserted cellon for jewels
-        /// </summary>
-        public byte Cellon { get; set; }
-
-        #endregion
-
         #region SpecialistCards
 
         public byte Level { get; set; }
@@ -102,12 +109,6 @@ namespace NosSharp.DatabasePlugin.Models.Character
         public byte ElementPoints { get; set; }
 
         public byte HpMpPoints { get; set; }
-
-        #endregion
-
-        #region GlovesAndBoots
-
-        public byte Sum { get; set; }
 
         #endregion
 

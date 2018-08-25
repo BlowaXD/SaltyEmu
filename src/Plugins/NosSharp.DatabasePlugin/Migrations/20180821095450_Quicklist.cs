@@ -8,14 +8,14 @@ namespace NosSharp.DatabasePlugin.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AlterColumn<int>(
-                name: "ElementType",
-                table: "character_item",
+                "ElementType",
+                "character_item",
                 nullable: false,
                 oldClrType: typeof(byte));
 
             migrationBuilder.CreateTable(
-                name: "quicklist",
-                columns: table => new
+                "quicklist",
+                table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
                     CharacterId = table.Column<long>(nullable: false),
@@ -30,27 +30,27 @@ namespace NosSharp.DatabasePlugin.Migrations
                 {
                     table.PrimaryKey("PK_quicklist", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_quicklist_character_CharacterId",
-                        column: x => x.CharacterId,
-                        principalTable: "character",
-                        principalColumn: "Id",
+                        "FK_quicklist_character_CharacterId",
+                        x => x.CharacterId,
+                        "character",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_quicklist_CharacterId",
-                table: "quicklist",
-                column: "CharacterId");
+                "IX_quicklist_CharacterId",
+                "quicklist",
+                "CharacterId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "quicklist");
+                "quicklist");
 
             migrationBuilder.AlterColumn<byte>(
-                name: "ElementType",
-                table: "character_item",
+                "ElementType",
+                "character_item",
                 nullable: false,
                 oldClrType: typeof(int));
         }

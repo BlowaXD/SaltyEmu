@@ -10,9 +10,6 @@ namespace NosSharp.BasicAlgorithm.NpcMonsterAlgorithms
         {
         }
 
-        public int GetStat(NpcMonsterRaceType type, byte level, bool isMonster)
-        {
-            return 0;
-        }
+        public int GetStat(NpcMonsterRaceType type, byte level, bool isMonster) => 0;
     }
 }

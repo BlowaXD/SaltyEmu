@@ -8,11 +8,8 @@ namespace NosSharp.DatabasePlugin.Models.Character
     [Table("character_mate")]
     public class CharacterMateModel : IMappedDto
     {
-        [Key]
-        public long Id { get; set; }
-        
         public CharacterModel Character { get; set; }
-        
+
         [ForeignKey("FK_CHARACTERMATE_TO_CHARACTER")]
         public long CharacterId { get; set; }
 
@@ -50,5 +47,8 @@ namespace NosSharp.DatabasePlugin.Models.Character
         public long NpcMonsterId { get; set; }
 
         public short Skin { get; set; }
+
+        [Key]
+        public long Id { get; set; }
     }
 }
