@@ -2,7 +2,7 @@
 
 namespace ChickenAPI.Game.Permissions
 {
-    public abstract class RankBase : IRank
+    public abstract class PermissibleRankBase : IPermissibleRank
     {
         protected HashSet<string> PermissionsString = new HashSet<string>();
         protected HashSet<PermissionType> PermissionsTypes = new HashSet<PermissionType>();

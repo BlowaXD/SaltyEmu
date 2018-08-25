@@ -1,10 +1,10 @@
 ﻿namespace ChickenAPI.Game.Permissions.Ranks
 {
-    public class UserRank : RankBase
+    public class UserPermissibleRank : PermissibleRankBase
     {
         public override string Name => "User";
 
-        public UserRank()
+        public UserPermissibleRank()
         {
             #region Inventory
 

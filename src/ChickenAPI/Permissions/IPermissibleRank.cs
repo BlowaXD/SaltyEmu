@@ -1,9 +1,9 @@
 ﻿namespace ChickenAPI.Game.Permissions
 {
-    public interface IRank
+    public interface IPermissibleRank
     {
         /// <summary>
-        /// Rank's name
+        /// PermissibleRank's name
         /// </summary>
         string Name { get; }
 
@@ -17,7 +17,7 @@
         bool HasPermission(string permission);
 
         /// <summary>
-        /// Grant the permission to the actual rank
+        /// Grants the permission to the actual rank
         /// </summary>
         /// <param name="permission"></param>
         void GrantPermission(PermissionType permission);

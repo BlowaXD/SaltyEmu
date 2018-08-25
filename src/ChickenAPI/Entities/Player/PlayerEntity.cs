@@ -81,7 +81,7 @@ namespace ChickenAPI.Game.Entities.Player
         private static IItemInstanceService ItemInstance => new Lazy<IItemInstanceService>(() => ChickenContainer.Instance.Resolve<IItemInstanceService>()).Value;
         private static ICharacterService CharacterService => new Lazy<ICharacterService>(() => ChickenContainer.Instance.Resolve<ICharacterService>()).Value;
         private static ICharacterSkillService CharacterSkillService => new Lazy<ICharacterSkillService>(() => ChickenContainer.Instance.Resolve<ICharacterSkillService>()).Value;
-        private static ICharacterQuickListService CharacterQuickListService => new Lazy<ICharacterQuickListService>(() => ChickenContainer.Instance.Resolve<ICharacterQuickListService>()).Value;
+        private static ICharacterQuickListService CharacterQuicklistService => new Lazy<ICharacterQuickListService>(() => ChickenContainer.Instance.Resolve<ICharacterQuickListService>()).Value;
 
         public SkillComponent Skills { get; }
         public MovableComponent Movable { get; }
@@ -171,7 +171,7 @@ namespace ChickenAPI.Game.Entities.Player
             Task.WaitAll(
                 CharacterService.SaveAsync(Character),
                 // CharacterSkillService.SaveAsync(Character.Skills),
-                // CharacterQuicklistService.SaveAsync(Character.Quicklist),
+                CharacterQuicklistService.SaveAsync(Quicklist.Quicklist),
                 ItemInstance.SaveAsync(Inventory.GetItems())
             );
             Log.Info($"[SAVE] {Character.Name} saved in {(DateTime.UtcNow - before).TotalMilliseconds} ms");

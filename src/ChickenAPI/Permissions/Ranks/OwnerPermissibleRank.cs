@@ -1,6 +1,6 @@
 ﻿namespace ChickenAPI.Game.Permissions.Ranks
 {
-    public class OwnerRank : IRank
+    public class OwnerPermissibleRank : IPermissibleRank
     {
         public string Name => "Owner";
         public bool HasPermission(PermissionType permission) => true;

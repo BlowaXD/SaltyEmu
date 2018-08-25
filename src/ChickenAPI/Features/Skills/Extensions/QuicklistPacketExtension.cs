@@ -21,10 +21,10 @@ namespace ChickenAPI.Game.Features.Skills.Extensions
             for (int i = 0; i < 60; i++)
             {
                 tmp.Append(' ');
-                CharacterQuicklistDto dto;
+                CharacterQuicklistDto dto = player.Quicklist.Quicklist[i];
                 if (i < 30)
                 {
-                    if (!player.Quicklist.Q1.TryGetValue(i, out dto))
+                    if (dto == null)
                     {
                         tmp.Append("0.255.-1");
                         continue;
@@ -32,7 +32,7 @@ namespace ChickenAPI.Game.Features.Skills.Extensions
                 }
                 else
                 {
-                    if (!player.Quicklist.Q2.TryGetValue(i, out dto))
+                    if (dto == null)
                     {
                         tmp.Append("7.7.-1");
                         continue;

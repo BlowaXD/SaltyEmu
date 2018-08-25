@@ -33,7 +33,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NosSharp.Pathfinder", "src\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{4E7156D8-18DC-4638-9C9B-5BE5CFF76F13}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChickenAPI.Game.Test", "test\ChickenAPI.Game.Test\ChickenAPI.Game.Test.csproj", "{BF3759CC-C65F-4F35-AF88-5200D704CC89}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChickenAPI.Game.Test", "test\ChickenAPI.Game.Test\ChickenAPI.Game.Test.csproj", "{BF3759CC-C65F-4F35-AF88-5200D704CC89}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

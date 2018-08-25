@@ -11,7 +11,7 @@ namespace ChickenAPI.Game.Data.TransferObjects.Character
         /// </summary>
         public long Id { get; set; }
 
-        public IRank Rank { get; set; }
+        public IPermissibleRank PermissibleRank { get; set; }
 
         public AuthorityType Authority { get; set; }
 

@@ -2,7 +2,7 @@
 {
     public interface IRankService
     {
-        IRank GetPermissionByName(string name);
-        T GetPermissionByName<T>(string name) where T : IRank;
+        IPermissibleRank GetPermissionByName(string name);
+        T GetPermissionByName<T>(string name) where T : IPermissibleRank;
     }
 }
