@@ -38,8 +38,6 @@ RUN mkdir /server && \
 WORKDIR /server/
 
 COPY --from=builder /saltyemu/dist/ .
-COPY ./database.conf ./plugins/config/NosSharpDatabasePlugin/conf.json
-COPY ./redis.conf ./plugins/config/RedisPlugin/conf.json
 
 VOLUME /server/plugins
 

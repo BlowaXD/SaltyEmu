@@ -1,4 +1,3 @@
-image: docker:stable
 services:
   - docker:dind
 
@@ -17,16 +16,19 @@ variables:
   CONTAINER_WORLD_BUILD_IMAGE: $CONTAINER_REGISTRY/saltyemu-world:$CI_BUILD_REF_NAME
   CONTAINER_WORLD_RELEASE_IMAGE: $CONTAINER_REGISTRY/saltyemu-world:latest
 
-
-  
+ 
 build_project:
+  image: microsoft/dotnet:2.1-sdk-alpine
   stage: build
   script:
    - dotnet restore
    - dotnet build
-  
+
+
+# Docker Building
 build_docker:
   stage: build
+  image: docker:stable
   tags:
     - docker
   only:
@@ -37,17 +39,19 @@ build_docker:
     - docker build -t $CONTAINER_WORLD_BUILD_IMAGE world/
     - docker push $CONTAINER_WORLD_BUILD_IMAGE
 
+# Docker Building ${docker}:latest
+# master branch only
 release_docker:
   stage: release
+  image: docker:stable
   tags:
     - docker
   only:
-    - tags
+    - master
   before_script:
     - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
   script:
-    - docker pull $CONTAINER_WORLD_BUILD_IMAGE
-    - docker tag $CONTAINER_WORLD_BUILD_IMAGE $CONTAINER_WORLD_RELEASE_IMAGE
+    - docker build -t $CONTAINER_WORLD_RELEASE_IMAGE world/
     - docker push $CONTAINER_WORLD_RELEASE_IMAGE
   dependencies:
     - build_docker
