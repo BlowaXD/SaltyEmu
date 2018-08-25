@@ -13,27 +13,41 @@ variables:
   REVISION: 1
   DOCKER_VERSION: "18.04"
   DOCKER_HEALTHCHECK_TIMEOUT: "60"
-  CONTAINER_TEST_IMAGE: registry.gitlab.com/gamefield/noswings/server/world:$CI_BUILD_REF_NAME
-  CONTAINER_RELEASE_IMAGE: registry.gitlab.com/gamefield/noswings/server/world:latest
+  CONTAINER_REGISTRY: registry.gitlab.com/gamefield/saltynos/Server/World
+  CONTAINER_WORLD_BUILD_IMAGE: $CONTAINER_REGISTRY/saltyemu-world:$CI_BUILD_REF_NAME
+  CONTAINER_WORLD_RELEASE_IMAGE: $CONTAINER_REGISTRY/saltyemu-world:latest
 
-before_script:
-  - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
 
+  
+build_project:
+  stage: build
+  script:
+   - dotnet restore
+   - dotnet build
+  
 build_docker:
   stage: build
   tags:
     - docker
+  only:
+    - tags
+  before_script:
+    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
   script:
-    - docker build -t $CONTAINER_TEST_IMAGE .
-    - docker push $CONTAINER_TEST_IMAGE
+    - docker build -t $CONTAINER_WORLD_BUILD_IMAGE world/
+    - docker push $CONTAINER_WORLD_BUILD_IMAGE
 
-release-image:
+release_docker:
   stage: release
   tags:
     - docker
-  script:
-    - docker pull $CONTAINER_TEST_IMAGE
-    - docker tag $CONTAINER_TEST_IMAGE $CONTAINER_RELEASE_IMAGE
-    - docker push $CONTAINER_RELEASE_IMAGE
   only:
-    - master
+    - tags
+  before_script:
+    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
+  script:
+    - docker pull $CONTAINER_WORLD_BUILD_IMAGE
+    - docker tag $CONTAINER_WORLD_BUILD_IMAGE $CONTAINER_WORLD_RELEASE_IMAGE
+    - docker push $CONTAINER_WORLD_RELEASE_IMAGE
+  dependencies:
+    - build_docker
