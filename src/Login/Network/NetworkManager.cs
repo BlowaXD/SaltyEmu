@@ -25,14 +25,15 @@ namespace LoginServer.Network
             {
                 var bootstrap = new ServerBootstrap();
                 bootstrap
+                    .Option(ChannelOption.SoBacklog, 100)
                     .Group(bossGroup, workerGroup)
                     .Channel<TcpServerSocketChannel>()
                     .ChildHandler(new ActionChannelInitializer<ISocketChannel>(channel =>
                     {
                         IChannelPipeline pipeline = channel.Pipeline;
-                        pipeline.AddLast((MessageToMessageEncoder<string>)factory.GetEncoder());
-                        pipeline.AddLast((MessageToMessageDecoder<IByteBuffer>)factory.GetDecoder());
-                        pipeline.AddLast(new ClientSession(channel));
+                        pipeline.AddLast("encoder", (MessageToMessageEncoder<string>)factory.GetEncoder());
+                        pipeline.AddLast("decoder", (MessageToMessageDecoder<IByteBuffer>)factory.GetDecoder());
+                        pipeline.AddLast("session", new ClientSession(channel));
                     }));
 
                 IChannel bootstrapChannel = await bootstrap.BindAsync(port).ConfigureAwait(false);

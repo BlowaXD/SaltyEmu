@@ -24,13 +24,12 @@ namespace Login.Network
 
 
         private static volatile IChannelGroup _group;
-        private readonly ISocketChannel _channel;
+        private readonly IChannel _channel;
         private IPEndPoint _endPoint;
 
-        public ClientSession(ISocketChannel channel)
+        public ClientSession(IChannel channel)
         {
             _channel = channel;
-            _endPoint = channel.RemoteAddress as IPEndPoint;
         }
 
         public override void ChannelRegistered(IChannelHandlerContext context)
@@ -82,12 +81,12 @@ namespace Login.Network
         {
             Log.Info($"[{_endPoint.Address}][SOCKET_RELEASE] Client has been released");
             _channel.DisconnectAsync().Wait();
-            _channel.CloseAsync().Wait();
         }
 
         private void SendPacket(string packet)
         {
-            _channel.WriteAsync(packet).Wait();
+            Log.Info($"[{_endPoint.Address}][PACKET_SENT]");
+            _channel.WriteAsync(packet);
             _channel.Flush();
         }
 
