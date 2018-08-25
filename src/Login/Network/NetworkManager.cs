@@ -40,9 +40,10 @@ namespace LoginServer.Network
                 Log.Info($"-> PORT : {port}");
 
                 while (Console.ReadLine() != "quit")
-		{
-			Thread.Sleep(2000);
-		}
+                {
+                    Thread.Sleep(2000);
+                }
+
                 await bootstrapChannel.CloseAsync().ConfigureAwait(false);
             }
             catch (Exception ex)

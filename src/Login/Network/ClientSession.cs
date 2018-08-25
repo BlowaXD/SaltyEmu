@@ -47,8 +47,8 @@ namespace LoginServer.Network
                 }
             }
 
-            Log.Info("Client Connected");
             _endPoint = _channel.RemoteAddress as IPEndPoint;
+            Log.Info($"[{_endPoint?.Address}][SOCKET_ACCEPT] Client has been accepted");
             g.Add(context.Channel);
         }
 
@@ -76,7 +76,20 @@ namespace LoginServer.Network
             return packetBuilder.ToString();
         }
 
-        private string GetFailPacket(AuthResponse response) => "";
+        private string GetFailPacket(AuthResponse response) => $"failc {(byte)response}";
+
+        private void Disconnect()
+        {
+            Log.Info($"[{_endPoint.Address}][SOCKET_RELEASE] Client has been released");
+            _channel.DisconnectAsync().Wait();
+        }
+
+        private void SendPacket(string packet)
+        {
+            _channel.WriteAsync(packet).Wait();
+            _channel.Flush();
+        }
+
 
         public override void ChannelRead(IChannelHandlerContext context, object message)
         {
@@ -90,10 +103,9 @@ namespace LoginServer.Network
                 string[] packet = buff.Split(' ');
                 if (packet.Length <= 4 || packet[0] != "NoS0575")
                 {
-                    _channel.WriteAsync(GetFailPacket(AuthResponse.CantConnect)).Wait();
-                    _channel.Flush();
-                    _channel.DisconnectAsync().Wait();
-                    context.CloseAsync().Wait();
+                    Log.Info($"[{_endPoint.Address}][CONNECT_REQUEST] Wrong packet");
+                    SendPacket(GetFailPacket(AuthResponse.CantConnect));
+                    Disconnect();
                     return;
                 }
 
@@ -102,21 +114,17 @@ namespace LoginServer.Network
                 AccountDto dto = AccountService.GetByName(accountName.ToLower());
                 if (dto == null)
                 {
-                    Log.Info($"Not found {accountName}");
-                    _channel.WriteAsync("failc 5").Wait();
-                    _channel.Flush();
-                    _channel.DisconnectAsync().Wait();
-                    context.CloseAsync().Wait();
+                    Log.Info($"[{_endPoint.Address}][CONNECT_REQUEST] {accountName} Not found in database");
+                    SendPacket(GetFailPacket(AuthResponse.AccountOrPasswordWrong));
+                    Disconnect();
                     return;
                 }
 
                 if (!string.Equals(dto.Password, passwordHash, StringComparison.CurrentCultureIgnoreCase))
                 {
-                    Log.Info($"Password does not match for {dto.Name}");
-                    _channel.WriteAsync("failc 5").Wait();
-                    _channel.Flush();
-                    _channel.DisconnectAsync().Wait();
-                    context.CloseAsync().Wait();
+                    Log.Info($"[{_endPoint.Address}][CONNECT_REQUEST] {accountName} Wrong password");
+                    SendPacket(GetFailPacket(AuthResponse.AccountOrPasswordWrong));
+                    Disconnect();
                     return;
                 }
 
@@ -124,26 +132,21 @@ namespace LoginServer.Network
 
                 if (response != AuthResponse.Ok)
                 {
-                    Log.Info($"Password does not match for {dto.Name}");
-                    _channel.WriteAndFlushAsync(GetFailPacket(response)).Wait();
-                    _channel.Flush();
-                    _channel.DisconnectAsync().Wait();
-                    context.CloseAsync().Wait();
+                    Log.Info($"[{_endPoint.Address}][CONNECT_REQUEST] MAINTENANCE MODE");
+                    SendPacket(GetFailPacket(AuthResponse.AccountOrPasswordWrong));
+                    Disconnect();
                     return;
                 }
 
                 PlayerSessionDto session = SessionService.GetByAccountName(accountName);
                 if (session != null && session.State == PlayerSessionState.Connected)
                 {
-                    Log.Info("session already claimed");
-                    _channel.WriteAndFlushAsync(GetFailPacket(AuthResponse.AlreadyConnected)).Wait();
-                    _channel.Flush();
-                    _channel.DisconnectAsync().Wait();
-                    context.CloseAsync().Wait();
+                    Log.Info($"[{_endPoint.Address}][CONNECT_REQUEST] {accountName} already connected on World {session.WorldServerId}");
+                    SendPacket(GetFailPacket(AuthResponse.AlreadyConnected));
+                    Disconnect();
                     return;
                 }
 
-                Log.Info($"[CONNECTED] Account {accountName} with IP : {_endPoint.Address}");
 
                 if (session == null)
                 {
@@ -154,14 +157,14 @@ namespace LoginServer.Network
                         State = PlayerSessionState.Unauthed
                     };
                     SessionService.RegisterSession(session);
+                    Log.Info($"[{_endPoint.Address}][CONNECT_ACCEPT] {accountName} waiting for world endpoint");
                 }
 
                 IEnumerable<WorldServerDto> test = ServerApi.GetServers();
+                SendPacket(GenerateWorldListPacket(accountName, session.Id, test));
 
-                _channel.WriteAndFlushAsync(GenerateWorldListPacket(accountName, session.Id, test)).Wait();
-                _channel.Flush();
-                _channel.DisconnectAsync().Wait();
-                context.CloseAsync().Wait();
+                Log.Info($"[{_endPoint.Address}][CONNECT_ACCEPT] Server list sent to {accountName}");
+                Disconnect();
             }
             catch
             {
@@ -173,7 +176,6 @@ namespace LoginServer.Network
 
         public override void ChannelUnregistered(IChannelHandlerContext context)
         {
-            Log.Info("[DISCONNECT]");
             context.CloseAsync();
         }
 
