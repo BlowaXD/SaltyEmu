@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using ChickenAPI.Core.Logging;
 using DotNetty.Buffers;
@@ -38,7 +39,10 @@ namespace LoginServer.Network
                 Log.Info($"[LISTENING] Server is listening");
                 Log.Info($"-> PORT : {port}");
 
-                while (Console.ReadLine() != "quit");
+                while (Console.ReadLine() != "quit")
+		{
+			Thread.Sleep(2000);
+		}
                 await bootstrapChannel.CloseAsync().ConfigureAwait(false);
             }
             catch (Exception ex)
