@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Text;
 using ChickenAPI.Game.Data.TransferObjects.Character;
 using ChickenAPI.Game.Entities.Player;
+using ChickenAPI.Game.Features.Quicklist;
 using ChickenAPI.Packets.Game.Server.Player;
 
 namespace ChickenAPI.Game.Features.Skills.Extensions
@@ -35,9 +37,10 @@ namespace ChickenAPI.Game.Features.Skills.Extensions
                         tmp.Append("7.7.-1");
                         continue;
                     }
+
                 }
 
-                string lel = $"{(dto.IsSkill ? 0 : 1)}.{dto.EnumType}.{dto.RelatedSlot}";
+                string lel = $"{(dto.IsSkill ? 0 : 1)}.{dto.EnumType}.{dto.Slot}";
                 if (i < 30)
                 {
                     tmp.Append(lel);

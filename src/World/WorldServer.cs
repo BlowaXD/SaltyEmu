@@ -17,6 +17,7 @@ using ChickenAPI.Game.Features.Chat;
 using ChickenAPI.Game.Features.Effects;
 using ChickenAPI.Game.Features.Groups;
 using ChickenAPI.Game.Features.Inventory;
+using ChickenAPI.Game.Features.Quicklist;
 using ChickenAPI.Game.Features.Shops;
 using ChickenAPI.Game.Features.Visibility;
 using ChickenAPI.Game.Managers;
@@ -195,6 +196,7 @@ namespace World
             eventManager.Register(new InventoryEventHandler());
             eventManager.Register(new VisibilityEventHandler());
             eventManager.Register(new ShopEventHandler());
+            eventManager.Register(new QuickListEventHandler());
         }
 
         private static void Exit(object sender, EventArgs e)
