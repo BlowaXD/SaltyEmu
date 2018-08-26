@@ -3,6 +3,7 @@ using ChickenAPI.Core.ECS.Entities;
 using ChickenAPI.Core.Logging;
 using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Enums.Packets;
+using ChickenAPI.Game.Data.TransferObjects.Skills;
 using ChickenAPI.Game.Entities;
 using ChickenAPI.Game.Entities.Monster;
 using ChickenAPI.Game.Entities.Npc;
@@ -37,6 +38,8 @@ namespace NosSharp.PacketHandler.Skill
                     break;
             }
 
+            SkillDto tmp = player.Skills.Skills.Values.FirstOrDefault(s => s.CastId == packet.CastId);
+
             if (target == null)
             {
 
@@ -60,11 +63,11 @@ namespace NosSharp.PacketHandler.Skill
                 TargetId = packet.TargetId,
                 TargetVisualType = packet.TargetVisualType,
                 TargetIsAlive = true,
-                AttackAnimation = 0,
-                SkillCooldown = 0,
-                SkillEffect = 0,
-                SkillVnum = 0,
-                SkillTypeMinusOne = 0
+                AttackAnimation = tmp?.AttackAnimation ?? 0,
+                SkillCooldown = tmp?.Cooldown ?? 0,
+                SkillEffect = tmp?.Effect ?? 0,
+                SkillVnum = tmp?.Id ?? 0,
+                SkillTypeMinusOne = tmp?.SkillType - 1 ?? 0
             });
 
         }
