@@ -10,10 +10,10 @@ namespace ChickenAPI.Packets.Game.Client._NotYetSorted
         public long CastId { get; set; }
 
         [PacketIndex(1)]
-        public VisualType VisualType { get; set; }
+        public VisualType TargetVisualType { get; set; }
 
         [PacketIndex(2)]
-        public int MapMonsterId { get; set; }
+        public long TargetId { get; set; }
 
         [PacketIndex(3, IsOptional = true)]
         public short MapX { get; set; }
