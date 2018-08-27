@@ -9,14 +9,27 @@ namespace NosSharp.PacketHandler.Skill
     {
         public static void QuicklistPacketHandling(QsetPacket packet, IPlayerEntity player)
         {
-            player.NotifyEventHandler<QuickListEventHandler>(new GenerateQuickListArgs
+            if (packet.Data1.HasValue && packet.Data2.HasValue)
             {
-                IsSkill = packet.IsSkill,
-                Q1 = packet.Q1,
-                Q2 = packet.Q2,
-                Data1 = packet.Data1,
-                Data2 = packet.Data2
-            });
+                player.NotifyEventHandler<QuickListEventHandler>(new GenerateQuickListArgs
+                {
+                    Type = packet.Type,
+                    Q1 = packet.Q1,
+                    Q2 = packet.Q2,
+                    Data1 = packet.Data1.Value,
+                    Data2 = packet.Data2.Value
+                });
+            }
+            else
+            {
+                player.NotifyEventHandler<QuickListEventHandler>(new GenerateQuickListArgs
+                {
+                    Type = packet.Type,
+                    Q1 = packet.Q1,
+                    Q2 = packet.Q2
+                });
+            }
         }
+
     }
 }

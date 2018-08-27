@@ -22,12 +22,11 @@ namespace NosSharp.DatabasePlugin.Models.Character
 
         public short Position { get; set; }
 
-        public bool IsQ1 { get; set; }
+        public byte Q1 { get; set; }
+        public byte Q2 { get; set; }
 
-        public short EnumType { get; set; }
+        public short Type { get; set; }
 
         public short Slot { get; set; }
-
-        public bool IsSkill { get; set; }
     }
 }

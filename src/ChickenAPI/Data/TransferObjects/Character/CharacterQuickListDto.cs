@@ -13,12 +13,10 @@ namespace ChickenAPI.Game.Data.TransferObjects.Character
 
         public short Position { get; set; }
 
-        public bool IsQ1 { get; set; }
-
-        public short EnumType { get; set; }
+        public short Type { get; set; }
+        public short Q1 { get; set; }
+        public short Q2 { get; set; }
 
         public short Slot { get; set; }
-
-        public bool IsSkill { get; set; }
     }
 }

@@ -17,6 +17,7 @@ using ChickenAPI.Game.Features.Quicklist.Args;
 using ChickenAPI.Game.Data.TransferObjects.Character;
 using System.Text;
 using ChickenAPI.Packets.Game.Server.QuickList;
+using ChickenAPI.Game.Features.Quicklist.Extensions;
 
 namespace ChickenAPI.Game.Features.Quicklist
 {
@@ -29,65 +30,67 @@ namespace ChickenAPI.Game.Features.Quicklist
             switch (e)
             {
                 case GenerateQuickListArgs quicklistevent:
-                    SetQslot(entity as IPlayerEntity, quicklistevent);
+                    HandleQslot(entity as IPlayerEntity, quicklistevent);
                     break;
             }
         }
 
+        private static void HandleQslot(IPlayerEntity player, GenerateQuickListArgs args)
+        {
+            switch (args.Type)
+            {
+                case 0:
+                case 1:
+                    SetQslot(player, args);
+                    break;
+                case 2:
+                    SwitchQslot(player, args);
+                    break;
+                case 3:
+                    RemoveQslot(player, args);
+                    break;
+            }
+           
+        }
+
         private static void SetQslot(IPlayerEntity player, GenerateQuickListArgs args)
         {
-            bool type = args.IsSkill;
+            short type = args.Type;
             short q1 = args.Q1;
             short q2 = args.Q2;
             short data1 = args.Data1;
             short data2 = args.Data2;
 
+            // player.Quicklist.Quicklist.RemoveAll(n => n.Q1 == q1 && n.Q2 == q2 && (player.Character.UseSp ? n.Morph == player.Character.Morph : n.Morph == 0));
+
             player.Quicklist.Quicklist.Add(new CharacterQuicklistDto
             {
                 Id = Guid.NewGuid(),
                 CharacterId = player.Character.Id,
-                IsSkill = type,
-                IsQ1 = q1 != 0,
-                Slot = q1 != 0 ? q1 : q2,
-                EnumType = data1,
+                Type = type,
+                Q1 = q1,
+                Q2 = q2,
+                Slot = data1,
                 Position = data2,
                 // Morph = player.Character.UseSp ? (short)player.Character.Morph : (short)0
                 Morph = 0
             });
-            
-            player.SendPacket(GenerateQset(q1, q2, type, data1, data2));
+
+            player.SendPacket(QsetGenerationExtension.GenerateQset(args));
+
         }
 
-        public static QsetPacketReceive GenerateQset(short q1, short q2, bool type, short data1, short data2)
+        private static void RemoveQslot(IPlayerEntity player, GenerateQuickListArgs args)
         {
-            byte value = 0;
-            switch (type)
-            {
-                case true:
-                    value = 1;
-                    break;
-                case false:
-                    value = 0;
-                    break;
-            }
 
-            var tmp = new StringBuilder();
+            //  player.Quicklist.Quicklist.RemoveAll(n => n.Q1 == args.Q1 && n.Q2 == args.Q2 && (Session.Character.UseSp ? n.Morph == Session.Character.Morph : n.Morph == 0));
 
-            tmp.Append(' ');
-            tmp.Append(value);
-            tmp.Append('.');
-            tmp.Append(data1);
-            tmp.Append('.');
-            tmp.Append(data2);
-            tmp.Append('.');
-            tmp.Append("0");
+            player.SendPacket(QsetGenerationExtension.RemoveQset(args));
+        }
 
-            return new QsetPacketReceive
-            {
-                Q1 = q1,
-                Q2 = q2,
-                Data = tmp.ToString().Trim()
-            };
+        private static void SwitchQslot(IPlayerEntity player, GenerateQuickListArgs args)
+        {
+            player.SendPacket(QsetGenerationExtension.SwitchQset(player, args));
         }
     }
 }

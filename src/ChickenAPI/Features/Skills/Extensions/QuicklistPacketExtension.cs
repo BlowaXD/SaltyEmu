@@ -40,7 +40,7 @@ namespace ChickenAPI.Game.Features.Skills.Extensions
 
                 }
 
-                string lel = $"{(dto.IsSkill ? 0 : 1)}.{dto.EnumType}.{dto.Slot}";
+                string lel = $"{dto.Type}.{dto.Position}.{dto.Slot}";
                 if (i < 30)
                 {
                     tmp.Append(lel);

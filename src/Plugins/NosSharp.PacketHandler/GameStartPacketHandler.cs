@@ -87,7 +87,7 @@ namespace NosSharp.PacketHandler
             session.SendPacket(session.Player.GenerateCondPacket());
 
             session.SendPacket(session.Player.GenerateGoldPacket());
-            session.SendPackets(session.Player.GenerateQuicklistPacket());
+          //  session.SendPackets(session.Player.GenerateQuicklistPacket());
             // finit
             // Blinit
             // clinit
