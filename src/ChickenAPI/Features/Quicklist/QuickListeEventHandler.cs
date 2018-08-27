@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using ChickenAPI.Core.ECS.Entities;
 using ChickenAPI.Core.Events;
 using ChickenAPI.Core.Logging;
@@ -50,7 +51,6 @@ namespace ChickenAPI.Game.Features.Quicklist
                     RemoveQslot(player, args);
                     break;
             }
-           
         }
 
         private static void SetQslot(IPlayerEntity player, GenerateQuickListArgs args)
@@ -62,8 +62,7 @@ namespace ChickenAPI.Game.Features.Quicklist
             short data2 = args.Data2;
 
             // player.Quicklist.Quicklist.RemoveAll(n => n.Q1 == q1 && n.Q2 == q2 && (player.Character.UseSp ? n.Morph == player.Character.Morph : n.Morph == 0));
-
-            player.Quicklist.Quicklist.Add(new CharacterQuicklistDto
+            var tmp = new CharacterQuicklistDto
             {
                 Id = Guid.NewGuid(),
                 CharacterId = player.Character.Id,
@@ -74,23 +73,56 @@ namespace ChickenAPI.Game.Features.Quicklist
                 Position = data2,
                 // Morph = player.Character.UseSp ? (short)player.Character.Morph : (short)0
                 Morph = 0
-            });
+            };
+            player.Quicklist.Quicklist.Add(tmp);
 
-            player.SendPacket(QsetGenerationExtension.GenerateQset(args));
-
+            player.SendPacket(player.Quicklist.GenerateQSetPacket(tmp));
         }
 
         private static void RemoveQslot(IPlayerEntity player, GenerateQuickListArgs args)
         {
+            CharacterQuicklistDto qlFrom = player.Quicklist.Quicklist.FirstOrDefault(n => n.Q1 == args.Data1 && n.Q2 == args.Data2);
 
-            //  player.Quicklist.Quicklist.RemoveAll(n => n.Q1 == args.Q1 && n.Q2 == args.Q2 && (Session.Character.UseSp ? n.Morph == Session.Character.Morph : n.Morph == 0));
+            if (qlFrom == null)
+            {
+                // can't remove what does not exist
+                return;
+            }
 
-            player.SendPacket(QsetGenerationExtension.RemoveQset(args));
+            player.Quicklist.Quicklist.Remove(qlFrom);
+            player.SendPacket(player.Quicklist.GenerateRemoveQSetPacket(qlFrom.Q1, qlFrom.Q2));
         }
 
         private static void SwitchQslot(IPlayerEntity player, GenerateQuickListArgs args)
         {
-            player.SendPacket(QsetGenerationExtension.SwitchQset(player, args));
+            // check sp
+            CharacterQuicklistDto qlFrom = player.Quicklist.Quicklist.FirstOrDefault(n => n.Q1 == args.Data1 && n.Q2 == args.Data2);
+
+            if (qlFrom == null)
+            {
+                // modified packet
+                return;
+            }
+
+            // check sp
+            CharacterQuicklistDto qlTo = player.Quicklist.Quicklist.FirstOrDefault(s => s.Q1 == args.Q1 && s.Q2 == args.Q2);
+
+            if (qlTo == null)
+            {
+                player.SendPacket(player.Quicklist.GenerateRemoveQSetPacket(qlFrom.Q1, qlFrom.Q2));
+            }
+            else
+            {
+                qlTo.Q1 = qlFrom.Q1;
+                qlTo.Q1 = qlFrom.Q2;
+            }
+
+
+            qlFrom.Q1 = args.Data1;
+            qlFrom.Q2 = args.Data2;
+
+
+            player.SendPacket(player.Quicklist.GenerateQSetPacket(qlFrom));
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using Autofac;
 using ChickenAPI.Core.ECS.Entities;
 using ChickenAPI.Core.IoC;
@@ -36,16 +37,20 @@ namespace ChickenAPI.Game.Maps
 
             _random = ChickenContainer.Instance.Resolve<IRandomGenerator>();
 
-            List<Position<short>> cells = new List<Position<short>>();
-            for (short y = 0; y <= _map.Height; y++)
-            {
-                for (short x = 0; x <= _map.Width; x++)
-                {
-                    cells.Add(new Position<short> { X = x, Y = y });
-                }
-            }
 
-            WalkableGrid = cells.ToArray();
+            WalkableGrid = new Lazy<Position<short>[]>(() =>
+            {
+                List<Position<short>> cells = new List<Position<short>>();
+                for (short y = 0; y <= map.Height; y++)
+                {
+                    for (short x = 0; x <= map.Width; x++)
+                    {
+                        cells.Add(new Position<short> { X = x, Y = y });
+                    }
+                }
+
+                return cells.ToArray();
+            }, LazyThreadSafetyMode.ExecutionAndPublication).Value;
         }
 
         public long Id => _map.Id;
