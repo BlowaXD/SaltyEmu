@@ -37,7 +37,7 @@ namespace NosSharp.PacketHandler
             catch (Exception e)
             {
                 Log.Error("OnEnable", e);
-                throw;
+                return;
             }
         }
 
