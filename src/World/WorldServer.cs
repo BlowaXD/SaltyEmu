@@ -177,7 +177,9 @@ namespace World
                 return;
             }
 
+#if DEBUG
             InitializeAccounts();
+#endif
             InitializeEventHandlers();
 
             var packetHandler = new PacketHandlerPlugin();

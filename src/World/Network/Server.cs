@@ -125,7 +125,7 @@ namespace World.Network
 
         public static async Task RunServerAsync(int port)
         {
-            var bossGroup = new MultithreadEventLoopGroup(1);
+            var bossGroup = new MultithreadEventLoopGroup();
             var workerGroup = new MultithreadEventLoopGroup();
 
             try
