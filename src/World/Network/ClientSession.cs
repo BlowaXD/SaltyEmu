@@ -83,7 +83,10 @@ namespace World.Network
 
             g.Add(context.Channel);
             Ip = _channel.RemoteAddress as IPEndPoint;
-            Log.Info($"[CONNECT] {Ip?.Address}");
+
+#if DEBUG
+            Log.Debug($"[{Ip?.Address}][SOCKET_ACCEPT]");
+#endif
             SessionId = 0;
         }
 
@@ -106,10 +109,13 @@ namespace World.Network
             }
 
             string tmp = _packetFactory.Serialize(packet);
+
+#if DEBUG
             if (!tmp.StartsWith("mv") && !tmp.StartsWith("cond"))
             {
-                Log.Info($"[SEND_PACKET] {SessionId} : {tmp}");
+                Log.Debug($"[{Ip?.Address}][SOCKET_WRITE] {tmp}");
             }
+#endif
 
             _channel.WriteAsync(tmp);
             _channel.Flush();
@@ -183,6 +189,10 @@ namespace World.Network
 
         public void Disconnect()
         {
+#if DEBUG
+            Log.Debug($"[{Ip?.Address}][SOCKET_RELEASE]");
+#endif
+
             Log.Info($"[DISCONNECT] {Ip.Address}");
             Player?.EntityManager.UnregisterEntity(Player);
             Player?.Save();
@@ -201,7 +211,10 @@ namespace World.Network
         public override void ExceptionCaught(IChannelHandlerContext context, Exception exception)
         {
             Disconnect();
-            Log.Error("[EXCEPTION]", exception);
+
+#if DEBUG
+            Log.Error($"[{Ip?.Address}][SOCKET_EXCEPTION]", exception);
+#endif
             context.CloseAsync();
         }
 
@@ -337,14 +350,15 @@ namespace World.Network
             GamePacketHandler gameHandler = _packetHandler.GetGamePacketHandler(packetHeader);
             if (gameHandler == null)
             {
-                Log.Warn($"Handler for {packetHeader} not found !");
+#if DEBUG
+                Log.Warn($"[{Ip?.Address}][HANDLER_NOT_FOUND] {packetHeader}");
+#endif
                 return;
             }
 
-            if (packetHeader.StartsWith("npc_req"))
-            {
-                Log.Info($"packet : {packet}");
-            }
+#if DEBUG
+            Log.Debug($"[{Ip?.Address}][HANDLER_NOT_FOUND] {packet}");
+#endif
 
             IPacket packetT = _packetFactory.Deserialize(packet, gameHandler.PacketType, IsAuthenticated);
             _packetHandler.Handle((packetT, Player));
@@ -368,7 +382,9 @@ namespace World.Network
             CharacterScreenPacketHandler handler = _packetHandler.GetCharacterScreenPacketHandler(packetHeader);
             if (handler == null)
             {
-                Log.Warn($"[HANDLER_NOT_FOUND] {packetHeader}");
+#if DEBUG
+                Log.Warn($"[{Ip?.Address}][HANDLER_NOT_FOUND] {packetHeader}");
+#endif
                 return;
             }
 

@@ -138,6 +138,12 @@ namespace World.Network
                     .ChildHandler(new ClientSessionInitializer());
 
                 IChannel bootstrapChannel = await bootstrap.BindAsync(port).ConfigureAwait(false);
+
+
+                Log.Info($"[LISTENING] Server is listening");
+                Log.Info($"-> PORT   : {port}");
+                Log.Info($"-> TICK   : {TickRate}");
+                Log.Info($"-> WORLD  : {WorldGroup}");
                 ServerLoop();
 
                 await bootstrapChannel.CloseAsync().ConfigureAwait(false);
