@@ -2,6 +2,7 @@
 using NosSharp.DatabasePlugin.Models;
 using NosSharp.DatabasePlugin.Models.BCard;
 using NosSharp.DatabasePlugin.Models.Character;
+using NosSharp.DatabasePlugin.Models.Families;
 using NosSharp.DatabasePlugin.Models.Item;
 using NosSharp.DatabasePlugin.Models.Map;
 using NosSharp.DatabasePlugin.Models.NpcMonster;
@@ -17,6 +18,63 @@ namespace NosSharp.DatabasePlugin.Context
         }
 
         public DbSet<AccountModel> Accounts { get; set; }
+
+        #region Data
+
+        public DbSet<MapModel> Maps { get; set; }
+
+        public DbSet<SkillModel> Skills { get; set; }
+        public DbSet<SkillBCardModel> SkillBCards { get; set; }
+        public DbSet<CharacterQuicklistModel> QuickList { get; set; }
+
+        public DbSet<CardModel> Cards { get; set; }
+        public DbSet<CardBCardModel> CardBCards { get; set; }
+
+        public DbSet<ItemModel> Items { get; set; }
+        public DbSet<ItemBCardModel> ItemBCards { get; set; }
+
+        public DbSet<NpcMonsterModel> NpcMonster { get; set; }
+        public DbSet<NpcMonsterBCardModel> NpcMonsterBCards { get; set; }
+
+        #endregion
+
+        #region Character
+
+        public DbSet<CharacterModel> Characters { get; set; }
+
+        public DbSet<CharacterItemModel> CharacterItems { get; set; }
+
+        public DbSet<CharacterMateModel> CharacterMates { get; set; }
+
+        public DbSet<CharacterSkillModel> CharacterSkills { get; set; }
+
+        public DbSet<CharacterFamilyModel> CharacterFamily { get; set; }
+
+        #endregion
+
+        public DbSet<FamilyModel> Families { get; set; }
+
+        #region MapObjects
+
+        public DbSet<MapMonsterModel> MapNpcMonsters { get; set; }
+
+        public DbSet<MapPortalModel> MapPortals { get; set; }
+
+        #endregion
+
+        #region Shop
+
+        public DbSet<ShopModel> Shops { get; set; }
+
+        public DbSet<ShopItemModel> ShopItems { get; set; }
+
+        public DbSet<ShopItemModel> ShopSkills { get; set; }
+
+        public DbSet<RecipeModel> Recipes { get; set; }
+
+        public DbSet<RecipeItemModel> RecipeItems { get; set; }
+
+        #endregion
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -118,7 +176,17 @@ namespace NosSharp.DatabasePlugin.Context
                 .WithMany(s => s.BoundItems)
                 .HasForeignKey(s => s.BoundCharacterId);
 
+            modelBuilder.Entity<CharacterFamilyModel>()
+                .HasOne(s => s.Family)
+                .WithMany(s => s.FamilyMembers)
+                .HasForeignKey(s => s.FamilyId);
+
             #endregion
+
+            modelBuilder.Entity<FamilyModel>()
+                .HasMany(s => s.FamilyMembers)
+                .WithOne(s => s.Family)
+                .HasForeignKey(s => s.FamilyId);
 
             #region MapItems 
 
@@ -185,58 +253,5 @@ namespace NosSharp.DatabasePlugin.Context
 
             #endregion
         }
-
-        #region Data
-
-        public DbSet<MapModel> Maps { get; set; }
-
-        public DbSet<SkillModel> Skills { get; set; }
-        public DbSet<SkillBCardModel> SkillBCards { get; set; }
-        public DbSet<CharacterQuicklistModel> QuickList { get; set; }
-
-        public DbSet<CardModel> Cards { get; set; }
-        public DbSet<CardBCardModel> CardBCards { get; set; }
-
-        public DbSet<ItemModel> Items { get; set; }
-        public DbSet<ItemBCardModel> ItemBCards { get; set; }
-
-        public DbSet<NpcMonsterModel> NpcMonster { get; set; }
-        public DbSet<NpcMonsterBCardModel> NpcMonsterBCards { get; set; }
-
-        #endregion
-
-        #region Character
-
-        public DbSet<CharacterModel> Characters { get; set; }
-
-        public DbSet<CharacterItemModel> CharacterItems { get; set; }
-
-        public DbSet<CharacterMateModel> CharacterMates { get; set; }
-
-        public DbSet<CharacterSkillModel> CharacterSkills { get; set; }
-
-        #endregion
-
-        #region MapObjects
-
-        public DbSet<MapMonsterModel> MapNpcMonsters { get; set; }
-
-        public DbSet<MapPortalModel> MapPortals { get; set; }
-
-        #endregion
-
-        #region Shop
-
-        public DbSet<ShopModel> Shops { get; set; }
-
-        public DbSet<ShopItemModel> ShopItems { get; set; }
-
-        public DbSet<ShopItemModel> ShopSkills { get; set; }
-
-        public DbSet<RecipeModel> Recipes { get; set; }
-
-        public DbSet<RecipeItemModel> RecipeItems { get; set; }
-
-        #endregion
     }
 }
