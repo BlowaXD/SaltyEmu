@@ -3,6 +3,7 @@ using ChickenAPI.Enums;
 
 namespace ChickenAPI.Packets.Attributes
 {
+    [AttributeUsage(AttributeTargets.Class)]
     public class PacketHeaderAttribute : Attribute
     {
         #region Instantiation

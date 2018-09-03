@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace ChickenAPI.Packets.Attributes
 {
+    [AttributeUsage(AttributeTargets.Property)]
     public class PacketIndexAttribute : Attribute
     {
         #region Instantiation

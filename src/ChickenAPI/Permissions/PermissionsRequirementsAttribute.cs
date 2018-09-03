@@ -2,7 +2,6 @@
 
 namespace ChickenAPI.Game.Permissions
 {
-
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
     public sealed class PermissionsRequirementsAttribute : Attribute
     {
