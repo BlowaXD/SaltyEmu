@@ -18,6 +18,7 @@ using ChickenAPI.Game.Features.Inventory.Extensions;
 using ChickenAPI.Game.Features.Leveling;
 using ChickenAPI.Game.Features.Movement;
 using ChickenAPI.Game.Features.Movement.Extensions;
+using ChickenAPI.Game.Features.NpcDialog.Handlers;
 using ChickenAPI.Game.Features.Quicklist;
 using ChickenAPI.Game.Features.Skills;
 using ChickenAPI.Game.Features.Specialists;
@@ -93,9 +94,21 @@ namespace ChickenAPI.Game.Entities.Player
         public QuicklistComponent Quicklist { get; }
         public SpecialistComponent Sp { get; }
         public ISession Session { get; }
-        public bool HasPermission(PermissionType permission) => throw new NotImplementedException();
 
-        public bool HasPermission(string permissionKey) => throw new NotImplementedException();
+        public bool HasPermission(PermissionType permission)
+        {
+            return Session.Account.PermissibleRank.HasPermission(permission);
+        }
+
+        public bool HasPermission(string permissionKey)
+        {
+            return Session.Account.PermissibleRank.HasPermission(permissionKey);
+        }
+
+        public bool HasPermission(PermissionsRequirementsAttribute permissions)
+        {
+            return HasPermission(permissions.PermissionType) && HasPermission(permissions.PermissionName);
+        }
 
         public long LastPulse { get; }
 

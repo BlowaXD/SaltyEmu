@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using ChickenAPI.Core.ECS.Entities;
 using ChickenAPI.Game.Data.TransferObjects.Character;
+using ChickenAPI.Game.Features.NpcDialog.Handlers;
 using ChickenAPI.Game.Features.Visibility;
 using ChickenAPI.Game.Network;
 using ChickenAPI.Game.Permissions;
@@ -15,6 +16,7 @@ namespace ChickenAPI.Game.Entities.Player
 
         bool HasPermission(PermissionType permission);
         bool HasPermission(string permissionKey);
+        bool HasPermission(PermissionsRequirementsAttribute permissions);
 
         long LastPulse { get; }
 
