@@ -30,7 +30,13 @@
         RELATION_TELEPORT_FRIEND,
         RELATION_CHAT_FRIEND,
         RELATION_ADD_BLOCKED,
-        RELATION_REMOVE_BLOCKED
+        RELATION_REMOVE_BLOCKED,
+
+        #endregion
+
+        #region TELEPORT
+
+        NPC_DIALOG_TELEPORT,
 
         #endregion
     }

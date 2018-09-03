@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NosSharp.RedisSessionPlugin
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NosSharp.BasicPacketHandlerPlugin", "src\Plugins\NosSharp.PacketHandler\NosSharp.BasicPacketHandlerPlugin.csproj", "{C18EC263-D92D-4DB6-9D8C-02A6945FF5B5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NosSharp.DatabasePlugin", "src\Plugins\NosSharp.DatabasePlugin\NosSharp.DatabasePlugin.csproj", "{45E04475-DFC4-400A-9D35-44BAF5180ACD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SaltyEmu.DatabasePlugin", "src\Plugins\NosSharp.DatabasePlugin\SaltyEmu.DatabasePlugin.csproj", "{45E04475-DFC4-400A-9D35-44BAF5180ACD}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NosSharp.BasicAlgorithm", "src\Plugins\NosSharp.BasicAlgorithm\NosSharp.BasicAlgorithm.csproj", "{28B389E6-9863-4306-B32E-756A2C6D9E99}"
 EndProject

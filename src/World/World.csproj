@@ -25,7 +25,7 @@
   <ItemGroup>
     <ProjectReference Include="..\ChickenAPI\ChickenAPI.Game.csproj" />
     <ProjectReference Include="..\Plugins\NosSharp.BasicAlgorithm\NosSharp.BasicAlgorithm.csproj" />
-    <ProjectReference Include="..\Plugins\NosSharp.DatabasePlugin\NosSharp.DatabasePlugin.csproj" />
+    <ProjectReference Include="..\Plugins\NosSharp.DatabasePlugin\SaltyEmu.DatabasePlugin.csproj" />
     <ProjectReference Include="..\Plugins\NosSharp.PacketHandler\NosSharp.BasicPacketHandlerPlugin.csproj" />
     <ProjectReference Include="..\Plugins\NosSharp.Pathfinder\NosSharp.Pathfinder.csproj" />
     <ProjectReference Include="..\Plugins\NosSharp.RedisSessionPlugin\NosSharp.RedisSessionPlugin.csproj" />

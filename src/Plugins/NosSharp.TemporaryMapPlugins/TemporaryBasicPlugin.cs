@@ -5,6 +5,7 @@ using ChickenAPI.Core.Logging;
 using ChickenAPI.Core.Maths;
 using ChickenAPI.Core.Plugins;
 using ChickenAPI.Game.Data.AccessLayer.Item;
+using ChickenAPI.Game.Features.NpcDialog;
 using ChickenAPI.Game.Managers;
 
 namespace NosSharp.TemporaryMapPlugins
@@ -31,6 +32,7 @@ namespace NosSharp.TemporaryMapPlugins
             ChickenContainer.Builder.Register(c => new SimpleItemInstanceFactory(c.Resolve<IItemService>())).As<IItemInstanceFactory>();
             ChickenContainer.Builder.Register(s => new EventManager()).As<IEventManager>().SingleInstance();
             ChickenContainer.Builder.Register(_ => new RandomGenerator()).As<IRandomGenerator>().SingleInstance();
+            ChickenContainer.Builder.Register(s => new BasicNpcDialogHandler()).As<INpcDialogHandler>().SingleInstance();
             Log.Info("Loaded !");
         }
 
