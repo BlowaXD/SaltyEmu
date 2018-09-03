@@ -3,11 +3,11 @@ using System.Threading.Tasks;
 using AutoMapper;
 using ChickenAPI.Game.Data.AccessLayer.Item;
 using ChickenAPI.Game.Data.TransferObjects.Item;
-using NosSharp.DatabasePlugin.Context;
-using NosSharp.DatabasePlugin.Models.Item;
-using NosSharp.DatabasePlugin.Services.Base;
+using SaltyEmu.DatabasePlugin.Context;
+using SaltyEmu.DatabasePlugin.Models.Item;
+using SaltyEmu.DatabasePlugin.Services.Base;
 
-namespace NosSharp.DatabasePlugin.Services.Item
+namespace SaltyEmu.DatabasePlugin.Services.Item
 {
     public class ItemDao : MappedRepositoryBase<ItemDto, ItemModel>, IItemService
     {

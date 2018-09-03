@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
 using ChickenAPI.Game.Data.AccessLayer.NpcMonster;
 using ChickenAPI.Game.Data.TransferObjects.NpcMonster;
-using NosSharp.DatabasePlugin.Context;
-using NosSharp.DatabasePlugin.Models.NpcMonster;
-using NosSharp.DatabasePlugin.Services.Base;
+using SaltyEmu.DatabasePlugin.Context;
+using SaltyEmu.DatabasePlugin.Models.NpcMonster;
+using SaltyEmu.DatabasePlugin.Services.Base;
 
-namespace NosSharp.DatabasePlugin.Services.NpcMonster
+namespace SaltyEmu.DatabasePlugin.Services.NpcMonster
 {
     public class NpcMonsterSkillDao : MappedRepositoryBase<NpcMonsterSkillDto, NpcMonsterSkillModel>, INpcMonsterSkillService
     {

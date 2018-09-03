@@ -3,9 +3,9 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using ChickenAPI.Core.Data.TransferObjects;
 using ChickenAPI.Enums.Game.Buffs;
-using NosSharp.DatabasePlugin.Models.BCard;
+using SaltyEmu.DatabasePlugin.Models.BCard;
 
-namespace NosSharp.DatabasePlugin.Models
+namespace SaltyEmu.DatabasePlugin.Models
 {
     [Table("_data_card")]
     public class CardModel : IMappedDto

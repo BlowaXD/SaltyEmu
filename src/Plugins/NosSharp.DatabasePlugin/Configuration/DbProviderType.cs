@@ -1,4 +1,4 @@
-﻿namespace NosSharp.DatabasePlugin.Configuration
+﻿namespace SaltyEmu.DatabasePlugin.Configuration
 {
     public enum DbProviderType
     {

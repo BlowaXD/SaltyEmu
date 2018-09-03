@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace NosSharp.DatabasePlugin.Configuration
+namespace SaltyEmu.DatabasePlugin.Configuration
 {
     public class DatabaseConfiguration
     {

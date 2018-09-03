@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using ChickenAPI.Core.Data.TransferObjects;
-using NosSharp.DatabasePlugin.Models.Item;
+using SaltyEmu.DatabasePlugin.Models.Item;
 
-namespace NosSharp.DatabasePlugin.Models.Shop
+namespace SaltyEmu.DatabasePlugin.Models.Shop
 {
     [Table("shop_item")]
     public class ShopItemModel : IMappedDto

@@ -11,11 +11,11 @@ using EFCore.BulkExtensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Storage;
-using NosSharp.DatabasePlugin.Context;
-using NosSharp.DatabasePlugin.Models.BCard;
-using NosSharp.DatabasePlugin.Services.Base;
+using SaltyEmu.DatabasePlugin.Context;
+using SaltyEmu.DatabasePlugin.Models.BCard;
+using SaltyEmu.DatabasePlugin.Services.Base;
 
-namespace NosSharp.DatabasePlugin.Services.BCard
+namespace SaltyEmu.DatabasePlugin.Services.BCard
 {
     public class BCardDao : MappedRepositoryBase<BCardDto, BCardModel>, IBCardService
     {

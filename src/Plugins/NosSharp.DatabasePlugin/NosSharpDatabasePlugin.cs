@@ -16,20 +16,20 @@ using ChickenAPI.Game.Data.AccessLayer.Shop;
 using ChickenAPI.Game.Data.AccessLayer.Skill;
 using ChickenAPI.Game.Data.TransferObjects.Character;
 using Microsoft.EntityFrameworkCore;
-using NosSharp.DatabasePlugin.Configuration;
-using NosSharp.DatabasePlugin.Context;
-using NosSharp.DatabasePlugin.Services.Account;
-using NosSharp.DatabasePlugin.Services.BCard;
-using NosSharp.DatabasePlugin.Services.Card;
-using NosSharp.DatabasePlugin.Services.Character;
-using NosSharp.DatabasePlugin.Services.Item;
-using NosSharp.DatabasePlugin.Services.Map;
-using NosSharp.DatabasePlugin.Services.NpcMonster;
-using NosSharp.DatabasePlugin.Services.Shop;
-using NosSharp.DatabasePlugin.Services.Skill;
-using NosSharp.DatabasePlugin.Utils;
+using SaltyEmu.DatabasePlugin.Configuration;
+using SaltyEmu.DatabasePlugin.Context;
+using SaltyEmu.DatabasePlugin.Services.Account;
+using SaltyEmu.DatabasePlugin.Services.BCard;
+using SaltyEmu.DatabasePlugin.Services.Card;
+using SaltyEmu.DatabasePlugin.Services.Character;
+using SaltyEmu.DatabasePlugin.Services.Item;
+using SaltyEmu.DatabasePlugin.Services.Map;
+using SaltyEmu.DatabasePlugin.Services.NpcMonster;
+using SaltyEmu.DatabasePlugin.Services.Shop;
+using SaltyEmu.DatabasePlugin.Services.Skill;
+using SaltyEmu.DatabasePlugin.Utils;
 
-namespace NosSharp.DatabasePlugin
+namespace SaltyEmu.DatabasePlugin
 {
     public class NosSharpDatabasePlugin : IPlugin
     {

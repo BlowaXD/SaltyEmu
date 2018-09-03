@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace NosSharp.DatabasePlugin.Models.BCard
+namespace SaltyEmu.DatabasePlugin.Models.BCard
 {
     [Table("_data_card_bcard")]
     public class CardBCardModel : BCardModel

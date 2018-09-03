@@ -6,11 +6,11 @@ using AutoMapper;
 using ChickenAPI.Game.Data.AccessLayer.Character;
 using ChickenAPI.Game.Data.TransferObjects.Character;
 using Microsoft.EntityFrameworkCore;
-using NosSharp.DatabasePlugin.Context;
-using NosSharp.DatabasePlugin.Models.Character;
-using NosSharp.DatabasePlugin.Services.Base;
+using SaltyEmu.DatabasePlugin.Context;
+using SaltyEmu.DatabasePlugin.Models.Character;
+using SaltyEmu.DatabasePlugin.Services.Base;
 
-namespace NosSharp.DatabasePlugin.Services.Character
+namespace SaltyEmu.DatabasePlugin.Services.Character
 {
     public class CharacterQuickListDao : SynchronizedRepositoryBase<CharacterQuicklistDto, CharacterQuicklistModel>, ICharacterQuickListService
     {

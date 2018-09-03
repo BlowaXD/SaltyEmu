@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
-using NosSharp.DatabasePlugin.Models.Map;
+using SaltyEmu.DatabasePlugin.Models.Map;
 
-namespace NosSharp.DatabasePlugin.Models.Drops
+namespace SaltyEmu.DatabasePlugin.Models.Drops
 {
     [Table("map_drop")]
     public class MapDropModel : DropModel

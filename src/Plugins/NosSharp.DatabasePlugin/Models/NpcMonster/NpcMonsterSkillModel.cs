@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using ChickenAPI.Core.Data.TransferObjects;
-using NosSharp.DatabasePlugin.Models.Skill;
+using SaltyEmu.DatabasePlugin.Models.Skill;
 
-namespace NosSharp.DatabasePlugin.Models.NpcMonster
+namespace SaltyEmu.DatabasePlugin.Models.NpcMonster
 {
     [Table("_data_npc_monster_skill")]
     public class NpcMonsterSkillModel : IMappedDto

@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using ChickenAPI.Core.Data.TransferObjects;
 using ChickenAPI.Enums;
 
-namespace NosSharp.DatabasePlugin.Models.Character
+namespace SaltyEmu.DatabasePlugin.Models.Character
 {
     [Table("account")]
     public class AccountModel : IMappedDto

@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
-using NosSharp.DatabasePlugin.Models.Skill;
+using SaltyEmu.DatabasePlugin.Models.Skill;
 
-namespace NosSharp.DatabasePlugin.Models.BCard
+namespace SaltyEmu.DatabasePlugin.Models.BCard
 {
     [Table("_data_skill_bcard")]
     public class SkillBCardModel : BCardModel

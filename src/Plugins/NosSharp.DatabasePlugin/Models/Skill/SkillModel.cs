@@ -2,10 +2,10 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using ChickenAPI.Core.Data.TransferObjects;
-using NosSharp.DatabasePlugin.Models.BCard;
-using NosSharp.DatabasePlugin.Models.NpcMonster;
+using SaltyEmu.DatabasePlugin.Models.BCard;
+using SaltyEmu.DatabasePlugin.Models.NpcMonster;
 
-namespace NosSharp.DatabasePlugin.Models.Skill
+namespace SaltyEmu.DatabasePlugin.Models.Skill
 {
     [Table("_data_skill")]
     public class SkillModel : IMappedDto

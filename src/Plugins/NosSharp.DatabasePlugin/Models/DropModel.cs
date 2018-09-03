@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using ChickenAPI.Core.Data.TransferObjects;
 
-namespace NosSharp.DatabasePlugin.Models
+namespace SaltyEmu.DatabasePlugin.Models
 {
     [Table("global_drop")]
     public class DropModel : IMappedDto

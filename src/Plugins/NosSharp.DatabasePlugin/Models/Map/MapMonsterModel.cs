@@ -2,9 +2,9 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using ChickenAPI.Core.Data.TransferObjects;
 using ChickenAPI.Enums.Game.Entity;
-using NosSharp.DatabasePlugin.Models.NpcMonster;
+using SaltyEmu.DatabasePlugin.Models.NpcMonster;
 
-namespace NosSharp.DatabasePlugin.Models.Map
+namespace SaltyEmu.DatabasePlugin.Models.Map
 {
     [Table("map_monsters")]
     public class MapMonsterModel : IMappedDto

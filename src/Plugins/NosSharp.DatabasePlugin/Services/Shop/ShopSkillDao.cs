@@ -6,11 +6,11 @@ using AutoMapper;
 using ChickenAPI.Game.Data.AccessLayer.Shop;
 using ChickenAPI.Game.Data.TransferObjects.Shop;
 using Microsoft.EntityFrameworkCore;
-using NosSharp.DatabasePlugin.Context;
-using NosSharp.DatabasePlugin.Models.Shop;
-using NosSharp.DatabasePlugin.Services.Base;
+using SaltyEmu.DatabasePlugin.Context;
+using SaltyEmu.DatabasePlugin.Models.Shop;
+using SaltyEmu.DatabasePlugin.Services.Base;
 
-namespace NosSharp.DatabasePlugin.Services.Shop
+namespace SaltyEmu.DatabasePlugin.Services.Shop
 {
     public class ShopSkillDao : MappedRepositoryBase<ShopSkillDto, ShopSkillModel>, IShopSkillService
     {

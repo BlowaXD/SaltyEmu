@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
-using NosSharp.DatabasePlugin.Configuration;
+using SaltyEmu.DatabasePlugin.Configuration;
 
-namespace NosSharp.DatabasePlugin.Context
+namespace SaltyEmu.DatabasePlugin.Context
 {
     public class NosSharpContextFactory : IDesignTimeDbContextFactory<NosSharpContext>
     {

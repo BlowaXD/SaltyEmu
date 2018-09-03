@@ -2,7 +2,7 @@
 using ChickenAPI.Core.Logging;
 using CommandLine;
 using NosSharp.BasicAlgorithm;
-using NosSharp.DatabasePlugin;
+using SaltyEmu.DatabasePlugin;
 using Toolkit.Generators.FromPackets;
 
 namespace Toolkit.Commands

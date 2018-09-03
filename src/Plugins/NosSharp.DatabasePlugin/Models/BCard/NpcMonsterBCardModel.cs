@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
-using NosSharp.DatabasePlugin.Models.NpcMonster;
+using SaltyEmu.DatabasePlugin.Models.NpcMonster;
 
-namespace NosSharp.DatabasePlugin.Models.BCard
+namespace SaltyEmu.DatabasePlugin.Models.BCard
 {
     [Table("_data_npc_monster_bcard")]
     public class NpcMonsterBCardModel : BCardModel

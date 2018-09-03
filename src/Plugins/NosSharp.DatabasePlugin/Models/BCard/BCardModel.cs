@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using ChickenAPI.Core.Data.TransferObjects;
 
-namespace NosSharp.DatabasePlugin.Models.BCard
+namespace SaltyEmu.DatabasePlugin.Models.BCard
 {
     [Table("global_bcard")]
     public class BCardModel : IMappedDto

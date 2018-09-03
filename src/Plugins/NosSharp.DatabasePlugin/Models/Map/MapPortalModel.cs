@@ -2,7 +2,7 @@
 using ChickenAPI.Core.Data.TransferObjects;
 using ChickenAPI.Enums.Game.Portals;
 
-namespace NosSharp.DatabasePlugin.Models.Map
+namespace SaltyEmu.DatabasePlugin.Models.Map
 {
     [Table("map_portals")]
     public class MapPortalModel : IMappedDto

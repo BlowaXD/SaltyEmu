@@ -1,15 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using NosSharp.DatabasePlugin.Models;
-using NosSharp.DatabasePlugin.Models.BCard;
-using NosSharp.DatabasePlugin.Models.Character;
-using NosSharp.DatabasePlugin.Models.Families;
-using NosSharp.DatabasePlugin.Models.Item;
-using NosSharp.DatabasePlugin.Models.Map;
-using NosSharp.DatabasePlugin.Models.NpcMonster;
-using NosSharp.DatabasePlugin.Models.Shop;
-using NosSharp.DatabasePlugin.Models.Skill;
+using SaltyEmu.DatabasePlugin.Models;
+using SaltyEmu.DatabasePlugin.Models.BCard;
+using SaltyEmu.DatabasePlugin.Models.Character;
+using SaltyEmu.DatabasePlugin.Models.Families;
+using SaltyEmu.DatabasePlugin.Models.Item;
+using SaltyEmu.DatabasePlugin.Models.Map;
+using SaltyEmu.DatabasePlugin.Models.NpcMonster;
+using SaltyEmu.DatabasePlugin.Models.Shop;
+using SaltyEmu.DatabasePlugin.Models.Skill;
 
-namespace NosSharp.DatabasePlugin.Context
+namespace SaltyEmu.DatabasePlugin.Context
 {
     public class NosSharpContext : DbContext
     {

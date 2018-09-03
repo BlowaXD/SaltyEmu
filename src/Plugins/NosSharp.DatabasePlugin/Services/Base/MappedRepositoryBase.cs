@@ -11,9 +11,9 @@ using EFCore.BulkExtensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using Newtonsoft.Json;
-using NosSharp.DatabasePlugin.Context;
+using SaltyEmu.DatabasePlugin.Context;
 
-namespace NosSharp.DatabasePlugin.Services.Base
+namespace SaltyEmu.DatabasePlugin.Services.Base
 {
     public class MappedRepositoryBase<TObject, TModel> : IMappedRepository<TObject> where TObject : class, IMappedDto where TModel : class, IMappedDto, new()
     {

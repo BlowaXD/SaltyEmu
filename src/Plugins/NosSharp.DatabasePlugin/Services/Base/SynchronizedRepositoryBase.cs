@@ -9,9 +9,9 @@ using ChickenAPI.Core.Logging;
 using EFCore.BulkExtensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
-using NosSharp.DatabasePlugin.Context;
+using SaltyEmu.DatabasePlugin.Context;
 
-namespace NosSharp.DatabasePlugin.Services.Base
+namespace SaltyEmu.DatabasePlugin.Services.Base
 {
     public class SynchronizedRepositoryBase<TObject, TModel> : ISynchronizedRepository<TObject>
     where TObject : class, ISynchronizedDto where TModel : class, ISynchronizedDto, new()

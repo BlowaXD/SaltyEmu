@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
 using ChickenAPI.Game.Data.AccessLayer.Skill;
 using ChickenAPI.Game.Data.TransferObjects.Skills;
-using NosSharp.DatabasePlugin.Context;
-using NosSharp.DatabasePlugin.Models;
-using NosSharp.DatabasePlugin.Services.Base;
+using SaltyEmu.DatabasePlugin.Context;
+using SaltyEmu.DatabasePlugin.Models;
+using SaltyEmu.DatabasePlugin.Services.Base;
 
-namespace NosSharp.DatabasePlugin.Services.Card
+namespace SaltyEmu.DatabasePlugin.Services.Card
 {
     public class CardDao : MappedRepositoryBase<CardDto, CardModel>, ICardService
     {

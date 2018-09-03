@@ -3,9 +3,9 @@ using System.ComponentModel.DataAnnotations;
 using ChickenAPI.Core.Data.TransferObjects;
 using ChickenAPI.Enums.Game.Character;
 using ChickenAPI.Enums.Game.Families;
-using NosSharp.DatabasePlugin.Models.Character;
+using SaltyEmu.DatabasePlugin.Models.Character;
 
-namespace NosSharp.DatabasePlugin.Models.Families
+namespace SaltyEmu.DatabasePlugin.Models.Families
 {
     public class FamilyModel : IMappedDto
     {

@@ -10,7 +10,7 @@ using ChickenAPI.Game.Data.AccessLayer.Server;
 using Login.Network;
 using LoginServer.Cryptography.Factories;
 using LoginServer.Network;
-using NosSharp.DatabasePlugin;
+using SaltyEmu.DatabasePlugin;
 using NosSharp.RedisSessionPlugin;
 
 namespace LoginServer

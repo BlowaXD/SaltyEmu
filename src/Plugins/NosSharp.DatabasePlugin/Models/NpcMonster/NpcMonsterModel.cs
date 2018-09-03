@@ -2,12 +2,12 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using ChickenAPI.Core.Data.TransferObjects;
 using ChickenAPI.Enums.Game.Entity;
-using NosSharp.DatabasePlugin.Models.BCard;
-using NosSharp.DatabasePlugin.Models.Character;
-using NosSharp.DatabasePlugin.Models.Drops;
-using NosSharp.DatabasePlugin.Models.Map;
+using SaltyEmu.DatabasePlugin.Models.BCard;
+using SaltyEmu.DatabasePlugin.Models.Character;
+using SaltyEmu.DatabasePlugin.Models.Drops;
+using SaltyEmu.DatabasePlugin.Models.Map;
 
-namespace NosSharp.DatabasePlugin.Models.NpcMonster
+namespace SaltyEmu.DatabasePlugin.Models.NpcMonster
 {
     [Table("_data_npc_monster")]
     public class NpcMonsterModel : IMappedDto

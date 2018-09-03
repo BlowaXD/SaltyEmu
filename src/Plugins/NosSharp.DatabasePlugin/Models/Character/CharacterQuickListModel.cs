@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using ChickenAPI.Core.Data.TransferObjects;
-using ChickenAPI.Enums.Game.Character;
 
-namespace NosSharp.DatabasePlugin.Models.Character
+namespace SaltyEmu.DatabasePlugin.Models.Character
 {
     [Table("quicklist")]
     public class CharacterQuicklistModel : ISynchronizedDto

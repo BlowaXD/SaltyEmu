@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace NosSharp.DatabasePlugin.Migrations
+namespace SaltyEmu.DatabasePlugin.Migrations
 {
     public partial class quicklist : Migration
     {

@@ -2,9 +2,9 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using ChickenAPI.Core.Data.TransferObjects;
-using NosSharp.DatabasePlugin.Models.Drops;
+using SaltyEmu.DatabasePlugin.Models.Drops;
 
-namespace NosSharp.DatabasePlugin.Models.Map
+namespace SaltyEmu.DatabasePlugin.Models.Map
 {
     [Table("_data_map")]
     public class MapModel : IMappedDto

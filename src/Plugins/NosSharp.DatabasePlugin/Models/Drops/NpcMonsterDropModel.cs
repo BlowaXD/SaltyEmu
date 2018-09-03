@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
-using NosSharp.DatabasePlugin.Models.NpcMonster;
+using SaltyEmu.DatabasePlugin.Models.NpcMonster;
 
-namespace NosSharp.DatabasePlugin.Models.Drops
+namespace SaltyEmu.DatabasePlugin.Models.Drops
 {
     [Table("_data_npc_monster_drops")]
     public class NpcMonsterDropModel : DropModel

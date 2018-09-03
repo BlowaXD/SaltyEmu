@@ -24,7 +24,7 @@ using ChickenAPI.Game.Managers;
 using ChickenAPI.Game.Packets;
 using NLog;
 using NosSharp.BasicAlgorithm;
-using NosSharp.DatabasePlugin;
+using SaltyEmu.DatabasePlugin;
 using NosSharp.PacketHandler;
 using NosSharp.Pathfinder;
 using NosSharp.RedisSessionPlugin;

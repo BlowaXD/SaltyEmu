@@ -15,17 +15,17 @@ using ChickenAPI.Game.Data.TransferObjects.Map;
 using ChickenAPI.Game.Data.TransferObjects.NpcMonster;
 using ChickenAPI.Game.Data.TransferObjects.Shop;
 using ChickenAPI.Game.Data.TransferObjects.Skills;
-using NosSharp.DatabasePlugin.Models;
-using NosSharp.DatabasePlugin.Models.BCard;
-using NosSharp.DatabasePlugin.Models.Character;
-using NosSharp.DatabasePlugin.Models.Drops;
-using NosSharp.DatabasePlugin.Models.Item;
-using NosSharp.DatabasePlugin.Models.Map;
-using NosSharp.DatabasePlugin.Models.NpcMonster;
-using NosSharp.DatabasePlugin.Models.Shop;
-using NosSharp.DatabasePlugin.Models.Skill;
+using SaltyEmu.DatabasePlugin.Models;
+using SaltyEmu.DatabasePlugin.Models.BCard;
+using SaltyEmu.DatabasePlugin.Models.Character;
+using SaltyEmu.DatabasePlugin.Models.Drops;
+using SaltyEmu.DatabasePlugin.Models.Item;
+using SaltyEmu.DatabasePlugin.Models.Map;
+using SaltyEmu.DatabasePlugin.Models.NpcMonster;
+using SaltyEmu.DatabasePlugin.Models.Shop;
+using SaltyEmu.DatabasePlugin.Models.Skill;
 
-namespace NosSharp.DatabasePlugin.Utils
+namespace SaltyEmu.DatabasePlugin.Utils
 {
     public class NosSharpDatabasePluginMapper
     {

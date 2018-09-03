@@ -3,11 +3,11 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using ChickenAPI.Core.Data.TransferObjects;
 using ChickenAPI.Enums.Game.Items;
-using NosSharp.DatabasePlugin.Models.BCard;
-using NosSharp.DatabasePlugin.Models.Character;
-using NosSharp.DatabasePlugin.Models.Shop;
+using SaltyEmu.DatabasePlugin.Models.BCard;
+using SaltyEmu.DatabasePlugin.Models.Character;
+using SaltyEmu.DatabasePlugin.Models.Shop;
 
-namespace NosSharp.DatabasePlugin.Models.Item
+namespace SaltyEmu.DatabasePlugin.Models.Item
 {
     [Table("_data_item")]
     public class ItemModel : IMappedDto

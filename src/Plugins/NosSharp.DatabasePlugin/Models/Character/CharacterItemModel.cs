@@ -4,9 +4,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 using ChickenAPI.Core.Data.TransferObjects;
 using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Enums.Game.Items;
-using NosSharp.DatabasePlugin.Models.Item;
+using SaltyEmu.DatabasePlugin.Models.Item;
 
-namespace NosSharp.DatabasePlugin.Models.Character
+namespace SaltyEmu.DatabasePlugin.Models.Character
 {
     [Table("character_item")]
     public class CharacterItemModel : ISynchronizedDto
