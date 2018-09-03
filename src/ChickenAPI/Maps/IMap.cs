@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using ChickenAPI.Core.ECS.Entities;
 using ChickenAPI.Core.Utils;
+using ChickenAPI.Game.Data.TransferObjects.Map;
 
 namespace ChickenAPI.Game.Maps
 {
@@ -50,5 +51,7 @@ namespace ChickenAPI.Game.Maps
         bool IsWalkable(short x, short y);
 
         Position<short> GetFreePosition(short minimumX, short minimumY, short maximumX, short maximumY);
+
+        PortalDto GetPortalFromPosition(short x, short y, short range = 2);
     }
 }

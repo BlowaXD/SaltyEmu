@@ -87,5 +87,12 @@ namespace ChickenAPI.Game.Maps
         }
 
         private static bool IsWalkable(byte cell) => cell == 0 || cell == 2 || cell >= 16 && cell <= 19;
+
+        public PortalDto GetPortalFromPosition(short x, short y, short range = 2)
+        {
+            return _portals.FirstOrDefault(portal =>
+                (x <= portal.SourceX + 2 && x >= portal.SourceX - 2) &&
+                (y <= portal.SourceY + 2 && y >= portal.SourceY - 2));
+        }
     }
 }
