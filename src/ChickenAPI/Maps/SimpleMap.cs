@@ -91,8 +91,8 @@ namespace ChickenAPI.Game.Maps
         public PortalDto GetPortalFromPosition(short x, short y, short range = 2)
         {
             return _portals.FirstOrDefault(portal =>
-                (x <= portal.SourceX + 2 && x >= portal.SourceX - 2) &&
-                (y <= portal.SourceY + 2 && y >= portal.SourceY - 2));
+                (x <= portal.SourceX + range && x >= portal.SourceX - range) &&
+                (y <= portal.SourceY + range && y >= portal.SourceY - range));
         }
     }
 }
