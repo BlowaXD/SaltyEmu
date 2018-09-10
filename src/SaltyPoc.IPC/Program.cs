@@ -26,14 +26,25 @@ namespace SaltyPoc.IPC
     {
     }
 
+    public interface IIpcPacket
+    {
+
+    }
+
     internal sealed class Communicator
     {
-        private static List<BaseRequest> _requests = new List<BaseRequest>();
+        private static readonly Dictionary<Guid, BaseRequest> _requests = new Dictionary<Guid, BaseRequest>();
         private static List<BaseResponse> _response = new List<BaseResponse>();
+
+        public static Task<T> RequestAsync<T>(IIpcPacket packet)
+        {
+            return null;
+        }
 
         public static Task<T> RequestAsync<T>(BaseRequest request) where T : BaseResponse
         {
             // todo rabbitmq implementation & packet serialization
+            _requests.Add(request.Id, request);
             DateTime timeout = DateTime.UtcNow.AddSeconds(5);
             return Task.Run(() =>
             {
