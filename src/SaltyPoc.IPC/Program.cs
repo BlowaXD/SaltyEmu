@@ -1,8 +1,12 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using RabbitMQ.Client;
+using RabbitMQ.Client.Events;
 
 namespace SaltyPoc.IPC
 {
@@ -12,6 +16,8 @@ namespace SaltyPoc.IPC
 
         public Type Type { get; set; }
         public string Content { get; set; }
+
+        public TaskCompletionSource<BaseResponse> Response { get; set; }
     }
 
     internal class BaseResponse
@@ -28,7 +34,6 @@ namespace SaltyPoc.IPC
 
     public interface IIpcPacket
     {
-
     }
 
     internal sealed class Communicator
@@ -36,31 +41,41 @@ namespace SaltyPoc.IPC
         private static readonly Dictionary<Guid, BaseRequest> _requests = new Dictionary<Guid, BaseRequest>();
         private static List<BaseResponse> _response = new List<BaseResponse>();
 
-        public static Task<T> RequestAsync<T>(IIpcPacket packet)
+        public static async Task<T> RequestAsync<T>(IIpcPacket packet) where T : BaseResponse
         {
-            return null;
+            return await RequestAsync<T>(new BaseRequest
+            {
+                Id = Guid.NewGuid(),
+                Content = JsonConvert.SerializeObject(packet),
+                Response = new TaskCompletionSource<BaseResponse>(),
+                Type = typeof(T),
+            });
         }
 
-        public static Task<T> RequestAsync<T>(BaseRequest request) where T : BaseResponse
+        private static Task<T> RequestAsync<T>(BaseRequest request) where T : BaseResponse
         {
             // todo rabbitmq implementation & packet serialization
             _requests.Add(request.Id, request);
-            DateTime timeout = DateTime.UtcNow.AddSeconds(5);
-            return Task.Run(() =>
+
+            // send message
+            string correlationId = request.Id.ToString();
+            string message = request.Content;
+
+
+            return request.Response.Task as Task<T>;
+        }
+
+        public static void OnMessage(object sender, BasicDeliverEventArgs e)
+        {
+            string correlationId = e.BasicProperties.CorrelationId;
+            string message = Encoding.UTF8.GetString(e.Body);
+            var tmp = JsonConvert.DeserializeObject<BaseResponse>(message);
+            if (!_requests.TryGetValue(tmp.Id, out BaseRequest request))
             {
-                while (timeout > DateTime.UtcNow)
-                {
-                    BaseResponse tmp = _response.FirstOrDefault(s => s.RequestId == request.Id);
-                    if (tmp == null || tmp.ResponseType != typeof(T))
-                    {
-                        continue;
-                    }
+                return;
+            }
 
-                    return JsonConvert.DeserializeObject<T>(tmp.Content);
-                }
-
-                return null;
-            });
+            request.Response.SetResult(tmp);
         }
     }
 
