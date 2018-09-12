@@ -1,19 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using ChickenAPI.Core.Logging;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Packets.Game.Client._NotYetSorted;
+using ChickenAPI.Packets.Game.Client.Battle;
+using NosSharp.PacketHandler.Utils;
 
 namespace NosSharp.PacketHandler.Battle
 {
-    public class MultiTargetListPacket
+    public class MultiTargetListPacketHandling : BasePacketHandling<MultiTargetListPacket>
     {
-        private static readonly Logger Log = Logger.GetLogger<MultiTargetListPacket>();
-
-        public static void OnMultiTargetListPacket(MultiTargetListPacket packet, IPlayerEntity session)
+        public override void OnPacketReceived(MultiTargetListPacket packet, IPlayerEntity player)
         {
-
+            throw new NotImplementedException();
         }
     }
 }
