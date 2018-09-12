@@ -32,6 +32,11 @@ namespace SaltyPoc.IPC
     {
     }
 
+    internal sealed class ExampleRequest : BaseRequest, IIpcPacket
+    {
+        public long TestId { get; set; }
+    }
+
     public interface IIpcPacket
     {
     }
@@ -88,7 +93,7 @@ namespace SaltyPoc.IPC
 
         private static async Task DoTheWork()
         {
-            var request = new BaseRequest();
+            var request = new ExampleRequest();
             await Communicator.RequestAsync<ExampleResponse>(request);
             Console.WriteLine("Hello World!");
         }
