@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace SaltyPoc.IPC.Protocol
 {
-    internal class BaseRequest : IIpcRequest
+    public class BaseRequest : IIpcRequest
     {
         public Guid Id { get; set; }
 
@@ -16,5 +16,6 @@ namespace SaltyPoc.IPC.Protocol
         public string Content { get; set; }
 
         public TaskCompletionSource<BaseResponse> Response { get; set; }
+        internal IIpcCommunicator Communicator { get; set; }
     }
 }

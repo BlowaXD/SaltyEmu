@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
+using SaltyPoc.IPC.PacketExample;
 using SaltyPoc.IPC.Protocol;
 
 namespace SaltyPoc.IPC
@@ -76,14 +78,40 @@ namespace SaltyPoc.IPC
             return request.Response.Task as Task<T>;
         }
 
-        private static void OnMessage(object sender, BasicDeliverEventArgs e)
+        private void OnMessage(object sender, BasicDeliverEventArgs e)
         {
             string requestMessage = Encoding.UTF8.GetString(e.Body);
             var request = JsonConvert.DeserializeObject<BaseRequest>(requestMessage);
             string correlationId = e.BasicProperties.CorrelationId;
             string responseQueueName = e.BasicProperties.ReplyTo;
 
+            request.Communicator = this;
+
+            if (request is GetFamilyMembersName familyRequest)
+            {
+                OnRequestReceived(familyRequest);
+            }
+
             // handle the packet received
+        }
+
+        private static readonly Dictionary<long, List<string>> Families = new Dictionary<long, List<string>>
+        {
+            { 1, new List<string> { "SaltyChef", "Kraken", "Syl" } }
+        };
+
+        public static async void OnRequestReceived(GetFamilyMembersName packet)
+        {
+            if (!Families.TryGetValue(packet.FamilyId, out List<string> names))
+            {
+                Console.WriteLine("ERROR : FamilyId not found");
+            }
+
+            await packet.RespondAsync(new GetFamilyMembersNameResponse
+            {
+                RequestId = packet.Id,
+                Names = names
+            });
         }
 
         private void Reply(string message, string correlationId)
