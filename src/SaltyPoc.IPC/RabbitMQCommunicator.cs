@@ -36,7 +36,6 @@ namespace SaltyPoc.IPC
 
             var consumer = new EventingBasicConsumer(_channel);
             consumer.Received += OnMessage;
-            _channel.BasicConsume(ResponseQueueName, true, consumer);
 
             _pendingRequests = new ConcurrentDictionary<Guid, BaseRequest>();
         }
@@ -82,6 +81,9 @@ namespace SaltyPoc.IPC
         private void OnMessage(object sender, BasicDeliverEventArgs e)
         {
             string requestMessage = Encoding.UTF8.GetString(e.Body);
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine("Message : " + requestMessage);
+            Console.ResetColor();
             switch (e.BasicProperties.ReplyTo)
             {
                 case ResponseQueueName:
@@ -101,7 +103,7 @@ namespace SaltyPoc.IPC
             // handle in handler
         }
 
-        private async void OnResponsePacket(IIpcResponse deserializeObject)
+        private void OnResponsePacket(IIpcResponse deserializeObject)
         {
             if (!(deserializeObject is BaseResponse response))
             {
@@ -113,7 +115,7 @@ namespace SaltyPoc.IPC
                 return;
             }
 
-            await request.RespondAsync(response);
+            request.Response.SetResult(response);
         }
 
         private void OnRequestPacket(IIpcRequest deserializeObject)
@@ -124,38 +126,8 @@ namespace SaltyPoc.IPC
             }
 
             request.Communicator = this;
-            if (request is GetFamilyMembersName familyRequest)
-            {
-                OnRequestReceived(familyRequest);
-            }
         }
 
-        /// <summary>
-        /// Example
-        /// </summary>
-        private static readonly Dictionary<long, List<string>> Families = new Dictionary<long, List<string>>
-        {
-            { 1, new List<string> { "SaltyChef", "Kraken", "Syl" } }
-        };
-
-
-        /// <summary>
-        /// Example handler
-        /// </summary>
-        /// <param name="packet"></param>
-        public static async void OnRequestReceived(GetFamilyMembersName packet)
-        {
-            if (!Families.TryGetValue(packet.FamilyId, out List<string> names))
-            {
-                Console.WriteLine("ERROR : FamilyId not found");
-            }
-
-            await packet.RespondAsync(new GetFamilyMembersNameResponse
-            {
-                RequestId = packet.Id,
-                Names = names
-            });
-        }
 
         private void Reply(string message, string correlationId)
         {
