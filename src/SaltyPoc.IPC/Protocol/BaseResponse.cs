@@ -1,12 +1,11 @@
 ﻿using System;
 
-namespace SaltyPoc.IPC
+namespace SaltyPoc.IPC.Protocol
 {
-    public class BaseResponse
+    public class BaseResponse : IIpcResponse
     {
         public Guid Id { get; set; }
         public Guid RequestId { get; set; }
-        public Type ResponseType { get; set; }
         public string Content { get; set; }
     }
 }

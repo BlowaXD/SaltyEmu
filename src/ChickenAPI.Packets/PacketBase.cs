@@ -5,6 +5,7 @@
         #region Properties
 
         public string Header { get; set; }
+        public string Content => OriginalContent;
 
         /// <summary>
         /// </summary>

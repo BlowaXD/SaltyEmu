@@ -1,5 +1,5 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using SaltyPoc.IPC.Protocol;
 
 namespace SaltyPoc.IPC
 {

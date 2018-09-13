@@ -9,7 +9,7 @@ namespace NosSharp.PacketHandler.Battle
     {
         public override void OnPacketReceived(MultiTargetListPacket packet, IPlayerEntity player)
         {
-            throw new NotImplementedException();
+            Log.Debug(packet.OriginalContent);
         }
     }
 }

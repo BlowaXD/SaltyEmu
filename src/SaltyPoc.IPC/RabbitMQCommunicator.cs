@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
+using SaltyPoc.IPC.Protocol;
 
 namespace SaltyPoc.IPC
 {
