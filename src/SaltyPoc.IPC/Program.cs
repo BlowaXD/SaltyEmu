@@ -57,6 +57,12 @@ namespace SaltyPoc.IPC
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine("Message : " + requestMessage);
             Console.ResetColor();
+
+            var tmp = JsonConvert.DeserializeObject<BaseRequest>(requestMessage);
+            if (tmp is GetFamilyMembersName packet)
+            {
+                OnRequestReceived(packet);
+            }
         }
 
 
@@ -89,7 +95,12 @@ namespace SaltyPoc.IPC
 
         private static async Task DoTheWork()
         {
-            GetFamilyMembersNameResponse result = await communicator.RequestAsync<GetFamilyMembersNameResponse>(new GetFamilyMembersName { FamilyId = 1 });
+            GetFamilyMembersNameResponse result = await communicator.RequestAsync<GetFamilyMembersNameResponse>(new GetFamilyMembersName
+            {
+                FamilyId = 1,
+                Id = Guid.NewGuid(),
+                Type = typeof(GetFamilyMembersName),
+            });
             Console.WriteLine(result.Names.Aggregate((s, s1) => s += " " + s1));
             Console.ReadKey();
         }

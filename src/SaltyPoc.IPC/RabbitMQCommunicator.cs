@@ -32,10 +32,14 @@ namespace SaltyPoc.IPC
 
             _channel.QueueDeclare(RequestQueueName, true, false, false, null);
             _channel.QueueDeclare(ResponseQueueName, true, false, false, null);
-            _channel.QueueDeclare(BroadcastQueueName, true);
+            _channel.QueueDeclare(BroadcastQueueName, true, false, false, null);
 
             var consumer = new EventingBasicConsumer(_channel);
             consumer.Received += OnMessage;
+
+            _channel.BasicConsume(RequestQueueName, true, consumer);
+            _channel.BasicConsume(ResponseQueueName, true, consumer);
+            _channel.BasicConsume(BroadcastQueueName, true, consumer);
 
             _pendingRequests = new ConcurrentDictionary<Guid, BaseRequest>();
         }
