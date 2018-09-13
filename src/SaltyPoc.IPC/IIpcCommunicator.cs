@@ -11,7 +11,7 @@ namespace SaltyPoc.IPC
         /// <typeparam name="T"></typeparam>
         /// <param name="packet"></param>
         /// <returns></returns>
-        Task<T> RequestAsync<T>(IIpcPacket packet) where T : BaseResponse;
+        Task<T> RequestAsync<T>(IIpcRequest packet) where T : IIpcResponse;
 
         /// <summary>
         /// Broadcasts the given packet
@@ -19,5 +19,7 @@ namespace SaltyPoc.IPC
         /// <param name="packet"></param>
         /// <returns></returns>
         Task SendAsync(IIpcPacket packet);
+
+        Task<T> RespondAsync<T>(T packet) where T : IIpcResponse;
     }
 }

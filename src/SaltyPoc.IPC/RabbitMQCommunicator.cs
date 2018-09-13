@@ -35,18 +35,13 @@ namespace SaltyPoc.IPC
             _channel.QueueDeclare(BroadcastQueueName, true);
 
             var consumer = new EventingBasicConsumer(_channel);
-            consumer.Registered += OnRegistered;
             consumer.Received += OnMessage;
             _channel.BasicConsume(ResponseQueueName, true, consumer);
 
             _pendingRequests = new ConcurrentDictionary<Guid, BaseRequest>();
         }
 
-        private void OnRegistered(object sender, ConsumerEventArgs e)
-        {
-        }
-
-        public async Task<T> RequestAsync<T>(IIpcPacket packet) where T : BaseResponse
+        public async Task<T> RequestAsync<T>(IIpcRequest packet) where T : IIpcResponse
         {
             return await RequestAsync<T>(new BaseRequest
             {
@@ -60,11 +55,17 @@ namespace SaltyPoc.IPC
         public Task SendAsync(IIpcPacket packet)
         {
             string tmp = JsonConvert.SerializeObject(packet);
-            Publish(tmp);
+            Publish(tmp, BroadcastQueueName);
             return Task.CompletedTask;
         }
 
-        private Task<T> RequestAsync<T>(BaseRequest request) where T : BaseResponse
+        public Task<T> RespondAsync<T>(T packet) where T : IIpcResponse
+        {
+            Publish(JsonConvert.SerializeObject(packet), ResponseQueueName);
+            return (Task<T>)Task.CompletedTask;
+        }
+
+        private Task<T> RequestAsync<T>(BaseRequest request) where T : IIpcResponse
         {
             // todo rabbitmq implementation & packet serialization
             _pendingRequests.TryAdd(request.Id, request);
@@ -81,25 +82,67 @@ namespace SaltyPoc.IPC
         private void OnMessage(object sender, BasicDeliverEventArgs e)
         {
             string requestMessage = Encoding.UTF8.GetString(e.Body);
-            var request = JsonConvert.DeserializeObject<BaseRequest>(requestMessage);
-            string correlationId = e.BasicProperties.CorrelationId;
-            string responseQueueName = e.BasicProperties.ReplyTo;
+            switch (e.BasicProperties.ReplyTo)
+            {
+                case ResponseQueueName:
+                    OnResponsePacket(JsonConvert.DeserializeObject<IIpcResponse>(requestMessage));
+                    break;
+                case RequestQueueName:
+                    OnRequestPacket(JsonConvert.DeserializeObject<IIpcRequest>(requestMessage));
+                    break;
+                case BroadcastQueueName:
+                    OnPacket(JsonConvert.DeserializeObject<IIpcPacket>(requestMessage));
+                    break;
+            }
+        }
+
+        private void OnPacket(IIpcPacket deserializeObject)
+        {
+            // handle in handler
+        }
+
+        private async void OnResponsePacket(IIpcResponse deserializeObject)
+        {
+            if (!(deserializeObject is BaseResponse response))
+            {
+                return;
+            }
+
+            if (!_pendingRequests.TryRemove(response.RequestId, out BaseRequest request))
+            {
+                return;
+            }
+
+            await request.RespondAsync(response);
+        }
+
+        private void OnRequestPacket(IIpcRequest deserializeObject)
+        {
+            if (!(deserializeObject is BaseRequest request))
+            {
+                return;
+            }
 
             request.Communicator = this;
-
             if (request is GetFamilyMembersName familyRequest)
             {
                 OnRequestReceived(familyRequest);
             }
-
-            // handle the packet received
         }
 
+        /// <summary>
+        /// Example
+        /// </summary>
         private static readonly Dictionary<long, List<string>> Families = new Dictionary<long, List<string>>
         {
             { 1, new List<string> { "SaltyChef", "Kraken", "Syl" } }
         };
 
+
+        /// <summary>
+        /// Example handler
+        /// </summary>
+        /// <param name="packet"></param>
         public static async void OnRequestReceived(GetFamilyMembersName packet)
         {
             if (!Families.TryGetValue(packet.FamilyId, out List<string> names))
@@ -124,10 +167,10 @@ namespace SaltyPoc.IPC
             _channel.BasicPublish(ExchangeName, RequestQueueName, props, messageBytes);
         }
 
-        private void Publish(string message)
+        private void Publish(string message, string queueName)
         {
             byte[] messageBytes = Encoding.UTF8.GetBytes(message);
-            _channel.BasicPublish(ExchangeName, BroadcastQueueName, body: messageBytes);
+            _channel.BasicPublish(ExchangeName, queueName, body: messageBytes);
         }
 
         public void Dispose()

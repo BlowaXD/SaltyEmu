@@ -7,9 +7,9 @@ namespace SaltyPoc.IPC.Protocol
     {
         public Guid Id { get; set; }
 
-        public Task RespondAsync<T>(T obj) where T : IIpcResponse
+        public async Task RespondAsync<T>(T obj) where T : IIpcResponse
         {
-            return Task.CompletedTask;
+            await Communicator.RespondAsync(obj);
         }
 
         public Type Type { get; set; }
