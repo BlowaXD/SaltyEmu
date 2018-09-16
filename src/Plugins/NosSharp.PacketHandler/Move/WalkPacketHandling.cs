@@ -3,7 +3,7 @@ using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Features.Movement.Extensions;
 using ChickenAPI.Game.Packets;
 using ChickenAPI.Game.Packets.Extensions;
-using ChickenAPI.Packets.Game.Client._NotYetSorted;
+using ChickenAPI.Packets.Game.Client.Movement;
 
 namespace NosSharp.PacketHandler.Move
 {

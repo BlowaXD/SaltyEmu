@@ -8,6 +8,9 @@ using ChickenAPI.Core.Utils;
 using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Game.Data.AccessLayer.Character;
 using ChickenAPI.Game.Entities.Player;
+using ChickenAPI.Game.Maps;
+using ChickenAPI.Packets.Game.Server.Entities;
+using ChickenAPI.Game.Features.Movement.Extensions;
 
 namespace ChickenAPI.Game.Features.Movement
 {
@@ -19,6 +22,7 @@ namespace ChickenAPI.Game.Features.Movement
         private static IAlgorithmService _algorithmService;
         private static readonly Logger Log = Logger.GetLogger<MovableComponent>();
         private Position<short> _actual;
+        private bool _isSitting;
 
         public MovableComponent(IEntity entity, byte speed)
         {
@@ -44,6 +48,18 @@ namespace ChickenAPI.Game.Features.Movement
         ///     Entity Walking Speed
         /// </summary>
         public byte Speed { get; set; }
+
+        public bool IsSitting {
+            get => _isSitting;
+            set
+            {
+                _isSitting = value;
+                if (Entity.EntityManager is IMapLayer mapLayer)
+                {
+                    mapLayer.Broadcast(RestEntityExtensions.GenerateRestPacket(Entity));
+                }
+            }
+        }
 
         public DirectionType DirectionType { get; set; }
 
