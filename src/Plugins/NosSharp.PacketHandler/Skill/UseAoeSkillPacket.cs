@@ -1,10 +1,7 @@
 ﻿using ChickenAPI.Core.Logging;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Game.Features.Movement.Extensions;
-using ChickenAPI.Game.Packets;
-using ChickenAPI.Game.Packets.Extensions;
 
-namespace NosSharp.PacketHandler.Battle
+namespace NosSharp.PacketHandler.Skill
 {
     public class UseAoeSkillPacket
     {

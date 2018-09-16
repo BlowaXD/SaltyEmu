@@ -27,14 +27,22 @@ namespace NosSharp.PacketHandler.Skill
                 player.SendPacket(new MscPacket());
             }
 
+            if (player.Movable.IsSitting)
+            {
+                player.Movable.IsSitting = false;
+            }
+
             IEntity target = null;
             switch (packet.TargetVisualType)
             {
+                case VisualType.Character:
+                    target = player.EntityManager.GetEntitiesByType<IPlayerEntity>(EntityType.Player).FirstOrDefault(s => s.Id == packet.TargetId);
+                    break;
                 case VisualType.Monster:
                     target = player.EntityManager.GetEntitiesByType<IMonsterEntity>(EntityType.Monster).FirstOrDefault(s => s.Id == packet.TargetId);
                     break;
                 case VisualType.Npc:
-                    target = player.EntityManager.GetEntitiesByType<INpcEntity>(EntityType.Monster).FirstOrDefault(s => s.Id == packet.TargetId);
+                    target = player.EntityManager.GetEntitiesByType<INpcEntity>(EntityType.Npc).FirstOrDefault(s => s.Id == packet.TargetId);
                     break;
             }
 
@@ -42,7 +50,6 @@ namespace NosSharp.PacketHandler.Skill
 
             if (target == null)
             {
-
                 player.SendPacket(new CancelPacket
                 {
                     Type = CancelPacketType.NotInCombatMode,

@@ -1,9 +1,8 @@
-﻿using System;
-using ChickenAPI.Game.Entities.Player;
+﻿using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Packets.Game.Client.Battle;
 using NosSharp.PacketHandler.Utils;
 
-namespace NosSharp.PacketHandler.Battle
+namespace NosSharp.PacketHandler.Skill
 {
     public class MultiTargetListPacketHandling : BasePacketHandling<MultiTargetListPacket>
     {
