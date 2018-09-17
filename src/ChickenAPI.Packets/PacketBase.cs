@@ -5,7 +5,9 @@
         #region Properties
 
         public string Header { get; set; }
-        public string Content => OriginalContent;
+
+        // get the packet without the sessionId
+        public string Content => OriginalContent.Substring(OriginalContent.IndexOf(' '));
 
         /// <summary>
         /// </summary>

@@ -33,11 +33,20 @@ namespace SaltyPoc.IPC
 
                         // consumer
 
-                        var consumer = new EventingBasicConsumer(channel);
-                        consumer.Received += OnMessage;
-                        channel.BasicConsume(RequestQueueName, true, consumer);
-                        channel.BasicConsume(ResponseQueueName, true, consumer);
-                        channel.BasicConsume(BroadcastQueueName, true, consumer);
+                        var responseConsumer = new EventingBasicConsumer(channel);
+                        responseConsumer.Received += OnMessage;
+                        channel.BasicConsume(ResponseQueueName, true, responseConsumer);
+
+                        var requestConsumer = new AsyncEventingBasicConsumer(channel);
+                        requestConsumer.Received += (sender, @event) =>
+                        {
+                            Console.WriteLine($"{Encoding.UTF8.GetString(@event.Body)}");
+                            return Task.CompletedTask;
+                        };
+                        channel.BasicConsume(RequestQueueName, true, requestConsumer);
+
+                        var broadcastConsumer = new EventingBasicConsumer(channel);
+                        channel.BasicConsume(BroadcastQueueName, true, broadcastConsumer);
 
                         Console.WriteLine("Waiting for messages...");
                         Console.WriteLine("Press ENTER to exit.");
