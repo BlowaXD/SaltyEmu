@@ -13,6 +13,8 @@
 
         MOVEMENT_MOVE_SELF,
         MOVEMENT_MOVE_PETS,
+        MOVEMENT_SIT_SELF,
+        MOVEMENT_SIT_PETS,
 
         #region Quicklist
 

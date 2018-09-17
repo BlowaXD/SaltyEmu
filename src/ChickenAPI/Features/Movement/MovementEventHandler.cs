@@ -81,7 +81,14 @@ namespace ChickenAPI.Game.Features.Movement
             switch (entity)
             {
                 case IPlayerEntity player:
+                    if (!player.HasPermission(PermissionType.MOVEMENT_MOVE_SELF))
+                    {
+                        return;
+                    }
+
                     player.Movable.IsSitting = !player.Movable.IsSitting;
+
+                    // pets should sit
                     break;
                 case IMonsterEntity monster:
                     monster.Movable.IsSitting = !monster.Movable.IsSitting;
