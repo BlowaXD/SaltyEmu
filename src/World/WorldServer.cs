@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 using Autofac;
@@ -185,17 +186,22 @@ namespace World
             Server.RunServerAsync(1337).Wait();
         }
 
+        private static IEnumerable<Type> GetHandlers()
+        {
+            List<Type> handlers = new List<Type>();
+
+            handlers.AddRange(typeof(EffectEventHandler).Assembly.GetTypes().Where(s => s.IsSubclassOf(typeof(EventHandlerBase))));
+            return handlers;
+        }
+
         private static void InitializeEventHandlers()
         {
             // first version hardcoded, next one through Plugin + Assembly Reflection
             var eventManager = ChickenContainer.Instance.Resolve<IEventManager>();
-            eventManager.Register(new EffectEventHandler());
-            eventManager.Register(new ChatEventHandler());
-            eventManager.Register(new GroupEventHandler());
-            eventManager.Register(new InventoryEventHandler());
-            eventManager.Register(new VisibilityEventHandler());
-            eventManager.Register(new ShopEventHandler());
-            eventManager.Register(new QuickListEventHandler());
+            foreach (Type handler in GetHandlers())
+            {
+                eventManager.Register(Activator.CreateInstance(handler) as IEventHandler, handler);
+            }
         }
 
         private static void Exit(object sender, EventArgs e)

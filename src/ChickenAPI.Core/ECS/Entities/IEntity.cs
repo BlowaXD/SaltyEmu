@@ -22,6 +22,12 @@ namespace ChickenAPI.Core.ECS.Entities
         EntityType Type { get; }
 
         /// <summary>
+        /// Notifies all event handlers with the given event
+        /// </summary>
+        /// <param name="e"></param>
+        void NotifyEventHandler(ChickenEventArgs e);
+
+        /// <summary>
         ///     Notify a system of the entity manager to be executed.
         /// </summary>
         /// <typeparam name="T">System type</typeparam>

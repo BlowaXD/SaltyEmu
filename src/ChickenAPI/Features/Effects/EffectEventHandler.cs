@@ -13,12 +13,10 @@ namespace ChickenAPI.Game.Features.Effects
                 case AddEffectArgument addEffect:
                     AddEffectArgument(entity, addEffect);
                     break;
-                default:
-                    return;
             }
         }
 
-        private void AddEffectArgument(IEntity entity, AddEffectArgument args)
+        private static void AddEffectArgument(IEntity entity, AddEffectArgument args)
         {
             var effects = entity.GetComponent<EffectComponent>();
 

@@ -15,7 +15,7 @@ namespace ChickenAPI.Game.Network
 
         bool IsAuthenticated { get; }
 
-        IPEndPoint Ip { get; }
+        IPAddress Ip { get; }
 
         AccountDto Account { get; }
         IPlayerEntity Player { get; }

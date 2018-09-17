@@ -47,7 +47,7 @@ namespace Login.Network
             }
 
             _endPoint = _channel.RemoteAddress as IPEndPoint;
-            Log.Info($"[{_endPoint?.Address}][SOCKET_ACCEPT] Client has been accepted");
+            Log.Info($"[{_endPoint?.Address.MapToIPv4()}][SOCKET_ACCEPT] Client has been accepted");
             g.Add(context.Channel);
         }
 
@@ -79,13 +79,13 @@ namespace Login.Network
 
         private void Disconnect()
         {
-            Log.Info($"[{_endPoint.Address}][SOCKET_RELEASE] Client has been released");
+            Log.Info($"[{_endPoint.Address.MapToIPv4()}][SOCKET_RELEASE] Client has been released");
             _channel.DisconnectAsync().Wait();
         }
 
         private void SendPacket(string packet)
         {
-            Log.Info($"[{_endPoint.Address}][PACKET_SENT]");
+            Log.Info($"[{_endPoint.Address.MapToIPv4()}][PACKET_SENT]");
             _channel.WriteAsync(packet);
             _channel.Flush();
         }
@@ -103,7 +103,7 @@ namespace Login.Network
                 string[] packet = buff.Split(' ');
                 if (packet.Length <= 4 || packet[0] != "NoS0575")
                 {
-                    Log.Info($"[{_endPoint.Address}][CONNECT_REQUEST] Wrong packet");
+                    Log.Info($"[{_endPoint.Address.MapToIPv4()}][CONNECT_REQUEST] Wrong packet");
                     SendPacket(GetFailPacket(AuthResponse.CantConnect));
                     Disconnect();
                     return;
@@ -114,7 +114,7 @@ namespace Login.Network
                 AccountDto dto = AccountService.GetByName(accountName.ToLower());
                 if (dto == null)
                 {
-                    Log.Info($"[{_endPoint.Address}][CONNECT_REQUEST] {accountName} Not found in database");
+                    Log.Info($"[{_endPoint.Address.MapToIPv4()}][CONNECT_REQUEST] {accountName} Not found in database");
                     SendPacket(GetFailPacket(AuthResponse.AccountOrPasswordWrong));
                     Disconnect();
                     return;
@@ -122,7 +122,7 @@ namespace Login.Network
 
                 if (!string.Equals(dto.Password, passwordHash, StringComparison.CurrentCultureIgnoreCase))
                 {
-                    Log.Info($"[{_endPoint.Address}][CONNECT_REQUEST] {accountName} Wrong password");
+                    Log.Info($"[{_endPoint.Address.MapToIPv4()}][CONNECT_REQUEST] {accountName} Wrong password");
                     SendPacket(GetFailPacket(AuthResponse.AccountOrPasswordWrong));
                     Disconnect();
                     return;
@@ -132,7 +132,7 @@ namespace Login.Network
 
                 if (response != AuthResponse.Ok)
                 {
-                    Log.Info($"[{_endPoint.Address}][CONNECT_REQUEST] MAINTENANCE MODE");
+                    Log.Info($"[{_endPoint.Address.MapToIPv4()}][CONNECT_REQUEST] MAINTENANCE MODE");
                     SendPacket(GetFailPacket(AuthResponse.AccountOrPasswordWrong));
                     Disconnect();
                     return;
@@ -157,13 +157,13 @@ namespace Login.Network
                         State = PlayerSessionState.Unauthed
                     };
                     SessionService.RegisterSession(session);
-                    Log.Info($"[{_endPoint.Address}][CONNECT_ACCEPT] {accountName} waiting for world endpoint");
+                    Log.Info($"[{_endPoint.Address.MapToIPv4()}][CONNECT_ACCEPT] {accountName} waiting for world endpoint");
                 }
 
                 IEnumerable<WorldServerDto> test = ServerApi.GetServers();
                 SendPacket(GenerateWorldListPacket(accountName, session.Id, test));
 
-                Log.Info($"[{_endPoint.Address}][CONNECT_ACCEPT] Server list sent to {accountName}");
+                Log.Info($"[{_endPoint.Address.MapToIPv4()}][CONNECT_ACCEPT] Server list sent to {accountName}");
                 Disconnect();
             }
             catch
@@ -181,7 +181,7 @@ namespace Login.Network
 
         public override void ExceptionCaught(IChannelHandlerContext context, Exception exception)
         {
-            Log.Error($"[EXCEPTION] {_endPoint.Address}", exception);
+            Log.Error($"[EXCEPTION] {_endPoint.Address.MapToIPv4()}", exception);
             context.CloseAsync();
         }
     }

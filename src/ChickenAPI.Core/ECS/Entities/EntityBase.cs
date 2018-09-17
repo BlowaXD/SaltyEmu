@@ -31,6 +31,11 @@ namespace ChickenAPI.Core.ECS.Entities
 
         public IEntityManager EntityManager { get; protected set; }
 
+        public void NotifyEventHandler(ChickenEventArgs e)
+        {
+            EventManager.Notify(this, e);
+        }
+
         public void NotifyEventHandler<T>(ChickenEventArgs e) where T : class, IEventHandler
         {
             EventManager.Notify<T>(this, e);

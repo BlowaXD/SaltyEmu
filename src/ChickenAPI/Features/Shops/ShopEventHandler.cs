@@ -27,10 +27,7 @@ namespace ChickenAPI.Game.Features.Shops
 {
     public class ShopEventHandler : EventHandlerBase
     {
-        private static IRandomGenerator _randomGenerator;
-
-        private static IRandomGenerator Random =>
-            _randomGenerator ?? (_randomGenerator = ChickenContainer.Instance.Resolve<IRandomGenerator>());
+        private static readonly IRandomGenerator _randomGenerator = new Lazy<IRandomGenerator>(() => ChickenContainer.Instance.Resolve<IRandomGenerator>()).Value;
 
         public override void Execute(IEntity entity, ChickenEventArgs e)
         {
@@ -300,7 +297,7 @@ namespace ChickenAPI.Game.Features.Shops
                 }
 
                 // generate a random rarity
-                byte ra = (byte)Random.Next(100);
+                byte ra = (byte)_randomGenerator.Next(100);
 
                 int[] rareprob = { 100, 100, 70, 50, 30, 15, 5, 1 };
                 if (item.Item.ReputPrice == 0)

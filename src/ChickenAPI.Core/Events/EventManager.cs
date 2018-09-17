@@ -12,9 +12,14 @@ namespace ChickenAPI.Core.Events
 
         public void Register<T>(T handler) where T : IEventHandler
         {
-            if (!_eventHandlersByType.ContainsKey(typeof(T)))
+            Register(handler, typeof(T));
+        }
+
+        public void Register(IEventHandler handler, Type type)
+        {
+            if (!_eventHandlersByType.ContainsKey(type))
             {
-                _eventHandlersByType.Add(typeof(T), handler);
+                _eventHandlersByType.Add(type, handler);
             }
         }
 

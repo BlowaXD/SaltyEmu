@@ -13,10 +13,6 @@ namespace ChickenAPI.Game.Features.Skills
 {
     public class SkillEventHandler : EventHandlerBase
     {
-        public SkillEventHandler(IEntityManager entityManager)
-        {
-        }
-
         public override void Execute(IEntity entity, ChickenEventArgs e)
         {
             var component = entity.GetComponent<SkillComponent>();
