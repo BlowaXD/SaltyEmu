@@ -49,14 +49,15 @@ namespace ChickenAPI.Game.Features.Movement
         /// </summary>
         public byte Speed { get; set; }
 
-        public bool IsSitting {
+        public bool IsSitting
+        {
             get => _isSitting;
             set
             {
                 _isSitting = value;
                 if (Entity.EntityManager is IMapLayer mapLayer)
                 {
-                    mapLayer.Broadcast(RestEntityExtensions.GenerateRestPacket(Entity));
+                    mapLayer.Broadcast(Entity.GenerateRestPacket());
                 }
             }
         }
