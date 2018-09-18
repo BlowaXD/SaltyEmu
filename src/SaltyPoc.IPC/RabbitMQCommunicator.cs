@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
-using SaltyPoc.IPC.PacketExample;
 using SaltyPoc.IPC.Protocol;
 
 namespace SaltyPoc.IPC
@@ -46,17 +44,23 @@ namespace SaltyPoc.IPC
 
         public async Task<T> RequestAsync<T>(IIpcRequest packet) where T : IIpcResponse
         {
+            string tmp = JsonConvert.SerializeObject(packet);
             return await RequestAsync<T>(new BaseRequest
             {
-                Id = Guid.NewGuid(),
-                Content = JsonConvert.SerializeObject(packet),
-                Response = new TaskCompletionSource<BaseResponse>(),
+                Id = packet.Id == Guid.Empty ? Guid.NewGuid() : packet.Id,
+                Content = tmp,
                 Type = typeof(T),
+                Response = new TaskCompletionSource<BaseResponse>(),
             });
         }
 
         public Task SendAsync(IIpcPacket packet)
         {
+            if (packet.Id == Guid.Empty)
+            {
+                packet.Id = Guid.NewGuid();
+            }
+
             string tmp = JsonConvert.SerializeObject(packet);
             Publish(tmp, BroadcastQueueName);
             return Task.CompletedTask;
@@ -68,7 +72,7 @@ namespace SaltyPoc.IPC
             return (Task<T>)Task.CompletedTask;
         }
 
-        private Task<T> RequestAsync<T>(BaseRequest request) where T : IIpcResponse
+        private async Task<T> RequestAsync<T>(BaseRequest request) where T : IIpcResponse
         {
             // todo rabbitmq implementation & packet serialization
             _pendingRequests.TryAdd(request.Id, request);
@@ -78,26 +82,25 @@ namespace SaltyPoc.IPC
             string message = request.Content;
             Reply(message, correlationId);
 
+            BaseResponse tmp = await request.Response.Task;
 
-            return request.Response.Task as Task<T>;
+
+            return JsonConvert.DeserializeObject<T>(tmp.Content);
         }
 
         private void OnMessage(object sender, BasicDeliverEventArgs e)
         {
             string requestMessage = Encoding.UTF8.GetString(e.Body);
             Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.WriteLine("Message : " + requestMessage);
+            Console.WriteLine("[CLIENT][RECV][" + e.BasicProperties.ReplyTo + "] :" + requestMessage);
             Console.ResetColor();
             switch (e.BasicProperties.ReplyTo)
             {
                 case ResponseQueueName:
-                    OnResponsePacket(JsonConvert.DeserializeObject<IIpcResponse>(requestMessage));
+                    OnResponsePacket(JsonConvert.DeserializeObject<BaseResponse>(requestMessage));
                     break;
                 case RequestQueueName:
-                    OnRequestPacket(JsonConvert.DeserializeObject<IIpcRequest>(requestMessage));
-                    break;
-                case BroadcastQueueName:
-                    OnPacket(JsonConvert.DeserializeObject<IIpcPacket>(requestMessage));
+                    OnRequestPacket(JsonConvert.DeserializeObject<BaseRequest>(requestMessage));
                     break;
             }
         }
@@ -113,13 +116,9 @@ namespace SaltyPoc.IPC
             {
                 return;
             }
-
-            if (!_pendingRequests.TryRemove(response.RequestId, out BaseRequest request))
-            {
-                return;
-            }
-
-            request.Response.SetResult(response);
+            
+            BaseRequest tmp = _pendingRequests[response.RequestId];
+            tmp?.Response.SetResult(response);
         }
 
         private void OnRequestPacket(IIpcRequest deserializeObject)
@@ -146,7 +145,10 @@ namespace SaltyPoc.IPC
         private void Publish(string message, string queueName)
         {
             byte[] messageBytes = Encoding.UTF8.GetBytes(message);
-            _channel.BasicPublish(ExchangeName, queueName, body: messageBytes);
+            IBasicProperties props = _channel.CreateBasicProperties();
+            props.CorrelationId = "test";
+            props.ReplyTo = queueName;
+            _channel.BasicPublish(ExchangeName, queueName, props, messageBytes);
         }
 
         public void Dispose()
