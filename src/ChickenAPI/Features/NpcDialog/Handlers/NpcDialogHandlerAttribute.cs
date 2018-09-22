@@ -15,16 +15,15 @@ namespace ChickenAPI.Game.Features.NpcDialog.Handlers
         private readonly Action<IPlayerEntity, NpcDialogEventArgs> _func;
         private readonly IEnumerable<PermissionsRequirementsAttribute> _permissions;
 
-        public NpcDialogHandlerAttribute(long npcDialogId, Type type)
+        public NpcDialogHandlerAttribute(long npcDialogId, Type type, string methodName)
         {
-            MethodInfo method = type.GetMethods().FirstOrDefault(s => s.GetCustomAttribute<NpcDialogHandlerAttribute>()?.NpcDialogId == npcDialogId);
+            MethodInfo method = type.GetMethod(methodName);
             if (method == null)
             {
                 throw new Exception($"Your handler for {npcDialogId} is wrong");
             }
 
             _permissions = method.GetCustomAttributes<PermissionsRequirementsAttribute>();
-
             _func = (Action<IPlayerEntity, NpcDialogEventArgs>)Delegate.CreateDelegate(typeof(Action<IPlayerEntity, NpcDialogEventArgs>), method);
             NpcDialogId = npcDialogId;
         }

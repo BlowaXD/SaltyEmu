@@ -16,7 +16,7 @@ namespace ChickenAPI.Game.Features.NpcDialog.Handlers
         /// <param name="player"></param>
         /// <param name="args"></param>
         [PermissionsRequirements(PermissionType.NPC_DIALOG_TELEPORT)]
-        [NpcDialogHandler(301, typeof(TeleporterHandler))]
+        [NpcDialogHandler(301, typeof(TeleporterHandler), "OnGrahamDialogTeleport")]
         public static void OnGrahamDialogTeleport(IPlayerEntity player, NpcDialogEventArgs args)
         {
             Log.Info($"[TELEPORT][GRAHAM] {player.Character.Name}");
@@ -29,7 +29,7 @@ namespace ChickenAPI.Game.Features.NpcDialog.Handlers
         /// <param name="player"></param>
         /// <param name="args"></param>
         [PermissionsRequirements(PermissionType.NPC_DIALOG_TELEPORT)]
-        [NpcDialogHandler(16, typeof(TeleporterHandler))]
+        [NpcDialogHandler(16, typeof(TeleporterHandler), "OnNpcDialogTeleport")]
         public static void OnNpcDialogTeleport(IPlayerEntity player, NpcDialogEventArgs args)
         {
             switch (args.Type)

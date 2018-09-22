@@ -12,14 +12,16 @@ namespace ChickenAPI.Game.Features.NpcDialog
     public class BasicNpcDialogHandler : INpcDialogHandler
     {
         private static readonly Logger Log = Logger.GetLogger<BasicNpcDialogHandler>();
-        protected Dictionary<long, NpcDialogHandlerAttribute> HandlersByDialogId = new Dictionary<long, NpcDialogHandlerAttribute>();
+        protected readonly Dictionary<long, NpcDialogHandlerAttribute> HandlersByDialogId;
 
         public BasicNpcDialogHandler()
         {
+            HandlersByDialogId = new Dictionary<long, NpcDialogHandlerAttribute>();
             Assembly currentAsm = Assembly.GetAssembly(typeof(BasicNpcDialogHandler));
-            foreach (Type handler in currentAsm.GetTypes().Where(s => s.GetMethods().Any(m => CustomAttributeExtensions.GetCustomAttribute<NpcDialogHandlerAttribute>((MemberInfo)m) != null)))
+            foreach (Type handler in currentAsm.GetTypes().Where(s => s.GetMethods().Any(m => m.GetCustomAttribute<NpcDialogHandlerAttribute>() != null)))
             {
-                foreach (MethodInfo method in handler.GetMethods())
+                Log.Info("GetTypes()");
+                foreach (MethodInfo method in handler.GetMethods().Where(s => s.GetCustomAttribute<NpcDialogHandlerAttribute>() != null))
                 {
                     Register(method.GetCustomAttribute<NpcDialogHandlerAttribute>());
                 }
