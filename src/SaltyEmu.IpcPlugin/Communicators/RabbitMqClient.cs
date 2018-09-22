@@ -86,6 +86,12 @@ namespace SaltyEmu.IpcPlugin.Communicators
                 return;
             }
 
+            if (!_pendingRequests.TryGetValue(baseResponse.RequestId, out PendingRequest request))
+            {
+                return;
+            }
+
+            request.Response.SetResult(baseResponse);
             Log.Debug("[ON_MESSAGE] : " + container.Content);
         }
 

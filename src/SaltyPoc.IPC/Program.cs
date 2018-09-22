@@ -9,22 +9,29 @@ namespace SaltyPoc.IPC
 {
     class Program
     {
+        private static readonly Logger Log = Logger.GetLogger<Program>();
         private static IIpcServer _server;
         private static IIpcClient _client;
 
-        static void Main(string[] args)
+        internal static async Task Main(string[] args)
         {
             Logger.Initialize();
             _server = new RabbitMqServer();
             _client = new RabbitMqClient();
 
-            Test();
+            await Test();
             Console.ReadKey();
         }
 
-        static async Task Test()
+        private static async Task Test()
         {
-            TestResponsePacket tmp = await _client.RequestAsync<TestResponsePacket>(new TestRequestPacket());
+            var req = new TestRequestPacket();
+            Log.Info("RequestPacket : " + req.Id);
+            TestResponsePacket resp = await _client.RequestAsync<TestResponsePacket>(req);
+            Log.Info("ResponsePacket : " + resp.Id);
+            Log.Info("ResponsePacket : " + resp.RequestId);
+            Log.Info("ResponsePacket : " + resp.Name);
+            Log.Info("ResponsePacket : " + resp.Popopopo);
         }
     }
 }
