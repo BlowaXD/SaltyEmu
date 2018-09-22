@@ -2,14 +2,15 @@
 using System.Collections.Concurrent;
 using System.Text;
 using System.Threading.Tasks;
+using ChickenAPI.Core.IPC;
+using ChickenAPI.Core.IPC.Protocol;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
-using SaltyPoc.IPC.Protocol;
 
 namespace SaltyPoc.IPC
 {
-    public class RabbitMqCommunicator : IDisposable, IIpcCommunicator
+    public class RabbitMqCommunicator : IDisposable, IIpcClient
     {
         private readonly IConnection _connection;
         private readonly IModel _channel;
@@ -53,6 +54,8 @@ namespace SaltyPoc.IPC
                 Response = new TaskCompletionSource<BaseResponse>(),
             });
         }
+
+        public Task BroadcastAsync<T>(T packet) where T : IIpcPacket => throw new NotImplementedException();
 
         public Task SendAsync(IIpcPacket packet)
         {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SaltyPoc.IPC.Protocol
+namespace ChickenAPI.Core.IPC.Protocol
 {
     public interface IIpcPacket
     {
