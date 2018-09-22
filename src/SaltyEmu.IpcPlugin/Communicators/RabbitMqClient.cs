@@ -49,7 +49,7 @@ namespace SaltyEmu.IpcPlugin.Communicators
             Log.Info("IPC Client launched !");
         }
 
-        public Task<T> RequestAsync<T>(IIpcRequest packet) where T : class, IIpcResponse
+        public async Task<T> RequestAsync<T>(IIpcRequest packet) where T : class, IIpcResponse
         {
             // add packet to requests
             PendingRequest request = _requestFactory.Create(packet);
@@ -63,7 +63,9 @@ namespace SaltyEmu.IpcPlugin.Communicators
 
             Publish(container, RequestQueueName);
 
-            return request.Response.Task as Task<T>;
+            IIpcResponse tmp = await request.Response.Task;
+            Log.Debug("Awaited response !");
+            return tmp as T;
         }
 
         public Task BroadcastAsync<T>(T packet) where T : IIpcPacket

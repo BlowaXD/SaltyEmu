@@ -1,8 +1,7 @@
 ﻿using System.Threading.Tasks;
 using ChickenAPI.Core.IPC.Protocol;
-using SaltyEmu.IpcPlugin.Communicators;
 
-namespace SaltyEmu.IpcPlugin.Protocol
+namespace SaltyEmu.IpcPlugin.Communicators
 {
     public class PendingRequestFactory : IPendingRequestFactory
     {

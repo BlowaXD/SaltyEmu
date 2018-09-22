@@ -15,6 +15,10 @@ namespace SaltyEmu.IpcPlugin.Communicators
     public class RabbitMqServer : IIpcServer
     {
         private static readonly Logger Log = Logger.GetLogger<RabbitMqServer>();
+
+        private readonly IIpcRequestHandler _requestHandler;
+        private readonly IPacketContainerFactory _packetContainerFactory;
+
         private readonly IConnection _connection;
         private readonly IModel _channel;
 
@@ -24,9 +28,16 @@ namespace SaltyEmu.IpcPlugin.Communicators
         private const string BroadcastQueueName = "salty_broadcast";
         private const string ExchangeName = ""; // default exchange
 
+        public RabbitMqServer(IIpcRequestHandler requestHandler) : this()
+        {
+            _requestHandler = requestHandler;
+        }
+
         public RabbitMqServer()
         {
             var factory = new ConnectionFactory { HostName = "localhost" };
+
+            _packetContainerFactory = new PacketContainerFactory();
 
             _connection = factory.CreateConnection();
             _channel = _connection.CreateModel();
@@ -55,15 +66,16 @@ namespace SaltyEmu.IpcPlugin.Communicators
                     break;
                 case RequestQueueName:
                     object ipc = JsonConvert.DeserializeObject(packet.Content, packet.Type);
-                    OnRequest(ipc as BaseRequest);
+                    OnRequest(ipc as BaseRequest, packet.Type);
                     break;
             }
         }
 
-        public void OnRequest(BaseRequest request)
+        public void OnRequest(BaseRequest request, Type type)
         {
             Log.Info("[OnRequest]");
             request.Server = this;
+            _requestHandler.Handle(request, type);
         }
 
 
@@ -75,8 +87,18 @@ namespace SaltyEmu.IpcPlugin.Communicators
 
         public Task ResponseAsync<T>(T response) where T : IIpcResponse
         {
-            _channel.BasicPublish(ExchangeName, ResponseQueueName);
-            return Task.CompletedTask;
+            return Task.Run(() =>
+            {
+                Publish(_packetContainerFactory.ToPacket<T>(response), ResponseQueueName);
+            });
+        }
+
+        private void Publish(PacketContainer container, string queueName)
+        {
+            byte[] messageBytes = Encoding.UTF8.GetBytes(container.ToString());
+            IBasicProperties props = _channel.CreateBasicProperties();
+            props.ReplyTo = queueName;
+            _channel.BasicPublish(ExchangeName, queueName, props, messageBytes);
         }
     }
 }

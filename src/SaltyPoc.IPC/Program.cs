@@ -7,16 +7,27 @@ using SaltyPoc.IPC.Packets;
 
 namespace SaltyPoc.IPC
 {
-    class Program
+    internal class Program
     {
         private static readonly Logger Log = Logger.GetLogger<Program>();
         private static IIpcServer _server;
         private static IIpcClient _client;
 
+        internal static IIpcRequestHandler GetHandler()
+        {
+            IIpcRequestHandler requestHandler = new RequestHandler();
+            requestHandler.Register<TestRequestPacket>(async packet =>
+            {
+                await packet.ReplyAsync(new TestResponsePacket());
+                Log.Info("Replied to TestRequest");
+            });
+            return requestHandler;
+        }
+
         internal static async Task Main(string[] args)
         {
             Logger.Initialize();
-            _server = new RabbitMqServer();
+            _server = new RabbitMqServer(GetHandler());
             _client = new RabbitMqClient();
 
             await Test();
@@ -27,11 +38,19 @@ namespace SaltyPoc.IPC
         {
             var req = new TestRequestPacket();
             Log.Info("RequestPacket : " + req.Id);
+            // send the request and asynchronously wait for a response
             TestResponsePacket resp = await _client.RequestAsync<TestResponsePacket>(req);
+
+            if (resp == null)
+            {
+                // not handled
+                return;
+            }
+
             Log.Info("ResponsePacket : " + resp.Id);
             Log.Info("ResponsePacket : " + resp.RequestId);
             Log.Info("ResponsePacket : " + resp.Name);
-            Log.Info("ResponsePacket : " + resp.Popopopo);
+            Log.Info("ResponsePacket : " + resp.RandomPropertyWithoutName);
         }
     }
 }

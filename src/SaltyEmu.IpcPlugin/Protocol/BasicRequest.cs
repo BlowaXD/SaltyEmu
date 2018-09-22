@@ -19,9 +19,10 @@ namespace SaltyEmu.IpcPlugin.Protocol
 
         public IIpcServer Server { get; set; }
 
-        public Task ReplyAsync(IIpcResponse response)
+        public Task ReplyAsync<T>(T response) where T : IIpcResponse
         {
-            return Server.ResponseAsync(response);
+            response.RequestId = Id;
+            return Server.ResponseAsync<T>(response);
         }
     }
 }

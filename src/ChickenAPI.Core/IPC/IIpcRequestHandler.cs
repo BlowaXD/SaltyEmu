@@ -5,7 +5,8 @@ namespace ChickenAPI.Core.IPC
 {
     public interface IIpcRequestHandler
     {
-        Type Type { get; }
-        void Handle(IIpcRequest request);
+        void Register<T>(Action<IIpcRequest> handler) where T : IIpcRequest;
+        void Handle(IIpcRequest request, Type type);
+        void Handle<T>(T request) where T : IIpcRequest;
     }
 }
