@@ -4,24 +4,27 @@ using System.Text;
 using System.Threading.Tasks;
 using ChickenAPI.Core.IPC;
 using ChickenAPI.Core.IPC.Protocol;
+using ChickenAPI.Core.Logging;
+using Newtonsoft.Json;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using SaltyEmu.IpcPlugin.Protocol;
 
 namespace SaltyEmu.IpcPlugin.Communicators
 {
-    public class RabbitMQServer : IIpcServer
+    public class RabbitMqServer : IIpcServer
     {
+        private static readonly Logger Log = Logger.GetLogger<RabbitMqServer>();
         private readonly IConnection _connection;
         private readonly IModel _channel;
-        
+
 
         private const string RequestQueueName = "salty_requests";
         private const string ResponseQueueName = "salty_responses";
         private const string BroadcastQueueName = "salty_broadcast";
         private const string ExchangeName = ""; // default exchange
 
-        public RabbitMQServer()
+        public RabbitMqServer()
         {
             var factory = new ConnectionFactory { HostName = "localhost" };
 
@@ -35,19 +38,34 @@ namespace SaltyEmu.IpcPlugin.Communicators
             var consumer = new EventingBasicConsumer(_channel);
             consumer.Received += OnMessage;
             _channel.BasicConsume(RequestQueueName, true, consumer);
+            _channel.BasicConsume(BroadcastQueueName, true, consumer);
+            Log.Info("IPC Server launched !");
         }
 
         private void OnMessage(object sender, BasicDeliverEventArgs e)
         {
             string requestMessage = Encoding.UTF8.GetString(e.Body);
-            Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.ResetColor();
+            var packet = JsonConvert.DeserializeObject<PacketContainer>(requestMessage);
+
+            Log.Debug($"[OnMesssage] : " + requestMessage);
+
+            switch (e.BasicProperties.ReplyTo)
+            {
+                case BroadcastQueueName:
+                    break;
+                case RequestQueueName:
+                    object ipc = JsonConvert.DeserializeObject(packet.Content, packet.Type);
+                    OnRequest(ipc as BaseRequest);
+                    break;
+            }
         }
 
-        private void OnPacket(IIpcPacket deserializeObject)
+        public void OnRequest(BaseRequest request)
         {
-            // handle in handler
+            Log.Info("[OnRequest]");
+            request.Server = this;
         }
+
 
         public void Dispose()
         {
@@ -57,6 +75,7 @@ namespace SaltyEmu.IpcPlugin.Communicators
 
         public Task ResponseAsync<T>(T response) where T : IIpcResponse
         {
+            _channel.BasicPublish(ExchangeName, ResponseQueueName);
             return Task.CompletedTask;
         }
     }

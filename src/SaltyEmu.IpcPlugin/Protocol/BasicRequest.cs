@@ -11,9 +11,11 @@ namespace SaltyEmu.IpcPlugin.Protocol
     {
         public Guid Id { get; set; }
 
-        public async Task ReplyAsync(IIpcResponse response)
+        public IIpcServer Server { get; set; }
+
+        public Task ReplyAsync(IIpcResponse response)
         {
-            await ChickenContainer.Instance.Resolve<IIpcServer>().ResponseAsync(response);
+            return Server.ResponseAsync(response);
         }
     }
 }

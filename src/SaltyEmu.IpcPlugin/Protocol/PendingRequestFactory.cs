@@ -6,13 +6,10 @@ namespace SaltyEmu.IpcPlugin.Protocol
 {
     public class PendingRequestFactory : IPendingRequestFactory
     {
-        public PendingRequest Create(IIpcRequest request)
+        public PendingRequest Create(IIpcRequest request) => new PendingRequest
         {
-            return new PendingRequest
-            {
-                Request = request,
-                Response = new TaskCompletionSource<IIpcResponse>()
-            };
-        }
+            Request = request,
+            Response = new TaskCompletionSource<IIpcResponse>()
+        };
     }
 }

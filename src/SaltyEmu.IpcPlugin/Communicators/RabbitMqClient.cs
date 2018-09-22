@@ -4,6 +4,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ChickenAPI.Core.IPC;
 using ChickenAPI.Core.IPC.Protocol;
+using ChickenAPI.Core.Logging;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
@@ -13,6 +14,7 @@ namespace SaltyEmu.IpcPlugin.Communicators
 {
     public class RabbitMqClient : IDisposable, IIpcClient
     {
+        private static readonly Logger Log = Logger.GetLogger<RabbitMqClient>();
         private readonly IConnection _connection;
         private readonly IModel _channel;
 
@@ -42,19 +44,9 @@ namespace SaltyEmu.IpcPlugin.Communicators
             consumer.Received += OnMessage;
 
             _channel.BasicConsume(ResponseQueueName, true, consumer);
-            _channel.BasicConsume(BroadcastQueueName, true, consumer);
 
             _pendingRequests = new ConcurrentDictionary<Guid, PendingRequest>();
-        }
-
-        private PacketContainer ToPacket<T>(IIpcPacket packet)
-        {
-            return ToPacket(typeof(T), packet);
-        }
-
-        private PacketContainer ToPacket(Type type, IIpcPacket packet)
-        {
-            return _packetFactory.Create(type, JsonConvert.SerializeObject(packet));
+            Log.Info("IPC Client launched !");
         }
 
         public Task<T> RequestAsync<T>(IIpcRequest packet) where T : class, IIpcResponse
@@ -67,7 +59,7 @@ namespace SaltyEmu.IpcPlugin.Communicators
             }
 
             // create the packet container
-            PacketContainer container = ToPacket(packet.GetType(), packet);
+            PacketContainer container = _packetFactory.ToPacket(packet.GetType(), packet);
 
             Publish(container, RequestQueueName);
 
@@ -78,7 +70,7 @@ namespace SaltyEmu.IpcPlugin.Communicators
         {
             return Task.Run(() =>
             {
-                PacketContainer tmp = ToPacket<T>(packet);
+                PacketContainer tmp = _packetFactory.ToPacket<T>(packet);
                 Publish(tmp, BroadcastQueueName);
             });
         }
@@ -87,13 +79,20 @@ namespace SaltyEmu.IpcPlugin.Communicators
         {
             string requestMessage = Encoding.UTF8.GetString(e.Body);
             var container = JsonConvert.DeserializeObject<PacketContainer>(requestMessage);
+            object response = JsonConvert.DeserializeObject(container.Content, container.Type);
+
+            if (!(response is BaseResponse baseResponse))
+            {
+                return;
+            }
+
+            Log.Debug("[ON_MESSAGE] : " + container.Content);
         }
 
         private void Publish(PacketContainer container, string queueName)
         {
             byte[] messageBytes = Encoding.UTF8.GetBytes(container.ToString());
             IBasicProperties props = _channel.CreateBasicProperties();
-            props.CorrelationId = "test";
             props.ReplyTo = queueName;
             _channel.BasicPublish(ExchangeName, queueName, props, messageBytes);
         }
