@@ -9,13 +9,25 @@ namespace ChickenAPI.Game.Features.NpcDialog.Handlers
     {
         private static readonly Logger Log = Logger.GetLogger<TeleporterHandler>();
 
+        /// <summary>
+        /// This method will teleport the requester to Act 6
+        /// It requires the player to be near Graham
+        /// </summary>
+        /// <param name="player"></param>
+        /// <param name="args"></param>
         [PermissionsRequirements(PermissionType.NPC_DIALOG_TELEPORT)]
         [NpcDialogHandler(301, typeof(TeleporterHandler))]
         public static void OnGrahamDialogTeleport(IPlayerEntity player, NpcDialogEventArgs args)
         {
+            Log.Info($"[TELEPORT][GRAHAM] {player.Character.Name}");
             TeleportGraham(player);
         }
 
+        /// <summary>
+        /// This method will teleport the requester to Krem or Alveus, depending on which dialog type he choosed
+        /// </summary>
+        /// <param name="player"></param>
+        /// <param name="args"></param>
         [PermissionsRequirements(PermissionType.NPC_DIALOG_TELEPORT)]
         [NpcDialogHandler(16, typeof(TeleporterHandler))]
         public static void OnNpcDialogTeleport(IPlayerEntity player, NpcDialogEventArgs args)
@@ -34,7 +46,7 @@ namespace ChickenAPI.Game.Features.NpcDialog.Handlers
         public static void TeleportGraham(IPlayerEntity player)
         {
             // TeleportPlayerOnMap(x,x,x);
-            Log.Info($"J'ai était Tp par Graham LUL .");
+            Log.Info($"Graham a téléporté {player.Character.Name}");
         }
 
         public static void TeleportZapMtKrem(IPlayerEntity player)
