@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using ChickenAPI.Core.IPC;
 using ChickenAPI.Core.IPC.Protocol;
+using ChickenAPI.Core.Logging;
 
-namespace SaltyEmu.IpcPlugin.Communicators
+namespace SaltyEmu.IpcPlugin.Utils
 {
     public class RequestHandler : IIpcRequestHandler
     {
+        private static Logger Log = Logger.GetLogger<IIpcRequestHandler>();
         private readonly Dictionary<Type, Action<IIpcRequest>> _packetHandlers = new Dictionary<Type, Action<IIpcRequest>>();
 
         public void Register<T>(Action<IIpcRequest> handler) where T : IIpcRequest
@@ -26,6 +28,7 @@ namespace SaltyEmu.IpcPlugin.Communicators
                 return;
             }
 
+            Log.Info($"Handling {type.Name} packet");
             handler.Invoke(request);
         }
 

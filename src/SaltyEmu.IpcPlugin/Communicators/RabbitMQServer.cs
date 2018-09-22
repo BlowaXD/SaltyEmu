@@ -57,8 +57,7 @@ namespace SaltyEmu.IpcPlugin.Communicators
         {
             string requestMessage = Encoding.UTF8.GetString(e.Body);
             var packet = JsonConvert.DeserializeObject<PacketContainer>(requestMessage);
-
-            Log.Debug($"[OnMesssage] : " + requestMessage);
+            Log.Info($"[PACKET_RECEIVED] {packet.Type}");
 
             switch (e.BasicProperties.ReplyTo)
             {
@@ -73,7 +72,6 @@ namespace SaltyEmu.IpcPlugin.Communicators
 
         public void OnRequest(BaseRequest request, Type type)
         {
-            Log.Info("[OnRequest]");
             request.Server = this;
             _requestHandler.Handle(request, type);
         }
@@ -87,10 +85,7 @@ namespace SaltyEmu.IpcPlugin.Communicators
 
         public Task ResponseAsync<T>(T response) where T : IIpcResponse
         {
-            return Task.Run(() =>
-            {
-                Publish(_packetContainerFactory.ToPacket<T>(response), ResponseQueueName);
-            });
+            return Task.Run(() => { Publish(_packetContainerFactory.ToPacket<T>(response), ResponseQueueName); });
         }
 
         private void Publish(PacketContainer container, string queueName)

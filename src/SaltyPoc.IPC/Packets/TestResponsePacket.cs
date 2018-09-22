@@ -7,6 +7,6 @@ namespace SaltyPoc.IPC.Packets
     public class TestResponsePacket : BaseResponse
     {
         public string Name => "ok";
-        public string RandomPropertyWithoutName => "another_property 123";
+        public string RandomPropertyAsATry => "another_property 123";
     }
 }

@@ -64,7 +64,6 @@ namespace SaltyEmu.IpcPlugin.Communicators
             Publish(container, RequestQueueName);
 
             IIpcResponse tmp = await request.Response.Task;
-            Log.Debug("Awaited response !");
             return tmp as T;
         }
 
@@ -94,11 +93,11 @@ namespace SaltyEmu.IpcPlugin.Communicators
             }
 
             request.Response.SetResult(baseResponse);
-            Log.Debug("[ON_MESSAGE] : " + container.Content);
         }
 
         private void Publish(PacketContainer container, string queueName)
         {
+            Log.Info($"[PACKET_SENT] {container.Type}");
             byte[] messageBytes = Encoding.UTF8.GetBytes(container.ToString());
             IBasicProperties props = _channel.CreateBasicProperties();
             props.ReplyTo = queueName;

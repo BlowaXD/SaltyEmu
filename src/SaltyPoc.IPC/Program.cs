@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using ChickenAPI.Core.IPC;
 using ChickenAPI.Core.Logging;
 using SaltyEmu.IpcPlugin.Communicators;
+using SaltyEmu.IpcPlugin.Utils;
 using SaltyPoc.IPC.Packets;
 
 namespace SaltyPoc.IPC
@@ -10,7 +11,6 @@ namespace SaltyPoc.IPC
     internal class Program
     {
         private static readonly Logger Log = Logger.GetLogger<Program>();
-        private static IIpcServer _server;
         private static IIpcClient _client;
 
         internal static IIpcRequestHandler GetHandler()
@@ -27,9 +27,8 @@ namespace SaltyPoc.IPC
         internal static async Task Main(string[] args)
         {
             Logger.Initialize();
-            _server = new RabbitMqServer(GetHandler());
+            IIpcServer server = new RabbitMqServer(GetHandler());
             _client = new RabbitMqClient();
-
             await Test();
             Console.ReadKey();
         }
@@ -38,19 +37,12 @@ namespace SaltyPoc.IPC
         {
             var req = new TestRequestPacket();
             Log.Info("RequestPacket : " + req.Id);
-            // send the request and asynchronously wait for a response
             TestResponsePacket resp = await _client.RequestAsync<TestResponsePacket>(req);
-
-            if (resp == null)
-            {
-                // not handled
-                return;
-            }
+            if (resp == null) return; // not handled correctly
 
             Log.Info("ResponsePacket : " + resp.Id);
             Log.Info("ResponsePacket : " + resp.RequestId);
-            Log.Info("ResponsePacket : " + resp.Name);
-            Log.Info("ResponsePacket : " + resp.RandomPropertyWithoutName);
+            Log.Info("ResponsePacket : " + resp.RandomPropertyAsATry);
         }
     }
 }
