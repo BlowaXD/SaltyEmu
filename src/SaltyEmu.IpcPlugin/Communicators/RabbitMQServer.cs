@@ -1,18 +1,20 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Text;
+using System.Threading.Tasks;
+using ChickenAPI.Core.IPC;
 using ChickenAPI.Core.IPC.Protocol;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
+using SaltyEmu.IpcPlugin.Protocol;
 
-namespace SaltyPoc.IPC
+namespace SaltyEmu.IpcPlugin.Communicators
 {
-    public class RabbitMQServer
+    public class RabbitMQServer : IIpcServer
     {
         private readonly IConnection _connection;
         private readonly IModel _channel;
-
-        private readonly ConcurrentDictionary<Guid, BaseRequest> _pendingRequests;
+        
 
         private const string RequestQueueName = "salty_requests";
         private const string ResponseQueueName = "salty_responses";
@@ -51,6 +53,11 @@ namespace SaltyPoc.IPC
         {
             _connection?.Dispose();
             _channel?.Dispose();
+        }
+
+        public Task ResponseAsync<T>(T response) where T : IIpcResponse
+        {
+            return Task.CompletedTask;
         }
     }
 }

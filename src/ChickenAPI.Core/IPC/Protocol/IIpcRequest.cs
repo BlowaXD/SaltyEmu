@@ -2,7 +2,7 @@
 
 namespace ChickenAPI.Core.IPC.Protocol
 {
-    public interface IIpcRequest
+    public interface IIpcRequest : IIpcPacket
     {
         Task ReplyAsync(IIpcResponse response);
     }

@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ChickenAPI.Core\ChickenAPI.Core.csproj" />
+    <ProjectReference Include="..\SaltyEmu.IpcPlugin\SaltyEmu.IpcPlugin.csproj" />
   </ItemGroup>
 
 </Project>
