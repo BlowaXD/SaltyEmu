@@ -10,32 +10,23 @@ namespace ChickenAPI.Game.Features.NpcDialog.Handlers
         private static readonly Logger Log = Logger.GetLogger<TeleporterHandler>();
 
         [PermissionsRequirements(PermissionType.NPC_DIALOG_TELEPORT)]
-        [NpcDialogHandler(1, typeof(TeleporterHandler))]
+        [NpcDialogHandler(301, typeof(TeleporterHandler))]
+        public static void OnGrahamDialogTeleport(IPlayerEntity player, NpcDialogEventArgs args)
+        {
+            TeleportGraham(player);
+        }
+
+        [PermissionsRequirements(PermissionType.NPC_DIALOG_TELEPORT)]
+        [NpcDialogHandler(16, typeof(TeleporterHandler))]
         public static void OnNpcDialogTeleport(IPlayerEntity player, NpcDialogEventArgs args)
         {
-            // do the work
-            switch (args.DialogId)
+            switch (args.Type)
             {
-                case 301:
-                    TeleportGraham(player);
+                case 1:
+                    TeleportZapMtKrem(player);
                     break;
-
-                case 16:
-                    switch (args.Type)
-                    {
-                        case 1:
-                            TeleportZapMtKrem(player);
-                            break;
-                        case 2:
-                            TeleportZapPortsAlveus(player);
-                            break;
-                        default:
-                            return;
-                    }
-                    break;
-
-                default:
-                    Log.Info($" No Handler for {args.DialogId} {args.Type} {args.Value} {args.NpcId} : Mashalux Beaugosse va .");
+                case 2:
+                    TeleportZapPortsAlveus(player);
                     break;
             }
         }
@@ -57,7 +48,5 @@ namespace ChickenAPI.Game.Features.NpcDialog.Handlers
             // TeleportPlayerOnMap(x,x,x);
             Log.Info($"J'ai était TP Au Ports Alveus .");
         }
-
-        // public static void TeleportPlayerOnMap( mapid , x , y)
     }
 }

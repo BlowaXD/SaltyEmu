@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Features.NpcDialog.Events;
 using ChickenAPI.Game.Features.NpcDialog.Handlers;
@@ -10,6 +11,7 @@ namespace ChickenAPI.Game.Features.NpcDialog
 {
     public class BasicNpcDialogHandler : INpcDialogHandler
     {
+        private static readonly Logger Log = Logger.GetLogger<BasicNpcDialogHandler>();
         protected Dictionary<long, NpcDialogHandlerAttribute> HandlersByDialogId = new Dictionary<long, NpcDialogHandlerAttribute>();
 
         public BasicNpcDialogHandler()
@@ -31,6 +33,7 @@ namespace ChickenAPI.Game.Features.NpcDialog
                 return;
             }
 
+            Log.Info($"[REGISTER_HANDLER] NPC_DIALOG_ID : {handlerAttribute.NpcDialogId} REGISTERED !");
             HandlersByDialogId.Add(handlerAttribute.NpcDialogId, handlerAttribute);
         }
 
