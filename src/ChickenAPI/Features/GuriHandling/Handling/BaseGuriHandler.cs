@@ -5,8 +5,6 @@ using System.Reflection;
 using ChickenAPI.Core.Logging;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Features.GuriHandling.Args;
-using ChickenAPI.Game.Features.NpcDialog;
-using ChickenAPI.Game.Features.NpcDialog.Handlers;
 
 namespace ChickenAPI.Game.Features.GuriHandling.Handling
 {
@@ -37,7 +35,7 @@ namespace ChickenAPI.Game.Features.GuriHandling.Handling
                 return;
             }
 
-            Log.Info($"[REGISTER_HANDLER] NPC_DIALOG_ID : {handler.GuriEffectId} REGISTERED !");
+            Log.Info($"[REGISTER_HANDLER] GURI_EFFECT : {handler.GuriEffectId} REGISTERED !");
             HandlersByDialogId.Add(handler.GuriEffectId, handler);
         }
 
