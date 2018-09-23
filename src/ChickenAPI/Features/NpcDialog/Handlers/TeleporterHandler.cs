@@ -20,7 +20,7 @@ namespace ChickenAPI.Game.Features.NpcDialog.Handlers
         public static void OnGrahamDialogTeleport(IPlayerEntity player, NpcDialogEventArgs args)
         {
             Log.Info($"[TELEPORT][GRAHAM] {player.Character.Name}");
-            TeleportGraham(player);
+            // need to provide implementation
         }
 
         /// <summary>
@@ -41,12 +41,6 @@ namespace ChickenAPI.Game.Features.NpcDialog.Handlers
                     TeleportZapPortsAlveus(player);
                     break;
             }
-        }
-
-        public static void TeleportGraham(IPlayerEntity player)
-        {
-            // TeleportPlayerOnMap(x,x,x);
-            Log.Info($"Graham a téléporté {player.Character.Name}");
         }
 
         public static void TeleportZapMtKrem(IPlayerEntity player)

@@ -9,7 +9,6 @@ namespace ChickenAPI.Game.Features.GuriHandling.Handling
 {
     public class EmoticonGuriHandler
     {
-
         private static readonly Logger Log = Logger.GetLogger<TeleporterHandler>();
 
         /// <summary>
@@ -22,8 +21,8 @@ namespace ChickenAPI.Game.Features.GuriHandling.Handling
         [GuriEffect(301)]
         public static void OnEmoticonRequest(IPlayerEntity player, GuriEventArgs args)
         {
-            Log.Info($"[GURI][ALT] {player.Character.Name} used emoji : " );
+            Log.Info($"[GURI][ALT] {player.Character.Name} used emoji : ");
+            // broadcast packet...
         }
-
     }
 }
