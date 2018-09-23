@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using ChickenAPI.Core.ECS.Entities;
 using ChickenAPI.Core.ECS.Systems;
-using ChickenAPI.Core.Logging;
 using ChickenAPI.Game.Maps;
 using ChickenAPI.Packets.Game.Client._NotYetSorted;
 
@@ -11,8 +10,6 @@ namespace ChickenAPI.Game.Features.Effects
 {
     public class EffectSystem : SystemBase
     {
-        private static readonly Logger Log = Logger.GetLogger<EffectSystem>();
-
         public EffectSystem(IEntityManager entityManager) : base(entityManager)
         {
         }

@@ -1,4 +1,6 @@
-﻿namespace ChickenAPI.Game.Permissions
+﻿using Newtonsoft.Json.Serialization;
+
+namespace ChickenAPI.Game.Permissions
 {
     public enum PermissionType : ulong
     {
@@ -41,5 +43,7 @@
         NPC_DIALOG_TELEPORT,
 
         #endregion
+
+        GURI_EMOTICON,
     }
 }
