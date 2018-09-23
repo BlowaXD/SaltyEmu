@@ -12,31 +12,32 @@ namespace ChickenAPI.Game.Features.NpcDialog
     public class BasicNpcDialogHandler : INpcDialogHandler
     {
         private static readonly Logger Log = Logger.GetLogger<BasicNpcDialogHandler>();
-        protected readonly Dictionary<long, NpcDialogHandlerAttribute> HandlersByDialogId;
+        protected readonly Dictionary<long, NpcDialogHandler> HandlersByDialogId;
 
         public BasicNpcDialogHandler()
         {
-            HandlersByDialogId = new Dictionary<long, NpcDialogHandlerAttribute>();
+            HandlersByDialogId = new Dictionary<long, NpcDialogHandler>();
             Assembly currentAsm = Assembly.GetAssembly(typeof(BasicNpcDialogHandler));
-            foreach (Type handler in currentAsm.GetTypes().Where(s => s.GetMethods().Any(m => m.GetCustomAttribute<NpcDialogHandlerAttribute>() != null)))
+            // get types
+            foreach (Type type in currentAsm.GetTypes().Where(s => s.GetMethods().Any(m => m.GetCustomAttribute<NpcDialogHandlerAttribute>() != null)))
             {
-                Log.Info("GetTypes()");
-                foreach (MethodInfo method in handler.GetMethods().Where(s => s.GetCustomAttribute<NpcDialogHandlerAttribute>() != null))
+                // each method for a type
+                foreach (MethodInfo method in type.GetMethods().Where(s => s.GetCustomAttribute<NpcDialogHandlerAttribute>() != null))
                 {
-                    Register(method.GetCustomAttribute<NpcDialogHandlerAttribute>());
+                    Register(new NpcDialogHandler(method));
                 }
             }
         }
 
-        public void Register(NpcDialogHandlerAttribute handlerAttribute)
+        public void Register(NpcDialogHandler handlerAttribute)
         {
-            if (HandlersByDialogId.ContainsKey(handlerAttribute.NpcDialogId))
+            if (HandlersByDialogId.ContainsKey(handlerAttribute.DialogId))
             {
                 return;
             }
 
-            Log.Info($"[REGISTER_HANDLER] NPC_DIALOG_ID : {handlerAttribute.NpcDialogId} REGISTERED !");
-            HandlersByDialogId.Add(handlerAttribute.NpcDialogId, handlerAttribute);
+            Log.Info($"[REGISTER_HANDLER] NPC_DIALOG_ID : {handlerAttribute.DialogId} REGISTERED !");
+            HandlersByDialogId.Add(handlerAttribute.DialogId, handlerAttribute);
         }
 
         public void Unregister(long npcDialogId)
@@ -51,7 +52,7 @@ namespace ChickenAPI.Game.Features.NpcDialog
 
         public void Execute(IPlayerEntity player, NpcDialogEventArgs eventArgs)
         {
-            if (!HandlersByDialogId.TryGetValue(eventArgs.DialogId, out NpcDialogHandlerAttribute handler))
+            if (!HandlersByDialogId.TryGetValue(eventArgs.DialogId, out NpcDialogHandler handler))
             {
                 return;
             }

@@ -6,7 +6,7 @@ namespace ChickenAPI.Game.Features.NpcDialog
 {
     public interface INpcDialogHandler
     {
-        void Register(NpcDialogHandlerAttribute handlerAttribute);
+        void Register(NpcDialogHandler handler);
 
         void Unregister(long npcDialogId);
         void Unregister(NpcDialogHandlerAttribute handlerAttribute);
