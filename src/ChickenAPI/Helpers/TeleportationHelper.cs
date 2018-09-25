@@ -14,22 +14,19 @@ namespace ChickenAPI.Game.Helpers
 
         private static void TeleportChangingMap(IPlayerEntity player, IMapLayer layer, short x, short y)
         {
-
         }
 
         public static void TeleportTo(this IPlayerEntity player, IMapLayer layer, short x, short y)
         {
-            if (player.EntityManager != layer)
+            if (player.EntityManager == layer)
             {
-                TeleportChangingMap(player, layer, x, y);
+                player.TeleportTo(x, y);
                 return;
-                // change layer
             }
 
-            // improve that
             player.Movable.Actual.X = x;
             player.Movable.Actual.Y = y;
-            player.Broadcast(player.GenerateTpPacket(x, y));
+            player.TransferEntity(layer);
         }
 
 
@@ -40,7 +37,10 @@ namespace ChickenAPI.Game.Helpers
 
         public static void TeleportTo(this IPlayerEntity player, short x, short y)
         {
-            player.TeleportTo(player.EntityManager as IMapLayer, x, y);
+            // improve that
+            player.Movable.Actual.X = x;
+            player.Movable.Actual.Y = y;
+            player.Broadcast(player.GenerateTpPacket(x, y));
         }
     }
 }
