@@ -67,8 +67,7 @@ namespace ChickenAPI.Core.Logging
             Initialize(DefaultLayout, DefaultLayout);
         }
 
-        public static Logger GetLogger<TClass>()
-        where TClass : class => new Logger(typeof(TClass));
+        public static Logger GetLogger<TClass>() where TClass : class => new Logger(typeof(TClass));
 
         public void Trace(string msg)
         {
