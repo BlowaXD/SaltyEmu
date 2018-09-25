@@ -45,5 +45,6 @@ namespace ChickenAPI.Game.Permissions
         #endregion
 
         GURI_EMOTICON,
+        GURI_IDENTIFY_SHELL
     }
 }

@@ -2,13 +2,12 @@
 using ChickenAPI.Enums.Game.Effects;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Features.GuriHandling.Args;
-using ChickenAPI.Game.Features.NpcDialog.Events;
+using ChickenAPI.Game.Features.GuriHandling.Handling;
 using ChickenAPI.Game.Features.NpcDialog.Handlers;
 using ChickenAPI.Game.Helpers;
-using ChickenAPI.Game.Maps;
 using ChickenAPI.Game.Permissions;
 
-namespace ChickenAPI.Game.Features.GuriHandling.Handling
+namespace ChickenAPI.Game.Features.GuriHandling.Handlers
 {
     public class EmoticonGuriHandler
     {
@@ -29,15 +28,11 @@ namespace ChickenAPI.Game.Features.GuriHandling.Handling
                 return;
             }
 
-            if (!(player.EntityManager is IMapLayer mapLayer))
-            {
-                return;
-            }
 
-            // todo : broadcast and filter receiver type
-            mapLayer.Broadcast(player.EmojiToEffectPacket((EmojiType)e.Data));
+            // todo receiver type
+            player.Broadcast(player.EmojiToEffectPacket((EmojiType)e.Data));
 
-            Log.Info($"[GURI][ALT] {player.Character.Name} used emoji : ");
+            Log.Info($"[GURI][EMOTICON] {player.Character.Name} used emoji : ");
         }
     }
 }

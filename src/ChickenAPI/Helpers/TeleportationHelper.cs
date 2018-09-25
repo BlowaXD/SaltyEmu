@@ -11,11 +11,7 @@ namespace ChickenAPI.Game.Helpers
     public static class TeleportationHelper
     {
         private static readonly IMapManager MapManager = new Lazy<IMapManager>(() => ChickenContainer.Instance.Resolve<IMapManager>()).Value;
-
-        private static void TeleportChangingMap(IPlayerEntity player, IMapLayer layer, short x, short y)
-        {
-        }
-
+        
         public static void TeleportTo(this IPlayerEntity player, IMapLayer layer, short x, short y)
         {
             if (player.EntityManager == layer)
