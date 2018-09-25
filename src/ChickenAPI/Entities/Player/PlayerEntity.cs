@@ -26,6 +26,7 @@ using ChickenAPI.Game.Features.Visibility;
 using ChickenAPI.Game.Features.Visibility.Args;
 using ChickenAPI.Game.Maps;
 using ChickenAPI.Game.Network;
+using ChickenAPI.Game.Packets;
 using ChickenAPI.Game.Packets.Extensions;
 using ChickenAPI.Game.Permissions;
 using ChickenAPI.Packets;
@@ -111,6 +112,50 @@ namespace ChickenAPI.Game.Entities.Player
         }
 
         public long LastPulse { get; }
+
+        public void Broadcast<T>(T packet) where T : IPacket
+        {
+            Broadcast(packet, false);
+        }
+
+        public void Broadcast<T>(IEnumerable<T> packets) where T : IPacket
+        {
+            Broadcast(packets, false);
+        }
+
+        public void Broadcast<T>(T packet, bool doNotReceive) where T : IPacket
+        {
+            if (!(EntityManager is IBroadcastable broadcastable))
+            {
+                return;
+            }
+
+            if (doNotReceive)
+            {
+                broadcastable.Broadcast(this, packet);
+            }
+            else
+            {
+                broadcastable.Broadcast(packet);
+            }
+        }
+
+        public void Broadcast<T>(IEnumerable<T> packets, bool doNotReceive) where T : IPacket
+        {
+            if (!(EntityManager is IBroadcastable broadcastable))
+            {
+                return;
+            }
+
+            if (doNotReceive)
+            {
+                broadcastable.Broadcast(this, packets);
+            }
+            else
+            {
+                broadcastable.Broadcast(packets);
+            }
+        }
 
         public override void TransferEntity(IEntityManager manager)
         {

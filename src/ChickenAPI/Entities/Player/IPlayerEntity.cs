@@ -20,6 +20,12 @@ namespace ChickenAPI.Game.Entities.Player
 
         long LastPulse { get; }
 
+        void Broadcast<T>(T packet) where T : IPacket;
+        void Broadcast<T>(IEnumerable<T> packets) where T : IPacket;
+
+        void Broadcast<T>(T packet, bool doNotReceive) where T : IPacket;
+        void Broadcast<T>(IEnumerable<T> packets, bool doNotReceive) where T : IPacket;
+
         void SendPacket<T>(T packetBase) where T : IPacket;
 
         void SendPackets<T>(IEnumerable<T> packets) where T : IPacket;
