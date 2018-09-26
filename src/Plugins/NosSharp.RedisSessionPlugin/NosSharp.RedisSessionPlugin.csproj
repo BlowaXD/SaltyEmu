@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\ChickenAPI\ChickenAPI.Game.csproj" />
+    <ProjectReference Include="..\..\ChickenAPI.Game\ChickenAPI.Game.csproj" />
   </ItemGroup>
 
 </Project>

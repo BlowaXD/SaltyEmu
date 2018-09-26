@@ -30,7 +30,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ChickenAPI\ChickenAPI.Game.csproj" />
+    <ProjectReference Include="..\ChickenAPI.Game\ChickenAPI.Game.csproj" />
     <ProjectReference Include="..\Plugins\NosSharp.DatabasePlugin\SaltyEmu.DatabasePlugin.csproj" />
     <ProjectReference Include="..\Plugins\NosSharp.RedisSessionPlugin\NosSharp.RedisSessionPlugin.csproj" />
   </ItemGroup>

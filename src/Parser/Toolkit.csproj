@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ChickenAPI\ChickenAPI.Game.csproj" />
+    <ProjectReference Include="..\ChickenAPI.Game\ChickenAPI.Game.csproj" />
     <ProjectReference Include="..\Plugins\NosSharp.BasicAlgorithm\NosSharp.BasicAlgorithm.csproj" />
     <ProjectReference Include="..\Plugins\NosSharp.DatabasePlugin\SaltyEmu.DatabasePlugin.csproj" />
   </ItemGroup>
