@@ -19,10 +19,13 @@ namespace ChickenAPI.Game.Features.Battle
             Hp = HpMax;
             MpMax = algo.GetMpMax(dto.Class, dto.Level);
             Mp = MpMax;
+            BasicArea = 1;
         }
 
         public byte HpPercentage => Convert.ToByte((int)(Hp / (float)HpMax * 100));
         public byte MpPercentage => Convert.ToByte((int)(Mp / (float)MpMax * 100.0));
+
+        public byte BasicArea { get; set; }
 
         public int Hp { get; set; }
 

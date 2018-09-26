@@ -6,8 +6,10 @@ using ChickenAPI.Game.Data.TransferObjects.Character;
 using ChickenAPI.Game.Data.TransferObjects.Skills;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Features.Battle;
+using ChickenAPI.Game.Features.Battle.Extensions;
 using ChickenAPI.Game.Features.Leveling;
 using ChickenAPI.Game.Features.Skills.Args;
+using ChickenAPI.Game.Packets;
 
 namespace ChickenAPI.Game.Features.Skills
 {
@@ -26,10 +28,28 @@ namespace ChickenAPI.Game.Features.Skills
                 case SkillCastArgs skillcast:
                     TryCastSkill(component, skillcast);
                     break;
+                case UseSkillArgs useSkill:
+                    UseSkill(component, useSkill);
+                    break;
                 case PlayerAddSkillEventArgs addSkill:
                     AddSkill(entity as IPlayerEntity, addSkill, component);
                     break;
             }
+        }
+
+        public static void UseSkill(SkillComponent component, UseSkillArgs e)
+        {
+            var battleComponent = component.Entity.GetComponent<BattleComponent>();
+            if (battleComponent is null)
+            {
+                return;
+            }
+            battleComponent.Mp -= e.Skill.MpCost;
+            if (component.Entity.EntityManager is IBroadcastable broadcastable)
+            {
+                broadcastable.Broadcast(CtPacketExtensions.GenerateCtPacket(battleComponent.Entity, e.Skill));
+            }
+            //TODO: Skill Cooldown
         }
 
         public static bool TryCastSkill(SkillComponent component, SkillCastArgs e)

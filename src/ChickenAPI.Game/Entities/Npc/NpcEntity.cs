@@ -23,7 +23,8 @@ namespace ChickenAPI.Game.Entities.Npc
                 Hp = npc.NpcMonster.MaxHp,
                 HpMax = npc.NpcMonster.MaxHp,
                 Mp = npc.NpcMonster.MaxMp,
-                MpMax = npc.NpcMonster.MaxMp
+                MpMax = npc.NpcMonster.MaxMp,
+                BasicArea = npc.NpcMonster.BasicArea
             };
             Movable = new MovableComponent(this, npc.IsMoving ? npc.NpcMonster.Speed : (byte)0)
             {

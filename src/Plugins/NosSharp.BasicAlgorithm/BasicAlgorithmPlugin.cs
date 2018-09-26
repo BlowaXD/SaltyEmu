@@ -3,6 +3,7 @@ using Autofac;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Logging;
 using ChickenAPI.Core.Plugins;
+using ChickenAPI.Game.Data.AccessLayer.Battle;
 using ChickenAPI.Game.Data.AccessLayer.Character;
 using ChickenAPI.Game.Data.AccessLayer.NpcMonster;
 
@@ -26,6 +27,7 @@ namespace NosSharp.BasicAlgorithm
             Log.Info("Loading...");
             ChickenContainer.Builder.Register(s => new AlgorithmService()).As<IAlgorithmService>().SingleInstance();
             ChickenContainer.Builder.Register(s => new NpcMonsterAlgorithmService()).As<INpcMonsterAlgorithmService>().SingleInstance();
+            ChickenContainer.Builder.Register(s => new DamageAlgorithm()).As<IDamageAlgorithm>().SingleInstance();
             Log.Info("Algorithms initialized");
         }
 

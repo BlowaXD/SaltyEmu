@@ -25,6 +25,6 @@ namespace ChickenAPI.Packets.Game.Server.Battle
         public long CastEffect { get; set; }
 
         [PacketIndex(6)]
-        public long SkillVnum { get; set; }
+        public long SkillId { get; set; }
     }
 }

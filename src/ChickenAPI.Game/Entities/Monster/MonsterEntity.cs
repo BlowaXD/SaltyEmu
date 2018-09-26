@@ -26,7 +26,8 @@ namespace ChickenAPI.Game.Entities.Monster
                 Hp = dto.NpcMonster.MaxHp,
                 HpMax = dto.NpcMonster.MaxHp,
                 Mp = dto.NpcMonster.MaxMp,
-                MpMax = dto.NpcMonster.MaxMp
+                MpMax = dto.NpcMonster.MaxMp,
+                BasicArea = dto.NpcMonster.BasicArea
             };
             Skills = new SkillComponent(this);
             NpcMonster = dto.NpcMonster;
