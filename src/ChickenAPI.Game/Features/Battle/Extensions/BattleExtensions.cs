@@ -40,7 +40,7 @@ namespace ChickenAPI.Game.Features.Battle.Extensions
             {
                 // Single Hit
                 case 0:
-                    if (MoveChecksExtensions.GetDistance(movableComponent.Actual, targetMovableComponent.Actual) > skill.Range + target.Battle.BasicArea + 1)
+                    if (movableComponent.GetDistance(targetMovableComponent) > skill.Range + target.Battle.BasicArea + 1)
                     {
                         goto default;
                     }
