@@ -26,12 +26,12 @@ namespace Toolkit.Converter
         private static readonly Logger Log = Logger.GetLogger<MonsterDatConverter>();
         private static readonly string _file = "Monster.dat";
         private static string _inputDirectory;
-        private readonly Queue<BCardDto> _monsterBcards = new Queue<BCardDto>();
-        private readonly Queue<DropDto> _monsterDrops = new Queue<DropDto>();
+        private readonly List<BCardDto> _monsterBcards = new List<BCardDto>();
+        private readonly List<DropDto> _monsterDrops = new List<DropDto>();
 
 
-        private readonly Queue<NpcMonsterDto> _monsters = new Queue<NpcMonsterDto>();
-        private readonly Queue<NpcMonsterSkillDto> _monsterSkills = new Queue<NpcMonsterSkillDto>();
+        private readonly List<NpcMonsterDto> _monsters = new List<NpcMonsterDto>();
+        private readonly List<NpcMonsterSkillDto> _monsterSkills = new List<NpcMonsterSkillDto>();
         private IBCardService _bcardDb;
         private IDropService _dropsDb;
 
@@ -170,7 +170,7 @@ namespace Toolkit.Converter
                     break;
                 }
 
-                _monsterDrops.Enqueue(new DropDto
+                _monsterDrops.Add(new DropDto
                 {
                     ItemId = vnum,
                     Amount = Convert.ToInt32(currentLine[i + 2]),
@@ -181,7 +181,7 @@ namespace Toolkit.Converter
                 _monsterDropsCount++;
             }
 
-            _monsters.Enqueue(monster);
+            _monsters.Add(monster);
             itemAreaBegin = false;
         }
 
@@ -210,7 +210,7 @@ namespace Toolkit.Converter
                     IsLevelScaled = false,
                     IsLevelDivided = false
                 };
-                _monsterBcards.Enqueue(monsterCard);
+                _monsterBcards.Add(monsterCard);
                 _monsterBCardsCount++;
             }
         }
@@ -238,7 +238,7 @@ namespace Toolkit.Converter
                     SecondData = (short)(int.Parse(currentLine[5 * i + 4]) / 4),
                     ThirdData = (short)(int.Parse(currentLine[5 * i + 6]) / 4)
                 };
-                _monsterBcards.Enqueue(monsterCard);
+                _monsterBcards.Add(monsterCard);
                 _monsterBCardsCount++;
             }
         }
@@ -258,7 +258,7 @@ namespace Toolkit.Converter
                     continue;
                 }
 
-                _monsterSkills.Enqueue(new NpcMonsterSkillDto
+                _monsterSkills.Add(new NpcMonsterSkillDto
                 {
                     SkillId = vnum,
                     Rate = Convert.ToInt16(currentLine[i + 1]),
@@ -443,13 +443,12 @@ namespace Toolkit.Converter
             _monsterDb = ChickenContainer.Instance.Resolve<INpcMonsterService>();
             _bcardDb = ChickenContainer.Instance.Resolve<IBCardService>();
             _skillsDb = ChickenContainer.Instance.Resolve<INpcMonsterSkillService>();
-            //_dropsDb = ChickenContainer.Instance.Resolve<IDropService>();
+            _dropsDb = ChickenContainer.Instance.Resolve<IDropService>();
 
             _monsterDb.Save(_monsters);
             _bcardDb.Save(_monsterBcards);
-
+            //_dropsDb.Save(_monsterDrops);
             _skillsDb.Save(_monsterSkills);
-            //Log.Info($"NpcMonster Drops Parsed : {_monsterDropsCount}");
         }
 
         public void Extract(string inputDirectory)

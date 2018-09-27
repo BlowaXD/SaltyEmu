@@ -19,7 +19,6 @@ namespace Toolkit.Converter
         private const string FILE = "Card.dat";
         private static readonly Logger Log = Logger.GetLogger<CardDatConverter>();
         private static string _inputDirectory;
-        private static string _outputDirectory;
         private readonly Queue<BCardDto> _cardBcards = new Queue<BCardDto>();
 
         private readonly Queue<CardDto> _cards = new Queue<CardDto>();

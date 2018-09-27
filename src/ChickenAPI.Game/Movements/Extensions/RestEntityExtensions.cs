@@ -1,11 +1,11 @@
-﻿using ChickenAPI.Enums.Game.Entity;
-using ChickenAPI.Packets.Game.Server.Entities;
-using ChickenAPI.Core.ECS.Entities;
+﻿using ChickenAPI.Core.ECS.Entities;
+using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Game.Entities.Monster;
 using ChickenAPI.Game.Entities.Npc;
 using ChickenAPI.Game.Entities.Player;
+using ChickenAPI.Packets.Game.Server.Entities;
 
-namespace ChickenAPI.Game.Features.Movement.Extensions
+namespace ChickenAPI.Game.Movements.Extensions
 {
     public static class RestEntityExtensions
     {

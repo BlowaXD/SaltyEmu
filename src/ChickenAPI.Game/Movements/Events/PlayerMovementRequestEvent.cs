@@ -1,6 +1,6 @@
 ﻿using ChickenAPI.Core.Events;
 
-namespace ChickenAPI.Game.Features.Movement.Args
+namespace ChickenAPI.Game.Movements.Events
 {
     public class PlayerMovementRequestEvent : ChickenEventArgs
     {

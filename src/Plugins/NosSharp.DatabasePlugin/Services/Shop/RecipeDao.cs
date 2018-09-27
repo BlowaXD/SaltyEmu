@@ -27,7 +27,7 @@ namespace SaltyEmu.DatabasePlugin.Services.Shop
             catch (Exception e)
             {
                 Log.Error("[GET_BY_SHOP_ID]", e);
-                throw;
+                return null;
             }
         }
 
@@ -40,7 +40,7 @@ namespace SaltyEmu.DatabasePlugin.Services.Shop
             catch (Exception e)
             {
                 Log.Error("[GET_BY_SHOP_ID]", e);
-                throw;
+                return null;
             }
         }
     }

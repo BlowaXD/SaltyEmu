@@ -1,8 +1,8 @@
 ﻿using System.Linq;
 using ChickenAPI.Core.Logging;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Game.Features.Movement;
-using ChickenAPI.Game.Features.Movement.Args;
+using ChickenAPI.Game.Movements;
+using ChickenAPI.Game.Movements.Events;
 using ChickenAPI.Packets.Game.Client.Movement;
 
 namespace NosSharp.PacketHandler.Move

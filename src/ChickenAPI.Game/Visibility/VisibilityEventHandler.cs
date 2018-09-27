@@ -2,6 +2,7 @@
 using ChickenAPI.Core.Events;
 using ChickenAPI.Core.Logging;
 using ChickenAPI.Enums.Game.Entity;
+using ChickenAPI.Enums.Game.Visibility;
 using ChickenAPI.Game.Entities.Npc;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Entities.Player.Extensions;
@@ -22,13 +23,20 @@ namespace ChickenAPI.Game.Visibility
 
         public override void Execute(IEntity entity, ChickenEventArgs e)
         {
+            if (!(entity is IVisibleEntity visible))
+            {
+                return;
+            }
+
             switch (e)
             {
                 case VisibilitySetInvisibleEventArgs invisibleEvent:
+                    visible.Visibility = VisibilityType.Visible;
                     SetInvisible(entity, invisibleEvent);
                     break;
 
                 case VisibilitySetVisibleEventArgs visibleEvent:
+                    visible.Visibility = VisibilityType.Invisible;
                     SetVisible(entity, visibleEvent);
                     break;
             }
@@ -36,7 +44,6 @@ namespace ChickenAPI.Game.Visibility
 
         private static void SetVisible(IEntity entity, VisibilitySetVisibleEventArgs args)
         {
-            entity.GetComponent<VisibilityComponent>().ChangeVisibility(VisibilityType.Visible);
             if (!args.Broadcast)
             {
                 return;
@@ -124,13 +131,7 @@ namespace ChickenAPI.Game.Visibility
 
         private static void SetInvisible(IEntity entity, VisibilitySetInvisibleEventArgs args)
         {
-            entity.GetComponent<VisibilityComponent>().ChangeVisibility(VisibilityType.Invisible);
             if (!args.Broadcast)
-            {
-                return;
-            }
-
-            if (entity.EntityManager?.Entities == null)
             {
                 return;
             }

@@ -22,20 +22,20 @@ namespace ChickenAPI.Game.Battle.Extensions
             {
                 case IPlayerEntity player:
                     ct.VisualType = VisualType.Character;
-                    ct.VisualId = player.Id;
-                    ct.SenderId = player.Id;
+                    ct.VisualId = player.Character.Id;
+                    ct.SenderId = player.Character.Id;
                     break;
 
                 case INpcEntity npc:
                     ct.VisualType = VisualType.Npc;
-                    ct.VisualId = npc.Id;
-                    ct.SenderId = npc.Id;
+                    ct.VisualId = npc.MapNpc.Id;
+                    ct.SenderId = npc.MapNpc.Id;
                     break;
 
                 case IMonsterEntity monster:
                     ct.VisualType = VisualType.Monster;
-                    ct.VisualId = monster.Id;
-                    ct.SenderId = monster.Id;
+                    ct.VisualId = monster.MapMonster.Id;
+                    ct.SenderId = monster.MapMonster.Id;
                     break;
             }
 

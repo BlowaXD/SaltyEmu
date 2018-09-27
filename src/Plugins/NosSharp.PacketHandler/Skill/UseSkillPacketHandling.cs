@@ -4,7 +4,6 @@ using ChickenAPI.Core.Logging;
 using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Enums.Packets;
 using ChickenAPI.Game.Data.TransferObjects.Skills;
-using ChickenAPI.Game.Entities;
 using ChickenAPI.Game.Entities.Monster;
 using ChickenAPI.Game.Entities.Npc;
 using ChickenAPI.Game.Entities.Player;
@@ -36,13 +35,13 @@ namespace NosSharp.PacketHandler.Skill
             switch (packet.TargetVisualType)
             {
                 case VisualType.Character:
-                    target = player.EntityManager.GetEntitiesByType<IPlayerEntity>(EntityType.Player).FirstOrDefault(s => s.Id == packet.TargetId);
+                    target = player.EntityManager.GetEntitiesByType<IPlayerEntity>(EntityType.Player).FirstOrDefault(s => s.Character.Id == packet.TargetId);
                     break;
                 case VisualType.Monster:
-                    target = player.EntityManager.GetEntitiesByType<IMonsterEntity>(EntityType.Monster).FirstOrDefault(s => s.Id == packet.TargetId);
+                    target = player.EntityManager.GetEntitiesByType<IMonsterEntity>(EntityType.Monster).FirstOrDefault(s => s.MapMonster.Id == packet.TargetId);
                     break;
                 case VisualType.Npc:
-                    target = player.EntityManager.GetEntitiesByType<INpcEntity>(EntityType.Npc).FirstOrDefault(s => s.Id == packet.TargetId);
+                    target = player.EntityManager.GetEntitiesByType<INpcEntity>(EntityType.Npc).FirstOrDefault(s => s.MapNpc.Id == packet.TargetId);
                     break;
             }
 
@@ -76,7 +75,6 @@ namespace NosSharp.PacketHandler.Skill
                 SkillVnum = tmp?.Id ?? 0,
                 SkillTypeMinusOne = tmp?.SkillType - 1 ?? 0
             });
-
         }
     }
 }

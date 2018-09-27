@@ -1,7 +1,8 @@
 ﻿using System;
 using ChickenAPI.Core.Utils;
+using ChickenAPI.Game.Movements.DataObjects;
 
-namespace ChickenAPI.Game.Features.Movement.Extensions
+namespace ChickenAPI.Game.Movements.Extensions
 {
     public static class MoveChecksExtensions
     {

@@ -8,8 +8,8 @@ using ChickenAPI.Game.Data.TransferObjects.NpcMonster;
 using ChickenAPI.Game.Entities.Monster;
 using ChickenAPI.Game.Entities.Npc;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Game.Features.Movement;
 using ChickenAPI.Game.Maps;
+using ChickenAPI.Game.Movements.DataObjects;
 using ChickenAPI.Packets.Game.Server.Entities;
 using ChickenAPI.Packets.Game.Server.MiniMap;
 using ChickenAPI.Packets.Game.Server._NotYetSorted;
@@ -154,7 +154,7 @@ namespace ChickenAPI.Game.Packets.Extensions
                     FamilyId = -1,
                     FamilyName = "-", // if not put -1
                     ReputationIcon = 27,
-                    Invisible = player.Visibility.IsInvisible,
+                    Invisible = player.IsInvisible,
                     SpUpgrade = 0,
                     Faction = FactionType.Neutral, // todo faction system
                     SpDesign = 0,

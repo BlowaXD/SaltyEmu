@@ -29,7 +29,7 @@
     <ProjectReference Include="..\Plugins\NosSharp.PacketHandler\NosSharp.BasicPacketHandlerPlugin.csproj" />
     <ProjectReference Include="..\Plugins\NosSharp.Pathfinder\NosSharp.Pathfinder.csproj" />
     <ProjectReference Include="..\Plugins\NosSharp.RedisSessionPlugin\NosSharp.RedisSessionPlugin.csproj" />
-    <ProjectReference Include="..\Plugins\NosSharp.TemporaryMapPlugins\NosSharp.TemporaryMapPlugins.csproj" />
+    <ProjectReference Include="..\Plugins\NosSharp.TemporaryMapPlugins\SaltyEmu.BasicPlugin.csproj" />
   </ItemGroup>
 
 </Project>

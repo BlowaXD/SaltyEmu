@@ -9,6 +9,7 @@ using ChickenAPI.Enums.Game.Character;
 using ChickenAPI.Game.Data.AccessLayer.Account;
 using ChickenAPI.Game.Data.AccessLayer.BCard;
 using ChickenAPI.Game.Data.AccessLayer.Character;
+using ChickenAPI.Game.Data.AccessLayer.Drop;
 using ChickenAPI.Game.Data.AccessLayer.Item;
 using ChickenAPI.Game.Data.AccessLayer.Map;
 using ChickenAPI.Game.Data.AccessLayer.NpcMonster;
@@ -22,6 +23,7 @@ using SaltyEmu.DatabasePlugin.Services.Account;
 using SaltyEmu.DatabasePlugin.Services.BCard;
 using SaltyEmu.DatabasePlugin.Services.Card;
 using SaltyEmu.DatabasePlugin.Services.Character;
+using SaltyEmu.DatabasePlugin.Services.Drop;
 using SaltyEmu.DatabasePlugin.Services.Item;
 using SaltyEmu.DatabasePlugin.Services.Map;
 using SaltyEmu.DatabasePlugin.Services.NpcMonster;
@@ -139,6 +141,7 @@ namespace SaltyEmu.DatabasePlugin
             ChickenContainer.Builder.Register(s => new ShopSkillDao(s.Resolve<NosSharpContext>(), _mapper)).As<IShopSkillService>().InstancePerLifetimeScope();
             ChickenContainer.Builder.Register(s => new RecipeDao(s.Resolve<NosSharpContext>(), _mapper)).As<IRecipeService>().InstancePerLifetimeScope();
             ChickenContainer.Builder.Register(s => new RecipeItemDao(s.Resolve<NosSharpContext>(), _mapper)).As<IRecipeItemService>().InstancePerLifetimeScope();
+            ChickenContainer.Builder.Register(s => new DropDao(s.Resolve<NosSharpContext>(), _mapper)).As<IDropService>().InstancePerLifetimeScope();
         }
 
         private bool Initialize()

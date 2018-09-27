@@ -9,7 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "plugins", "plugins", "{7A7E
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Login", "src\Login\Login.csproj", "{1D5A4507-4811-49CB-A4E5-26019FDD1051}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NosSharp.TemporaryMapPlugins", "src\Plugins\NosSharp.TemporaryMapPlugins\NosSharp.TemporaryMapPlugins.csproj", "{99CBBDD6-A465-494F-9CA4-FD6091D23DD8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SaltyEmu.BasicPlugin", "src\Plugins\NosSharp.TemporaryMapPlugins\SaltyEmu.BasicPlugin.csproj", "{99CBBDD6-A465-494F-9CA4-FD6091D23DD8}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NosSharp.RedisSessionPlugin", "src\Plugins\NosSharp.RedisSessionPlugin\NosSharp.RedisSessionPlugin.csproj", "{B94CD465-ACF2-419C-B1F5-294DFADF8D2E}"
 EndProject
@@ -39,7 +39,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PoCs", "PoCs", "{5FA5C728-C
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SaltyPoc.IPC", "src\SaltyPoc.IPC\SaltyPoc.IPC.csproj", "{414D415C-9A45-4B79-8BC4-7F3405EEA500}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SaltyEmu.IpcPlugin", "src\SaltyEmu.IpcPlugin\SaltyEmu.IpcPlugin.csproj", "{AA0972AB-A59A-4EB7-AF5A-B31F61D25644}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SaltyEmu.IpcPlugin", "src\SaltyEmu.IpcPlugin\SaltyEmu.IpcPlugin.csproj", "{AA0972AB-A59A-4EB7-AF5A-B31F61D25644}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

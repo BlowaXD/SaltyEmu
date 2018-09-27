@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using ChickenAPI.Core.ECS.Entities;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Game.Entities.Extensions;
 using ChickenAPI.Game.Entities.Monster;
@@ -11,6 +12,8 @@ namespace NosSharp.PacketHandler
 {
     public class NcifPacketHandling
     {
+        private static readonly Logger Log = Logger.GetLogger<NcifPacketHandling>();
+
         public static void OnNcifPacket(NcifPacket packetBase, IPlayerEntity player)
         {
             try
@@ -44,6 +47,7 @@ namespace NosSharp.PacketHandler
             }
             catch (Exception e)
             {
+                Log.Error("[NCIF]", e);
             }
         }
     }

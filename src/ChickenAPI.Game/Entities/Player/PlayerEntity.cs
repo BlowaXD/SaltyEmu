@@ -6,6 +6,7 @@ using ChickenAPI.Core.ECS.Components;
 using ChickenAPI.Core.ECS.Entities;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Utils;
+using ChickenAPI.Enums.Game.Visibility;
 using ChickenAPI.Game.Battle.DataObjects;
 using ChickenAPI.Game.Data.AccessLayer.Character;
 using ChickenAPI.Game.Data.AccessLayer.Item;
@@ -16,12 +17,12 @@ using ChickenAPI.Game.Features.Families;
 using ChickenAPI.Game.Features.Inventory;
 using ChickenAPI.Game.Features.Inventory.Extensions;
 using ChickenAPI.Game.Features.Leveling;
-using ChickenAPI.Game.Features.Movement;
-using ChickenAPI.Game.Features.Movement.Extensions;
 using ChickenAPI.Game.Features.Quicklist;
 using ChickenAPI.Game.Features.Skills;
 using ChickenAPI.Game.Features.Specialists;
 using ChickenAPI.Game.Maps;
+using ChickenAPI.Game.Movements.DataObjects;
+using ChickenAPI.Game.Movements.Extensions;
 using ChickenAPI.Game.Network;
 using ChickenAPI.Game.Packets;
 using ChickenAPI.Game.Packets.Extensions;
@@ -64,11 +65,11 @@ namespace ChickenAPI.Game.Entities.Player
                     Y = dto.MapY
                 }
             };
-            Visibility = new VisibilityComponent(this);
+            _visibility = new VisibilityComponent(this);
             Skills = new SkillComponent(this);
             Components = new Dictionary<Type, IComponent>
             {
-                { typeof(VisibilityComponent), Visibility },
+                { typeof(VisibilityComponent), _visibility },
                 { typeof(MovableComponent), Movable },
                 { typeof(BattleComponent), Battle },
                 { typeof(ExperienceComponent), Experience },
@@ -89,7 +90,6 @@ namespace ChickenAPI.Game.Entities.Player
         public BattleComponent Battle { get; }
         public InventoryComponent Inventory { get; }
         public ExperienceComponent Experience { get; }
-        public VisibilityComponent Visibility { get; }
         public CharacterDto Character { get; }
         public QuicklistComponent Quicklist { get; }
         public SpecialistComponent Sp { get; }
@@ -233,5 +233,33 @@ namespace ChickenAPI.Game.Entities.Player
             );
             Log.Info($"[SAVE] {Character.Name} saved in {(DateTime.UtcNow - before).TotalMilliseconds} ms");
         }
+
+        #region Visibility
+
+        public event EventHandlerWithoutArgs<IVisibleEntity> Invisible
+        {
+            add => _visibility.Invisible += value;
+            remove => _visibility.Invisible -= value;
+        }
+
+        public event EventHandlerWithoutArgs<IVisibleEntity> Visible
+        {
+            add => _visibility.Visible += value;
+            remove => _visibility.Visible -= value;
+        }
+
+        public bool IsVisible => _visibility.IsVisible;
+
+        public bool IsInvisible => _visibility.IsInvisible;
+
+        VisibilityType IVisibleEntity.Visibility
+        {
+            get => _visibility.Visibility;
+            set => _visibility.Visibility = value;
+        }
+
+        private VisibilityComponent _visibility { get; }
+
+        #endregion
     }
 }

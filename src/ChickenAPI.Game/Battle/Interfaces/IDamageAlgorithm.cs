@@ -1,4 +1,4 @@
-﻿namespace ChickenAPI.Game.Battle.DAL
+﻿namespace ChickenAPI.Game.Battle.Interfaces
 {
     public interface IDamageAlgorithm
     {

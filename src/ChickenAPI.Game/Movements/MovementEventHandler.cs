@@ -1,17 +1,15 @@
 ﻿using ChickenAPI.Core.ECS.Entities;
 using ChickenAPI.Core.Events;
-using ChickenAPI.Core.Utils;
 using ChickenAPI.Game.Entities.Monster;
 using ChickenAPI.Game.Entities.Npc;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Game.Features.Movement.Args;
-using ChickenAPI.Game.Features.Movement.Extensions;
-using ChickenAPI.Game.Maps;
+using ChickenAPI.Game.Movements.Events;
+using ChickenAPI.Game.Movements.Extensions;
 using ChickenAPI.Game.Packets;
 using ChickenAPI.Game.Packets.Extensions;
 using ChickenAPI.Game.Permissions;
 
-namespace ChickenAPI.Game.Features.Movement
+namespace ChickenAPI.Game.Movements
 {
     public class MovementEventHandler : EventHandlerBase
     {

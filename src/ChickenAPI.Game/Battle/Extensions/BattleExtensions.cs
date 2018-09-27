@@ -3,12 +3,13 @@ using Autofac;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Enums.Packets;
 using ChickenAPI.Game.Battle.DataObjects;
+using ChickenAPI.Game.Battle.Interfaces;
 using ChickenAPI.Game.Data.TransferObjects.Skills;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Game.Features.Movement;
-using ChickenAPI.Game.Features.Movement.Extensions;
 using ChickenAPI.Game.Features.Skills;
 using ChickenAPI.Game.Features.Skills.Args;
+using ChickenAPI.Game.Movements.DataObjects;
+using ChickenAPI.Game.Movements.Extensions;
 using ChickenAPI.Packets.Game.Server.QuickList.Battle;
 
 namespace ChickenAPI.Game.Battle.Extensions
@@ -17,12 +18,12 @@ namespace ChickenAPI.Game.Battle.Extensions
     {
         private static readonly IHitRequestFactory _HitRequestFactory = new Lazy<IHitRequestFactory>(() => ChickenContainer.Instance.Resolve<IHitRequestFactory>()).Value;
 
-        public static HitRequest CreateHitRequest(this IBattleEntity entity, IBattleEntity target)
+        public static Hitting.HitRequest CreateHitRequest(this IBattleEntity entity, IBattleEntity target)
         {
             return _HitRequestFactory.CreateHitRequest(entity, target);
         }
 
-        public static void ProcessHitRequest(this IBattleEntity entity, HitRequest hit)
+        public static void ProcessHitRequest(this IBattleEntity entity, Hitting.HitRequest hit)
         {
             if (hit.Target != entity)
             {
@@ -61,7 +62,7 @@ namespace ChickenAPI.Game.Battle.Extensions
                         goto default;
                     }
 
-                    entity.NotifyEventHandler<SkillEventHandler>(new UseSkillArgs { Skill = skill });
+                    entity.Battle.Entity.NotifyEventHandler<SkillEventHandler>(new UseSkillArgs { Skill = skill });
 
                     break;
 

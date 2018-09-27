@@ -2,7 +2,7 @@
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Packets.Game.Server.Player;
 
-namespace ChickenAPI.Game.Features.Movement.Extensions
+namespace ChickenAPI.Game.Movements.Extensions
 {
     public static class MovablePlayerExtensions
     {

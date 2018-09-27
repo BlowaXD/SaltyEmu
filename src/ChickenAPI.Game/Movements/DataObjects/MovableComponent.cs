@@ -9,10 +9,9 @@ using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Game.Data.AccessLayer.Character;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Maps;
-using ChickenAPI.Packets.Game.Server.Entities;
-using ChickenAPI.Game.Features.Movement.Extensions;
+using ChickenAPI.Game.Movements.Extensions;
 
-namespace ChickenAPI.Game.Features.Movement
+namespace ChickenAPI.Game.Movements.DataObjects
 {
     /// <inheritdoc />
     /// <summary>

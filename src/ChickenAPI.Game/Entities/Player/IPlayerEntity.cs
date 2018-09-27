@@ -1,17 +1,14 @@
 ﻿using System.Collections.Generic;
 using ChickenAPI.Core.ECS.Entities;
-using ChickenAPI.Game.Battle;
+using ChickenAPI.Game.Battle.Interfaces;
 using ChickenAPI.Game.Data.TransferObjects.Character;
-using ChickenAPI.Game.Features.NpcDialog.Handlers;
-using ChickenAPI.Game.Movements;
 using ChickenAPI.Game.Network;
 using ChickenAPI.Game.Permissions;
-using ChickenAPI.Game.Visibility;
 using ChickenAPI.Packets;
 
 namespace ChickenAPI.Game.Entities.Player
 {
-    public interface IPlayerEntity : IEntity, IMovableEntity, IBattleEntity, IInventoriedEntity, IExperenciedEntity, IVisibleEntity, ISkillEntity, ISpecialistEntity, IQuicklistEntity
+    public interface IPlayerEntity : IEntity, IBattleEntity, IInventoriedEntity, IExperenciedEntity, ISkillEntity, ISpecialistEntity, IQuicklistEntity
     {
         CharacterDto Character { get; }
         ISession Session { get; }

@@ -1,9 +1,10 @@
 ﻿using ChickenAPI.Core.ECS.Entities;
-using ChickenAPI.Game.Features.Movement;
+using ChickenAPI.Game.Movements.DataObjects;
+using ChickenAPI.Game.Visibility;
 
 namespace ChickenAPI.Game.Movements
 {
-    public interface IMovableEntity : IEntity
+    public interface IMovableEntity : IVisibleEntity
     {
         MovableComponent Movable { get; }
     }

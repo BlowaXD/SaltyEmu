@@ -2,7 +2,7 @@
 using ChickenAPI.Core.ECS.Entities;
 using ChickenAPI.Game.Data.TransferObjects.Skills;
 
-namespace ChickenAPI.Game.Battle.DataObjects
+namespace ChickenAPI.Game.Battle.Hitting
 {
     public class HitRequest
     {

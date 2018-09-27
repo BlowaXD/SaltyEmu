@@ -1,6 +1,4 @@
-﻿using ChickenAPI.Game.Battle.DataObjects;
-
-namespace ChickenAPI.Game.Battle
+﻿namespace ChickenAPI.Game.Battle.Interfaces
 {
     public interface IHitRequestFactory
     {
@@ -12,6 +10,6 @@ namespace ChickenAPI.Game.Battle
         /// <param name="sender"></param>
         /// <param name="target"></param>
         /// <returns></returns>
-        HitRequest CreateHitRequest(IBattleEntity sender, IBattleEntity target);
+        Hitting.HitRequest CreateHitRequest(IBattleEntity sender, IBattleEntity target);
     }
 }

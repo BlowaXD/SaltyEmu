@@ -6,8 +6,8 @@ using ChickenAPI.Core.ECS.Systems;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Maths;
 using ChickenAPI.Core.Utils;
-using ChickenAPI.Game.Features.Movement;
 using ChickenAPI.Game.Maps;
+using ChickenAPI.Game.Movements.DataObjects;
 
 namespace ChickenAPI.Game.Features.IAs
 {

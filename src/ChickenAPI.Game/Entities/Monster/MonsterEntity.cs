@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using ChickenAPI.Core.ECS.Components;
 using ChickenAPI.Core.ECS.Entities;
 using ChickenAPI.Core.Utils;
+using ChickenAPI.Enums.Game.Visibility;
 using ChickenAPI.Game.Battle.DataObjects;
 using ChickenAPI.Game.Data.TransferObjects.Map;
 using ChickenAPI.Game.Data.TransferObjects.NpcMonster;
-using ChickenAPI.Game.Features.Movement;
 using ChickenAPI.Game.Features.Skills;
+using ChickenAPI.Game.Movements.DataObjects;
 using ChickenAPI.Game.Visibility;
 
 namespace ChickenAPI.Game.Entities.Monster
@@ -32,9 +33,10 @@ namespace ChickenAPI.Game.Entities.Monster
             Skills = new SkillComponent(this);
             NpcMonster = dto.NpcMonster;
             MapMonster = dto;
+            _visibility = new VisibilityComponent(this);
             Components = new Dictionary<Type, IComponent>
             {
-                { typeof(VisibilityComponent), new VisibilityComponent(this) },
+                { typeof(VisibilityComponent), _visibility },
                 { typeof(BattleComponent), Battle },
                 { typeof(MovableComponent), Movable },
                 { typeof(NpcMonsterComponent), new NpcMonsterComponent(this, dto) },
@@ -53,5 +55,33 @@ namespace ChickenAPI.Game.Entities.Monster
         public BattleComponent Battle { get; set; }
         public NpcMonsterDto NpcMonster { get; }
         public MapMonsterDto MapMonster { get; }
+
+        #region Visibility
+
+        private VisibilityComponent _visibility { get; }
+
+        public event EventHandlerWithoutArgs<IVisibleEntity> Invisible
+        {
+            add => _visibility.Invisible += value;
+            remove => _visibility.Invisible -= value;
+        }
+
+        public event EventHandlerWithoutArgs<IVisibleEntity> Visible
+        {
+            add => _visibility.Visible += value;
+            remove => _visibility.Visible -= value;
+        }
+
+        public bool IsVisible => _visibility.IsVisible;
+
+        public bool IsInvisible => _visibility.IsInvisible;
+
+        public VisibilityType Visibility
+        {
+            get => _visibility.Visibility;
+            set => _visibility.Visibility = value;
+        }
+
+        #endregion
     }
 }

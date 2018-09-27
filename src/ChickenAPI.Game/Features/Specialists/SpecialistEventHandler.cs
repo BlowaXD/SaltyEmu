@@ -6,8 +6,8 @@ using ChickenAPI.Enums.Game.Items;
 using ChickenAPI.Game.Entities.Extensions;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Entities.Player.Extensions;
-using ChickenAPI.Game.Features.Movement.Extensions;
 using ChickenAPI.Game.Features.Specialists.Args;
+using ChickenAPI.Game.Movements.Extensions;
 
 namespace ChickenAPI.Game.Features.Specialists
 {
