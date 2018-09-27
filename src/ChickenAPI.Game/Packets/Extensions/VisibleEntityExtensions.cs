@@ -154,7 +154,7 @@ namespace ChickenAPI.Game.Packets.Extensions
                     FamilyId = -1,
                     FamilyName = "-", // if not put -1
                     ReputationIcon = 27,
-                    Invisible = !player.Visibility.IsVisible,
+                    Invisible = player.Visibility.IsInvisible,
                     SpUpgrade = 0,
                     Faction = FactionType.Neutral, // todo faction system
                     SpDesign = 0,

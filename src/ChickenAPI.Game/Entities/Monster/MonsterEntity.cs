@@ -34,12 +34,7 @@ namespace ChickenAPI.Game.Entities.Monster
             MapMonster = dto;
             Components = new Dictionary<Type, IComponent>
             {
-                {
-                    typeof(VisibilityComponent), new VisibilityComponent(this)
-                    {
-                        IsVisible = true
-                    }
-                },
+                { typeof(VisibilityComponent), new VisibilityComponent(this) },
                 { typeof(BattleComponent), Battle },
                 { typeof(MovableComponent), Movable },
                 { typeof(NpcMonsterComponent), new NpcMonsterComponent(this, dto) },

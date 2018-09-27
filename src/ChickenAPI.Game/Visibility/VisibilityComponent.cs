@@ -7,21 +7,22 @@ namespace ChickenAPI.Game.Visibility
 {
     public class VisibilityComponent : ComponentBase
     {
-        private bool _isVisible;
+        public static event TypedSenderEventHandler<IEntity, VisibilityChangeArgs> VisibilityChange;
 
-        public VisibilityComponent(IEntity entity) : base(entity) => _isVisible = true;
+        public VisibilityComponent(IEntity entity) : base(entity) => Visibility = VisibilityType.Visible;
 
-        public bool IsVisible
+        public bool IsVisible => Visibility == VisibilityType.Visible;
+
+        public bool IsInvisible => Visibility == VisibilityType.Invisible;
+
+        public VisibilityType Visibility { get; private set; }
+
+        public void ChangeVisibility(VisibilityType visible)
         {
-            get => _isVisible;
-            set
-            {
-                _isVisible = value;
-                OnVisibilityChange(Entity, new VisibilityChangeArgs { IsVisible = _isVisible });
-            }
+            Visibility = visible;
+            OnVisibilityChange(Entity, new VisibilityChangeArgs());
         }
 
-        public static event TypedSenderEventHandler<IEntity, VisibilityChangeArgs> VisibilityChange;
 
         private static void OnVisibilityChange(IEntity sender, VisibilityChangeArgs e)
         {
@@ -29,8 +30,14 @@ namespace ChickenAPI.Game.Visibility
         }
     }
 
+    public enum VisibilityType
+    {
+        Invisible,
+        Visible,
+    }
+
     public class VisibilityChangeArgs : EventArgs
     {
-        public bool IsVisible { get; set; }
+        public VisibilityType Visibility { get; set; }
     }
 }

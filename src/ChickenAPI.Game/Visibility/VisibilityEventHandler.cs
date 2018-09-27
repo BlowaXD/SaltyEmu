@@ -36,7 +36,7 @@ namespace ChickenAPI.Game.Visibility
 
         private static void SetVisible(IEntity entity, VisibilitySetVisibleEventArgs args)
         {
-            entity.GetComponent<VisibilityComponent>().IsVisible = true;
+            entity.GetComponent<VisibilityComponent>().ChangeVisibility(VisibilityType.Visible);
             if (!args.Broadcast)
             {
                 return;
@@ -73,7 +73,7 @@ namespace ChickenAPI.Game.Visibility
                     continue;
                 }
 
-                if (!entityy.GetComponent<VisibilityComponent>().IsVisible)
+                if (entityy.GetComponent<VisibilityComponent>().IsInvisible)
                 {
                     continue;
                 }
@@ -124,7 +124,7 @@ namespace ChickenAPI.Game.Visibility
 
         private static void SetInvisible(IEntity entity, VisibilitySetInvisibleEventArgs args)
         {
-            entity.GetComponent<VisibilityComponent>().IsVisible = false;
+            entity.GetComponent<VisibilityComponent>().ChangeVisibility(VisibilityType.Invisible);
             if (!args.Broadcast)
             {
                 return;
