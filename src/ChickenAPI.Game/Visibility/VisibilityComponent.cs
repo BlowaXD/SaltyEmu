@@ -3,7 +3,7 @@ using ChickenAPI.Core.ECS.Components;
 using ChickenAPI.Core.ECS.Entities;
 using ChickenAPI.Core.Utils;
 
-namespace ChickenAPI.Game.Features.Visibility
+namespace ChickenAPI.Game.Visibility
 {
     public class VisibilityComponent : ComponentBase
     {

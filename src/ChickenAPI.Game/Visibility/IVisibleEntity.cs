@@ -1,4 +1,4 @@
-﻿namespace ChickenAPI.Game.Features.Visibility
+﻿namespace ChickenAPI.Game.Visibility
 {
     public interface IVisibleEntity
     {

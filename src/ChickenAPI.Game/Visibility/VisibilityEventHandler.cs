@@ -7,15 +7,14 @@ using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Entities.Player.Extensions;
 using ChickenAPI.Game.Entities.Portal;
 using ChickenAPI.Game.Features.Portals;
-using ChickenAPI.Game.Features.Visibility;
-using ChickenAPI.Game.Features.Visibility.Args;
 using ChickenAPI.Game.Packets;
 using ChickenAPI.Game.Packets.Extensions;
+using ChickenAPI.Game.Visibility.Events;
 using ChickenAPI.Packets.Game.Client.Shops;
 using ChickenAPI.Packets.Game.Server.Inventory;
 using ChickenAPI.Packets.Game.Server._NotYetSorted;
 
-namespace ChickenAPI.Game.Visibiility
+namespace ChickenAPI.Game.Visibility
 {
     public class VisibilityEventHandler : EventHandlerBase
     {

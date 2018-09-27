@@ -20,7 +20,6 @@ using ChickenAPI.Game.Features.Groups;
 using ChickenAPI.Game.Features.Inventory;
 using ChickenAPI.Game.Features.Quicklist;
 using ChickenAPI.Game.Features.Shops;
-using ChickenAPI.Game.Features.Visibility;
 using ChickenAPI.Game.Managers;
 using ChickenAPI.Game.Packets;
 using NLog;

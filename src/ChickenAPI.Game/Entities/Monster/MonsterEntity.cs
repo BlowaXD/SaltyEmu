@@ -8,7 +8,7 @@ using ChickenAPI.Game.Data.TransferObjects.Map;
 using ChickenAPI.Game.Data.TransferObjects.NpcMonster;
 using ChickenAPI.Game.Features.Movement;
 using ChickenAPI.Game.Features.Skills;
-using ChickenAPI.Game.Features.Visibility;
+using ChickenAPI.Game.Visibility;
 
 namespace ChickenAPI.Game.Entities.Monster
 {

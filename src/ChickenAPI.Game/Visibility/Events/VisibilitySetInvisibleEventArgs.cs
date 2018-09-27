@@ -1,6 +1,6 @@
 ﻿using ChickenAPI.Core.Events;
 
-namespace ChickenAPI.Game.Features.Visibility.Args
+namespace ChickenAPI.Game.Visibility.Events
 {
     public class VisibilitySetInvisibleEventArgs : ChickenEventArgs
     {
