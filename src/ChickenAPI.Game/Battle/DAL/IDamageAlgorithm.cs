@@ -1,6 +1,4 @@
-﻿using ChickenAPI.Game.Entities;
-
-namespace ChickenAPI.Game.Data.AccessLayer.Battle
+﻿namespace ChickenAPI.Game.Battle.DAL
 {
     public interface IDamageAlgorithm
     {

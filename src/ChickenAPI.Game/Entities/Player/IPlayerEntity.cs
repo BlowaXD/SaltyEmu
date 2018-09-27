@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 using ChickenAPI.Core.ECS.Entities;
+using ChickenAPI.Game.Battle;
 using ChickenAPI.Game.Data.TransferObjects.Character;
 using ChickenAPI.Game.Features.NpcDialog.Handlers;
 using ChickenAPI.Game.Features.Visibility;
+using ChickenAPI.Game.Movements;
 using ChickenAPI.Game.Network;
 using ChickenAPI.Game.Permissions;
 using ChickenAPI.Packets;

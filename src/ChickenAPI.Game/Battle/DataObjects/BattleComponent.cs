@@ -6,7 +6,7 @@ using ChickenAPI.Core.IoC;
 using ChickenAPI.Game.Data.AccessLayer.Character;
 using ChickenAPI.Game.Data.TransferObjects.Character;
 
-namespace ChickenAPI.Game.Features.Battle
+namespace ChickenAPI.Game.Battle.DataObjects
 {
     public class BattleComponent : IComponent
     {

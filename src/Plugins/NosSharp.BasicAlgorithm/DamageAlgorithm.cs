@@ -1,4 +1,5 @@
-﻿using ChickenAPI.Game.Data.AccessLayer.Battle;
+﻿using ChickenAPI.Game.Battle;
+using ChickenAPI.Game.Battle.DAL;
 using ChickenAPI.Game.Entities;
 
 namespace NosSharp.BasicAlgorithm

@@ -1,5 +1,5 @@
-﻿using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Game.Features.Battle;
+﻿using ChickenAPI.Game.Battle.DataObjects;
+using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Packets.Game.Server.Player;
 
 namespace ChickenAPI.Game.Entities.Extensions

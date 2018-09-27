@@ -1,17 +1,40 @@
-﻿using ChickenAPI.Enums.Packets;
+﻿using System;
+using Autofac;
+using ChickenAPI.Core.IoC;
+using ChickenAPI.Enums.Packets;
+using ChickenAPI.Game.Battle.DataObjects;
 using ChickenAPI.Game.Data.TransferObjects.Skills;
-using ChickenAPI.Game.Entities;
 using ChickenAPI.Game.Entities.Player;
+using ChickenAPI.Game.Features.Movement;
+using ChickenAPI.Game.Features.Movement.Extensions;
 using ChickenAPI.Game.Features.Skills;
 using ChickenAPI.Game.Features.Skills.Args;
 using ChickenAPI.Packets.Game.Server.QuickList.Battle;
-using ChickenAPI.Game.Features.Movement;
-using ChickenAPI.Game.Features.Movement.Extensions;
 
-namespace ChickenAPI.Game.Features.Battle.Extensions
+namespace ChickenAPI.Game.Battle.Extensions
 {
     public static class BattleExtensions
     {
+        private static readonly IHitRequestFactory _HitRequestFactory = new Lazy<IHitRequestFactory>(() => ChickenContainer.Instance.Resolve<IHitRequestFactory>()).Value;
+
+        public static HitRequest CreateHitRequest(this IBattleEntity entity, IBattleEntity target)
+        {
+            return _HitRequestFactory.CreateHitRequest(entity, target);
+        }
+
+        public static void ProcessHitRequest(this IBattleEntity entity, HitRequest hit)
+        {
+            if (hit.Target != entity)
+            {
+                // this should never be here
+                return;
+            }
+
+            // remove hp
+            // apply buffs
+            // apply debuffs
+        }
+
         public static void TargetHit(this IBattleEntity entity, IBattleEntity target, long skillId)
         {
             var skillComponent = entity.Battle.Entity.GetComponent<SkillComponent>();
@@ -21,12 +44,14 @@ namespace ChickenAPI.Game.Features.Battle.Extensions
             {
                 player = null;
             }
+
             SkillDto skill = skillComponent.Skills[skillId];
             if (skill == null || SkillEventHandler.TryCastSkill(skillComponent, new SkillCastArgs { Skill = skill }))
             {
                 player?.SendPacket(new CancelPacket { Type = CancelPacketType.InCombatMode, TargetId = target.Battle.Entity.Id });
                 return;
             }
+
             switch (skill.TargetType)
             {
                 // Single Hit
@@ -35,6 +60,7 @@ namespace ChickenAPI.Game.Features.Battle.Extensions
                     {
                         goto default;
                     }
+
                     entity.NotifyEventHandler<SkillEventHandler>(new UseSkillArgs { Skill = skill });
 
                     break;

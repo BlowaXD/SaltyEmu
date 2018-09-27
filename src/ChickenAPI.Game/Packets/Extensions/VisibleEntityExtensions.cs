@@ -2,12 +2,12 @@
 using ChickenAPI.Enums;
 using ChickenAPI.Enums.Game.Character;
 using ChickenAPI.Enums.Game.Entity;
+using ChickenAPI.Game.Battle.DataObjects;
 using ChickenAPI.Game.Data.TransferObjects.Character;
 using ChickenAPI.Game.Data.TransferObjects.NpcMonster;
 using ChickenAPI.Game.Entities.Monster;
 using ChickenAPI.Game.Entities.Npc;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Game.Features.Battle;
 using ChickenAPI.Game.Features.Movement;
 using ChickenAPI.Game.Maps;
 using ChickenAPI.Packets.Game.Server.Entities;

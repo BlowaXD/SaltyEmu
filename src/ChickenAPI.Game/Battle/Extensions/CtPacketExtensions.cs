@@ -1,18 +1,23 @@
 ﻿using ChickenAPI.Core.ECS.Entities;
-using ChickenAPI.Game.Data.TransferObjects.Skills;
-using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Packets.Game.Server.Battle;
 using ChickenAPI.Enums.Game.Entity;
+using ChickenAPI.Game.Data.TransferObjects.Skills;
 using ChickenAPI.Game.Entities.Monster;
 using ChickenAPI.Game.Entities.Npc;
+using ChickenAPI.Game.Entities.Player;
+using ChickenAPI.Packets.Game.Server.Battle;
 
-namespace ChickenAPI.Game.Features.Battle.Extensions
+namespace ChickenAPI.Game.Battle.Extensions
 {
     public static class CtPacketExtensions
     {
         public static CtPacket GenerateCtPacket(IEntity entity, SkillDto skill)
         {
-            var ct = new CtPacket();
+            var ct = new CtPacket
+            {
+                CastAnimationId = skill.CastAnimation,
+                CastEffect = skill.CastEffect,
+                SkillId = skill.Id,
+            };
             switch (entity)
             {
                 case IPlayerEntity player:
@@ -33,9 +38,7 @@ namespace ChickenAPI.Game.Features.Battle.Extensions
                     ct.SenderId = monster.Id;
                     break;
             }
-            ct.CastAnimationId = skill.CastAnimation;
-            ct.CastEffect = skill.CastEffect;
-            ct.SkillId = skill.Id;
+
             return ct;
         }
     }

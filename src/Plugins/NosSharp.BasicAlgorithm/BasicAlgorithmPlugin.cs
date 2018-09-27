@@ -3,7 +3,7 @@ using Autofac;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Logging;
 using ChickenAPI.Core.Plugins;
-using ChickenAPI.Game.Data.AccessLayer.Battle;
+using ChickenAPI.Game.Battle.DAL;
 using ChickenAPI.Game.Data.AccessLayer.Character;
 using ChickenAPI.Game.Data.AccessLayer.NpcMonster;
 

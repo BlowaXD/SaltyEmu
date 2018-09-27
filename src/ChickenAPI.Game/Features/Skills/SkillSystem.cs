@@ -2,11 +2,11 @@
 using ChickenAPI.Core.ECS.Entities;
 using ChickenAPI.Core.Events;
 using ChickenAPI.Enums.Game.Character;
+using ChickenAPI.Game.Battle.DataObjects;
+using ChickenAPI.Game.Battle.Extensions;
 using ChickenAPI.Game.Data.TransferObjects.Character;
 using ChickenAPI.Game.Data.TransferObjects.Skills;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Game.Features.Battle;
-using ChickenAPI.Game.Features.Battle.Extensions;
 using ChickenAPI.Game.Features.Leveling;
 using ChickenAPI.Game.Features.Skills.Args;
 using ChickenAPI.Game.Packets;
