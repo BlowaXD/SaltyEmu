@@ -5,7 +5,7 @@ namespace NosSharp.BasicAlgorithm
 {
     public class DamageAlgorithm : IDamageAlgorithm
     {
-        public ushort GenerateDamage(IBattleEntity entity, IBattleEntity targetEntity)
+        public uint GenerateDamage(IBattleEntity entity, IBattleEntity targetEntity)
         {
             return 100;
         }
