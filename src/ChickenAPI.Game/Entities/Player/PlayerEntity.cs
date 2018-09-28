@@ -254,7 +254,7 @@ namespace ChickenAPI.Game.Entities.Player
 
         public bool IsInvisible => _visibility.IsInvisible;
 
-        VisibilityType IVisibleEntity.Visibility
+        VisibilityType IVisibleCapacity.Visibility
         {
             get => _visibility.Visibility;
             set => _visibility.Visibility = value;

@@ -23,7 +23,7 @@ namespace ChickenAPI.Game.Visibility
 
         public override void Execute(IEntity entity, ChickenEventArgs e)
         {
-            if (!(entity is IVisibleEntity visible))
+            if (!(entity is IVisibleCapacity visible))
             {
                 return;
             }

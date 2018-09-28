@@ -6,7 +6,7 @@ using ChickenAPI.Game.ECS.Entities;
 
 namespace ChickenAPI.Game.Visibility
 {
-    public class VisibilityComponent : ComponentBase, IVisibleEntity
+    public class VisibilityComponent : ComponentBase, IVisibleCapacity
     {
         private VisibilityType _visibility;
 

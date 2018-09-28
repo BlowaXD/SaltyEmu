@@ -1,12 +1,9 @@
 ﻿using ChickenAPI.Core.Utils;
-using ChickenAPI.Enums.Game.Visibility;
+using ChickenAPI.Game.ECS.Entities;
 
 namespace ChickenAPI.Game.Visibility
 {
-    /// <summary>
-    /// ceci est une proposition d'interface pour remplacer la IVisibleEntity actuelle
-    /// </summary>
-    public interface IVisibleEntity
+    public interface IVisibleEntity : IEntity, IVisibleCapacity
     {
         /// <summary>
         /// Triggered event when the entity becomes invisible
@@ -18,19 +15,5 @@ namespace ChickenAPI.Game.Visibility
         /// </summary>
         event EventHandlerWithoutArgs<IVisibleEntity> Visible;
 
-        /// <summary>
-        /// Tells if the entity is Visible
-        /// </summary>
-        bool IsVisible { get; }
-
-        /// <summary>
-        /// Tells if the entity is Invisible
-        /// </summary>
-        bool IsInvisible { get; }
-
-        /// <summary>
-        /// Actual Visibility State
-        /// </summary>
-        VisibilityType Visibility { get; set; }
     }
 }
