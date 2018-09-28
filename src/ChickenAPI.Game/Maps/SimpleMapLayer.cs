@@ -33,7 +33,6 @@ namespace ChickenAPI.Game.Maps
 
         public Guid Id { get; set; }
         public IMap Map { get; }
-
         public IEnumerable<IEntity> GetEntitiesInRange(Position<short> pos, int range) =>
             Entities.Where(e => e.HasComponent<MovableComponent>() && PositionHelper.GetDistance(pos, e.GetComponent<MovableComponent>().Actual) < range);
 
@@ -59,16 +58,6 @@ namespace ChickenAPI.Game.Maps
             {
                 i.SendPackets(packets);
             }
-        }
-
-        public void Broadcast<T>(IEntity sender, T packet) where T : IPacket
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Broadcast<T>(IEntity sender, IEnumerable<T> packets) where T : IPacket
-        {
-            throw new NotImplementedException();
         }
 
         public void Broadcast<T>(IPlayerEntity sender, T packet) where T : IPacket

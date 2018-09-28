@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using ChickenAPI.Core.Utils;
 using ChickenAPI.Enums.Game.Entity;
+using ChickenAPI.Game.Entities.Monster;
+using ChickenAPI.Game.Entities.Npc;
+using ChickenAPI.Game.Entities.Player;
+using ChickenAPI.Game.Entities.Portal;
 using ChickenAPI.Packets;
 
 namespace ChickenAPI.Game.ECS.Entities
@@ -42,9 +46,9 @@ namespace ChickenAPI.Game.ECS.Entities
         /// <typeparam name="T"></typeparam>
         /// <param name="sender"></param>
         /// <param name="packet"></param>
-        void Broadcast<T>(IEntity sender, T packet) where T : IPacket;
+        void Broadcast<T>(IPlayerEntity sender, T packet) where T : IPacket;
 
-        void Broadcast<T>(IEntity sender, IEnumerable<T> packets) where T : IPacket;
+        void Broadcast<T>(IPlayerEntity sender, IEnumerable<T> packets) where T : IPacket;
 
         #endregion
     }

@@ -6,28 +6,24 @@ using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Logging;
 using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Game.ECS.Systems;
+using ChickenAPI.Game.Entities.Player;
 
 namespace ChickenAPI.Game.ECS.Entities
 {
     public abstract class EntityManagerBase : IEntityManager
     {
+        protected static IEntityManagerContainer EmContainer = new Lazy<IEntityManagerContainer>(() => ChickenContainer.Instance.Resolve<IEntityManagerContainer>()).Value;
         protected static readonly Logger Log = Logger.GetLogger<EntityManagerBase>();
 
         // entities
         protected readonly Dictionary<long, IEntity> EntitiesByEntityId = new Dictionary<long, IEntity>();
         protected readonly Dictionary<VisualType, Dictionary<long, IEntity>> EntitiesByVisualType = new Dictionary<VisualType, Dictionary<long, IEntity>>();
 
-        private IEntityManagerContainer _emContainer;
         protected List<ISystem> _systems = new List<ISystem>();
-
         protected List<IEntityManager> EntityManagers = new List<IEntityManager>();
+
         protected long LastEntityId;
 
-        protected IEntityManagerContainer EmContainer
-        {
-            get => _emContainer ?? (_emContainer = ChickenContainer.Instance.Resolve<IEntityManagerContainer>());
-            set => _emContainer = value;
-        }
 
         protected bool ShouldUpdate { get; set; }
 
