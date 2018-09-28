@@ -21,29 +21,9 @@ namespace ChickenAPI.Game.ECS.Entities
 
         IReadOnlyList<ISystem> Systems { get; }
 
-
-        /// <summary>
-        ///     Gets the child contexts, returns null if none
-        /// </summary>
-        IEnumerable<IEntityManager> ChildEntityManagers { get; }
-
-        /// <summary>
-        ///     Add a child context to the actual context
-        /// </summary>
-        /// <param name="entityManager"></param>
-        void AddChildEntityManager(IEntityManager entityManager);
-
-        /// <summary>
-        ///     Remove the child context from the actual context
-        /// </summary>
-        /// <param name="entityManager"></param>
-        void RemoveChildEntityManager(IEntityManager entityManager);
-
         #endregion
 
         #region Entities
-
-        long NextEntityId { get; }
 
         IEnumerable<IEntity> Entities { get; }
 
@@ -56,26 +36,21 @@ namespace ChickenAPI.Game.ECS.Entities
         IEnumerable<T> GetEntitiesByType<T>(VisualType type) where T : class, IEntity;
 
         /// <summary>
-        ///     Creates a new entity.
-        /// </summary>
-        /// <typeparam name="TEntity">Entity concrete type.</typeparam>
-        /// <returns>New entity</returns>
-        TEntity CreateEntity<TEntity>() where TEntity : class, IEntity, new();
-
-        /// <summary>
         ///     Get the entity from entity manager by its id
         /// </summary>
         /// <param name="id"></param>
+        /// <param name="type"></param>
         /// <returns></returns>
-        IEntity GetEntity(long id);
+        IEntity GetEntity(long id, VisualType type);
 
         /// <summary>
         ///     Returns the entity as a <see cref="T" /> from entity manager by its id
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="id"></param>
+        /// <param name="type"></param>
         /// <returns></returns>
-        T GetEntity<T>(long id) where T : class, IEntity;
+        T GetEntity<T>(long id, VisualType type) where T : class, IEntity;
 
         /// <summary>
         ///     Register an entity to the entity container
@@ -102,8 +77,9 @@ namespace ChickenAPI.Game.ECS.Entities
         ///     Returns if the entity is contained in the entity manager by its id
         /// </summary>
         /// <param name="id"></param>
+        /// <param name="type"></param>
         /// <returns></returns>
-        bool HasEntity(long id);
+        bool HasEntity(long id, VisualType type);
 
         /// <summary>
         ///     Deletes an entity
@@ -111,13 +87,6 @@ namespace ChickenAPI.Game.ECS.Entities
         /// <param name="entity">Entity to delete</param>
         /// <returns>Deleted state</returns>
         bool DeleteEntity(IEntity entity);
-
-        /// <summary>
-        ///     Transfer the entity contained in the entity manger to another one by its id
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="manager"></param>
-        void TransferEntity(long id, IMapLayer manager);
 
         /// <summary>
         ///     Transfer the entity contained in the entity manger to another one

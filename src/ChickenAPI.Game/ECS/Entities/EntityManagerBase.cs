@@ -16,11 +16,10 @@ namespace ChickenAPI.Game.ECS.Entities
         protected static readonly Logger Log = Logger.GetLogger<EntityManagerBase>();
 
         // entities
-        protected readonly Dictionary<long, IEntity> EntitiesByEntityId = new Dictionary<long, IEntity>();
+        protected readonly HashSet<IEntity> EntitiesSet = new HashSet<IEntity>();
         protected readonly Dictionary<VisualType, Dictionary<long, IEntity>> EntitiesByVisualType = new Dictionary<VisualType, Dictionary<long, IEntity>>();
 
         protected List<ISystem> _systems = new List<ISystem>();
-        protected List<IEntityManager> EntityManagers = new List<IEntityManager>();
 
         protected long LastEntityId;
 
@@ -34,37 +33,19 @@ namespace ChickenAPI.Game.ECS.Entities
 
         public IEntityManager ParentEntityManager { get; protected set; }
         public IReadOnlyList<ISystem> Systems => _systems;
-        public IEnumerable<IEntityManager> ChildEntityManagers => EntityManagers;
 
-        public virtual void AddChildEntityManager(IEntityManager entityManager)
-        {
-            EntityManagers.Add(entityManager);
-        }
-
-        public virtual void RemoveChildEntityManager(IEntityManager entityManager)
-        {
-            EntityManagers.Remove(entityManager);
-        }
-
-        public long NextEntityId => ++LastEntityId;
-        public IEnumerable<IEntity> Entities => EntitiesByEntityId.Values.AsEnumerable();
+        public IEnumerable<IEntity> Entities => EntitiesSet;
 
 
         public IEnumerable<T> GetEntitiesByType<T>(VisualType type) where T : class, IEntity
         {
-            return !EntitiesByVisualType.TryGetValue(type, out Dictionary<long, IEntity> entities) ? null : entities.Select(s => s as T);
+            return !EntitiesByVisualType.TryGetValue(type, out Dictionary<long, IEntity> entities) ? null : entities.Select(s => s) as IEnumerable<T>;
         }
 
-        public TEntity CreateEntity<TEntity>() where TEntity : class, IEntity, new()
-        {
-            var entity = new TEntity();
-            RegisterEntity(entity);
-            return entity;
-        }
+        public IEntity GetEntity(long id, VisualType type) =>
+            EntitiesByVisualType.TryGetValue(type, out Dictionary<long, IEntity> entities) && entities.TryGetValue(id, out IEntity entity) ? entity : null;
 
-        public IEntity GetEntity(long id) => !EntitiesByEntityId.TryGetValue(id, out IEntity entity) ? null : entity;
-
-        public T GetEntity<T>(long id) where T : class, IEntity => !EntitiesByEntityId.TryGetValue(id, out IEntity entity) ? null : entity as T;
+        public T GetEntity<T>(long id, VisualType type) where T : class, IEntity => GetEntity(id, type) as T;
 
         public void RegisterEntity<T>(T entity) where T : IEntity
         {
@@ -73,7 +54,7 @@ namespace ChickenAPI.Game.ECS.Entities
                 StartSystemUpdate();
             }
 
-            EntitiesByEntityId[entity.Id] = entity;
+            EntitiesSet.Add(entity);
             if (!EntitiesByVisualType.TryGetValue(entity.Type, out Dictionary<long, IEntity> entities))
             {
                 entities = new Dictionary<long, IEntity>
@@ -88,7 +69,7 @@ namespace ChickenAPI.Game.ECS.Entities
 
         public void UnregisterEntity<T>(T entity) where T : IEntity
         {
-            EntitiesByEntityId.Remove(entity.Id);
+            EntitiesSet.Remove(entity);
             if (EntitiesByVisualType.TryGetValue(entity.Type, out Dictionary<long, IEntity> entities))
             {
                 entities.Remove(entity.Id);
@@ -97,21 +78,11 @@ namespace ChickenAPI.Game.ECS.Entities
             UpdateCache();
         }
 
-        public bool HasEntity(IEntity entity) => HasEntity(entity.Id);
+        public bool HasEntity(IEntity entity) => HasEntity(entity.Id, entity.Type);
 
-        public bool HasEntity(long id) => EntitiesByEntityId.ContainsKey(id);
+        public bool HasEntity(long id, VisualType type) => EntitiesByVisualType.TryGetValue(type, out Dictionary<long, IEntity> entities) && entities.ContainsKey(id);
 
-        public bool DeleteEntity(IEntity entity) => EntitiesByEntityId.Remove(entity.Id);
-
-        public void TransferEntity(long id, IMapLayer manager)
-        {
-            if (!EntitiesByEntityId.TryGetValue(id, out IEntity entity))
-            {
-                return;
-            }
-
-            TransferEntity(entity, manager);
-        }
+        public bool DeleteEntity(IEntity entity) => EntitiesByVisualType.TryGetValue(entity.Type, out Dictionary<long, IEntity> entities) && entities.Remove(entity.Id);
 
         public void TransferEntity(IEntity entity, IMapLayer manager)
         {
