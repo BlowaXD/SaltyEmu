@@ -52,7 +52,7 @@ namespace ChickenAPI.Game.Visibility
             InPacketBase inEntity = entity.GenerateInPacket();
             PairyPacket pairy = null;
 
-            foreach (IEntity entityy in entity.EntityManager.Entities)
+            foreach (IEntity entityy in entity.CurrentMap.Entities)
             {
                 if (entityy.Id == entity.Id)
                 {
@@ -135,7 +135,7 @@ namespace ChickenAPI.Game.Visibility
                 return;
             }
 
-            if (entity is IPlayerEntity player && player.EntityManager is IMapLayer broadcastable)
+            if (entity is IPlayerEntity player && player.CurrentMap is IMapLayer broadcastable)
             {
                 broadcastable.Broadcast(player, player.GenerateOutPacket());
             }

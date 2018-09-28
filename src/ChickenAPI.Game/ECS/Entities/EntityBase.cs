@@ -28,7 +28,7 @@ namespace ChickenAPI.Game.ECS.Entities
 
         public abstract void Dispose();
 
-        public IMapLayer EntityManager { get; protected set; }
+        public IMapLayer CurrentMap { get; protected set; }
 
         public void NotifyEventHandler(ChickenEventArgs e)
         {
@@ -42,14 +42,14 @@ namespace ChickenAPI.Game.ECS.Entities
 
         public virtual void TransferEntity(IMapLayer manager)
         {
-            if (EntityManager == null)
+            if (CurrentMap == null)
             {
-                EntityManager = manager;
-                EntityManager.RegisterEntity(this);
+                CurrentMap = manager;
+                CurrentMap.RegisterEntity(this);
             }
             else
             {
-                EntityManager.TransferEntity(this, manager);
+                CurrentMap.TransferEntity(this, manager);
             }
         }
 

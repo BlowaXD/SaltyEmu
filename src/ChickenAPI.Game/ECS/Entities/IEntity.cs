@@ -21,7 +21,7 @@ namespace ChickenAPI.Game.ECS.Entities
         /// <summary>
         ///     Gets the entityManager where the Entity is registered
         /// </summary>
-        IMapLayer EntityManager { get; }
+        IMapLayer CurrentMap { get; }
 
         /// <summary>
         /// Notifies all event handlers with the given event

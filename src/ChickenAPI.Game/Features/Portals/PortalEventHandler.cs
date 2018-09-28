@@ -31,7 +31,7 @@ namespace ChickenAPI.Game.Features.Portals
         private static void TriggerPortalEventHandler(IEntity entity, PortalTriggerEvent args)
         {
             // todo check portal state
-            if (!(entity.EntityManager is IMapLayer currentMap))
+            if (!(entity.CurrentMap is IMapLayer currentMap))
             {
                 return;
             }

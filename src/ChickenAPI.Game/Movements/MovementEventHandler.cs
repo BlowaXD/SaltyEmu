@@ -68,7 +68,7 @@ namespace ChickenAPI.Game.Movements
             player.Movable.Actual.Y = e.Y;
 
             player.SendPacket(player.GenerateCondPacket());
-            if (player.EntityManager is IMapLayer broadcastable)
+            if (player.CurrentMap is IMapLayer broadcastable)
             {
                 broadcastable.Broadcast(player.GenerateMvPacket());
             }

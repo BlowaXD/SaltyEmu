@@ -126,7 +126,7 @@ namespace ChickenAPI.Game.Entities.Player
 
         public void Broadcast<T>(T packet, bool doNotReceive) where T : IPacket
         {
-            if (!(EntityManager is IMapLayer broadcastable))
+            if (!(CurrentMap is IMapLayer broadcastable))
             {
                 return;
             }
@@ -143,7 +143,7 @@ namespace ChickenAPI.Game.Entities.Player
 
         public void Broadcast<T>(IEnumerable<T> packets, bool doNotReceive) where T : IPacket
         {
-            if (!(EntityManager is IMapLayer broadcastable))
+            if (!(CurrentMap is IMapLayer broadcastable))
             {
                 return;
             }
@@ -160,7 +160,7 @@ namespace ChickenAPI.Game.Entities.Player
 
         public override void TransferEntity(IMapLayer manager)
         {
-            if (EntityManager != null)
+            if (CurrentMap != null)
             {
                 NotifyEventHandler<VisibilityEventHandler>(new VisibilitySetInvisibleEventArgs { Broadcast = true, IsChangingMapLayer = true });
             }

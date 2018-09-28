@@ -80,7 +80,7 @@ namespace ChickenAPI.Game.Features.Inventory
             EquipItem(inventory, player, item);
             player.SendPacket(player.GenerateEffectPacket(123));
 
-            if (!(player.EntityManager is IMapLayer broadcastable))
+            if (!(player.CurrentMap is IMapLayer broadcastable))
             {
                 return;
             }
@@ -147,7 +147,7 @@ namespace ChickenAPI.Game.Features.Inventory
 
             player.SendPacket(GenerateIvnPacket(item));
 
-            if (!(player.EntityManager is IMapLayer broadcastable))
+            if (!(player.CurrentMap is IMapLayer broadcastable))
             {
                 return;
             }

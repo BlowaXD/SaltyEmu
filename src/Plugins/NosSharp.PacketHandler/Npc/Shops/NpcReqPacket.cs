@@ -14,7 +14,7 @@ namespace NosSharp.PacketHandler.Npc.Shops
     {
         public static void OnShoppingPacketReceived(ReceivedNpcReqPacket packet, IPlayerEntity player)
         {
-            IEnumerable<INpcEntity> npcs = player.EntityManager.GetEntitiesByType<INpcEntity>(VisualType.Npc);
+            IEnumerable<INpcEntity> npcs = player.CurrentMap.GetEntitiesByType<INpcEntity>(VisualType.Npc);
 
             INpcEntity npc = npcs.FirstOrDefault(s => s.MapNpc.Id == packet.VisualId);
             if (npc == null || !(npc is NpcEntity npcEntity))

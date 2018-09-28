@@ -21,7 +21,7 @@ namespace NosSharp.PacketHandler.Move
 
         public static void OnPreqPacket(PreqPacket packet, IPlayerEntity session)
         {
-            if (!(session.EntityManager is IMapLayer mapLayer))
+            if (!(session.CurrentMap is IMapLayer mapLayer))
             {
                 Log.Warn("Should be in a map");
                 return;

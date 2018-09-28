@@ -194,7 +194,7 @@ namespace World.Network
 #endif
 
             Log.Info($"[DISCONNECT] {Ip}");
-            Player?.EntityManager.UnregisterEntity(Player);
+            Player?.CurrentMap.UnregisterEntity(Player);
             Player?.Save();
             _sessionService.UnregisterSession(SessionId);
             _channel.DisconnectAsync().Wait();

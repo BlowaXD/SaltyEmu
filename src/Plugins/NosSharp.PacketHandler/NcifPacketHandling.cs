@@ -24,7 +24,7 @@ namespace NosSharp.PacketHandler
                     case VisualType.Character:
                         break;
                     case VisualType.Npc:
-                        entity = player.EntityManager.GetEntitiesByType<IEntity>(VisualType.Npc).FirstOrDefault(s => s.GetComponent<NpcMonsterComponent>().MapNpcMonsterId == packetBase.TargetId);
+                        entity = player.CurrentMap.GetEntitiesByType<IEntity>(VisualType.Npc).FirstOrDefault(s => s.GetComponent<NpcMonsterComponent>().MapNpcMonsterId == packetBase.TargetId);
                         if (entity == null)
                         {
                             return;
@@ -33,7 +33,7 @@ namespace NosSharp.PacketHandler
                         player.SendPacket(entity.GenerateStPacket());
                         break;
                     case VisualType.Monster:
-                        entity = player.EntityManager.GetEntitiesByType<IEntity>(VisualType.Monster).FirstOrDefault(s => s.GetComponent<NpcMonsterComponent>().MapNpcMonsterId == packetBase.TargetId);
+                        entity = player.CurrentMap.GetEntitiesByType<IEntity>(VisualType.Monster).FirstOrDefault(s => s.GetComponent<NpcMonsterComponent>().MapNpcMonsterId == packetBase.TargetId);
                         if (entity == null)
                         {
                             return;

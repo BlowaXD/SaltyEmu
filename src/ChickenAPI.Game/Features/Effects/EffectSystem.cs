@@ -38,7 +38,7 @@ namespace ChickenAPI.Game.Features.Effects
             }
 
 
-            if (entity.EntityManager is IMapLayer mapLayer)
+            if (entity.CurrentMap is IMapLayer mapLayer)
             {
                 mapLayer.Broadcast((IEnumerable<EffectPacket>)packets);
             }

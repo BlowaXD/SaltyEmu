@@ -29,7 +29,7 @@ namespace NosSharp.PacketHandler.Move
             session.Movable.Speed = packet.Speed;
 
             session.SendPacket(session.GenerateCondPacket());
-            if (session.EntityManager is IMapLayer broadcastable)
+            if (session.CurrentMap is IMapLayer broadcastable)
             {
                 broadcastable.Broadcast(session.GenerateMvPacket());
             }

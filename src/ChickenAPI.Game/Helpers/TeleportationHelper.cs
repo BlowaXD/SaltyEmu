@@ -15,7 +15,7 @@ namespace ChickenAPI.Game.Helpers
         
         public static void TeleportTo(this IPlayerEntity player, IMapLayer layer, short x, short y)
         {
-            if (player.EntityManager == layer)
+            if (player.CurrentMap == layer)
             {
                 player.TeleportTo(x, y);
                 return;

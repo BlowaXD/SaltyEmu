@@ -176,7 +176,7 @@ namespace ChickenAPI.Game.Packets.Extensions
                 return null;
             }
 
-            if (!(player.EntityManager is IMapLayer layer))
+            if (!(player.CurrentMap is IMapLayer layer))
             {
                 return null;
             }

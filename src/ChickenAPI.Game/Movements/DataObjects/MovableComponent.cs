@@ -54,7 +54,7 @@ namespace ChickenAPI.Game.Movements.DataObjects
             set
             {
                 _isSitting = value;
-                if (Entity.EntityManager is IMapLayer mapLayer)
+                if (Entity.CurrentMap is IMapLayer mapLayer)
                 {
                     mapLayer.Broadcast(Entity.GenerateRestPacket());
                 }

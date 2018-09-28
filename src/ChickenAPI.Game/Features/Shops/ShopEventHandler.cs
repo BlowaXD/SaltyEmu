@@ -139,7 +139,7 @@ namespace ChickenAPI.Game.Features.Shops
             switch (buy.Type)
             {
                 case VisualType.Character:
-                    IPlayerEntity shop = player.EntityManager.GetEntitiesByType<IPlayerEntity>(VisualType.Character).FirstOrDefault(s => s.Character.Id == buy.OwnerId);
+                    IPlayerEntity shop = player.CurrentMap.GetEntitiesByType<IPlayerEntity>(VisualType.Character).FirstOrDefault(s => s.Character.Id == buy.OwnerId);
                     if (shop == null)
                     {
                         return;
@@ -148,7 +148,7 @@ namespace ChickenAPI.Game.Features.Shops
                     HandlePlayerShopBuyRequest(player, buy, shop);
                     break;
                 case VisualType.Npc:
-                    INpcEntity npc = player.EntityManager.GetEntitiesByType<INpcEntity>(VisualType.Npc).FirstOrDefault(s => s.MapNpc.Id == buy.OwnerId);
+                    INpcEntity npc = player.CurrentMap.GetEntitiesByType<INpcEntity>(VisualType.Npc).FirstOrDefault(s => s.MapNpc.Id == buy.OwnerId);
                     if (npc == null || !(npc is NpcEntity npcEntity))
                     {
                         return;

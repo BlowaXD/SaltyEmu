@@ -35,13 +35,13 @@ namespace NosSharp.PacketHandler.Skill
             switch (packet.TargetVisualType)
             {
                 case VisualType.Character:
-                    target = player.EntityManager.GetEntitiesByType<IPlayerEntity>(VisualType.Character).FirstOrDefault(s => s.Character.Id == packet.TargetId);
+                    target = player.CurrentMap.GetEntitiesByType<IPlayerEntity>(VisualType.Character).FirstOrDefault(s => s.Character.Id == packet.TargetId);
                     break;
                 case VisualType.Monster:
-                    target = player.EntityManager.GetEntitiesByType<IMonsterEntity>(VisualType.Monster).FirstOrDefault(s => s.MapMonster.Id == packet.TargetId);
+                    target = player.CurrentMap.GetEntitiesByType<IMonsterEntity>(VisualType.Monster).FirstOrDefault(s => s.MapMonster.Id == packet.TargetId);
                     break;
                 case VisualType.Npc:
-                    target = player.EntityManager.GetEntitiesByType<INpcEntity>(VisualType.Npc).FirstOrDefault(s => s.MapNpc.Id == packet.TargetId);
+                    target = player.CurrentMap.GetEntitiesByType<INpcEntity>(VisualType.Npc).FirstOrDefault(s => s.MapNpc.Id == packet.TargetId);
                     break;
             }
 
