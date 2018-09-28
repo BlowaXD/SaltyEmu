@@ -71,7 +71,7 @@ namespace ChickenAPI.Game.Maps
             }
             catch (Exception)
             {
-                Log.Warn($"[IS_WALKABLE] {Id}: {x} {y}");
+                Log.Warn($"[IS_WALKABLE] {Id}: ({x},{y})");
                 return false;
             }
         }

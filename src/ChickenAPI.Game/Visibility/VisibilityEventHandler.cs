@@ -31,12 +31,12 @@ namespace ChickenAPI.Game.Visibility
             switch (e)
             {
                 case VisibilitySetInvisibleEventArgs invisibleEvent:
-                    visible.Visibility = VisibilityType.Visible;
+                    visible.Visibility = VisibilityType.Invisible;
                     SetInvisible(entity, invisibleEvent);
                     break;
 
                 case VisibilitySetVisibleEventArgs visibleEvent:
-                    visible.Visibility = VisibilityType.Invisible;
+                    visible.Visibility = VisibilityType.Visible;
                     SetVisible(entity, visibleEvent);
                     break;
             }

@@ -1,4 +1,5 @@
-﻿using ChickenAPI.Enums;
+﻿using ChickenAPI.Core.Logging;
+using ChickenAPI.Enums;
 using ChickenAPI.Enums.Game.Character;
 using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Game.Battle.DataObjects;

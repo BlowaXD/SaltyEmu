@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using ChickenAPI.Core.Utils;
+using ChickenAPI.Game.Data.TransferObjects.Map;
 
 namespace ChickenAPI.Game.ECS.Entities
 {
@@ -50,6 +51,6 @@ namespace ChickenAPI.Game.ECS.Entities
 
         Position<short> GetFreePosition(short minimumX, short minimumY, short maximumX, short maximumY);
 
-        //PortalDto GetPortalFromPosition(short x, short y, short range = 2);
+        PortalDto GetPortalFromPosition(short x, short y, short range = 2);
     }
 }
