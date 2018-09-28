@@ -31,61 +31,6 @@ namespace ChickenAPI.Game.Maps
             InitializeSystems();
         }
 
-        public Guid Id { get; set; }
-        public IMap Map { get; }
-        public IEnumerable<IEntity> GetEntitiesInRange(Position<short> pos, int range) =>
-            Entities.Where(e => e.HasComponent<MovableComponent>() && PositionHelper.GetDistance(pos, e.GetComponent<MovableComponent>().Actual) < range);
-
-        public void Broadcast<T>(T packet) where T : IPacket
-        {
-            foreach (IPlayerEntity i in GetEntitiesByType<IPlayerEntity>(VisualType.Character))
-            {
-                i.SendPacket(packet);
-            }
-        }
-
-        public void Broadcast<T>(IEnumerable<T> packets) where T : IPacket
-        {
-            foreach (IPlayerEntity i in GetEntitiesByType<IPlayerEntity>(VisualType.Character))
-            {
-                i.SendPackets(packets);
-            }
-        }
-
-        public void Broadcast(IEnumerable<IPacket> packets)
-        {
-            foreach (IPlayerEntity i in GetEntitiesByType<IPlayerEntity>(VisualType.Character))
-            {
-                i.SendPackets(packets);
-            }
-        }
-
-        public void Broadcast<T>(IPlayerEntity sender, T packet) where T : IPacket
-        {
-            foreach (IPlayerEntity i in GetEntitiesByType<IPlayerEntity>(VisualType.Character))
-            {
-                if (i == sender)
-                {
-                    continue;
-                }
-
-                i.SendPacket(packet);
-            }
-        }
-
-        public void Broadcast<T>(IPlayerEntity sender, IEnumerable<T> packets) where T : IPacket
-        {
-            foreach (IPlayerEntity i in GetEntitiesByType<IPlayerEntity>(VisualType.Character))
-            {
-                if (i == sender)
-                {
-                    continue;
-                }
-
-                i.SendPackets(packets);
-            }
-        }
-
         private void InitializePortals(IEnumerable<PortalDto> portals)
         {
             if (portals == null)
@@ -114,7 +59,7 @@ namespace ChickenAPI.Game.Maps
 
             foreach (MapNpcDto npc in npcs)
             {
-                ShopDto shop = shops.FirstOrDefault(s => s.MapNpcId == npc.Id);
+                ShopDto shop = shops?.FirstOrDefault(s => s.MapNpcId == npc.Id);
                 TransferEntity(new NpcEntity(npc, shop), this);
             }
         }
@@ -129,6 +74,63 @@ namespace ChickenAPI.Game.Maps
             foreach (MapMonsterDto monster in monsters)
             {
                 TransferEntity(new MonsterEntity(monster), this);
+            }
+        }
+
+        public Guid Id { get; set; }
+        public IMap Map { get; }
+        public IEnumerable<IPlayerEntity> Players => _players;
+
+        public IEnumerable<IEntity> GetEntitiesInRange(Position<short> pos, int range) =>
+            Entities.Where(e => e.HasComponent<MovableComponent>() && PositionHelper.GetDistance(pos, e.GetComponent<MovableComponent>().Actual) < range);
+
+        public void Broadcast<T>(T packet) where T : IPacket
+        {
+            foreach (IPlayerEntity i in Players)
+            {
+                i.SendPacket(packet);
+            }
+        }
+
+        public void Broadcast<T>(IEnumerable<T> packets) where T : IPacket
+        {
+            foreach (IPlayerEntity i in Players)
+            {
+                i.SendPackets(packets);
+            }
+        }
+
+        public void Broadcast(IEnumerable<IPacket> packets)
+        {
+            foreach (IPlayerEntity i in Players)
+            {
+                i.SendPackets(packets);
+            }
+        }
+
+        public void Broadcast<T>(IPlayerEntity sender, T packet) where T : IPacket
+        {
+            foreach (IPlayerEntity i in Players)
+            {
+                if (i == sender)
+                {
+                    continue;
+                }
+
+                i.SendPacket(packet);
+            }
+        }
+
+        public void Broadcast<T>(IPlayerEntity sender, IEnumerable<T> packets) where T : IPacket
+        {
+            foreach (IPlayerEntity i in Players)
+            {
+                if (i == sender)
+                {
+                    continue;
+                }
+
+                i.SendPackets(packets);
             }
         }
     }

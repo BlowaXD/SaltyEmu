@@ -16,12 +16,11 @@ namespace ChickenAPI.Game.ECS.Entities
         protected static readonly Logger Log = Logger.GetLogger<EntityManagerBase>();
 
         // entities
+        protected readonly HashSet<IPlayerEntity> _players = new HashSet<IPlayerEntity>();
         protected readonly HashSet<IEntity> EntitiesSet = new HashSet<IEntity>();
         protected readonly Dictionary<VisualType, Dictionary<long, IEntity>> EntitiesByVisualType = new Dictionary<VisualType, Dictionary<long, IEntity>>();
 
         protected List<ISystem> _systems = new List<ISystem>();
-
-        protected long LastEntityId;
 
 
         protected bool ShouldUpdate { get; set; }
@@ -39,7 +38,7 @@ namespace ChickenAPI.Game.ECS.Entities
 
         public IEnumerable<T> GetEntitiesByType<T>(VisualType type) where T : class, IEntity
         {
-            return !EntitiesByVisualType.TryGetValue(type, out Dictionary<long, IEntity> entities) ? null : entities.Select(s => s) as IEnumerable<T>;
+            return !EntitiesByVisualType.TryGetValue(type, out Dictionary<long, IEntity> entities) ? null : entities.Select(s => s.Value as T);
         }
 
         public IEntity GetEntity(long id, VisualType type) =>
@@ -49,18 +48,21 @@ namespace ChickenAPI.Game.ECS.Entities
 
         public void RegisterEntity<T>(T entity) where T : IEntity
         {
-            if (!ShouldUpdate && entity.Type == VisualType.Character)
+            if (entity.Type == VisualType.Character)
             {
-                StartSystemUpdate();
+                _players.Add(entity as IPlayerEntity);
+                // player cache
+                if (!ShouldUpdate)
+                {
+                    StartSystemUpdate();
+                }
             }
 
             EntitiesSet.Add(entity);
             if (!EntitiesByVisualType.TryGetValue(entity.Type, out Dictionary<long, IEntity> entities))
             {
-                entities = new Dictionary<long, IEntity>
-                {
-                    { entity.Id, entity }
-                };
+                entities = new Dictionary<long, IEntity>();
+                EntitiesByVisualType[entity.Type] = entities;
             }
 
             entities.Add(entity.Id, entity);
@@ -69,6 +71,11 @@ namespace ChickenAPI.Game.ECS.Entities
 
         public void UnregisterEntity<T>(T entity) where T : IEntity
         {
+            if (entity.Type == VisualType.Character)
+            {
+                _players.Remove(entity as IPlayerEntity);
+            }
+
             EntitiesSet.Remove(entity);
             if (EntitiesByVisualType.TryGetValue(entity.Type, out Dictionary<long, IEntity> entities))
             {

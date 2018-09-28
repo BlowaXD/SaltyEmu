@@ -19,6 +19,8 @@ namespace ChickenAPI.Game.ECS.Entities
         /// </summary>
         IMap Map { get; }
 
+        IEnumerable<IPlayerEntity> Players { get; }
+
         /// <summary>
         ///     Get all entities in the area between X and Y
         /// </summary>
