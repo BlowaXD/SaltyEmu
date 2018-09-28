@@ -180,8 +180,11 @@ namespace SaltyEmu.DatabasePlugin.Utils
             cfg.CreateMap<CharacterMateDto, CharacterMateModel>();
             cfg.CreateMap<CharacterMateModel, CharacterMateDto>();
 
-            cfg.CreateMap<CharacterSkillDto, CharacterSkillModel>();
-            cfg.CreateMap<CharacterSkillModel, CharacterSkillDto>();
+            cfg.CreateMap<CharacterSkillDto, CharacterSkillModel>()
+                .ForMember(s => s.Skill, expr => expr.Ignore());
+
+            cfg.CreateMap<CharacterSkillModel, CharacterSkillDto>()
+                .ForMember(s => s.Skill, expr => expr.ResolveUsing(origin => ChickenContainer.Instance.Resolve<ISkillService>().GetById(origin.SkillId)));
 
             cfg.CreateMap<CharacterQuicklistDto, CharacterQuicklistModel>();
             cfg.CreateMap<CharacterQuicklistModel, CharacterQuicklistDto>();

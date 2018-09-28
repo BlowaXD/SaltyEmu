@@ -13,8 +13,6 @@ namespace ChickenAPI.Game.Features.Skills
 {
     public class SkillComponent : IComponent
     {
-        private static ISkillService _skillService;
-
         public SkillComponent(IEntity entity)
         {
             Entity = entity;
@@ -48,7 +46,7 @@ namespace ChickenAPI.Game.Features.Skills
             }
         }
 
-        private static ISkillService SkillService => _skillService ?? (_skillService = ChickenContainer.Instance.Resolve<ISkillService>());
+        private static readonly ISkillService SkillService = new Lazy<ISkillService>(() => ChickenContainer.Instance.Resolve<ISkillService>()).Value;
 
         public Dictionary<long, SkillDto> Skills { get; }
 
