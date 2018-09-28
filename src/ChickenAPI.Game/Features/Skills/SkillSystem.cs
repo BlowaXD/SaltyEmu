@@ -45,7 +45,7 @@ namespace ChickenAPI.Game.Features.Skills
                 return;
             }
             battleComponent.Mp -= e.Skill.MpCost;
-            if (component.Entity.EntityManager is IBroadcastable broadcastable)
+            if (component.Entity.EntityManager is IMapLayer broadcastable)
             {
                 broadcastable.Broadcast(CtPacketExtensions.GenerateCtPacket(battleComponent.Entity, e.Skill));
             }

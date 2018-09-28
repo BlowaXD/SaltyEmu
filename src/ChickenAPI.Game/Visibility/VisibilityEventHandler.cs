@@ -136,7 +136,7 @@ namespace ChickenAPI.Game.Visibility
                 return;
             }
 
-            if (entity is IPlayerEntity player && player.EntityManager is IBroadcastable broadcastable)
+            if (entity is IPlayerEntity player && player.EntityManager is IMapLayer broadcastable)
             {
                 broadcastable.Broadcast(player, player.GenerateOutPacket());
             }

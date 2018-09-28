@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using Autofac;
+using ChickenAPI.Core.ECS;
+using ChickenAPI.Core.ECS.Entities;
 using ChickenAPI.Core.ECS.Systems;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Logging;
 
-namespace ChickenAPI.Core.ECS.Entities
+namespace ChickenAPI.Game.ECS.Entities
 {
     public abstract class EntityManagerBase : IEntityManager
     {
@@ -75,8 +77,6 @@ namespace ChickenAPI.Core.ECS.Entities
             {
                 StartSystemUpdate();
             }
-
-            entity.Id = NextEntityId;
             EntitiesByEntityId[entity.Id] = entity;
             if (!EntitiesByEntityType.TryGetValue(entity.Type, out HashSet<IEntity> entities))
             {

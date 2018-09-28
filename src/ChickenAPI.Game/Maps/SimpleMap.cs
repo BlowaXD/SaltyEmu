@@ -9,6 +9,7 @@ using ChickenAPI.Core.Maths;
 using ChickenAPI.Core.Utils;
 using ChickenAPI.Game.Data.TransferObjects.Map;
 using ChickenAPI.Game.Data.TransferObjects.Shop;
+using ChickenAPI.Game.ECS.Entities;
 
 namespace ChickenAPI.Game.Maps
 {

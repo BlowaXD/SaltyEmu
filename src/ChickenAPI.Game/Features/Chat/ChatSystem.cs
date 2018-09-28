@@ -31,7 +31,7 @@ namespace ChickenAPI.Game.Features.Chat
                 VisualId = args.SenderId
             };
 
-            if (entity.EntityManager is IBroadcastable broadcastable)
+            if (entity.EntityManager is IMapLayer broadcastable)
             {
                 broadcastable.Broadcast((IPlayerEntity)entity, sayPacket);
             }

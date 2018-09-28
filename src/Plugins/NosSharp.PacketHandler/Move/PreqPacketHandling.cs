@@ -1,5 +1,6 @@
 ﻿using System;
 using Autofac;
+using ChickenAPI.Core.ECS.Entities;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Logging;
 using ChickenAPI.Game.Data.TransferObjects.Map;
@@ -27,7 +28,7 @@ namespace NosSharp.PacketHandler.Move
             }
 
             IMapLayer currentMap = mapLayer;
-            PortalDto currentPortal = currentMap.Map.GetPortalFromPosition(session.Movable.Actual.X, session.Movable.Actual.Y);
+            /*PortalDto currentPortal = currentMap.Map.GetPortalFromPosition(session.Movable.Actual.X, session.Movable.Actual.Y);
 
             if (currentPortal == null)
             {
@@ -38,7 +39,7 @@ namespace NosSharp.PacketHandler.Move
             session.NotifyEventHandler<PortalEventHandler>(new PortalTriggerEvent
             {
                 Portal = currentPortal,
-            });
+            });*/
         }
     }
 }

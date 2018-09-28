@@ -36,6 +36,11 @@ namespace ChickenAPI.Game.Entities.Player
 {
     public class PlayerEntity : EntityBase, IPlayerEntity
     {
+        private static IItemInstanceService ItemInstance => new Lazy<IItemInstanceService>(() => ChickenContainer.Instance.Resolve<IItemInstanceService>()).Value;
+        private static ICharacterService CharacterService => new Lazy<ICharacterService>(() => ChickenContainer.Instance.Resolve<ICharacterService>()).Value;
+        private static ICharacterSkillService CharacterSkillService => new Lazy<ICharacterSkillService>(() => ChickenContainer.Instance.Resolve<ICharacterSkillService>()).Value;
+        private static ICharacterQuickListService CharacterQuicklistService => new Lazy<ICharacterQuickListService>(() => ChickenContainer.Instance.Resolve<ICharacterQuickListService>()).Value;
+
         public PlayerEntity(ISession session, CharacterDto dto, IEnumerable<CharacterSkillDto> skills, IEnumerable<CharacterQuicklistDto> quicklist) : base(EntityType.Player)
         {
             Session = session;
@@ -80,10 +85,6 @@ namespace ChickenAPI.Game.Entities.Player
             };
         }
 
-        private static IItemInstanceService ItemInstance => new Lazy<IItemInstanceService>(() => ChickenContainer.Instance.Resolve<IItemInstanceService>()).Value;
-        private static ICharacterService CharacterService => new Lazy<ICharacterService>(() => ChickenContainer.Instance.Resolve<ICharacterService>()).Value;
-        private static ICharacterSkillService CharacterSkillService => new Lazy<ICharacterSkillService>(() => ChickenContainer.Instance.Resolve<ICharacterSkillService>()).Value;
-        private static ICharacterQuickListService CharacterQuicklistService => new Lazy<ICharacterQuickListService>(() => ChickenContainer.Instance.Resolve<ICharacterQuickListService>()).Value;
 
         public SkillComponent Skills { get; }
         public MovableComponent Movable { get; }
@@ -124,7 +125,7 @@ namespace ChickenAPI.Game.Entities.Player
 
         public void Broadcast<T>(T packet, bool doNotReceive) where T : IPacket
         {
-            if (!(EntityManager is IBroadcastable broadcastable))
+            if (!(EntityManager is IMapLayer broadcastable))
             {
                 return;
             }
@@ -141,7 +142,7 @@ namespace ChickenAPI.Game.Entities.Player
 
         public void Broadcast<T>(IEnumerable<T> packets, bool doNotReceive) where T : IPacket
         {
-            if (!(EntityManager is IBroadcastable broadcastable))
+            if (!(EntityManager is IMapLayer broadcastable))
             {
                 return;
             }

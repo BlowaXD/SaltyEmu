@@ -10,8 +10,9 @@ using ChickenAPI.Game.Data.AccessLayer.Item;
 using ChickenAPI.Game.Features.GuriHandling.Handling;
 using ChickenAPI.Game.Features.NpcDialog;
 using ChickenAPI.Game.Managers;
+using NosSharp.TemporaryMapPlugins;
 
-namespace NosSharp.TemporaryMapPlugins
+namespace SaltyEmu.BasicPlugin
 {
     public class TemporaryMapPlugin : IPlugin
     {

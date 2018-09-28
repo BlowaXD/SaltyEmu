@@ -5,6 +5,7 @@ using ChickenAPI.Core.ECS.Entities;
 using ChickenAPI.Core.Utils;
 using ChickenAPI.Game.Data.TransferObjects.Map;
 using ChickenAPI.Game.Data.TransferObjects.Shop;
+using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Entities.Monster;
 using ChickenAPI.Game.Entities.Npc;
 using ChickenAPI.Game.Entities.Player;
@@ -58,6 +59,16 @@ namespace ChickenAPI.Game.Maps
             {
                 i.SendPackets(packets);
             }
+        }
+
+        public void Broadcast<T>(IEntity sender, T packet) where T : IPacket
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Broadcast<T>(IEntity sender, IEnumerable<T> packets) where T : IPacket
+        {
+            throw new NotImplementedException();
         }
 
         public void Broadcast<T>(IPlayerEntity sender, T packet) where T : IPacket

@@ -1,11 +1,25 @@
 ﻿using System.Collections.Generic;
-using ChickenAPI.Game.Entities.Player;
+using ChickenAPI.Core.Data.TransferObjects;
+using ChickenAPI.Core.Utils;
 using ChickenAPI.Packets;
 
-namespace ChickenAPI.Game.Packets
+namespace ChickenAPI.Core.ECS.Entities
 {
-    public interface IBroadcastable
+    public interface IMapLayer : ISynchronizedDto, IEntityManager
     {
+        /// <summary>
+        ///     Get the base map of the layer
+        /// </summary>
+        IMap Map { get; }
+
+        /// <summary>
+        ///     Get all entities in the area between X and Y
+        /// </summary>
+        /// <param name="pos"></param>
+        /// <param name="range"></param>
+        /// <returns></returns>
+        IEnumerable<IEntity> GetEntitiesInRange(Position<short> pos, int range);
+
         #region Packets
 
         /// <summary>
@@ -25,9 +39,9 @@ namespace ChickenAPI.Game.Packets
         /// <typeparam name="T"></typeparam>
         /// <param name="sender"></param>
         /// <param name="packet"></param>
-        void Broadcast<T>(IPlayerEntity sender, T packet) where T : IPacket;
+        void Broadcast<T>(IEntity sender, T packet) where T : IPacket;
 
-        void Broadcast<T>(IPlayerEntity sender, IEnumerable<T> packets) where T : IPacket;
+        void Broadcast<T>(IEntity sender, IEnumerable<T> packets) where T : IPacket;
 
         #endregion
     }

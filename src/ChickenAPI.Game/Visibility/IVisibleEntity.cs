@@ -1,5 +1,4 @@
-﻿using ChickenAPI.Core.ECS.Entities;
-using ChickenAPI.Core.Utils;
+﻿using ChickenAPI.Core.Utils;
 using ChickenAPI.Enums.Game.Visibility;
 
 namespace ChickenAPI.Game.Visibility

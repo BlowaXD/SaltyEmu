@@ -1,4 +1,5 @@
 ﻿using System;
+using ChickenAPI.Core.ECS.Entities;
 using ChickenAPI.Core.Utils;
 using ChickenAPI.Game.Maps;
 using NosSharp.Pathfinder.Utils;

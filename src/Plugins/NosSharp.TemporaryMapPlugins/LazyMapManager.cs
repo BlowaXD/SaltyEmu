@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Autofac;
+using ChickenAPI.Core.ECS.Entities;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Game.Data.AccessLayer.Map;
 using ChickenAPI.Game.Data.AccessLayer.Shop;

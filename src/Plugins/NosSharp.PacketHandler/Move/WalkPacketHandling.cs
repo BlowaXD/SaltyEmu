@@ -1,4 +1,5 @@
-﻿using ChickenAPI.Core.Logging;
+﻿using ChickenAPI.Core.ECS.Entities;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Movements.Extensions;
 using ChickenAPI.Game.Packets;
@@ -28,7 +29,7 @@ namespace NosSharp.PacketHandler.Move
             session.Movable.Speed = packet.Speed;
 
             session.SendPacket(session.GenerateCondPacket());
-            if (session.EntityManager is IBroadcastable broadcastable)
+            if (session.EntityManager is IMapLayer broadcastable)
             {
                 broadcastable.Broadcast(session.GenerateMvPacket());
             }

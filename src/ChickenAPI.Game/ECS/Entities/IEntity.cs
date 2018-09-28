@@ -9,17 +9,19 @@ namespace ChickenAPI.Core.ECS.Entities
     /// <summary>
     ///     Defines an entity
     /// </summary>
-    public interface IEntity : IMappedDto, IDisposable
+    public interface IEntity : IDisposable
     {
-        /// <summary>
-        ///     Gets the entityManager where the Entity is registered
-        /// </summary>
-        IEntityManager EntityManager { get; }
+        long Id { get; }
 
         /// <summary>
         ///     Gets the entity type
         /// </summary>
         EntityType Type { get; }
+
+        /// <summary>
+        ///     Gets the entityManager where the Entity is registered
+        /// </summary>
+        IEntityManager EntityManager { get; }
 
         /// <summary>
         /// Notifies all event handlers with the given event

@@ -8,7 +8,7 @@ using ChickenAPI.Game.Features.Shops;
 using ChickenAPI.Game.Features.Shops.Args;
 using ChickenAPI.Packets.Game.Client.Shops;
 
-namespace NosSharp.PacketHandler.Shops
+namespace NosSharp.PacketHandler.Npc.Shops
 {
     public class NpcReqPacketHandling
     {
