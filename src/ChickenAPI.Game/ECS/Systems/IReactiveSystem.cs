@@ -1,6 +1,6 @@
-﻿using ChickenAPI.Core.ECS.Entities;
+﻿using ChickenAPI.Game.ECS.Entities;
 
-namespace ChickenAPI.Core.ECS.Systems
+namespace ChickenAPI.Game.ECS.Systems
 {
     /// <summary>
     ///     System that is designed to be executed everytime it's called

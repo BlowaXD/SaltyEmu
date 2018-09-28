@@ -1,5 +1,5 @@
-﻿using ChickenAPI.Core.Events;
-using ChickenAPI.Game.Data.TransferObjects.Map;
+﻿using ChickenAPI.Game.Data.TransferObjects.Map;
+using ChickenAPI.Game.Events;
 
 namespace ChickenAPI.Game.Features.Portals.Args
 {

@@ -1,8 +1,8 @@
-﻿using ChickenAPI.Core.ECS.Entities;
-using ChickenAPI.Core.Events;
+﻿using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Entities.Monster;
 using ChickenAPI.Game.Entities.Npc;
 using ChickenAPI.Game.Entities.Player;
+using ChickenAPI.Game.Events;
 using ChickenAPI.Game.Movements.Events;
 using ChickenAPI.Game.Movements.Extensions;
 using ChickenAPI.Game.Packets;

@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using Autofac;
-using ChickenAPI.Core.ECS.Components;
-using ChickenAPI.Core.ECS.Entities;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Enums.Game.Character;
 using ChickenAPI.Game.Data.AccessLayer.Skill;
 using ChickenAPI.Game.Data.TransferObjects.Skills;
+using ChickenAPI.Game.ECS.Components;
+using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Entities.Player;
 
 namespace ChickenAPI.Game.Features.Skills

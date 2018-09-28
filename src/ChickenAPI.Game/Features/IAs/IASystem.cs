@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Linq.Expressions;
 using Autofac;
-using ChickenAPI.Core.ECS.Entities;
-using ChickenAPI.Core.ECS.Systems;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Maths;
 using ChickenAPI.Core.Utils;
+using ChickenAPI.Game.ECS.Entities;
+using ChickenAPI.Game.ECS.Systems;
 using ChickenAPI.Game.Maps;
 using ChickenAPI.Game.Movements.DataObjects;
 

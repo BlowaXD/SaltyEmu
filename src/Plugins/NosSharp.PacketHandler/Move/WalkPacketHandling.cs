@@ -1,5 +1,5 @@
-﻿using ChickenAPI.Core.ECS.Entities;
-using ChickenAPI.Core.Logging;
+﻿using ChickenAPI.Core.Logging;
+using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Movements.Extensions;
 using ChickenAPI.Game.Packets;

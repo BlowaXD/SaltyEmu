@@ -1,6 +1,6 @@
 ﻿using ChickenAPI.Game.Battle.Interfaces;
 
-namespace ChickenAPI.Game.Battle.HitRequest
+namespace ChickenAPI.Game.Battle.Hitting
 {
     public class BasicHitRequestFactory : IHitRequestFactory
     {

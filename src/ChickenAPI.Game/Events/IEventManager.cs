@@ -1,7 +1,7 @@
 ﻿using System;
-using ChickenAPI.Core.ECS.Entities;
+using ChickenAPI.Game.ECS.Entities;
 
-namespace ChickenAPI.Core.Events
+namespace ChickenAPI.Game.Events
 {
     public interface IEventManager
     {

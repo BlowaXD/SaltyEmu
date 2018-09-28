@@ -1,8 +1,8 @@
-﻿using ChickenAPI.Core.ECS.Entities;
-using ChickenAPI.Core.Events;
-using ChickenAPI.Enums.Game.Entity;
+﻿using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Enums.Packets;
+using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Entities.Player;
+using ChickenAPI.Game.Events;
 using ChickenAPI.Game.Features.Chat.Args;
 using ChickenAPI.Game.Packets;
 using ChickenAPI.Packets.Game.Server.Player;

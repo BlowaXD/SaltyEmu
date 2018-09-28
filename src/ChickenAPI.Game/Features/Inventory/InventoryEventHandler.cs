@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using Autofac;
-using ChickenAPI.Core.ECS.Entities;
-using ChickenAPI.Core.Events;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Enums.Game.Items;
 using ChickenAPI.Game.Data.AccessLayer.Item;
 using ChickenAPI.Game.Data.TransferObjects.Item;
+using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Entities.Player.Extensions;
+using ChickenAPI.Game.Events;
 using ChickenAPI.Game.Features.Effects;
 using ChickenAPI.Game.Features.Inventory.Args;
 using ChickenAPI.Game.Features.Inventory.Extensions;

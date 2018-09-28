@@ -1,6 +1,6 @@
 ﻿using System;
-using ChickenAPI.Core.Events;
 using ChickenAPI.Game.Entities.Player;
+using ChickenAPI.Game.Events;
 
 namespace ChickenAPI.Game.Features.Families.Args
 {

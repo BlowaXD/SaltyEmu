@@ -1,4 +1,4 @@
-﻿namespace ChickenAPI.Core.ECS.Entities
+﻿namespace ChickenAPI.Game.ECS.Entities
 {
     public enum EntityType
     {

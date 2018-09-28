@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Linq;
 using System.Linq.Expressions;
-using ChickenAPI.Core.ECS.Entities;
 using ChickenAPI.Core.Logging;
+using ChickenAPI.Game.ECS.Entities;
 
-namespace ChickenAPI.Core.ECS.Systems
+namespace ChickenAPI.Game.ECS.Systems
 {
     public abstract class SystemBase : ISystem
     {

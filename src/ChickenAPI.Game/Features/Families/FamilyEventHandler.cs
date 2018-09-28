@@ -1,5 +1,5 @@
-﻿using ChickenAPI.Core.ECS.Entities;
-using ChickenAPI.Core.Events;
+﻿using ChickenAPI.Game.ECS.Entities;
+using ChickenAPI.Game.Events;
 
 namespace ChickenAPI.Game.Features.Families
 {

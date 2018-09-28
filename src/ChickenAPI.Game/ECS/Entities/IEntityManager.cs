@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using ChickenAPI.Core.ECS.Systems;
+using ChickenAPI.Game.ECS.Systems;
 
-namespace ChickenAPI.Core.ECS.Entities
+namespace ChickenAPI.Game.ECS.Entities
 {
     /// <inheritdoc cref="IDisposable" />
     /// <summary>
-    ///     Contains entities and sub <see cref="T:ChickenAPI.Core.ECS.Entities.IEntityManager" />
+    ///     Contains entities and sub <see cref="T:ChickenAPI.Game.ECS.Entities.IEntityManager" />
     /// </summary>
     public interface IEntityManager : IDisposable
     {
@@ -116,14 +116,14 @@ namespace ChickenAPI.Core.ECS.Entities
         /// </summary>
         /// <param name="id"></param>
         /// <param name="manager"></param>
-        void TransferEntity(long id, IEntityManager manager);
+        void TransferEntity(long id, IMapLayer manager);
 
         /// <summary>
         ///     Transfer the entity contained in the entity manger to another one
         /// </summary>
         /// <param name="entity"></param>
         /// <param name="manager"></param>
-        void TransferEntity(IEntity entity, IEntityManager manager);
+        void TransferEntity(IEntity entity, IMapLayer manager);
 
         #endregion
 

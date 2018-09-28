@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Linq;
-using ChickenAPI.Core.ECS.Entities;
-using ChickenAPI.Core.Events;
 using ChickenAPI.Core.Logging;
 using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Game.Entities.Npc;
@@ -16,6 +14,8 @@ using ChickenAPI.Packets.Game.Server.Inventory;
 using ChickenAPI.Game.Features.Quicklist.Args;
 using ChickenAPI.Game.Data.TransferObjects.Character;
 using System.Text;
+using ChickenAPI.Game.ECS.Entities;
+using ChickenAPI.Game.Events;
 using ChickenAPI.Packets.Game.Server.QuickList;
 using ChickenAPI.Game.Features.Quicklist.Extensions;
 

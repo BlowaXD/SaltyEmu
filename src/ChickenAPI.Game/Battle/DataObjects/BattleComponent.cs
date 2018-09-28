@@ -1,10 +1,10 @@
 ﻿using System;
 using Autofac;
-using ChickenAPI.Core.ECS.Components;
-using ChickenAPI.Core.ECS.Entities;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Game.Data.AccessLayer.Character;
 using ChickenAPI.Game.Data.TransferObjects.Character;
+using ChickenAPI.Game.ECS.Components;
+using ChickenAPI.Game.ECS.Entities;
 
 namespace ChickenAPI.Game.Battle.DataObjects
 {

@@ -1,12 +1,12 @@
-﻿using ChickenAPI.Core.ECS.Entities;
-using ChickenAPI.Core.Events;
-using ChickenAPI.Core.Logging;
+﻿using ChickenAPI.Core.Logging;
 using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Enums.Game.Visibility;
+using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Entities.Npc;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Entities.Player.Extensions;
 using ChickenAPI.Game.Entities.Portal;
+using ChickenAPI.Game.Events;
 using ChickenAPI.Game.Features.Portals;
 using ChickenAPI.Game.Packets;
 using ChickenAPI.Game.Packets.Extensions;

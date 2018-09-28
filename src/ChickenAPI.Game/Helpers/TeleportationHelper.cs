@@ -1,7 +1,7 @@
 ﻿using System;
 using Autofac;
-using ChickenAPI.Core.ECS.Entities;
 using ChickenAPI.Core.IoC;
+using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Entities.Extensions;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Managers;

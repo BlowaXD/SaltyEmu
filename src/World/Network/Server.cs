@@ -2,13 +2,13 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Autofac;
-using ChickenAPI.Core.ECS;
-using ChickenAPI.Core.ECS.Entities;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Logging;
 using ChickenAPI.Enums.Game.Character;
 using ChickenAPI.Game.Data.AccessLayer.Server;
 using ChickenAPI.Game.Data.TransferObjects.Server;
+using ChickenAPI.Game.ECS;
+using ChickenAPI.Game.ECS.Entities;
 using DotNetty.Common.Concurrency;
 using DotNetty.Transport.Bootstrapping;
 using DotNetty.Transport.Channels;

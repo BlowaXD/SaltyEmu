@@ -1,8 +1,8 @@
 ﻿using System;
-using ChickenAPI.Core.ECS.Components;
-using ChickenAPI.Core.ECS.Entities;
 using ChickenAPI.Core.Utils;
 using ChickenAPI.Enums.Game.Visibility;
+using ChickenAPI.Game.ECS.Components;
+using ChickenAPI.Game.ECS.Entities;
 
 namespace ChickenAPI.Game.Visibility
 {

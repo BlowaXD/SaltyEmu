@@ -1,9 +1,8 @@
 ﻿using System;
-using ChickenAPI.Core.Data.TransferObjects;
-using ChickenAPI.Core.ECS.Components;
-using ChickenAPI.Core.Events;
+using ChickenAPI.Game.ECS.Components;
+using ChickenAPI.Game.Events;
 
-namespace ChickenAPI.Core.ECS.Entities
+namespace ChickenAPI.Game.ECS.Entities
 {
     /// <inheritdoc cref="IDisposable" />
     /// <summary>
@@ -21,7 +20,7 @@ namespace ChickenAPI.Core.ECS.Entities
         /// <summary>
         ///     Gets the entityManager where the Entity is registered
         /// </summary>
-        IEntityManager EntityManager { get; }
+        IMapLayer EntityManager { get; }
 
         /// <summary>
         /// Notifies all event handlers with the given event
@@ -40,7 +39,7 @@ namespace ChickenAPI.Core.ECS.Entities
         ///     Will transfer the Entity to another entity manager
         /// </summary>
         /// <param name="manager"></param>
-        void TransferEntity(IEntityManager manager);
+        void TransferEntity(IMapLayer manager);
 
         /// <summary>
         ///     Add the component to the actual <see cref="IEntity" />

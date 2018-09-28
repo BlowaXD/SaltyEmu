@@ -2,11 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using Autofac;
-using ChickenAPI.Core.ECS;
-using ChickenAPI.Core.ECS.Entities;
-using ChickenAPI.Core.ECS.Systems;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Logging;
+using ChickenAPI.Game.ECS.Systems;
 
 namespace ChickenAPI.Game.ECS.Entities
 {
@@ -105,7 +103,7 @@ namespace ChickenAPI.Game.ECS.Entities
 
         public bool DeleteEntity(IEntity entity) => EntitiesByEntityId.Remove(entity.Id);
 
-        public void TransferEntity(long id, IEntityManager manager)
+        public void TransferEntity(long id, IMapLayer manager)
         {
             if (!EntitiesByEntityId.TryGetValue(id, out IEntity entity))
             {
@@ -115,7 +113,7 @@ namespace ChickenAPI.Game.ECS.Entities
             TransferEntity(entity, manager);
         }
 
-        public void TransferEntity(IEntity entity, IEntityManager manager)
+        public void TransferEntity(IEntity entity, IMapLayer manager)
         {
             UnregisterEntity(entity);
             manager.RegisterEntity(entity);

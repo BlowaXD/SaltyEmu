@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using ChickenAPI.Core.ECS.Components;
-using ChickenAPI.Core.ECS.Entities;
 using ChickenAPI.Core.Utils;
 using ChickenAPI.Enums.Game.Visibility;
 using ChickenAPI.Game.Battle.DataObjects;
 using ChickenAPI.Game.Data.TransferObjects.Map;
 using ChickenAPI.Game.Data.TransferObjects.Shop;
+using ChickenAPI.Game.ECS.Components;
+using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Entities.Monster;
 using ChickenAPI.Game.Features.Shops;
 using ChickenAPI.Game.Features.Skills;

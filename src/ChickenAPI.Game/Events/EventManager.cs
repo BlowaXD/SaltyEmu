@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using ChickenAPI.Core.ECS.Entities;
 using ChickenAPI.Core.Logging;
+using ChickenAPI.Game.ECS.Entities;
 
-namespace ChickenAPI.Core.Events
+namespace ChickenAPI.Game.Events
 {
     public class EventManager : IEventManager
     {

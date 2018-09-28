@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using ChickenAPI.Core.ECS.Entities;
-using ChickenAPI.Core.ECS.Systems;
+using ChickenAPI.Game.ECS.Entities;
+using ChickenAPI.Game.ECS.Systems;
 using ChickenAPI.Game.Maps;
 using ChickenAPI.Packets.Game.Client._NotYetSorted;
 

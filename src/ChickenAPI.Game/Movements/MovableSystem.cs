@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq;
 using System.Linq.Expressions;
-using ChickenAPI.Core.ECS.Entities;
-using ChickenAPI.Core.ECS.Systems;
 using ChickenAPI.Core.Utils;
+using ChickenAPI.Game.ECS.Entities;
+using ChickenAPI.Game.ECS.Systems;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Maps;
 using ChickenAPI.Game.Movements.DataObjects;

@@ -1,12 +1,12 @@
 ﻿using Autofac;
-using ChickenAPI.Core.Events;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Logging;
 using ChickenAPI.Core.Maths;
 using ChickenAPI.Core.Plugins;
-using ChickenAPI.Game.Battle.HitRequest;
+using ChickenAPI.Game.Battle.Hitting;
 using ChickenAPI.Game.Battle.Interfaces;
 using ChickenAPI.Game.Data.AccessLayer.Item;
+using ChickenAPI.Game.Events;
 using ChickenAPI.Game.Features.GuriHandling.Handling;
 using ChickenAPI.Game.Features.NpcDialog;
 using ChickenAPI.Game.Managers;

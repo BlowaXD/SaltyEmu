@@ -1,5 +1,5 @@
-﻿using ChickenAPI.Core.ECS.Entities;
-using ChickenAPI.Enums.Game.Effects;
+﻿using ChickenAPI.Enums.Game.Effects;
+using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Features.Effects;
 using ChickenAPI.Packets.Game.Client._NotYetSorted;
 

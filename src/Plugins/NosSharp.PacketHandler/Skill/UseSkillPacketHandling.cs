@@ -1,9 +1,9 @@
 ﻿using System.Linq;
-using ChickenAPI.Core.ECS.Entities;
 using ChickenAPI.Core.Logging;
 using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Enums.Packets;
 using ChickenAPI.Game.Data.TransferObjects.Skills;
+using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Entities.Monster;
 using ChickenAPI.Game.Entities.Npc;
 using ChickenAPI.Game.Entities.Player;

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Linq;
-using ChickenAPI.Core.ECS.Entities;
 using ChickenAPI.Core.Logging;
 using ChickenAPI.Enums.Game.Entity;
+using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Entities.Extensions;
 using ChickenAPI.Game.Entities.Monster;
 using ChickenAPI.Game.Entities.Player;

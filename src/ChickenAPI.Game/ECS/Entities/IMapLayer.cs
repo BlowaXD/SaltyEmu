@@ -3,7 +3,7 @@ using ChickenAPI.Core.Data.TransferObjects;
 using ChickenAPI.Core.Utils;
 using ChickenAPI.Packets;
 
-namespace ChickenAPI.Core.ECS.Entities
+namespace ChickenAPI.Game.ECS.Entities
 {
     public interface IMapLayer : ISynchronizedDto, IEntityManager
     {

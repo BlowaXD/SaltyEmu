@@ -1,10 +1,10 @@
-﻿using ChickenAPI.Core.ECS.Entities;
-using ChickenAPI.Enums;
+﻿using ChickenAPI.Enums;
 using ChickenAPI.Enums.Game.Character;
 using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Game.Battle.DataObjects;
 using ChickenAPI.Game.Data.TransferObjects.Character;
 using ChickenAPI.Game.Data.TransferObjects.NpcMonster;
+using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Entities.Monster;
 using ChickenAPI.Game.Entities.Npc;
 using ChickenAPI.Game.Entities.Player;

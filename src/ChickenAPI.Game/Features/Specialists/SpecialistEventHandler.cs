@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Linq;
-using ChickenAPI.Core.ECS.Entities;
-using ChickenAPI.Core.Events;
 using ChickenAPI.Enums.Game.Items;
+using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Entities.Extensions;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Entities.Player.Extensions;
+using ChickenAPI.Game.Events;
 using ChickenAPI.Game.Features.Specialists.Args;
 using ChickenAPI.Game.Movements.Extensions;
 

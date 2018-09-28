@@ -1,5 +1,5 @@
-﻿using ChickenAPI.Core.Events;
-using ChickenAPI.Game.Data.TransferObjects.Skills;
+﻿using ChickenAPI.Game.Data.TransferObjects.Skills;
+using ChickenAPI.Game.Events;
 
 namespace ChickenAPI.Game.Features.Skills.Args
 {

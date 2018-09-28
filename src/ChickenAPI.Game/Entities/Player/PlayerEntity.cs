@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Autofac;
-using ChickenAPI.Core.ECS.Components;
-using ChickenAPI.Core.ECS.Entities;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Utils;
 using ChickenAPI.Enums.Game.Visibility;
@@ -11,6 +9,8 @@ using ChickenAPI.Game.Battle.DataObjects;
 using ChickenAPI.Game.Data.AccessLayer.Character;
 using ChickenAPI.Game.Data.AccessLayer.Item;
 using ChickenAPI.Game.Data.TransferObjects.Character;
+using ChickenAPI.Game.ECS.Components;
+using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Entities.Extensions;
 using ChickenAPI.Game.Entities.Player.Extensions;
 using ChickenAPI.Game.Features.Families;
@@ -157,7 +157,7 @@ namespace ChickenAPI.Game.Entities.Player
             }
         }
 
-        public override void TransferEntity(IEntityManager manager)
+        public override void TransferEntity(IMapLayer manager)
         {
             if (EntityManager != null)
             {

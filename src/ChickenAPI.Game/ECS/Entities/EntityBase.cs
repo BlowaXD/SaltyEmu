@@ -1,35 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
 using Autofac;
-using ChickenAPI.Core.ECS.Components;
-using ChickenAPI.Core.Events;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Logging;
+using ChickenAPI.Game.ECS.Components;
+using ChickenAPI.Game.Events;
 
-namespace ChickenAPI.Core.ECS.Entities
+namespace ChickenAPI.Game.ECS.Entities
 {
     public abstract class EntityBase : IEntity
     {
         protected static readonly Logger Log = Logger.GetLogger<EntityBase>();
-        private static IEventManager _eventManager;
+        protected static readonly IEventManager EventManager = new Lazy<IEventManager>(() => ChickenContainer.Instance.Resolve<IEventManager>()).Value;
         protected Dictionary<Type, IComponent> Components;
 
-        protected EntityBase(EntityType type, Dictionary<Type, IComponent> components)
-        {
-            Type = type;
-            Components = components;
-        }
-
         protected EntityBase(EntityType type) => Type = type;
-
-        protected IEventManager EventManager => _eventManager ?? (_eventManager = ChickenContainer.Instance.Resolve<IEventManager>());
 
 
         public long Id { get; set; }
 
         public abstract void Dispose();
 
-        public IEntityManager EntityManager { get; protected set; }
+        public IMapLayer EntityManager { get; protected set; }
 
         public void NotifyEventHandler(ChickenEventArgs e)
         {
@@ -43,7 +35,7 @@ namespace ChickenAPI.Core.ECS.Entities
 
         public EntityType Type { get; }
 
-        public virtual void TransferEntity(IEntityManager manager)
+        public virtual void TransferEntity(IMapLayer manager)
         {
             if (EntityManager == null)
             {

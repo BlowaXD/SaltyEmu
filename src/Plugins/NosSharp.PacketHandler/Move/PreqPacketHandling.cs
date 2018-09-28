@@ -1,9 +1,9 @@
 ﻿using System;
 using Autofac;
-using ChickenAPI.Core.ECS.Entities;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Logging;
 using ChickenAPI.Game.Data.TransferObjects.Map;
+using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Features.Portals;
 using ChickenAPI.Game.Features.Portals.Args;

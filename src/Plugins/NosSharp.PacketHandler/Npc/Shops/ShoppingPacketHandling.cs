@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using ChickenAPI.Core.ECS.Entities;
+using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Entities.Npc;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Features.Shops;

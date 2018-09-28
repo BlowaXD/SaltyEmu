@@ -1,5 +1,5 @@
-﻿using ChickenAPI.Core.Events;
-using ChickenAPI.Enums.Game.Items;
+﻿using ChickenAPI.Enums.Game.Items;
+using ChickenAPI.Game.Events;
 
 namespace ChickenAPI.Game.Features.Inventory.Args
 {

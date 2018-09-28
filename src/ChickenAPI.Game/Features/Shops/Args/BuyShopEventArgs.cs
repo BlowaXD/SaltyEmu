@@ -1,5 +1,5 @@
-﻿using ChickenAPI.Core.Events;
-using ChickenAPI.Enums.Game.Entity;
+﻿using ChickenAPI.Enums.Game.Entity;
+using ChickenAPI.Game.Events;
 
 namespace ChickenAPI.Game.Features.Shops.Args
 {

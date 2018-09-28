@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using ChickenAPI.Core.Events;
+using ChickenAPI.Game.Events;
 
 namespace ChickenAPI.Game.Movements.Events
 {

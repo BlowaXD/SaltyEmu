@@ -1,4 +1,4 @@
-﻿using ChickenAPI.Core.Events;
+﻿using ChickenAPI.Game.Events;
 
 namespace ChickenAPI.Game.Features.Quicklist.Args
 {

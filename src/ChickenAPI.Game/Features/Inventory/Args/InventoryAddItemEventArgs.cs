@@ -1,5 +1,5 @@
-﻿using ChickenAPI.Core.Events;
-using ChickenAPI.Game.Data.TransferObjects.Item;
+﻿using ChickenAPI.Game.Data.TransferObjects.Item;
+using ChickenAPI.Game.Events;
 
 namespace ChickenAPI.Game.Features.Inventory.Args
 {

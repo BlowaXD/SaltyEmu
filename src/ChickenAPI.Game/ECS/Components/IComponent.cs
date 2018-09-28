@@ -1,6 +1,6 @@
-﻿using ChickenAPI.Core.ECS.Entities;
+﻿using ChickenAPI.Game.ECS.Entities;
 
-namespace ChickenAPI.Core.ECS.Components
+namespace ChickenAPI.Game.ECS.Components
 {
     /// <summary>
     ///     Define a component that is attached to an entity

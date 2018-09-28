@@ -1,5 +1,5 @@
 ﻿using System;
-using ChickenAPI.Core.ECS.Entities;
+using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Maps;
 using ChickenAPI.Packets.Game.Server.MiniMap;
 

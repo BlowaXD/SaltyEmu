@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using ChickenAPI.Core.ECS.Entities;
+using ChickenAPI.Game.ECS.Entities;
 
-namespace ChickenAPI.Core.ECS
+namespace ChickenAPI.Game.ECS
 {
     public interface IEntityManagerContainer
     {

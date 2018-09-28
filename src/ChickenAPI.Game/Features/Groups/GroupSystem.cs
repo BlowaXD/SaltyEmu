@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq.Expressions;
-using ChickenAPI.Core.ECS.Entities;
-using ChickenAPI.Core.ECS.Systems;
+using ChickenAPI.Game.ECS.Entities;
+using ChickenAPI.Game.ECS.Systems;
 using ChickenAPI.Game.Entities.Player;
 
 namespace ChickenAPI.Game.Features.Groups
