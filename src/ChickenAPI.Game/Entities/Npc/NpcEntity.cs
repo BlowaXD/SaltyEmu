@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using ChickenAPI.Core.Utils;
+using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Enums.Game.Visibility;
 using ChickenAPI.Game.Battle.DataObjects;
 using ChickenAPI.Game.Data.TransferObjects.Map;
@@ -17,7 +18,7 @@ namespace ChickenAPI.Game.Entities.Npc
 {
     public class NpcEntity : EntityBase, INpcEntity
     {
-        public NpcEntity(MapNpcDto npc, ShopDto shop) : base(EntityType.Npc)
+        public NpcEntity(MapNpcDto npc, ShopDto shop) : base(VisualType.Npc, npc.Id)
         {
             Battle = new BattleComponent(this)
             {

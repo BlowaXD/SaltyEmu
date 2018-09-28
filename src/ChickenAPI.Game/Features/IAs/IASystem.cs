@@ -4,6 +4,7 @@ using Autofac;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Maths;
 using ChickenAPI.Core.Utils;
+using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.ECS.Systems;
 using ChickenAPI.Game.Maps;
@@ -30,7 +31,7 @@ namespace ChickenAPI.Game.Features.IAs
 
         private static bool MovableFilter(IEntity entity)
         {
-            if (entity.Type == EntityType.Player)
+            if (entity.Type == VisualType.Character)
             {
                 return false;
             }
@@ -48,7 +49,7 @@ namespace ChickenAPI.Game.Features.IAs
         {
             int i = 0;
             var movableComponent = entity.GetComponent<MovableComponent>();
-            if (movableComponent.Waypoints != null && movableComponent.Waypoints.Length != 0 || entity.Type == EntityType.Player)
+            if (movableComponent.Waypoints != null && movableComponent.Waypoints.Length != 0 || entity.Type == VisualType.Character)
             {
                 return;
             }

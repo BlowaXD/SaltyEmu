@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Entities.Npc;
 using ChickenAPI.Game.Entities.Player;
@@ -13,7 +14,7 @@ namespace NosSharp.PacketHandler.Npc.Shops
     {
         public static void OnShoppingPacketReceived(ShoppingPacket packet, IPlayerEntity player)
         {
-            IEnumerable<INpcEntity> npcs = player.EntityManager.GetEntitiesByType<INpcEntity>(EntityType.Npc);
+            IEnumerable<INpcEntity> npcs = player.EntityManager.GetEntitiesByType<INpcEntity>(VisualType.Npc);
 
             INpcEntity npc = npcs.FirstOrDefault(s => s.MapNpc.Id == packet.NpcId);
             if (npc == null || !(npc is NpcEntity shopEntity))

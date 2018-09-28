@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Autofac;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Logging;
+using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Game.ECS.Components;
 using ChickenAPI.Game.Events;
 
@@ -14,10 +15,16 @@ namespace ChickenAPI.Game.ECS.Entities
         protected static readonly IEventManager EventManager = new Lazy<IEventManager>(() => ChickenContainer.Instance.Resolve<IEventManager>()).Value;
         protected Dictionary<Type, IComponent> Components;
 
-        protected EntityBase(EntityType type) => Type = type;
+        protected EntityBase(VisualType type, long id)
+        {
+            Type = type;
+            Id = id;
+        }
 
 
-        public long Id { get; set; }
+        public long Id { get; }
+
+        public VisualType Type { get; }
 
         public abstract void Dispose();
 
@@ -32,8 +39,6 @@ namespace ChickenAPI.Game.ECS.Entities
         {
             EventManager.Notify<T>(this, e);
         }
-
-        public EntityType Type { get; }
 
         public virtual void TransferEntity(IMapLayer manager)
         {

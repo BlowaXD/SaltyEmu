@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Game.ECS.Systems;
 
 namespace ChickenAPI.Game.ECS.Entities
@@ -52,7 +53,7 @@ namespace ChickenAPI.Game.ECS.Entities
         /// <typeparam name="T"></typeparam>
         /// <param name="type"></param>
         /// <returns></returns>
-        IEnumerable<T> GetEntitiesByType<T>(EntityType type) where T : class, IEntity;
+        IEnumerable<T> GetEntitiesByType<T>(VisualType type) where T : class, IEntity;
 
         /// <summary>
         ///     Creates a new entity.

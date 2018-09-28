@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using ChickenAPI.Core.Utils;
+using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Enums.Game.Visibility;
 using ChickenAPI.Game.Battle.DataObjects;
 using ChickenAPI.Game.Data.TransferObjects.Map;
@@ -15,7 +16,7 @@ namespace ChickenAPI.Game.Entities.Monster
 {
     public class MonsterEntity : EntityBase, IMonsterEntity
     {
-        public MonsterEntity(MapMonsterDto dto) : base(EntityType.Monster)
+        public MonsterEntity(MapMonsterDto dto) : base(VisualType.Monster, dto.Id)
         {
             Movable = new MovableComponent(this, dto.IsMoving ? dto.NpcMonster.Speed : (byte)0)
             {

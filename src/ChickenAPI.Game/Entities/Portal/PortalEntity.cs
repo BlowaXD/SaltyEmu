@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Game.Data.TransferObjects.Map;
 using ChickenAPI.Game.ECS.Components;
 using ChickenAPI.Game.ECS.Entities;
@@ -10,7 +11,7 @@ namespace ChickenAPI.Game.Entities.Portal
 {
     public class PortalEntity : EntityBase
     {
-        public PortalEntity(PortalDto portal) : base(EntityType.Portal)
+        public PortalEntity(PortalDto portal) : base(VisualType.Portal, portal.Id)
         {
             Portal = new PortalComponent(this, portal);
             Components = new Dictionary<Type, IComponent>

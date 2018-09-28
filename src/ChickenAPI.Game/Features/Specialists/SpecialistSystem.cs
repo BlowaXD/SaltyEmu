@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq.Expressions;
+using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.ECS.Systems;
 using ChickenAPI.Game.Entities.Player;
@@ -15,7 +16,7 @@ namespace ChickenAPI.Game.Features.Specialists
 
         // all 10 seconds
         protected override double RefreshRate => 0.1;
-        protected override Expression<Func<IEntity, bool>> Filter => entity => entity.Type == EntityType.Player;
+        protected override Expression<Func<IEntity, bool>> Filter => entity => entity.Type == VisualType.Character;
 
         protected override void Execute(IEntity entity)
         {

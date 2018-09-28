@@ -1,12 +1,15 @@
-﻿using System.Collections.Generic;
-using ChickenAPI.Core.Data.TransferObjects;
+﻿using System;
+using System.Collections.Generic;
 using ChickenAPI.Core.Utils;
+using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Packets;
 
 namespace ChickenAPI.Game.ECS.Entities
 {
-    public interface IMapLayer : ISynchronizedDto, IEntityManager
+    public interface IMapLayer : IEntityManager
     {
+        Guid Id { get; }
+
         /// <summary>
         ///     Get the base map of the layer
         /// </summary>

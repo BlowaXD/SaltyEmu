@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using ChickenAPI.Core.Utils;
+using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Game.Data.TransferObjects.Map;
 using ChickenAPI.Game.Data.TransferObjects.Shop;
 using ChickenAPI.Game.ECS.Entities;
@@ -38,7 +39,7 @@ namespace ChickenAPI.Game.Maps
 
         public void Broadcast<T>(T packet) where T : IPacket
         {
-            foreach (IPlayerEntity i in GetEntitiesByType<IPlayerEntity>(EntityType.Player))
+            foreach (IPlayerEntity i in GetEntitiesByType<IPlayerEntity>(VisualType.Character))
             {
                 i.SendPacket(packet);
             }
@@ -46,7 +47,7 @@ namespace ChickenAPI.Game.Maps
 
         public void Broadcast<T>(IEnumerable<T> packets) where T : IPacket
         {
-            foreach (IPlayerEntity i in GetEntitiesByType<IPlayerEntity>(EntityType.Player))
+            foreach (IPlayerEntity i in GetEntitiesByType<IPlayerEntity>(VisualType.Character))
             {
                 i.SendPackets(packets);
             }
@@ -54,7 +55,7 @@ namespace ChickenAPI.Game.Maps
 
         public void Broadcast(IEnumerable<IPacket> packets)
         {
-            foreach (IPlayerEntity i in GetEntitiesByType<IPlayerEntity>(EntityType.Player))
+            foreach (IPlayerEntity i in GetEntitiesByType<IPlayerEntity>(VisualType.Character))
             {
                 i.SendPackets(packets);
             }
@@ -72,7 +73,7 @@ namespace ChickenAPI.Game.Maps
 
         public void Broadcast<T>(IPlayerEntity sender, T packet) where T : IPacket
         {
-            foreach (IPlayerEntity i in GetEntitiesByType<IPlayerEntity>(EntityType.Player))
+            foreach (IPlayerEntity i in GetEntitiesByType<IPlayerEntity>(VisualType.Character))
             {
                 if (i == sender)
                 {
@@ -85,7 +86,7 @@ namespace ChickenAPI.Game.Maps
 
         public void Broadcast<T>(IPlayerEntity sender, IEnumerable<T> packets) where T : IPacket
         {
-            foreach (IPlayerEntity i in GetEntitiesByType<IPlayerEntity>(EntityType.Player))
+            foreach (IPlayerEntity i in GetEntitiesByType<IPlayerEntity>(VisualType.Character))
             {
                 if (i == sender)
                 {

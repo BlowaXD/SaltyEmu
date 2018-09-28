@@ -87,10 +87,9 @@ namespace ChickenAPI.Game.Visibility
 
                 switch (entityy.Type)
                 {
-                    case EntityType.Monster:
-                    case EntityType.Mate:
-                    case EntityType.Npc:
-                    case EntityType.Player:
+                    case VisualType.Character:
+                    case VisualType.Npc:
+                    case VisualType.Monster:
                         session.SendPacket(entityy.GenerateInPacket());
                         if (entityy is IPlayerEntity player)
                         {
@@ -98,7 +97,7 @@ namespace ChickenAPI.Game.Visibility
                             player.SendPacket(pairy);
                         }
 
-                        if (entityy.Type != EntityType.Npc || !(entityy is NpcEntity npc))
+                        if (entityy.Type != VisualType.Npc || !(entityy is NpcEntity npc))
                         {
                             continue;
                         }
@@ -117,7 +116,7 @@ namespace ChickenAPI.Game.Visibility
                         }
 
                         break;
-                    case EntityType.Portal:
+                    case VisualType.Portal:
 
                         if (entityy is PortalEntity portal)
                         {

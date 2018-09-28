@@ -22,7 +22,7 @@ namespace ChickenAPI.Game.Maps
         private readonly IRandomGenerator _random;
         private readonly IEnumerable<ShopDto> _shops;
 
-        private readonly Position<short>[] WalkableGrid;
+        private readonly Position<short>[] _walkableGrid;
         private IMapLayer _baseMapLayer;
 
         public SimpleMap(MapDto map, IEnumerable<MapMonsterDto> monsters, IEnumerable<MapNpcDto> npcs, IEnumerable<PortalDto> portals, IEnumerable<ShopDto> shops)
@@ -38,7 +38,7 @@ namespace ChickenAPI.Game.Maps
             _random = ChickenContainer.Instance.Resolve<IRandomGenerator>();
 
 
-            WalkableGrid = new Lazy<Position<short>[]>(() =>
+            _walkableGrid = new Lazy<Position<short>[]>(() =>
             {
                 List<Position<short>> cells = new List<Position<short>>();
                 for (short y = 0; y <= map.Height; y++)
@@ -83,7 +83,7 @@ namespace ChickenAPI.Game.Maps
 
             short minY = (short)(-rangeY + minimumY);
             short maxY = (short)(rangeY + minimumY);
-            return WalkableGrid.Where(s => s.Y >= minY && s.Y <= maxY && s.X >= minX && s.X <= maxX).OrderBy(s => _random.Next(int.MaxValue)).FirstOrDefault(cell => IsWalkable(cell.X, cell.Y));
+            return _walkableGrid.Where(s => s.Y >= minY && s.Y <= maxY && s.X >= minX && s.X <= maxX).OrderBy(s => _random.Next(int.MaxValue)).FirstOrDefault(cell => IsWalkable(cell.X, cell.Y));
         }
 
         private static bool IsWalkable(byte cell) => cell == 0 || cell == 2 || cell >= 16 && cell <= 19;

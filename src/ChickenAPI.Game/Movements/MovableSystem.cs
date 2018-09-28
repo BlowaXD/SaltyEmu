@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Linq.Expressions;
 using ChickenAPI.Core.Utils;
+using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.ECS.Systems;
 using ChickenAPI.Game.Entities.Player;
@@ -25,7 +26,7 @@ namespace ChickenAPI.Game.Movements
 
         private static bool MovableFilter(IEntity entity)
         {
-            if (entity.Type == EntityType.Player)
+            if (entity.Type == VisualType.Character)
             {
                 return false;
             }

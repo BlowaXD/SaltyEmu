@@ -1,4 +1,5 @@
 ﻿using System;
+using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Game.ECS.Components;
 using ChickenAPI.Game.Events;
 
@@ -15,7 +16,7 @@ namespace ChickenAPI.Game.ECS.Entities
         /// <summary>
         ///     Gets the entity type
         /// </summary>
-        EntityType Type { get; }
+        VisualType Type { get; }
 
         /// <summary>
         ///     Gets the entityManager where the Entity is registered
