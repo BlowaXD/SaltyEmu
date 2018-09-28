@@ -77,5 +77,7 @@ namespace ChickenAPI.Core.Utils
                 return EqualityComparer<T>.Default.GetHashCode(X) * 397 ^ EqualityComparer<T>.Default.GetHashCode(Y);
             }
         }
+
+        public override string ToString() => "(" + X + "," + Y + ")";
     }
 }
