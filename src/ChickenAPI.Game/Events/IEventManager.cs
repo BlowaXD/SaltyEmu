@@ -9,10 +9,19 @@ namespace ChickenAPI.Game.Events
         void Register(IEventHandler handler, Type type);
         void Unregister<T>(T handler) where T : IEventHandler;
 
-        // notify only system with typeof(T)
+        /// <summary>
+        /// Notifies only event handlers that registered themselves for event of type <typeparam name="T"></typeparam> 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
         void Notify<T>(IEntity sender, ChickenEventArgs args);
 
-        // notify everyone
+        /// <summary>
+        /// Notifies every registered event handler
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
         void Notify(IEntity sender, ChickenEventArgs args);
     }
 }
