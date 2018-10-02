@@ -4,6 +4,7 @@ using Autofac;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Enums.Game.Character;
 using ChickenAPI.Game.Data.AccessLayer.Skill;
+using ChickenAPI.Game.Data.TransferObjects.Character;
 using ChickenAPI.Game.Data.TransferObjects.Skills;
 using ChickenAPI.Game.ECS.Components;
 using ChickenAPI.Game.ECS.Entities;
@@ -16,7 +17,7 @@ namespace ChickenAPI.Game.Features.Skills
         public SkillComponent(IEntity entity)
         {
             Entity = entity;
-
+            CharacterSkills = new Dictionary<Guid, CharacterSkillDto>();
             Skills = new Dictionary<long, SkillDto>();
             CooldownsBySkillId = new List<(DateTime, long)>();
 
@@ -35,16 +36,20 @@ namespace ChickenAPI.Game.Features.Skills
             }
         }
 
-        public SkillComponent(IEntity entity, IEnumerable<SkillDto> skills) : this(entity)
+        public SkillComponent(IEntity entity, IEnumerable<CharacterSkillDto> skills) : this(entity)
         {
-            foreach (SkillDto skill in skills)
+            foreach (CharacterSkillDto characterSkill in skills)
             {
+                CharacterSkills.Add(characterSkill.Id, characterSkill);
+                SkillDto skill = characterSkill.Skill;
                 if (!Skills.ContainsKey(skill.Id))
                 {
                     Skills.Add(skill.Id, skill);
                 }
             }
         }
+
+        public Dictionary<Guid, CharacterSkillDto> CharacterSkills { get; }
 
         private static readonly ISkillService SkillService = new Lazy<ISkillService>(() => ChickenContainer.Instance.Resolve<ISkillService>()).Value;
 

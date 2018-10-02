@@ -72,7 +72,7 @@ namespace ChickenAPI.Game.Entities.Player
                 }
             };
             _visibility = new VisibilityComponent(this);
-            Skills = new SkillComponent(this);
+            Skills = new SkillComponent(this, skills);
             Components = new Dictionary<Type, IComponent>
             {
                 { typeof(VisibilityComponent), _visibility },
