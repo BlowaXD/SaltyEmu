@@ -9,6 +9,6 @@ namespace ChickenAPI.Packets.Game.Server.Player
         public long Slot { get; set; }
 
         [PacketIndex(1)]
-        public string Content { get; set; }
+        public string Data { get; set; }
     }
 }

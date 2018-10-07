@@ -11,7 +11,7 @@ namespace NosSharp.PacketHandler.Effects
     {
         public static void OnAddEffectCommand(AddEffectCommand packet, IPlayerEntity player)
         {
-            player.NotifyEventHandler<EffectEventHandler>(new AddEffectArgument
+            player.EmitEvent(new AddEffectArgument
             {
                 EffectId = packet.EffectId,
                 Cooldown = packet.Cooldown

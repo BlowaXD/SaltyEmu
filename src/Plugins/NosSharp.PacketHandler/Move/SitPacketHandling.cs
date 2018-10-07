@@ -23,7 +23,7 @@ namespace NosSharp.PacketHandler.Move
                 //TODO: rest on mate
             }
 
-            player.NotifyEventHandler<MovementEventHandler>(new TriggerSitEvent
+            player.EmitEvent(new TriggerSitEvent
             {
                 ChildsId = packet.Users.Select(s => s.UserId)
             });

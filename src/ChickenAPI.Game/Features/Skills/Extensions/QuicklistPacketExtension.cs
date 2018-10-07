@@ -51,8 +51,8 @@ namespace ChickenAPI.Game.Features.Skills.Extensions
                 }
             }
 
-            qslotZero.Content = tmp.ToString().Trim();
-            qSlotOne.Content = tmpOne.ToString().Trim();
+            qslotZero.Data = tmp.ToString().Trim();
+            qSlotOne.Data = tmpOne.ToString().Trim();
             return packets;
         }
     }

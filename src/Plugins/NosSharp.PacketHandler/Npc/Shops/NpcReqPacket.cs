@@ -32,7 +32,7 @@ namespace NosSharp.PacketHandler.Npc.Shops
 
         public static void BuyPcket(BuyPacket packet, IPlayerEntity player)
         {
-            player.NotifyEventHandler<ShopEventHandler>(new BuyShopEventArgs
+            player.EmitEvent(new BuyShopEventArgs
             {
                 Amount = packet.Amount,
                 OwnerId = packet.OwnerId,

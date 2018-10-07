@@ -9,7 +9,7 @@ namespace NosSharp.PacketHandler.Dialog
     {
         public static void DialogPacket(NrunPacket packet, IPlayerEntity player)
         {
-            player.NotifyEventHandler<NpcDialogEventHandler>(new NpcDialogEventArgs
+            player.EmitEvent(new NpcDialogEventArgs
             {
                 DialogId = packet.Runner,
                 Type     = packet.Type,

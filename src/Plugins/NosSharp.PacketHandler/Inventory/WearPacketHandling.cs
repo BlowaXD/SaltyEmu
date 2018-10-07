@@ -9,7 +9,7 @@ namespace NosSharp.PacketHandler.Inventory
     {
         public static void OnWearPacket(WearPacket packet, IPlayerEntity player)
         {
-            player.NotifyEventHandler<InventoryEventHandler>(new InventoryWearEventArgs
+            player.EmitEvent(new InventoryWearEventArgs
             {
                 InventoryType = packet.InventoryType,
                 InventorySlot = packet.ItemSlot

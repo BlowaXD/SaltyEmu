@@ -9,7 +9,7 @@ namespace NosSharp.PacketHandler.Inventory
     {
         public static void OnRemovePacket(RemovePacket packet, IPlayerEntity player)
         {
-            player.NotifyEventHandler<InventoryEventHandler>(new InventoryUnwearEventArgs
+            player.EmitEvent(new InventoryUnwearEventArgs
             {
                 ItemToUnwear = player.Inventory.Wear[packet.InventorySlot]
             });

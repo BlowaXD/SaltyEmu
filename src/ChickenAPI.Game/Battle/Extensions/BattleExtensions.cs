@@ -62,7 +62,7 @@ namespace ChickenAPI.Game.Battle.Extensions
                         goto default;
                     }
 
-                    entity.Battle.Entity.NotifyEventHandler<SkillEventHandler>(new UseSkillArgs { Skill = skill });
+                    entity.Battle.Entity.EmitEvent(new UseSkillArgs { Skill = skill });
 
                     break;
 

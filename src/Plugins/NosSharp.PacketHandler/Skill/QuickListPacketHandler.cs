@@ -11,7 +11,7 @@ namespace NosSharp.PacketHandler.Skill
         {
             if (packet.Data1.HasValue && packet.Data2.HasValue)
             {
-                player.NotifyEventHandler<QuickListEventHandler>(new GenerateQuickListArgs
+                player.EmitEvent(new GenerateQuickListArgs
                 {
                     Type = packet.Type,
                     Q1 = packet.Q1,
@@ -22,7 +22,7 @@ namespace NosSharp.PacketHandler.Skill
             }
             else
             {
-                player.NotifyEventHandler<QuickListEventHandler>(new GenerateQuickListArgs
+                player.EmitEvent(new GenerateQuickListArgs
                 {
                     Type = packet.Type,
                     Q1 = packet.Q1,

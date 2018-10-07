@@ -35,7 +35,7 @@ namespace ChickenAPI.Game.Events
         /// <typeparam name="T"></typeparam>
         /// <param name="sender"></param>
         /// <param name="args"></param>
-        void Notify<T>(IEntity sender, ChickenEventArgs args);
+        void Notify<T>(IEntity sender, T args) where T : ChickenEventArgs;
 
         /// <summary>
         /// Notifies every registered event handler

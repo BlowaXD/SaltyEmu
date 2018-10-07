@@ -162,7 +162,7 @@ namespace ChickenAPI.Game.Entities.Player
         {
             if (CurrentMap != null)
             {
-                NotifyEventHandler<VisibilityEventHandler>(new VisibilitySetInvisibleEventArgs { Broadcast = true, IsChangingMapLayer = true });
+                EmitEvent(new VisibilitySetInvisibleEventArgs { Broadcast = true, IsChangingMapLayer = true });
             }
 
             base.TransferEntity(manager);
@@ -198,7 +198,7 @@ namespace ChickenAPI.Game.Entities.Player
             // Gp()
             //SendPacket(new RsfpPacket()); // Minimap Position
             //SendPacket(new CondPacketBase(this));
-            NotifyEventHandler<VisibilityEventHandler>(new VisibilitySetVisibleEventArgs
+            EmitEvent(new VisibilitySetVisibleEventArgs
             {
                 Broadcast = true,
                 IsChangingMapLayer = true

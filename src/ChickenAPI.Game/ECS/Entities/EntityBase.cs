@@ -30,14 +30,9 @@ namespace ChickenAPI.Game.ECS.Entities
 
         public IMapLayer CurrentMap { get; protected set; }
 
-        public void NotifyEventHandler(ChickenEventArgs e)
+        public void EmitEvent<T>(T e) where T : ChickenEventArgs
         {
             EventManager.Notify(this, e);
-        }
-
-        public void NotifyEventHandler<T>(ChickenEventArgs e) where T : class, IEventHandler
-        {
-            EventManager.Notify<T>(this, e);
         }
 
         public virtual void TransferEntity(IMapLayer manager)

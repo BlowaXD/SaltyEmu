@@ -22,7 +22,7 @@ namespace NosSharp.PacketHandler.Npc.Shops
                 return;
             }
 
-            player.NotifyEventHandler<ShopEventHandler>(new GetShopInformationEventArgs { Shop = shopEntity.Shop, Type = packet.Type });
+            player.EmitEvent(new GetShopInformationEventArgs { Shop = shopEntity.Shop, Type = packet.Type });
         }
     }
 }

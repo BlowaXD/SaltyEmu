@@ -83,8 +83,8 @@ namespace NosSharp.PacketHandler
             // scN
 
 
-            session.Player.NotifyEventHandler<InventoryEventHandler>(new InventoryInitializeEventArgs());
-            session.Player.NotifyEventHandler<InventoryEventHandler>(new InventoryGeneratePacketDetailsEventArgs());
+            session.Player.EmitEvent(new InventoryInitializeEventArgs());
+            session.Player.EmitEvent(new InventoryGeneratePacketDetailsEventArgs());
             session.SendPacket(session.Player.GenerateCondPacket());
 
             session.SendPacket(session.Player.GenerateGoldPacket());

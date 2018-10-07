@@ -24,17 +24,11 @@ namespace ChickenAPI.Game.ECS.Entities
         IMapLayer CurrentMap { get; }
 
         /// <summary>
-        /// Notifies all event handlers with the given event
-        /// </summary>
-        /// <param name="e"></param>
-        void NotifyEventHandler(ChickenEventArgs e);
-
-        /// <summary>
         ///     Notify a system of the entity manager to be executed.
         /// </summary>
         /// <typeparam name="T">System type</typeparam>
         /// <param name="e">Arguments</param>
-        void NotifyEventHandler<T>(ChickenEventArgs e) where T : class, IEventHandler;
+        void EmitEvent<T>(T e) where T : ChickenEventArgs;
 
         /// <summary>
         ///     Will transfer the Entity to another entity manager

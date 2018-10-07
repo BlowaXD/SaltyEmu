@@ -36,7 +36,7 @@ namespace NosSharp.PacketHandler.Move
                 return;
             }
 
-            session.NotifyEventHandler<PortalEventHandler>(new PortalTriggerEvent
+            session.EmitEvent(new PortalTriggerEvent
             {
                 Portal = currentPortal,
             });

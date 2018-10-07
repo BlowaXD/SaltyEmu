@@ -54,7 +54,7 @@ namespace ChickenAPI.Game.Events
             handlers.Remove(handler);
         }
 
-        public void Notify<T>(IEntity sender, ChickenEventArgs args)
+        public void Notify<T>(IEntity sender, T args) where T : ChickenEventArgs
         {
             if (!_eventHandlersByType.TryGetValue(typeof(T), out List<IEventHandler> handlers))
             {
