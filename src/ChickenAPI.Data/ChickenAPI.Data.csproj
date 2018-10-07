@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ChickenAPI.Core\ChickenAPI.Core.csproj" />
+    <ProjectReference Include="..\ChickenAPI.Enums\ChickenAPI.Enums.csproj" />
+  </ItemGroup>
+
+</Project>

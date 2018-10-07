@@ -41,6 +41,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SaltyPoc.IPC", "src\SaltyPo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SaltyEmu.IpcPlugin", "src\SaltyEmu.IpcPlugin\SaltyEmu.IpcPlugin.csproj", "{AA0972AB-A59A-4EB7-AF5A-B31F61D25644}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChickenAPI.Data", "src\ChickenAPI.Data\ChickenAPI.Data.csproj", "{548F9115-2EF6-4B73-B224-5CEB8D7F4276}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -111,6 +113,10 @@ Global
 		{AA0972AB-A59A-4EB7-AF5A-B31F61D25644}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AA0972AB-A59A-4EB7-AF5A-B31F61D25644}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AA0972AB-A59A-4EB7-AF5A-B31F61D25644}.Release|Any CPU.Build.0 = Release|Any CPU
+		{548F9115-2EF6-4B73-B224-5CEB8D7F4276}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{548F9115-2EF6-4B73-B224-5CEB8D7F4276}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{548F9115-2EF6-4B73-B224-5CEB8D7F4276}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{548F9115-2EF6-4B73-B224-5CEB8D7F4276}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

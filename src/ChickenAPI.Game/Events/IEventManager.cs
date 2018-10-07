@@ -27,7 +27,7 @@ namespace ChickenAPI.Game.Events
         void Register<T>(IEventHandler handler) where T : ChickenEventArgs;
 
         void Register(IEventHandler handler, Type type);
-        void Unregister<T>(IEventHandler handler) where T : ChickenEventArgs;
+        void Unregister<T>(T handler) where T : IEventHandler;
 
         /// <summary>
         /// Notifies only event handlers that registered themselves for event of type <typeparam name="T"></typeparam> 

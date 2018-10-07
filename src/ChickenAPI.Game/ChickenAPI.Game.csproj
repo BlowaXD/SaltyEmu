@@ -32,6 +32,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ChickenAPI.Core\ChickenAPI.Core.csproj" />
+    <ProjectReference Include="..\ChickenAPI.Data\ChickenAPI.Data.csproj" />
     <ProjectReference Include="..\ChickenAPI.Enums\ChickenAPI.Enums.csproj" />
     <ProjectReference Include="..\ChickenAPI.Packets\ChickenAPI.Packets.csproj" />
   </ItemGroup>

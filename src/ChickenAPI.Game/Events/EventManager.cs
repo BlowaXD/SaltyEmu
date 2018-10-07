@@ -12,7 +12,7 @@ namespace ChickenAPI.Game.Events
         private readonly Dictionary<Type, List<IEventFilter>> _eventFiltersByType = new Dictionary<Type, List<IEventFilter>>();
         private readonly Dictionary<Type, List<IEventHandler>> _eventHandlersByType = new Dictionary<Type, List<IEventHandler>>();
 
-        public void Register<T>(IEventFilter filter)
+        public void Register<T>(IEventFilter filter) where T : ChickenEventArgs
         {
             Register(filter, typeof(T));
         }
@@ -28,7 +28,7 @@ namespace ChickenAPI.Game.Events
             filters.Add(filter);
         }
 
-        public void Register<T>(T handler) where T : IEventHandler
+        public void Register<T>(IEventHandler handler) where T : ChickenEventArgs
         {
             Register(handler, typeof(T));
         }
@@ -61,6 +61,12 @@ namespace ChickenAPI.Game.Events
                 return;
             }
 
+            if (args.Sender == null)
+            {
+                args.Sender = sender;
+            }
+
+
             if (!CanSendEvent(sender, args, typeof(T)))
             {
                 return;
@@ -86,12 +92,18 @@ namespace ChickenAPI.Game.Events
 
         public void Notify(IEntity sender, ChickenEventArgs args)
         {
+            if (args.Sender == null)
+            {
+                args.Sender = sender;
+            }
+
             foreach (KeyValuePair<Type, List<IEventHandler>> events in _eventHandlersByType)
             {
                 if (!CanSendEvent(sender, args, events.Key))
                 {
                     continue;
                 }
+
                 foreach (IEventHandler handler in events.Value)
                 {
                     try
