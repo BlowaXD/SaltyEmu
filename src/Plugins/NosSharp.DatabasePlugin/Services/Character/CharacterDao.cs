@@ -17,7 +17,7 @@ namespace SaltyEmu.DatabasePlugin.Services.Character
     {
         private readonly CharacterDto _baseConf;
 
-        public CharacterDao(NosSharpContext context, IMapper mapper, CharacterDto baseConf) : base(context, mapper) => _baseConf = baseConf;
+        public CharacterDao(SaltyDbContext context, IMapper mapper, CharacterDto baseConf) : base(context, mapper) => _baseConf = baseConf;
 
         public IEnumerable<CharacterDto> GetActiveByAccountId(long accountId)
         {

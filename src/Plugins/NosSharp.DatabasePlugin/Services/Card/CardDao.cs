@@ -9,7 +9,7 @@ namespace SaltyEmu.DatabasePlugin.Services.Card
 {
     public class CardDao : MappedRepositoryBase<CardDto, CardModel>, ICardService
     {
-        public CardDao(NosSharpContext context, IMapper mapper) : base(context, mapper)
+        public CardDao(SaltyDbContext context, IMapper mapper) : base(context, mapper)
         {
         }
     }

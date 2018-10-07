@@ -18,7 +18,7 @@ namespace SaltyEmu.DatabasePlugin.Services.Drop
     {
         private readonly Dictionary<long, DropDto> _items = new Dictionary<long, DropDto>();
 
-        public DropDao(NosSharpContext context, IMapper mapper) : base(context, mapper)
+        public DropDao(SaltyDbContext context, IMapper mapper) : base(context, mapper)
         {
         }
 

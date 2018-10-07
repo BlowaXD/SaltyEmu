@@ -3,7 +3,7 @@
 namespace ChickenAPI.Game.Test.Families
 {
     [TestClass]
-    public class FamilyTest_Permission_Changement
+    public class FamilyTest_Permission_Trigger
     {
         
     }

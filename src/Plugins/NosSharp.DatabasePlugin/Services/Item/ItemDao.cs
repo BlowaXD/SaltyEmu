@@ -13,7 +13,7 @@ namespace SaltyEmu.DatabasePlugin.Services.Item
     {
         private readonly Dictionary<long, ItemDto> _items = new Dictionary<long, ItemDto>();
 
-        public ItemDao(NosSharpContext context, IMapper mapper) : base(context, mapper)
+        public ItemDao(SaltyDbContext context, IMapper mapper) : base(context, mapper)
         {
         }
 

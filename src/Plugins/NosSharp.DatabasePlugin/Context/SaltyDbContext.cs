@@ -11,9 +11,9 @@ using SaltyEmu.DatabasePlugin.Models.Skill;
 
 namespace SaltyEmu.DatabasePlugin.Context
 {
-    public class NosSharpContext : DbContext
+    public class SaltyDbContext : DbContext
     {
-        public NosSharpContext(DbContextOptions<NosSharpContext> options) : base(options)
+        public SaltyDbContext(DbContextOptions<SaltyDbContext> options) : base(options)
         {
         }
 

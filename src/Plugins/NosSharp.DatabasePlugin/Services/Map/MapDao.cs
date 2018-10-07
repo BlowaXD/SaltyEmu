@@ -9,7 +9,7 @@ namespace SaltyEmu.DatabasePlugin.Services.Map
 {
     public class MapDao : MappedRepositoryBase<MapDto, MapModel>, IMapService
     {
-        public MapDao(NosSharpContext context, IMapper mapper) : base(context, mapper)
+        public MapDao(SaltyDbContext context, IMapper mapper) : base(context, mapper)
         {
         }
     }

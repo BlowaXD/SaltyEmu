@@ -9,7 +9,7 @@ namespace SaltyEmu.DatabasePlugin.Services.Skill
 {
     public class SkillDao : MappedRepositoryBase<SkillDto, SkillModel>, ISkillService
     {
-        public SkillDao(NosSharpContext context, IMapper mapper) : base(context, mapper)
+        public SkillDao(SaltyDbContext context, IMapper mapper) : base(context, mapper)
         {
         }
     }

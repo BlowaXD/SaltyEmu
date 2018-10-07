@@ -14,7 +14,7 @@ namespace SaltyEmu.DatabasePlugin.Services.Shop
 {
     public class ShopSkillDao : MappedRepositoryBase<ShopSkillDto, ShopSkillModel>, IShopSkillService
     {
-        public ShopSkillDao(NosSharpContext context, IMapper mapper) : base(context, mapper)
+        public ShopSkillDao(SaltyDbContext context, IMapper mapper) : base(context, mapper)
         {
         }
 

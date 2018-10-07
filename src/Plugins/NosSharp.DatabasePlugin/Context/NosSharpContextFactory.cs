@@ -4,13 +4,13 @@ using SaltyEmu.DatabasePlugin.Configuration;
 
 namespace SaltyEmu.DatabasePlugin.Context
 {
-    public class NosSharpContextFactory : IDesignTimeDbContextFactory<NosSharpContext>
+    public class NosSharpContextFactory : IDesignTimeDbContextFactory<SaltyDbContext>
     {
-        public NosSharpContext CreateDbContext(string[] args)
+        public SaltyDbContext CreateDbContext(string[] args)
         {
-            DbContextOptionsBuilder<NosSharpContext> optionsBuilder = new DbContextOptionsBuilder<NosSharpContext>();
+            DbContextOptionsBuilder<SaltyDbContext> optionsBuilder = new DbContextOptionsBuilder<SaltyDbContext>();
             optionsBuilder.UseSqlServer(new DatabaseConfiguration().ToString());
-            return new NosSharpContext(optionsBuilder.Options);
+            return new SaltyDbContext(optionsBuilder.Options);
         }
     }
 }

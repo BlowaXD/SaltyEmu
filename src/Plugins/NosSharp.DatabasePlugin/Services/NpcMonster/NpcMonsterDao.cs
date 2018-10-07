@@ -13,7 +13,7 @@ namespace SaltyEmu.DatabasePlugin.Services.NpcMonster
     {
         private readonly Dictionary<long, NpcMonsterDto> _monsters = new Dictionary<long, NpcMonsterDto>();
 
-        public NpcMonsterDao(NosSharpContext context, IMapper mapper) : base(context, mapper)
+        public NpcMonsterDao(SaltyDbContext context, IMapper mapper) : base(context, mapper)
         {
         }
 

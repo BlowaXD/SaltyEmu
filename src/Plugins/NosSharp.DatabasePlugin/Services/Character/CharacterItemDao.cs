@@ -16,7 +16,7 @@ namespace SaltyEmu.DatabasePlugin.Services.Character
 {
     public class CharacterItemDao : SynchronizedRepositoryBase<ItemInstanceDto, CharacterItemModel>, IItemInstanceService
     {
-        public CharacterItemDao(NosSharpContext context, IMapper mapper) : base(context, mapper)
+        public CharacterItemDao(SaltyDbContext context, IMapper mapper) : base(context, mapper)
         {
         }
 

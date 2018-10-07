@@ -13,6 +13,17 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\ChickenAPI.Game\ChickenAPI.Game.csproj" />
+    <ProjectReference Include="..\..\src\Plugins\NosSharp.BasicAlgorithm\NosSharp.BasicAlgorithm.csproj" />
+    <ProjectReference Include="..\..\src\Plugins\NosSharp.DatabasePlugin\SaltyEmu.DatabasePlugin.csproj" />
+    <ProjectReference Include="..\..\src\Plugins\NosSharp.PacketHandler\NosSharp.BasicPacketHandlerPlugin.csproj" />
+    <ProjectReference Include="..\..\src\Plugins\NosSharp.Pathfinder\NosSharp.Pathfinder.csproj" />
+    <ProjectReference Include="..\..\src\Plugins\NosSharp.RedisSessionPlugin\NosSharp.RedisSessionPlugin.csproj" />
+    <ProjectReference Include="..\..\src\Plugins\NosSharp.TemporaryMapPlugins\SaltyEmu.BasicPlugin.csproj" />
+    <ProjectReference Include="..\..\src\SaltyEmu.IpcPlugin\SaltyEmu.IpcPlugin.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Reference Include="System">
       <HintPath>System</HintPath>
     </Reference>

@@ -19,7 +19,7 @@ namespace SaltyEmu.DatabasePlugin.Services.BCard
 {
     public class BCardDao : MappedRepositoryBase<BCardDto, BCardModel>, IBCardService
     {
-        public BCardDao(NosSharpContext context, IMapper mapper) : base(context, mapper)
+        public BCardDao(SaltyDbContext context, IMapper mapper) : base(context, mapper)
         {
         }
 

@@ -9,7 +9,7 @@ namespace SaltyEmu.DatabasePlugin.Services.NpcMonster
 {
     public class NpcMonsterSkillDao : MappedRepositoryBase<NpcMonsterSkillDto, NpcMonsterSkillModel>, INpcMonsterSkillService
     {
-        public NpcMonsterSkillDao(NosSharpContext context, IMapper mapper) : base(context, mapper)
+        public NpcMonsterSkillDao(SaltyDbContext context, IMapper mapper) : base(context, mapper)
         {
         }
     }

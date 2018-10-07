@@ -14,7 +14,7 @@ namespace SaltyEmu.DatabasePlugin.Services.Character
 {
     public class CharacterSkillDao : SynchronizedRepositoryBase<CharacterSkillDto, CharacterSkillModel>, ICharacterSkillService
     {
-        public CharacterSkillDao(NosSharpContext context, IMapper mapper) : base(context, mapper)
+        public CharacterSkillDao(SaltyDbContext context, IMapper mapper) : base(context, mapper)
         {
         }
 

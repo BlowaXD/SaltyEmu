@@ -14,7 +14,7 @@ namespace SaltyEmu.DatabasePlugin.Services.Map
 {
     public class MapMonsterDao : MappedRepositoryBase<MapMonsterDto, MapMonsterModel>, IMapMonsterService
     {
-        public MapMonsterDao(NosSharpContext context, IMapper mapper) : base(context, mapper)
+        public MapMonsterDao(SaltyDbContext context, IMapper mapper) : base(context, mapper)
         {
         }
 

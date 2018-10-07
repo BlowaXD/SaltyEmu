@@ -17,11 +17,11 @@ namespace SaltyEmu.DatabasePlugin.Services.Base
     public class MappedRepositoryBase<TObject, TModel> : IMappedRepository<TObject> where TObject : class, IMappedDto where TModel : class, IMappedDto, new()
     {
         protected static readonly Logger Log = Logger.GetLogger<TObject>();
-        protected readonly NosSharpContext Context;
+        protected readonly SaltyDbContext Context;
         protected readonly DbSet<TModel> DbSet;
         protected readonly IMapper Mapper;
 
-        public MappedRepositoryBase(NosSharpContext context, IMapper mapper)
+        public MappedRepositoryBase(SaltyDbContext context, IMapper mapper)
         {
             Context = context;
             Mapper = mapper;

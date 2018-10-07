@@ -9,7 +9,7 @@ using SaltyEmu.DatabasePlugin.Context;
 
 namespace SaltyEmu.DatabasePlugin.Migrations
 {
-    [DbContext(typeof(NosSharpContext))]
+    [DbContext(typeof(SaltyDbContext))]
     [Migration("20180827111608_quicklist")]
     partial class quicklist
     {

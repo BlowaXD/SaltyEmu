@@ -14,7 +14,7 @@ namespace SaltyEmu.DatabasePlugin.Services.Shop
 {
     public class RecipeDao : MappedRepositoryBase<RecipeDto, RecipeModel>, IRecipeService
     {
-        public RecipeDao(NosSharpContext context, IMapper mapper) : base(context, mapper)
+        public RecipeDao(SaltyDbContext context, IMapper mapper) : base(context, mapper)
         {
         }
 

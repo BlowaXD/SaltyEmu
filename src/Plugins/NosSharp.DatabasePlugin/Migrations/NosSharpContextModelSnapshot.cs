@@ -8,7 +8,7 @@ using SaltyEmu.DatabasePlugin.Context;
 
 namespace SaltyEmu.DatabasePlugin.Migrations
 {
-    [DbContext(typeof(NosSharpContext))]
+    [DbContext(typeof(SaltyDbContext))]
     partial class NosSharpContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
