@@ -1,4 +1,5 @@
-﻿using ChickenAPI.Game.ECS.Entities;
+﻿using System;
+using ChickenAPI.Game.ECS.Entities;
 
 namespace ChickenAPI.Game.Events
 {

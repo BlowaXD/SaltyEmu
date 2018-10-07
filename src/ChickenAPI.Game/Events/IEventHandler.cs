@@ -4,6 +4,6 @@ namespace ChickenAPI.Game.Events
 {
     public interface IEventHandler
     {
-        void Execute(IEntity entity, ChickenEventArgs args);
+        void Execute(IEntity entity, ChickenEventArgs e);
     }
 }

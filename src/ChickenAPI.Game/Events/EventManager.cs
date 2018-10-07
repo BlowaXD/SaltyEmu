@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using ChickenAPI.Core.Logging;
 using ChickenAPI.Game.ECS.Entities;
 
@@ -8,7 +9,24 @@ namespace ChickenAPI.Game.Events
     public class EventManager : IEventManager
     {
         private static readonly Logger Log = Logger.GetLogger<EventManager>();
+        private readonly Dictionary<Type, List<IEventFilter>> _eventFiltersByType = new Dictionary<Type, List<IEventFilter>>();
         private readonly Dictionary<Type, List<IEventHandler>> _eventHandlersByType = new Dictionary<Type, List<IEventHandler>>();
+
+        public void Register<T>(IEventFilter filter)
+        {
+            Register(filter, typeof(T));
+        }
+
+        public void Register(IEventFilter filter, Type type)
+        {
+            if (!_eventFiltersByType.TryGetValue(type, out List<IEventFilter> filters))
+            {
+                filters = new List<IEventFilter>();
+                _eventFiltersByType[type] = filters;
+            }
+
+            filters.Add(filter);
+        }
 
         public void Register<T>(T handler) where T : IEventHandler
         {
@@ -43,6 +61,11 @@ namespace ChickenAPI.Game.Events
                 return;
             }
 
+            if (!CanSendEvent(sender, args, typeof(T)))
+            {
+                return;
+            }
+
             foreach (IEventHandler handler in handlers)
             {
                 try
@@ -56,11 +79,20 @@ namespace ChickenAPI.Game.Events
             }
         }
 
+        private bool CanSendEvent(IEntity entity, ChickenEventArgs e, Type type)
+        {
+            return !_eventFiltersByType.TryGetValue(type, out List<IEventFilter> filters) || filters.All(filter => filter.Filter(entity, e));
+        }
+
         public void Notify(IEntity sender, ChickenEventArgs args)
         {
-            foreach (List<IEventHandler> handlers in _eventHandlersByType.Values)
+            foreach (KeyValuePair<Type, List<IEventHandler>> events in _eventHandlersByType)
             {
-                foreach (IEventHandler handler in handlers)
+                if (!CanSendEvent(sender, args, events.Key))
+                {
+                    continue;
+                }
+                foreach (IEventHandler handler in events.Value)
                 {
                     try
                     {
