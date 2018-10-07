@@ -5,10 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Foundatio" Version="7.0.1706" />
-    <PackageReference Include="Foundatio.JsonNet" Version="7.0.1706" />
-    <PackageReference Include="Foundatio.Redis" Version="7.0.1564" />
-    <PackageReference Include="ServiceStack.Redis.Core" Version="5.2.0" />
+    <PackageReference Include="Foundatio" Version="7.0.1738" />
+    <PackageReference Include="Foundatio.JsonNet" Version="7.0.1738" />
+    <PackageReference Include="Foundatio.Redis" Version="7.0.1570" />
+    <PackageReference Include="ServiceStack.Redis.Core" Version="5.4.0" />
   </ItemGroup>
 
   <ItemGroup>
