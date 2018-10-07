@@ -1,7 +1,6 @@
-﻿using ChickenAPI.Core.Data.TransferObjects;
-using ChickenAPI.Game.Data.TransferObjects.Skills;
+﻿using ChickenAPI.Data.Skills;
 
-namespace ChickenAPI.Game.Data.TransferObjects.Shop
+namespace ChickenAPI.Data.Shop
 {
     public class ShopSkillDto : IMappedDto
     {

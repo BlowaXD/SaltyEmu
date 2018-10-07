@@ -1,4 +1,4 @@
-﻿using ChickenAPI.Game.Data.TransferObjects.Map;
+﻿using ChickenAPI.Data.Map;
 
 namespace ChickenAPI.Game.Entities.Npc
 {

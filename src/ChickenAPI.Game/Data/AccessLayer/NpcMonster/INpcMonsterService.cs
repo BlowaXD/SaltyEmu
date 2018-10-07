@@ -1,5 +1,5 @@
-﻿using ChickenAPI.Core.Data.AccessLayer;
-using ChickenAPI.Game.Data.TransferObjects.NpcMonster;
+﻿using ChickenAPI.Data;
+using ChickenAPI.Data.NpcMonster;
 
 namespace ChickenAPI.Game.Data.AccessLayer.NpcMonster
 {

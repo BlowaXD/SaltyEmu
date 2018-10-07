@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using ChickenAPI.Core.Data.TransferObjects;
+using ChickenAPI.Data;
 using Foundatio.Caching;
 
 namespace NosSharp.RedisSessionPlugin.Redis

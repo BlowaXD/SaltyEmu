@@ -6,11 +6,11 @@ using System.Text;
 using Autofac;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Logging;
+using ChickenAPI.Data.Map;
+using ChickenAPI.Data.NpcMonster;
 using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Game.Data.AccessLayer.Map;
 using ChickenAPI.Game.Data.AccessLayer.NpcMonster;
-using ChickenAPI.Game.Data.TransferObjects.Map;
-using ChickenAPI.Game.Data.TransferObjects.NpcMonster;
 
 namespace Toolkit.Generators.FromPackets
 {

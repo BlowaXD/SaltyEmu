@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
+using ChickenAPI.Data.Skills;
 using ChickenAPI.Game.Data.AccessLayer.Skill;
-using ChickenAPI.Game.Data.TransferObjects.Skills;
 using SaltyEmu.DatabasePlugin.Context;
 using SaltyEmu.DatabasePlugin.Models.Skill;
 using SaltyEmu.DatabasePlugin.Services.Base;

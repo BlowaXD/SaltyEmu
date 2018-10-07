@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using ChickenAPI.Core.Utils;
+using ChickenAPI.Data.Map;
+using ChickenAPI.Data.NpcMonster;
 using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Enums.Game.Visibility;
 using ChickenAPI.Game.Battle.DataObjects;
-using ChickenAPI.Game.Data.TransferObjects.Map;
-using ChickenAPI.Game.Data.TransferObjects.NpcMonster;
 using ChickenAPI.Game.ECS.Components;
 using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Features.Skills;

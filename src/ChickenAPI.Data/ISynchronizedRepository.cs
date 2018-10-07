@@ -1,7 +1,6 @@
 ﻿using System;
-using ChickenAPI.Core.Data.TransferObjects;
 
-namespace ChickenAPI.Core.Data.AccessLayer
+namespace ChickenAPI.Data
 {
     public interface ISynchronizedRepository<T> : ISynchronousRepository<T, Guid>, IAsyncRepository<T, Guid> where T : class, ISynchronizedDto
     {

@@ -1,6 +1,4 @@
-﻿using ChickenAPI.Core.Data.TransferObjects;
-
-namespace ChickenAPI.Core.Data.AccessLayer
+﻿namespace ChickenAPI.Data
 {
     public interface IMappedRepository<T> : ISynchronousRepository<T, long>, IAsyncRepository<T, long> where T : class, IMappedDto
     {

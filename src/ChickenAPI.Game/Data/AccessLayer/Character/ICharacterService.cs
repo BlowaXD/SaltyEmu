@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using ChickenAPI.Core.Data.AccessLayer;
+using ChickenAPI.Data;
+using ChickenAPI.Data.Character;
 using ChickenAPI.Enums.Game.Character;
-using ChickenAPI.Game.Data.TransferObjects.Character;
 
 namespace ChickenAPI.Game.Data.AccessLayer.Character
 {

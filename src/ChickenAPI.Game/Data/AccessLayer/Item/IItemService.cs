@@ -1,5 +1,5 @@
-﻿using ChickenAPI.Core.Data.AccessLayer;
-using ChickenAPI.Game.Data.TransferObjects.Item;
+﻿using ChickenAPI.Data;
+using ChickenAPI.Data.Item;
 
 namespace ChickenAPI.Game.Data.AccessLayer.Item
 {

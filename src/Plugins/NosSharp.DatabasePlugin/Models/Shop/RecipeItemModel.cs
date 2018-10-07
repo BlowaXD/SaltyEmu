@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using ChickenAPI.Core.Data.TransferObjects;
+using ChickenAPI.Data;
 using SaltyEmu.DatabasePlugin.Models.Item;
 
 namespace SaltyEmu.DatabasePlugin.Models.Shop

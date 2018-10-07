@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using ChickenAPI.Core.Data.TransferObjects;
+using ChickenAPI.Data;
 using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Enums.Game.Items;
 using SaltyEmu.DatabasePlugin.Models.Item;

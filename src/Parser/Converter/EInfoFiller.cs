@@ -6,8 +6,8 @@ using System.Text;
 using Autofac;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Logging;
+using ChickenAPI.Data.NpcMonster;
 using ChickenAPI.Game.Data.AccessLayer.NpcMonster;
-using ChickenAPI.Game.Data.TransferObjects.NpcMonster;
 
 namespace Toolkit.Converter
 {

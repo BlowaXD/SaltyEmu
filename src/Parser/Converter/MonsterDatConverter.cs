@@ -4,9 +4,13 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using Autofac;
-using ChickenAPI.Core.Data.TransferObjects;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Logging;
+using ChickenAPI.Data;
+using ChickenAPI.Data.BCard;
+using ChickenAPI.Data.Drop;
+using ChickenAPI.Data.NpcMonster;
+using ChickenAPI.Data.Skills;
 using ChickenAPI.Enums.Game.BCard;
 using ChickenAPI.Enums.Game.Drop;
 using ChickenAPI.Enums.Game.Entity;
@@ -14,10 +18,6 @@ using ChickenAPI.Game.Data.AccessLayer.BCard;
 using ChickenAPI.Game.Data.AccessLayer.Drop;
 using ChickenAPI.Game.Data.AccessLayer.NpcMonster;
 using ChickenAPI.Game.Data.AccessLayer.Skill;
-using ChickenAPI.Game.Data.TransferObjects.BCard;
-using ChickenAPI.Game.Data.TransferObjects.Drop;
-using ChickenAPI.Game.Data.TransferObjects.NpcMonster;
-using ChickenAPI.Game.Data.TransferObjects.Skills;
 
 namespace Toolkit.Converter
 {

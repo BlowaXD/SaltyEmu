@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
+using ChickenAPI.Data.Item;
 using ChickenAPI.Game.Data.AccessLayer.Item;
-using ChickenAPI.Game.Data.TransferObjects.Item;
 using SaltyEmu.DatabasePlugin.Context;
 using SaltyEmu.DatabasePlugin.Models.Item;
 using SaltyEmu.DatabasePlugin.Services.Base;

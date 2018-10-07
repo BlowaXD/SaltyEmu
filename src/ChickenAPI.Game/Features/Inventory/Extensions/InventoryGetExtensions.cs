@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using ChickenAPI.Data.Item;
 using ChickenAPI.Enums.Game.Items;
-using ChickenAPI.Game.Data.TransferObjects.Item;
 
 namespace ChickenAPI.Game.Features.Inventory.Extensions
 {

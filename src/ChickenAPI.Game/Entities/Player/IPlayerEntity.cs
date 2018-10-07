@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
+using ChickenAPI.Data.Character;
 using ChickenAPI.Game.Battle.Interfaces;
-using ChickenAPI.Game.Data.TransferObjects.Character;
 using ChickenAPI.Game.Network;
 using ChickenAPI.Game.Permissions;
 using ChickenAPI.Packets;

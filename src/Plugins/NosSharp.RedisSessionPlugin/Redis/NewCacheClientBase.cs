@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using ChickenAPI.Core.Data.AccessLayer;
-using ChickenAPI.Core.Data.TransferObjects;
+using ChickenAPI.Data;
 using Foundatio.Caching;
 using Foundatio.Serializer;
 using Newtonsoft.Json;

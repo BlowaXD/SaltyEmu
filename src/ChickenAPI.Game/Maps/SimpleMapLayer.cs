@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using ChickenAPI.Core.Utils;
+using ChickenAPI.Data.Map;
+using ChickenAPI.Data.Shop;
 using ChickenAPI.Enums.Game.Entity;
-using ChickenAPI.Game.Data.TransferObjects.Map;
-using ChickenAPI.Game.Data.TransferObjects.Shop;
 using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Entities.Monster;
 using ChickenAPI.Game.Entities.Npc;

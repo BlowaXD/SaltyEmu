@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using System.Text;
-using ChickenAPI.Game.Data.TransferObjects.Skills;
+using ChickenAPI.Data.Skills;
 using ChickenAPI.Game.Entities.Player;
 
 namespace ChickenAPI.Game.Features.Skills.Extensions

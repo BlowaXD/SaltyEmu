@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using ChickenAPI.Game.Data.TransferObjects.Skills;
+using ChickenAPI.Data.Skills;
 using ChickenAPI.Game.ECS.Entities;
 
 namespace ChickenAPI.Game.Battle.Hitting

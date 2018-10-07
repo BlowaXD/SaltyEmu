@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using ChickenAPI.Core.Data.TransferObjects;
+using ChickenAPI.Data;
 using SaltyEmu.DatabasePlugin.Models.Skill;
 
 namespace SaltyEmu.DatabasePlugin.Models.NpcMonster

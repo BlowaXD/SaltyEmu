@@ -1,8 +1,8 @@
 ﻿using Autofac;
 using ChickenAPI.Core.IoC;
+using ChickenAPI.Data.Item;
 using ChickenAPI.Enums;
 using ChickenAPI.Game.Data.AccessLayer.Item;
-using ChickenAPI.Game.Data.TransferObjects.Item;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Features.Inventory;
 using ChickenAPI.Game.Features.Inventory.Args;

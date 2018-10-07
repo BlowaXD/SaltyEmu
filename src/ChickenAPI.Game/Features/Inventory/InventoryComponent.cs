@@ -1,4 +1,4 @@
-﻿using ChickenAPI.Game.Data.TransferObjects.Item;
+﻿using ChickenAPI.Data.Item;
 using ChickenAPI.Game.ECS.Components;
 using ChickenAPI.Game.ECS.Entities;
 

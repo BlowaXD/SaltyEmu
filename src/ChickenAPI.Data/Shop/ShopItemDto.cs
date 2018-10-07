@@ -1,7 +1,6 @@
-﻿using ChickenAPI.Core.Data.TransferObjects;
-using ChickenAPI.Game.Data.TransferObjects.Item;
+﻿using ChickenAPI.Data.Item;
 
-namespace ChickenAPI.Game.Data.TransferObjects.Shop
+namespace ChickenAPI.Data.Shop
 {
     public class ShopItemDto : IMappedDto
     {

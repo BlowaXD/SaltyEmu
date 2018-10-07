@@ -1,4 +1,4 @@
-﻿namespace ChickenAPI.Core.Data.TransferObjects
+﻿namespace ChickenAPI.Data
 {
     public interface IMappedDto
     {

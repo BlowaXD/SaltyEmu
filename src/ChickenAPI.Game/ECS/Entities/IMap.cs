@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using ChickenAPI.Core.Utils;
-using ChickenAPI.Game.Data.TransferObjects.Map;
+using ChickenAPI.Data.Map;
 
 namespace ChickenAPI.Game.ECS.Entities
 {

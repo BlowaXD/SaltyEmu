@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using ChickenAPI.Core.Data.AccessLayer;
+using ChickenAPI.Data;
+using ChickenAPI.Data.BCard;
 using ChickenAPI.Enums.Game.BCard;
-using ChickenAPI.Game.Data.TransferObjects.BCard;
 
 namespace ChickenAPI.Game.Data.AccessLayer.BCard
 {

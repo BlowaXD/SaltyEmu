@@ -5,8 +5,8 @@ using System.Linq;
 using Autofac;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Logging;
+using ChickenAPI.Data.Map;
 using ChickenAPI.Game.Data.AccessLayer.Map;
-using ChickenAPI.Game.Data.TransferObjects.Map;
 
 namespace Toolkit.Converter
 {

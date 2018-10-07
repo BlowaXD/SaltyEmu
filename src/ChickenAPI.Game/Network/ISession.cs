@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Net;
 using ChickenAPI.Core.i18n;
-using ChickenAPI.Game.Data.TransferObjects.Character;
+using ChickenAPI.Data.Character;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Packets;
 

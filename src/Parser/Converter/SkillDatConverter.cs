@@ -4,14 +4,14 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using Autofac;
-using ChickenAPI.Core.Data.TransferObjects;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Logging;
+using ChickenAPI.Data;
+using ChickenAPI.Data.BCard;
+using ChickenAPI.Data.Skills;
 using ChickenAPI.Enums.Game.BCard;
 using ChickenAPI.Game.Data.AccessLayer.BCard;
 using ChickenAPI.Game.Data.AccessLayer.Skill;
-using ChickenAPI.Game.Data.TransferObjects.BCard;
-using ChickenAPI.Game.Data.TransferObjects.Skills;
 
 namespace Toolkit.Converter
 {

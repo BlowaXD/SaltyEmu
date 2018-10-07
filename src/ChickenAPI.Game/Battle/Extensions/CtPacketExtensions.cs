@@ -1,5 +1,5 @@
-﻿using ChickenAPI.Enums.Game.Entity;
-using ChickenAPI.Game.Data.TransferObjects.Skills;
+﻿using ChickenAPI.Data.Skills;
+using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Entities.Monster;
 using ChickenAPI.Game.Entities.Npc;

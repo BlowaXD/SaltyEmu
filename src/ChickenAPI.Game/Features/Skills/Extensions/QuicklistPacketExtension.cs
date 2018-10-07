@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Text;
-using ChickenAPI.Game.Data.TransferObjects.Character;
+using ChickenAPI.Data.Character;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Features.Quicklist;
 using ChickenAPI.Packets.Game.Server.Player;

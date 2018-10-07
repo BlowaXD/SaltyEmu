@@ -6,12 +6,12 @@ using System.Text;
 using Autofac;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Logging;
+using ChickenAPI.Data.BCard;
+using ChickenAPI.Data.Item;
 using ChickenAPI.Enums.Game.BCard;
 using ChickenAPI.Enums.Game.Items;
 using ChickenAPI.Game.Data.AccessLayer.BCard;
 using ChickenAPI.Game.Data.AccessLayer.Item;
-using ChickenAPI.Game.Data.TransferObjects.BCard;
-using ChickenAPI.Game.Data.TransferObjects.Item;
 
 namespace Toolkit.Converter
 {

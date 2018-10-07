@@ -1,5 +1,5 @@
-﻿using ChickenAPI.Core.Data.AccessLayer;
-using ChickenAPI.Game.Data.TransferObjects.Families;
+﻿using ChickenAPI.Data;
+using ChickenAPI.Data.Families;
 
 namespace ChickenAPI.Game.Data.AccessLayer.Families
 {

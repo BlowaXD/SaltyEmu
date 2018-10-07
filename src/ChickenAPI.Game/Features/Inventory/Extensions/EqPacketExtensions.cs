@@ -1,6 +1,6 @@
 ﻿using System.Text;
+using ChickenAPI.Data.Item;
 using ChickenAPI.Enums.Game.Items;
-using ChickenAPI.Game.Data.TransferObjects.Item;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Packets.Game.Server.Inventory;
 

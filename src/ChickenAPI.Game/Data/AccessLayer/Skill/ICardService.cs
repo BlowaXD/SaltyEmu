@@ -1,5 +1,5 @@
-﻿using ChickenAPI.Core.Data.AccessLayer;
-using ChickenAPI.Game.Data.TransferObjects.Skills;
+﻿using ChickenAPI.Data;
+using ChickenAPI.Data.Skills;
 
 namespace ChickenAPI.Game.Data.AccessLayer.Skill
 {

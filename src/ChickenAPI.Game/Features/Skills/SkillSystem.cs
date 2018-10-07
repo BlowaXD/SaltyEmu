@@ -1,9 +1,9 @@
 ﻿using System.Linq;
+using ChickenAPI.Data.Character;
+using ChickenAPI.Data.Skills;
 using ChickenAPI.Enums.Game.Character;
 using ChickenAPI.Game.Battle.DataObjects;
 using ChickenAPI.Game.Battle.Extensions;
-using ChickenAPI.Game.Data.TransferObjects.Character;
-using ChickenAPI.Game.Data.TransferObjects.Skills;
 using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Events;

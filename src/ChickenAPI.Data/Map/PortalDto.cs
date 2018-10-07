@@ -1,7 +1,6 @@
-﻿using ChickenAPI.Core.Data.TransferObjects;
-using ChickenAPI.Enums.Game.Portals;
+﻿using ChickenAPI.Enums.Game.Portals;
 
-namespace ChickenAPI.Game.Data.TransferObjects.Map
+namespace ChickenAPI.Data.Map
 {
     public class PortalDto : IMappedDto
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using ChickenAPI.Data.Map;
 using ChickenAPI.Enums.Game.Entity;
-using ChickenAPI.Game.Data.TransferObjects.Map;
 using ChickenAPI.Game.ECS.Components;
 using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Features.Portals;

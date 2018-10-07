@@ -1,7 +1,6 @@
-﻿using ChickenAPI.Core.Data.TransferObjects;
-using ChickenAPI.Enums.Game.Families;
+﻿using ChickenAPI.Enums.Game.Families;
 
-namespace ChickenAPI.Game.Data.TransferObjects.Character
+namespace ChickenAPI.Data.Character
 {
     public class CharacterFamilyDto : IMappedDto
     {

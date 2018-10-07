@@ -1,7 +1,6 @@
-﻿using ChickenAPI.Core.Data.TransferObjects;
-using ChickenAPI.Enums.Game.Buffs;
+﻿using ChickenAPI.Enums.Game.Buffs;
 
-namespace ChickenAPI.Game.Data.TransferObjects.Skills
+namespace ChickenAPI.Data.Skills
 {
     public class CardDto : IMappedDto
     {

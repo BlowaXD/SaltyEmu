@@ -1,7 +1,6 @@
-﻿using ChickenAPI.Core.Data.TransferObjects;
-using ChickenAPI.Enums.Game.Drop;
+﻿using ChickenAPI.Enums.Game.Drop;
 
-namespace ChickenAPI.Game.Data.TransferObjects.Drop
+namespace ChickenAPI.Data.Drop
 {
     public class DropDto : IMappedDto
     {

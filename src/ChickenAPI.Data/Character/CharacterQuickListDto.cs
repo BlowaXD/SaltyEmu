@@ -1,7 +1,6 @@
-﻿using ChickenAPI.Core.Data.TransferObjects;
-using System;
+﻿using System;
 
-namespace ChickenAPI.Game.Data.TransferObjects.Character
+namespace ChickenAPI.Data.Character
 {
     public class CharacterQuicklistDto : ISynchronizedDto
     {

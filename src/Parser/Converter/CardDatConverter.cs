@@ -5,12 +5,12 @@ using System.Text;
 using Autofac;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Logging;
+using ChickenAPI.Data.BCard;
+using ChickenAPI.Data.Skills;
 using ChickenAPI.Enums.Game.BCard;
 using ChickenAPI.Enums.Game.Buffs;
 using ChickenAPI.Game.Data.AccessLayer.BCard;
 using ChickenAPI.Game.Data.AccessLayer.Skill;
-using ChickenAPI.Game.Data.TransferObjects.BCard;
-using ChickenAPI.Game.Data.TransferObjects.Skills;
 
 namespace Toolkit.Converter
 {

@@ -1,10 +1,10 @@
 ﻿using System;
 using Autofac;
 using ChickenAPI.Core.IoC;
+using ChickenAPI.Data.Skills;
 using ChickenAPI.Enums.Packets;
 using ChickenAPI.Game.Battle.DataObjects;
 using ChickenAPI.Game.Battle.Interfaces;
-using ChickenAPI.Game.Data.TransferObjects.Skills;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Features.Skills;
 using ChickenAPI.Game.Features.Skills.Args;

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using ChickenAPI.Core.Data.AccessLayer;
-using ChickenAPI.Game.Data.TransferObjects.Drop;
+using ChickenAPI.Data;
+using ChickenAPI.Data.Drop;
 
 namespace ChickenAPI.Game.Data.AccessLayer.Drop
 {

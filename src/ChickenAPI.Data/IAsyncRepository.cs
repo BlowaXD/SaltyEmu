@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace ChickenAPI.Core.Data.AccessLayer
+namespace ChickenAPI.Data
 {
     public interface IAsyncRepository<TObject, in TObjectId> where TObject : class
     {

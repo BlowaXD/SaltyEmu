@@ -1,4 +1,4 @@
-﻿using ChickenAPI.Game.Data.TransferObjects.NpcMonster;
+﻿using ChickenAPI.Data.NpcMonster;
 
 namespace ChickenAPI.Game.Entities
 {

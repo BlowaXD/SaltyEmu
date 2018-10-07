@@ -1,5 +1,5 @@
 ﻿using System;
-using ChickenAPI.Game.Data.TransferObjects.Families;
+using ChickenAPI.Data.Families;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Events;
 

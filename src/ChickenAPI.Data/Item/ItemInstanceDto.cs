@@ -1,9 +1,8 @@
 ﻿using System;
-using ChickenAPI.Core.Data.TransferObjects;
 using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Enums.Game.Items;
 
-namespace ChickenAPI.Game.Data.TransferObjects.Item
+namespace ChickenAPI.Data.Item
 {
     public class ItemInstanceDto : ISynchronizedDto, ICloneable
     {

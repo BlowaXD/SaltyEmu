@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using ChickenAPI.Game.Data.TransferObjects.Server;
+using ChickenAPI.Data.Server;
 
 namespace ChickenAPI.Game.Data.AccessLayer.Server
 {

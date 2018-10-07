@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using ChickenAPI.Game.Data.TransferObjects.Character;
+using ChickenAPI.Data.Character;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Features.Quicklist.Args;
 using ChickenAPI.Packets.Game.Server.QuickList;

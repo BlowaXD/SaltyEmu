@@ -2,7 +2,7 @@
 using Autofac;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Logging;
-using ChickenAPI.Game.Data.TransferObjects.Map;
+using ChickenAPI.Data.Map;
 using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Features.Portals;

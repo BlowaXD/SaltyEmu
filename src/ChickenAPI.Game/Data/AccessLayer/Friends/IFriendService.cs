@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using ChickenAPI.Game.Data.TransferObjects.Character;
-using ChickenAPI.Game.Data.TransferObjects.Server;
+using ChickenAPI.Data.Character;
+using ChickenAPI.Data.Server;
 
 namespace ChickenAPI.Game.Data.AccessLayer.Friends
 {

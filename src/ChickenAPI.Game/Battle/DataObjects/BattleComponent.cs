@@ -1,8 +1,8 @@
 ﻿using System;
 using Autofac;
 using ChickenAPI.Core.IoC;
+using ChickenAPI.Data.Character;
 using ChickenAPI.Game.Data.AccessLayer.Character;
-using ChickenAPI.Game.Data.TransferObjects.Character;
 using ChickenAPI.Game.ECS.Components;
 using ChickenAPI.Game.ECS.Entities;
 

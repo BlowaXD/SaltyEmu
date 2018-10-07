@@ -3,7 +3,7 @@ using Autofac;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Logging;
 using ChickenAPI.Core.Utils;
-using ChickenAPI.Game.Data.TransferObjects.Map;
+using ChickenAPI.Data.Map;
 using ChickenAPI.Game.Maps;
 
 namespace NosSharp.Pathfinder.Test

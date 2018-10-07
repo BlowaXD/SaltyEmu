@@ -1,7 +1,6 @@
-﻿using ChickenAPI.Core.Data.TransferObjects;
-using ChickenAPI.Enums.Game.Items;
+﻿using ChickenAPI.Enums.Game.Items;
 
-namespace ChickenAPI.Game.Data.TransferObjects.Item
+namespace ChickenAPI.Data.Item
 {
     /// <summary>
     ///     Items

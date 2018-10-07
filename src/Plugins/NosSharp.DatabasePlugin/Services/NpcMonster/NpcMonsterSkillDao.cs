@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
+using ChickenAPI.Data.NpcMonster;
 using ChickenAPI.Game.Data.AccessLayer.NpcMonster;
-using ChickenAPI.Game.Data.TransferObjects.NpcMonster;
 using SaltyEmu.DatabasePlugin.Context;
 using SaltyEmu.DatabasePlugin.Models.NpcMonster;
 using SaltyEmu.DatabasePlugin.Services.Base;

@@ -6,8 +6,8 @@ using Autofac;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Maths;
 using ChickenAPI.Core.Utils;
-using ChickenAPI.Game.Data.TransferObjects.Map;
-using ChickenAPI.Game.Data.TransferObjects.Shop;
+using ChickenAPI.Data.Map;
+using ChickenAPI.Data.Shop;
 using ChickenAPI.Game.ECS.Entities;
 
 namespace ChickenAPI.Game.Maps

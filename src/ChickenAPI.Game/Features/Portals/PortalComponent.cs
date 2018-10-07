@@ -1,5 +1,5 @@
-﻿using ChickenAPI.Enums.Game.Portals;
-using ChickenAPI.Game.Data.TransferObjects.Map;
+﻿using ChickenAPI.Data.Map;
+using ChickenAPI.Enums.Game.Portals;
 using ChickenAPI.Game.ECS.Components;
 using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Maps;

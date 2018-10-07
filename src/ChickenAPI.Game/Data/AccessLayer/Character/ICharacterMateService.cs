@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
-using ChickenAPI.Core.Data.AccessLayer;
-using ChickenAPI.Game.Data.TransferObjects.Character;
+using ChickenAPI.Data;
+using ChickenAPI.Data.Character;
 
 namespace ChickenAPI.Game.Data.AccessLayer.Character
 {

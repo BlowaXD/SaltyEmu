@@ -1,6 +1,4 @@
-﻿using ChickenAPI.Core.Data.TransferObjects;
-
-namespace ChickenAPI.Game.Data.TransferObjects.NpcMonster
+﻿namespace ChickenAPI.Data.NpcMonster
 {
     public class NpcMonsterSkillDto : IMappedDto
     {
