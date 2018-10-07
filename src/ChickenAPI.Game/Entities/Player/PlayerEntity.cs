@@ -79,7 +79,6 @@ namespace ChickenAPI.Game.Entities.Player
                 { typeof(MovableComponent), Movable },
                 { typeof(BattleComponent), Battle },
                 { typeof(ExperienceComponent), Experience },
-                { typeof(FamilyComponent), new FamilyComponent(this) },
                 { typeof(InventoryComponent), Inventory },
                 { typeof(SpecialistComponent), Sp },
                 { typeof(SkillComponent), Skills }

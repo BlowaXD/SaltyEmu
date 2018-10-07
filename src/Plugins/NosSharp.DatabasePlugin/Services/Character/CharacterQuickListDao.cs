@@ -16,8 +16,6 @@ namespace SaltyEmu.DatabasePlugin.Services.Character
     {
         #region Methods
 
-        private readonly CharacterQuicklistDto _baseConf;
-
         public CharacterQuickListDao(NosSharpContext context, IMapper mapper) : base(context, mapper)
         {
         }

@@ -23,7 +23,7 @@ namespace ChickenAPI.Packets.Game.Client.Families
         public short FamilyLevel { get; set; }
 
         [PacketIndex(4)]
-        public uint FamilyXp { get; set; }
+        public int FamilyXp { get; set; }
 
         [PacketIndex(5)]
         public uint MaxFamilyXp { get; set; }

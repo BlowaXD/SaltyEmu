@@ -2,6 +2,9 @@
 using System.Linq;
 using ChickenAPI.Data;
 using Foundatio.Caching;
+using Foundatio.Serializer;
+using Newtonsoft.Json;
+using StackExchange.Redis;
 
 namespace NosSharp.RedisSessionPlugin.Redis
 {
@@ -11,9 +14,14 @@ namespace NosSharp.RedisSessionPlugin.Redis
         protected static string AllKeys = KeyPrefix + '*';
         private readonly ICacheClient _cache;
 
-        private readonly RedisConfiguration _config;
-
-        protected CacheClientBase(RedisConfiguration configuration) => _config = configuration;
+        protected CacheClientBase(RedisConfiguration configuration)
+        {
+            _cache = new RedisHybridCacheClient(new RedisCacheClientOptions
+            {
+                ConnectionMultiplexer = ConnectionMultiplexer.Connect(configuration.ToString()),
+                Serializer = new JsonNetSerializer()
+            });
+        }
 
         protected string ToKey(long id) => KeyPrefix + id;
 

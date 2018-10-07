@@ -9,6 +9,7 @@ using ChickenAPI.Game.Data.AccessLayer.Character;
 using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Entities.Player.Extensions;
+using ChickenAPI.Game.Families.Extensions;
 using ChickenAPI.Game.Features.Inventory;
 using ChickenAPI.Game.Features.Inventory.Args;
 using ChickenAPI.Game.Features.Inventory.Extensions;
@@ -100,7 +101,9 @@ namespace NosSharp.PacketHandler
 
 
             // Session.SendPacket(Session.Character.GenerateGInfo());
-            // Session.CurrentMapInstance?.Broadcast(Session.Character.GenerateGidx());
+            session.SendPacket(session.Player.GenerateGInfoPacket());
+            session.Player.Broadcast(session.Player.GenerateGidxPacket());
+            //Session.CurrentMapInstance?.Broadcast(Session.Character.GenerateGidx());
             // Session.SendPackets(Session.Character.GetFamilyHistory());
             // Session.SendPacket(Session.Character.GenerateFamilyMember());
             // Session.SendPacket(Session.Character.GenerateFamilyMemberMessage());
