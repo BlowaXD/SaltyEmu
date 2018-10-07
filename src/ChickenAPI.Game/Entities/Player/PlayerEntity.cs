@@ -5,7 +5,9 @@ using Autofac;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Utils;
 using ChickenAPI.Data.Character;
+using ChickenAPI.Data.Families;
 using ChickenAPI.Enums.Game.Entity;
+using ChickenAPI.Enums.Game.Families;
 using ChickenAPI.Enums.Game.Visibility;
 using ChickenAPI.Game.Battle.DataObjects;
 using ChickenAPI.Game.Data.AccessLayer.Character;
@@ -21,11 +23,9 @@ using ChickenAPI.Game.Features.Leveling;
 using ChickenAPI.Game.Features.Quicklist;
 using ChickenAPI.Game.Features.Skills;
 using ChickenAPI.Game.Features.Specialists;
-using ChickenAPI.Game.Maps;
 using ChickenAPI.Game.Movements.DataObjects;
 using ChickenAPI.Game.Movements.Extensions;
 using ChickenAPI.Game.Network;
-using ChickenAPI.Game.Packets;
 using ChickenAPI.Game.Packets.Extensions;
 using ChickenAPI.Game.Permissions;
 using ChickenAPI.Game.Visibility;
@@ -261,6 +261,15 @@ namespace ChickenAPI.Game.Entities.Player
         }
 
         private VisibilityComponent _visibility { get; }
+
+        #endregion
+
+        #region Family
+
+        public bool HasFamily => Family != null;
+        public bool IsFamilyLeader => FamilyCharacter.Authority == FamilyAuthority.Head;
+        public FamilyDto Family { get; set; }
+        public CharacterFamilyDto FamilyCharacter { get; set; }
 
         #endregion
     }

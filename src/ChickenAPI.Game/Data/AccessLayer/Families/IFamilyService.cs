@@ -5,6 +5,8 @@ namespace ChickenAPI.Game.Data.AccessLayer.Families
 {
     public interface IFamilyService : IMappedRepository<FamilyDto>
     {
+        FamilyDto GetByName(string creationFamilyName);
+
         /// <summary>
         /// Broadcast an UpdateFamily event that will force sync on clients
         /// Will use ISC

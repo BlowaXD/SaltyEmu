@@ -10,13 +10,11 @@ namespace ChickenAPI.Data.Families
 
         public GenderType FamilyHeadGender { get; set; }
 
-        public long FamilyId { get; set; }
-
         public byte FamilyLevel { get; set; }
 
         public string FamilyMessage { get; set; }
 
-        public byte FamilyFaction { get; set; }
+        public FactionType FamilyFaction { get; set; }
 
         public FamilyAuthorityType ManagerAuthorityType { get; set; }
 

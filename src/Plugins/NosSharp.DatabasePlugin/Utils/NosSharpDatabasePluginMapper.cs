@@ -5,6 +5,7 @@ using ChickenAPI.Core.IoC;
 using ChickenAPI.Data.BCard;
 using ChickenAPI.Data.Character;
 using ChickenAPI.Data.Drop;
+using ChickenAPI.Data.Families;
 using ChickenAPI.Data.Item;
 using ChickenAPI.Data.Map;
 using ChickenAPI.Data.NpcMonster;
@@ -19,6 +20,7 @@ using SaltyEmu.DatabasePlugin.Models;
 using SaltyEmu.DatabasePlugin.Models.BCard;
 using SaltyEmu.DatabasePlugin.Models.Character;
 using SaltyEmu.DatabasePlugin.Models.Drops;
+using SaltyEmu.DatabasePlugin.Models.Families;
 using SaltyEmu.DatabasePlugin.Models.Item;
 using SaltyEmu.DatabasePlugin.Models.Map;
 using SaltyEmu.DatabasePlugin.Models.NpcMonster;
@@ -41,9 +43,16 @@ namespace SaltyEmu.DatabasePlugin.Utils
                 MapBCards(cfg);
                 MapNpcMonster(cfg);
                 MapShop(cfg);
+                ConfigureFamilies(cfg);
                 ConfigureMapObjects(cfg);
                 ConfigureCards(cfg);
             });
+        }
+
+        private static void ConfigureFamilies(IMapperConfigurationExpression cfg)
+        {
+            cfg.CreateMap<FamilyModel, FamilyDto>();
+            cfg.CreateMap<FamilyDto, FamilyModel>();
         }
 
         private static void ConfigureCards(IMapperConfigurationExpression cfg)
@@ -188,6 +197,9 @@ namespace SaltyEmu.DatabasePlugin.Utils
 
             cfg.CreateMap<CharacterQuicklistDto, CharacterQuicklistModel>();
             cfg.CreateMap<CharacterQuicklistModel, CharacterQuicklistDto>();
+
+            cfg.CreateMap<CharacterFamilyDto, CharacterFamilyModel>();
+            cfg.CreateMap<CharacterFamilyModel, CharacterFamilyDto>();
         }
 
         private static void MappDrops(IProfileExpression cfg)
