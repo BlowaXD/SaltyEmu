@@ -8,10 +8,12 @@ using ChickenAPI.Core.Logging;
 using ChickenAPI.Data;
 using EFCore.BulkExtensions;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Storage;
 using Newtonsoft.Json;
 using SaltyEmu.DatabasePlugin.Context;
 using SaltyEmu.DatabasePlugin.Models;
+using SaltyEmu.DatabasePlugin.Models.BCard;
 using SaltyEmu.DatabasePlugin.Utils;
 
 namespace SaltyEmu.DatabasePlugin.Services.Base
@@ -114,6 +116,54 @@ namespace SaltyEmu.DatabasePlugin.Services.Base
             }
         }
 
+
+        protected TObjectt Save<TObjectt, TModell>(DbSet<TModell> toInsert, TObjectt obj) where TObjectt : class, IMappedDto where TModell : class, IMappedModel
+        {
+            try
+            {
+                TModell model = toInsert.Find(obj.Id);
+                if (model == null)
+                {
+                    Log.Info($"Not found : {obj.Id}");
+                    model = toInsert.Add(Mapper.Map<TModell>(obj)).Entity;
+                }
+                else
+                {
+                    Context.Entry(model).CurrentValues.SetValues(obj);
+                    Context.Entry(model).State = EntityState.Modified;
+                }
+
+                Context.SaveChanges();
+                return Mapper.Map<TObjectt>(model);
+            }
+            catch (Exception e)
+            {
+                Log.Error("[SAVE]", e);
+                return null;
+            }
+        }
+
+        protected void Save<TModell>(IList<TModell> objs) where TModell : class, IMappedModel
+        {
+            try
+            {
+                using (IDbContextTransaction transaction = Context.Database.BeginTransaction())
+                {
+                    Context.BulkInsertOrUpdate(objs, new BulkConfig
+                    {
+                        PreserveInsertOrder = true
+                    });
+                    transaction.Commit();
+                }
+
+                Log.Info($"[SAVE] {objs.Count} {typeof(TModel).Name} saved");
+            }
+            catch (Exception e)
+            {
+                Log.Error("[SAVE]", e);
+            }
+        }
+
         public virtual void DeleteById(long id)
         {
             try
@@ -203,6 +253,23 @@ namespace SaltyEmu.DatabasePlugin.Services.Base
                 return null;
             }
         }
+
+        protected async Task<TObjectt> SaveAsync<TObjectt, TModell>(DbSet<TModell> toInsert, TObjectt obj) where TObjectt : class, IMappedDto where TModell : class, IMappedModel
+        {
+            try
+            {
+                var tmp = Mapper.Map<TModell>(obj);
+                EntityEntry<TModell> lol = toInsert.Update(tmp);
+                await Context.SaveChangesAsync();
+                return Mapper.Map<TObjectt>(lol.Entity);
+            }
+            catch (Exception e)
+            {
+                Log.Error("[UPDATE]", e);
+                return null;
+            }
+        }
+
 
         public virtual async Task SaveAsync(IEnumerable<TObject> objs)
         {

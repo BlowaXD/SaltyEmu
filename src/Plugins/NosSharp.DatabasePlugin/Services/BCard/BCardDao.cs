@@ -12,7 +12,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Storage;
 using SaltyEmu.DatabasePlugin.Context;
-using SaltyEmu.DatabasePlugin.Models;
 using SaltyEmu.DatabasePlugin.Models.BCard;
 using SaltyEmu.DatabasePlugin.Services.Base;
 
@@ -29,13 +28,13 @@ namespace SaltyEmu.DatabasePlugin.Services.BCard
             switch (obj.RelationType)
             {
                 case BCardRelationType.NpcMonster:
-                    return SubSave(Context.NpcMonsterBCards, obj);
+                    return Save(Context.NpcMonsterBCards, obj);
                 case BCardRelationType.Item:
-                    return SubSave(Context.ItemBCards, obj);
+                    return Save(Context.ItemBCards, obj);
                 case BCardRelationType.Skill:
-                    return SubSave(Context.SkillBCards, obj);
+                    return Save(Context.SkillBCards, obj);
                 case BCardRelationType.Card:
-                    return SubSave(Context.CardBCards, obj);
+                    return Save(Context.CardBCards, obj);
                 case BCardRelationType.Global:
                     return base.Save(obj);
                 default:
@@ -52,16 +51,16 @@ namespace SaltyEmu.DatabasePlugin.Services.BCard
                 switch (i.Key)
                 {
                     case BCardRelationType.NpcMonster:
-                        SubSaveMultiple(i.Select(Mapper.Map<NpcMonsterBCardModel>).ToList());
+                        Save(i.Select(Mapper.Map<NpcMonsterBCardModel>).ToList());
                         break;
                     case BCardRelationType.Item:
-                        SubSaveMultiple(i.Select(Mapper.Map<ItemBCardModel>).ToList());
+                        Save(i.Select(Mapper.Map<ItemBCardModel>).ToList());
                         break;
                     case BCardRelationType.Skill:
-                        SubSaveMultiple(i.Select(Mapper.Map<SkillBCardModel>).ToList());
+                        Save(i.Select(Mapper.Map<SkillBCardModel>).ToList());
                         break;
                     case BCardRelationType.Card:
-                        SubSaveMultiple(i.Select(Mapper.Map<CardBCardModel>).ToList());
+                        Save(i.Select(Mapper.Map<CardBCardModel>).ToList());
                         break;
                     case BCardRelationType.Global:
                         base.Save(i);
@@ -77,13 +76,13 @@ namespace SaltyEmu.DatabasePlugin.Services.BCard
             switch (obj.RelationType)
             {
                 case BCardRelationType.NpcMonster:
-                    return await SubSaveAsync(Context.NpcMonsterBCards, obj);
+                    return await SaveAsync(Context.NpcMonsterBCards, obj);
                 case BCardRelationType.Item:
-                    return await SubSaveAsync(Context.ItemBCards, obj);
+                    return await SaveAsync(Context.ItemBCards, obj);
                 case BCardRelationType.Skill:
-                    return await SubSaveAsync(Context.SkillBCards, obj);
+                    return await SaveAsync(Context.SkillBCards, obj);
                 case BCardRelationType.Card:
-                    return await SubSaveAsync(Context.CardBCards, obj);
+                    return await SaveAsync(Context.CardBCards, obj);
                 case BCardRelationType.Global:
                     return await base.SaveAsync(obj);
                 default:
@@ -161,71 +160,6 @@ namespace SaltyEmu.DatabasePlugin.Services.BCard
                 return null;
             }
         }
-
-        private TObject SubSave<TObject, TModel>(DbSet<TModel> toInsert, TObject obj) where TObject : class, IMappedDto where TModel : BCardModel
-        {
-            try
-            {
-                TModel model = toInsert.Find(obj.Id);
-                if (model == null)
-                {
-                    Log.Info($"Not found : {obj.Id}");
-                    model = toInsert.Add(Mapper.Map<TModel>(obj)).Entity;
-                }
-                else
-                {
-                    Context.Entry(model).CurrentValues.SetValues(obj);
-                    Context.Entry(model).State = EntityState.Modified;
-                }
-
-                Context.SaveChanges();
-                return Mapper.Map<TObject>(model);
-            }
-            catch (Exception e)
-            {
-                Log.Error("[SAVE]", e);
-                return null;
-            }
-        }
-
-
-        private void SubSaveMultiple<TModel>(IList<TModel> objs) where TModel : BCardModel
-        {
-            try
-            {
-                using (IDbContextTransaction transaction = Context.Database.BeginTransaction())
-                {
-                    Context.BulkInsertOrUpdate(objs, new BulkConfig
-                    {
-                        PreserveInsertOrder = true
-                    });
-                    transaction.Commit();
-                }
-
-                Log.Info($"[SAVE] {objs.Count} {typeof(TModel).Name} saved");
-            }
-            catch (Exception e)
-            {
-                Log.Error("[SAVE]", e);
-            }
-        }
-
-        private async Task<TObject> SubSaveAsync<TObject, TModel>(DbSet<TModel> toInsert, TObject obj) where TObject : class, IMappedDto where TModel : BCardModel
-        {
-            try
-            {
-                var tmp = Mapper.Map<TModel>(obj);
-                EntityEntry<TModel> lol = toInsert.Update(tmp);
-                await Context.SaveChangesAsync();
-                return Mapper.Map<TObject>(lol.Entity);
-            }
-            catch (Exception e)
-            {
-                Log.Error("[UPDATE]", e);
-                return null;
-            }
-        }
-
         public async Task<TObject> SubGetByIdAsync<TObject, TModel>(DbSet<TModel> dbSet, long id) where TModel : class where TObject : class
         {
             try
