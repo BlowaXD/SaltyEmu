@@ -25,9 +25,7 @@ namespace NosSharp.BasicAlgorithm
         public void OnLoad()
         {
             Log.Info("Loading...");
-            ChickenContainer.Builder.Register(s => new AlgorithmService()).As<IAlgorithmService>().SingleInstance();
-            ChickenContainer.Builder.Register(s => new NpcMonsterAlgorithmService()).As<INpcMonsterAlgorithmService>().SingleInstance();
-            ChickenContainer.Builder.Register(s => new DamageAlgorithm()).As<IDamageAlgorithm>().SingleInstance();
+            AlgorithmDependenciesInjector.InjectDependencies();
             Log.Info("Algorithms initialized");
         }
 

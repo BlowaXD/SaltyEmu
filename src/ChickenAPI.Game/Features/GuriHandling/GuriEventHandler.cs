@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Autofac;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Game.ECS.Entities;
@@ -11,6 +12,7 @@ namespace ChickenAPI.Game.Features.GuriHandling
 {
     public class GuriEventHandler : EventHandlerBase
     {
+        public override ISet<Type> HandledTypes => new HashSet<Type>();
         private readonly IGuriHandler _guriHandler = new Lazy<IGuriHandler>(() => ChickenContainer.Instance.Resolve<IGuriHandler>()).Value;
 
         public override void Execute(IEntity entity, ChickenEventArgs args)

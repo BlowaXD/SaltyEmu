@@ -1,4 +1,6 @@
-﻿using ChickenAPI.Game.ECS.Entities;
+﻿using System;
+using System.Collections.Generic;
+using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Entities.Monster;
 using ChickenAPI.Game.Entities.Npc;
 using ChickenAPI.Game.Entities.Player;
@@ -13,6 +15,7 @@ namespace ChickenAPI.Game.Movements
 {
     public class MovementEventHandler : EventHandlerBase
     {
+        public override ISet<Type> HandledTypes => new HashSet<Type>();
         public override void Execute(IEntity entity, ChickenEventArgs args)
         {
             switch (args)

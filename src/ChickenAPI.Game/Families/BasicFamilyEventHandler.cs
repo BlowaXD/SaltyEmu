@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Autofac;
 using ChickenAPI.Core.IoC;
@@ -6,6 +7,7 @@ using ChickenAPI.Data.Character;
 using ChickenAPI.Data.Families;
 using ChickenAPI.Enums.Game.Character;
 using ChickenAPI.Enums.Game.Families;
+using ChickenAPI.Game.Data.AccessLayer.Character;
 using ChickenAPI.Game.Data.AccessLayer.Families;
 using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Entities.Player;
@@ -17,6 +19,12 @@ namespace ChickenAPI.Game.Families
     public class BasicFamilyEventHandler : EventHandlerBase
     {
         private static readonly IFamilyService FamilyService = new Lazy<IFamilyService>(() => ChickenContainer.Instance.Resolve<IFamilyService>()).Value;
+        private static readonly ICharacterFamilyService CharacterFamilyService = new Lazy<ICharacterFamilyService>(() => ChickenContainer.Instance.Resolve<ICharacterFamilyService>()).Value;
+
+        public override ISet<Type> HandledTypes => new HashSet<Type>
+        {
+            typeof(FamilyCreationEvent)
+        };
 
         public override void Execute(IEntity entity, ChickenEventArgs e)
         {
@@ -61,14 +69,13 @@ namespace ChickenAPI.Game.Families
         private static void AttachFamily(IPlayerEntity player, FamilyDto dto, FamilyAuthority authority)
         {
             player.Family = dto;
-            player.FamilyCharacter = new CharacterFamilyDto
+            player.FamilyCharacter = CharacterFamilyService.Save(new CharacterFamilyDto
             {
                 Authority = authority,
                 CharacterId = player.Character.Id,
                 FamilyId = dto.Id,
                 Rank = 0
-            };
-            // change faction ?
+            });
         }
     }
 }

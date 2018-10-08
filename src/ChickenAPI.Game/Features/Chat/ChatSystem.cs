@@ -1,16 +1,22 @@
-﻿using ChickenAPI.Enums.Game.Entity;
+﻿using System;
+using System.Collections.Generic;
+using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Enums.Packets;
 using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Events;
 using ChickenAPI.Game.Features.Chat.Args;
-using ChickenAPI.Game.Packets;
 using ChickenAPI.Packets.Game.Server.Player;
 
 namespace ChickenAPI.Game.Features.Chat
 {
     public class ChatEventHandler : EventHandlerBase
     {
+        public override ISet<Type> HandledTypes => new HashSet<Type>
+        {
+            typeof(PlayerChatEventArg)
+        };
+
         public override void Execute(IEntity entity, ChickenEventArgs e)
         {
             switch (e)

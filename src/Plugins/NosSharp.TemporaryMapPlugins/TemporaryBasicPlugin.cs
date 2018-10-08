@@ -32,13 +32,6 @@ namespace SaltyEmu.BasicPlugin
         public void OnLoad()
         {
             Log.Info("Loading...");
-            ChickenContainer.Builder.Register(s => new LazyMapManager()).As<IMapManager>().SingleInstance();
-            ChickenContainer.Builder.Register(c => new SimpleItemInstanceFactory(c.Resolve<IItemService>())).As<IItemInstanceFactory>();
-            ChickenContainer.Builder.Register(s => new EventManager()).As<IEventManager>().SingleInstance();
-            ChickenContainer.Builder.Register(_ => new RandomGenerator()).As<IRandomGenerator>().SingleInstance();
-            ChickenContainer.Builder.Register(s => new BasicNpcDialogHandler()).As<INpcDialogHandler>().SingleInstance();
-            ChickenContainer.Builder.Register(s => new BaseGuriHandler()).As<IGuriHandler>().SingleInstance();
-            ChickenContainer.Builder.Register(s => new BasicHitRequestFactory()).As<IHitRequestFactory>().SingleInstance();
             Log.Info("Loaded !");
         }
 

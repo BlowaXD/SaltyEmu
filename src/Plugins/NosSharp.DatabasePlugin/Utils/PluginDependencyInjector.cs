@@ -1,10 +1,13 @@
 ﻿using Autofac;
 using AutoMapper;
 using ChickenAPI.Core.IoC;
+using ChickenAPI.Data.Character;
+using ChickenAPI.Enums.Game.Character;
 using ChickenAPI.Game.Data.AccessLayer.Account;
 using ChickenAPI.Game.Data.AccessLayer.BCard;
 using ChickenAPI.Game.Data.AccessLayer.Character;
 using ChickenAPI.Game.Data.AccessLayer.Drop;
+using ChickenAPI.Game.Data.AccessLayer.Families;
 using ChickenAPI.Game.Data.AccessLayer.Item;
 using ChickenAPI.Game.Data.AccessLayer.Map;
 using ChickenAPI.Game.Data.AccessLayer.NpcMonster;
@@ -17,6 +20,7 @@ using SaltyEmu.DatabasePlugin.Services.BCard;
 using SaltyEmu.DatabasePlugin.Services.Card;
 using SaltyEmu.DatabasePlugin.Services.Character;
 using SaltyEmu.DatabasePlugin.Services.Drop;
+using SaltyEmu.DatabasePlugin.Services.Families;
 using SaltyEmu.DatabasePlugin.Services.Item;
 using SaltyEmu.DatabasePlugin.Services.Map;
 using SaltyEmu.DatabasePlugin.Services.NpcMonster;
@@ -27,7 +31,6 @@ namespace SaltyEmu.DatabasePlugin.Utils
 {
     public class PluginDependencyInjector
     {
-
         public static void RegisterMapping()
         {
             ChickenContainer.Builder.Register(s => NosSharpDatabasePluginMapper.ConfigureMapper().CreateMapper()).As<IMapper>().InstancePerDependency();
@@ -45,6 +48,29 @@ namespace SaltyEmu.DatabasePlugin.Utils
 
         public static void RegisterDaos()
         {
+            var characterConf = new CharacterDto
+            {
+                Class = CharacterClassType.Adventurer,
+                Gender = GenderType.Male,
+                HairColor = HairColorType.Black,
+                HairStyle = HairStyleType.HairStyleA,
+                Hp = 221,
+                JobLevel = 20,
+                Level = 15,
+                MapId = 1,
+                MapX = 78,
+                MapY = 109,
+                Mp = 221,
+                MaxMateCount = 10,
+                Gold = 15000,
+                SpPoint = 10000,
+                SpAdditionPoint = 0,
+                Name = "template",
+                Slot = 0,
+                AccountId = 0,
+                MinilandMessage = "Welcome",
+                State = CharacterState.Active
+            };
             // data
             ChickenContainer.Builder.Register(s => new SkillDao(s.Resolve<SaltyDbContext>(), s.Resolve<IMapper>())).As<ISkillService>().InstancePerLifetimeScope();
             ChickenContainer.Builder.Register(s => new BCardDao(s.Resolve<SaltyDbContext>(), s.Resolve<IMapper>())).As<IBCardService>().InstancePerLifetimeScope();
@@ -55,11 +81,14 @@ namespace SaltyEmu.DatabasePlugin.Utils
             ChickenContainer.Builder.Register(s => new MapDao(s.Resolve<SaltyDbContext>(), s.Resolve<IMapper>())).As<IMapService>().InstancePerLifetimeScope();
 
             ChickenContainer.Builder.Register(s => new AccountDao(s.Resolve<SaltyDbContext>(), s.Resolve<IMapper>())).As<IAccountService>().InstancePerLifetimeScope();
-            ChickenContainer.Builder.Register(s => new CharacterDao(s.Resolve<SaltyDbContext>(), s.Resolve<IMapper>(), null)).As<ICharacterService>().InstancePerLifetimeScope();
+            ChickenContainer.Builder.Register(s => new CharacterDao(s.Resolve<SaltyDbContext>(), s.Resolve<IMapper>(), characterConf)).As<ICharacterService>().InstancePerLifetimeScope();
             ChickenContainer.Builder.Register(s => new CharacterMateDao(s.Resolve<SaltyDbContext>(), s.Resolve<IMapper>())).As<ICharacterMateService>().InstancePerLifetimeScope();
             ChickenContainer.Builder.Register(s => new CharacterItemDao(s.Resolve<SaltyDbContext>(), s.Resolve<IMapper>())).As<IItemInstanceService>().InstancePerLifetimeScope();
             ChickenContainer.Builder.Register(s => new CharacterSkillDao(s.Resolve<SaltyDbContext>(), s.Resolve<IMapper>())).As<ICharacterSkillService>().InstancePerLifetimeScope();
             ChickenContainer.Builder.Register(s => new CharacterQuickListDao(s.Resolve<SaltyDbContext>(), s.Resolve<IMapper>())).As<ICharacterQuickListService>().InstancePerLifetimeScope();
+            ChickenContainer.Builder.Register(s => new CharacterFamilyDao(s.Resolve<SaltyDbContext>(), s.Resolve<IMapper>())).As<ICharacterFamilyService>().InstancePerLifetimeScope();
+
+            ChickenContainer.Builder.Register(s => new FamilyDao(s.Resolve<SaltyDbContext>(), s.Resolve<IMapper>())).As<IFamilyService>().InstancePerLifetimeScope();
 
             ChickenContainer.Builder.Register(s => new MapMonsterDao(s.Resolve<SaltyDbContext>(), s.Resolve<IMapper>())).As<IMapMonsterService>().InstancePerLifetimeScope();
             ChickenContainer.Builder.Register(s => new MapNpcDao(s.Resolve<SaltyDbContext>(), s.Resolve<IMapper>())).As<IMapNpcService>().InstancePerLifetimeScope();
@@ -71,6 +100,7 @@ namespace SaltyEmu.DatabasePlugin.Utils
             ChickenContainer.Builder.Register(s => new RecipeItemDao(s.Resolve<SaltyDbContext>(), s.Resolve<IMapper>())).As<IRecipeItemService>().InstancePerLifetimeScope();
             ChickenContainer.Builder.Register(s => new DropDao(s.Resolve<SaltyDbContext>(), s.Resolve<IMapper>())).As<IDropService>().InstancePerLifetimeScope();
         }
+
         public static void RegisterDependencies()
         {
             RegisterMapping();

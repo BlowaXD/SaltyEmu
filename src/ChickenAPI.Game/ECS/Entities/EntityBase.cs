@@ -32,6 +32,7 @@ namespace ChickenAPI.Game.ECS.Entities
 
         public void EmitEvent<T>(T e) where T : ChickenEventArgs
         {
+            e.Sender = this;
             EventManager.Notify(this, e);
         }
 

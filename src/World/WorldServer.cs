@@ -191,9 +191,21 @@ namespace World
         {
             // first version hardcoded, next one through Plugin + Assembly Reflection
             var eventManager = ChickenContainer.Instance.Resolve<IEventManager>();
-            foreach (Type handler in GetHandlers())
+            foreach (Type handlerType in GetHandlers())
             {
-                eventManager.Register(Activator.CreateInstance(handler) as IEventHandler, handler);
+                object handler = Activator.CreateInstance(handlerType);
+
+                if (!(handler is EventHandlerBase handlerBase))
+                {
+                    continue;
+                }
+
+                foreach (Type type in handlerBase.HandledTypes)
+                {
+
+                    eventManager.Register(handlerBase, type);
+                }
+
             }
         }
 

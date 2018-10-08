@@ -1,22 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using ChickenAPI.Core.Logging;
-using ChickenAPI.Enums.Game.Entity;
-using ChickenAPI.Game.Entities.Npc;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Game.Entities.Player.Extensions;
-using ChickenAPI.Game.Entities.Portal;
-using ChickenAPI.Game.Features.Portals;
-using ChickenAPI.Game.Packets;
-using ChickenAPI.Game.Packets.Extensions;
-using ChickenAPI.Packets.Game.Client.Shops;
-using ChickenAPI.Packets.Game.Server.Inventory;
 using ChickenAPI.Game.Features.Quicklist.Args;
-using System.Text;
 using ChickenAPI.Data.Character;
 using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Events;
-using ChickenAPI.Packets.Game.Server.QuickList;
 using ChickenAPI.Game.Features.Quicklist.Extensions;
 
 namespace ChickenAPI.Game.Features.Quicklist
@@ -24,6 +14,11 @@ namespace ChickenAPI.Game.Features.Quicklist
     public class QuickListEventHandler : EventHandlerBase
     {
         private static readonly Logger Log = Logger.GetLogger<QuickListEventHandler>();
+
+        public override ISet<Type> HandledTypes => new HashSet<Type>
+        {
+            typeof(GenerateQuickListArgs)
+        };
 
         public override void Execute(IEntity entity, ChickenEventArgs e)
         {

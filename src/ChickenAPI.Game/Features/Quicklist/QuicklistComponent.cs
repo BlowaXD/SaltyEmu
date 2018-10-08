@@ -12,6 +12,10 @@ namespace ChickenAPI.Game.Features.Quicklist
         public QuicklistComponent(IEntity entity, IEnumerable<CharacterQuicklistDto> quicklist)
         {
             Entity = entity;
+            if (quicklist == null)
+            {
+                return;
+            }
             Quicklist.AddRange(quicklist.OrderBy(s => s.Position));
         }
 

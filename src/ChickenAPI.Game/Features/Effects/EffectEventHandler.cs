@@ -1,4 +1,6 @@
-﻿using ChickenAPI.Game.ECS.Entities;
+﻿using System;
+using System.Collections.Generic;
+using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Events;
 using ChickenAPI.Game.Features.Effects.Args;
 
@@ -6,6 +8,7 @@ namespace ChickenAPI.Game.Features.Effects
 {
     public class EffectEventHandler : EventHandlerBase
     {
+        public override ISet<Type> HandledTypes => new HashSet<Type>();
         public override void Execute(IEntity entity, ChickenEventArgs e)
         {
             switch (e)

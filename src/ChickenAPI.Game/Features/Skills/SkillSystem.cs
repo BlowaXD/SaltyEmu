@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using ChickenAPI.Data.Character;
 using ChickenAPI.Data.Skills;
 using ChickenAPI.Enums.Game.Character;
@@ -9,12 +11,16 @@ using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Events;
 using ChickenAPI.Game.Features.Leveling;
 using ChickenAPI.Game.Features.Skills.Args;
-using ChickenAPI.Game.Packets;
 
 namespace ChickenAPI.Game.Features.Skills
 {
     public class SkillEventHandler : EventHandlerBase
     {
+        public override ISet<Type> HandledTypes => new HashSet<Type>
+        {
+            typeof(SkillCastArgs), typeof(UseSkillArgs), typeof(PlayerAddSkillEventArgs)
+        };
+
         public override void Execute(IEntity entity, ChickenEventArgs e)
         {
             var component = entity.GetComponent<SkillComponent>();

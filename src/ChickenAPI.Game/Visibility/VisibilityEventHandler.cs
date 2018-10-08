@@ -1,4 +1,6 @@
-﻿using ChickenAPI.Core.Logging;
+﻿using System;
+using System.Collections.Generic;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Enums.Game.Visibility;
 using ChickenAPI.Game.ECS.Entities;
@@ -21,6 +23,7 @@ namespace ChickenAPI.Game.Visibility
     {
         private static readonly Logger Log = Logger.GetLogger<VisibilityEventHandler>();
 
+        public override ISet<Type> HandledTypes => new HashSet<Type>();
         public override void Execute(IEntity entity, ChickenEventArgs e)
         {
             if (!(entity is IVisibleCapacity visible))

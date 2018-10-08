@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Autofac;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Logging;
@@ -15,6 +16,7 @@ namespace ChickenAPI.Game.Features.NpcDialog
         private static readonly Logger Log = Logger.GetLogger<NpcDialogEventArgs>();
         private static readonly INpcDialogHandler NpcDialogHandler = new Lazy<INpcDialogHandler>(() => ChickenContainer.Instance.Resolve<INpcDialogHandler>()).Value;
 
+        public override ISet<Type> HandledTypes => new HashSet<Type>();
         public override void Execute(IEntity entity, ChickenEventArgs e)
         {
             switch (e)

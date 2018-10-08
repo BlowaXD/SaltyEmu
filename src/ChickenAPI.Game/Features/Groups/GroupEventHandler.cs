@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Events;
 using ChickenAPI.Game.Features.Groups.Args;
@@ -7,6 +8,7 @@ namespace ChickenAPI.Game.Features.Groups
 {
     public class GroupEventHandler : EventHandlerBase
     {
+        public override ISet<Type> HandledTypes => new HashSet<Type>();
         public override void Execute(IEntity entity, ChickenEventArgs e)
         {
             switch (e)

@@ -38,6 +38,11 @@ namespace ChickenAPI.Game.Features.Skills
 
         public SkillComponent(IEntity entity, IEnumerable<CharacterSkillDto> skills) : this(entity)
         {
+            if (skills == null)
+            {
+                return;
+            }
+
             foreach (CharacterSkillDto characterSkill in skills)
             {
                 CharacterSkills.Add(characterSkill.Id, characterSkill);

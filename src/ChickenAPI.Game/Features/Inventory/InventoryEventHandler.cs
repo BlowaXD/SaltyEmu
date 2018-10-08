@@ -20,6 +20,7 @@ namespace ChickenAPI.Game.Features.Inventory
 {
     public class InventoryEventHandler : EventHandlerBase
     {
+        public override ISet<Type> HandledTypes => new HashSet<Type>();
         public override void Execute(IEntity entity, ChickenEventArgs e)
         {
             var inventory = entity.GetComponent<InventoryComponent>();

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Autofac;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Logging;
@@ -16,6 +17,7 @@ namespace ChickenAPI.Game.Features.Portals
 {
     public class PortalEventHandler : EventHandlerBase
     {
+        public override ISet<Type> HandledTypes => new HashSet<Type>();
         private static readonly Logger Log = Logger.GetLogger<PortalEventHandler>();
         private static readonly IMapManager MapManager = new Lazy<IMapManager>(ChickenContainer.Instance.Resolve<IMapManager>).Value;
         public override void Execute(IEntity entity, ChickenEventArgs args)

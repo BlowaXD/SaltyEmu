@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using ChickenAPI.Enums.Game.Items;
 using ChickenAPI.Game.ECS.Entities;
@@ -13,6 +14,8 @@ namespace ChickenAPI.Game.Features.Specialists
 {
     public class SpecialistEventHandler : EventHandlerBase
     {
+        public override ISet<Type> HandledTypes => new HashSet<Type>();
+
         public override void Execute(IEntity entity, ChickenEventArgs args)
         {
             switch (args)

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Autofac;
@@ -28,6 +29,11 @@ namespace ChickenAPI.Game.Features.Shops
     public class ShopEventHandler : EventHandlerBase
     {
         private static readonly IRandomGenerator _randomGenerator = new Lazy<IRandomGenerator>(() => ChickenContainer.Instance.Resolve<IRandomGenerator>()).Value;
+
+        public override ISet<Type> HandledTypes => new HashSet<Type>
+        {
+            typeof(GetShopInformationEventArgs), typeof(BuyShopEventArgs), typeof(SellShopEventArgs)
+        };
 
         public override void Execute(IEntity entity, ChickenEventArgs e)
         {
