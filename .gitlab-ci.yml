@@ -24,7 +24,7 @@ build_project:
    - dotnet restore
    - dotnet build
    
-   
+# Test ChickenAPI.Game project with unit test
 test_project:
     image: microsoft/dotnet:2.1-sdk-alpine
     stage: test
