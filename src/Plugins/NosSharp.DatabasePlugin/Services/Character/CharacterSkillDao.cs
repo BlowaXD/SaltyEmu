@@ -6,7 +6,6 @@ using AutoMapper;
 using ChickenAPI.Data.Character;
 using ChickenAPI.Game.Data.AccessLayer.Character;
 using Microsoft.EntityFrameworkCore;
-using SaltyEmu.DatabasePlugin.Context;
 using SaltyEmu.DatabasePlugin.Models.Character;
 using SaltyEmu.DatabasePlugin.Services.Base;
 
@@ -14,7 +13,7 @@ namespace SaltyEmu.DatabasePlugin.Services.Character
 {
     public class CharacterSkillDao : SynchronizedRepositoryBase<CharacterSkillDto, CharacterSkillModel>, ICharacterSkillService
     {
-        public CharacterSkillDao(SaltyDbContext context, IMapper mapper) : base(context, mapper)
+        public CharacterSkillDao(DbContext context, IMapper mapper) : base(context, mapper)
         {
         }
 

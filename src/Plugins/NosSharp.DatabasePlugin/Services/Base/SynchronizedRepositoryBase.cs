@@ -17,11 +17,11 @@ namespace SaltyEmu.DatabasePlugin.Services.Base
     where TObject : class, ISynchronizedDto where TModel : class, ISynchronizedModel, new()
     {
         protected static readonly Logger Log = Logger.GetLogger<TModel>();
-        protected readonly SaltyDbContext Context;
+        protected readonly DbContext Context;
         protected readonly DbSet<TModel> DbSet;
         protected readonly IMapper Mapper;
 
-        public SynchronizedRepositoryBase(SaltyDbContext context, IMapper mapper)
+        public SynchronizedRepositoryBase(DbContext context, IMapper mapper)
         {
             Context = context;
             Mapper = mapper;

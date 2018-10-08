@@ -13,7 +13,7 @@ namespace SaltyEmu.DatabasePlugin.Services.Character
 {
     public class CharacterMateDao : MappedRepositoryBase<CharacterMateDto, CharacterMateModel>, ICharacterMateService
     {
-        public CharacterMateDao(SaltyDbContext context, IMapper mapper) : base(context, mapper)
+        public CharacterMateDao(DbContext context, IMapper mapper) : base(context, mapper)
         {
         }
 

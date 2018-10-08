@@ -3,15 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using ChickenAPI.Data;
 using ChickenAPI.Data.BCard;
 using ChickenAPI.Enums.Game.BCard;
 using ChickenAPI.Game.Data.AccessLayer.BCard;
-using EFCore.BulkExtensions;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
-using Microsoft.EntityFrameworkCore.Storage;
-using SaltyEmu.DatabasePlugin.Context;
 using SaltyEmu.DatabasePlugin.Models.BCard;
 using SaltyEmu.DatabasePlugin.Services.Base;
 
@@ -19,7 +14,7 @@ namespace SaltyEmu.DatabasePlugin.Services.BCard
 {
     public class BCardDao : MappedRepositoryBase<BCardDto, BCardModel>, IBCardService
     {
-        public BCardDao(SaltyDbContext context, IMapper mapper) : base(context, mapper)
+        public BCardDao(DbContext context, IMapper mapper) : base(context, mapper)
         {
         }
 
@@ -28,13 +23,13 @@ namespace SaltyEmu.DatabasePlugin.Services.BCard
             switch (obj.RelationType)
             {
                 case BCardRelationType.NpcMonster:
-                    return Save(Context.NpcMonsterBCards, obj);
+                    return Save(Context.Set<NpcMonsterBCardModel>(), obj);
                 case BCardRelationType.Item:
-                    return Save(Context.ItemBCards, obj);
+                    return Save(Context.Set<ItemBCardModel>(), obj);
                 case BCardRelationType.Skill:
-                    return Save(Context.SkillBCards, obj);
+                    return Save(Context.Set<SkillBCardModel>(), obj);
                 case BCardRelationType.Card:
-                    return Save(Context.CardBCards, obj);
+                    return Save(Context.Set<CardBCardModel>(), obj);
                 case BCardRelationType.Global:
                     return base.Save(obj);
                 default:
@@ -76,13 +71,13 @@ namespace SaltyEmu.DatabasePlugin.Services.BCard
             switch (obj.RelationType)
             {
                 case BCardRelationType.NpcMonster:
-                    return await SaveAsync(Context.NpcMonsterBCards, obj);
+                    return await SaveAsync(Context.Set<NpcMonsterBCardModel>(), obj);
                 case BCardRelationType.Item:
-                    return await SaveAsync(Context.ItemBCards, obj);
+                    return await SaveAsync(Context.Set<ItemBCardModel>(), obj);
                 case BCardRelationType.Skill:
-                    return await SaveAsync(Context.SkillBCards, obj);
+                    return await SaveAsync(Context.Set<SkillBCardModel>(), obj);
                 case BCardRelationType.Card:
-                    return await SaveAsync(Context.CardBCards, obj);
+                    return await SaveAsync(Context.Set<CardBCardModel>(), obj);
                 case BCardRelationType.Global:
                     return await base.SaveAsync(obj);
                 default:
@@ -95,13 +90,13 @@ namespace SaltyEmu.DatabasePlugin.Services.BCard
             switch (type)
             {
                 case BCardRelationType.NpcMonster:
-                    return await SubGetByIdAsync<BCardDto, NpcMonsterBCardModel>(Context.NpcMonsterBCards, id);
+                    return await SubGetByIdAsync<BCardDto, NpcMonsterBCardModel>(Context.Set<NpcMonsterBCardModel>(), id);
                 case BCardRelationType.Item:
-                    return await SubGetByIdAsync<BCardDto, ItemBCardModel>(Context.ItemBCards, id);
+                    return await SubGetByIdAsync<BCardDto, ItemBCardModel>(Context.Set<ItemBCardModel>(), id);
                 case BCardRelationType.Skill:
-                    return await SubGetByIdAsync<BCardDto, SkillBCardModel>(Context.SkillBCards, id);
+                    return await SubGetByIdAsync<BCardDto, SkillBCardModel>(Context.Set<SkillBCardModel>(), id);
                 case BCardRelationType.Card:
-                    return await SubGetByIdAsync<BCardDto, CardBCardModel>(Context.CardBCards, id);
+                    return await SubGetByIdAsync<BCardDto, CardBCardModel>(Context.Set<CardBCardModel>(), id);
                 case BCardRelationType.Global:
                     return await GetByIdAsync(id);
                 default:
@@ -113,7 +108,7 @@ namespace SaltyEmu.DatabasePlugin.Services.BCard
         {
             try
             {
-                return (await Context.SkillBCards.Where(s => s.RelationId == skillId).ToListAsync()).Select(Mapper.Map<BCardDto>);
+                return (await Context.Set<SkillBCardModel>().Where(s => s.RelationId == skillId).ToListAsync()).Select(Mapper.Map<BCardDto>);
             }
             catch (Exception e)
             {
@@ -126,7 +121,7 @@ namespace SaltyEmu.DatabasePlugin.Services.BCard
         {
             try
             {
-                return (await Context.NpcMonsterBCards.Where(s => s.RelationId == monsterId).ToListAsync()).Select(Mapper.Map<BCardDto>);
+                return (await Context.Set<NpcMonsterBCardModel>().Where(s => s.RelationId == monsterId).ToListAsync()).Select(Mapper.Map<BCardDto>);
             }
             catch (Exception e)
             {
@@ -139,7 +134,7 @@ namespace SaltyEmu.DatabasePlugin.Services.BCard
         {
             try
             {
-                return (await Context.CardBCards.Where(s => s.RelationId == cardId).ToListAsync()).Select(Mapper.Map<BCardDto>);
+                return (await Context.Set<CardBCardModel>().Where(s => s.RelationId == cardId).ToListAsync()).Select(Mapper.Map<BCardDto>);
             }
             catch (Exception e)
             {
@@ -152,7 +147,7 @@ namespace SaltyEmu.DatabasePlugin.Services.BCard
         {
             try
             {
-                return (await Context.ItemBCards.Where(s => s.RelationId == itemId).ToListAsync()).Select(Mapper.Map<BCardDto>);
+                return (await Context.Set<ItemBCardModel>().Where(s => s.RelationId == itemId).ToListAsync()).Select(Mapper.Map<BCardDto>);
             }
             catch (Exception e)
             {
@@ -160,6 +155,7 @@ namespace SaltyEmu.DatabasePlugin.Services.BCard
                 return null;
             }
         }
+
         public async Task<TObject> SubGetByIdAsync<TObject, TModel>(DbSet<TModel> dbSet, long id) where TModel : class where TObject : class
         {
             try

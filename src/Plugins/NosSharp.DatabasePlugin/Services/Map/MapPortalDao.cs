@@ -14,7 +14,7 @@ namespace SaltyEmu.DatabasePlugin.Services.Map
 {
     public class MapPortalDao : MappedRepositoryBase<PortalDto, MapPortalModel>, IPortalService
     {
-        public MapPortalDao(SaltyDbContext context, IMapper mapper) : base(context, mapper)
+        public MapPortalDao(DbContext context, IMapper mapper) : base(context, mapper)
         {
         }
 

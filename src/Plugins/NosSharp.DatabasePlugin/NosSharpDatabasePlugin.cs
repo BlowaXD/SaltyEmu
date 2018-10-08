@@ -112,36 +112,36 @@ namespace SaltyEmu.DatabasePlugin
 
         private static void RegisterMapping()
         {
-            _mapper = NosSharpDatabasePluginMapper.ConfigureMapper().CreateMapper();
+            ChickenContainer.Builder.Register(s => NosSharpDatabasePluginMapper.ConfigureMapper().CreateMapper()).As<IMapper>().InstancePerDependency();
         }
 
         private static void RegisterDependencies()
         {
             // data
-            ChickenContainer.Builder.Register(s => new SkillDao(s.Resolve<SaltyDbContext>(), _mapper)).As<ISkillService>().InstancePerLifetimeScope();
-            ChickenContainer.Builder.Register(s => new BCardDao(s.Resolve<SaltyDbContext>(), _mapper)).As<IBCardService>().InstancePerLifetimeScope();
-            ChickenContainer.Builder.Register(s => new CardDao(s.Resolve<SaltyDbContext>(), _mapper)).As<ICardService>().InstancePerLifetimeScope();
-            ChickenContainer.Builder.Register(s => new ItemDao(s.Resolve<SaltyDbContext>(), _mapper)).As<IItemService>().InstancePerLifetimeScope();
-            ChickenContainer.Builder.Register(s => new NpcMonsterDao(s.Resolve<SaltyDbContext>(), _mapper)).As<INpcMonsterService>().InstancePerLifetimeScope();
-            ChickenContainer.Builder.Register(s => new NpcMonsterSkillDao(s.Resolve<SaltyDbContext>(), _mapper)).As<INpcMonsterSkillService>().InstancePerLifetimeScope();
-            ChickenContainer.Builder.Register(s => new MapDao(s.Resolve<SaltyDbContext>(), _mapper)).As<IMapService>().InstancePerLifetimeScope();
+            ChickenContainer.Builder.Register(s => new SkillDao(s.Resolve<SaltyDbContext>(), s.Resolve<IMapper>())).As<ISkillService>().InstancePerLifetimeScope();
+            ChickenContainer.Builder.Register(s => new BCardDao(s.Resolve<SaltyDbContext>(), s.Resolve<IMapper>())).As<IBCardService>().InstancePerLifetimeScope();
+            ChickenContainer.Builder.Register(s => new CardDao(s.Resolve<SaltyDbContext>(), s.Resolve<IMapper>())).As<ICardService>().InstancePerLifetimeScope();
+            ChickenContainer.Builder.Register(s => new ItemDao(s.Resolve<SaltyDbContext>(), s.Resolve<IMapper>())).As<IItemService>().InstancePerLifetimeScope();
+            ChickenContainer.Builder.Register(s => new NpcMonsterDao(s.Resolve<SaltyDbContext>(), s.Resolve<IMapper>())).As<INpcMonsterService>().InstancePerLifetimeScope();
+            ChickenContainer.Builder.Register(s => new NpcMonsterSkillDao(s.Resolve<SaltyDbContext>(), s.Resolve<IMapper>())).As<INpcMonsterSkillService>().InstancePerLifetimeScope();
+            ChickenContainer.Builder.Register(s => new MapDao(s.Resolve<SaltyDbContext>(), s.Resolve<IMapper>())).As<IMapService>().InstancePerLifetimeScope();
 
-            ChickenContainer.Builder.Register(s => new AccountDao(s.Resolve<SaltyDbContext>(), _mapper)).As<IAccountService>().InstancePerLifetimeScope();
-            ChickenContainer.Builder.Register(s => new CharacterDao(s.Resolve<SaltyDbContext>(), _mapper, _characterConf)).As<ICharacterService>().InstancePerLifetimeScope();
-            ChickenContainer.Builder.Register(s => new CharacterMateDao(s.Resolve<SaltyDbContext>(), _mapper)).As<ICharacterMateService>().InstancePerLifetimeScope();
-            ChickenContainer.Builder.Register(s => new CharacterItemDao(s.Resolve<SaltyDbContext>(), _mapper)).As<IItemInstanceService>().InstancePerLifetimeScope();
-            ChickenContainer.Builder.Register(s => new CharacterSkillDao(s.Resolve<SaltyDbContext>(), _mapper)).As<ICharacterSkillService>().InstancePerLifetimeScope();
-            ChickenContainer.Builder.Register(s => new CharacterQuickListDao(s.Resolve<SaltyDbContext>(), _mapper)).As<ICharacterQuickListService>().InstancePerLifetimeScope();
+            ChickenContainer.Builder.Register(s => new AccountDao(s.Resolve<SaltyDbContext>(), s.Resolve<IMapper>())).As<IAccountService>().InstancePerLifetimeScope();
+            ChickenContainer.Builder.Register(s => new CharacterDao(s.Resolve<SaltyDbContext>(), s.Resolve<IMapper>(), _characterConf)).As<ICharacterService>().InstancePerLifetimeScope();
+            ChickenContainer.Builder.Register(s => new CharacterMateDao(s.Resolve<SaltyDbContext>(), s.Resolve<IMapper>())).As<ICharacterMateService>().InstancePerLifetimeScope();
+            ChickenContainer.Builder.Register(s => new CharacterItemDao(s.Resolve<SaltyDbContext>(), s.Resolve<IMapper>())).As<IItemInstanceService>().InstancePerLifetimeScope();
+            ChickenContainer.Builder.Register(s => new CharacterSkillDao(s.Resolve<SaltyDbContext>(), s.Resolve<IMapper>())).As<ICharacterSkillService>().InstancePerLifetimeScope();
+            ChickenContainer.Builder.Register(s => new CharacterQuickListDao(s.Resolve<SaltyDbContext>(), s.Resolve<IMapper>())).As<ICharacterQuickListService>().InstancePerLifetimeScope();
 
-            ChickenContainer.Builder.Register(s => new MapMonsterDao(s.Resolve<SaltyDbContext>(), _mapper)).As<IMapMonsterService>().InstancePerLifetimeScope();
-            ChickenContainer.Builder.Register(s => new MapNpcDao(s.Resolve<SaltyDbContext>(), _mapper)).As<IMapNpcService>().InstancePerLifetimeScope();
-            ChickenContainer.Builder.Register(s => new MapPortalDao(s.Resolve<SaltyDbContext>(), _mapper)).As<IPortalService>().InstancePerLifetimeScope();
-            ChickenContainer.Builder.Register(s => new ShopDao(s.Resolve<SaltyDbContext>(), _mapper)).As<IShopService>().InstancePerLifetimeScope();
-            ChickenContainer.Builder.Register(s => new ShopItemDao(s.Resolve<SaltyDbContext>(), _mapper)).As<IShopItemService>().InstancePerLifetimeScope();
-            ChickenContainer.Builder.Register(s => new ShopSkillDao(s.Resolve<SaltyDbContext>(), _mapper)).As<IShopSkillService>().InstancePerLifetimeScope();
-            ChickenContainer.Builder.Register(s => new RecipeDao(s.Resolve<SaltyDbContext>(), _mapper)).As<IRecipeService>().InstancePerLifetimeScope();
-            ChickenContainer.Builder.Register(s => new RecipeItemDao(s.Resolve<SaltyDbContext>(), _mapper)).As<IRecipeItemService>().InstancePerLifetimeScope();
-            ChickenContainer.Builder.Register(s => new DropDao(s.Resolve<SaltyDbContext>(), _mapper)).As<IDropService>().InstancePerLifetimeScope();
+            ChickenContainer.Builder.Register(s => new MapMonsterDao(s.Resolve<SaltyDbContext>(), s.Resolve<IMapper>())).As<IMapMonsterService>().InstancePerLifetimeScope();
+            ChickenContainer.Builder.Register(s => new MapNpcDao(s.Resolve<SaltyDbContext>(), s.Resolve<IMapper>())).As<IMapNpcService>().InstancePerLifetimeScope();
+            ChickenContainer.Builder.Register(s => new MapPortalDao(s.Resolve<SaltyDbContext>(), s.Resolve<IMapper>())).As<IPortalService>().InstancePerLifetimeScope();
+            ChickenContainer.Builder.Register(s => new ShopDao(s.Resolve<SaltyDbContext>(), s.Resolve<IMapper>())).As<IShopService>().InstancePerLifetimeScope();
+            ChickenContainer.Builder.Register(s => new ShopItemDao(s.Resolve<SaltyDbContext>(), s.Resolve<IMapper>())).As<IShopItemService>().InstancePerLifetimeScope();
+            ChickenContainer.Builder.Register(s => new ShopSkillDao(s.Resolve<SaltyDbContext>(), s.Resolve<IMapper>())).As<IShopSkillService>().InstancePerLifetimeScope();
+            ChickenContainer.Builder.Register(s => new RecipeDao(s.Resolve<SaltyDbContext>(), s.Resolve<IMapper>())).As<IRecipeService>().InstancePerLifetimeScope();
+            ChickenContainer.Builder.Register(s => new RecipeItemDao(s.Resolve<SaltyDbContext>(), s.Resolve<IMapper>())).As<IRecipeItemService>().InstancePerLifetimeScope();
+            ChickenContainer.Builder.Register(s => new DropDao(s.Resolve<SaltyDbContext>(), s.Resolve<IMapper>())).As<IDropService>().InstancePerLifetimeScope();
         }
 
         private bool Initialize()

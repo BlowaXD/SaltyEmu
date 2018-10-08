@@ -11,21 +11,18 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Storage;
 using Newtonsoft.Json;
-using SaltyEmu.DatabasePlugin.Context;
 using SaltyEmu.DatabasePlugin.Models;
-using SaltyEmu.DatabasePlugin.Models.BCard;
-using SaltyEmu.DatabasePlugin.Utils;
 
 namespace SaltyEmu.DatabasePlugin.Services.Base
 {
     public class MappedRepositoryBase<TObject, TModel> : IMappedRepository<TObject> where TObject : class, IMappedDto where TModel : class, IMappedModel, new()
     {
         protected static readonly Logger Log = Logger.GetLogger<TObject>();
-        protected readonly SaltyDbContext Context;
+        protected readonly DbContext Context;
         protected readonly DbSet<TModel> DbSet;
         protected readonly IMapper Mapper;
 
-        public MappedRepositoryBase(SaltyDbContext context, IMapper mapper)
+        public MappedRepositoryBase(DbContext context, IMapper mapper)
         {
             Context = context;
             Mapper = mapper;

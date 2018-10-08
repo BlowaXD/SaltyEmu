@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using ChickenAPI.Data.Item;
 using ChickenAPI.Game.Data.AccessLayer.Item;
+using Microsoft.EntityFrameworkCore;
 using SaltyEmu.DatabasePlugin.Context;
 using SaltyEmu.DatabasePlugin.Models.Item;
 using SaltyEmu.DatabasePlugin.Services.Base;
@@ -13,7 +14,7 @@ namespace SaltyEmu.DatabasePlugin.Services.Item
     {
         private readonly Dictionary<long, ItemDto> _items = new Dictionary<long, ItemDto>();
 
-        public ItemDao(SaltyDbContext context, IMapper mapper) : base(context, mapper)
+        public ItemDao(DbContext context, IMapper mapper) : base(context, mapper)
         {
         }
 

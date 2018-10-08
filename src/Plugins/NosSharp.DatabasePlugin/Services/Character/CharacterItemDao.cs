@@ -8,7 +8,6 @@ using ChickenAPI.Enums;
 using ChickenAPI.Enums.Game.Items;
 using ChickenAPI.Game.Data.AccessLayer.Item;
 using Microsoft.EntityFrameworkCore;
-using SaltyEmu.DatabasePlugin.Context;
 using SaltyEmu.DatabasePlugin.Models.Character;
 using SaltyEmu.DatabasePlugin.Services.Base;
 
@@ -16,7 +15,7 @@ namespace SaltyEmu.DatabasePlugin.Services.Character
 {
     public class CharacterItemDao : SynchronizedRepositoryBase<ItemInstanceDto, CharacterItemModel>, IItemInstanceService
     {
-        public CharacterItemDao(SaltyDbContext context, IMapper mapper) : base(context, mapper)
+        public CharacterItemDao(DbContext context, IMapper mapper) : base(context, mapper)
         {
         }
 

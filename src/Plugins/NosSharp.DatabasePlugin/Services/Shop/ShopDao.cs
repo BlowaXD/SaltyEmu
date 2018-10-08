@@ -14,7 +14,7 @@ namespace SaltyEmu.DatabasePlugin.Services.Shop
 {
     public class ShopDao : MappedRepositoryBase<ShopDto, ShopModel>, IShopService
     {
-        public ShopDao(SaltyDbContext context, IMapper mapper) : base(context, mapper)
+        public ShopDao(DbContext context, IMapper mapper) : base(context, mapper)
         {
         }
 

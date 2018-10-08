@@ -4,8 +4,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using ChickenAPI.Data.Drop;
 using ChickenAPI.Game.Data.AccessLayer.Drop;
-using SaltyEmu.DatabasePlugin.Context;
-using SaltyEmu.DatabasePlugin.Models;
+using Microsoft.EntityFrameworkCore;
 using SaltyEmu.DatabasePlugin.Models.Drops;
 using SaltyEmu.DatabasePlugin.Services.Base;
 
@@ -19,7 +18,7 @@ namespace SaltyEmu.DatabasePlugin.Services.Drop
     {
         private readonly Dictionary<long, DropDto> _items = new Dictionary<long, DropDto>();
 
-        public DropDao(SaltyDbContext context, IMapper mapper) : base(context, mapper)
+        public DropDao(DbContext context, IMapper mapper) : base(context, mapper)
         {
         }
 

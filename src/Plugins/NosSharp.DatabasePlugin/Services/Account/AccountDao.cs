@@ -13,7 +13,7 @@ namespace SaltyEmu.DatabasePlugin.Services.Account
 {
     public class AccountDao : MappedRepositoryBase<AccountDto, AccountModel>, IAccountService
     {
-        public AccountDao(SaltyDbContext dbFactory, IMapper mapper) : base(dbFactory, mapper)
+        public AccountDao(DbContext dbFactory, IMapper mapper) : base(dbFactory, mapper)
         {
         }
 
