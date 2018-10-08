@@ -10,16 +10,12 @@ using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Events;
 using ChickenAPI.Game.Families.Events;
 using ChickenAPI.Game.Features.Effects;
-using ChickenAPI.Game.Managers;
-using ChickenAPI.Game.Network;
 using ChickenAPI.Game.Test.Mocks;
 using Microsoft.EntityFrameworkCore;
-using Moq;
 using NosSharp.BasicAlgorithm;
 using NUnit.Framework;
 using SaltyEmu.BasicPlugin;
 using SaltyEmu.DatabasePlugin.Context;
-using SaltyEmu.DatabasePlugin.Services.Account;
 using SaltyEmu.DatabasePlugin.Utils;
 
 namespace ChickenAPI.Game.Test.Families
@@ -121,6 +117,10 @@ namespace ChickenAPI.Game.Test.Families
         public void Family_Creation_Success_Only_Leader()
         {
             string familyName = "family_name_test";
+
+            Assert.IsNull(_player.Family);
+            Assert.IsNull(_player.FamilyCharacter);
+
             _player.EmitEvent(new FamilyCreationEvent
             {
                 Leader = _player,
@@ -131,6 +131,7 @@ namespace ChickenAPI.Game.Test.Families
             Assert.IsNotNull(_player.FamilyCharacter);
             Assert.AreEqual(_player.Family.Id, _player.FamilyCharacter.FamilyId);
             Assert.AreEqual(_player.Family.Name, familyName);
+            // leave family
         }
 
         [Test]
@@ -138,9 +139,9 @@ namespace ChickenAPI.Game.Test.Families
         {
             string familyName = "family_name_test_three_persons";
 
-            PlayerEntity firstAssist = LoadPlayer("firstAssist");
-            PlayerEntity secondAssist = LoadPlayer("SecondAssist");
-            PlayerEntity thirdAssist = LoadPlayer("thirdAssist");
+            PlayerEntity firstAssist = LoadPlayer("player_assist_1");
+            PlayerEntity secondAssist = LoadPlayer("player_assist_2");
+            PlayerEntity thirdAssist = LoadPlayer("player_assist_3");
 
             List<IPlayerEntity> assistants = new List<IPlayerEntity>
             {
@@ -149,15 +150,24 @@ namespace ChickenAPI.Game.Test.Families
                 thirdAssist
             };
 
+            foreach (IPlayerEntity player in assistants)
+            {
+                Assert.IsNull(player.Family);
+                Assert.IsNull(player.FamilyCharacter);
+            }
+
             _player.EmitEvent(new FamilyCreationEvent
             {
                 Leader = _player,
                 FamilyName = familyName,
                 Assistants = assistants
             });
+            // process event through event pipeline
 
             foreach (IPlayerEntity player in assistants)
             {
+                Assert.IsNotNull(player.Family);
+                Assert.IsNotNull(player.FamilyCharacter);
                 Assert.AreEqual(_player.Family, player.Family);
                 Assert.AreEqual(player.Family.Name, familyName);
                 Assert.AreEqual(player.FamilyCharacter.CharacterId, player.Character.Id);
