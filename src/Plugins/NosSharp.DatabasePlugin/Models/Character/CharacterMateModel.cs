@@ -6,7 +6,7 @@ using SaltyEmu.DatabasePlugin.Models.NpcMonster;
 namespace SaltyEmu.DatabasePlugin.Models.Character
 {
     [Table("character_mate")]
-    public class CharacterMateModel : IMappedDto
+    public class CharacterMateModel : IMappedModel
     {
         public CharacterModel Character { get; set; }
 

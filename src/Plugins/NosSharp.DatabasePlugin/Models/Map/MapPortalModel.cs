@@ -5,7 +5,7 @@ using ChickenAPI.Enums.Game.Portals;
 namespace SaltyEmu.DatabasePlugin.Models.Map
 {
     [Table("map_portals")]
-    public class MapPortalModel : IMappedDto
+    public class MapPortalModel : IMappedModel
     {
         public PortalType Type { get; set; }
 

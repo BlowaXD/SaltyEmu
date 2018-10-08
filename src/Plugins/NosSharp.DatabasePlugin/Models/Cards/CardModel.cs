@@ -1,15 +1,18 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using ChickenAPI.Data;
 using ChickenAPI.Enums.Game.Buffs;
 using SaltyEmu.DatabasePlugin.Models.BCard;
 
-namespace SaltyEmu.DatabasePlugin.Models
+namespace SaltyEmu.DatabasePlugin.Models.Cards
 {
     [Table("_data_card")]
-    public class CardModel : IMappedDto
+    public class CardModel : IMappedModel
     {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public long Id { get; set; }
+
         public int Duration { get; set; }
 
         public int EffectId { get; set; }
@@ -29,9 +32,5 @@ namespace SaltyEmu.DatabasePlugin.Models
 
         public byte Propability { get; set; }
         public IEnumerable<CardBCardModel> BCards { get; set; }
-
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public long Id { get; set; }
     }
 }

@@ -7,7 +7,7 @@ using SaltyEmu.DatabasePlugin.Models.NpcMonster;
 namespace SaltyEmu.DatabasePlugin.Models.Map
 {
     [Table("map_monsters")]
-    public class MapMonsterModel : IMappedDto
+    public class MapMonsterModel : IMappedModel
     {
         public short MapX { get; set; }
 

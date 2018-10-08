@@ -6,7 +6,7 @@ using SaltyEmu.DatabasePlugin.Models.Item;
 namespace SaltyEmu.DatabasePlugin.Models.Shop
 {
     [Table("shop_item")]
-    public class ShopItemModel : IMappedDto
+    public class ShopItemModel : IMappedModel
     {
         public byte Color { get; set; }
 

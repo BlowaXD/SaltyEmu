@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SaltyEmu.DatabasePlugin.Models;
 using SaltyEmu.DatabasePlugin.Models.BCard;
+using SaltyEmu.DatabasePlugin.Models.Cards;
 using SaltyEmu.DatabasePlugin.Models.Character;
 using SaltyEmu.DatabasePlugin.Models.Families;
 using SaltyEmu.DatabasePlugin.Models.Item;

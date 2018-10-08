@@ -6,7 +6,7 @@ using ChickenAPI.Data;
 namespace SaltyEmu.DatabasePlugin.Models.Character
 {
     [Table("quicklist")]
-    public class CharacterQuicklistModel : ISynchronizedDto
+    public class CharacterQuicklistModel : ISynchronizedModel
     {
         [Key]
         public Guid Id { get; set; }

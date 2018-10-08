@@ -7,7 +7,7 @@ using ChickenAPI.Enums.Game.Character;
 namespace SaltyEmu.DatabasePlugin.Models.Character
 {
     [Table("character")]
-    public class CharacterModel : IMappedDto
+    public class CharacterModel : IMappedModel
     {
         public AccountModel Account { get; set; }
 

@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Storage;
 using SaltyEmu.DatabasePlugin.Context;
+using SaltyEmu.DatabasePlugin.Models;
 using SaltyEmu.DatabasePlugin.Models.BCard;
 using SaltyEmu.DatabasePlugin.Services.Base;
 
@@ -161,7 +162,7 @@ namespace SaltyEmu.DatabasePlugin.Services.BCard
             }
         }
 
-        private TObject SubSave<TObject, TModel>(DbSet<TModel> toInsert, TObject obj) where TObject : class, IMappedDto where TModel : class, IMappedDto
+        private TObject SubSave<TObject, TModel>(DbSet<TModel> toInsert, TObject obj) where TObject : class, IMappedDto where TModel : BCardModel
         {
             try
             {
@@ -209,7 +210,7 @@ namespace SaltyEmu.DatabasePlugin.Services.BCard
             }
         }
 
-        private async Task<TObject> SubSaveAsync<TObject, TModel>(DbSet<TModel> toInsert, TObject obj) where TObject : class, IMappedDto where TModel : class, IMappedDto
+        private async Task<TObject> SubSaveAsync<TObject, TModel>(DbSet<TModel> toInsert, TObject obj) where TObject : class, IMappedDto where TModel : BCardModel
         {
             try
             {

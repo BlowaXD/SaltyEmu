@@ -2,10 +2,10 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using ChickenAPI.Data;
 
-namespace SaltyEmu.DatabasePlugin.Models
+namespace SaltyEmu.DatabasePlugin.Models.Drops
 {
     [Table("global_drop")]
-    public class DropModel : IMappedDto
+    public class DropModel : IMappedModel
     {
         /// <summary>
         ///     Item that will be dropped

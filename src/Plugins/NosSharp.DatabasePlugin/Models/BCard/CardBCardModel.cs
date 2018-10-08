@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using SaltyEmu.DatabasePlugin.Models.Cards;
 
 namespace SaltyEmu.DatabasePlugin.Models.BCard
 {

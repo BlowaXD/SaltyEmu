@@ -9,11 +9,12 @@ using EFCore.BulkExtensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using SaltyEmu.DatabasePlugin.Context;
+using SaltyEmu.DatabasePlugin.Models;
 
 namespace SaltyEmu.DatabasePlugin.Services.Base
 {
     public class SynchronizedRepositoryBase<TObject, TModel> : ISynchronizedRepository<TObject>
-    where TObject : class, ISynchronizedDto where TModel : class, ISynchronizedDto, new()
+    where TObject : class, ISynchronizedDto where TModel : class, ISynchronizedModel, new()
     {
         protected static readonly Logger Log = Logger.GetLogger<TModel>();
         protected readonly SaltyDbContext Context;

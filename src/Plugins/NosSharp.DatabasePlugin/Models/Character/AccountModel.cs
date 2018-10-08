@@ -7,7 +7,7 @@ using ChickenAPI.Enums;
 namespace SaltyEmu.DatabasePlugin.Models.Character
 {
     [Table("account")]
-    public class AccountModel : IMappedDto
+    public class AccountModel : IMappedModel
     {
         [Required]
         public AuthorityType Authority { get; set; }

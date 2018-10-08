@@ -7,7 +7,7 @@ using SaltyEmu.DatabasePlugin.Models.Map;
 namespace SaltyEmu.DatabasePlugin.Models.Shop
 {
     [Table("map_npcs_shop")]
-    public class ShopModel : IMappedDto
+    public class ShopModel : IMappedModel
     {
         public MapNpcModel MapNpc { get; set; }
 

@@ -7,7 +7,7 @@ using SaltyEmu.DatabasePlugin.Models.Skill;
 namespace SaltyEmu.DatabasePlugin.Models.Character
 {
     [Table("character_skill")]
-    public class CharacterSkillModel : ISynchronizedDto
+    public class CharacterSkillModel : ISynchronizedModel
     {
         public CharacterModel Character { get; set; }
 

@@ -8,7 +8,7 @@ using SaltyEmu.DatabasePlugin.Models.NpcMonster;
 namespace SaltyEmu.DatabasePlugin.Models.Skill
 {
     [Table("_data_skill")]
-    public class SkillModel : IMappedDto
+    public class SkillModel : IMappedModel
     {
         public short AttackAnimation { get; set; }
 

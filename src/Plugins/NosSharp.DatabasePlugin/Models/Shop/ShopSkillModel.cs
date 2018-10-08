@@ -6,7 +6,7 @@ using SaltyEmu.DatabasePlugin.Models.Skill;
 namespace SaltyEmu.DatabasePlugin.Models.Shop
 {
     [Table("shop_skill")]
-    public class ShopSkillModel : IMappedDto
+    public class ShopSkillModel : IMappedModel
     {
         public SkillModel Skill { get; set; }
 

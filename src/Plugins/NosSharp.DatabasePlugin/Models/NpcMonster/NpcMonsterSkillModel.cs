@@ -6,7 +6,7 @@ using SaltyEmu.DatabasePlugin.Models.Skill;
 namespace SaltyEmu.DatabasePlugin.Models.NpcMonster
 {
     [Table("_data_npc_monster_skill")]
-    public class NpcMonsterSkillModel : IMappedDto
+    public class NpcMonsterSkillModel : IMappedModel
     {
         public SkillModel Skill { get; set; }
 

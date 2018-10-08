@@ -9,7 +9,7 @@ using SaltyEmu.DatabasePlugin.Models.Item;
 namespace SaltyEmu.DatabasePlugin.Models.Character
 {
     [Table("character_item")]
-    public class CharacterItemModel : ISynchronizedDto
+    public class CharacterItemModel : ISynchronizedModel
     {
         public CharacterModel Character { get; set; }
 

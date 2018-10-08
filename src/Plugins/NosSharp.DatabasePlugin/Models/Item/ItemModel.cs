@@ -10,7 +10,7 @@ using SaltyEmu.DatabasePlugin.Models.Shop;
 namespace SaltyEmu.DatabasePlugin.Models.Item
 {
     [Table("_data_item")]
-    public class ItemModel : IMappedDto
+    public class ItemModel : IMappedModel
     {
         public long Vnum { get; set; }
 

@@ -7,7 +7,7 @@ using SaltyEmu.DatabasePlugin.Models.Item;
 namespace SaltyEmu.DatabasePlugin.Models.Shop
 {
     [Table("shop_recipe")]
-    public class RecipeModel : IMappedDto
+    public class RecipeModel : IMappedModel
     {
         public byte Amount { get; set; }
 

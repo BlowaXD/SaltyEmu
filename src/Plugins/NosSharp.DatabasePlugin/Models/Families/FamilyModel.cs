@@ -7,7 +7,7 @@ using SaltyEmu.DatabasePlugin.Models.Character;
 
 namespace SaltyEmu.DatabasePlugin.Models.Families
 {
-    public class FamilyModel : IMappedDto
+    public class FamilyModel : IMappedModel
     {
         public long Id { get; set; }
         public uint Experience { get; set; }

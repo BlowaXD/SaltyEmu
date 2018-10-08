@@ -4,7 +4,7 @@ using ChickenAPI.Data;
 namespace SaltyEmu.DatabasePlugin.Models.BCard
 {
     [Table("global_bcard")]
-    public class BCardModel : IMappedDto
+    public class BCardModel : IMappedModel
     {
         public byte SubType { get; set; }
 

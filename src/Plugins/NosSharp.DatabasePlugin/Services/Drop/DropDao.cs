@@ -6,6 +6,7 @@ using ChickenAPI.Data.Drop;
 using ChickenAPI.Game.Data.AccessLayer.Drop;
 using SaltyEmu.DatabasePlugin.Context;
 using SaltyEmu.DatabasePlugin.Models;
+using SaltyEmu.DatabasePlugin.Models.Drops;
 using SaltyEmu.DatabasePlugin.Services.Base;
 
 namespace SaltyEmu.DatabasePlugin.Services.Drop

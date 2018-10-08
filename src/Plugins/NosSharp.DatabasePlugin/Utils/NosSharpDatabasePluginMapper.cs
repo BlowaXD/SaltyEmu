@@ -18,6 +18,7 @@ using ChickenAPI.Game.Data.AccessLayer.NpcMonster;
 using ChickenAPI.Game.Data.AccessLayer.Skill;
 using SaltyEmu.DatabasePlugin.Models;
 using SaltyEmu.DatabasePlugin.Models.BCard;
+using SaltyEmu.DatabasePlugin.Models.Cards;
 using SaltyEmu.DatabasePlugin.Models.Character;
 using SaltyEmu.DatabasePlugin.Models.Drops;
 using SaltyEmu.DatabasePlugin.Models.Families;
