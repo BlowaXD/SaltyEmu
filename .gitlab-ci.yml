@@ -23,6 +23,14 @@ build_project:
   script:
    - dotnet restore
    - dotnet build
+   
+   
+test_project:
+    image: microsoft/dotnet:2.1-sdk-alpine
+    stage: test
+    script:
+    - dotnet restore
+    - dotnet test test/ChickenAPI.Game.Test/
 
 
 # Docker Building

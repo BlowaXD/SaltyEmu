@@ -27,16 +27,23 @@ namespace ChickenAPI.Game.Test.Families
     [TestFixture]
     public class Family_Creation
     {
+        private bool _initialized;
         private ICharacterService _characterService;
         private IPlayerEntity _player;
 
         [SetUp]
         public void Setup()
         {
+            if (_initialized)
+            {
+                return;
+            }
+
+            _initialized = true;
             InjectDependencies();
             ChickenContainer.Initialize();
             LoadDatabase();
-            LoadPlayer();
+            _player = LoadPlayer("test_player_1");
             InitializeEventHandlers();
         }
 
@@ -58,26 +65,28 @@ namespace ChickenAPI.Game.Test.Families
             BasicPluginIoCInjector.InjectDependencies();
         }
 
-        private void LoadPlayer()
+        PlayerEntity LoadPlayer(string name)
         {
-            CharacterDto dto = _characterService.GetActiveByNameAsync("test_player_1").Result;
-            if (dto == null)
+            CharacterDto dto = _characterService.GetActiveByNameAsync(name).Result;
+            if (dto != null)
             {
-                CharacterDto newCharacter = _characterService.GetCreationCharacter();
-
-                newCharacter.Class = CharacterClassType.Adventurer;
-                newCharacter.Gender = GenderType.Male;
-                newCharacter.HairColor = HairColorType.Black;
-                newCharacter.HairStyle = HairStyleType.HairStyleA;
-                newCharacter.Name = "test_player_1";
-                newCharacter.Slot = 1;
-                newCharacter.AccountId = 1;
-                newCharacter.MinilandMessage = "Welcome";
-                newCharacter.State = CharacterState.Active;
-                dto = _characterService.Save(newCharacter);
+                return new PlayerEntity(new SessionMock(), dto, null, null);
             }
 
-            _player = new PlayerEntity(new SessionMock(), dto, null, null);
+            CharacterDto newCharacter = _characterService.GetCreationCharacter();
+
+            newCharacter.Class = CharacterClassType.Adventurer;
+            newCharacter.Gender = GenderType.Male;
+            newCharacter.HairColor = HairColorType.Black;
+            newCharacter.HairStyle = HairStyleType.HairStyleA;
+            newCharacter.Name = name;
+            newCharacter.Slot = 1;
+            newCharacter.AccountId = 1;
+            newCharacter.MinilandMessage = "Welcome";
+            newCharacter.State = CharacterState.Active;
+            dto = _characterService.Save(newCharacter);
+
+            return new PlayerEntity(new SessionMock(), dto, null, null);
         }
 
         private static IEnumerable<Type> GetHandlers()
@@ -103,10 +112,8 @@ namespace ChickenAPI.Game.Test.Families
 
                 foreach (Type type in handlerBase.HandledTypes)
                 {
-
                     eventManager.Register(handlerBase, type);
                 }
-
             }
         }
 
@@ -124,6 +131,37 @@ namespace ChickenAPI.Game.Test.Families
             Assert.IsNotNull(_player.FamilyCharacter);
             Assert.AreEqual(_player.Family.Id, _player.FamilyCharacter.FamilyId);
             Assert.AreEqual(_player.Family.Name, familyName);
+        }
+
+        [Test]
+        public void Family_Creation_Success_Three_Persons()
+        {
+            string familyName = "family_name_test_three_persons";
+
+            PlayerEntity firstAssist = LoadPlayer("firstAssist");
+            PlayerEntity secondAssist = LoadPlayer("SecondAssist");
+            PlayerEntity thirdAssist = LoadPlayer("thirdAssist");
+
+            List<IPlayerEntity> assistants = new List<IPlayerEntity>
+            {
+                firstAssist,
+                secondAssist,
+                thirdAssist
+            };
+
+            _player.EmitEvent(new FamilyCreationEvent
+            {
+                Leader = _player,
+                FamilyName = familyName,
+                Assistants = assistants
+            });
+
+            foreach (IPlayerEntity player in assistants)
+            {
+                Assert.AreEqual(_player.Family, player.Family);
+                Assert.AreEqual(player.Family.Name, familyName);
+                Assert.AreEqual(player.FamilyCharacter.CharacterId, player.Character.Id);
+            }
         }
     }
 }
