@@ -22,7 +22,7 @@ namespace ChickenAPI.Game.Test.Families
         {
             TestHelper.Initialize();
             _characterService = ChickenContainer.Instance.Resolve<ICharacterService>();
-            string familyName = "family_join_test";
+            const string familyName = "family_join_test";
             _leader = LoadPlayer("test_leader");
 
             _familyEventHandler.Execute(_leader, new FamilyCreationEvent
@@ -32,20 +32,16 @@ namespace ChickenAPI.Game.Test.Families
             });
         }
 
-        private static IPlayerEntity LoadPlayer(string name)
-        {
-            return TestHelper.LoadPlayer(name);
-        }
+        private static IPlayerEntity LoadPlayer(string name) => TestHelper.LoadPlayer(name);
 
         [Test]
         public void Family_Join_Success_Existing_Family()
         {
             IPlayerEntity newPlayer = LoadPlayer("test_member");
+
             _familyEventHandler.Execute(newPlayer, new FamilyJoinEvent
             {
                 Family = _leader.Family,
-                Force = true,
-                ExpectedAuthority = FamilyAuthority.Member
             });
 
             Assert.AreEqual(_leader.Family, newPlayer.Family);
@@ -57,18 +53,18 @@ namespace ChickenAPI.Game.Test.Families
         [Test]
         public void Family_Join_Success_Custom_Role()
         {
-            IPlayerEntity newPlayer = LoadPlayer("test_member");
+            IPlayerEntity newPlayer = LoadPlayer("test_member_custom_role");
+
             _familyEventHandler.Execute(newPlayer, new FamilyJoinEvent
             {
                 Family = _leader.Family,
-                Force = true,
-                ExpectedAuthority = FamilyAuthority.Member
+                ExpectedAuthority = FamilyAuthority.Assistant
             });
 
             Assert.AreEqual(_leader.Family, newPlayer.Family);
-            Assert.AreEqual(_leader.Family.Id, newPlayer.FamilyCharacter.FamilyId);
+            Assert.AreEqual(newPlayer.FamilyCharacter.FamilyId, newPlayer.FamilyCharacter.FamilyId);
             Assert.AreEqual(newPlayer.Character.Id, newPlayer.FamilyCharacter.CharacterId);
-            Assert.AreEqual(newPlayer.FamilyCharacter.Authority, FamilyAuthority.Member);
+            Assert.AreEqual(newPlayer.FamilyCharacter.Authority, FamilyAuthority.Assistant);
         }
 
         [Test]

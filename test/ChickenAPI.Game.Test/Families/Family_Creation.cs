@@ -48,9 +48,9 @@ namespace ChickenAPI.Game.Test.Families
         }
 
         [Test]
-        public void Family_Creation_Success_Three_Persons()
+        public void Family_Creation_Success_Three_Assistants()
         {
-            string familyName = "family_name_test_three_persons";
+            string familyName = "family_name_test_three_assistants";
 
             IPlayerEntity player = LoadPlayer("test_three_persons");
             IPlayerEntity firstAssist = LoadPlayer("player_assist_1");
