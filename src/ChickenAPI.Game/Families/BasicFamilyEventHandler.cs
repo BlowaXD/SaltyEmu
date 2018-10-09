@@ -63,6 +63,12 @@ namespace ChickenAPI.Game.Families
                 return;
             }
 
+            if (creation.Leader.HasFamily)
+            {
+                Log.Info("[FAMILY][CREATION] ALREADY_IN_FAMILY");
+                return;
+            }
+
             var family = new FamilyDto
             {
                 Name = creation.FamilyName,
@@ -86,11 +92,11 @@ namespace ChickenAPI.Game.Families
 
             foreach (IPlayerEntity player in creation.Assistants)
             {
+                if (player.HasFamily) continue;
                 AttachFamily(player, family, FamilyAuthority.Assistant);
                 player.Broadcast(creation.Leader.GenerateGidxPacket());
                 player.Broadcast(creation.Leader.GenerateGInfoPacket());
             }
-
         }
 
         private static void AttachFamily(IPlayerEntity player, FamilyDto dto, FamilyAuthority authority)

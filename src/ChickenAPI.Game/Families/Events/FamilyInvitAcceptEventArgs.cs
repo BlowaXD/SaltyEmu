@@ -2,7 +2,7 @@
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Events;
 
-namespace ChickenAPI.Game.Features.Families.Args
+namespace ChickenAPI.Game.Families.Events
 {
     public class FamilyInvitAcceptEventArgs : ChickenEventArgs
     {

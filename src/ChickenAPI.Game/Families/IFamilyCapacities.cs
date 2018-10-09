@@ -6,19 +6,6 @@ namespace ChickenAPI.Game.Families
     public interface IFamilyCapacities
     {
         /// <summary>
-        /// Joins the given family
-        /// Will emit the <seealso cref="Events.FamilyJoinEvent"/>
-        /// </summary>
-        void FamilyJoin(FamilyDto dto);
-
-        /// <summary>
-        /// Leaves the family
-        /// Does nothing if the character has no family
-        /// </summary>
-        void FamilyLeave();
-
-
-        /// <summary>
         /// Tells if the player actually has a family
         /// </summary>
         bool HasFamily { get; }

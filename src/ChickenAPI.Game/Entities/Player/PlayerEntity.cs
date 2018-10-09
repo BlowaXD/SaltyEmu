@@ -266,33 +266,6 @@ namespace ChickenAPI.Game.Entities.Player
 
         #region Family
 
-        public void FamilyJoin(FamilyDto dto)
-        {
-            if (HasFamily)
-            {
-                // already got a family
-                return;
-            }
-
-            EmitEvent(new FamilyJoinEvent
-            {
-                Family = dto
-            });
-        }
-
-        public void FamilyLeave()
-        {
-            if (!HasFamily)
-            {
-                return;
-            }
-
-            EmitEvent(new FamilyLeaveEvent
-            {
-                Family = Family,
-            });
-        }
-
         public bool HasFamily => Family != null;
         public bool IsFamilyLeader => FamilyCharacter.Authority == FamilyAuthority.Head;
         public FamilyDto Family { get; set; }
