@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Autofac;
 using ChickenAPI.Core.IoC;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Data.Character;
 using ChickenAPI.Data.Families;
 using ChickenAPI.Enums.Game.Character;
@@ -13,11 +14,13 @@ using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Events;
 using ChickenAPI.Game.Families.Events;
+using ChickenAPI.Game.Families.Extensions;
 
 namespace ChickenAPI.Game.Families
 {
     public class BasicFamilyEventHandler : EventHandlerBase
     {
+        private static readonly Logger Log = Logger.GetLogger<BasicFamilyEventHandler>();
         private static readonly IFamilyService FamilyService = new Lazy<IFamilyService>(() => ChickenContainer.Instance.Resolve<IFamilyService>()).Value;
         private static readonly ICharacterFamilyService CharacterFamilyService = new Lazy<ICharacterFamilyService>(() => ChickenContainer.Instance.Resolve<ICharacterFamilyService>()).Value;
 
@@ -33,15 +36,30 @@ namespace ChickenAPI.Game.Families
                 case FamilyCreationEvent creation:
                     CreateFamilyEvent(creation).Wait();
                     break;
+                case FamilyJoinEvent join:
+                    FamilyJoin(join);
+                    break;
+                case FamilyLeaveEvent leave:
+                    FamilyLeave(leave);
+                    break;
             }
+        }
+
+        private void FamilyLeave(FamilyLeaveEvent leave)
+        {
+            // todo
+        }
+
+        private void FamilyJoin(FamilyJoinEvent join)
+        {
+            // todo
         }
 
         private async Task CreateFamilyEvent(FamilyCreationEvent creation)
         {
-            // check family name already here
-
             if (FamilyService.GetByName(creation.FamilyName) != null)
             {
+                Log.Info("[FAMILY][CREATION] NAME_ALREADY_TAKEN");
                 return;
             }
 
@@ -58,12 +76,21 @@ namespace ChickenAPI.Game.Families
 
             AttachFamily(creation.Leader, family, FamilyAuthority.Head);
 
-            foreach (IPlayerEntity i in creation.Assistants)
+            creation.Leader.Broadcast(creation.Leader.GenerateGidxPacket());
+            creation.Leader.Broadcast(creation.Leader.GenerateGInfoPacket());
+
+            if (creation.Assistants == null)
             {
-                AttachFamily(i, family, FamilyAuthority.Assistant);
+                return;
             }
 
-            // broadcast packets
+            foreach (IPlayerEntity player in creation.Assistants)
+            {
+                AttachFamily(player, family, FamilyAuthority.Assistant);
+                player.Broadcast(creation.Leader.GenerateGidxPacket());
+                player.Broadcast(creation.Leader.GenerateGInfoPacket());
+            }
+
         }
 
         private static void AttachFamily(IPlayerEntity player, FamilyDto dto, FamilyAuthority authority)

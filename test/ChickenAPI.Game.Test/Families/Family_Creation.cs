@@ -8,6 +8,7 @@ using ChickenAPI.Enums.Game.Character;
 using ChickenAPI.Game.Data.AccessLayer.Character;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Events;
+using ChickenAPI.Game.Families;
 using ChickenAPI.Game.Families.Events;
 using ChickenAPI.Game.Features.Effects;
 using ChickenAPI.Game.Test.Mocks;
@@ -25,7 +26,7 @@ namespace ChickenAPI.Game.Test.Families
     {
         private bool _initialized;
         private ICharacterService _characterService;
-        private IPlayerEntity _player;
+        private readonly BasicFamilyEventHandler _familyEventHandler = new BasicFamilyEventHandler();
 
         [SetUp]
         public void Setup()
@@ -39,8 +40,6 @@ namespace ChickenAPI.Game.Test.Families
             InjectDependencies();
             ChickenContainer.Initialize();
             LoadDatabase();
-            _player = LoadPlayer("test_player_1");
-            InitializeEventHandlers();
         }
 
         public void LoadDatabase()
@@ -85,53 +84,24 @@ namespace ChickenAPI.Game.Test.Families
             return new PlayerEntity(new SessionMock(), dto, null, null);
         }
 
-        private static IEnumerable<Type> GetHandlers()
-        {
-            List<Type> handlers = new List<Type>();
-
-            handlers.AddRange(typeof(EffectEventHandler).Assembly.GetTypes().Where(s => s.IsSubclassOf(typeof(EventHandlerBase))));
-            return handlers;
-        }
-
-        private static void InitializeEventHandlers()
-        {
-            // first version hardcoded, next one through Plugin + Assembly Reflection
-            var eventManager = ChickenContainer.Instance.Resolve<IEventManager>();
-            foreach (Type handlerType in GetHandlers())
-            {
-                object handler = Activator.CreateInstance(handlerType);
-
-                if (!(handler is EventHandlerBase handlerBase))
-                {
-                    continue;
-                }
-
-                foreach (Type type in handlerBase.HandledTypes)
-                {
-                    eventManager.Register(handlerBase, type);
-                }
-            }
-        }
-
         [Test]
         public void Family_Creation_Success_Only_Leader()
         {
             string familyName = "family_name_test";
+            IPlayerEntity player = LoadPlayer("test_only_leader");
+            Assert.IsNull(player.Family);
+            Assert.IsNull(player.FamilyCharacter);
 
-            Assert.IsNull(_player.Family);
-            Assert.IsNull(_player.FamilyCharacter);
-
-            _player.EmitEvent(new FamilyCreationEvent
+            _familyEventHandler.Execute(player, new FamilyCreationEvent
             {
-                Leader = _player,
+                Leader = player,
                 FamilyName = familyName
             });
 
-            Assert.IsNotNull(_player.Family);
-            Assert.IsNotNull(_player.FamilyCharacter);
-            Assert.AreEqual(_player.Family.Id, _player.FamilyCharacter.FamilyId);
-            Assert.AreEqual(_player.Family.Name, familyName);
-            // leave family
+            Assert.IsNotNull(player.Family);
+            Assert.IsNotNull(player.FamilyCharacter);
+            Assert.AreEqual(player.Family.Id, player.FamilyCharacter.FamilyId);
+            Assert.AreEqual(player.Family.Name, familyName);
         }
 
         [Test]
@@ -139,6 +109,7 @@ namespace ChickenAPI.Game.Test.Families
         {
             string familyName = "family_name_test_three_persons";
 
+            IPlayerEntity player = LoadPlayer("test_three_persons");
             PlayerEntity firstAssist = LoadPlayer("player_assist_1");
             PlayerEntity secondAssist = LoadPlayer("player_assist_2");
             PlayerEntity thirdAssist = LoadPlayer("player_assist_3");
@@ -150,28 +121,55 @@ namespace ChickenAPI.Game.Test.Families
                 thirdAssist
             };
 
-            foreach (IPlayerEntity player in assistants)
+            foreach (IPlayerEntity assistant in assistants)
             {
-                Assert.IsNull(player.Family);
-                Assert.IsNull(player.FamilyCharacter);
+                Assert.IsNull(assistant.Family);
+                Assert.IsNull(assistant.FamilyCharacter);
             }
 
-            _player.EmitEvent(new FamilyCreationEvent
+            _familyEventHandler.Execute(player, new FamilyCreationEvent
             {
-                Leader = _player,
+                Leader = player,
                 FamilyName = familyName,
                 Assistants = assistants
             });
-            // process event through event pipeline
 
-            foreach (IPlayerEntity player in assistants)
+            foreach (IPlayerEntity assistant in assistants)
             {
-                Assert.IsNotNull(player.Family);
-                Assert.IsNotNull(player.FamilyCharacter);
-                Assert.AreEqual(_player.Family, player.Family);
-                Assert.AreEqual(player.Family.Name, familyName);
-                Assert.AreEqual(player.FamilyCharacter.CharacterId, player.Character.Id);
+                Assert.IsNotNull(assistant.Family);
+                Assert.IsNotNull(assistant.FamilyCharacter);
+                Assert.AreEqual(assistant.Family, player.Family);
+                Assert.AreEqual(assistant.Family.Name, familyName);
+                Assert.AreEqual(assistant.FamilyCharacter.CharacterId, assistant.Character.Id);
             }
+        }
+
+        [Test]
+        public void Family_Creation_Fail_Family_Name_Already_Taken()
+        {
+            string familyName = "family_name_test_fail_same_name";
+
+            IPlayerEntity player = LoadPlayer("test_fail_name_already_taken");
+            _familyEventHandler.Execute(player, new FamilyCreationEvent
+            {
+                Leader = player,
+                FamilyName = familyName,
+            });
+
+            Assert.IsNotNull(player.Family);
+            Assert.IsNotNull(player.FamilyCharacter);
+
+            // remove family from
+            player.Family = null;
+            player.FamilyCharacter = null;
+            _familyEventHandler.Execute(player, new FamilyCreationEvent
+            {
+                Leader = player,
+                FamilyName = familyName,
+            });
+
+            Assert.IsNull(player.Family);
+            Assert.IsNull(player.FamilyCharacter);
         }
     }
 }

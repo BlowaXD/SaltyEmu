@@ -16,6 +16,7 @@ using ChickenAPI.Game.ECS.Components;
 using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Entities.Extensions;
 using ChickenAPI.Game.Entities.Player.Extensions;
+using ChickenAPI.Game.Families.Events;
 using ChickenAPI.Game.Features.Families;
 using ChickenAPI.Game.Features.Inventory;
 using ChickenAPI.Game.Features.Inventory.Extensions;
@@ -264,6 +265,33 @@ namespace ChickenAPI.Game.Entities.Player
         #endregion
 
         #region Family
+
+        public void FamilyJoin(FamilyDto dto)
+        {
+            if (HasFamily)
+            {
+                // already got a family
+                return;
+            }
+
+            EmitEvent(new FamilyJoinEvent
+            {
+                Family = dto
+            });
+        }
+
+        public void FamilyLeave()
+        {
+            if (!HasFamily)
+            {
+                return;
+            }
+
+            EmitEvent(new FamilyLeaveEvent
+            {
+                Family = Family,
+            });
+        }
 
         public bool HasFamily => Family != null;
         public bool IsFamilyLeader => FamilyCharacter.Authority == FamilyAuthority.Head;
