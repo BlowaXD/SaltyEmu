@@ -78,6 +78,8 @@ namespace ChickenAPI.Game.Test.Families
                 ExpectedAuthority = FamilyAuthority.Head
             });
 
+            Assert.IsNotNull(_leader.Family);
+            Assert.IsTrue(_leader.IsFamilyLeader);
             Assert.IsNull(newPlayer.Family);
             Assert.IsNull(newPlayer.FamilyCharacter);
         }

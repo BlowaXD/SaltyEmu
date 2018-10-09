@@ -267,7 +267,7 @@ namespace ChickenAPI.Game.Entities.Player
         #region Family
 
         public bool HasFamily => Family != null;
-        public bool IsFamilyLeader => FamilyCharacter.Authority == FamilyAuthority.Head;
+        public bool IsFamilyLeader => FamilyCharacter?.Authority == FamilyAuthority.Head;
         public FamilyDto Family { get; set; }
         public CharacterFamilyDto FamilyCharacter { get; set; }
 

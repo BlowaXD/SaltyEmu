@@ -32,6 +32,9 @@ namespace ChickenAPI.Game.Test.Families
         {
             string familyName = "family_name_test";
             IPlayerEntity player = LoadPlayer("test_only_leader");
+
+            Assert.IsFalse(player.HasFamily);
+            Assert.IsFalse(player.IsFamilyLeader);
             Assert.IsNull(player.Family);
             Assert.IsNull(player.FamilyCharacter);
 
@@ -41,6 +44,8 @@ namespace ChickenAPI.Game.Test.Families
                 FamilyName = familyName
             });
 
+            Assert.IsTrue(player.HasFamily);
+            Assert.IsTrue(player.IsFamilyLeader);
             Assert.IsNotNull(player.Family);
             Assert.IsNotNull(player.FamilyCharacter);
             Assert.AreEqual(player.Family.Id, player.FamilyCharacter.FamilyId);
@@ -79,6 +84,8 @@ namespace ChickenAPI.Game.Test.Families
 
             foreach (IPlayerEntity assistant in assistants)
             {
+                Assert.IsTrue(assistant.HasFamily);
+                Assert.IsFalse(assistant.IsFamilyLeader);
                 Assert.IsNotNull(assistant.Family);
                 Assert.IsNotNull(assistant.FamilyCharacter);
                 Assert.AreEqual(assistant.Family, player.Family);
@@ -99,20 +106,10 @@ namespace ChickenAPI.Game.Test.Families
                 FamilyName = familyName,
             });
 
-            Assert.IsNotNull(player.Family);
-            Assert.IsNotNull(player.FamilyCharacter);
-
-            // remove family from
-            player.Family = null;
-            player.FamilyCharacter = null;
-            _familyEventHandler.Execute(player, new FamilyCreationEvent
-            {
-                Leader = player,
-                FamilyName = familyName,
-            });
-
             Assert.IsNull(player.Family);
             Assert.IsNull(player.FamilyCharacter);
+            Assert.IsFalse(player.HasFamily);
+            Assert.IsFalse(player.IsFamilyLeader);
         }
 
         [Test]
