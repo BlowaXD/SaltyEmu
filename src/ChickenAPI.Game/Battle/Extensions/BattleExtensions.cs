@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Autofac;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Data.Skills;
@@ -62,7 +62,7 @@ namespace ChickenAPI.Game.Battle.Extensions
                         goto default;
                     }
 
-                    entity.Battle.Entity.EmitEvent(new UseSkillArgs { Skill = skill });
+                    entity.Battle.Entity.EmitEvent(new UseSkillArgs { Skill = skill, targetEntity = target });
 
                     break;
 
@@ -76,6 +76,7 @@ namespace ChickenAPI.Game.Battle.Extensions
 
                 // Buff
                 case 2 when skill.HitType == 0:
+                    entity.Battle.Entity.EmitEvent(new UseSkillArgs { Skill = skill, targetEntity = target });
                     break;
 
                 default:

@@ -10,7 +10,7 @@ namespace ChickenAPI.Game.Battle.Extensions
 {
     public static class CtPacketExtensions
     {
-        public static CtPacket GenerateCtPacket(IEntity entity, SkillDto skill)
+        public static CtPacket GenerateCtPacket(IEntity entity, IEntity target, SkillDto skill)
         {
             var ct = new CtPacket
             {
@@ -23,19 +23,33 @@ namespace ChickenAPI.Game.Battle.Extensions
                 case IPlayerEntity player:
                     ct.VisualType = VisualType.Character;
                     ct.VisualId = player.Character.Id;
-                    ct.SenderId = player.Character.Id;
                     break;
 
                 case INpcEntity npc:
                     ct.VisualType = VisualType.Npc;
                     ct.VisualId = npc.MapNpc.Id;
-                    ct.SenderId = npc.MapNpc.Id;
                     break;
 
                 case IMonsterEntity monster:
                     ct.VisualType = VisualType.Monster;
                     ct.VisualId = monster.MapMonster.Id;
-                    ct.SenderId = monster.MapMonster.Id;
+                    break;
+            }
+            switch (target)
+            {
+                case IPlayerEntity player:
+                    ct.TargetVisualType = VisualType.Character;
+                    ct.TargetId = player.Character.Id;
+                    break;
+
+                case INpcEntity npc:
+                    ct.TargetVisualType = VisualType.Npc;
+                    ct.TargetId = npc.MapNpc.Id;
+                    break;
+
+                case IMonsterEntity monster:
+                    ct.TargetVisualType = VisualType.Monster;
+                    ct.TargetId = monster.MapMonster.Id;
                     break;
             }
 

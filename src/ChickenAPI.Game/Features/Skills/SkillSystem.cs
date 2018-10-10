@@ -53,7 +53,7 @@ namespace ChickenAPI.Game.Features.Skills
             battleComponent.Mp -= e.Skill.MpCost;
             if (component.Entity.CurrentMap is IMapLayer broadcastable)
             {
-                broadcastable.Broadcast(CtPacketExtensions.GenerateCtPacket(battleComponent.Entity, e.Skill));
+                broadcastable.Broadcast(CtPacketExtensions.GenerateCtPacket(battleComponent.Entity, e.targetEntity, e.Skill));
             }
             //TODO: Skill Cooldown
         }

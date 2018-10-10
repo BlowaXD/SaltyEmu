@@ -13,10 +13,10 @@ namespace ChickenAPI.Packets.Game.Server.Battle
         public long VisualId { get; set; }
 
         [PacketIndex(2)]
-        public byte Unknown { get; set; } = 1;
+        public VisualType TargetVisualType { get; set; }
 
         [PacketIndex(3)]
-        public long SenderId { get; set; }
+        public long TargetId { get; set; }
 
         [PacketIndex(4)]
         public long CastAnimationId { get; set; }
