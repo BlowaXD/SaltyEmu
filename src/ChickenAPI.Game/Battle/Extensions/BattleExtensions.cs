@@ -1,10 +1,11 @@
-using System;
+﻿using System;
 using Autofac;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Data.Skills;
 using ChickenAPI.Enums.Packets;
 using ChickenAPI.Game.Battle.DataObjects;
 using ChickenAPI.Game.Battle.Interfaces;
+using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Features.Skills;
 using ChickenAPI.Game.Features.Skills.Args;
@@ -30,7 +31,10 @@ namespace ChickenAPI.Game.Battle.Extensions
                 // this should never be here
                 return;
             }
-
+            if (entity.CurrentMap is IMapLayer broadcastable)
+            {
+                broadcastable.Broadcast(SuPacketExtensions.GenerateSuPacket(hit));
+            }
             // remove hp
             // apply buffs
             // apply debuffs

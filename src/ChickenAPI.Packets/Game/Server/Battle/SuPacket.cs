@@ -44,7 +44,7 @@ namespace ChickenAPI.Packets.Game.Server.Battle
         public byte HpPercentage { get; set; }
 
         [PacketIndex(12)]
-        public ushort Damage { get; set; }
+        public uint Damage { get; set; }
 
         [PacketIndex(13)]
         public SuPacketHitMode HitMode { get; set; }
