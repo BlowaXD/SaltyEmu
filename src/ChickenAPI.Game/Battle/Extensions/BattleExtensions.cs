@@ -65,22 +65,34 @@ namespace ChickenAPI.Game.Battle.Extensions
                     {
                         goto default;
                     }
-
                     entity.Battle.Entity.EmitEvent(new UseSkillArgs { Skill = skill, targetEntity = target });
-
                     break;
 
                 // AOE Target Hit
                 case 1 when skill.HitType == 1:
+                    entity.Battle.Entity.EmitEvent(new UseSkillArgs { Skill = skill, targetEntity = target });
+                    // Hit correct entity in range
                     break;
 
                 // AOE Buff
                 case 1 when skill.HitType != 1:
+                    entity.Battle.Entity.EmitEvent(new UseSkillArgs { Skill = skill, targetEntity = entity });
+                    switch (skill.HitType)
+                    {
+                        case 0:
+                        case 4:
+                            // Apply Buff on himself
+                            break;
+
+                        case 2:
+                            // Apply Buff in range
+                            break;
+                    }
                     break;
 
                 // Buff
                 case 2 when skill.HitType == 0:
-                    entity.Battle.Entity.EmitEvent(new UseSkillArgs { Skill = skill, targetEntity = target });
+                    entity.Battle.Entity.EmitEvent(new UseSkillArgs { Skill = skill, targetEntity = entity });
                     break;
 
                 default:
