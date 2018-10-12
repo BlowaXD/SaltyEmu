@@ -20,6 +20,8 @@
     <ProjectReference Include="..\ChickenAPI.Game\ChickenAPI.Game.csproj" />
     <ProjectReference Include="..\Plugins\NosSharp.BasicAlgorithm\SaltyEmu.BasicAlgorithmPlugin.csproj" />
     <ProjectReference Include="..\Plugins\NosSharp.DatabasePlugin\SaltyEmu.DatabasePlugin.csproj" />
+    <ProjectReference Include="..\Plugins\NosSharp.RedisSessionPlugin\SaltyEmu.RedisWrappers.csproj" />
+    <ProjectReference Include="..\Plugins\NosSharp.TemporaryMapPlugins\SaltyEmu.BasicPlugin.csproj" />
   </ItemGroup>
 
 </Project>

@@ -30,6 +30,7 @@
     <ProjectReference Include="..\Plugins\NosSharp.Pathfinder\SaltyEmu.PathfinderPlugin.csproj" />
     <ProjectReference Include="..\Plugins\NosSharp.RedisSessionPlugin\SaltyEmu.RedisWrappers.csproj" />
     <ProjectReference Include="..\Plugins\NosSharp.TemporaryMapPlugins\SaltyEmu.BasicPlugin.csproj" />
+    <ProjectReference Include="..\SaltyEmu.IpcPlugin\SaltyEmu.IpcPlugin.csproj" />
   </ItemGroup>
 
 </Project>
