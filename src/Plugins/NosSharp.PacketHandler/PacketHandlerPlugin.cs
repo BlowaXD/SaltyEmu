@@ -3,6 +3,7 @@ using Autofac;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Logging;
 using ChickenAPI.Core.Plugins;
+using ChickenAPI.Game.PacketHandling;
 using ChickenAPI.Game.Packets;
 using NosSharp.PacketHandler.Utils;
 

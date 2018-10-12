@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using ChickenAPI.Core.i18n;
 using ChickenAPI.Data.Character;
@@ -12,6 +13,8 @@ namespace ChickenAPI.Game.Test.Mocks
     public class SessionMock : ISession
     {
         private readonly ISession _session;
+        private readonly List<Tuple<Type, IPacket>> _packets = new List<Tuple<Type, IPacket>>();
+
         public SessionMock()
         {
             Mock<ISession> mock = new Mock<ISession>();
@@ -49,17 +52,27 @@ namespace ChickenAPI.Game.Test.Mocks
 
         public void SendPacket<T>(T packet) where T : IPacket
         {
+            _packets.Add(new Tuple<Type, IPacket>(typeof(T), packet));
             _session.SendPacket(packet);
         }
 
+        public IReadOnlyList<Tuple<Type, IPacket>> Packets => _packets;
+
         public void SendPackets<T>(IEnumerable<T> packets) where T : IPacket
         {
-            _session.SendPackets(packets);
+            foreach (T i in packets)
+            {
+                SendPacket(i);
+            }
         }
 
         public void SendPackets(IEnumerable<IPacket> packets)
         {
-            _session.SendPackets(packets);
+            foreach (IPacket packet in packets)
+            {
+                _packets.Add(new Tuple<Type, IPacket>(packet.GetType(), packet));
+                _session.SendPacket(packet);
+            }
         }
 
         public void Disconnect()

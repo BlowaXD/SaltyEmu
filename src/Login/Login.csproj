@@ -32,7 +32,7 @@
   <ItemGroup>
     <ProjectReference Include="..\ChickenAPI.Game\ChickenAPI.Game.csproj" />
     <ProjectReference Include="..\Plugins\NosSharp.DatabasePlugin\SaltyEmu.DatabasePlugin.csproj" />
-    <ProjectReference Include="..\Plugins\NosSharp.RedisSessionPlugin\NosSharp.RedisSessionPlugin.csproj" />
+    <ProjectReference Include="..\Plugins\NosSharp.RedisSessionPlugin\SaltyEmu.RedisWrappers.csproj" />
   </ItemGroup>
 
 </Project>

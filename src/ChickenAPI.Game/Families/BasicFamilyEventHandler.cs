@@ -50,12 +50,26 @@ namespace ChickenAPI.Game.Families
             // todo
         }
 
-        private void FamilyJoin(FamilyJoinEvent join)
+        private static void FamilyJoin(FamilyJoinEvent join)
         {
-            // todo
+            if (join.Player.HasFamily)
+            {
+                Log.Info("[FAMILY][JOIN] ALREADY_IN_FAMILY");
+                return;
+            }
+
+            if (join.ExpectedAuthority == FamilyAuthority.Head)
+            {
+                Log.Info("[FAMILY][JOIN] CANT_HAVE_TWO_LEADERS");
+                return;
+            }
+
+            AttachFamily(join.Player, join.Family, join.ExpectedAuthority);
+            join.Player.Broadcast(join.Player.GenerateGidxPacket());
+            join.Player.SendPacket(join.Player.GenerateGInfoPacket());
         }
 
-        private async Task CreateFamilyEvent(FamilyCreationEvent creation)
+        private static async Task CreateFamilyEvent(FamilyCreationEvent creation)
         {
             if (FamilyService.GetByName(creation.FamilyName) != null)
             {
@@ -79,11 +93,9 @@ namespace ChickenAPI.Game.Families
             };
             await FamilyService.SaveAsync(family);
             // todo family object shared across all entities
-
             AttachFamily(creation.Leader, family, FamilyAuthority.Head);
-
             creation.Leader.Broadcast(creation.Leader.GenerateGidxPacket());
-            creation.Leader.Broadcast(creation.Leader.GenerateGInfoPacket());
+            creation.Leader.SendPacket(creation.Leader.GenerateGInfoPacket());
 
             if (creation.Assistants == null)
             {
@@ -92,15 +104,23 @@ namespace ChickenAPI.Game.Families
 
             foreach (IPlayerEntity player in creation.Assistants)
             {
-                if (player.HasFamily) continue;
+                if (player.HasFamily)
+                {
+                    continue;
+                }
+
                 AttachFamily(player, family, FamilyAuthority.Assistant);
-                player.Broadcast(creation.Leader.GenerateGidxPacket());
-                player.Broadcast(creation.Leader.GenerateGInfoPacket());
+                player.Broadcast(player.GenerateGidxPacket());
+                player.SendPacket(player.GenerateGInfoPacket());
             }
         }
 
         private static void AttachFamily(IPlayerEntity player, FamilyDto dto, FamilyAuthority authority)
         {
+            if (dto == null)
+            {
+                return;
+            }
             player.Family = dto;
             player.FamilyCharacter = CharacterFamilyService.Save(new CharacterFamilyDto
             {

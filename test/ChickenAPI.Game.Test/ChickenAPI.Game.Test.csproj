@@ -15,11 +15,11 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\ChickenAPI.Game\ChickenAPI.Game.csproj" />
-    <ProjectReference Include="..\..\src\Plugins\NosSharp.BasicAlgorithm\NosSharp.BasicAlgorithm.csproj" />
+    <ProjectReference Include="..\..\src\Plugins\NosSharp.BasicAlgorithm\SaltyEmu.BasicAlgorithmPlugin.csproj" />
     <ProjectReference Include="..\..\src\Plugins\NosSharp.DatabasePlugin\SaltyEmu.DatabasePlugin.csproj" />
-    <ProjectReference Include="..\..\src\Plugins\NosSharp.PacketHandler\NosSharp.BasicPacketHandlerPlugin.csproj" />
-    <ProjectReference Include="..\..\src\Plugins\NosSharp.Pathfinder\NosSharp.Pathfinder.csproj" />
-    <ProjectReference Include="..\..\src\Plugins\NosSharp.RedisSessionPlugin\NosSharp.RedisSessionPlugin.csproj" />
+    <ProjectReference Include="..\..\src\Plugins\NosSharp.PacketHandler\SaltyEmu.BasicPacketHandlerPlugin.csproj" />
+    <ProjectReference Include="..\..\src\Plugins\NosSharp.Pathfinder\SaltyEmu.PathfinderPlugin.csproj" />
+    <ProjectReference Include="..\..\src\Plugins\NosSharp.RedisSessionPlugin\SaltyEmu.RedisWrappers.csproj" />
     <ProjectReference Include="..\..\src\Plugins\NosSharp.TemporaryMapPlugins\SaltyEmu.BasicPlugin.csproj" />
     <ProjectReference Include="..\..\src\SaltyEmu.IpcPlugin\SaltyEmu.IpcPlugin.csproj" />
   </ItemGroup>

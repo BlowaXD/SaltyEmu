@@ -11,13 +11,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Login", "src\Login\Login.cs
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SaltyEmu.BasicPlugin", "src\Plugins\NosSharp.TemporaryMapPlugins\SaltyEmu.BasicPlugin.csproj", "{99CBBDD6-A465-494F-9CA4-FD6091D23DD8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NosSharp.RedisSessionPlugin", "src\Plugins\NosSharp.RedisSessionPlugin\NosSharp.RedisSessionPlugin.csproj", "{B94CD465-ACF2-419C-B1F5-294DFADF8D2E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SaltyEmu.RedisWrappers", "src\Plugins\NosSharp.RedisSessionPlugin\SaltyEmu.RedisWrappers.csproj", "{B94CD465-ACF2-419C-B1F5-294DFADF8D2E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NosSharp.BasicPacketHandlerPlugin", "src\Plugins\NosSharp.PacketHandler\NosSharp.BasicPacketHandlerPlugin.csproj", "{C18EC263-D92D-4DB6-9D8C-02A6945FF5B5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SaltyEmu.BasicPacketHandlerPlugin", "src\Plugins\NosSharp.PacketHandler\SaltyEmu.BasicPacketHandlerPlugin.csproj", "{C18EC263-D92D-4DB6-9D8C-02A6945FF5B5}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SaltyEmu.DatabasePlugin", "src\Plugins\NosSharp.DatabasePlugin\SaltyEmu.DatabasePlugin.csproj", "{45E04475-DFC4-400A-9D35-44BAF5180ACD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NosSharp.BasicAlgorithm", "src\Plugins\NosSharp.BasicAlgorithm\NosSharp.BasicAlgorithm.csproj", "{28B389E6-9863-4306-B32E-756A2C6D9E99}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SaltyEmu.BasicAlgorithmPlugin", "src\Plugins\NosSharp.BasicAlgorithm\SaltyEmu.BasicAlgorithmPlugin.csproj", "{28B389E6-9863-4306-B32E-756A2C6D9E99}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChickenAPI.Game", "src\ChickenAPI.Game\ChickenAPI.Game.csproj", "{34BBD274-3133-4894-8776-783731D126BC}"
 EndProject
@@ -29,7 +29,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChickenAPI.Enums", "src\Chi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Toolkit", "src\Parser\Toolkit.csproj", "{5F14B226-7842-4F6E-BE2E-1CC01C530F3B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NosSharp.Pathfinder", "src\Plugins\NosSharp.Pathfinder\NosSharp.Pathfinder.csproj", "{48D59236-CC25-497E-A98D-DAB290E4A8B7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SaltyEmu.PathfinderPlugin", "src\Plugins\NosSharp.Pathfinder\SaltyEmu.PathfinderPlugin.csproj", "{48D59236-CC25-497E-A98D-DAB290E4A8B7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{4E7156D8-18DC-4638-9C9B-5BE5CFF76F13}"
 EndProject
@@ -41,7 +41,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SaltyEmu.IpcPlugin", "src\S
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChickenAPI.Data", "src\ChickenAPI.Data\ChickenAPI.Data.csproj", "{548F9115-2EF6-4B73-B224-5CEB8D7F4276}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChickenAPI.Game.Test", "test\ChickenAPI.Game.Test\ChickenAPI.Game.Test.csproj", "{0C47ED85-6577-4338-9976-8A2B00016609}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChickenAPI.Game.Test", "test\ChickenAPI.Game.Test\ChickenAPI.Game.Test.csproj", "{0C47ED85-6577-4338-9976-8A2B00016609}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

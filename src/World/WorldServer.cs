@@ -14,6 +14,7 @@ using ChickenAPI.Game.ECS;
 using ChickenAPI.Game.Events;
 using ChickenAPI.Game.Features.Effects;
 using ChickenAPI.Game.Managers;
+using ChickenAPI.Game.PacketHandling;
 using ChickenAPI.Game.Packets;
 using NLog;
 using NosSharp.BasicAlgorithm;

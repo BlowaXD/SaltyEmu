@@ -21,8 +21,6 @@ namespace World.Packets
     {
         private static readonly Logger Log = Logger.GetLogger<PluggablePacketFactory>();
         private readonly Dictionary<Type, PacketInformation> _deserializationInformations = new Dictionary<Type, PacketInformation>();
-        private readonly Dictionary<string, Type> _packetByHeader = new Dictionary<string, Type>();
-        private readonly Dictionary<Type, string> _packetByType = new Dictionary<Type, string>();
 
         public string Serialize<TPacket>(TPacket packet) where TPacket : IPacket => Serialize(packet, typeof(TPacket));
 
