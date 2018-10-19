@@ -34,7 +34,7 @@ namespace ChickenAPI.Game.Families
             switch (e)
             {
                 case FamilyCreationEvent creation:
-                    CreateFamilyEvent(creation).Wait();
+                    Task.WaitAll(CreateFamilyEvent(creation));
                     break;
                 case FamilyJoinEvent join:
                     FamilyJoin(join);
@@ -69,7 +69,7 @@ namespace ChickenAPI.Game.Families
             join.Player.SendPacket(join.Player.GenerateGInfoPacket());
         }
 
-        private static async Task CreateFamilyEvent(FamilyCreationEvent creation)
+        private async Task CreateFamilyEvent(FamilyCreationEvent creation)
         {
             if (FamilyService.GetByName(creation.FamilyName) != null)
             {
@@ -91,7 +91,7 @@ namespace ChickenAPI.Game.Families
                 FamilyMessage = string.Empty,
                 MaxSize = 50,
             };
-            await FamilyService.SaveAsync(family);
+            family = await FamilyService.SaveAsync(family);
             // todo family object shared across all entities
             AttachFamily(creation.Leader, family, FamilyAuthority.Head);
             creation.Leader.Broadcast(creation.Leader.GenerateGidxPacket());
@@ -121,6 +121,7 @@ namespace ChickenAPI.Game.Families
             {
                 return;
             }
+
             player.Family = dto;
             player.FamilyCharacter = CharacterFamilyService.Save(new CharacterFamilyDto
             {

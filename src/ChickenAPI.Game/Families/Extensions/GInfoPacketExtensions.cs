@@ -7,6 +7,10 @@ namespace ChickenAPI.Game.Families.Extensions
     {
         public static GInfoPacket GenerateGInfoPacket(this IPlayerEntity player)
         {
+            if (!player.HasFamily)
+            {
+                return null;
+            }
             return new GInfoPacket
             {
                 FamilyName = player.Family.Name,

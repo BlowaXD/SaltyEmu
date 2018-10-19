@@ -18,6 +18,7 @@ namespace ChickenAPI.Game.Maps
         private readonly IEnumerable<MapMonsterDto> _monsters;
         private readonly IEnumerable<MapNpcDto> _npcs;
         private readonly IEnumerable<PortalDto> _portals;
+        private readonly bool _initSystems;
 
         private readonly IRandomGenerator _random;
         private readonly IEnumerable<ShopDto> _shops;
@@ -25,14 +26,14 @@ namespace ChickenAPI.Game.Maps
         private readonly Position<short>[] _walkableGrid;
         private IMapLayer _baseMapLayer;
 
-        public SimpleMap(MapDto map, IEnumerable<MapMonsterDto> monsters, IEnumerable<MapNpcDto> npcs, IEnumerable<PortalDto> portals, IEnumerable<ShopDto> shops)
+        public SimpleMap(MapDto map, IEnumerable<MapMonsterDto> monsters, IEnumerable<MapNpcDto> npcs, IEnumerable<PortalDto> portals, IEnumerable<ShopDto> shops, bool initSystems = true)
         {
             _map = map;
             _monsters = monsters;
             _npcs = npcs;
             _portals = portals;
             _shops = shops;
-            _baseMapLayer = new SimpleMapLayer(this, _monsters, _npcs, _portals, _shops);
+            _initSystems = initSystems;
             Layers = new HashSet<IMapLayer>();
 
             _random = ChickenContainer.Instance.Resolve<IRandomGenerator>();
@@ -55,7 +56,7 @@ namespace ChickenAPI.Game.Maps
 
         public long Id => _map.Id;
         public int MusicId => _map.Music;
-        public IMapLayer BaseLayer => _baseMapLayer ?? (_baseMapLayer = new SimpleMapLayer(this, _monsters, _npcs, _portals, _shops));
+        public IMapLayer BaseLayer => _baseMapLayer ?? (_baseMapLayer = new SimpleMapLayer(this, _monsters, _npcs, _portals, _shops, _initSystems));
         public HashSet<IMapLayer> Layers { get; }
 
         public short Width => _map.Width;

@@ -20,7 +20,11 @@ namespace ChickenAPI.Game.Maps
 {
     public class SimpleMapLayer : EntityManagerBase, IMapLayer
     {
-        public SimpleMapLayer(IMap map, IEnumerable<MapMonsterDto> monsters, IEnumerable<MapNpcDto> npcs = null, IEnumerable<PortalDto> portals = null, IEnumerable<ShopDto> shops = null)
+        public SimpleMapLayer(IMap map, IEnumerable<MapMonsterDto> monsters,
+            IEnumerable<MapNpcDto> npcs = null,
+            IEnumerable<PortalDto> portals = null,
+            IEnumerable<ShopDto> shops = null,
+            bool initSystems = true)
         {
             Id = Guid.NewGuid();
             Map = map;
@@ -28,13 +32,18 @@ namespace ChickenAPI.Game.Maps
             InitializeMonsters(monsters);
             InitializeNpcs(npcs, shops);
             InitializePortals(portals);
-            InitializeSystems();
+
+            if (initSystems)
+            {
+                InitializeSystems();
+            }
         }
 
         private void InitializePortals(IEnumerable<PortalDto> portals)
         {
             if (portals == null)
             {
+                return;
             }
 
             foreach (PortalDto portal in portals)

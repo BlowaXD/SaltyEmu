@@ -11,6 +11,6 @@ namespace ChickenAPI.Game.Families.Events
         public IPlayerEntity Player { get; set; }
         public bool Force { get; set; }
 
-        public FamilyAuthority ExpectedAuthority { get; set; }
+        public FamilyAuthority ExpectedAuthority { get; set; } = FamilyAuthority.Member;
     }
 }

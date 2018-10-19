@@ -3,7 +3,10 @@ using ChickenAPI.Core.IoC;
 using ChickenAPI.Data.Character;
 using ChickenAPI.Enums.Game.Character;
 using ChickenAPI.Game.Data.AccessLayer.Character;
+using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Entities.Player;
+using ChickenAPI.Game.Managers;
+using ChickenAPI.Game.Maps;
 using ChickenAPI.Game.Test.Mocks;
 using Microsoft.EntityFrameworkCore;
 using NosSharp.BasicAlgorithm;
@@ -17,6 +20,7 @@ namespace ChickenAPI.Game.Test
     {
         private static bool _initialized;
         private static ICharacterService _characterService;
+        private static MapLayerMock Layer;
 
         public static void Initialize()
         {
@@ -34,6 +38,7 @@ namespace ChickenAPI.Game.Test
         private static void LoadDatabase()
         {
             _characterService = ChickenContainer.Instance.Resolve<ICharacterService>();
+            Layer = new MapLayerMock();
         }
 
         private static void InjectDependencies()
@@ -47,6 +52,7 @@ namespace ChickenAPI.Game.Test
             PluginDependencyInjector.RegisterDaos();
             AlgorithmDependenciesInjector.InjectDependencies();
             BasicPluginIoCInjector.InjectDependencies();
+            ChickenContainer.Builder.Register(s => new NosSharp.Pathfinder.Pathfinder.Pathfinder()).As<IPathfinder>();
         }
 
         public static PlayerEntity LoadPlayer(string name)
@@ -69,8 +75,9 @@ namespace ChickenAPI.Game.Test
             newCharacter.MinilandMessage = "Welcome";
             newCharacter.State = CharacterState.Active;
             dto = _characterService.Save(newCharacter);
-
-            return new PlayerEntity(new SessionMock(), dto, null, null);
+            var tmp = new PlayerEntity(new SessionMock(), dto, null, null);
+            tmp.TransferEntity(Layer);
+            return tmp;
         }
     }
 }

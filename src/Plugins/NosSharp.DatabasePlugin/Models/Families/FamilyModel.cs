@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using ChickenAPI.Data;
+using System.ComponentModel.DataAnnotations.Schema;
 using ChickenAPI.Enums.Game.Character;
 using ChickenAPI.Enums.Game.Families;
 using SaltyEmu.DatabasePlugin.Models.Character;
@@ -9,7 +9,10 @@ namespace SaltyEmu.DatabasePlugin.Models.Families
 {
     public class FamilyModel : IMappedModel
     {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long Id { get; set; }
+
         public uint Experience { get; set; }
 
         public GenderType FamilyHeadGender { get; set; }

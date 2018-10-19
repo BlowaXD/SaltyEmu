@@ -17,9 +17,6 @@ namespace ChickenAPI.Game.Features.Skills
         public SkillComponent(IEntity entity)
         {
             Entity = entity;
-            CharacterSkills = new Dictionary<Guid, CharacterSkillDto>();
-            Skills = new Dictionary<long, SkillDto>();
-            CooldownsBySkillId = new List<(DateTime, long)>();
 
             if (!(entity is IPlayerEntity player))
             {
@@ -54,13 +51,13 @@ namespace ChickenAPI.Game.Features.Skills
             }
         }
 
-        public Dictionary<Guid, CharacterSkillDto> CharacterSkills { get; }
+        public Dictionary<Guid, CharacterSkillDto> CharacterSkills { get; } = new Dictionary<Guid, CharacterSkillDto>();
 
         private static readonly ISkillService SkillService = new Lazy<ISkillService>(() => ChickenContainer.Instance.Resolve<ISkillService>()).Value;
 
-        public Dictionary<long, SkillDto> Skills { get; }
+        public Dictionary<long, SkillDto> Skills { get; } = new Dictionary<long, SkillDto>();
 
-        public List<(DateTime, long)> CooldownsBySkillId { get; }
+        public List<(DateTime, long)> CooldownsBySkillId { get; } = new List<(DateTime, long)>();
 
         public IEntity Entity { get; }
     }

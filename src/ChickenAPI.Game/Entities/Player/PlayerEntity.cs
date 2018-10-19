@@ -16,8 +16,6 @@ using ChickenAPI.Game.ECS.Components;
 using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Entities.Extensions;
 using ChickenAPI.Game.Entities.Player.Extensions;
-using ChickenAPI.Game.Families.Events;
-using ChickenAPI.Game.Features.Families;
 using ChickenAPI.Game.Features.Inventory;
 using ChickenAPI.Game.Features.Inventory.Extensions;
 using ChickenAPI.Game.Features.Leveling;

@@ -64,7 +64,6 @@ namespace World
                     plugin.OnEnable();
                 }
 
-                ChickenContainer.Builder.Register(s => new SimpleEntityManagerContainer()).As<IEntityManagerContainer>().SingleInstance();
             }
             catch (Exception e)
             {

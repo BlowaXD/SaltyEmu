@@ -1,5 +1,4 @@
-﻿using ChickenAPI.Enums.Game.Entity;
-using ChickenAPI.Game.Entities.Player;
+﻿using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Packets.Game.Client.Families;
 
 namespace ChickenAPI.Game.Families.Extensions
@@ -8,9 +7,14 @@ namespace ChickenAPI.Game.Families.Extensions
     {
         public static GidxPacket GenerateGidxPacket(this IPlayerEntity player)
         {
+            if (!player.HasFamily)
+            {
+                return null;
+            }
+
             return new GidxPacket
             {
-                VisualType = VisualType.Character,
+                VisualType = player.Type,
                 VisualId = player.Id,
                 FamilyId = player.Family.Id,
                 FamilyName = player.Family.Name,

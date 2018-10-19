@@ -1,9 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Autofac;
-using ChickenAPI.Core.IoC;
+﻿using System.Linq;
 using ChickenAPI.Enums.Game.Families;
-using ChickenAPI.Game.Data.AccessLayer.Character;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Families;
 using ChickenAPI.Game.Families.Events;
@@ -16,18 +12,12 @@ namespace ChickenAPI.Game.Test.Families
     [TestFixture]
     public class Family_Join
     {
-        private IPlayerEntity _leader;
-        private ICharacterService _characterService;
         private readonly BasicFamilyEventHandler _familyEventHandler = new BasicFamilyEventHandler();
 
-        const string familyName = "family_join_test";
-        
-        [SetUp]
+        [OneTimeSetUp]
         public void Setup()
         {
             TestHelper.Initialize();
-            _characterService = ChickenContainer.Instance.Resolve<ICharacterService>();
-            _leader = LoadPlayer("test_leader");
         }
 
         private static IPlayerEntity LoadPlayer(string name) => TestHelper.LoadPlayer(name);
@@ -35,79 +25,89 @@ namespace ChickenAPI.Game.Test.Families
         [Test]
         public void Family_Join_Success_Existing_Family()
         {
+            const string familyName = "family_join_test";
+            IPlayerEntity leader = LoadPlayer("test_leader");
             IPlayerEntity newPlayer = LoadPlayer("test_member");
 
-            _familyEventHandler.Execute(_leader, new FamilyCreationEvent
+            _familyEventHandler.Execute(leader, new FamilyCreationEvent
             {
-                Leader = _leader,
+                Leader = leader,
                 FamilyName = familyName
             });
             _familyEventHandler.Execute(newPlayer, new FamilyJoinEvent
             {
                 Player = newPlayer,
-                Family = _leader.Family,
+                Family = leader.Family,
             });
 
-            Assert.AreEqual(_leader.Family, newPlayer.Family);
-            Assert.AreEqual(_leader.Family.Id, newPlayer.FamilyCharacter.FamilyId);
+            Assert.AreEqual(leader.Family, newPlayer.Family);
+            Assert.AreEqual(leader.Family.Id, newPlayer.FamilyCharacter.FamilyId);
             Assert.AreEqual(newPlayer.Character.Id, newPlayer.FamilyCharacter.CharacterId);
             Assert.AreEqual(newPlayer.FamilyCharacter.Authority, FamilyAuthority.Member);
+            Assert.IsTrue(((SessionMock)newPlayer.Session).Packets.Any(s => s.Item1 == typeof(GidxPacket)));
+            Assert.IsTrue(((SessionMock)newPlayer.Session).Packets.Any(s => s.Item1 == typeof(GInfoPacket)));
         }
 
         [Test]
         public void Family_Join_Success_Custom_Role()
         {
+            const string familyName = "family_join_test_custom_role";
+            IPlayerEntity leader = LoadPlayer("test_leader_custom_role");
             IPlayerEntity newPlayer = LoadPlayer("test_member_custom_role");
 
-            _familyEventHandler.Execute(_leader, new FamilyCreationEvent
+            _familyEventHandler.Execute(leader, new FamilyCreationEvent
             {
-                Leader = _leader,
+                Leader = leader,
                 FamilyName = familyName
             });
             _familyEventHandler.Execute(newPlayer, new FamilyJoinEvent
             {
                 Player = newPlayer,
-                Family = _leader.Family,
+                Family = leader.Family,
                 ExpectedAuthority = FamilyAuthority.Assistant
             });
 
-            Assert.AreEqual(_leader.Family, newPlayer.Family);
-            Assert.AreEqual(newPlayer.FamilyCharacter.FamilyId, newPlayer.FamilyCharacter.FamilyId);
+            Assert.AreEqual(leader.Family, newPlayer.Family);
+            Assert.AreEqual(leader.Family.Id, newPlayer.FamilyCharacter.FamilyId);
             Assert.AreEqual(newPlayer.Character.Id, newPlayer.FamilyCharacter.CharacterId);
             Assert.AreEqual(newPlayer.FamilyCharacter.Authority, FamilyAuthority.Assistant);
             Assert.IsTrue(((SessionMock)newPlayer.Session).Packets.Any(s => s.Item1 == typeof(GidxPacket)));
-            Assert.IsTrue(((SessionMock)newPlayer.Session).Packets.Any(s => s.Item1 == typeof(GidxPacket)));
+            Assert.IsTrue(((SessionMock)newPlayer.Session).Packets.Any(s => s.Item1 == typeof(GInfoPacket)));
         }
 
         [Test]
         public void Family_Join_Fail_Custom_Role_Two_Leaders()
         {
-            IPlayerEntity newPlayer = LoadPlayer("test_member_fail_already_leader");
-            _familyEventHandler.Execute(_leader, new FamilyCreationEvent
+            const string familyName = "family_join_test_two_leaders";
+            IPlayerEntity leader = LoadPlayer("test_leader_two_leaders");
+            IPlayerEntity newPlayer = LoadPlayer("test_member_two_leaders");
+
+            _familyEventHandler.Execute(leader, new FamilyCreationEvent
             {
-                Leader = _leader,
+                Leader = leader,
                 FamilyName = familyName
             });
             _familyEventHandler.Execute(newPlayer, new FamilyJoinEvent
             {
                 Player = newPlayer,
-                Family = _leader.Family,
+                Family = leader.Family,
                 ExpectedAuthority = FamilyAuthority.Head
             });
 
-            Assert.IsNotNull(_leader.Family);
-            Assert.IsTrue(_leader.IsFamilyLeader);
-            Assert.IsNull(newPlayer.Family);
+            Assert.IsFalse(newPlayer.HasFamily);
             Assert.IsNull(newPlayer.FamilyCharacter);
         }
 
         [Test]
         public void Family_Join_Fail_Family_Does_Not_Exist()
         {
-            IPlayerEntity newPlayer = LoadPlayer("test_member_fail_no_family");
-            _familyEventHandler.Execute(_leader, new FamilyCreationEvent
+            const string familyName = "family_join_test_no_family";
+            IPlayerEntity leader = LoadPlayer("test_leader_no_family");
+            IPlayerEntity newPlayer = LoadPlayer("test_member_no_family");
+
+            _familyEventHandler.Execute(leader, new FamilyCreationEvent
             {
-                Leader = _leader,
+                Leader = leader,
                 FamilyName = familyName
             });
             _familyEventHandler.Execute(newPlayer, new FamilyJoinEvent
@@ -117,32 +117,44 @@ namespace ChickenAPI.Game.Test.Families
                 ExpectedAuthority = FamilyAuthority.Member
             });
 
-            Assert.AreEqual(_leader.Family, newPlayer.Family);
-            Assert.AreEqual(_leader.Family.Id, newPlayer.FamilyCharacter.FamilyId);
-            Assert.AreEqual(newPlayer.Character.Id, newPlayer.FamilyCharacter.CharacterId);
-            Assert.AreEqual(newPlayer.FamilyCharacter.Authority, FamilyAuthority.Member);
+            Assert.IsFalse(newPlayer.HasFamily);
         }
 
         [Test]
         public void Family_Join_Fail_Already_In_Family()
         {
-            IPlayerEntity newPlayer = LoadPlayer("test_member_fail_already");
-            _familyEventHandler.Execute(_leader, new FamilyCreationEvent
+            // leader
+            IPlayerEntity leader = LoadPlayer("test_leader_already_in_family");
+            const string familyName = "family_join_test_already_in_family";
+
+            _familyEventHandler.Execute(leader, new FamilyCreationEvent
             {
-                Leader = _leader,
+                Leader = leader,
                 FamilyName = familyName
             });
+
+            // member
+            IPlayerEntity newPlayer = LoadPlayer("test_member_already_in_family");
+            const string newPlayerFamily = "family_join_test_already_in_family_newplayer";
+            _familyEventHandler.Execute(newPlayer, new FamilyCreationEvent
+            {
+                Leader = newPlayer,
+                FamilyName = newPlayerFamily
+            });
+
+
             _familyEventHandler.Execute(newPlayer, new FamilyJoinEvent
             {
                 Player = newPlayer,
-                Family = _leader.Family,
+                Family = leader.Family,
                 ExpectedAuthority = FamilyAuthority.Member
             });
 
-            Assert.AreEqual(_leader.Family, newPlayer.Family);
-            Assert.AreEqual(_leader.Family.Id, newPlayer.FamilyCharacter.FamilyId);
-            Assert.AreEqual(newPlayer.Character.Id, newPlayer.FamilyCharacter.CharacterId);
-            Assert.AreEqual(newPlayer.FamilyCharacter.Authority, FamilyAuthority.Member);
+            Assert.IsTrue(newPlayer.HasFamily);
+            Assert.IsTrue(newPlayer.IsFamilyLeader);
+            Assert.IsTrue(leader.HasFamily);
+            Assert.IsTrue(leader.IsFamilyLeader);
+            Assert.AreNotEqual(newPlayer.Family.Id, leader.Family.Id);
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net;
 using ChickenAPI.Core.i18n;
 using ChickenAPI.Data.Character;
+using ChickenAPI.Enums;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Network;
 using ChickenAPI.Packets;
@@ -18,6 +19,10 @@ namespace ChickenAPI.Game.Test.Mocks
         public SessionMock()
         {
             Mock<ISession> mock = new Mock<ISession>();
+            mock.Setup(_ => _.Account).Returns(new AccountDto
+            {
+                Authority = AuthorityType.User
+            });
             _session = mock.Object;
         }
 

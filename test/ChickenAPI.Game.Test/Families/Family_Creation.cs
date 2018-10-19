@@ -15,7 +15,7 @@ namespace ChickenAPI.Game.Test.Families
         private ICharacterService _characterService;
         private readonly BasicFamilyEventHandler _familyEventHandler = new BasicFamilyEventHandler();
 
-        [SetUp]
+        [OneTimeSetUp]
         public void Setup()
         {
             TestHelper.Initialize();

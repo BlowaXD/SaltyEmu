@@ -4,6 +4,7 @@ using ChickenAPI.Core.Maths;
 using ChickenAPI.Game.Battle.Hitting;
 using ChickenAPI.Game.Battle.Interfaces;
 using ChickenAPI.Game.Data.AccessLayer.Item;
+using ChickenAPI.Game.ECS;
 using ChickenAPI.Game.Events;
 using ChickenAPI.Game.Features.GuriHandling.Handling;
 using ChickenAPI.Game.Features.NpcDialog;
@@ -24,6 +25,7 @@ namespace SaltyEmu.BasicPlugin
             ChickenContainer.Builder.Register(s => new BasicNpcDialogHandler()).As<INpcDialogHandler>().SingleInstance();
             ChickenContainer.Builder.Register(s => new BaseGuriHandler()).As<IGuriHandler>().SingleInstance();
             ChickenContainer.Builder.Register(s => new BasicHitRequestFactory()).As<IHitRequestFactory>().SingleInstance();
+            ChickenContainer.Builder.Register(s => new SimpleEntityManagerContainer()).As<IEntityManagerContainer>().SingleInstance();
         }
     }
 }
