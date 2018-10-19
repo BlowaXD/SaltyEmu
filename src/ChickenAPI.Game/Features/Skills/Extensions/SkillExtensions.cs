@@ -8,12 +8,12 @@ namespace ChickenAPI.Game.Features.Skills.Extensions
     {
         public static int GetCp(this IPlayerEntity player)
         {
+            int cpMax = (player.Character.Class > CharacterClassType.Adventurer ? 40 : 0) + player.Experience.JobLevel * 2;
             if (player.Skills?.Skills?.Count == null)
             {
-                return 0;
+                return cpMax;
             }
 
-            int cpMax = (player.Character.Class > CharacterClassType.Adventurer ? 40 : 0) + player.Experience.JobLevel * 2;
             int cpUsed = 0 + (int)player.Skills?.Skills?.Values.Where(s => s != null).Sum(dto => dto.CpCost);
             return cpMax - cpUsed;
         }
