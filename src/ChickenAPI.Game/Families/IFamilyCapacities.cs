@@ -19,6 +19,11 @@ namespace ChickenAPI.Game.Families
         /// Player's Family
         /// </summary>
         FamilyDto Family { get; set; }
+
+        /// <summary>
+        /// Player's Family's related infos
+        /// Exp, Join time...
+        /// </summary>
         CharacterFamilyDto FamilyCharacter { get; set; }
     }
 }

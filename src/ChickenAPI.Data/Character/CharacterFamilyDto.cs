@@ -1,4 +1,5 @@
-﻿using ChickenAPI.Enums.Game.Families;
+﻿using System;
+using ChickenAPI.Enums.Game.Families;
 
 namespace ChickenAPI.Data.Character
 {
@@ -18,5 +19,7 @@ namespace ChickenAPI.Data.Character
         public long FamilyId { get; set; }
 
         public FamilyMemberRank Rank { get; set; }
+
+        public DateTime JoinDate { get; set; }
     }
 }

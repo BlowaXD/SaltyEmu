@@ -15,12 +15,14 @@ using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Events;
 using ChickenAPI.Game.Families.Events;
 using ChickenAPI.Game.Families.Extensions;
+using ChickenAPI.Game.Managers;
 
 namespace ChickenAPI.Game.Families
 {
     public class BasicFamilyEventHandler : EventHandlerBase
     {
         private static readonly Logger Log = Logger.GetLogger<BasicFamilyEventHandler>();
+        private static readonly IPlayerManager PlayerManager = new Lazy<IPlayerManager>(() => ChickenContainer.Instance.Resolve<IPlayerManager>()).Value;
         private static readonly IFamilyService FamilyService = new Lazy<IFamilyService>(() => ChickenContainer.Instance.Resolve<IFamilyService>()).Value;
         private static readonly ICharacterFamilyService CharacterFamilyService = new Lazy<ICharacterFamilyService>(() => ChickenContainer.Instance.Resolve<ICharacterFamilyService>()).Value;
 
@@ -42,6 +44,22 @@ namespace ChickenAPI.Game.Families
                 case FamilyLeaveEvent leave:
                     FamilyLeave(leave);
                     break;
+                case FamilyKickEvent kick:
+                    FamilyKick(kick);
+                    break;
+            }
+        }
+
+        private void FamilyKick(FamilyKickEvent kick)
+        {
+            IPlayerEntity player = PlayerManager.GetPlayerByCharacterName(kick.CharacterName);
+            if (player == null)
+            {
+                // todo player offline
+            }
+            else
+            {
+                // todo player online
             }
         }
 
