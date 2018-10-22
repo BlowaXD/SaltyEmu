@@ -1,9 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using Autofac;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Data.Skills;
 using ChickenAPI.Enums.Packets;
-using ChickenAPI.Game.Battle.DataObjects;
 using ChickenAPI.Game.Battle.Interfaces;
 using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Entities.Player;
@@ -11,6 +11,7 @@ using ChickenAPI.Game.Features.Skills;
 using ChickenAPI.Game.Features.Skills.Args;
 using ChickenAPI.Game.Movements.DataObjects;
 using ChickenAPI.Game.Movements.Extensions;
+using ChickenAPI.Packets.Game.Server.Battle;
 using ChickenAPI.Packets.Game.Server.QuickList.Battle;
 
 namespace ChickenAPI.Game.Battle.Extensions
@@ -31,11 +32,26 @@ namespace ChickenAPI.Game.Battle.Extensions
                 // this should never be here
                 return;
             }
+            var battle = entity.Battle;
+            uint damage = hit.Damages;
+            var packets = new List<SuPacket>();
+            while (damage > 0)
+            {
+                hit.Damages = damage > ushort.MaxValue ? ushort.MaxValue : (ushort)damage;
+                damage -= hit.Damages;
+                packets.Add(SuPacketExtensions.GenerateSuPacket(hit));
+                if (battle.Hp - hit.Damages <= 0)
+                {
+                    battle.Hp = 0;
+                    // Generate Death
+                    break;
+                }
+                battle.Hp -= (ushort)hit.Damages;
+            }
             if (entity.CurrentMap is IMapLayer broadcastable)
             {
-                broadcastable.Broadcast(SuPacketExtensions.GenerateSuPacket(hit));
+                broadcastable.Broadcast<SuPacket>(packets);
             }
-            // remove hp
             // apply buffs
             // apply debuffs
         }
@@ -71,7 +87,10 @@ namespace ChickenAPI.Game.Battle.Extensions
                 // AOE Target Hit
                 case 1 when skill.HitType == 1:
                     entity.Battle.Entity.EmitEvent(new UseSkillArgs { Skill = skill, targetEntity = target });
-                    // Hit correct entity in range
+                    if (!(entity.CurrentMap is IMapLayer map) || skill.TargetRange == 0)
+                    {
+                        goto default;
+                    }
                     break;
 
                 // AOE Buff
@@ -80,12 +99,16 @@ namespace ChickenAPI.Game.Battle.Extensions
                     switch (skill.HitType)
                     {
                         case 0:
-                        case 4:
-                            // Apply Buff on himself
+                        case 4: // Apply Buff on himself
                             break;
 
-                        case 2:
-                            // Apply Buff in range
+                        case 2: // Apply Buff in range
+                            if (!(entity.CurrentMap is IMapLayer mapl) || skill.TargetRange == 0)
+                            {
+                                player?.SendPacket(new CancelPacket { Type = CancelPacketType.InCombatMode, TargetId = target.Battle.Entity.Id });
+                                return;
+                            }
+                            // apply buff on each entities of type
                             break;
                     }
                     break;

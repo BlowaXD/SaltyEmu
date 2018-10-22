@@ -3,6 +3,8 @@ using ChickenAPI.Core.Logging;
 using ChickenAPI.Data.Skills;
 using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Enums.Packets;
+using ChickenAPI.Game.Battle.Extensions;
+using ChickenAPI.Game.Battle.Interfaces;
 using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Entities.Monster;
 using ChickenAPI.Game.Entities.Npc;
@@ -45,9 +47,7 @@ namespace NosSharp.PacketHandler.Skill
                     break;
             }
 
-            SkillDto tmp = player.Skills.Skills.Values.FirstOrDefault(s => s.CastId == packet.CastId);
-
-            if (target == null)
+            if (target == null || !(target is IBattleEntity battleEntity))
             {
                 player.SendPacket(new CancelPacket
                 {
@@ -56,25 +56,8 @@ namespace NosSharp.PacketHandler.Skill
                 });
                 return;
             }
+            BattleExtensions.TargetHit(player, battleEntity, packet.CastId);
 
-            player.SendPacket(new SuPacket
-            {
-                VisualType = VisualType.Character,
-                VisualId = player.Character.Id,
-                HitMode = SuPacketHitMode.SuccessAttack,
-                Damage = 100,
-                HpPercentage = 100,
-                PositionX = player.Movable.Actual.X,
-                PositionY = player.Movable.Actual.Y,
-                TargetId = packet.TargetId,
-                TargetVisualType = packet.TargetVisualType,
-                TargetIsAlive = true,
-                AttackAnimation = tmp?.AttackAnimation ?? 0,
-                SkillCooldown = tmp?.Cooldown ?? 0,
-                SkillEffect = tmp?.Effect ?? 0,
-                SkillVnum = tmp?.Id ?? 0,
-                SkillTypeMinusOne = tmp?.SkillType - 1 ?? 0
-            });
         }
     }
 }

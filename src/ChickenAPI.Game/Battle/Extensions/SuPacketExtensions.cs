@@ -18,7 +18,7 @@ namespace ChickenAPI.Game.Battle.Extensions
                 HpPercentage = (byte)((battleTarget.Hp - hit.Damages < 0 ? 0 : battleTarget.Hp - hit.Damages) / (float)battleTarget.HpMax * 100),
                 PositionX = movable.Actual.X,
                 PositionY = movable.Actual.Y,
-                TargetIsAlive = true,
+                TargetIsAlive = battleTarget.Hp > 0,
                 AttackAnimation = hit.UsedSkill.AttackAnimation,
                 SkillCooldown = hit.UsedSkill.Cooldown,
                 SkillEffect = hit.UsedSkill.Effect,
