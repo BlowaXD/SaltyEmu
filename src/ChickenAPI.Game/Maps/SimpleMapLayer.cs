@@ -90,8 +90,14 @@ namespace ChickenAPI.Game.Maps
         public IMap Map { get; }
         public IEnumerable<IPlayerEntity> Players => _players;
 
+        public IEnumerable<IPlayerEntity> GetPlayersInRange(Position<short> pos, int range) =>
+            _players.Where(e => PositionHelper.GetDistance(pos, e.Movable.Actual) < range);
+
         public IEnumerable<IEntity> GetEntitiesInRange(Position<short> pos, int range) =>
             Entities.Where(e => e.HasComponent<MovableComponent>() && PositionHelper.GetDistance(pos, e.GetComponent<MovableComponent>().Actual) < range);
+
+        public IEnumerable<T> GetEntitiesInRange<T>(Position<short> pos, int range) where T : IEntity =>
+            Entities.Where(e => e is T && e.HasComponent<MovableComponent>() && PositionHelper.GetDistance(pos, e.GetComponent<MovableComponent>().Actual) < range) as IEnumerable<T>;
 
         public void Broadcast<T>(T packet) where T : IPacket
         {

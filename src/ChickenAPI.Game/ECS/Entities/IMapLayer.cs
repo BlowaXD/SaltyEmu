@@ -22,12 +22,30 @@ namespace ChickenAPI.Game.ECS.Entities
         IEnumerable<IPlayerEntity> Players { get; }
 
         /// <summary>
+        ///     Get all players in the area between X and Y
+        /// </summary>
+        /// <param name="pos"></param>
+        /// <param name="range"></param>
+        /// <returns></returns>
+        IEnumerable<IPlayerEntity> GetPlayersInRange(Position<short> pos, int range);
+
+        /// <summary>
         ///     Get all entities in the area between X and Y
         /// </summary>
         /// <param name="pos"></param>
         /// <param name="range"></param>
         /// <returns></returns>
         IEnumerable<IEntity> GetEntitiesInRange(Position<short> pos, int range);
+
+        /// <summary>
+        ///     Get all specified entities in the area between X and Y
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="pos"></param>
+        /// <param name="range"></param>
+        /// <returns></returns>
+        IEnumerable<T> GetEntitiesInRange<T>(Position<short> pos, int range) where T : IEntity;
+
 
         #region Packets
 
