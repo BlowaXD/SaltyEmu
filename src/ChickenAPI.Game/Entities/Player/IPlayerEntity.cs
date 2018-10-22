@@ -40,7 +40,18 @@ namespace ChickenAPI.Game.Entities.Player
         /// </summary>
         long LastPulse { get; }
 
+        /// <summary>
+        /// Broadcasts the packet and receives the packet too
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="packet"></param>
         void Broadcast<T>(T packet) where T : IPacket;
+
+        /// <summary>
+        /// Broadcasts all the packets and receives it as well
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="packets"></param>
         void Broadcast<T>(IEnumerable<T> packets) where T : IPacket;
 
         /// <summary>

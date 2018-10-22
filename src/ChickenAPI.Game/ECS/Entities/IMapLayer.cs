@@ -6,6 +6,7 @@ using ChickenAPI.Game.Entities.Monster;
 using ChickenAPI.Game.Entities.Npc;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Entities.Portal;
+using ChickenAPI.Game.Network;
 using ChickenAPI.Packets;
 
 namespace ChickenAPI.Game.ECS.Entities
@@ -60,15 +61,11 @@ namespace ChickenAPI.Game.ECS.Entities
 
         void Broadcast(IEnumerable<IPacket> packets);
 
-        /// <summary>
-        ///     Broadcast a packet to every entities in the context except
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="sender"></param>
-        /// <param name="packet"></param>
-        void Broadcast<T>(IPlayerEntity sender, T packet) where T : IPacket;
+        void Broadcast<T>(T packet, IBroadcastRule rule) where T : IPacket;
 
-        void Broadcast<T>(IPlayerEntity sender, IEnumerable<T> packets) where T : IPacket;
+        void Broadcast<T>(IEnumerable<T> packets, IBroadcastRule rule) where T : IPacket;
+
+        void Broadcast(IEnumerable<IPacket> packets, IBroadcastRule rule);
 
         #endregion
     }

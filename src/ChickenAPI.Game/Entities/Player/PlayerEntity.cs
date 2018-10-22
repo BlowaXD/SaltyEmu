@@ -27,6 +27,7 @@ using ChickenAPI.Game.Maps.Events;
 using ChickenAPI.Game.Movements.DataObjects;
 using ChickenAPI.Game.Movements.Extensions;
 using ChickenAPI.Game.Network;
+using ChickenAPI.Game.Network.BroadcastRules;
 using ChickenAPI.Game.Packets.Extensions;
 using ChickenAPI.Game.Permissions;
 using ChickenAPI.Game.Skills;
@@ -44,6 +45,7 @@ namespace ChickenAPI.Game.Entities.Player
         private static ICharacterService CharacterService => new Lazy<ICharacterService>(() => ChickenContainer.Instance.Resolve<ICharacterService>()).Value;
         private static ICharacterSkillService CharacterSkillService => new Lazy<ICharacterSkillService>(() => ChickenContainer.Instance.Resolve<ICharacterSkillService>()).Value;
         private static ICharacterQuickListService CharacterQuicklistService => new Lazy<ICharacterQuickListService>(() => ChickenContainer.Instance.Resolve<ICharacterQuickListService>()).Value;
+        private static IPlayerManager PlayerManager => new Lazy<IPlayerManager>(() => ChickenContainer.Instance.Resolve<IPlayerManager>()).Value;
 
         public PlayerEntity(ISession session, CharacterDto dto, IEnumerable<CharacterSkillDto> skills, IEnumerable<CharacterQuicklistDto> quicklist) : base(VisualType.Character, dto.Id)
         {
@@ -136,7 +138,7 @@ namespace ChickenAPI.Game.Entities.Player
 
             if (doNotReceive)
             {
-                broadcastable.Broadcast(this, packet);
+                broadcastable.Broadcast(packet, new AllExpectOne(this));
             }
             else
             {
@@ -153,7 +155,7 @@ namespace ChickenAPI.Game.Entities.Player
 
             if (doNotReceive)
             {
-                broadcastable.Broadcast(this, packets);
+                broadcastable.Broadcast(packets, new AllExpectOne(this));
             }
             else
             {
@@ -198,6 +200,7 @@ namespace ChickenAPI.Game.Entities.Player
 
         public override void Dispose()
         {
+            PlayerManager.UnregisterPlayer(this);
             GC.SuppressFinalize(this);
         }
 

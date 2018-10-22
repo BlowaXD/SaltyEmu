@@ -14,6 +14,7 @@ using ChickenAPI.Game.Features.Effects;
 using ChickenAPI.Game.Features.IAs;
 using ChickenAPI.Game.Movements;
 using ChickenAPI.Game.Movements.DataObjects;
+using ChickenAPI.Game.Network;
 using ChickenAPI.Packets;
 
 namespace ChickenAPI.Game.Maps
@@ -98,54 +99,43 @@ namespace ChickenAPI.Game.Maps
 
         public IEnumerable<T> GetEntitiesInRange<T>(Position<short> pos, int range) where T : IEntity =>
             Entities.Where(e => e is T && e.HasComponent<MovableComponent>() && PositionHelper.GetDistance(pos, e.GetComponent<MovableComponent>().Actual) < range) as IEnumerable<T>;
+        public void Broadcast<T>(T packet) where T : IPacket => Broadcast(packet, null);
 
-        public void Broadcast<T>(T packet) where T : IPacket
+
+        public void Broadcast<T>(IEnumerable<T> packets) where T : IPacket => Broadcast(packets, null);
+
+        public void Broadcast(IEnumerable<IPacket> packets) => Broadcast(packets, null);
+
+        public void Broadcast<T>(T packet, IBroadcastRule rule) where T : IPacket
         {
             foreach (IPlayerEntity i in Players)
             {
-                i.SendPacket(packet);
-            }
-        }
-
-        public void Broadcast<T>(IEnumerable<T> packets) where T : IPacket
-        {
-            foreach (IPlayerEntity i in Players)
-            {
-                i.SendPackets(packets);
-            }
-        }
-
-        public void Broadcast(IEnumerable<IPacket> packets)
-        {
-            foreach (IPlayerEntity i in Players)
-            {
-                i.SendPackets(packets);
-            }
-        }
-
-        public void Broadcast<T>(IPlayerEntity sender, T packet) where T : IPacket
-        {
-            foreach (IPlayerEntity i in Players)
-            {
-                if (i == sender)
+                if (rule == null || rule.Match(i))
                 {
-                    continue;
+                    i.SendPacket(packet);
                 }
-
-                i.SendPacket(packet);
             }
         }
 
-        public void Broadcast<T>(IPlayerEntity sender, IEnumerable<T> packets) where T : IPacket
+        public void Broadcast<T>(IEnumerable<T> packets, IBroadcastRule rule) where T : IPacket
         {
             foreach (IPlayerEntity i in Players)
             {
-                if (i == sender)
+                if (rule == null || rule.Match(i))
                 {
-                    continue;
+                    i.SendPackets(packets);
                 }
+            }
+        }
 
-                i.SendPackets(packets);
+        public void Broadcast(IEnumerable<IPacket> packets, IBroadcastRule rule)
+        {
+            foreach (IPlayerEntity i in Players)
+            {
+                if (rule == null || rule.Match(i))
+                {
+                    i.SendPackets(packets);
+                }
             }
         }
     }

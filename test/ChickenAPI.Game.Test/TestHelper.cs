@@ -20,6 +20,7 @@ namespace ChickenAPI.Game.Test
     {
         private static bool _initialized;
         private static ICharacterService _characterService;
+        private static IPlayerManager _playerManager;
         private static MapLayerMock Layer;
 
         public static void Initialize()
@@ -39,6 +40,7 @@ namespace ChickenAPI.Game.Test
         {
             _characterService = ChickenContainer.Instance.Resolve<ICharacterService>();
             Layer = new MapLayerMock();
+            _playerManager = ChickenContainer.Instance.Resolve<IPlayerManager>();
         }
 
         private static void InjectDependencies()
@@ -77,6 +79,7 @@ namespace ChickenAPI.Game.Test
             dto = _characterService.Save(newCharacter);
             var tmp = new PlayerEntity(new SessionMock(), dto, null, null);
             tmp.TransferEntity(Layer);
+            _playerManager.RegisterPlayer(tmp);
             return tmp;
         }
     }

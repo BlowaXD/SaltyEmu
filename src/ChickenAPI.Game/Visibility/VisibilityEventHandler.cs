@@ -24,6 +24,7 @@ namespace ChickenAPI.Game.Visibility
         private readonly Logger _log = Logger.GetLogger<VisibilityEventHandler>();
 
         public override ISet<Type> HandledTypes => new HashSet<Type>();
+
         public override void Execute(IEntity entity, ChickenEventArgs e)
         {
             if (!(entity is IVisibleCapacity visible))
@@ -119,9 +120,9 @@ namespace ChickenAPI.Game.Visibility
                 return;
             }
 
-            if (entity is IPlayerEntity player && player.CurrentMap is IMapLayer broadcastable)
+            if (entity is IPlayerEntity player)
             {
-                broadcastable.Broadcast(player, player.GenerateOutPacket());
+                player.Broadcast(player.GenerateOutPacket());
             }
         }
     }

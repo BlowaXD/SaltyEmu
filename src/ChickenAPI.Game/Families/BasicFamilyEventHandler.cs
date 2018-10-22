@@ -55,17 +55,28 @@ namespace ChickenAPI.Game.Families
             IPlayerEntity player = PlayerManager.GetPlayerByCharacterName(kick.CharacterName);
             if (player == null)
             {
-                // todo player offline
+                FamilyKickOffline(kick);
+                return;
             }
-            else
-            {
-                // todo player online
-            }
+
+            DetachFamily(player);
+            player.Broadcast(player.GenerateGidxPacket());
+        }
+
+        private void FamilyKickOffline(FamilyKickEvent kick)
+        {
+            throw new NotImplementedException();
         }
 
         private void FamilyLeave(FamilyLeaveEvent leave)
         {
-            // todo
+            if (leave.Player.IsFamilyLeader)
+            {
+                Log.Warn("CANT_LEAVE_FAMILY_LEADER");
+                return;
+            }
+            DetachFamily(leave.Player);
+            leave.Player.Broadcast(leave.Player.GenerateGidxPacket());
         }
 
         private static void FamilyJoin(FamilyJoinEvent join)
@@ -131,6 +142,14 @@ namespace ChickenAPI.Game.Families
                 player.Broadcast(player.GenerateGidxPacket());
                 player.SendPacket(player.GenerateGInfoPacket());
             }
+        }
+
+        private static void DetachFamily(IPlayerEntity player)
+        {
+            CharacterFamilyService.DeleteById(player.FamilyCharacter.Id);
+            player.FamilyCharacter = null;
+            player.Family = null;
+            // globally update family
         }
 
         private static void AttachFamily(IPlayerEntity player, FamilyDto dto, FamilyAuthority authority)
