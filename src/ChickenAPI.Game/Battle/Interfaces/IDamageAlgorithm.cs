@@ -1,4 +1,6 @@
-﻿namespace ChickenAPI.Game.Battle.Interfaces
+﻿using ChickenAPI.Game.Battle.Hitting;
+
+namespace ChickenAPI.Game.Battle.Interfaces
 {
     public interface IDamageAlgorithm
     {
@@ -8,6 +10,6 @@
         /// <param name="entity"></param>
         /// <param name="targetEntity"></param>
         /// <returns></returns>
-        uint GenerateDamage(IBattleEntity entity, IBattleEntity targetEntity);
+        uint GenerateDamage(HitRequest hit);
     }
 }

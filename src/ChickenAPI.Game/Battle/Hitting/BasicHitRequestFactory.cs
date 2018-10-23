@@ -11,7 +11,8 @@ namespace ChickenAPI.Game.Battle.Hitting
             {
                 Sender = sender,
                 Target = target,
-                UsedSkill = dto
+                UsedSkill = dto,
+                Damages = 100
             };
         }
     }

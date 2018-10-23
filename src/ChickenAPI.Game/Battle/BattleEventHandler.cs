@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using Autofac;
+using ChickenAPI.Core.IoC;
 using ChickenAPI.Game.Battle.Events;
-using ChickenAPI.Game.Battle.Extensions;
 using ChickenAPI.Game.Battle.Hitting;
 using ChickenAPI.Game.Battle.Interfaces;
 using ChickenAPI.Game.ECS.Entities;
@@ -14,8 +15,7 @@ namespace ChickenAPI.Game.Battle
         public override ISet<Type> HandledTypes => new HashSet<Type>
         {
             typeof(ProcessHitRequestEvent),
-            typeof(FillHitRequestEvent),
-            typeof(TargetHitRequest)
+            typeof(FillHitRequestEvent)
         };
 
         public override void Execute(IEntity entity, ChickenEventArgs e)
@@ -34,14 +34,13 @@ namespace ChickenAPI.Game.Battle
                     FillEffects(fillHitRequest.HitRequest);
                     DamageCalculation(fillHitRequest.HitRequest);
                     break;
-                case TargetHitRequest targetHit:
-                    BattleExtensions.TargetHit(battleEntity, targetHit);
-                    break;
             }
         }
 
         private void DamageCalculation(HitRequest hitRequest)
         {
+            var algo = ChickenContainer.Instance.Resolve<IDamageAlgorithm>();
+            hitRequest.Damages = algo.GenerateDamage(hitRequest);
         }
 
         private void FillEffects(HitRequest hitRequest)

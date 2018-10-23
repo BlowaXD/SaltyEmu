@@ -59,7 +59,7 @@ namespace NosSharp.PacketHandler.Skill
                     player.SendPacket(player.GenerateEmptyCancelPacket(CancelPacketType.InCombatMode));
                     return;
                 case IBattleEntity battleEntity:
-                    player.EmitEvent(new SkillCastArgs
+                    player.EmitEvent(new UseSkillArgs
                     {
                         Skill = skill,
                         Target = battleEntity

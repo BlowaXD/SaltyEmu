@@ -4,8 +4,8 @@ using System.Linq;
 using ChickenAPI.Data.Character;
 using ChickenAPI.Data.Skills;
 using ChickenAPI.Enums.Game.Character;
+using ChickenAPI.Enums.Game.Skill;
 using ChickenAPI.Enums.Packets;
-using ChickenAPI.Game.Battle.DataObjects;
 using ChickenAPI.Game.Battle.Events;
 using ChickenAPI.Game.Battle.Extensions;
 using ChickenAPI.Game.Battle.Hitting;
@@ -15,6 +15,8 @@ using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Events;
 using ChickenAPI.Game.Features.Leveling;
 using ChickenAPI.Game.Features.Skills.Args;
+using ChickenAPI.Game.Movements.DataObjects;
+using ChickenAPI.Game.Movements.Extensions;
 
 namespace ChickenAPI.Game.Features.Skills
 {
@@ -22,7 +24,7 @@ namespace ChickenAPI.Game.Features.Skills
     {
         public override ISet<Type> HandledTypes => new HashSet<Type>
         {
-            typeof(SkillCastArgs), typeof(UseSkillArgs), typeof(PlayerAddSkillEventArgs)
+            typeof(UseSkillArgs), typeof(PlayerAddSkillEventArgs)
         };
 
         public override void Execute(IEntity entity, ChickenEventArgs e)
@@ -34,9 +36,6 @@ namespace ChickenAPI.Game.Features.Skills
 
             switch (e)
             {
-                case SkillCastArgs castSkill:
-                    CastSkill(battleEntity, castSkill);
-                    break;
                 case UseSkillArgs useSkill:
                     UseSkill(battleEntity, useSkill);
                     break;
@@ -46,40 +45,86 @@ namespace ChickenAPI.Game.Features.Skills
             }
         }
 
-        public static void CastSkill(IBattleEntity entity, SkillCastArgs e)
-        {
-            if (e.Skill.MpCost > entity.Mp) //TODO: others check
-            {
-                if (entity is IPlayerEntity player)
-                {
-                    player.SendPacket(e.Target.GenerateTargetCancelPacket(CancelPacketType.NotInCombatMode));
-                }
-                return;
-            }
-            entity.CurrentMap.Broadcast(entity.GenerateCtPacket(e.Target, e.Skill));
-            entity.EmitEvent(new TargetHitRequest
-            {
-                Target = e.Target,
-                Skill = e.Skill
-            });
-        }
-
         public static void UseSkill(IBattleEntity entity, UseSkillArgs e)
         {
+            IBattleEntity target = e.Target;
+            SkillComponent skillComponent = entity.Skills;
+            MovableComponent movableComponent = entity.Movable;
+            MovableComponent targetMovableComponent = target.Movable;
+            SkillDto skill = e.Skill;
+
+            if (!(entity is IPlayerEntity player))
+            {
+                player = null;
+            }
+
+            if (e.Skill.MpCost > entity.Mp) //TODO: others check
+            {
+                player?.SendPacket(e.Target.GenerateTargetCancelPacket(CancelPacketType.NotInCombatMode));
+                return;
+            }
+
+            List<IBattleEntity> targets = new List<IBattleEntity>();
+            switch ((SkillTargetType)skill.TargetType)
+            {
+                case SkillTargetType.SingleHit:
+                case SkillTargetType.SingleBuff when skill.HitType == 0:
+                    if (movableComponent.GetDistance(targetMovableComponent) > skill.Range + target.Battle.BasicArea + 1)
+                    {
+                        goto default;
+                    }
+                    targets.Add(target);
+                    break;
+
+                case SkillTargetType.AOE when skill.HitType == 1: // Target Hit
+                    if (skill.TargetRange == 0)
+                    {
+                        goto default;
+                    }
+                    break;
+
+                case SkillTargetType.AOE when skill.HitType != 1: // Buff
+                    switch (skill.HitType)
+                    {
+                        case 0:
+                        case 4: // Apply Buff on himself
+                            break;
+
+                        case 2: // Apply Buff in range
+                            if (skill.TargetRange == 0)
+                            {
+                                player?.SendPacket(target.GenerateTargetCancelPacket(CancelPacketType.NotInCombatMode));
+                                return;
+                            }
+                            // apply buff on each entities of type
+                            break;
+                    }
+                    break;
+
+                default:
+                    player?.SendPacket(target.GenerateTargetCancelPacket(CancelPacketType.NotInCombatMode));
+                    return;
+            }
+
+            entity.CurrentMap.Broadcast(entity.GenerateCtPacket(e.Target, e.Skill));
             entity.DecreaseMp(e.Skill.MpCost);
             //TODO: Skill Cooldown
 
-            HitRequest hitRequest = entity.CreateHitRequest(e.Target, e.Skill);
-
-            entity.EmitEvent(new FillHitRequestEvent
+            targets.ForEach(t =>
             {
-                HitRequest = hitRequest,
-            });
+                HitRequest hitRequest = entity.CreateHitRequest(t, e.Skill);
 
-            entity.EmitEvent(new ProcessHitRequestEvent
-            {
-                HitRequest = hitRequest
+                entity.EmitEvent(new FillHitRequestEvent
+                {
+                    HitRequest = hitRequest,
+                });
+
+                entity.EmitEvent(new ProcessHitRequestEvent
+                {
+                    HitRequest = hitRequest
+                });
             });
+            
         }
 
         /// <summary>

@@ -1,12 +1,11 @@
-﻿using ChickenAPI.Game.Battle;
+﻿using ChickenAPI.Game.Battle.Hitting;
 using ChickenAPI.Game.Battle.Interfaces;
-using ChickenAPI.Game.Entities;
 
 namespace NosSharp.BasicAlgorithm
 {
     public class DamageAlgorithm : IDamageAlgorithm
     {
-        public uint GenerateDamage(IBattleEntity entity, IBattleEntity targetEntity)
+        public uint GenerateDamage(HitRequest hit)
         {
             return 100;
         }
