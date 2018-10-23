@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using ChickenAPI.Core.Utils;
 using ChickenAPI.Data.Map;
 using ChickenAPI.Data.NpcMonster;
@@ -45,15 +46,12 @@ namespace ChickenAPI.Game.Entities.Monster
             };
         }
 
-        public SkillComponent Skills { get; }
-
         public override void Dispose()
         {
             GC.SuppressFinalize(this);
         }
 
         public MovableComponent Movable { get; }
-        public BattleComponent Battle { get; set; }
         public NpcMonsterDto NpcMonster { get; }
         public MapMonsterDto MapMonster { get; }
 
@@ -82,6 +80,30 @@ namespace ChickenAPI.Game.Entities.Monster
             get => _visibility.Visibility;
             set => _visibility.Visibility = value;
         }
+
+        #endregion
+
+        #region Battle
+
+        #region Skills
+
+
+        public bool HasSkill(long skillId) => Skills.Skills.ContainsKey(skillId);
+
+        public bool CanCastSkill(long skillId) => Skills.CooldownsBySkillId.Any(s => s.Item2 == skillId);
+
+        public SkillComponent Skills { get; }
+
+        #endregion
+
+        public BattleComponent Battle { get; }
+
+
+
+        public long Hp => Battle.Hp;
+        public long Mp => Battle.Mp;
+        public long HpMax => Battle.HpMax;
+        public long MpMax => Battle.MpMax;
 
         #endregion
     }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Autofac;
 using ChickenAPI.Core.IoC;
@@ -83,11 +84,7 @@ namespace ChickenAPI.Game.Entities.Player
                 { typeof(SkillComponent), Skills }
             };
         }
-
-
-        public SkillComponent Skills { get; }
         public MovableComponent Movable { get; }
-        public BattleComponent Battle { get; }
         public InventoryComponent Inventory { get; }
         public ExperienceComponent Experience { get; }
         public CharacterDto Character { get; }
@@ -233,6 +230,28 @@ namespace ChickenAPI.Game.Entities.Player
             );
             Log.Info($"[SAVE] {Character.Name} saved in {(DateTime.UtcNow - before).TotalMilliseconds} ms");
         }
+
+        #region Battle
+
+        #region Skills
+
+
+        public bool HasSkill(long skillId) => Skills.Skills.ContainsKey(skillId);
+
+        public bool CanCastSkill(long skillId) => Skills.CooldownsBySkillId.Any(s => s.Item2 == skillId);
+
+        public SkillComponent Skills { get; }
+
+        #endregion
+
+        public BattleComponent Battle { get; }
+
+        public long Hp => Battle.Hp;
+        public long Mp => Battle.Mp;
+        public long HpMax => Battle.HpMax;
+        public long MpMax => Battle.MpMax;
+
+        #endregion
 
         #region Visibility
 

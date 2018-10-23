@@ -4,12 +4,12 @@ namespace ChickenAPI.Game.Battle.Hitting
 {
     public class BasicHitRequestFactory : IHitRequestFactory
     {
-        public Hitting.HitRequest CreateHitRequest(IBattleEntity sender, IBattleEntity target)
+        public HitRequest CreateHitRequest(IBattleEntity sender, IBattleEntity target)
         {
-            return new Hitting.HitRequest
+            return new HitRequest
             {
-                Sender = sender.Battle.Entity,
-                Target = target.Battle.Entity,
+                Sender = sender,
+                Target = target,
             };
         }
     }

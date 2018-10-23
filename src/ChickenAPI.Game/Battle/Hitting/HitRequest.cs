@@ -1,14 +1,15 @@
 ﻿using System.Collections.Generic;
 using ChickenAPI.Data.Skills;
 using ChickenAPI.Enums.Packets;
+using ChickenAPI.Game.Battle.Interfaces;
 using ChickenAPI.Game.ECS.Entities;
 
 namespace ChickenAPI.Game.Battle.Hitting
 {
     public class HitRequest
     {
-        public IEntity Sender { get; set; }
-        public IEntity Target { get; set; }
+        public IBattleEntity Sender { get; set; }
+        public IBattleEntity Target { get; set; }
 
         public SkillDto UsedSkill { get; set; }
 
