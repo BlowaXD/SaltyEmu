@@ -38,5 +38,10 @@ namespace ChickenAPI.Game.Movements.Extensions
         {
             return PositionHelper.GetDistance(src.Actual, dest.Actual);
         }
+
+        public static int GetDistance(this IMovableEntity src, IMovableEntity dest)
+        {
+            return PositionHelper.GetDistance(src.Actual, dest.Actual);
+        }
     }
 }

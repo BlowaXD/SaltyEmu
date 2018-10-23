@@ -12,6 +12,7 @@ namespace ChickenAPI.Game.Battle
 {
     public class BattleEventHandler : EventHandlerBase
     {
+        private readonly IDamageAlgorithm _algo = new Lazy<IDamageAlgorithm>(() => ChickenContainer.Instance.Resolve<IDamageAlgorithm>()).Value;
         public override ISet<Type> HandledTypes => new HashSet<Type>
         {
             typeof(ProcessHitRequestEvent),
@@ -39,8 +40,7 @@ namespace ChickenAPI.Game.Battle
 
         private void DamageCalculation(HitRequest hitRequest)
         {
-            var algo = ChickenContainer.Instance.Resolve<IDamageAlgorithm>();
-            hitRequest.Damages = algo.GenerateDamage(hitRequest);
+            hitRequest.Damages = _algo.GenerateDamage(hitRequest);
         }
 
         private void FillEffects(HitRequest hitRequest)

@@ -17,6 +17,7 @@ using ChickenAPI.Game.Features.Leveling;
 using ChickenAPI.Game.Features.Skills.Args;
 using ChickenAPI.Game.Movements.DataObjects;
 using ChickenAPI.Game.Movements.Extensions;
+using NLog.Targets;
 
 namespace ChickenAPI.Game.Features.Skills
 {
@@ -48,9 +49,6 @@ namespace ChickenAPI.Game.Features.Skills
         public static void UseSkill(IBattleEntity entity, UseSkillArgs e)
         {
             IBattleEntity target = e.Target;
-            SkillComponent skillComponent = entity.Skills;
-            MovableComponent movableComponent = entity.Movable;
-            MovableComponent targetMovableComponent = target.Movable;
             SkillDto skill = e.Skill;
 
             if (!(entity is IPlayerEntity player))
@@ -69,7 +67,7 @@ namespace ChickenAPI.Game.Features.Skills
             {
                 case SkillTargetType.SingleHit:
                 case SkillTargetType.SingleBuff when skill.HitType == 0:
-                    if (movableComponent.GetDistance(targetMovableComponent) > skill.Range + target.Battle.BasicArea + 1)
+                    if (entity.GetDistance(target) > skill.Range + target.Battle.BasicArea + 1)
                     {
                         goto default;
                     }
@@ -105,6 +103,7 @@ namespace ChickenAPI.Game.Features.Skills
                     player?.SendPacket(target.GenerateTargetCancelPacket(CancelPacketType.NotInCombatMode));
                     return;
             }
+
 
             entity.CurrentMap.Broadcast(entity.GenerateCtPacket(e.Target, e.Skill));
             entity.DecreaseMp(e.Skill.MpCost);

@@ -10,7 +10,6 @@ using ChickenAPI.Game.Entities.Player.Extensions;
 using ChickenAPI.Game.Entities.Portal;
 using ChickenAPI.Game.Events;
 using ChickenAPI.Game.Features.Portals;
-using ChickenAPI.Game.Packets;
 using ChickenAPI.Game.Packets.Extensions;
 using ChickenAPI.Game.Visibility.Events;
 using ChickenAPI.Packets.Game.Client.Shops;
@@ -21,7 +20,7 @@ namespace ChickenAPI.Game.Visibility
 {
     public class VisibilityEventHandler : EventHandlerBase
     {
-        private static readonly Logger Log = Logger.GetLogger<VisibilityEventHandler>();
+        private readonly Logger _log = Logger.GetLogger<VisibilityEventHandler>();
 
         public override ISet<Type> HandledTypes => new HashSet<Type>();
         public override void Execute(IEntity entity, ChickenEventArgs e)
@@ -45,6 +44,11 @@ namespace ChickenAPI.Game.Visibility
             }
         }
 
+        /// <summary>
+        /// To review
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <param name="args"></param>
         private static void SetVisible(IEntity entity, VisibilitySetVisibleEventArgs args)
         {
             if (!args.Broadcast)
