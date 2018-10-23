@@ -6,11 +6,11 @@ namespace ChickenAPI.Game.Battle.Interfaces
 {
     public interface IBattleEntity : IMovableEntity, ISkillEntity
     {
-        long Hp { get; }
-        long Mp { get; }
+        int Hp { get; set; }
+        int Mp { get; set; }
 
-        long HpMax { get; }
-        long MpMax { get; }
+        int HpMax { get; set; }
+        int MpMax { get; set; }
         BattleComponent Battle { get; }
     }
 }

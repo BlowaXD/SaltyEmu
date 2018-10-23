@@ -14,7 +14,7 @@ namespace ChickenAPI.Game.Battle.Extensions
         {
             return new CancelPacket
             {
-                TargetId = battle?.Id ?? -1,
+                TargetId = battle?.Id ?? 0,
                 Type = type,
             };
         }

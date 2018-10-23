@@ -9,6 +9,8 @@ using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Entities.Monster;
 using ChickenAPI.Game.Entities.Npc;
 using ChickenAPI.Game.Entities.Player;
+using ChickenAPI.Game.Features.Skills.Args;
+using ChickenAPI.Packets.Game.Client.Battle;
 using ChickenAPI.Packets.Game.Client._NotYetSorted;
 using ChickenAPI.Packets.Game.Server.Battle;
 using ChickenAPI.Packets.Game.Server.QuickList.Battle;
@@ -33,6 +35,12 @@ namespace NosSharp.PacketHandler.Skill
                 player.Movable.IsSitting = false;
             }
 
+            if (!player.Skills.Skills.TryGetValue(packet.CastId, out SkillDto skill))
+            {
+                // skill does not exist
+                return;
+            }
+
             IEntity target = null;
             switch (packet.TargetVisualType)
             {
@@ -47,17 +55,19 @@ namespace NosSharp.PacketHandler.Skill
                     break;
             }
 
-            if (target == null || !(target is IBattleEntity battleEntity))
+            switch (target)
             {
-                player.SendPacket(new CancelPacket
-                {
-                    Type = CancelPacketType.NotInCombatMode,
-                    TargetId = 0,
-                });
-                return;
+                case null:
+                    player.SendPacket(player.GenerateEmptyCancelPacket(CancelPacketType.InCombatMode));
+                    return;
+                case IBattleEntity battleEntity:
+                    player.EmitEvent(new SkillCastArgs
+                    {
+                        Skill = skill,
+                        Target = battleEntity
+                    });
+                    break;
             }
-            BattleExtensions.TargetHit(player, battleEntity, packet.CastId);
-
         }
     }
 }

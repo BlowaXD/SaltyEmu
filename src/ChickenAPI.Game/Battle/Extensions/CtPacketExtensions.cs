@@ -1,4 +1,5 @@
 ﻿using ChickenAPI.Data.Skills;
+using ChickenAPI.Game.Battle.Interfaces;
 using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Packets.Game.Server.Battle;
 
@@ -6,7 +7,7 @@ namespace ChickenAPI.Game.Battle.Extensions
 {
     public static class CtPacketExtensions
     {
-        public static CtPacket GenerateCtPacket(IEntity entity, IEntity target, SkillDto skill)
+        public static CtPacket GenerateCtPacket(this IBattleEntity entity, IEntity target, SkillDto skill)
         {
             return new CtPacket
             {

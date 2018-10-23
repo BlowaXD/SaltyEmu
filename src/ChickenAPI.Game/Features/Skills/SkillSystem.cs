@@ -5,7 +5,10 @@ using ChickenAPI.Data.Character;
 using ChickenAPI.Data.Skills;
 using ChickenAPI.Enums.Game.Character;
 using ChickenAPI.Game.Battle.DataObjects;
+using ChickenAPI.Game.Battle.Events;
 using ChickenAPI.Game.Battle.Extensions;
+using ChickenAPI.Game.Battle.Hitting;
+using ChickenAPI.Game.Battle.Interfaces;
 using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Events;
@@ -23,73 +26,49 @@ namespace ChickenAPI.Game.Features.Skills
 
         public override void Execute(IEntity entity, ChickenEventArgs e)
         {
-            var component = entity.GetComponent<SkillComponent>();
-            if (component is null)
+            if (!(entity is IBattleEntity battleEntity))
             {
                 return;
             }
 
             switch (e)
             {
-                case SkillCastArgs skillcast:
-                    TryCastSkill(component, skillcast);
-                    break;
                 case UseSkillArgs useSkill:
-                    UseSkill(component, useSkill);
+                    UseSkill(battleEntity, useSkill);
                     break;
                 case PlayerAddSkillEventArgs addSkill:
-                    AddSkill(entity as IPlayerEntity, addSkill, component);
+                    AddSkill(entity as IPlayerEntity, addSkill);
                     break;
             }
         }
 
-        public static void UseSkill(SkillComponent component, UseSkillArgs e)
+        public static void UseSkill(IBattleEntity entity, UseSkillArgs e)
         {
-            var battleComponent = component.Entity.GetComponent<BattleComponent>();
-            if (battleComponent is null)
-            {
-                return;
-            }
-            battleComponent.Mp -= e.Skill.MpCost;
-            if (component.Entity.CurrentMap is IMapLayer broadcastable)
-            {
-                broadcastable.Broadcast(CtPacketExtensions.GenerateCtPacket(battleComponent.Entity, e.targetEntity, e.Skill));
-            }
+            entity.DecreaseMp(e.Skill.MpCost);
+            entity.CurrentMap.Broadcast(entity.GenerateCtPacket(e.Target, e.Skill));
             //TODO: Skill Cooldown
+
+            HitRequest hitRequest = entity.CreateHitRequest(e.Target, e.Skill);
+
+            entity.EmitEvent(new FillHitRequestEvent
+            {
+                HitRequest = hitRequest,
+            });
+
+            entity.EmitEvent(new ProcessHitRequestEvent
+            {
+                HitRequest = hitRequest
+            });
         }
 
-        public static bool TryCastSkill(SkillComponent component, SkillCastArgs e)
+        /// <summary>
+        /// Todo rework
+        /// </summary>
+        /// <param name="player"></param>
+        /// <param name="e"></param>
+        public static void AddSkill(IPlayerEntity player, PlayerAddSkillEventArgs e)
         {
-            var battleComponent = component.Entity.GetComponent<BattleComponent>();
-            if (battleComponent is null)
-            {
-                return false;
-            }
-
-            //todo: cooldown check
-
-            if (e.Skill.MpCost > battleComponent.Mp)
-            {
-                return false; //not enough mp
-            }
-
-            if (e.Skill.HitType != e.Skill.TargetType)
-            {
-                return false; //todo: need to ignore this check if the skill is a buff (cf: SkillDto#SkillType)
-            }
-
-            if (e.Skill.Range != e.Skill.TargetRange)
-            {
-                return false; //current entity is too far from target
-            }
-
-            //todo: ensure there are no more checks to do.
-
-            return true;
-        }
-
-        public static void AddSkill(IPlayerEntity player, PlayerAddSkillEventArgs e, SkillComponent component)
-        {
+            SkillComponent component = player.Skills;
             if (e.Skill is null)
             {
                 return; //the skill doesn't exist?

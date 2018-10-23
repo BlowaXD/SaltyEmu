@@ -23,9 +23,9 @@ namespace ChickenAPI.Game.Battle.Extensions
     {
         private static readonly IHitRequestFactory HitRequestFactory = new Lazy<IHitRequestFactory>(() => ChickenContainer.Instance.Resolve<IHitRequestFactory>()).Value;
 
-        public static HitRequest CreateHitRequest(this IBattleEntity entity, IBattleEntity target)
+        public static HitRequest CreateHitRequest(this IBattleEntity entity, IBattleEntity target, SkillDto skill)
         {
-            return HitRequestFactory.CreateHitRequest(entity, target);
+            return HitRequestFactory.CreateHitRequest(entity, target, skill);
         }
 
         public static void ProcessHitRequest(this IBattleEntity entity, HitRequest hit)
@@ -63,25 +63,29 @@ namespace ChickenAPI.Game.Battle.Extensions
             // apply debuffs
         }
 
-        public static void TargetHit(this IBattleEntity entity, IBattleEntity target, long skillId)
+        public static void TargetHit(this IBattleEntity entity, IBattleEntity target, HitRequest request)
         {
             SkillComponent skillComponent = entity.Skills;
             MovableComponent movableComponent = entity.Movable;
             MovableComponent targetMovableComponent = target.Movable;
+            SkillDto skill = request.UsedSkill;
+            long skillId = request.UsedSkill.Id;
 
 
             if (!(entity is IPlayerEntity player))
             {
                 player = null;
             }
-
+            /*
             SkillDto skill = skillComponent.Skills[skillId];
             if (skill == null || SkillEventHandler.TryCastSkill(skillComponent, new SkillCastArgs { Skill = skill }))
             {
                 player?.SendPacket(target.GenerateTargetCancelPacket(CancelPacketType.InCombatMode));
                 return;
             }
-
+            */
+            /*
+            // todo ENUM
             switch (skill.TargetType)
             {
                 // Single Hit
@@ -135,6 +139,7 @@ namespace ChickenAPI.Game.Battle.Extensions
                     player?.SendPacket(target.GenerateTargetCancelPacket(CancelPacketType.InCombatMode));
                     return;
             }
+            */
         }
     }
 }

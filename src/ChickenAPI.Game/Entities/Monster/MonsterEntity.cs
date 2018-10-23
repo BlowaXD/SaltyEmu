@@ -99,10 +99,29 @@ namespace ChickenAPI.Game.Entities.Monster
         public BattleComponent Battle { get; }
 
 
-        public long Hp => Battle.Hp;
-        public long Mp => Battle.Mp;
-        public long HpMax => Battle.HpMax;
-        public long MpMax => Battle.MpMax;
+        public int Hp
+        {
+            get => Battle.Hp;
+            set => Battle.Hp = value;
+        }
+
+        public int Mp
+        {
+            get => Battle.Mp;
+            set => Battle.Mp = value;
+        }
+
+        public int HpMax
+        {
+            get => Battle.HpMax;
+            set => Battle.HpMax = value;
+        }
+
+        public int MpMax
+        {
+            get => Battle.MpMax;
+            set => Battle.MpMax = value;
+        }
 
         #region Movements
 
