@@ -8,7 +8,6 @@ using ChickenAPI.Game.Data.AccessLayer.Character;
 using ChickenAPI.Game.ECS.Components;
 using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Game.Maps;
 using ChickenAPI.Game.Movements.Extensions;
 
 namespace ChickenAPI.Game.Movements.DataObjects

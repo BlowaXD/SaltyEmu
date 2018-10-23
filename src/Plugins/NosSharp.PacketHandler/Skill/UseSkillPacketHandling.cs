@@ -11,9 +11,7 @@ using ChickenAPI.Game.Entities.Npc;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Features.Skills.Args;
 using ChickenAPI.Packets.Game.Client.Battle;
-using ChickenAPI.Packets.Game.Client._NotYetSorted;
 using ChickenAPI.Packets.Game.Server.Battle;
-using ChickenAPI.Packets.Game.Server.QuickList.Battle;
 
 namespace NosSharp.PacketHandler.Skill
 {

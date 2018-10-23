@@ -4,6 +4,7 @@ using System.Linq;
 using ChickenAPI.Data.Character;
 using ChickenAPI.Data.Skills;
 using ChickenAPI.Enums.Game.Character;
+using ChickenAPI.Enums.Packets;
 using ChickenAPI.Game.Battle.DataObjects;
 using ChickenAPI.Game.Battle.Events;
 using ChickenAPI.Game.Battle.Extensions;
@@ -33,6 +34,9 @@ namespace ChickenAPI.Game.Features.Skills
 
             switch (e)
             {
+                case SkillCastArgs castSkill:
+                    CastSkill(battleEntity, castSkill);
+                    break;
                 case UseSkillArgs useSkill:
                     UseSkill(battleEntity, useSkill);
                     break;
@@ -42,10 +46,27 @@ namespace ChickenAPI.Game.Features.Skills
             }
         }
 
+        public static void CastSkill(IBattleEntity entity, SkillCastArgs e)
+        {
+            if (e.Skill.MpCost > entity.Mp) //TODO: others check
+            {
+                if (entity is IPlayerEntity player)
+                {
+                    player.SendPacket(e.Target.GenerateTargetCancelPacket(CancelPacketType.NotInCombatMode));
+                }
+                return;
+            }
+            entity.CurrentMap.Broadcast(entity.GenerateCtPacket(e.Target, e.Skill));
+            entity.EmitEvent(new TargetHitRequest
+            {
+                Target = e.Target,
+                Skill = e.Skill
+            });
+        }
+
         public static void UseSkill(IBattleEntity entity, UseSkillArgs e)
         {
             entity.DecreaseMp(e.Skill.MpCost);
-            entity.CurrentMap.Broadcast(entity.GenerateCtPacket(e.Target, e.Skill));
             //TODO: Skill Cooldown
 
             HitRequest hitRequest = entity.CreateHitRequest(e.Target, e.Skill);

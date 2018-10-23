@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using ChickenAPI.Game.Battle.Events;
+using ChickenAPI.Game.Battle.Extensions;
 using ChickenAPI.Game.Battle.Hitting;
+using ChickenAPI.Game.Battle.Interfaces;
 using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Events;
 
@@ -12,11 +14,16 @@ namespace ChickenAPI.Game.Battle
         public override ISet<Type> HandledTypes => new HashSet<Type>
         {
             typeof(ProcessHitRequestEvent),
-            typeof(FillHitRequestEvent)
+            typeof(FillHitRequestEvent),
+            typeof(TargetHitRequest)
         };
 
         public override void Execute(IEntity entity, ChickenEventArgs e)
         {
+            if (!(entity is IBattleEntity battleEntity))
+            {
+                return;
+            }
             switch (e)
             {
                 case ProcessHitRequestEvent processHitRequest:
@@ -26,6 +33,9 @@ namespace ChickenAPI.Game.Battle
                     SetupHitType(fillHitRequest.HitRequest);
                     FillEffects(fillHitRequest.HitRequest);
                     DamageCalculation(fillHitRequest.HitRequest);
+                    break;
+                case TargetHitRequest targetHit:
+                    BattleExtensions.TargetHit(battleEntity, targetHit);
                     break;
             }
         }
