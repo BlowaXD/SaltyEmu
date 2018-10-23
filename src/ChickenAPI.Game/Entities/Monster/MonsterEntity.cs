@@ -11,6 +11,7 @@ using ChickenAPI.Game.ECS.Components;
 using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Features.Skills;
 using ChickenAPI.Game.Movements.DataObjects;
+using ChickenAPI.Game.Movements.Extensions;
 using ChickenAPI.Game.Visibility;
 
 namespace ChickenAPI.Game.Entities.Monster
@@ -87,7 +88,6 @@ namespace ChickenAPI.Game.Entities.Monster
 
         #region Skills
 
-
         public bool HasSkill(long skillId) => Skills.Skills.ContainsKey(skillId);
 
         public bool CanCastSkill(long skillId) => Skills.CooldownsBySkillId.Any(s => s.Item2 == skillId);
@@ -99,11 +99,29 @@ namespace ChickenAPI.Game.Entities.Monster
         public BattleComponent Battle { get; }
 
 
-
         public long Hp => Battle.Hp;
         public long Mp => Battle.Mp;
         public long HpMax => Battle.HpMax;
         public long MpMax => Battle.MpMax;
+
+        #region Movements
+
+
+        public bool CanMove => !Movable.IsSitting;
+        public Position<short> Actual => Movable.Actual;
+        public Position<short> Destination => Movable.Destination;
+        public void SetPosition(Position<short> position)
+        {
+            Movable.Actual = position;
+        }
+
+        public void SetPosition(short x, short y)
+        {
+            Movable.Actual = new Position<short>(x, y);
+        }
+
+
+        #endregion
 
         #endregion
     }

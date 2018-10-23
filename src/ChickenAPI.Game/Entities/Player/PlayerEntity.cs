@@ -84,6 +84,7 @@ namespace ChickenAPI.Game.Entities.Player
                 { typeof(SkillComponent), Skills }
             };
         }
+
         public MovableComponent Movable { get; }
         public InventoryComponent Inventory { get; }
         public ExperienceComponent Experience { get; }
@@ -235,7 +236,6 @@ namespace ChickenAPI.Game.Entities.Player
 
         #region Skills
 
-
         public bool HasSkill(long skillId) => Skills.Skills.ContainsKey(skillId);
 
         public bool CanCastSkill(long skillId) => Skills.CooldownsBySkillId.Any(s => s.Item2 == skillId);
@@ -250,6 +250,24 @@ namespace ChickenAPI.Game.Entities.Player
         public long Mp => Battle.Mp;
         public long HpMax => Battle.HpMax;
         public long MpMax => Battle.MpMax;
+
+        #region Movements
+
+        public bool CanMove => !Movable.IsSitting;
+        public Position<short> Actual => Movable.Actual;
+        public Position<short> Destination => Movable.Destination;
+
+        public void SetPosition(Position<short> position)
+        {
+            Movable.Actual = position;
+        }
+
+        public void SetPosition(short x, short y)
+        {
+            Movable.Actual = new Position<short>(x, y);
+        }
+
+        #endregion
 
         #endregion
 

@@ -109,6 +109,25 @@ namespace ChickenAPI.Game.Entities.Npc
         public long HpMax => Battle.HpMax;
         public long MpMax => Battle.MpMax;
 
+        #region Movements
+
+
+        public bool CanMove => !Movable.IsSitting;
+        public Position<short> Actual => Movable.Actual;
+        public Position<short> Destination => Movable.Destination;
+        public void SetPosition(Position<short> position)
+        {
+            Movable.Actual = position;
+        }
+
+        public void SetPosition(short x, short y)
+        {
+            Movable.Actual = new Position<short>(x, y);
+        }
+
+
+        #endregion
+
         #endregion
     }
 }
