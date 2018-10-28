@@ -1,16 +1,5 @@
-﻿using Autofac;
-using ChickenAPI.Core.IoC;
-using ChickenAPI.Core.Logging;
-using ChickenAPI.Core.Maths;
+﻿using ChickenAPI.Core.Logging;
 using ChickenAPI.Core.Plugins;
-using ChickenAPI.Game.Battle.Hitting;
-using ChickenAPI.Game.Battle.Interfaces;
-using ChickenAPI.Game.Data.AccessLayer.Item;
-using ChickenAPI.Game.Events;
-using ChickenAPI.Game.Features.GuriHandling.Handling;
-using ChickenAPI.Game.Features.NpcDialog;
-using ChickenAPI.Game.Managers;
-using NosSharp.TemporaryMapPlugins;
 
 namespace SaltyEmu.BasicPlugin
 {
@@ -32,6 +21,7 @@ namespace SaltyEmu.BasicPlugin
         public void OnLoad()
         {
             Log.Info("Loading...");
+            BasicPluginIoCInjector.InjectDependencies();
             Log.Info("Loaded !");
         }
 
