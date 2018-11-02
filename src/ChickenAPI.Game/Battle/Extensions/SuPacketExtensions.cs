@@ -1,8 +1,6 @@
 ﻿using ChickenAPI.Game.Battle.DataObjects;
 using ChickenAPI.Game.Battle.Hitting;
 using ChickenAPI.Game.Battle.Interfaces;
-using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Game.Movements.DataObjects;
 using ChickenAPI.Packets.Game.Server.Battle;
 
 namespace ChickenAPI.Game.Battle.Extensions
