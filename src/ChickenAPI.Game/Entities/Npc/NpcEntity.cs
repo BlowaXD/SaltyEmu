@@ -107,6 +107,11 @@ namespace ChickenAPI.Game.Entities.Npc
         #endregion
         public BattleComponent Battle { get; }
 
+        public bool IsAlive => Hp > 0;
+
+        public byte HpPercentage => Convert.ToByte((int)(Hp / (float)HpMax * 100));
+        public byte MpPercentage => Convert.ToByte((int)(Mp / (float)MpMax * 100.0));
+
 
         public int Hp
         {

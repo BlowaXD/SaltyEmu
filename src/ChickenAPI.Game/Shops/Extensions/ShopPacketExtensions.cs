@@ -1,7 +1,7 @@
 ﻿using ChickenAPI.Game.Entities.Npc;
 using ChickenAPI.Packets.Game.Client.Shops;
 
-namespace ChickenAPI.Game.Features.Shops.Extensions
+namespace ChickenAPI.Game.Shops.Extensions
 {
     public static class ShopPacketExtensions
     {

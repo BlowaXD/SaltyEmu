@@ -9,12 +9,10 @@ using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Events;
 using ChickenAPI.Game.Features.Portals.Args;
 using ChickenAPI.Game.Managers;
-using ChickenAPI.Game.Maps;
 using ChickenAPI.Game.PacketHandling.Extensions;
-using ChickenAPI.Game.Packets.Extensions;
 using ChickenAPI.Packets.Game.Server.Map;
 
-namespace ChickenAPI.Game.Features.Portals
+namespace ChickenAPI.Game.Portals
 {
     public class PortalEventHandler : EventHandlerBase
     {
@@ -34,10 +32,6 @@ namespace ChickenAPI.Game.Features.Portals
         private static void TriggerPortalEventHandler(IEntity entity, PortalTriggerEvent args)
         {
             // todo check portal state
-            if (!(entity.CurrentMap is IMapLayer currentMap))
-            {
-                return;
-            }
             if (!(entity is IPlayerEntity session))
             {
                 return;
@@ -46,7 +40,7 @@ namespace ChickenAPI.Game.Features.Portals
             PortalDto currentPortal = args.Portal;
 
             session.SendPacket(new MapoutPacket());
-            currentMap.Broadcast(session, session.GenerateOutPacket());
+            session.Broadcast(session.GenerateOutPacket());
 
             session.Movable.Actual.X = currentPortal.DestinationX;
             session.Movable.Actual.Y = currentPortal.DestinationY;

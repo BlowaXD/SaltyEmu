@@ -33,8 +33,8 @@ namespace ChickenAPI.Game.PacketHandling.Extensions
                 DirectionType = movable.DirectionType,
                 InMonsterSubPacket = new InMonsterSubPacket
                 {
-                    HpPercentage = battle.HpPercentage,
-                    MpPercentage = battle.MpPercentage,
+                    HpPercentage = monster.HpPercentage,
+                    MpPercentage = monster.MpPercentage,
                     Unknown1 = 0,
                     Unknown2 = 0,
                     Unknown3 = -1,
@@ -93,8 +93,8 @@ namespace ChickenAPI.Game.PacketHandling.Extensions
                 DirectionType = movable.DirectionType,
                 InNpcSubPacket = new InNpcSubPacket
                 {
-                    HpPercentage = battle.HpPercentage,
-                    MpPercentage = battle.MpPercentage,
+                    HpPercentage = npcEntity.HpPercentage,
+                    MpPercentage = npcEntity.MpPercentage,
                     Dialog = npcEntity.MapNpc.Dialog,
                     Unknown1 = 0,
                     Unknown2 = 0,
@@ -121,7 +121,6 @@ namespace ChickenAPI.Game.PacketHandling.Extensions
         {
             CharacterDto character = player.Character;
             MovableComponent movable = player.Movable;
-            BattleComponent battle = player.Battle;
             return new InPacketBase
             {
                 VisualType = VisualType.Character,
@@ -139,8 +138,8 @@ namespace ChickenAPI.Game.PacketHandling.Extensions
                     HairColor = character.HairColor,
                     Class = character.Class,
                     Equipment = player.GenerateInventoryWearPacket(),
-                    HpPercentage = battle.HpPercentage,
-                    MpPercentage = battle.MpPercentage,
+                    HpPercentage = player.HpPercentage,
+                    MpPercentage = player.MpPercentage,
                     IsSitting = false,
                     GroupId = -1,
                     FairyId = 0,

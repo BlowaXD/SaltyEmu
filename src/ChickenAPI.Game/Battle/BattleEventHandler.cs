@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Autofac;
 using ChickenAPI.Core.IoC;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Game.Battle.DataObjects;
 using ChickenAPI.Game.Battle.Events;
 using ChickenAPI.Game.Battle.Extensions;
@@ -15,7 +16,9 @@ namespace ChickenAPI.Game.Battle
 {
     public class BattleEventHandler : EventHandlerBase
     {
+        private readonly Logger Log = Logger.GetLogger<BattleEventHandler>();
         private readonly IDamageAlgorithm _algo = new Lazy<IDamageAlgorithm>(() => ChickenContainer.Instance.Resolve<IDamageAlgorithm>()).Value;
+
         public override ISet<Type> HandledTypes => new HashSet<Type>
         {
             typeof(ProcessHitRequestEvent),
@@ -28,6 +31,7 @@ namespace ChickenAPI.Game.Battle
             {
                 return;
             }
+
             switch (e)
             {
                 case ProcessHitRequestEvent processHitRequest: // do the whole graphical & stats processing
@@ -57,27 +61,25 @@ namespace ChickenAPI.Game.Battle
         private void ProcessHitRequest(HitRequest hitRequest)
         {
             BattleComponent battleTarget = hitRequest.Target.Battle;
-            uint damage = hitRequest.Damages;
+            uint givenDamages = 0;
             List<SuPacket> packets = new List<SuPacket>();
-            while (damage > 0)
+            while (givenDamages != hitRequest.Damages && battleTarget.IsAlive)
             {
-                hitRequest.Damages = damage > ushort.MaxValue ? ushort.MaxValue : (ushort)damage;
-                damage -= hitRequest.Damages;
-                packets.Add(hitRequest.Sender.GenerateSuPacket(hitRequest));
-                if (battleTarget.Hp - hitRequest.Damages <= 0)
+                ushort nextDamages = hitRequest.Damages - givenDamages > ushort.MaxValue ? ushort.MaxValue : (ushort)(hitRequest.Damages - givenDamages);
+                givenDamages += nextDamages;
+                if (battleTarget.Hp - nextDamages <= 0)
                 {
                     battleTarget.Hp = 0;
                     // Generate Death
                     break;
                 }
-                battleTarget.Hp -= (ushort)hitRequest.Damages;
+
+                battleTarget.Hp -= nextDamages;
+                packets.Add(hitRequest.Sender.GenerateSuPacket(hitRequest, nextDamages));
             }
 
-            if (hitRequest.Sender.CurrentMap is IMapLayer broadcastable)
-            {
-                broadcastable.Broadcast<SuPacket>(packets);
-            }
-
+            hitRequest.Sender.CurrentMap.Broadcast<SuPacket>(packets);
+            Log.Debug($"[{hitRequest.Sender.Type.ToString()}][{hitRequest.Sender.Id}] ATTACK -> [{hitRequest.Target.Type.ToString()}]({hitRequest.Target.Id}) : {givenDamages} damages");
             // apply buffs
             // apply debuffs
         }
