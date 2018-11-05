@@ -159,6 +159,10 @@ namespace ChickenAPI.Game.Entities.Player
 
         public override void TransferEntity(IMapLayer map)
         {
+            if (CurrentMap == map)
+            {
+                return;
+            }
             if (CurrentMap != null)
             {
                 EmitEvent(new MapLeaveEvent { Map = CurrentMap });
@@ -166,6 +170,7 @@ namespace ChickenAPI.Game.Entities.Player
             }
 
             base.TransferEntity(map);
+
             EmitEvent(new MapJoinEvent { Map = map });
             EmitEvent(new VisibilitySetVisibleEventArgs
             {
