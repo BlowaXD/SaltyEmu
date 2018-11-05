@@ -33,8 +33,8 @@ namespace ChickenAPI.Game.ECS.Entities
         /// <summary>
         ///     Will transfer the Entity to another entity manager
         /// </summary>
-        /// <param name="manager"></param>
-        void TransferEntity(IMapLayer manager);
+        /// <param name="map"></param>
+        void TransferEntity(IMapLayer map);
 
         /// <summary>
         ///     Add the component to the actual <see cref="IEntity" />

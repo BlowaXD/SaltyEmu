@@ -133,7 +133,7 @@ namespace ChickenAPI.Game.Features.Skills
         /// <param name="e"></param>
         public static void AddSkill(IPlayerEntity player, PlayerAddSkillEventArgs e)
         {
-            SkillComponent component = player.Skills;
+            SkillComponent component = player.SkillComponent;
             if (e.Skill is null)
             {
                 return; //the skill doesn't exist?

@@ -7,6 +7,7 @@ using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Utils;
 using ChickenAPI.Data.Character;
 using ChickenAPI.Data.Families;
+using ChickenAPI.Data.Skills;
 using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Enums.Game.Families;
 using ChickenAPI.Enums.Game.Visibility;
@@ -23,6 +24,7 @@ using ChickenAPI.Game.Features.Leveling;
 using ChickenAPI.Game.Features.Quicklist;
 using ChickenAPI.Game.Features.Skills;
 using ChickenAPI.Game.Features.Specialists;
+using ChickenAPI.Game.Maps.Events;
 using ChickenAPI.Game.Movements.DataObjects;
 using ChickenAPI.Game.Movements.Extensions;
 using ChickenAPI.Game.Network;
@@ -72,7 +74,7 @@ namespace ChickenAPI.Game.Entities.Player
                 }
             };
             _visibility = new VisibilityComponent(this);
-            Skills = new SkillComponent(this, skills);
+            SkillComponent = new SkillComponent(this, skills);
             Components = new Dictionary<Type, IComponent>
             {
                 { typeof(VisibilityComponent), _visibility },
@@ -81,7 +83,7 @@ namespace ChickenAPI.Game.Entities.Player
                 { typeof(ExperienceComponent), Experience },
                 { typeof(InventoryComponent), Inventory },
                 { typeof(SpecialistComponent), Sp },
-                { typeof(SkillComponent), Skills }
+                { typeof(SkillComponent), SkillComponent }
             };
         }
 
@@ -154,53 +156,17 @@ namespace ChickenAPI.Game.Entities.Player
             }
         }
 
-        public override void TransferEntity(IMapLayer manager)
+        public override void TransferEntity(IMapLayer map)
         {
             if (CurrentMap != null)
             {
+                EmitEvent(new MapLeaveEvent { Map = CurrentMap });
                 EmitEvent(new VisibilitySetInvisibleEventArgs { Broadcast = true, IsChangingMapLayer = true });
             }
 
-            base.TransferEntity(manager);
-
-            if (!(manager is IMapLayer map))
-            {
-                return;
-            }
-
-            SendPacket(this.GenerateCInfoPacket());
-            SendPacket(this.GenerateCModePacket());
-            SendPacket(this.GenerateEqPacket());
-            SendPacket(this.GenerateEquipmentPacket());
-            SendPacket(this.GenerateLevPacket());
-            SendPacket(this.GenerateStPacket());
-
-            SendPacket(this.GenerateAtPacket());
-            SendPacket(this.GenerateCondPacket());
-            SendPacket(map.Map.GenerateCMapPacket());
-            SendPacket(this.GenerateStatCharPacket());
-            SendPacket(this.GeneratePairyPacket());
-            // Pst()
-            // Act6() : Act()
-            SendPacket(new PInitPacket());
-            // PInitPacket
-            // ScPacket
-            // ScpStcPacket
-            // FcPacket
-            // Act4Raid ? DgPacket() : RaidMbf
-            // MapDesignObjects()
-            // MapDesignObjectsEffects
-            // MapItems()
-            // Gp()
-            //SendPacket(new RsfpPacket()); // Minimap Position
-            //SendPacket(new CondPacketBase(this));
-            EmitEvent(new VisibilitySetVisibleEventArgs
-            {
-                Broadcast = true,
-                IsChangingMapLayer = true
-            });
-            SendPacket(this.GenerateInPacket());
-            SendPacket(this.GenerateStatPacket());
+            base.TransferEntity(map);
+            EmitEvent(new MapJoinEvent { Map = map });
+            EmitEvent(new VisibilitySetVisibleEventArgs());
         }
 
         public void SendPacket<T>(T packetBase) where T : IPacket => Session.SendPacket(packetBase);
@@ -225,7 +191,7 @@ namespace ChickenAPI.Game.Entities.Player
             DateTime before = DateTime.UtcNow;
             Task.WaitAll(
                 CharacterService.SaveAsync(Character),
-                // CharacterSkillService.SaveAsync(Character.Skills),
+                CharacterSkillService.SaveAsync(SkillComponent.CharacterSkills.Values),
                 CharacterQuicklistService.SaveAsync(Quicklist.Quicklist),
                 ItemInstance.SaveAsync(Inventory.GetItems())
             );
@@ -236,11 +202,12 @@ namespace ChickenAPI.Game.Entities.Player
 
         #region Skills
 
-        public bool HasSkill(long skillId) => Skills.Skills.ContainsKey(skillId);
+        public bool HasSkill(long skillId) => SkillComponent.Skills.ContainsKey(skillId);
 
-        public bool CanCastSkill(long skillId) => Skills.CooldownsBySkillId.Any(s => s.Item2 == skillId);
+        public bool CanCastSkill(long skillId) => SkillComponent.CooldownsBySkillId.Any(s => s.Item2 == skillId);
+        public IDictionary<long, SkillDto> Skills { get; }
 
-        public SkillComponent Skills { get; }
+        public SkillComponent SkillComponent { get; }
 
         #endregion
 

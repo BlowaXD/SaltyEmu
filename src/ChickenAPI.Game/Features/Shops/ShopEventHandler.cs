@@ -185,13 +185,13 @@ namespace ChickenAPI.Game.Features.Shops
             // check use sp
 
             // check skill cooldown
-            if (player.Skills.CooldownsBySkillId.Any(s => s.Item2 == buy.Slot))
+            if (player.SkillComponent.CooldownsBySkillId.Any(s => s.Item2 == buy.Slot))
             {
                 return;
             }
 
             // check skill already exists in player skills
-            if (player.Skills.Skills.ContainsKey(buy.Slot))
+            if (player.SkillComponent.Skills.ContainsKey(buy.Slot))
             {
                 return;
             }

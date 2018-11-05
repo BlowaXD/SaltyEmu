@@ -33,7 +33,7 @@ namespace NosSharp.PacketHandler.Skill
                 player.Movable.IsSitting = false;
             }
 
-            if (!player.Skills.Skills.TryGetValue(packet.CastId, out SkillDto skill))
+            if (!player.SkillComponent.Skills.TryGetValue(packet.CastId, out SkillDto skill))
             {
                 // skill does not exist
                 return;

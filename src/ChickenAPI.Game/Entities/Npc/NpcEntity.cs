@@ -4,6 +4,7 @@ using System.Linq;
 using ChickenAPI.Core.Utils;
 using ChickenAPI.Data.Map;
 using ChickenAPI.Data.Shop;
+using ChickenAPI.Data.Skills;
 using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Enums.Game.Visibility;
 using ChickenAPI.Game.Battle.DataObjects;
@@ -38,7 +39,7 @@ namespace ChickenAPI.Game.Entities.Npc
             MapNpc = npc;
 
             Shop = shop != null ? new Shop(shop) : null;
-            Skills = new SkillComponent(this);
+            SkillComponent = new SkillComponent(this);
             _visibility = new VisibilityComponent(this);
             Components = new Dictionary<Type, IComponent>
             {
@@ -46,7 +47,7 @@ namespace ChickenAPI.Game.Entities.Npc
                 { typeof(VisibilityComponent), _visibility },
                 { typeof(MovableComponent), Movable },
                 { typeof(NpcMonsterComponent), new NpcMonsterComponent(this, npc) },
-                { typeof(SkillComponent), Skills }
+                { typeof(SkillComponent), SkillComponent }
             };
         }
 
@@ -94,11 +95,12 @@ namespace ChickenAPI.Game.Entities.Npc
         #region Skills
 
 
-        public bool HasSkill(long skillId) => Skills.Skills.ContainsKey(skillId);
+        public bool HasSkill(long skillId) => SkillComponent.Skills.ContainsKey(skillId);
 
-        public bool CanCastSkill(long skillId) => Skills.CooldownsBySkillId.Any(s => s.Item2 == skillId);
+        public bool CanCastSkill(long skillId) => SkillComponent.CooldownsBySkillId.Any(s => s.Item2 == skillId);
+        public IDictionary<long, SkillDto> Skills { get; }
 
-        public SkillComponent Skills { get; }
+        public SkillComponent SkillComponent { get; }
 
         #endregion
         public BattleComponent Battle { get; }

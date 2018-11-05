@@ -31,7 +31,7 @@ namespace ChickenAPI.Game.Features.Specialists
 
         private static void PlayerWearSp(IPlayerEntity player, SpTransformEvent spTransform)
         {
-            if (player.Skills.CooldownsBySkillId.Any())
+            if (player.SkillComponent.CooldownsBySkillId.Any())
             {
                 // should have no cooldowns
                 return;

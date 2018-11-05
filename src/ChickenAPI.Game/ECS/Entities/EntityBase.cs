@@ -36,19 +36,19 @@ namespace ChickenAPI.Game.ECS.Entities
             EventManager.Notify(this, e);
         }
 
-        public virtual void TransferEntity(IMapLayer manager)
+        public virtual void TransferEntity(IMapLayer map)
         {
-            if (CurrentMap == manager)
+            if (CurrentMap == map)
             {
                 return;
             }
 
             if (CurrentMap == null)
             {
-                CurrentMap = manager;
+                CurrentMap = map;
             }
 
-            CurrentMap.TransferEntity(this, manager);
+            CurrentMap.TransferEntity(this, map);
         }
 
         public virtual void AddComponent<T>(T component) where T : IComponent

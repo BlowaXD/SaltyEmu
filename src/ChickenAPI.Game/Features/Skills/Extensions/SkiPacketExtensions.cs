@@ -14,7 +14,7 @@ namespace ChickenAPI.Game.Features.Skills.Extensions
             // check sp
 
 
-            IOrderedEnumerable<SkillDto> skills = player.Skills.Skills.Values.OrderBy(s => s.CastId);
+            IOrderedEnumerable<SkillDto> skills = player.SkillComponent.Skills.Values.OrderBy(s => s.CastId);
 
             // ski base
             // if no sp

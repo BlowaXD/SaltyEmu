@@ -1,4 +1,7 @@
-﻿using ChickenAPI.Game.Features.Skills;
+﻿using System.Collections.Generic;
+using ChickenAPI.Data.Character;
+using ChickenAPI.Data.Skills;
+using ChickenAPI.Game.Features.Skills;
 
 namespace ChickenAPI.Game.Entities
 {
@@ -18,6 +21,11 @@ namespace ChickenAPI.Game.Entities
         /// <returns></returns>
         bool CanCastSkill(long skillId);
 
-        SkillComponent Skills { get; }
+        /// <summary>
+        /// Skills
+        /// </summary>
+        IDictionary<long, SkillDto> Skills { get; }
+
+        SkillComponent SkillComponent { get; }
     }
 }
