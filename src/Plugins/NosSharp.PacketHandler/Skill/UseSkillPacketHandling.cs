@@ -36,6 +36,7 @@ namespace NosSharp.PacketHandler.Skill
             if (!player.SkillComponent.SkillsByCastId.TryGetValue(packet.CastId, out SkillDto skill))
             {
                 // skill does not exist
+                player.SendPacket(player.GenerateEmptyCancelPacket(CancelPacketType.NotInCombatMode));
                 Log.Warn($"{player.Character.Name} Trying to cast unowned skill");
                 return;
             }

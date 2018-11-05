@@ -14,6 +14,7 @@ using ChickenAPI.Game.Entities.Monster;
 using ChickenAPI.Game.Features.Shops;
 using ChickenAPI.Game.Features.Skills;
 using ChickenAPI.Game.Movements.DataObjects;
+using ChickenAPI.Game.Skills;
 using ChickenAPI.Game.Visibility;
 
 namespace ChickenAPI.Game.Entities.Npc

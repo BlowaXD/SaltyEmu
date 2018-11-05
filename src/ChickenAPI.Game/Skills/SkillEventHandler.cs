@@ -15,11 +15,9 @@ using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Events;
 using ChickenAPI.Game.Features.Leveling;
 using ChickenAPI.Game.Features.Skills.Args;
-using ChickenAPI.Game.Movements.DataObjects;
 using ChickenAPI.Game.Movements.Extensions;
-using NLog.Targets;
 
-namespace ChickenAPI.Game.Features.Skills
+namespace ChickenAPI.Game.Skills
 {
     public class SkillEventHandler : EventHandlerBase
     {

@@ -30,6 +30,7 @@ using ChickenAPI.Game.Movements.Extensions;
 using ChickenAPI.Game.Network;
 using ChickenAPI.Game.Packets.Extensions;
 using ChickenAPI.Game.Permissions;
+using ChickenAPI.Game.Skills;
 using ChickenAPI.Game.Visibility;
 using ChickenAPI.Game.Visibility.Events;
 using ChickenAPI.Packets;

@@ -13,6 +13,7 @@ using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Features.Skills;
 using ChickenAPI.Game.Movements.DataObjects;
 using ChickenAPI.Game.Movements.Extensions;
+using ChickenAPI.Game.Skills;
 using ChickenAPI.Game.Visibility;
 
 namespace ChickenAPI.Game.Entities.Monster

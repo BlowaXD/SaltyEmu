@@ -10,7 +10,7 @@ using ChickenAPI.Game.ECS.Components;
 using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Entities.Player;
 
-namespace ChickenAPI.Game.Features.Skills
+namespace ChickenAPI.Game.Skills
 {
     public class SkillComponent : IComponent
     {
