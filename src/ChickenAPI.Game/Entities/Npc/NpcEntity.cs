@@ -7,12 +7,10 @@ using ChickenAPI.Data.Shop;
 using ChickenAPI.Data.Skills;
 using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Enums.Game.Visibility;
-using ChickenAPI.Game.Battle.DataObjects;
 using ChickenAPI.Game.ECS.Components;
 using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Entities.Monster;
 using ChickenAPI.Game.Features.Shops;
-using ChickenAPI.Game.Features.Skills;
 using ChickenAPI.Game.Movements.DataObjects;
 using ChickenAPI.Game.Skills;
 using ChickenAPI.Game.Visibility;
@@ -23,14 +21,6 @@ namespace ChickenAPI.Game.Entities.Npc
     {
         public NpcEntity(MapNpcDto npc, ShopDto shop) : base(VisualType.Npc, npc.Id)
         {
-            Battle = new BattleComponent(this)
-            {
-                Hp = npc.NpcMonster.MaxHp,
-                HpMax = npc.NpcMonster.MaxHp,
-                Mp = npc.NpcMonster.MaxMp,
-                MpMax = npc.NpcMonster.MaxMp,
-                BasicArea = npc.NpcMonster.BasicArea
-            };
             Movable = new MovableComponent(this, npc.IsMoving ? npc.NpcMonster.Speed : (byte)0)
             {
                 Actual = new Position<short>(npc.MapX, npc.MapY),
@@ -38,13 +28,16 @@ namespace ChickenAPI.Game.Entities.Npc
                 DirectionType = npc.Position
             };
             MapNpc = npc;
-
+            Hp = npc.NpcMonster.MaxHp;
+            Mp = npc.NpcMonster.MaxMp;
+            HpMax = npc.NpcMonster.MaxHp;
+            MpMax = npc.NpcMonster.MaxMp;
+            BasicArea = npc.NpcMonster.BasicArea;
             Shop = shop != null ? new Shop(shop) : null;
             SkillComponent = new SkillComponent(this);
             _visibility = new VisibilityComponent(this);
             Components = new Dictionary<Type, IComponent>
             {
-                { typeof(BattleComponent), Battle },
                 { typeof(VisibilityComponent), _visibility },
                 { typeof(MovableComponent), Movable },
                 { typeof(NpcMonsterComponent), new NpcMonsterComponent(this, npc) },
@@ -105,37 +98,19 @@ namespace ChickenAPI.Game.Entities.Npc
         public SkillComponent SkillComponent { get; }
 
         #endregion
-        public BattleComponent Battle { get; }
+
+        public int MpMax { get; set; }
 
         public bool IsAlive => Hp > 0;
+        public bool CanAttack => true;
 
         public byte HpPercentage => Convert.ToByte((int)(Hp / (float)HpMax * 100));
         public byte MpPercentage => Convert.ToByte((int)(Mp / (float)MpMax * 100.0));
+        public byte BasicArea { get; }
+        public int Hp { get; set; }
+        public int Mp { get; set; }
+        public int HpMax { get; set; }
 
-
-        public int Hp
-        {
-            get => Battle.Hp;
-            set => Battle.Hp = value;
-        }
-
-        public int Mp
-        {
-            get => Battle.Mp;
-            set => Battle.Mp = value;
-        }
-
-        public int HpMax
-        {
-            get => Battle.HpMax;
-            set => Battle.HpMax = value;
-        }
-
-        public int MpMax
-        {
-            get => Battle.MpMax;
-            set => Battle.MpMax = value;
-        }
 
         #region Movements
 

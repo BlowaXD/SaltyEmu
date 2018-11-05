@@ -7,7 +7,6 @@ using ChickenAPI.Data.NpcMonster;
 using ChickenAPI.Data.Skills;
 using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Enums.Game.Visibility;
-using ChickenAPI.Game.Battle.DataObjects;
 using ChickenAPI.Game.ECS.Components;
 using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Features.Skills;
@@ -27,14 +26,11 @@ namespace ChickenAPI.Game.Entities.Monster
                 Actual = new Position<short> { X = dto.MapX, Y = dto.MapY },
                 Destination = new Position<short> { X = dto.MapX, Y = dto.MapY }
             };
-            Battle = new BattleComponent(this)
-            {
-                Hp = dto.NpcMonster.MaxHp,
-                HpMax = dto.NpcMonster.MaxHp,
-                Mp = dto.NpcMonster.MaxMp,
-                MpMax = dto.NpcMonster.MaxMp,
-                BasicArea = dto.NpcMonster.BasicArea
-            };
+            Hp = dto.NpcMonster.MaxHp;
+            HpMax = dto.NpcMonster.MaxHp;
+            Mp = dto.NpcMonster.MaxMp;
+            MpMax = dto.NpcMonster.MaxMp;
+            BasicArea = dto.NpcMonster.BasicArea;
             SkillComponent = new SkillComponent(this);
             NpcMonster = dto.NpcMonster;
             MapMonster = dto;
@@ -42,7 +38,6 @@ namespace ChickenAPI.Game.Entities.Monster
             Components = new Dictionary<Type, IComponent>
             {
                 { typeof(VisibilityComponent), _visibility },
-                { typeof(BattleComponent), Battle },
                 { typeof(MovableComponent), Movable },
                 { typeof(NpcMonsterComponent), new NpcMonsterComponent(this, dto) },
                 { typeof(SkillComponent), SkillComponent }
@@ -100,44 +95,26 @@ namespace ChickenAPI.Game.Entities.Monster
 
         #endregion
 
-        public BattleComponent Battle { get; }
+        public int MpMax { get; set; }
 
 
         public bool IsAlive => Hp > 0;
+        public bool CanAttack => true;
 
         public byte HpPercentage => Convert.ToByte((int)(Hp / (float)HpMax * 100));
         public byte MpPercentage => Convert.ToByte((int)(Mp / (float)MpMax * 100.0));
+        public byte BasicArea { get; }
+        public int Hp { get; set; }
+        public int Mp { get; set; }
+        public int HpMax { get; set; }
 
-        public int Hp
-        {
-            get => Battle.Hp;
-            set => Battle.Hp = value;
-        }
-
-        public int Mp
-        {
-            get => Battle.Mp;
-            set => Battle.Mp = value;
-        }
-
-        public int HpMax
-        {
-            get => Battle.HpMax;
-            set => Battle.HpMax = value;
-        }
-
-        public int MpMax
-        {
-            get => Battle.MpMax;
-            set => Battle.MpMax = value;
-        }
 
         #region Movements
-
 
         public bool CanMove => !Movable.IsSitting;
         public Position<short> Actual => Movable.Actual;
         public Position<short> Destination => Movable.Destination;
+
         public void SetPosition(Position<short> position)
         {
             Movable.Actual = position;
@@ -147,7 +124,6 @@ namespace ChickenAPI.Game.Entities.Monster
         {
             Movable.Actual = new Position<short>(x, y);
         }
-
 
         #endregion
 

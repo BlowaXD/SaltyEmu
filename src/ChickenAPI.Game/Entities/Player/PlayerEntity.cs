@@ -11,7 +11,6 @@ using ChickenAPI.Data.Skills;
 using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Enums.Game.Families;
 using ChickenAPI.Enums.Game.Visibility;
-using ChickenAPI.Game.Battle.DataObjects;
 using ChickenAPI.Game.Data.AccessLayer.Character;
 using ChickenAPI.Game.Data.AccessLayer.Item;
 using ChickenAPI.Game.ECS.Components;
@@ -40,6 +39,7 @@ namespace ChickenAPI.Game.Entities.Player
 {
     public class PlayerEntity : EntityBase, IPlayerEntity
     {
+        public static readonly IAlgorithmService Algorithm = new Lazy<IAlgorithmService>(() => ChickenContainer.Instance.Resolve<IAlgorithmService>()).Value;
         private static IItemInstanceService ItemInstance => new Lazy<IItemInstanceService>(() => ChickenContainer.Instance.Resolve<IItemInstanceService>()).Value;
         private static ICharacterService CharacterService => new Lazy<ICharacterService>(() => ChickenContainer.Instance.Resolve<ICharacterService>()).Value;
         private static ICharacterSkillService CharacterSkillService => new Lazy<ICharacterSkillService>(() => ChickenContainer.Instance.Resolve<ICharacterSkillService>()).Value;
@@ -50,7 +50,12 @@ namespace ChickenAPI.Game.Entities.Player
             Session = session;
             Character = dto;
             Quicklist = new QuicklistComponent(this, quicklist);
-            Battle = new BattleComponent(this, dto);
+
+            HpMax = Algorithm.GetHpMax(dto.Class, dto.Level);
+            Hp = HpMax;
+            MpMax = Algorithm.GetMpMax(dto.Class, dto.Level);
+            Mp = MpMax;
+            BasicArea = 1;
             Inventory = new InventoryComponent(this);
             Experience = new ExperienceComponent(this)
             {
@@ -80,7 +85,6 @@ namespace ChickenAPI.Game.Entities.Player
             {
                 { typeof(VisibilityComponent), _visibility },
                 { typeof(MovableComponent), Movable },
-                { typeof(BattleComponent), Battle },
                 { typeof(ExperienceComponent), Experience },
                 { typeof(InventoryComponent), Inventory },
                 { typeof(SpecialistComponent), Sp },
@@ -163,6 +167,7 @@ namespace ChickenAPI.Game.Entities.Player
             {
                 return;
             }
+
             if (CurrentMap != null)
             {
                 EmitEvent(new MapLeaveEvent { Map = CurrentMap });
@@ -220,37 +225,18 @@ namespace ChickenAPI.Game.Entities.Player
         public SkillComponent SkillComponent { get; }
 
         #endregion
-
-        public BattleComponent Battle { get; }
+        
 
         public bool IsAlive => Hp > 0;
+        public bool CanAttack => true;
 
         public byte HpPercentage => Convert.ToByte((int)(Hp / (float)HpMax * 100));
         public byte MpPercentage => Convert.ToByte((int)(Mp / (float)MpMax * 100.0));
-
-        public int Hp
-        {
-            get => Battle.Hp;
-            set => Battle.Hp = value;
-        }
-
-        public int Mp
-        {
-            get => Battle.Mp;
-            set => Battle.Mp = value;
-        }
-
-        public int HpMax
-        {
-            get => Battle.HpMax;
-            set => Battle.HpMax = value;
-        }
-
-        public int MpMax
-        {
-            get => Battle.MpMax;
-            set => Battle.MpMax = value;
-        }
+        public byte BasicArea { get; }
+        public int Hp { get; set; }
+        public int Mp { get; set; }
+        public int HpMax { get; set; }
+        public int MpMax { get; set; }
 
         #region Movements
 

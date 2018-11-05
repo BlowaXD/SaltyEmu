@@ -1,5 +1,4 @@
-﻿using ChickenAPI.Game.Battle.DataObjects;
-using ChickenAPI.Game.Battle.Hitting;
+﻿using ChickenAPI.Game.Battle.Hitting;
 using ChickenAPI.Game.Battle.Interfaces;
 using ChickenAPI.Packets.Game.Server.Battle;
 

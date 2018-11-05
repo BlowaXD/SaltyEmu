@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Autofac;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Logging;
-using ChickenAPI.Game.Battle.DataObjects;
 using ChickenAPI.Game.Battle.Events;
 using ChickenAPI.Game.Battle.Extensions;
 using ChickenAPI.Game.Battle.Hitting;
@@ -60,21 +59,21 @@ namespace ChickenAPI.Game.Battle
 
         private void ProcessHitRequest(HitRequest hitRequest)
         {
-            BattleComponent battleTarget = hitRequest.Target.Battle;
+            IBattleEntity target = hitRequest.Target;
             uint givenDamages = 0;
             List<SuPacket> packets = new List<SuPacket>();
-            while (givenDamages != hitRequest.Damages && battleTarget.IsAlive)
+            while (givenDamages != hitRequest.Damages && target.IsAlive)
             {
                 ushort nextDamages = hitRequest.Damages - givenDamages > ushort.MaxValue ? ushort.MaxValue : (ushort)(hitRequest.Damages - givenDamages);
                 givenDamages += nextDamages;
-                if (battleTarget.Hp - nextDamages <= 0)
+                if (target.Hp - nextDamages <= 0)
                 {
-                    battleTarget.Hp = 0;
+                    target.Hp = 0;
                     // Generate Death
                     break;
                 }
 
-                battleTarget.Hp -= nextDamages;
+                target.Hp -= nextDamages;
                 packets.Add(hitRequest.Sender.GenerateSuPacket(hitRequest, nextDamages));
             }
 

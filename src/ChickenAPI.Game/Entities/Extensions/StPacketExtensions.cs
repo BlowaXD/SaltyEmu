@@ -1,5 +1,4 @@
 ﻿using ChickenAPI.Enums.Game.Entity;
-using ChickenAPI.Game.Battle.DataObjects;
 using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Entities.Monster;
 using ChickenAPI.Game.Entities.Npc;

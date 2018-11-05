@@ -3,7 +3,6 @@ using ChickenAPI.Data.NpcMonster;
 using ChickenAPI.Enums;
 using ChickenAPI.Enums.Game.Character;
 using ChickenAPI.Enums.Game.Entity;
-using ChickenAPI.Game.Battle.DataObjects;
 using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Entities.Monster;
 using ChickenAPI.Game.Entities.Npc;
@@ -20,7 +19,6 @@ namespace ChickenAPI.Game.PacketHandling.Extensions
     {
         private static InPacketBase GenerateInMonster(IMonsterEntity monster)
         {
-            BattleComponent battle = monster.Battle;
             NpcMonsterDto npcMonster = monster.NpcMonster;
             MovableComponent movable = monster.Movable;
             return new InPacketBase
@@ -81,8 +79,6 @@ namespace ChickenAPI.Game.PacketHandling.Extensions
         {
             var npcMonster = npcEntity.GetComponent<NpcMonsterComponent>();
             MovableComponent movable = npcEntity.Movable;
-            BattleComponent battle = npcEntity.Battle;
-
             return new InPacketBase
             {
                 VisualType = VisualType.Npc,
