@@ -51,6 +51,7 @@ namespace ChickenAPI.Game.Entities.Npc
             };
         }
 
+        public bool HasShop => Shop != null;
         public Shop Shop { get; set; }
 
         public MapNpcDto MapNpc { get; set; }

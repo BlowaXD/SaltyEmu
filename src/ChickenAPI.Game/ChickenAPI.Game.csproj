@@ -38,6 +38,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Features\Specialists\Extensions\" />
+    <Folder Include="Specialists\Extensions\" />
   </ItemGroup>
 </Project>

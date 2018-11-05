@@ -24,12 +24,25 @@ namespace ChickenAPI.Game.Features.Skills
             }
 
             int tmp = 200 + 20 * (byte)player.Character.Class;
-            Skills.Add(tmp, SkillService.GetById(tmp));
-            Skills.Add(tmp + 1, SkillService.GetById(tmp + 1));
+            AddSkill(SkillService.GetById(tmp));
+            AddSkill(SkillService.GetById(tmp + 1));
 
             if (player.Character.Class == CharacterClassType.Adventurer)
             {
-                Skills.Add(tmp + 9, SkillService.GetById(tmp + 9));
+                AddSkill(SkillService.GetById(tmp + 9));
+            }
+        }
+
+        private void AddSkill(SkillDto skill)
+        {
+            if (!Skills.ContainsKey(skill.Id))
+            {
+                Skills.Add(skill.Id, skill);
+            }
+
+            if (!SkillsByCastId.ContainsKey(skill.CastId))
+            {
+                Skills.Add(skill.CastId, skill);
             }
         }
 
@@ -43,11 +56,7 @@ namespace ChickenAPI.Game.Features.Skills
             foreach (CharacterSkillDto characterSkill in skills)
             {
                 CharacterSkills.Add(characterSkill.Id, characterSkill);
-                SkillDto skill = characterSkill.Skill;
-                if (!Skills.ContainsKey(skill.Id))
-                {
-                    Skills.Add(skill.Id, skill);
-                }
+                AddSkill(characterSkill.Skill);
             }
         }
 
@@ -56,6 +65,8 @@ namespace ChickenAPI.Game.Features.Skills
         private static readonly ISkillService SkillService = new Lazy<ISkillService>(() => ChickenContainer.Instance.Resolve<ISkillService>()).Value;
 
         public Dictionary<long, SkillDto> Skills { get; } = new Dictionary<long, SkillDto>();
+
+        public Dictionary<long, SkillDto> SkillsByCastId { get; } = new Dictionary<long, SkillDto>();
 
         public List<(DateTime, long)> CooldownsBySkillId { get; } = new List<(DateTime, long)>();
 

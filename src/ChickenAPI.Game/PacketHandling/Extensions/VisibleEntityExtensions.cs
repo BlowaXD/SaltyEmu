@@ -1,5 +1,4 @@
-﻿using ChickenAPI.Core.Logging;
-using ChickenAPI.Data.Character;
+﻿using ChickenAPI.Data.Character;
 using ChickenAPI.Data.NpcMonster;
 using ChickenAPI.Enums;
 using ChickenAPI.Enums.Game.Character;
@@ -9,13 +8,13 @@ using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Entities.Monster;
 using ChickenAPI.Game.Entities.Npc;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Game.Maps;
 using ChickenAPI.Game.Movements.DataObjects;
+using ChickenAPI.Game.Packets.Extensions;
 using ChickenAPI.Packets.Game.Server.Entities;
 using ChickenAPI.Packets.Game.Server.MiniMap;
 using ChickenAPI.Packets.Game.Server._NotYetSorted;
 
-namespace ChickenAPI.Game.Packets.Extensions
+namespace ChickenAPI.Game.PacketHandling.Extensions
 {
     public static class VisibleEntityExtensions
     {

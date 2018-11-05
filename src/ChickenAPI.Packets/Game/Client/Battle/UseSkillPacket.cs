@@ -16,9 +16,9 @@ namespace ChickenAPI.Packets.Game.Client.Battle
         public long TargetId { get; set; }
 
         [PacketIndex(3, IsOptional = true)]
-        public short MapX { get; set; }
+        public short? MapX { get; set; }
 
         [PacketIndex(4, IsOptional = true)]
-        public short MapY { get; set; }
+        public short? MapY { get; set; }
     }
 }

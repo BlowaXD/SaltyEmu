@@ -166,7 +166,11 @@ namespace ChickenAPI.Game.Entities.Player
 
             base.TransferEntity(map);
             EmitEvent(new MapJoinEvent { Map = map });
-            EmitEvent(new VisibilitySetVisibleEventArgs());
+            EmitEvent(new VisibilitySetVisibleEventArgs
+            {
+                Broadcast = true,
+                IsChangingMapLayer = true,
+            });
         }
 
         public void SendPacket<T>(T packetBase) where T : IPacket => Session.SendPacket(packetBase);

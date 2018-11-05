@@ -9,6 +9,7 @@ using ChickenAPI.Game.Features.Inventory.Extensions;
 using ChickenAPI.Game.Maps.Events;
 using ChickenAPI.Game.Maps.Extensions;
 using ChickenAPI.Game.Movements.Extensions;
+using ChickenAPI.Game.PacketHandling.Extensions;
 using ChickenAPI.Game.Packets.Extensions;
 using ChickenAPI.Game.Visibility.Events;
 using ChickenAPI.Packets.Game.Server.Group;
@@ -44,6 +45,8 @@ namespace ChickenAPI.Game.Maps
         private void SendMapInfosPackets(IPlayerEntity player, MapJoinEvent join)
         {
             player.SendPackets(join.Map.GetEntitiesPackets());
+            // todo pairy
+            player.SendPackets(join.Map.GetShopsPackets());
             player.SendPackets(join.Map.GetPortalsPackets());
         }
 

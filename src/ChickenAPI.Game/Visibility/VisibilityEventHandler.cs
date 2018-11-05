@@ -10,6 +10,7 @@ using ChickenAPI.Game.Entities.Player.Extensions;
 using ChickenAPI.Game.Entities.Portal;
 using ChickenAPI.Game.Events;
 using ChickenAPI.Game.Features.Portals;
+using ChickenAPI.Game.PacketHandling.Extensions;
 using ChickenAPI.Game.Packets.Extensions;
 using ChickenAPI.Game.Visibility.Events;
 using ChickenAPI.Packets.Game.Client.Shops;
@@ -55,7 +56,7 @@ namespace ChickenAPI.Game.Visibility
             {
                 return;
             }
-
+            /*
             InPacketBase inEntity = entity.GenerateInPacket();
             PairyPacket pairy = null;
 
@@ -102,37 +103,13 @@ namespace ChickenAPI.Game.Visibility
                         {
                             player.SendPacket(inEntity);
                             player.SendPacket(pairy);
-                        }
-
-                        if (entityy.Type != VisualType.Npc || !(entityy is NpcEntity npc))
-                        {
-                            continue;
-                        }
-
-                        if (npc.Shop != null)
-                        {
-                            session.SendPacket(new ShopPacket
-                            {
-                                VisualType = VisualType.Npc,
-                                EntityId = npc.MapNpc.Id,
-                                ShopId = npc.Shop.Id,
-                                MenuType = npc.Shop.MenuType,
-                                ShopType = npc.Shop.ShopType,
-                                Name = npc.Shop.Name
-                            });
-                        }
-
-                        break;
-                    case VisualType.Portal:
-
-                        if (entityy is PortalEntity portal)
-                        {
-                            session.SendPacket(portal.GetComponent<PortalComponent>().GenerateGpPacket());
+                            session.SendPacket(player.GeneratePairyPacket());
                         }
 
                         break;
                 }
             }
+            */
         }
 
         private static void SetInvisible(IEntity entity, VisibilitySetInvisibleEventArgs args)

@@ -33,9 +33,10 @@ namespace NosSharp.PacketHandler.Skill
                 player.Movable.IsSitting = false;
             }
 
-            if (!player.SkillComponent.Skills.TryGetValue(packet.CastId, out SkillDto skill))
+            if (!player.SkillComponent.SkillsByCastId.TryGetValue(packet.CastId, out SkillDto skill))
             {
                 // skill does not exist
+                Log.Warn($"{player.Character.Name} Trying to cast unowned skill");
                 return;
             }
 

@@ -1,11 +1,9 @@
-﻿using ChickenAPI.Game.Battle;
-using ChickenAPI.Game.Battle.Interfaces;
-using ChickenAPI.Game.ECS.Entities;
-using ChickenAPI.Game.Movements;
+﻿using ChickenAPI.Game.Battle.Interfaces;
+using ChickenAPI.Game.Features.Shops;
 
 namespace ChickenAPI.Game.Entities.Npc
 {
-    public interface INpcEntity : IEntity, IBattleEntity, IMovableEntity, IMapNpcEntity
+    public interface INpcEntity : IBattleEntity, IMapNpcEntity, IShopCapacity
     {
     }
 }
