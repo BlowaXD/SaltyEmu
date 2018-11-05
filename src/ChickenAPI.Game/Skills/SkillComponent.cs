@@ -42,7 +42,7 @@ namespace ChickenAPI.Game.Features.Skills
 
             if (!SkillsByCastId.ContainsKey(skill.CastId))
             {
-                Skills.Add(skill.CastId, skill);
+                SkillsByCastId.Add(skill.CastId, skill);
             }
         }
 
