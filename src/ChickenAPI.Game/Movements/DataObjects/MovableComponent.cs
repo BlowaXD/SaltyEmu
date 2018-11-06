@@ -37,7 +37,7 @@ namespace ChickenAPI.Game.Movements.DataObjects
             Waypoints = null;
             Destination = new Position<short>();
             Actual = new Position<short>();
-            Speed = (byte)Algorithm.GetSpeed(entity.Character.Class, entity.Experience.Level);
+            Speed = (byte)Algorithm.GetSpeed(entity.Character.Class, entity.Level);
         }
 
         private static IAlgorithmService Algorithm => _algorithmService ?? (_algorithmService = ChickenContainer.Instance.Resolve<IAlgorithmService>());

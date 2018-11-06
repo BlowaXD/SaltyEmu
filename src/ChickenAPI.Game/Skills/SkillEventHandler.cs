@@ -13,7 +13,6 @@ using ChickenAPI.Game.Battle.Interfaces;
 using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Events;
-using ChickenAPI.Game.Features.Leveling;
 using ChickenAPI.Game.Features.Skills.Args;
 using ChickenAPI.Game.Movements.Extensions;
 
@@ -69,6 +68,7 @@ namespace ChickenAPI.Game.Skills
                     {
                         goto default;
                     }
+
                     targets.Add(target);
                     break;
 
@@ -77,6 +77,7 @@ namespace ChickenAPI.Game.Skills
                     {
                         goto default;
                     }
+
                     break;
 
                 case SkillTargetType.AOE when skill.HitType != 1: // Buff
@@ -92,9 +93,11 @@ namespace ChickenAPI.Game.Skills
                                 player?.SendPacket(target.GenerateTargetCancelPacket(CancelPacketType.NotInCombatMode));
                                 return;
                             }
+
                             // apply buff on each entities of type
                             break;
                     }
+
                     break;
 
                 default:
@@ -121,7 +124,6 @@ namespace ChickenAPI.Game.Skills
                     HitRequest = hitRequest
                 });
             });
-            
         }
 
         /// <summary>
@@ -140,14 +142,8 @@ namespace ChickenAPI.Game.Skills
             if (e.ForceChecks)
             {
                 CharacterDto character = player.Character;
-                ExperienceComponent experience = player.Experience;
 
                 if (character is null)
-                {
-                    return; //we need it.
-                }
-
-                if (experience is null)
                 {
                     return; //we need it.
                 }
@@ -162,7 +158,7 @@ namespace ChickenAPI.Game.Skills
                     return; //not enough gold to learn that skill.
                 }
 
-                if (e.Skill.LevelMinimum > experience.JobLevel)
+                if (e.Skill.LevelMinimum > player.JobLevel)
                 {
                     return; //the joblevel of the entity isn't high enough.
                 }
@@ -195,7 +191,7 @@ namespace ChickenAPI.Game.Skills
                         break;
                 }
 
-                if (classLevel > experience.Level)
+                if (classLevel > player.Level)
                 {
                     return; //the level of the entity isn't high enough.
                 }

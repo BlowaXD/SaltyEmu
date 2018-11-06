@@ -33,10 +33,11 @@ namespace ChickenAPI.Game.Features.GuriHandling.Handling
 
         public void Handle(IPlayerEntity player, GuriEventArgs e)
         {
-            if (!_permissions.All(player.HasPermission))
+            /* if (!_permissions.All(player.HasPermission))
             {
                 return;
             }
+            */
 
             _func.Invoke(player, e);
         }

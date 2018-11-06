@@ -8,7 +8,7 @@ namespace ChickenAPI.Game.Features.Skills.Extensions
     {
         public static int GetCp(this IPlayerEntity player)
         {
-            int cpMax = (player.Character.Class > CharacterClassType.Adventurer ? 40 : 0) + player.Experience.JobLevel * 2;
+            int cpMax = (player.Character.Class > CharacterClassType.Adventurer ? 40 : 0) + player.JobLevel * 2;
             if (player.SkillComponent?.Skills?.Count == null)
             {
                 return cpMax;

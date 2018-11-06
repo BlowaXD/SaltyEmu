@@ -153,12 +153,12 @@ namespace ChickenAPI.Game.PacketHandling.Extensions
                     SpUpgrade = 0,
                     Faction = FactionType.Neutral, // todo faction system
                     SpDesign = 0,
-                    Level = player.Experience.Level,
+                    Level = player.Level,
                     FamilyLevel = 0,
                     ArenaWinner = character.ArenaWinner,
                     Compliment = character.Compliment,
                     Size = 10,
-                    HeroLevel = player.Experience.HeroLevel
+                    HeroLevel = player.HeroLevel
                 }
             };
         }

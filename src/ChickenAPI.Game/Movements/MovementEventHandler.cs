@@ -16,6 +16,7 @@ namespace ChickenAPI.Game.Movements
     public class MovementEventHandler : EventHandlerBase
     {
         public override ISet<Type> HandledTypes => new HashSet<Type>();
+
         public override void Execute(IEntity entity, ChickenEventArgs args)
         {
             switch (args)
@@ -57,10 +58,12 @@ namespace ChickenAPI.Game.Movements
 
         private void TreatPlayerMovementRequest(IPlayerEntity player, PlayerMovementRequestEvent e)
         {
-            if (!player.HasPermission(PermissionType.MOVEMENT_MOVE_SELF))
+            /*
+             if (!player.HasPermission(PermissionType.MOVEMENT_MOVE_SELF))
             {
                 return;
             }
+            */
 
             if (!PreMovementChecks(player, e))
             {
@@ -82,10 +85,6 @@ namespace ChickenAPI.Game.Movements
             switch (entity)
             {
                 case IPlayerEntity player:
-                    if (!player.HasPermission(PermissionType.MOVEMENT_MOVE_SELF))
-                    {
-                        return;
-                    }
 
                     player.Movable.IsSitting = !player.Movable.IsSitting;
 

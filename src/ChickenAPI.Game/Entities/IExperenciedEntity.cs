@@ -1,9 +1,14 @@
-﻿using ChickenAPI.Game.Features.Leveling;
-
-namespace ChickenAPI.Game.Entities
+﻿namespace ChickenAPI.Game.Entities
 {
     public interface IExperenciedEntity
     {
-        ExperienceComponent Experience { get; }
+        byte Level { get; set; }
+        long LevelXp { get; set; }
+
+        byte HeroLevel { get; set; }
+        long HeroLevelXp { get; set; }
+
+        byte JobLevel { get; set; }
+        long JobLevelXp { get; set; }
     }
 }

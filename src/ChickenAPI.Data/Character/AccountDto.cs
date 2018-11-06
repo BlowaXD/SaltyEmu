@@ -10,8 +10,6 @@ namespace ChickenAPI.Data.Character
         /// </summary>
         public long Id { get; set; }
 
-        public IPermissibleRank PermissibleRank { get; set; }
-
         public AuthorityType Authority { get; set; }
 
         /// <summary>

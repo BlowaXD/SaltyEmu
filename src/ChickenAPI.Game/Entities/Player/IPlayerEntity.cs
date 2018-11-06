@@ -8,32 +8,11 @@ using ChickenAPI.Packets;
 
 namespace ChickenAPI.Game.Entities.Player
 {
-    public interface IPlayerEntity : IBattleEntity, IInventoriedEntity, IExperenciedEntity, ISkillEntity, ISpecialistEntity, IQuicklistEntity, IFamilyCapacities
+    public interface IPlayerEntity : IBattleEntity, IInventoriedEntity, IExperenciedEntity, ISpecialistEntity, IQuicklistEntity, IFamilyCapacities
     {
         CharacterDto Character { get; }
 
         ISession Session { get; }
-
-        /// <summary>
-        /// Checks if the player has the given permission
-        /// </summary>
-        /// <param name="permission"></param>
-        /// <returns></returns>
-        bool HasPermission(PermissionType permission);
-
-        /// <summary>
-        /// Checks if the player has the given permission
-        /// </summary>
-        /// <param name="permissionKey"></param>
-        /// <returns></returns>
-        bool HasPermission(string permissionKey);
-
-        /// <summary>
-        /// Checks f the player has the given permissions
-        /// </summary>
-        /// <param name="permissions"></param>
-        /// <returns></returns>
-        bool HasPermission(PermissionsRequirementsAttribute permissions);
 
         /// <summary>
         /// 

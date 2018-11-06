@@ -15,38 +15,33 @@ using ChickenAPI.Game.Data.AccessLayer.Character;
 using ChickenAPI.Game.Data.AccessLayer.Item;
 using ChickenAPI.Game.ECS.Components;
 using ChickenAPI.Game.ECS.Entities;
-using ChickenAPI.Game.Entities.Extensions;
-using ChickenAPI.Game.Entities.Player.Extensions;
 using ChickenAPI.Game.Features.Inventory;
 using ChickenAPI.Game.Features.Inventory.Extensions;
-using ChickenAPI.Game.Features.Leveling;
 using ChickenAPI.Game.Features.Quicklist;
-using ChickenAPI.Game.Features.Skills;
 using ChickenAPI.Game.Features.Specialists;
 using ChickenAPI.Game.Managers;
 using ChickenAPI.Game.Maps.Events;
 using ChickenAPI.Game.Movements.DataObjects;
-using ChickenAPI.Game.Movements.Extensions;
 using ChickenAPI.Game.Network;
 using ChickenAPI.Game.Network.BroadcastRules;
-using ChickenAPI.Game.Packets.Extensions;
-using ChickenAPI.Game.Permissions;
 using ChickenAPI.Game.Skills;
 using ChickenAPI.Game.Visibility;
 using ChickenAPI.Game.Visibility.Events;
 using ChickenAPI.Packets;
-using ChickenAPI.Packets.Game.Server.Group;
 
 namespace ChickenAPI.Game.Entities.Player
 {
     public class PlayerEntity : EntityBase, IPlayerEntity
     {
-        public static readonly IAlgorithmService Algorithm = new Lazy<IAlgorithmService>(() => ChickenContainer.Instance.Resolve<IAlgorithmService>()).Value;
-        private static IItemInstanceService ItemInstance => new Lazy<IItemInstanceService>(() => ChickenContainer.Instance.Resolve<IItemInstanceService>()).Value;
-        private static ICharacterService CharacterService => new Lazy<ICharacterService>(() => ChickenContainer.Instance.Resolve<ICharacterService>()).Value;
-        private static ICharacterSkillService CharacterSkillService => new Lazy<ICharacterSkillService>(() => ChickenContainer.Instance.Resolve<ICharacterSkillService>()).Value;
-        private static ICharacterQuickListService CharacterQuicklistService => new Lazy<ICharacterQuickListService>(() => ChickenContainer.Instance.Resolve<ICharacterQuickListService>()).Value;
-        private static IPlayerManager PlayerManager => new Lazy<IPlayerManager>(() => ChickenContainer.Instance.Resolve<IPlayerManager>()).Value;
+        private static readonly IAlgorithmService Algorithm = new Lazy<IAlgorithmService>(() => ChickenContainer.Instance.Resolve<IAlgorithmService>()).Value;
+        private static readonly IItemInstanceService ItemInstance = new Lazy<IItemInstanceService>(() => ChickenContainer.Instance.Resolve<IItemInstanceService>()).Value;
+        private static readonly ICharacterService CharacterService = new Lazy<ICharacterService>(() => ChickenContainer.Instance.Resolve<ICharacterService>()).Value;
+        private static readonly ICharacterSkillService CharacterSkillService = new Lazy<ICharacterSkillService>(() => ChickenContainer.Instance.Resolve<ICharacterSkillService>()).Value;
+
+        private static readonly ICharacterQuickListService
+            CharacterQuicklistService = new Lazy<ICharacterQuickListService>(() => ChickenContainer.Instance.Resolve<ICharacterQuickListService>()).Value;
+
+        private static readonly IPlayerManager PlayerManager = new Lazy<IPlayerManager>(() => ChickenContainer.Instance.Resolve<IPlayerManager>()).Value;
 
         public PlayerEntity(ISession session, CharacterDto dto, IEnumerable<CharacterSkillDto> skills, IEnumerable<CharacterQuicklistDto> quicklist) : base(VisualType.Character, dto.Id)
         {
@@ -60,15 +55,6 @@ namespace ChickenAPI.Game.Entities.Player
             Mp = MpMax;
             BasicArea = 1;
             Inventory = new InventoryComponent(this);
-            Experience = new ExperienceComponent(this)
-            {
-                Level = dto.Level,
-                LevelXp = dto.LevelXp,
-                JobLevel = dto.JobLevel,
-                JobLevelXp = dto.JobLevelXp,
-                HeroLevel = dto.HeroLevel,
-                HeroLevelXp = dto.HeroXp
-            };
             Movable = new MovableComponent(this)
             {
                 Actual = new Position<short>
@@ -88,7 +74,6 @@ namespace ChickenAPI.Game.Entities.Player
             {
                 { typeof(VisibilityComponent), _visibility },
                 { typeof(MovableComponent), Movable },
-                { typeof(ExperienceComponent), Experience },
                 { typeof(InventoryComponent), Inventory },
                 { typeof(SpecialistComponent), Sp },
                 { typeof(SkillComponent), SkillComponent }
@@ -97,26 +82,10 @@ namespace ChickenAPI.Game.Entities.Player
 
         public MovableComponent Movable { get; }
         public InventoryComponent Inventory { get; }
-        public ExperienceComponent Experience { get; }
         public CharacterDto Character { get; }
         public QuicklistComponent Quicklist { get; }
         public SpecialistComponent Sp { get; }
         public ISession Session { get; }
-
-        public bool HasPermission(PermissionType permission)
-        {
-            return Session.Account.PermissibleRank.HasPermission(permission);
-        }
-
-        public bool HasPermission(string permissionKey)
-        {
-            return Session.Account.PermissibleRank.HasPermission(permissionKey);
-        }
-
-        public bool HasPermission(PermissionsRequirementsAttribute permissions)
-        {
-            return HasPermission(permissions.PermissionType) && HasPermission(permissions.PermissionName);
-        }
 
         public long LastPulse { get; }
 
@@ -229,7 +198,7 @@ namespace ChickenAPI.Game.Entities.Player
         public SkillComponent SkillComponent { get; }
 
         #endregion
-        
+
 
         public bool IsAlive => Hp > 0;
         public bool CanAttack => true;
@@ -296,6 +265,46 @@ namespace ChickenAPI.Game.Entities.Player
         public bool IsFamilyLeader => FamilyCharacter?.Authority == FamilyAuthority.Head;
         public FamilyDto Family { get; set; }
         public CharacterFamilyDto FamilyCharacter { get; set; }
+
+        #endregion
+
+        #region Experience
+
+        public byte Level
+        {
+            get => Character.Level;
+            set => Character.Level = value;
+        }
+
+        public long LevelXp
+        {
+            get => Character.LevelXp;
+            set => Character.LevelXp = value;
+        }
+
+        public byte HeroLevel
+        {
+            get => Character.HeroLevel;
+            set => Character.HeroLevel = value;
+        }
+
+        public long HeroLevelXp
+        {
+            get => Character.HeroXp;
+            set => Character.HeroXp = value;
+        }
+
+        public byte JobLevel
+        {
+            get => Character.JobLevel;
+            set => Character.JobLevel = value;
+        }
+
+        public long JobLevelXp
+        {
+            get => Character.JobLevelXp;
+            set => Character.JobLevelXp = value;
+        }
 
         #endregion
     }

@@ -17,8 +17,8 @@ namespace ChickenAPI.Game.Entities.Extensions
                 case IPlayerEntity player:
                     stPacket.VisualType = VisualType.Character;
                     stPacket.VisualId = player.Character.Id;
-                    stPacket.Level = player.Experience.Level;
-                    stPacket.HeroLevel = player.Experience.HeroLevel;
+                    stPacket.Level = player.Level;
+                    stPacket.HeroLevel = player.HeroLevel;
                     stPacket.HpPercentage = player.HpPercentage;
                     stPacket.MpPercentage = player.MpPercentage;
                     stPacket.Hp = player.Hp;

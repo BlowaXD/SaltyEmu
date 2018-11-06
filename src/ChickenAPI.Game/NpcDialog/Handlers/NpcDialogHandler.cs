@@ -39,11 +39,6 @@ namespace ChickenAPI.Game.Features.NpcDialog.Handlers
                 return;
             }
 
-            if (!_permissions.All(player.HasPermission))
-            {
-                return;
-            }
-
             _func.Invoke(player, e);
         }
     }

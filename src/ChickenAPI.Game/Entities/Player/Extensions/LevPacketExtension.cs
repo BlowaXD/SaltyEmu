@@ -1,7 +1,6 @@
 ﻿using Autofac;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Game.Data.AccessLayer.Character;
-using ChickenAPI.Game.Features.Leveling;
 using ChickenAPI.Game.Features.Skills.Extensions;
 using ChickenAPI.Packets.Game.Server.Player;
 
@@ -14,20 +13,19 @@ namespace ChickenAPI.Game.Entities.Player.Extensions
 
         public static LevPacket GenerateLevPacket(this IPlayerEntity player)
         {
-            var exp = player.GetComponent<ExperienceComponent>();
             return new LevPacket
             {
-                Level = player.Experience.Level,
-                LevelXp = (int)player.Experience.LevelXp,
-                JobLevel = exp.JobLevel,
-                JobLevelXp = (int)exp.JobLevelXp,
-                LevelXpMax = Algorithm.GetLevelXp(player.Character.Class, exp.Level),
-                JobLevelXpMax = Algorithm.GetLevelXp(player.Character.Class, exp.JobLevel),
-                HeroLevel = exp.HeroLevel,
+                Level = player.Level,
+                LevelXp = (int)player.LevelXp,
+                JobLevel = player.JobLevel,
+                JobLevelXp = (int)player.JobLevelXp,
+                LevelXpMax = Algorithm.GetLevelXp(player.Character.Class, player.Level),
+                JobLevelXpMax = Algorithm.GetLevelXp(player.Character.Class, player.JobLevel),
+                HeroLevel = player.HeroLevel,
                 Reputation = player.Character.Reput,
                 Cp = player.GetCp(),
-                HeroLevelXp = (int)exp.HeroLevelXp,
-                HeroLevelXpMax = Algorithm.GetHeroLevelXp(player.Character.Class, exp.HeroLevel)
+                HeroLevelXp = (int)player.HeroLevelXp,
+                HeroLevelXpMax = Algorithm.GetHeroLevelXp(player.Character.Class, player.HeroLevel)
             };
         }
     }
