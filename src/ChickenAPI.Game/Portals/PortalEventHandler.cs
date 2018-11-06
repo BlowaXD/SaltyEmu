@@ -40,7 +40,7 @@ namespace ChickenAPI.Game.Portals
             PortalDto currentPortal = args.Portal;
 
             session.SendPacket(new MapoutPacket());
-            session.Broadcast(session.GenerateOutPacket());
+            session.BroadcastExceptSender(session.GenerateOutPacket());
 
             session.Movable.Actual.X = currentPortal.DestinationX;
             session.Movable.Actual.Y = currentPortal.DestinationY;

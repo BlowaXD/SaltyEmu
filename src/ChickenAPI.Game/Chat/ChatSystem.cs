@@ -36,7 +36,7 @@ namespace ChickenAPI.Game.Features.Chat
                 VisualType = VisualType.Character,
                 VisualId = args.SenderId
             };
-            ((IPlayerEntity)entity).Broadcast(sayPacket);
+            ((IPlayerEntity)entity).BroadcastExceptSender(sayPacket);
         }
     }
 }

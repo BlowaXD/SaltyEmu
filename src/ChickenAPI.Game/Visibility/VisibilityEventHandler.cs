@@ -122,7 +122,7 @@ namespace ChickenAPI.Game.Visibility
 
             if (entity is IPlayerEntity player)
             {
-                player.Broadcast(player.GenerateOutPacket());
+                player.BroadcastExceptSender(player.GenerateOutPacket());
             }
         }
     }

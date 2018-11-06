@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using Autofac;
@@ -91,46 +92,32 @@ namespace ChickenAPI.Game.Entities.Player
 
         public void Broadcast<T>(T packet) where T : IPacket
         {
-            Broadcast(packet, false);
+            Broadcast(packet, null);
         }
 
         public void Broadcast<T>(IEnumerable<T> packets) where T : IPacket
         {
-            Broadcast(packets, false);
+            Broadcast(packets, null);
         }
 
-        public void Broadcast<T>(T packet, bool doNotReceive) where T : IPacket
+        public void BroadcastExceptSender<T>(T packet) where T : IPacket
         {
-            if (!(CurrentMap is IMapLayer broadcastable))
-            {
-                return;
-            }
-
-            if (doNotReceive)
-            {
-                broadcastable.Broadcast(packet, new AllExpectOne(this));
-            }
-            else
-            {
-                broadcastable.Broadcast(packet);
-            }
+            Broadcast(packet, new AllExpectOne(this));
         }
 
-        public void Broadcast<T>(IEnumerable<T> packets, bool doNotReceive) where T : IPacket
+        public void BroadcastExceptSender<T>(IEnumerable<T> packets) where T : IPacket
         {
-            if (!(CurrentMap is IMapLayer broadcastable))
-            {
-                return;
-            }
+            Broadcast(packets, new AllExpectOne(this));
+        }
 
-            if (doNotReceive)
-            {
-                broadcastable.Broadcast(packets, new AllExpectOne(this));
-            }
-            else
-            {
-                broadcastable.Broadcast(packets);
-            }
+        public void Broadcast<T>(T packet, IBroadcastRule rule) where T : IPacket
+        {
+            CurrentMap?.Broadcast(packet, rule);
+        }
+
+        public void Broadcast<T>(IEnumerable<T> packets, IBroadcastRule rule) where T : IPacket
+        {
+            CurrentMap?.Broadcast(packets, rule);
         }
 
         public override void TransferEntity(IMapLayer map)
