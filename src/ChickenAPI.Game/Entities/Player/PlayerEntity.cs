@@ -120,6 +120,16 @@ namespace ChickenAPI.Game.Entities.Player
             CurrentMap?.Broadcast(packets, rule);
         }
 
+        public void Broadcast(IEnumerable<IPacket> packets)
+        {
+            Broadcast(packets, null);
+        }
+
+        public void Broadcast(IEnumerable<IPacket> packets, IBroadcastRule rule)
+        {
+            CurrentMap?.Broadcast(packets, rule);
+        }
+
         public override void TransferEntity(IMapLayer map)
         {
             if (CurrentMap == map)

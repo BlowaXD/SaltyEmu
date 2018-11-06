@@ -1,17 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using ChickenAPI.Core.Utils;
-using ChickenAPI.Enums.Game.Entity;
-using ChickenAPI.Game.Entities.Monster;
-using ChickenAPI.Game.Entities.Npc;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Game.Entities.Portal;
 using ChickenAPI.Game.Network;
 using ChickenAPI.Packets;
 
 namespace ChickenAPI.Game.ECS.Entities
 {
-    public interface IMapLayer : IEntityManager
+    public interface IMapLayer : IEntityManager, IBroadcastable
     {
         Guid Id { get; }
 
@@ -46,27 +42,5 @@ namespace ChickenAPI.Game.ECS.Entities
         /// <param name="range"></param>
         /// <returns></returns>
         IEnumerable<T> GetEntitiesInRange<T>(Position<short> pos, int range) where T : IEntity;
-
-
-        #region Packets
-
-        /// <summary>
-        ///     Broadcast a packet to every entities in the context
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="packet"></param>
-        void Broadcast<T>(T packet) where T : IPacket;
-
-        void Broadcast<T>(IEnumerable<T> packets) where T : IPacket;
-
-        void Broadcast(IEnumerable<IPacket> packets);
-
-        void Broadcast<T>(T packet, IBroadcastRule rule) where T : IPacket;
-
-        void Broadcast<T>(IEnumerable<T> packets, IBroadcastRule rule) where T : IPacket;
-
-        void Broadcast(IEnumerable<IPacket> packets, IBroadcastRule rule);
-
-        #endregion
     }
 }
