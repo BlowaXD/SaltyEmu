@@ -1,6 +1,6 @@
 ﻿using ChickenAPI.Game.Events;
 
-namespace ChickenAPI.Game.Features.Inventory.Args
+namespace ChickenAPI.Game.Inventory.Args
 {
     public class InventoryEqInfoEventArgs : ChickenEventArgs
     {

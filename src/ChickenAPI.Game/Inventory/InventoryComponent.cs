@@ -2,7 +2,7 @@
 using ChickenAPI.Game.ECS.Components;
 using ChickenAPI.Game.ECS.Entities;
 
-namespace ChickenAPI.Game.Features.Inventory
+namespace ChickenAPI.Game.Inventory
 {
     public class InventoryComponent : IComponent
     {

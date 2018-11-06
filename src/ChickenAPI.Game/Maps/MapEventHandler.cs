@@ -5,7 +5,7 @@ using ChickenAPI.Game.Entities.Extensions;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Entities.Player.Extensions;
 using ChickenAPI.Game.Events;
-using ChickenAPI.Game.Features.Inventory.Extensions;
+using ChickenAPI.Game.Inventory.Extensions;
 using ChickenAPI.Game.Maps.Events;
 using ChickenAPI.Game.Maps.Extensions;
 using ChickenAPI.Game.Movements.Extensions;

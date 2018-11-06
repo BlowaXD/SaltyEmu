@@ -17,11 +17,10 @@ using ChickenAPI.Game.Entities.Npc;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Entities.Player.Extensions;
 using ChickenAPI.Game.Events;
-using ChickenAPI.Game.Features.Inventory;
-using ChickenAPI.Game.Features.Inventory.Args;
-using ChickenAPI.Game.Features.Inventory.Extensions;
 using ChickenAPI.Game.Features.Shops.Args;
 using ChickenAPI.Game.Features.Skills.Extensions;
+using ChickenAPI.Game.Inventory.Args;
+using ChickenAPI.Game.Inventory.Extensions;
 using ChickenAPI.Packets.Game.Client.Shops;
 
 namespace ChickenAPI.Game.Features.Shops

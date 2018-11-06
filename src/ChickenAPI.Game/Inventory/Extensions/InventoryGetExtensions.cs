@@ -4,7 +4,7 @@ using System.Linq;
 using ChickenAPI.Data.Item;
 using ChickenAPI.Enums.Game.Items;
 
-namespace ChickenAPI.Game.Features.Inventory.Extensions
+namespace ChickenAPI.Game.Inventory.Extensions
 {
     public static class InventoryGetExtensions
     {

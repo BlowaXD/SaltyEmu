@@ -1,4 +1,4 @@
-﻿namespace ChickenAPI.Game.Features.Inventory.ItemsUse
+﻿namespace ChickenAPI.Game.Inventory.ItemsUse
 {
     public static class WearItemUseExtensions
     {

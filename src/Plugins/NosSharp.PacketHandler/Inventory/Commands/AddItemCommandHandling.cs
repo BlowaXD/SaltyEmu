@@ -4,8 +4,7 @@ using ChickenAPI.Data.Item;
 using ChickenAPI.Enums;
 using ChickenAPI.Game.Data.AccessLayer.Item;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Game.Features.Inventory;
-using ChickenAPI.Game.Features.Inventory.Args;
+using ChickenAPI.Game.Inventory.Args;
 using ChickenAPI.Packets;
 using ChickenAPI.Packets.Attributes;
 

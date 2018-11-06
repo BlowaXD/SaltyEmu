@@ -1,7 +1,7 @@
 ﻿using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Packets.Game.Server.Inventory;
 
-namespace ChickenAPI.Game.Features.Inventory.Extensions
+namespace ChickenAPI.Game.Inventory.Extensions
 {
     public static class GoldPacketExtension
     {

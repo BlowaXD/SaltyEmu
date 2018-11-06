@@ -1,4 +1,4 @@
-﻿using ChickenAPI.Game.Features.Inventory;
+﻿using ChickenAPI.Game.Inventory;
 
 namespace ChickenAPI.Game.Entities
 {

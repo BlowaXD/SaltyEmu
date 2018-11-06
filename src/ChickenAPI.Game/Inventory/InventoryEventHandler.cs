@@ -11,12 +11,11 @@ using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Entities.Player.Extensions;
 using ChickenAPI.Game.Events;
 using ChickenAPI.Game.Features.Effects;
-using ChickenAPI.Game.Features.Inventory.Args;
-using ChickenAPI.Game.Features.Inventory.Extensions;
-using ChickenAPI.Game.Packets;
+using ChickenAPI.Game.Inventory.Args;
+using ChickenAPI.Game.Inventory.Extensions;
 using ChickenAPI.Packets.Game.Server.Inventory;
 
-namespace ChickenAPI.Game.Features.Inventory
+namespace ChickenAPI.Game.Inventory
 {
     public class InventoryEventHandler : EventHandlerBase
     {

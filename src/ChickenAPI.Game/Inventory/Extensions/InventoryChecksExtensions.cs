@@ -1,6 +1,6 @@
 ﻿using ChickenAPI.Data.Item;
 
-namespace ChickenAPI.Game.Features.Inventory.Extensions
+namespace ChickenAPI.Game.Inventory.Extensions
 {
     public static class InventoryChecksExtensions
     {
