@@ -23,6 +23,7 @@ using ChickenAPI.Game.Features.Leveling;
 using ChickenAPI.Game.Features.Quicklist;
 using ChickenAPI.Game.Features.Skills;
 using ChickenAPI.Game.Features.Specialists;
+using ChickenAPI.Game.Managers;
 using ChickenAPI.Game.Maps.Events;
 using ChickenAPI.Game.Movements.DataObjects;
 using ChickenAPI.Game.Movements.Extensions;
