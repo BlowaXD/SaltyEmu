@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using FastExpressionCompiler;
 
 namespace NosSharp.PacketHandler.Utils
 {
@@ -10,7 +11,7 @@ namespace NosSharp.PacketHandler.Utils
     {
         #region Methods
 
-        public static T BuildDelegate<T>(MethodInfo method, params object[] missingParamValues)
+        public static T BuildDelegate<T>(MethodInfo method, params object[] missingParamValues) where T : class
         {
             Queue<object> queueMissingParams = new Queue<object>(missingParamValues);
 
@@ -33,7 +34,7 @@ namespace NosSharp.PacketHandler.Utils
                     Expression.Call(method, paramsToPass),
                     paramsOfDelegate);
 
-                return expr.Compile();
+                return expr.CompileFast();
             }
             else
             {
@@ -47,13 +48,13 @@ namespace NosSharp.PacketHandler.Utils
                     Expression.Call(paramThis, method, paramsToPass),
                     paramsOfDelegate);
 
-                return expr.Compile();
+                return expr.CompileFast();
             }
         }
 
-        private static Expression CreateParam(ParameterExpression[] paramsOfDelegate, int i, ParameterInfo callParamType, Queue<object> queueMissingParams)
+        private static Expression CreateParam(IReadOnlyList<ParameterExpression> paramsOfDelegate, int i, ParameterInfo callParamType, Queue<object> queueMissingParams)
         {
-            if (i < paramsOfDelegate.Length)
+            if (i < paramsOfDelegate.Count)
             {
                 return Expression.Convert(paramsOfDelegate[i], callParamType.ParameterType);
             }

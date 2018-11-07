@@ -9,13 +9,13 @@ using SaltyEmu.DatabasePlugin.Utils;
 
 namespace SaltyEmu.DatabasePlugin
 {
-    public class NosSharpDatabasePlugin : IPlugin
+    public class DatabasePlugin : IPlugin
     {
-        private static readonly Logger Log = Logger.GetLogger<NosSharpDatabasePlugin>();
-        private readonly string _configurationFilePath = $"plugins/config/{nameof(NosSharpDatabasePlugin)}/conf.json";
+        private static readonly Logger Log = Logger.GetLogger<DatabasePlugin>();
+        private readonly string _configurationFilePath = $"plugins/config/{nameof(DatabasePlugin)}/conf.json";
         private DatabaseConfiguration _configuration;
         public PluginEnableTime EnableTime => PluginEnableTime.PreContainerBuild;
-        public string Name => nameof(NosSharpDatabasePlugin);
+        public string Name => nameof(DatabasePlugin);
 
         public void OnLoad()
         {

@@ -33,7 +33,7 @@ namespace Toolkit.Commands
             algo.OnEnable();
             if (command.IsDb)
             {
-                var tmp = new NosSharpDatabasePlugin();
+                var tmp = new DatabasePlugin();
                 tmp.OnLoad();
                 tmp.OnEnable();
             }

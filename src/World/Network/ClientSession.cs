@@ -223,14 +223,14 @@ namespace World.Network
 
             if (SessionId == 0)
             {
-                HandleUnauthedPackets(buff, context);
+                BufferToUnauthedPackets(buff, context);
                 return;
             }
 
-            HandlePackets(buff);
+            BufferToPackets(buff);
         }
 
-        private void HandleUnauthedPackets(string packets, IChannelHandlerContext context)
+        private void BufferToUnauthedPackets(string packets, IChannelHandlerContext context)
         {
             string[] sessionParts = packets.Split(' ');
             if (sessionParts.Length == 0)
@@ -300,7 +300,7 @@ namespace World.Network
             }
         }
 
-        private void HandlePackets(string packets)
+        private void BufferToPackets(string packets)
         {
             foreach (string packet in packets.Split((char)PACKET_SPLIT_CHARACTER, StringSplitOptions.RemoveEmptyEntries))
             {

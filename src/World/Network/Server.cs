@@ -140,7 +140,7 @@ namespace World.Network
                 IChannel bootstrapChannel = await bootstrap.BindAsync(port).ConfigureAwait(false);
 
 
-                Log.Info($"[LISTENING] Server is listening");
+                Log.Info("[LISTENING] Server is listening");
                 Log.Info($"-> PORT   : {port}");
                 Log.Info($"-> TICK   : {TickRate}");
                 Log.Info($"-> WORLD  : {WorldGroup}");

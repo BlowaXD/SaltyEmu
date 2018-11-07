@@ -81,7 +81,7 @@ namespace Toolkit.Commands
             var algo = new BasicAlgorithmPlugin();
             algo.OnLoad();
             algo.OnEnable();
-            var tmp = new NosSharpDatabasePlugin();
+            var tmp = new DatabasePlugin();
             tmp.OnLoad();
             tmp.OnEnable();
             ChickenContainer.Initialize();

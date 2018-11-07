@@ -13,7 +13,7 @@ namespace NosSharp.PacketHandler.Utils
         public static IEnumerable<CharacterScreenPacketHandler> GetCharacterScreenPacketHandlers()
         {
             List<CharacterScreenPacketHandler> references = new List<CharacterScreenPacketHandler>();
-            // iterate thru each type in the given assembly
+            // iterate through each type in the given assembly
             foreach (Type handlerType in typeof(CharacterScreenPacketsHandling).Assembly.GetTypes())
             {
                 // include PacketDefinition

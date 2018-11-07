@@ -12,10 +12,10 @@ using ChickenAPI.Enums;
 using ChickenAPI.Game.Data.AccessLayer.Account;
 using ChickenAPI.Game.PacketHandling;
 using NLog;
-using SaltyEmu.DatabasePlugin;
 using NosSharp.PacketHandler;
 using SaltyEmu.BasicAlgorithmPlugin;
 using SaltyEmu.BasicPlugin;
+using SaltyEmu.DatabasePlugin;
 using SaltyEmu.PathfinderPlugin;
 using SaltyEmu.RedisWrappers;
 using World.Network;
@@ -33,10 +33,10 @@ namespace World
         {
             new BasicAlgorithmPlugin(),
             new RedisPlugin(),
-            new NosSharpDatabasePlugin(),
+            new DatabasePlugin(),
             new BasicPlugin(),
             new PathfinderPlugin(),
-            new PacketHandlerPlugin(),
+            new PacketHandlerPlugin()
         };
 
         private static void InitializePlugins()

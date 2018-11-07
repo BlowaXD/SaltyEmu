@@ -63,7 +63,7 @@ namespace LoginServer
             try
             {
                 IPlugin[] plugins = new SimplePluginManager().LoadPlugins(new DirectoryInfo("plugins"));
-                var dbPlugin = new NosSharpDatabasePlugin();
+                var dbPlugin = new DatabasePlugin();
                 dbPlugin.OnLoad();
                 var redisPlugin = new RedisPlugin();
                 redisPlugin.OnLoad();
