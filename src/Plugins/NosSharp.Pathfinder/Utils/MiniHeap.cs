@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace NosSharp.Pathfinder.Utils
+namespace SaltyEmu.PathfinderPlugin.Utils
 {
     public class MiniHeap<T> where T : IComparable
     {

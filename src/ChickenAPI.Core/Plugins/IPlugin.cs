@@ -2,6 +2,8 @@
 {
     public interface IPlugin
     {
+        PluginEnableTime EnableTime { get; }
+
         /// <summary>
         ///     Name of the plugin
         /// </summary>

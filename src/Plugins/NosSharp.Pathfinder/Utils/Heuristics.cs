@@ -1,4 +1,4 @@
-﻿namespace NosSharp.Pathfinder.Utils
+﻿namespace SaltyEmu.PathfinderPlugin.Utils
 {
     public static class Heuristics
     {

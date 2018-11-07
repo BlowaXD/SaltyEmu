@@ -3,10 +3,11 @@ using ChickenAPI.Core.Plugins;
 
 namespace SaltyEmu.BasicPlugin
 {
-    public class TemporaryMapPlugin : IPlugin
+    public class BasicPlugin : IPlugin
     {
-        private static readonly Logger Log = Logger.GetLogger<TemporaryMapPlugin>();
-        public string Name => nameof(TemporaryMapPlugin);
+        private static readonly Logger Log = Logger.GetLogger<BasicPlugin>();
+        public PluginEnableTime EnableTime => PluginEnableTime.PostContainerBuild;
+        public string Name => nameof(BasicPlugin);
 
         public void OnDisable()
         {
@@ -15,7 +16,7 @@ namespace SaltyEmu.BasicPlugin
 
         public void OnEnable()
         {
-            // nothing
+            BasicPluginIoCInjector.InitializeEventHandlers();
         }
 
         public void OnLoad()

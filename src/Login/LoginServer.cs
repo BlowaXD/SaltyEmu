@@ -12,6 +12,7 @@ using LoginServer.Cryptography.Factories;
 using LoginServer.Network;
 using SaltyEmu.DatabasePlugin;
 using NosSharp.RedisSessionPlugin;
+using SaltyEmu.RedisWrappers;
 
 namespace LoginServer
 {

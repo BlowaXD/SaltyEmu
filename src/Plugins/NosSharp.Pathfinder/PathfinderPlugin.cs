@@ -4,18 +4,20 @@ using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Logging;
 using ChickenAPI.Core.Plugins;
 using ChickenAPI.Game.Maps;
+using SaltyEmu.PathfinderPlugin.Algorithms;
 
-namespace NosSharp.Pathfinder
+namespace SaltyEmu.PathfinderPlugin
 {
     public class PathfinderPlugin : IPlugin
     {
         private static readonly Logger Log = Logger.GetLogger<PathfinderPlugin>();
+        public PluginEnableTime EnableTime => PluginEnableTime.PostContainerBuild;
         public string Name => nameof(PathfinderPlugin);
 
         public void OnLoad()
         {
             Log.Info("Loading...");
-            ChickenContainer.Builder.Register(s => new Pathfinder.Pathfinder()).As<IPathfinder>();
+            ChickenContainer.Builder.Register(s => new Pathfinder()).As<IPathfinder>();
             Log.Info("Loaded !");
         }
 

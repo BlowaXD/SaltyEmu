@@ -13,6 +13,7 @@ using NosSharp.BasicAlgorithm;
 using SaltyEmu.BasicPlugin;
 using SaltyEmu.DatabasePlugin.Context;
 using SaltyEmu.DatabasePlugin.Utils;
+using SaltyEmu.PathfinderPlugin.Algorithms;
 
 namespace ChickenAPI.Game.Test
 {
@@ -54,7 +55,7 @@ namespace ChickenAPI.Game.Test
             PluginDependencyInjector.RegisterDaos();
             AlgorithmDependenciesInjector.InjectDependencies();
             BasicPluginIoCInjector.InjectDependencies();
-            ChickenContainer.Builder.Register(s => new NosSharp.Pathfinder.Pathfinder.Pathfinder()).As<IPathfinder>();
+            ChickenContainer.Builder.Register(s => new Pathfinder()).As<IPathfinder>();
         }
 
         public static PlayerEntity LoadPlayer(string name)

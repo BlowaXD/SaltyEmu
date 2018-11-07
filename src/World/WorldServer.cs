@@ -10,20 +10,14 @@ using ChickenAPI.Core.Utils;
 using ChickenAPI.Data.Character;
 using ChickenAPI.Enums;
 using ChickenAPI.Game.Data.AccessLayer.Account;
-using ChickenAPI.Game.ECS;
-using ChickenAPI.Game.Events;
-using ChickenAPI.Game.Features.Effects;
-using ChickenAPI.Game.Managers;
 using ChickenAPI.Game.PacketHandling;
-using ChickenAPI.Game.Packets;
 using NLog;
-using NosSharp.BasicAlgorithm;
 using SaltyEmu.DatabasePlugin;
 using NosSharp.PacketHandler;
-using NosSharp.Pathfinder;
-using NosSharp.RedisSessionPlugin;
-using NosSharp.TemporaryMapPlugins;
+using SaltyEmu.BasicAlgorithmPlugin;
 using SaltyEmu.BasicPlugin;
+using SaltyEmu.PathfinderPlugin;
+using SaltyEmu.RedisWrappers;
 using World.Network;
 using World.Packets;
 using World.Utils;
@@ -40,8 +34,9 @@ namespace World
             new BasicAlgorithmPlugin(),
             new RedisPlugin(),
             new NosSharpDatabasePlugin(),
-            new TemporaryMapPlugin(),
-            new PathfinderPlugin()
+            new BasicPlugin(),
+            new PathfinderPlugin(),
+            new PacketHandlerPlugin(),
         };
 
         private static void InitializePlugins()
@@ -59,11 +54,6 @@ namespace World
                 }
 
                 Plugins.AddRange(new SimplePluginManager().LoadPlugins(new DirectoryInfo("plugins")));
-                foreach (IPlugin plugin in Plugins)
-                {
-                    plugin.OnEnable();
-                }
-
             }
             catch (Exception e)
             {
@@ -148,6 +138,15 @@ namespace World
             acc.Save(account);
         }
 
+        private static void EnablePlugins(PluginEnableTime enableTime)
+        {
+            Log.Info($"Enabling plugins of type {enableTime}");
+            foreach (IPlugin plugin in Plugins.Where(s => s.EnableTime == enableTime))
+            {
+                plugin.OnEnable();
+            }
+        }
+
         private static void Main()
         {
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
@@ -158,10 +157,9 @@ namespace World
             InitializeLogger();
             InitializeConfigs();
             InitializePlugins();
-            ChickenContainer.Builder.Register(s => new PacketHandler()).As<IPacketHandler>().SingleInstance();
+            EnablePlugins(PluginEnableTime.PreContainerBuild);
             ChickenContainer.Initialize();
-            ClientSession.SetPacketFactory(new PluggablePacketFactory());
-            ClientSession.SetPacketHandler(ChickenContainer.Instance.Resolve<IPacketHandler>());
+            InitializeClientSession();
             if (Server.RegisterServer())
             {
                 Log.Info("Failed to register to ServerAPI");
@@ -171,42 +169,14 @@ namespace World
 #if DEBUG
             InitializeAccounts();
 #endif
-            InitializeEventHandlers();
-
-            var packetHandler = new PacketHandlerPlugin();
-            packetHandler.OnLoad();
-            packetHandler.OnEnable();
+            EnablePlugins(PluginEnableTime.PostContainerBuild);
             Server.RunServerAsync(1337).Wait();
         }
 
-        private static IEnumerable<Type> GetHandlers()
+        private static void InitializeClientSession()
         {
-            List<Type> handlers = new List<Type>();
-
-            handlers.AddRange(typeof(EffectEventHandler).Assembly.GetTypes().Where(s => s.IsSubclassOf(typeof(EventHandlerBase))));
-            return handlers;
-        }
-
-        private static void InitializeEventHandlers()
-        {
-            // first version hardcoded, next one through Plugin + Assembly Reflection
-            var eventManager = ChickenContainer.Instance.Resolve<IEventManager>();
-            foreach (Type handlerType in GetHandlers())
-            {
-                object handler = Activator.CreateInstance(handlerType);
-
-                if (!(handler is EventHandlerBase handlerBase))
-                {
-                    continue;
-                }
-
-                foreach (Type type in handlerBase.HandledTypes)
-                {
-
-                    eventManager.Register(handlerBase, type);
-                }
-
-            }
+            ClientSession.SetPacketFactory(new PluggablePacketFactory());
+            ClientSession.SetPacketHandler(ChickenContainer.Instance.Resolve<IPacketHandler>());
         }
 
         private static void Exit(object sender, EventArgs e)

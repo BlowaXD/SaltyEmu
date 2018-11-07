@@ -6,7 +6,7 @@ using ChickenAPI.Core.Utils;
 using ChickenAPI.Data.Map;
 using ChickenAPI.Game.Maps;
 
-namespace NosSharp.Pathfinder.Test
+namespace SaltyEmu.PathfinderPlugin.Test
 {
     public class PathfinderTest
     {

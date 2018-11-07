@@ -5,6 +5,7 @@ namespace SaltyEmu.IpcPlugin
 {
     public class Class1 : IPlugin
     {
+        public PluginEnableTime EnableTime => PluginEnableTime.PreContainerBuild;
         public string Name { get; }
 
         public void OnDisable()

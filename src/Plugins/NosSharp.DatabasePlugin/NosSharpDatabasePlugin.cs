@@ -14,6 +14,7 @@ namespace SaltyEmu.DatabasePlugin
         private static readonly Logger Log = Logger.GetLogger<NosSharpDatabasePlugin>();
         private readonly string _configurationFilePath = $"plugins/config/{nameof(NosSharpDatabasePlugin)}/conf.json";
         private DatabaseConfiguration _configuration;
+        public PluginEnableTime EnableTime => PluginEnableTime.PreContainerBuild;
         public string Name => nameof(NosSharpDatabasePlugin);
 
         public void OnLoad()

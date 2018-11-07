@@ -6,14 +6,16 @@ using ChickenAPI.Core.Logging;
 using ChickenAPI.Core.Plugins;
 using ChickenAPI.Core.Utils;
 using ChickenAPI.Game.Data.AccessLayer.Server;
+using NosSharp.RedisSessionPlugin;
 
-namespace NosSharp.RedisSessionPlugin
+namespace SaltyEmu.RedisWrappers
 {
     public class RedisPlugin : IPlugin
     {
         private static readonly Logger Log = Logger.GetLogger<RedisPlugin>();
         private readonly string _configurationPath = $"plugins/config/{nameof(RedisPlugin)}/conf.json";
         private RedisConfiguration _configuration;
+        public PluginEnableTime EnableTime => PluginEnableTime.PreContainerBuild;
         public string Name => "RedisPlugin";
 
         public void OnDisable()

@@ -1,8 +1,7 @@
 ﻿using ChickenAPI.Core.Utils;
 using ChickenAPI.Game.ECS.Entities;
-using ChickenAPI.Game.Maps;
 
-namespace NosSharp.Pathfinder.Utils
+namespace SaltyEmu.PathfinderPlugin.Utils
 {
     public static class PathfinderHelper
     {

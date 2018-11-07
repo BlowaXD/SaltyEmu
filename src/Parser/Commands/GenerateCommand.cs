@@ -2,6 +2,7 @@
 using ChickenAPI.Core.Logging;
 using CommandLine;
 using NosSharp.BasicAlgorithm;
+using SaltyEmu.BasicAlgorithmPlugin;
 using SaltyEmu.DatabasePlugin;
 using Toolkit.Generators.FromPackets;
 

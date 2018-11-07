@@ -1,7 +1,7 @@
 ﻿using System;
 using ChickenAPI.Core.Utils;
 
-namespace NosSharp.Pathfinder.Utils
+namespace SaltyEmu.PathfinderPlugin.Utils
 {
     public class Node : IComparable
     {

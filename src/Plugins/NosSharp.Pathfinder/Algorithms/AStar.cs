@@ -1,10 +1,9 @@
 ﻿using System;
 using ChickenAPI.Core.Utils;
 using ChickenAPI.Game.ECS.Entities;
-using ChickenAPI.Game.Maps;
-using NosSharp.Pathfinder.Utils;
+using SaltyEmu.PathfinderPlugin.Utils;
 
-namespace NosSharp.Pathfinder.Pathfinder
+namespace SaltyEmu.PathfinderPlugin.Algorithms
 {
     public static class AStar
     {

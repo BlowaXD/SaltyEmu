@@ -20,6 +20,8 @@ namespace World.Network
 {
     public class ClientSession : ChannelHandlerAdapter, ISession
     {
+        private const byte PACKET_SPLIT_CHARACTER = 0xFF;
+
         private static readonly Logger Log = Logger.GetLogger<ClientSession>();
         private static Guid _worldServerId;
         private static IPacketFactory _packetFactory;
@@ -102,6 +104,13 @@ namespace World.Network
             Player = ett;
         }
 
+        public void InitializeAccount(AccountDto account)
+        {
+            Account = account;
+        }
+
+        private static readonly string[] BlacklistedDebug = { "mv", "cond", "in", "st" };
+
         public void SendPacket<T>(T packet) where T : IPacket
         {
             if (packet == null)
@@ -112,7 +121,7 @@ namespace World.Network
             string tmp = _packetFactory.Serialize(packet);
 
 #if DEBUG
-            if (!tmp.StartsWith("mv") && !tmp.StartsWith("cond"))
+            if (!BlacklistedDebug.All(s => tmp.StartsWith(s)))
             {
                 Log.Debug($"[{Ip}][SOCKET_WRITE] {tmp}");
             }
@@ -136,36 +145,18 @@ namespace World.Network
                     continue;
                 }
 
-                _channel.WriteAsync(_packetFactory.Serialize(packet));
+                string tmp = _packetFactory.Serialize(packet);
+#if DEBUG
+                if (!BlacklistedDebug.All(s => tmp.StartsWith(s)))
+                {
+                    Log.Debug($"[{Ip}][SOCKET_WRITE] {tmp}");
+                }
+#endif
+
+                _channel.WriteAsync(tmp);
             }
 
             _channel.Flush();
-        }
-
-        public void GlobalBroadcast<T>(T packet) where T : IPacket
-        {
-            if (packet == null)
-            {
-                return;
-            }
-
-            string serialized = _packetFactory.Serialize(packet);
-            _group.WriteAndFlushAsync(serialized);
-        }
-
-        public void GlobalBroadcast<T>(IEnumerable<T> packets) where T : IPacket
-        {
-            if (packets == null)
-            {
-                return;
-            }
-
-            foreach (T i in packets)
-            {
-                _group.WriteAsync(_packetFactory.Serialize(i));
-            }
-
-            _group.Flush();
         }
 
         public void SendPackets(IEnumerable<IPacket> packets)
@@ -177,16 +168,20 @@ namespace World.Network
                     continue;
                 }
 
-                _channel?.WriteAsync(_packetFactory.Serialize(packet));
+                string tmp = _packetFactory.Serialize(packet);
+#if DEBUG
+                if (!BlacklistedDebug.All(s => tmp.StartsWith(s)))
+                {
+                    Log.Debug($"[{Ip}][SOCKET_WRITE] {tmp}");
+                }
+#endif
+
+                _channel.WriteAsync(tmp);
             }
 
-            _channel?.Flush();
+            _channel.Flush();
         }
 
-        public void InitializeAccount(AccountDto account)
-        {
-            Account = account;
-        }
 
         public void Disconnect()
         {
@@ -290,34 +285,38 @@ namespace World.Network
             return false;
         }
 
+        private void KeepAliveCheck(int nextKeepAlive)
+        {
+            if (nextKeepAlive == 0)
+            {
+                if (LastKeepAliveIdentity == ushort.MaxValue)
+                {
+                    LastKeepAliveIdentity = nextKeepAlive;
+                }
+            }
+            else
+            {
+                LastKeepAliveIdentity = nextKeepAlive;
+            }
+        }
+
         private void HandlePackets(string packets)
         {
-            foreach (string packet in packets.Split((char)0xFF, StringSplitOptions.RemoveEmptyEntries))
+            foreach (string packet in packets.Split((char)PACKET_SPLIT_CHARACTER, StringSplitOptions.RemoveEmptyEntries))
             {
                 string packetstring = packet.Replace('^', ' ');
                 string[] packetsplit = packetstring.Split(' ');
 
                 // keep alive
                 string nextKeepAliveRaw = packetsplit[0];
-                if (!int.TryParse(nextKeepAliveRaw, out int nextKeepaliveIdentity) && nextKeepaliveIdentity != (LastKeepAliveIdentity + 1))
+                if (!int.TryParse(nextKeepAliveRaw, out int nextKeepAlive) && nextKeepAlive != (LastKeepAliveIdentity + 1))
                 {
                     Disconnect();
                     return;
                 }
 
-                if (nextKeepaliveIdentity == 0)
-                {
-                    if (LastKeepAliveIdentity == ushort.MaxValue)
-                    {
-                        LastKeepAliveIdentity = nextKeepaliveIdentity;
-                    }
-                }
-                else
-                {
-                    LastKeepAliveIdentity = nextKeepaliveIdentity;
-                }
+                KeepAliveCheck(nextKeepAlive);
 
-                // TODO NEED TO BE REWRITED
                 if (_waitForPacketsAmount.HasValue)
                 {
                     if (WaitForPackets(packetstring, packetsplit))
@@ -333,7 +332,7 @@ namespace World.Network
                     continue;
                 }
 
-                if (packetsplit[1].Length >= 1 && (packetsplit[1][0] == '/' || packetsplit[1][0] == ':' || packetsplit[1][0] == ';'))
+                if (packetsplit[1].Length >= 1 && ChatDelimiter.Any(s => s == packetsplit[1][0]))
                 {
                     packetsplit[1] = packetsplit[1][0].ToString();
                     packetstring = packet.Insert(packet.IndexOf(' ') + 2, " ");
@@ -345,6 +344,8 @@ namespace World.Network
                 }
             }
         }
+
+        private static readonly char[] ChatDelimiter = { '/', ':', ';' };
 
         private void GameHandler(string packetHeader, string packet)
         {

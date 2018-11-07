@@ -12,7 +12,8 @@ namespace NosSharp.PacketHandler
     public class PacketHandlerPlugin : IPlugin
     {
         private static readonly Logger Log = Logger.GetLogger<PacketHandlerPlugin>();
-        public string Name => "Nos#-PacketHandler";
+        public PluginEnableTime EnableTime => PluginEnableTime.PostContainerBuild;
+        public string Name => "SaltyEmu";
 
         public void OnDisable()
         {

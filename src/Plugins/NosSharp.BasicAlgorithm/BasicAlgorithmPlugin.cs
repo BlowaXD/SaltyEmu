@@ -1,17 +1,14 @@
 ﻿using System;
-using Autofac;
-using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Logging;
 using ChickenAPI.Core.Plugins;
-using ChickenAPI.Game.Battle.Interfaces;
-using ChickenAPI.Game.Data.AccessLayer.Character;
-using ChickenAPI.Game.Data.AccessLayer.NpcMonster;
+using NosSharp.BasicAlgorithm;
 
-namespace NosSharp.BasicAlgorithm
+namespace SaltyEmu.BasicAlgorithmPlugin
 {
     public class BasicAlgorithmPlugin : IPlugin
     {
         private static readonly Logger Log = Logger.GetLogger<BasicAlgorithmPlugin>();
+        public PluginEnableTime EnableTime => PluginEnableTime.PreContainerBuild;
         public string Name => nameof(BasicAlgorithmPlugin);
 
         public void OnDisable()
