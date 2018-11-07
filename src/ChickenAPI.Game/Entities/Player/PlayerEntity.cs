@@ -220,7 +220,12 @@ namespace ChickenAPI.Game.Entities.Player
         public bool IsWalking => !Movable.IsSitting;
         public bool CanMove => !Movable.IsSitting;
         public bool IsStanding => !Movable.IsSitting;
-        public byte Speed => Movable.Speed;
+        public byte Speed
+        {
+            get => Movable.Speed;
+            set => Movable.Speed = value;
+        }
+
         public DateTime LastMove { get; }
         public Position<short> Actual => Movable.Actual;
         public Position<short> Destination => Movable.Destination;

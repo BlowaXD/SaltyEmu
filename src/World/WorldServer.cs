@@ -75,17 +75,17 @@ namespace World
             string tick = Environment.GetEnvironmentVariable("SERVER_REFRESH_RATE") ?? "10";
             if (!int.TryParse(tick, out int tickRate))
             {
-                tickRate = 5;
+                tickRate = 10;
             }
 
             Server.Port = intPort;
             Server.Ip = Environment.GetEnvironmentVariable("SERVER_IP") ?? "127.0.0.1";
             Server.WorldGroup = Environment.GetEnvironmentVariable("SERVER_WORLDGROUP") ?? "SaltyNos";
             Server.TickRate = tickRate;
-            Log.Info($"TICK-RATE : {Server.TickRate} Hz");
-            Log.Info($"WORLDGROUP : {Server.WorldGroup}");
-            Log.Info($"IP : {Server.Ip}");
-            Log.Info($"PORT : {Server.Port}");
+            Log.Info($"SERVER_IP : {Server.Ip}");
+            Log.Info($"SERVER_PORT : {Server.Port}");
+            Log.Info($"SERVER_WORLDGROUP : {Server.WorldGroup}");
+            Log.Info($"SERVER_REFRESH_RATE : {Server.TickRate} Hz");
         }
 
         private static void PrintHeader()
