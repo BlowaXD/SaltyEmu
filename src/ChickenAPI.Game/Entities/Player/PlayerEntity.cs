@@ -38,7 +38,10 @@ namespace ChickenAPI.Game.Entities.Player
         private static readonly IItemInstanceService ItemInstance = new Lazy<IItemInstanceService>(() => ChickenContainer.Instance.Resolve<IItemInstanceService>()).Value;
         private static readonly ICharacterService CharacterService = new Lazy<ICharacterService>(() => ChickenContainer.Instance.Resolve<ICharacterService>()).Value;
         private static readonly ICharacterSkillService CharacterSkillService = new Lazy<ICharacterSkillService>(() => ChickenContainer.Instance.Resolve<ICharacterSkillService>()).Value;
-        private static readonly ICharacterQuickListService CharacterQuicklistService = new Lazy<ICharacterQuickListService>(() => ChickenContainer.Instance.Resolve<ICharacterQuickListService>()).Value;
+
+        private static readonly ICharacterQuickListService
+            CharacterQuicklistService = new Lazy<ICharacterQuickListService>(() => ChickenContainer.Instance.Resolve<ICharacterQuickListService>()).Value;
+
         private static readonly IPlayerManager PlayerManager = new Lazy<IPlayerManager>(() => ChickenContainer.Instance.Resolve<IPlayerManager>()).Value;
 
         public PlayerEntity(ISession session, CharacterDto dto, IEnumerable<CharacterSkillDto> skills, IEnumerable<CharacterQuicklistDto> quicklist) : base(VisualType.Character, dto.Id)
@@ -213,11 +216,11 @@ namespace ChickenAPI.Game.Entities.Player
 
         // todo manage Position of player in instanciated mapLayers
         public Position<short> Position { get; }
-        public bool IsSitting { get; }
-        public bool IsWalking { get; }
+        public bool IsSitting => Movable.IsSitting;
+        public bool IsWalking => !Movable.IsSitting;
         public bool CanMove => !Movable.IsSitting;
-        public bool IsStanding { get; }
-        public byte Speed { get; set; }
+        public bool IsStanding => !Movable.IsSitting;
+        public byte Speed => Movable.Speed;
         public DateTime LastMove { get; }
         public Position<short> Actual => Movable.Actual;
         public Position<short> Destination => Movable.Destination;
