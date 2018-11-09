@@ -8,8 +8,8 @@ namespace ChickenAPI.Game.Movements.Extensions
     {
         public static CondPacketBase GenerateCondPacket(this IPlayerEntity entity) => new CondPacketBase
         {
-            CanAttack = entity.CanAttack,
-            CanMove = entity.CanMove,
+            NoAttack = !entity.CanAttack,
+            NoMove = !entity.CanMove,
             VisualType = VisualType.Character,
             VisualId = entity.Character.Id,
             Speed = entity.Movable.Speed

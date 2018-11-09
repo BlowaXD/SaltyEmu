@@ -12,6 +12,7 @@ using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Entities.Portal;
 using ChickenAPI.Game.Features.Effects;
 using ChickenAPI.Game.Features.IAs;
+using ChickenAPI.Game.Features.Shops;
 using ChickenAPI.Game.Movements;
 using ChickenAPI.Game.Movements.DataObjects;
 using ChickenAPI.Game.Network;
@@ -49,7 +50,7 @@ namespace ChickenAPI.Game.Maps
 
             foreach (PortalDto portal in portals)
             {
-                TransferEntity(new PortalEntity(portal), this);
+                new PortalEntity(portal).TransferEntity(this);
             }
         }
 
@@ -70,7 +71,7 @@ namespace ChickenAPI.Game.Maps
             foreach (MapNpcDto npc in npcs)
             {
                 ShopDto shop = shops?.FirstOrDefault(s => s.MapNpcId == npc.Id);
-                TransferEntity(new NpcEntity(npc, shop), this);
+                new NpcEntity(npc, shop).TransferEntity(this);
             }
         }
 
@@ -83,7 +84,7 @@ namespace ChickenAPI.Game.Maps
 
             foreach (MapMonsterDto monster in monsters)
             {
-                TransferEntity(new MonsterEntity(monster), this);
+                new MonsterEntity(monster).TransferEntity(this);
             }
         }
 

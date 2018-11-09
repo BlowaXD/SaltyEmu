@@ -9,7 +9,7 @@ using ChickenAPI.Game.Visibility;
 
 namespace ChickenAPI.Game.Entities.Portal
 {
-    public class PortalEntity : EntityBase
+    public class PortalEntity : EntityBase, IPortalEntity
     {
         public PortalEntity(PortalDto portal) : base(VisualType.Portal, portal.Id)
         {

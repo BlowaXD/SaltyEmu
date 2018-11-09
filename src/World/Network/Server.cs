@@ -81,14 +81,22 @@ namespace World.Network
             _container = ChickenContainer.Instance.Resolve<IEntityManagerContainer>();
             while (_running)
             {
-                DateTime next = DateTime.UtcNow.AddMilliseconds(DelayBetweenTicks);
-                Update();
-                DateTime after = DateTime.UtcNow;
-
-                if (next > after)
+                try
                 {
-                    Thread.Sleep((next - after).Milliseconds);
+                    DateTime next = DateTime.UtcNow.AddMilliseconds(DelayBetweenTicks);
+                    Update();
+                    DateTime after = DateTime.UtcNow;
+
+                    if (next > after)
+                    {
+                        Thread.Sleep((next - after).Milliseconds);
+                    }
                 }
+                catch (Exception e)
+                {
+                    Log.Error("[SERVER_LOOP]", e);
+                }
+
             }
         }
 

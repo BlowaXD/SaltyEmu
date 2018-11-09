@@ -4,7 +4,7 @@ using SaltyEmu.DatabasePlugin.Configuration;
 
 namespace SaltyEmu.DatabasePlugin.Context
 {
-    public class NosSharpContextFactory : IDesignTimeDbContextFactory<SaltyDbContext>
+    public class DbContextFactory : IDesignTimeDbContextFactory<SaltyDbContext>
     {
         public SaltyDbContext CreateDbContext(string[] args)
         {

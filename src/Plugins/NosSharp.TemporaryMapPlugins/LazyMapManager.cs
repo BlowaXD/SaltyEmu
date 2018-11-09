@@ -12,7 +12,7 @@ using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Managers;
 using ChickenAPI.Game.Maps;
 
-namespace NosSharp.TemporaryMapPlugins
+namespace SaltyEmu.BasicPlugin
 {
     public class LazyMapManager : IMapManager
     {
@@ -52,13 +52,13 @@ namespace NosSharp.TemporaryMapPlugins
 
         public IMapLayer GetBaseMapLayer(IMap map) => map.BaseLayer;
 
-        private IMap LoadMap(long mapId)
+        private static IMap LoadMap(long mapId)
         {
             MapDto map = ChickenContainer.Instance.Resolve<IMapService>().GetById(mapId);
             IEnumerable<MapNpcDto> npcs = ChickenContainer.Instance.Resolve<IMapNpcService>().GetByMapId(mapId);
             IEnumerable<MapMonsterDto> monsters = ChickenContainer.Instance.Resolve<IMapMonsterService>().GetByMapId(mapId);
             IEnumerable<PortalDto> portals = ChickenContainer.Instance.Resolve<IPortalService>().GetByMapId(mapId);
-            IEnumerable<ShopDto> shops = ChickenContainer.Instance.Resolve<IShopService>().GetByMapNpcIds(npcs.Select(s => s.Id).ToList());
+            IEnumerable<ShopDto> shops = ChickenContainer.Instance.Resolve<IShopService>().GetByMapNpcIds(npcs.Select(s => s.Id));
             return new SimpleMap(map, monsters, npcs, portals, shops);
         }
     }

@@ -1,12 +1,14 @@
 ﻿using System;
 using ChickenAPI.Game.ECS.Entities;
-using ChickenAPI.Game.Maps;
+using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Packets.Game.Server.MiniMap;
 
-namespace ChickenAPI.Game.Packets.Extensions
+namespace ChickenAPI.Game.PacketHandling.Extensions
 {
     public static class MapPacketsExtensions
     {
+        public static CMapPacket GenerateCMapPacket(this IPlayerEntity player) => player.CurrentMap?.Map.GenerateCMapPacket();
+
         public static CMapPacket GenerateCMapPacket(this IMap map) => new CMapPacket
         {
             Type = 0,

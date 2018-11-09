@@ -1,4 +1,5 @@
-﻿using ChickenAPI.Data.Character;
+﻿using System;
+using ChickenAPI.Data.Character;
 using ChickenAPI.Data.NpcMonster;
 using ChickenAPI.Enums;
 using ChickenAPI.Enums.Game.Character;
@@ -163,28 +164,17 @@ namespace ChickenAPI.Game.PacketHandling.Extensions
             };
         }
 
-        public static AtPacketBase GenerateAtPacket(this IEntity entity)
+        public static AtPacketBase GenerateAtPacket(this IPlayerEntity player)
         {
-            if (!(entity is IPlayerEntity player))
-            {
-                // error, at packet should not be used for that player
-                return null;
-            }
-
-            if (!(player.CurrentMap is IMapLayer layer))
-            {
-                return null;
-            }
-
             return new AtPacketBase
             {
                 CharacterId = player.Character.Id,
-                MapId = player.Character.MapId,
+                MapId = Convert.ToInt16(player.CurrentMap.Map.Id),
                 PositionX = player.Movable.Actual.X,
                 PositionY = player.Movable.Actual.Y,
                 Unknown1 = 2, // TODO: Find signification
                 Unknown2 = 0, // TODO: Find signification
-                Music = layer.Map.MusicId, //layer.Map.MusicId;
+                Music = player.CurrentMap.Map.MusicId, //layer.Map.MusicId;
                 Unknown3 = -1 // TODO: Find signification
             };
         }

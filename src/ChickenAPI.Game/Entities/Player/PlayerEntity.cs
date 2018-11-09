@@ -140,7 +140,6 @@ namespace ChickenAPI.Game.Entities.Player
             if (CurrentMap != null)
             {
                 EmitEvent(new MapLeaveEvent { Map = CurrentMap });
-                EmitEvent(new VisibilitySetInvisibleEventArgs { Broadcast = true, IsChangingMapLayer = true });
             }
 
             base.TransferEntity(map);
@@ -157,6 +156,10 @@ namespace ChickenAPI.Game.Entities.Player
 
         public void SendPackets<T>(IEnumerable<T> packets) where T : IPacket
         {
+            if (packets == null)
+            {
+                return;
+            }
             foreach (T i in packets)
             {
                 Session.SendPacket(i);

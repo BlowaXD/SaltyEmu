@@ -88,7 +88,7 @@ namespace NosSharp.PacketHandler
             session.SendPacket(session.Player.GenerateCondPacket());
 
             session.SendPacket(session.Player.GenerateGoldPacket());
-          //  session.SendPackets(session.Player.GenerateQuicklistPacket());
+            //  session.SendPackets(session.Player.GenerateQuicklistPacket());
             // finit
             // Blinit
             // clinit
@@ -99,7 +99,6 @@ namespace NosSharp.PacketHandler
             session.SendPacket(session.Player.GeneratePairyPacket());
 
 
-            // Session.SendPacket(Session.Character.GenerateGInfo());
             session.SendPacket(session.Player.GenerateGInfoPacket());
             session.Player.Broadcast(session.Player.GenerateGidxPacket());
             //Session.CurrentMapInstance?.Broadcast(Session.Character.GenerateGidx());

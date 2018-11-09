@@ -7,6 +7,7 @@ using ChickenAPI.Core.Logging;
 using ChickenAPI.Core.Plugins;
 using ChickenAPI.Game.Data.AccessLayer.Account;
 using ChickenAPI.Game.Data.AccessLayer.Server;
+using Login;
 using Login.Network;
 using LoginServer.Cryptography.Factories;
 using LoginServer.Network;
@@ -24,7 +25,7 @@ namespace LoginServer
 
         private static void PrintHeader()
         {
-            Console.Title = "SaltyEmu - WORLD";
+            Console.Title = "SaltyEmu - Login";
             const string text = @"
 ███████╗ █████╗ ██╗  ████████╗██╗   ██╗███████╗███╗   ███╗██╗   ██╗    ██╗      ██████╗  ██████╗ ██╗███╗   ██╗
 ██╔════╝██╔══██╗██║  ╚══██╔══╝╚██╗ ██╔╝██╔════╝████╗ ████║██║   ██║    ██║     ██╔═══██╗██╔════╝ ██║████╗  ██║

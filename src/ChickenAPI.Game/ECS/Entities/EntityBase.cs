@@ -49,6 +49,7 @@ namespace ChickenAPI.Game.ECS.Entities
             }
 
             CurrentMap.TransferEntity(this, map);
+            CurrentMap = map;
         }
 
         public virtual void AddComponent<T>(T component) where T : IComponent

@@ -6,7 +6,7 @@ namespace ChickenAPI.Game.Managers
 {
     public class SimpleEntityManagerContainer : IEntityManagerContainer
     {
-        public HashSet<IEntityManager> _managers = new HashSet<IEntityManager>();
+        private readonly HashSet<IEntityManager> _managers = new HashSet<IEntityManager>();
 
         public void Register(IEntityManager manager)
         {

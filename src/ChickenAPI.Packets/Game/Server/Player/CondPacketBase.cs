@@ -13,10 +13,10 @@ namespace ChickenAPI.Packets.Game.Server.Player
         public long VisualId { get; set; }
 
         [PacketIndex(2)]
-        public bool CanAttack { get; set; }
+        public bool NoAttack { get; set; }
 
         [PacketIndex(3)]
-        public bool CanMove { get; set; }
+        public bool NoMove { get; set; }
 
         [PacketIndex(4)]
         public byte Speed { get; set; }

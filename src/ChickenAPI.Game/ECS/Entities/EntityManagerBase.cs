@@ -51,11 +51,6 @@ namespace ChickenAPI.Game.ECS.Entities
             if (entity.Type == VisualType.Character)
             {
                 _players.Add(entity as IPlayerEntity);
-                // player cache
-                if (!ShouldUpdate)
-                {
-                    StartSystemUpdate();
-                }
             }
 
             EntitiesSet.Add(entity);
@@ -67,6 +62,11 @@ namespace ChickenAPI.Game.ECS.Entities
 
             entities.Add(entity.Id, entity);
             UpdateCache();
+            // player cache
+            if (!ShouldUpdate && entity.Type == VisualType.Character)
+            {
+                StartSystemUpdate();
+            }
         }
 
         public void UnregisterEntity<T>(T entity) where T : IEntity
@@ -95,7 +95,6 @@ namespace ChickenAPI.Game.ECS.Entities
         {
             UnregisterEntity(entity);
             manager.RegisterEntity(entity);
-            entity.TransferEntity(manager);
         }
 
         public void Update(DateTime date)

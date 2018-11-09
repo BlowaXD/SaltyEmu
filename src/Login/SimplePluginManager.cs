@@ -6,7 +6,7 @@ using System.Reflection;
 using ChickenAPI.Core.Logging;
 using ChickenAPI.Core.Plugins;
 
-namespace LoginServer
+namespace Login
 {
     public class SimplePluginManager : IPluginManager
     {

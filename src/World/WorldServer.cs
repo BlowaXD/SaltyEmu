@@ -31,9 +31,9 @@ namespace World
 
         private static readonly List<IPlugin> Plugins = new List<IPlugin>
         {
+            new DatabasePlugin(),
             new BasicAlgorithmPlugin(),
             new RedisPlugin(),
-            new DatabasePlugin(),
             new BasicPlugin(),
             new PathfinderPlugin(),
             new PacketHandlerPlugin()
@@ -69,7 +69,6 @@ namespace World
             if (!int.TryParse(port, out int intPort))
             {
                 intPort = 1337;
-                Server.Port = intPort;
             }
 
             string tick = Environment.GetEnvironmentVariable("SERVER_REFRESH_RATE") ?? "10";

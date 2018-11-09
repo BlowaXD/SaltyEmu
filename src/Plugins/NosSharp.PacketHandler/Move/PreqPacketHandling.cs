@@ -6,9 +6,9 @@ using ChickenAPI.Data.Map;
 using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Features.Portals;
-using ChickenAPI.Game.Features.Portals.Args;
 using ChickenAPI.Game.Managers;
 using ChickenAPI.Game.Maps;
+using ChickenAPI.Game.Portals.Args;
 using ChickenAPI.Packets.Game.Client.Movement;
 
 namespace NosSharp.PacketHandler.Move

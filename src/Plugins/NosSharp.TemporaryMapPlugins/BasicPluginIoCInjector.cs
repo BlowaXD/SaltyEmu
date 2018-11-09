@@ -4,7 +4,6 @@ using System.Linq;
 using Autofac;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Maths;
-using ChickenAPI.Core.Utils;
 using ChickenAPI.Game.Battle.Hitting;
 using ChickenAPI.Game.Battle.Interfaces;
 using ChickenAPI.Game.Data.AccessLayer.Item;
@@ -15,7 +14,6 @@ using ChickenAPI.Game.Features.GuriHandling.Handling;
 using ChickenAPI.Game.Features.NpcDialog;
 using ChickenAPI.Game.Managers;
 using ChickenAPI.Game.PacketHandling;
-using NosSharp.TemporaryMapPlugins;
 
 namespace SaltyEmu.BasicPlugin
 {

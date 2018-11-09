@@ -9,11 +9,11 @@ namespace World.Cryptography.Encoder
 {
     public class WorldEncoder : MessageToMessageEncoder<string>, IEncoder
     {
-        private static readonly Encoding encoding = Encoding.GetEncoding(1252);
+        private static readonly Encoding Encoding = Encoding.GetEncoding(1252);
 
         protected override void Encode(IChannelHandlerContext context, string message, List<object> output)
         {
-            Span<byte> strBytes = Encoding.Convert(Encoding.UTF8, encoding, Encoding.UTF8.GetBytes(message));
+            Span<byte> strBytes = Encoding.Convert(Encoding.UTF8, Encoding, Encoding.UTF8.GetBytes(message));
             int bytesLength = strBytes.Length;
             Span<byte> encryptedData = new byte[bytesLength + (int)Math.Ceiling((decimal)bytesLength / 0x7E) + 1];
 

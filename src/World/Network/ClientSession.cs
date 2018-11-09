@@ -121,7 +121,7 @@ namespace World.Network
             string tmp = _packetFactory.Serialize(packet);
 
 #if DEBUG
-            if (!BlacklistedDebug.All(s => tmp.StartsWith(s)))
+            if (BlacklistedDebug.All(s => !tmp.StartsWith(s)))
             {
                 Log.Debug($"[{Ip}][SOCKET_WRITE] {tmp}");
             }
@@ -147,7 +147,7 @@ namespace World.Network
 
                 string tmp = _packetFactory.Serialize(packet);
 #if DEBUG
-                if (!BlacklistedDebug.All(s => tmp.StartsWith(s)))
+                if (BlacklistedDebug.All(s => !tmp.StartsWith(s)))
                 {
                     Log.Debug($"[{Ip}][SOCKET_WRITE] {tmp}");
                 }
@@ -170,7 +170,7 @@ namespace World.Network
 
                 string tmp = _packetFactory.Serialize(packet);
 #if DEBUG
-                if (!BlacklistedDebug.All(s => tmp.StartsWith(s)))
+                if (BlacklistedDebug.All(s => !tmp.StartsWith(s)))
                 {
                     Log.Debug($"[{Ip}][SOCKET_WRITE] {tmp}");
                 }
