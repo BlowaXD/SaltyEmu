@@ -61,7 +61,6 @@ namespace ChickenAPI.Game.Maps
             // GenerateWp()
             player.SendPackets(join.Map.GetEntitiesPackets());
             player.SendPackets(join.Map.GetPairyPackets(player));
-            // todo pairy
             player.SendPackets(join.Map.GetShopsPackets());
 
             // user shop

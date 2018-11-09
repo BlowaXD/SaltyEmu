@@ -41,6 +41,9 @@ namespace ChickenAPI.Packets.Game.Server._NotYetSorted
         [PacketIndex(10, IsOptional = true, RemoveSeparator = true)]
         public InNpcSubPacket InNpcSubPacket { get; set; }
 
+        [PacketIndex(10, IsOptional = true, RemoveSeparator = true)]
+        public InItemSubPacketBase InDropSubPacket { get; set; }
+
         #endregion
     }
 }
