@@ -78,13 +78,13 @@ namespace ChickenAPI.Game.Battle
                     switch (target) // send death event
                     {
                         case IPlayerEntity player:
-                            player.EmitEvent(new PlayerDeathEvent {killer = hitRequest.Sender});
+                            player.EmitEvent(new PlayerDeathEvent {Killer = hitRequest.Sender});
                             break;
                         case IMonsterEntity monster:
-                            monster.EmitEvent(new MonsterDeathEvent { killer = hitRequest.Sender });
+                            monster.EmitEvent(new MonsterDeathEvent { Killer = hitRequest.Sender });
                             break;
                         case INpcEntity npc:
-                            npc.EmitEvent(new NpcDeathEvent { killer = hitRequest.Sender });
+                            npc.EmitEvent(new NpcDeathEvent { Killer = hitRequest.Sender });
                             break;
                     }
                     break;

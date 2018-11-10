@@ -3,7 +3,6 @@ using ChickenAPI.Data.Character;
 using ChickenAPI.Game.Battle.Interfaces;
 using ChickenAPI.Game.Families;
 using ChickenAPI.Game.Network;
-using ChickenAPI.Game.Permissions;
 using ChickenAPI.Packets;
 
 namespace ChickenAPI.Game.Entities.Player

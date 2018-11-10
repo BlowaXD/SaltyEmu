@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
-using ChickenAPI.Data.Character;
 using ChickenAPI.Data.Skills;
-using ChickenAPI.Game.Features.Skills;
 using ChickenAPI.Game.Skills;
 
 namespace ChickenAPI.Game.Entities

@@ -1,5 +1,4 @@
-﻿using ChickenAPI.Data.Character;
-using ChickenAPI.Data.NpcMonster;
+﻿using ChickenAPI.Data.NpcMonster;
 using ChickenAPI.Enums;
 using ChickenAPI.Enums.Game.Character;
 using ChickenAPI.Enums.Game.Entity;
@@ -118,12 +117,12 @@ namespace ChickenAPI.Game.PacketHandling.Extensions
             };
         }
 
-        private static InPacket GenerateInDrop(ItemDropEntity drop)
+        private static InPacket GenerateInDrop(IDropEntity drop)
         {
             return new InPacket
             {
                 VisualType = drop.Type,
-                Name = drop.Item.Vnum.ToString(),
+                Name = drop.ItemVnum.ToString(),
                 TransportId = drop.Id.ToString(),
                 PositionX = drop.Position.X,
                 PositionY = drop.Position.Y,

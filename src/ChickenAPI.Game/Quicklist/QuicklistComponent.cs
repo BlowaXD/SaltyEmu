@@ -3,7 +3,6 @@ using System.Linq;
 using ChickenAPI.Data.Character;
 using ChickenAPI.Game.ECS.Components;
 using ChickenAPI.Game.ECS.Entities;
-using ChickenAPI.Game.Entities.Player;
 
 namespace ChickenAPI.Game.Features.Quicklist
 {

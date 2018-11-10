@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Features.GuriHandling.Args;
-using ChickenAPI.Game.Features.NpcDialog.Events;
 using ChickenAPI.Game.Permissions;
 
 namespace ChickenAPI.Game.Features.GuriHandling.Handling

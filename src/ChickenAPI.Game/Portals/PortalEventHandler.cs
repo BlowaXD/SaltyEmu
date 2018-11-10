@@ -9,7 +9,6 @@ using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Events;
 using ChickenAPI.Game.Managers;
 using ChickenAPI.Game.Portals.Args;
-using ChickenAPI.Packets.Game.Server.Map;
 
 namespace ChickenAPI.Game.Portals
 {

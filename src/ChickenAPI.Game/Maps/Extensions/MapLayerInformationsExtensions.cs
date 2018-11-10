@@ -14,7 +14,6 @@ using ChickenAPI.Packets.Game.Client.Shops;
 using ChickenAPI.Packets.Game.Server.Inventory;
 using ChickenAPI.Packets.Game.Server.Portals;
 using ChickenAPI.Packets.Game.Server.Visibility;
-using ChickenAPI.Packets.Game.Server._NotYetSorted;
 
 namespace ChickenAPI.Game.Maps.Extensions
 {

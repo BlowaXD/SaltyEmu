@@ -1,10 +1,8 @@
-﻿using ChickenAPI.Game.Battle.Interfaces;
-using ChickenAPI.Game.Events;
+﻿using ChickenAPI.Game.Battle.Events;
 
 namespace ChickenAPI.Game.Entities.Npc.Events
 {
-    public class NpcDeathEvent : ChickenEventArgs
+    public class NpcDeathEvent : EntityDeathEvent
     {
-        public IBattleEntity killer { get; set; }
     }
 }

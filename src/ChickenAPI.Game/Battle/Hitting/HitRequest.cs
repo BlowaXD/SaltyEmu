@@ -2,7 +2,6 @@
 using ChickenAPI.Data.Skills;
 using ChickenAPI.Enums.Packets;
 using ChickenAPI.Game.Battle.Interfaces;
-using ChickenAPI.Game.ECS.Entities;
 
 namespace ChickenAPI.Game.Battle.Hitting
 {

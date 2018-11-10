@@ -7,7 +7,6 @@ using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Events;
 using ChickenAPI.Game.Features.NpcDialog.Events;
-using ChickenAPI.Game.Features.NpcDialog.Handlers;
 
 namespace ChickenAPI.Game.Features.NpcDialog
 {

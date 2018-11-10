@@ -1,5 +1,4 @@
-﻿using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Game.Events;
+﻿using ChickenAPI.Game.Events;
 
 namespace ChickenAPI.Game.Features.Chat.Args
 {

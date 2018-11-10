@@ -9,9 +9,7 @@ using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Enums.Game.Visibility;
 using ChickenAPI.Game.ECS.Components;
 using ChickenAPI.Game.ECS.Entities;
-using ChickenAPI.Game.Features.Skills;
 using ChickenAPI.Game.Movements.DataObjects;
-using ChickenAPI.Game.Movements.Extensions;
 using ChickenAPI.Game.Skills;
 using ChickenAPI.Game.Visibility;
 

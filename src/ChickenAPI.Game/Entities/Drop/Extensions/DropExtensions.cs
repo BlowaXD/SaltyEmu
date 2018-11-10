@@ -1,19 +1,19 @@
 ﻿using ChickenAPI.Packets.Game.Server.Entities;
 
-namespace ChickenAPI.Game.Entities.Drop
+namespace ChickenAPI.Game.Entities.Drop.Extensions
 {
     public static class DropExtensions
     {
-        public static DropPacket GenerateDropPacket(this ItemDropEntity drop)
+        public static DropPacket GenerateDropPacket(this IDropEntity drop)
         {
             return new DropPacket
             {
-                ItemVnum = drop.Item.Vnum,
+                ItemVnum = drop.ItemVnum,
                 Quantity = drop.Quantity,
                 PositionX = drop.Position.X,
                 PositionY = drop.Position.Y,
                 TransportId = drop.Id,
-                IsQuestDrop = drop.IsQuest,
+                IsQuestDrop = drop.IsQuestDrop,
                 Unknown = 0,
                 Unknown2 = -1,
             };

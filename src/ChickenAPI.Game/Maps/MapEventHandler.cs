@@ -5,14 +5,11 @@ using ChickenAPI.Game.Entities.Extensions;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Entities.Player.Extensions;
 using ChickenAPI.Game.Events;
-using ChickenAPI.Game.Features.Groups;
 using ChickenAPI.Game.Inventory.Extensions;
 using ChickenAPI.Game.Maps.Events;
 using ChickenAPI.Game.Maps.Extensions;
 using ChickenAPI.Game.Movements.Extensions;
 using ChickenAPI.Game.PacketHandling.Extensions;
-using ChickenAPI.Game.Packets.Extensions;
-using ChickenAPI.Game.Visibility.Events;
 using ChickenAPI.Packets.Game.Server.Group;
 using ChickenAPI.Packets.Game.Server.Map;
 

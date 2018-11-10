@@ -1,8 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using ChickenAPI.Data.Character;
-using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Game.Features.Quicklist.Args;
+﻿using ChickenAPI.Data.Character;
 using ChickenAPI.Packets.Game.Server.QuickList;
 
 namespace ChickenAPI.Game.Features.Quicklist.Extensions
