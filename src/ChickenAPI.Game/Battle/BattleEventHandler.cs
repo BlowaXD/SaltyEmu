@@ -8,6 +8,12 @@ using ChickenAPI.Game.Battle.Extensions;
 using ChickenAPI.Game.Battle.Hitting;
 using ChickenAPI.Game.Battle.Interfaces;
 using ChickenAPI.Game.ECS.Entities;
+using ChickenAPI.Game.Entities.Monster;
+using ChickenAPI.Game.Entities.Monster.Events;
+using ChickenAPI.Game.Entities.Npc;
+using ChickenAPI.Game.Entities.Npc.Events;
+using ChickenAPI.Game.Entities.Player;
+using ChickenAPI.Game.Entities.Player.Events;
 using ChickenAPI.Game.Events;
 using ChickenAPI.Packets.Game.Server.Battle;
 
@@ -69,10 +75,20 @@ namespace ChickenAPI.Game.Battle
                 if (target.Hp - nextDamages <= 0)
                 {
                     target.Hp = 0;
-                    // Generate Death
+                    switch (target) // send death event
+                    {
+                        case IPlayerEntity player:
+                            player.EmitEvent(new PlayerDeathEvent {killer = hitRequest.Sender});
+                            break;
+                        case IMonsterEntity monster:
+                            monster.EmitEvent(new MonsterDeathEvent { killer = hitRequest.Sender });
+                            break;
+                        case INpcEntity npc:
+                            npc.EmitEvent(new NpcDeathEvent { killer = hitRequest.Sender });
+                            break;
+                    }
                     break;
                 }
-
                 target.Hp -= nextDamages;
                 packets.Add(hitRequest.Sender.GenerateSuPacket(hitRequest, nextDamages));
             }

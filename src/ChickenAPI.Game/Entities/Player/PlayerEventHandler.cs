@@ -13,6 +13,7 @@ namespace ChickenAPI.Game.Entities.Player
         {
             typeof(ExperienceGainEvent),
             typeof(ReputationGainEvent),
+            typeof(PlayerDeathEvent)
         };
 
         public override void Execute(IEntity entity, ChickenEventArgs e)
@@ -35,6 +36,17 @@ namespace ChickenAPI.Game.Entities.Player
                         return;
                     }
 
+                    break;
+
+                case PlayerDeathEvent death:
+                    if (!(entity is IPlayerEntity pl))
+                    {
+                        return;
+                    }
+                    // If PvP generate reward
+                    // Clear Buff/Debuff
+                    // Send message box
+                    // Respawn with location according to the choice made in the message box
                     break;
             }
         }
