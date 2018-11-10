@@ -1,4 +1,5 @@
-﻿using ChickenAPI.Data.Item;
+﻿using ChickenAPI.Core.Utils;
+using ChickenAPI.Data.Item;
 using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Game.ECS.Entities;
 
@@ -14,6 +15,7 @@ namespace ChickenAPI.Game.Entities.Drop
         public ItemDto Item { get; set; }
         public long Quantity { get; set; }
         public bool IsQuest { get; set; }
+        public Position<short> Position { get; set; }
 
         public override void Dispose()
         {

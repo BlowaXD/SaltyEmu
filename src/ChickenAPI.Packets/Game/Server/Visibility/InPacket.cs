@@ -1,10 +1,11 @@
 ﻿using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Packets.Attributes;
+using ChickenAPI.Packets.Game.Server._NotYetSorted;
 
-namespace ChickenAPI.Packets.Game.Server._NotYetSorted
+namespace ChickenAPI.Packets.Game.Server.Visibility
 {
     [PacketHeader("in")]
-    public class InPacketBase : PacketBase
+    public class InPacket : PacketBase
     {
         #region Properties
 
@@ -15,7 +16,7 @@ namespace ChickenAPI.Packets.Game.Server._NotYetSorted
         public string Name { get; set; }
 
         [PacketIndex(2)]
-        public string Unknown { get; set; }
+        public string TransportId { get; set; }
 
         [PacketIndex(3, IsOptional = true)]
         public long? VNum { get; set; }
@@ -30,7 +31,7 @@ namespace ChickenAPI.Packets.Game.Server._NotYetSorted
         public DirectionType DirectionType { get; set; }
 
         [PacketIndex(7, IsOptional = true)]
-        public short? Amount { get; set; }
+        public long? Amount { get; set; }
 
         [PacketIndex(8, IsOptional = true, RemoveSeparator = true)]
         public InMonsterSubPacket InMonsterSubPacket { get; set; }

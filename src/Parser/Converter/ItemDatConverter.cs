@@ -42,6 +42,7 @@ namespace Toolkit.Converter
                 {
                     itemAreaBegin = true;
                     item.Id = short.Parse(currentLine[2]);
+                    item.Vnum = item.Id;
                     item.Price = long.Parse(currentLine[3]);
                 }
                 else if (currentLine.Length > 1 && currentLine[1] == "END")

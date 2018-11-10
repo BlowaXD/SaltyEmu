@@ -13,6 +13,7 @@ using ChickenAPI.Game.Visibility;
 using ChickenAPI.Packets.Game.Client.Shops;
 using ChickenAPI.Packets.Game.Server.Inventory;
 using ChickenAPI.Packets.Game.Server.Portals;
+using ChickenAPI.Packets.Game.Server.Visibility;
 using ChickenAPI.Packets.Game.Server._NotYetSorted;
 
 namespace ChickenAPI.Game.Maps.Extensions
@@ -29,7 +30,7 @@ namespace ChickenAPI.Game.Maps.Extensions
             return layer.GetEntitiesByType<IPlayerEntity>(VisualType.Character).Select(s => s == player ? null : s.GeneratePairyPacket());
         }
 
-        public static IEnumerable<InPacketBase> GetEntitiesPackets(this IMapLayer layer)
+        public static IEnumerable<InPacket> GetEntitiesPackets(this IMapLayer layer)
         {
             return layer.Entities.Where(s => s is IVisibleEntity).Select(p => ((IVisibleEntity)p).GenerateInPacket());
         }

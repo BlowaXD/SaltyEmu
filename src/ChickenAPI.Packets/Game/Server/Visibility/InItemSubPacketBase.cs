@@ -8,10 +8,13 @@ namespace ChickenAPI.Packets.Game.Server._NotYetSorted
         #region Properties
 
         [PacketIndex(0)]
-        public int Amount { get; set; }
+        public short Unknown { get; set; }
 
         [PacketIndex(1)]
-        public bool IsQuestRelative { get; set; }
+        public short Unknown1 { get; set; }
+
+        [PacketIndex(2)]
+        public short Unknown2 { get; set; }
 
         #endregion
     }

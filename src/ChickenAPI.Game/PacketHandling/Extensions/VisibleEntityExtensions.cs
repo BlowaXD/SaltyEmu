@@ -1,32 +1,34 @@
-﻿using System;
-using ChickenAPI.Data.Character;
+﻿using ChickenAPI.Data.Character;
 using ChickenAPI.Data.NpcMonster;
 using ChickenAPI.Enums;
 using ChickenAPI.Enums.Game.Character;
 using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Game.ECS.Entities;
+using ChickenAPI.Game.Entities.Drop;
 using ChickenAPI.Game.Entities.Monster;
 using ChickenAPI.Game.Entities.Npc;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Movements.DataObjects;
 using ChickenAPI.Game.Packets.Extensions;
+using ChickenAPI.Packets.Game.Server._NotYetSorted;
 using ChickenAPI.Packets.Game.Server.Entities;
 using ChickenAPI.Packets.Game.Server.MiniMap;
-using ChickenAPI.Packets.Game.Server._NotYetSorted;
+using ChickenAPI.Packets.Game.Server.Visibility;
+using System;
 
 namespace ChickenAPI.Game.PacketHandling.Extensions
 {
     public static class VisibleEntityExtensions
     {
-        private static InPacketBase GenerateInMonster(IMonsterEntity monster)
+        private static InPacket GenerateInMonster(IMonsterEntity monster)
         {
             NpcMonsterDto npcMonster = monster.NpcMonster;
             MovableComponent movable = monster.Movable;
-            return new InPacketBase
+            return new InPacket
             {
                 VisualType = VisualType.Monster,
                 Name = npcMonster.Id.ToString(),
-                Unknown = monster.MapMonster.Id.ToString(),
+                TransportId = monster.MapMonster.Id.ToString(),
                 PositionX = movable.Actual.X,
                 PositionY = movable.Actual.Y,
                 DirectionType = movable.DirectionType,
@@ -55,7 +57,7 @@ namespace ChickenAPI.Game.PacketHandling.Extensions
             };
         }
 
-        public static InPacketBase GenerateInPacket(this IEntity entity)
+        public static InPacket GenerateInPacket(this IEntity entity)
         {
             switch (entity)
             {
@@ -65,6 +67,8 @@ namespace ChickenAPI.Game.PacketHandling.Extensions
                     return GenerateInPlayer(player);
                 case INpcEntity npc:
                     return GenerateInNpc(npc);
+                case ItemDropEntity drop:
+                    return GenerateInDrop(drop);
                 default:
                     return null;
             }
@@ -76,15 +80,15 @@ namespace ChickenAPI.Game.PacketHandling.Extensions
             EntityId = player.Character.Id
         };
 
-        private static InPacketBase GenerateInNpc(INpcEntity npcEntity)
+        private static InPacket GenerateInNpc(INpcEntity npcEntity)
         {
             var npcMonster = npcEntity.GetComponent<NpcMonsterComponent>();
             MovableComponent movable = npcEntity.Movable;
-            return new InPacketBase
+            return new InPacket
             {
                 VisualType = VisualType.Npc,
                 Name = npcMonster.Vnum.ToString(),
-                Unknown = npcMonster.MapNpcMonsterId.ToString(),
+                TransportId = npcMonster.MapNpcMonsterId.ToString(),
                 PositionX = movable.Actual.X,
                 PositionY = movable.Actual.Y,
                 DirectionType = movable.DirectionType,
@@ -114,26 +118,44 @@ namespace ChickenAPI.Game.PacketHandling.Extensions
             };
         }
 
-        private static InPacketBase GenerateInPlayer(IPlayerEntity player)
+        private static InPacket GenerateInDrop(ItemDropEntity drop)
         {
-            CharacterDto character = player.Character;
+            return new InPacket
+            {
+                VisualType = drop.Type,
+                Name = drop.Item.Vnum.ToString(),
+                TransportId = drop.Id.ToString(),
+                PositionX = drop.Position.X,
+                PositionY = drop.Position.Y,
+                Amount = drop.Quantity,
+                InDropSubPacket = new InItemSubPacketBase
+                {
+                    Unknown = 0,
+                    Unknown1 = 0,
+                    Unknown2 = 0,
+                }
+            };
+        }
+
+        private static InPacket GenerateInPlayer(IPlayerEntity player)
+        {
             MovableComponent movable = player.Movable;
-            return new InPacketBase
+            return new InPacket
             {
                 VisualType = VisualType.Character,
                 Name = player.Character.Name,
-                Unknown = "-",
-                VNum = character.Id,
+                TransportId = "-",
+                VNum = player.Character.Id,
                 PositionX = movable.Actual.X,
                 PositionY = movable.Actual.Y,
                 DirectionType = movable.DirectionType,
                 InCharacterSubPacket = new InCharacterSubPacketBase
                 {
                     Authority = player.Session.Account.Authority > AuthorityType.GameMaster ? (byte)2 : (byte)0,
-                    Gender = character.Gender,
-                    HairStyle = character.HairStyle,
-                    HairColor = character.HairColor,
-                    Class = character.Class,
+                    Gender = player.Character.Gender,
+                    HairStyle = player.Character.HairStyle,
+                    HairColor = player.Character.HairColor,
+                    Class = player.Character.Class,
                     Equipment = player.GenerateInventoryWearPacket(),
                     HpPercentage = player.HpPercentage,
                     MpPercentage = player.MpPercentage,
@@ -156,8 +178,8 @@ namespace ChickenAPI.Game.PacketHandling.Extensions
                     SpDesign = 0,
                     Level = player.Level,
                     FamilyLevel = 0,
-                    ArenaWinner = character.ArenaWinner,
-                    Compliment = character.Compliment,
+                    ArenaWinner = player.Character.ArenaWinner,
+                    Compliment = player.Character.Compliment,
                     Size = 10,
                     HeroLevel = player.HeroLevel
                 }
