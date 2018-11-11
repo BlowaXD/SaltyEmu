@@ -36,8 +36,4 @@
     <ProjectReference Include="..\ChickenAPI.Enums\ChickenAPI.Enums.csproj" />
     <ProjectReference Include="..\ChickenAPI.Packets\ChickenAPI.Packets.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Specialists\Extensions\" />
-  </ItemGroup>
 </Project>
