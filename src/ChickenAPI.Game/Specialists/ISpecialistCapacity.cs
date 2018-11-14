@@ -1,8 +1,8 @@
 ﻿using ChickenAPI.Data.Item;
 
-namespace ChickenAPI.Game.Features.Specialists
+namespace ChickenAPI.Game.Specialists
 {
-    public interface ISpecialistCapacity
+    public interface ISpecialistCapacity : IMorphableCapacity
     {
         /// <summary>
         /// Tells if the sp is in weared but not transformed
