@@ -24,7 +24,7 @@ namespace ChickenAPI.Game.Entities.Player.Extensions
                 Class = player.Character.Class,
                 Icon = (byte)player.GetReputIcon(), // todo
                 Compliment = player.Character.Compliment,
-                Morph = 0,
+                Morph = player.MorphId,
                 Invisible = player.IsInvisible,
                 FamilyLevel = 0,
                 SpUpgrade = player.Sp?.Upgrade ?? 0,
