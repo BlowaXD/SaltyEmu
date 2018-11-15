@@ -6,7 +6,7 @@ using ChickenAPI.Game.ECS.Systems;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Entities.Player.Extensions;
 
-namespace ChickenAPI.Game.Features.Specialists
+namespace ChickenAPI.Game.Specialists
 {
     public class SpecialistSystem : SystemBase
     {
@@ -25,11 +25,11 @@ namespace ChickenAPI.Game.Features.Specialists
                 return;
             }
 
-            if (player.Sp == null)
+            if (!player.HasSpWeared)
             {
                 return;
             }
-
+            
             // remove points
             player.SendPacket(player.GenerateSpPacket());
         }

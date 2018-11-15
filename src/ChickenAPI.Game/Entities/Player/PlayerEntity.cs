@@ -7,9 +7,11 @@ using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Utils;
 using ChickenAPI.Data.Character;
 using ChickenAPI.Data.Families;
+using ChickenAPI.Data.Item;
 using ChickenAPI.Data.Skills;
 using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Enums.Game.Families;
+using ChickenAPI.Enums.Game.Items;
 using ChickenAPI.Enums.Game.Visibility;
 using ChickenAPI.Game.Data.AccessLayer.Character;
 using ChickenAPI.Game.Data.AccessLayer.Item;
@@ -25,6 +27,7 @@ using ChickenAPI.Game.Movements.DataObjects;
 using ChickenAPI.Game.Network;
 using ChickenAPI.Game.Network.BroadcastRules;
 using ChickenAPI.Game.Skills;
+using ChickenAPI.Game.Specialists;
 using ChickenAPI.Game.Visibility;
 using ChickenAPI.Game.Visibility.Events;
 using ChickenAPI.Packets;
@@ -75,7 +78,6 @@ namespace ChickenAPI.Game.Entities.Player
                 { typeof(VisibilityComponent), _visibility },
                 { typeof(MovableComponent), Movable },
                 { typeof(InventoryComponent), Inventory },
-                { typeof(SpecialistComponent), Sp },
                 { typeof(SkillComponent), SkillComponent }
             };
         }
@@ -84,7 +86,7 @@ namespace ChickenAPI.Game.Entities.Player
         public InventoryComponent Inventory { get; }
         public CharacterDto Character { get; }
         public QuicklistComponent Quicklist { get; }
-        public SpecialistComponent Sp { get; }
+
         public ISession Session { get; }
 
         public long LastPulse { get; }
@@ -159,6 +161,7 @@ namespace ChickenAPI.Game.Entities.Player
             {
                 return;
             }
+
             foreach (T i in packets)
             {
                 Session.SendPacket(i);
@@ -222,6 +225,7 @@ namespace ChickenAPI.Game.Entities.Player
         public bool IsWalking => !Movable.IsSitting;
         public bool CanMove => !Movable.IsSitting;
         public bool IsStanding => !Movable.IsSitting;
+
         public byte Speed
         {
             get => Movable.Speed;
@@ -310,6 +314,20 @@ namespace ChickenAPI.Game.Entities.Player
             get => Character.JobLevelXp;
             set => Character.JobLevelXp = value;
         }
+
+        #endregion
+
+        #region Specialist
+
+        /// <summary>
+        /// Find a better way to manage it
+        /// </summary>
+        public short MorphId { get; set; }
+
+        public bool HasSpWeared => Sp != null;
+        public bool IsTransformedSp => HasSpWeared && MorphId == Sp.Item.Morph;
+
+        public ItemInstanceDto Sp => Inventory.Wear[(int)EquipmentType.Sp];
 
         #endregion
     }

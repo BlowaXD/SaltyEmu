@@ -7,7 +7,10 @@ using ChickenAPI.Game.Entities.Extensions;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Entities.Player.Extensions;
 using ChickenAPI.Game.Events;
+using ChickenAPI.Game.Features.Effects;
+using ChickenAPI.Game.Features.Skills.Extensions;
 using ChickenAPI.Game.Features.Specialists.Args;
+using ChickenAPI.Game.Inventory.Extensions;
 using ChickenAPI.Game.Movements.Extensions;
 
 namespace ChickenAPI.Game.Features.Specialists
@@ -37,25 +40,31 @@ namespace ChickenAPI.Game.Features.Specialists
                 return;
             }
 
-            if (player.Inventory.Wear[(int)EquipmentType.Sp] == null)
+            if (!player.HasSpWeared)
             {
-                // should have item weared !
                 return;
             }
 
             // check vehicle
 
-            if (player.Sp != null)
+            if (player.IsTransformedSp)
             {
-                // remove SP
+                // remove sp
                 return;
             }
 
+
             // check last sp usage + sp cooldown
+
+            if (player.Inventory.GetWeared(EquipmentType.Fairy).ElementType != player.Sp.ElementType)
+            {
+                return;
+            }
+
             // check fairy element
             // set last transform
-            // Broadcast cmode()
-            // Broadcast Eff 196
+            player.Broadcast(player.GenerateCModePacket());
+            player.Broadcast(player.GenerateEffectPacket(196));
             // Broadcast Guri 6 1
             // remove buffs
             // transform
@@ -65,8 +74,8 @@ namespace ChickenAPI.Game.Features.Specialists
             player.SendPacket(player.GenerateStatCharPacket());
 
             // LoadSpSkills()
-            // GenerateSki()
-            // GenerateQuicklist()
+            player.SendPacket(player.GenerateSkiPacket());
+            player.SendPackets(player.GenerateQuicklistPacket());
             // WingsBuff
             // LoadPassive
         }

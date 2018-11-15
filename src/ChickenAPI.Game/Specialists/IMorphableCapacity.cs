@@ -5,6 +5,6 @@
         /// <summary>
         /// If the entity is under morph, this is the morphId
         /// </summary>
-        long MorphId { get; }
+        short MorphId { get; }
     }
 }

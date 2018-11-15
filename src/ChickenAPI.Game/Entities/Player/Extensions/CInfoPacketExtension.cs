@@ -1,6 +1,5 @@
 ﻿using ChickenAPI.Data.Families;
 using ChickenAPI.Enums;
-using ChickenAPI.Game.Features.Specialists;
 using ChickenAPI.Packets.Game.Server.Player;
 
 namespace ChickenAPI.Game.Entities.Player.Extensions
@@ -10,7 +9,6 @@ namespace ChickenAPI.Game.Entities.Player.Extensions
         public static CInfoPacket GenerateCInfoPacket(this IPlayerEntity player)
         {
             FamilyDto family = player.Family;
-            var sp = player.GetComponent<SpecialistComponent>();
             return new CInfoPacket
             {
                 Name = player.Character.Name,
@@ -29,7 +27,7 @@ namespace ChickenAPI.Game.Entities.Player.Extensions
                 Morph = 0,
                 Invisible = player.IsInvisible,
                 FamilyLevel = 0,
-                SpUpgrade = sp?.Upgrade ?? 0,
+                SpUpgrade = player.Sp?.Upgrade ?? 0,
                 ArenaWinner = player.Character.ArenaWinner
             };
         }

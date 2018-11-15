@@ -1,4 +1,5 @@
-﻿using ChickenAPI.Packets.Attributes;
+﻿using ChickenAPI.Enums.Packets;
+using ChickenAPI.Packets.Attributes;
 
 namespace ChickenAPI.Packets.Game.Client.Specialists
 {
@@ -8,7 +9,7 @@ namespace ChickenAPI.Packets.Game.Client.Specialists
         #region Properties
 
         [PacketIndex(0)]
-        public byte Type { get; set; }
+        public SlPacketType Type { get; set; }
 
         [PacketIndex(3)]
         public int TransportId { get; set; }
