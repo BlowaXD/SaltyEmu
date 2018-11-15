@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <OutputPath>..\..\bin\Debug\Login</OutputPath>
+    <OutputPath>..\..\dist\Debug\Login\</OutputPath>
     <LangVersion>7.2</LangVersion>
     <DebugType>none</DebugType>
     <DebugSymbols>false</DebugSymbols>
@@ -17,7 +17,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <OutputPath>..\..\bin\Release\Login</OutputPath>
+    <OutputPath>..\..\dist\Release\Login\</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>

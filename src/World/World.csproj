@@ -9,8 +9,12 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <OutputPath>..\..\bin\Debug\World\</OutputPath>
+    <OutputPath>..\..\dist\Debug\World\</OutputPath>
     <Optimize>false</Optimize>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <OutputPath>..\..\dist\Release\World\</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>

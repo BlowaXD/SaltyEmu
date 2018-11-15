@@ -1,0 +1,3 @@
+# SaltyEmu - Plugins
+
+todo

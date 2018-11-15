@@ -1,1 +1,0 @@
-docker container restart redis-session

@@ -305,7 +305,7 @@ namespace ChickenAPI.Game.Entities.Player
 
         public byte JobLevel
         {
-            get => Character.JobLevel;
+            get => IsTransformedSp ? Sp.Level : Character.JobLevel;
             set => Character.JobLevel = value;
         }
 

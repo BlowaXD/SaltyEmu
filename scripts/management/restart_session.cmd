@@ -1,0 +1,1 @@
+docker container restart saltyemu-session

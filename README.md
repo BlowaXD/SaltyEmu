@@ -1,54 +1,40 @@
-# SaltyEmu World Server
 
-[![forthebadge](https://forthebadge.com/images/badges/made-with-c-sharp.svg)](http://forthebadge.com)
- 
-[![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)](http://forthebadge.com)
+# SaltyEmu
+
+[![forthebadge](https://forthebadge.com/images/badges/made-with-c-sharp.svg)](http://forthebadge.com)[![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)](http://forthebadge.com)
+
+## Description :
+
+SaltyEmu is a software designed as a server emulator for the MMORPG Nostale.
+It's based on [ChickenAPI](https://github.com/BlowaXD/ChickenAPI) and has an event driven architecture.
+SaltyEmu is an opensource project, made for fun and skill improvements, it will stay as is.
+
 
 
 ## Requirements :
-[.NET Core SDK 2.1+](https://www.microsoft.com/net/download)
- 
-[Docker](https://www.docker.com/community-edition)
- 
-[SSMS](https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-2017)
+> [.NET Core SDK 2.1+](https://www.microsoft.com/net/download)
+
+> [Docker](https://www.docker.com/community-edition)
  
 
-## Installation
+## Content
 
-### Enable Session Service
-You will need to start a Redis 
- 
-`docker run -p 6379:6379 --name saltyemu-session -d redis:latest`
-
-
-### Enable Database
-You also need to start a MSSQL Server instance
- 
-`docker run -p 1433:1433 -e ACCEPT_EULA=Y -e SA_PASSWORD=strong_pass2018 --name saltyemu-database -d microsoft/mssql-server-linux:latest`
-
-Now create your Database, by default called `saltynos` in configs
-
-### Parse Datas
-
-Go in SaltyEmu.Toolkit
- 
-`dotnet src/SaltyEmu.Toolkit parse all -i {PathToParsingDirectory}`
-
-### Run Login
-
-`dotnet bin/Debug/Login.dll`
-
-### Run World 
-
-`dotnet bin/Debug/World.dll`
-
+### [Build](docs/build.md)
+### [Installation](docs/installation.md)
+### [Plugins](docs/plugins.md)
+### [Features](docs/features.md)
 
 ## Credits
-Authors : 
+### Authors : 
 - Blowa
 - Kraken
-
-
-Contributors :
 - SylEze
-- Kiritsu
+
+### Contributors :
+- GodnessCookie
+
+### Special Thanks :
+- 0Lucifer0
+- Ciapa
+- Z0ltar
+- Cryless

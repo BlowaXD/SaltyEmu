@@ -1,0 +1,1 @@
+dotnet build --configuration Debug ../../src/Toolkit/

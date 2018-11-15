@@ -27,7 +27,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChickenAPI.Packets", "src\C
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChickenAPI.Enums", "src\ChickenAPI.Enums\ChickenAPI.Enums.csproj", "{2C706520-AA6F-45FA-910F-DCDD42C52192}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Toolkit", "src\Parser\Toolkit.csproj", "{5F14B226-7842-4F6E-BE2E-1CC01C530F3B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Toolkit", "src\Toolkit\Toolkit.csproj", "{5F14B226-7842-4F6E-BE2E-1CC01C530F3B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SaltyEmu.PathfinderPlugin", "src\Plugins\NosSharp.Pathfinder\SaltyEmu.PathfinderPlugin.csproj", "{48D59236-CC25-497E-A98D-DAB290E4A8B7}"
 EndProject
