@@ -16,6 +16,7 @@ using ChickenAPI.Game.Features.Skills.Extensions;
 using ChickenAPI.Game.Features.Specialists.Args;
 using ChickenAPI.Game.Inventory.Extensions;
 using ChickenAPI.Game.Movements.Extensions;
+using ChickenAPI.Game.Skills.Extensions;
 using ChickenAPI.Game.Specialists;
 using ChickenAPI.Game.Specialists.Extensions;
 

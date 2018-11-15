@@ -2,6 +2,7 @@
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Game.Data.AccessLayer.Character;
 using ChickenAPI.Game.Features.Skills.Extensions;
+using ChickenAPI.Game.Skills.Extensions;
 using ChickenAPI.Packets.Game.Server.Player;
 
 namespace ChickenAPI.Game.Entities.Player.Extensions

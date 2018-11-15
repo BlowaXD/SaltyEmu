@@ -3,9 +3,8 @@ using System.Linq;
 using ChickenAPI.Data.Skills;
 using ChickenAPI.Enums.Game.Character;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Game.Skills;
 
-namespace ChickenAPI.Game.Features.Skills.Extensions
+namespace ChickenAPI.Game.Skills.Extensions
 {
     public static class SkillExtensions
     {

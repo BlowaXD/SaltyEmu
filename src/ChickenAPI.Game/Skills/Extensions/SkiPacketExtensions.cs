@@ -1,12 +1,26 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using ChickenAPI.Data.Skills;
 using ChickenAPI.Game.Entities.Player;
+using ChickenAPI.Game.Features.Skills;
 
-namespace ChickenAPI.Game.Features.Skills.Extensions
+namespace ChickenAPI.Game.Skills.Extensions
 {
     public static class SkiPacketExtensions
     {
+        public static IOrderedEnumerable<SkillDto> GetSpSkillsByCastIdAscending(this IPlayerEntity player)
+        {
+            return player.SkillComponent.Skills.Values.Where(s => s.Class == (player.MorphId + 31)).OrderBy(s => s.CastId);
+        }
+
+        public static IOrderedEnumerable<SkillDto> GetSkillsByCastIdAscending(this IPlayerEntity player)
+        {
+            return player.SkillComponent.Skills.Values.OrderBy(s => s.CastId);
+        }
+
         public static SkiPacket GenerateSkiPacket(this IPlayerEntity player)
         {
             var tmp = new StringBuilder();
@@ -14,13 +28,18 @@ namespace ChickenAPI.Game.Features.Skills.Extensions
             // check sp
 
 
-            IOrderedEnumerable<SkillDto> skills = player.SkillComponent.Skills.Values.OrderBy(s => s.CastId);
+            IEnumerable<SkillDto> skills = player.HasSpWeared ? GetSpSkillsByCastIdAscending(player) : GetSkillsByCastIdAscending(player);
 
             // ski base
             // if no sp
-            tmp.Append(200 + 20 * (byte)player.Character.Class);
-            tmp.Append(' ');
-            tmp.Append(201 + 20 * (byte)player.Character.Class);
+            if (player.HasSpWeared)
+            {
+                tmp.Append(skills.ElementAt(0).Id + ' ' + skills.ElementAt(0).Id);
+            }
+            else
+            {
+                tmp.Append(200 + 20 * (byte)player.Character.Class + ' ' + 201 + 20 * (byte)player.Character.Class);
+            }
 
             foreach (SkillDto i in skills)
             {

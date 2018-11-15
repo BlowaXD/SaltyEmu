@@ -18,6 +18,7 @@ using ChickenAPI.Game.Managers;
 using ChickenAPI.Game.Maps;
 using ChickenAPI.Game.Movements.Extensions;
 using ChickenAPI.Game.Network;
+using ChickenAPI.Game.Skills.Extensions;
 using ChickenAPI.Packets.CharacterSelectionScreen.Client;
 using ChickenAPI.Packets.Game.Server.Map;
 using ChickenAPI.Packets.Game.Server.Player;
