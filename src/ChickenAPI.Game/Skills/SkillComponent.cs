@@ -9,6 +9,7 @@ using ChickenAPI.Game.Data.AccessLayer.Skill;
 using ChickenAPI.Game.ECS.Components;
 using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Entities.Player;
+using ChickenAPI.Game.Features.Skills.Extensions;
 
 namespace ChickenAPI.Game.Skills
 {
@@ -24,25 +25,12 @@ namespace ChickenAPI.Game.Skills
             }
 
             int tmp = 200 + 20 * (byte)player.Character.Class;
-            AddSkill(SkillService.GetById(tmp));
-            AddSkill(SkillService.GetById(tmp + 1));
+            this.AddSkill(SkillService.GetById(tmp));
+            this.AddSkill(SkillService.GetById(tmp + 1));
 
             if (player.Character.Class == CharacterClassType.Adventurer)
             {
-                AddSkill(SkillService.GetById(tmp + 9));
-            }
-        }
-
-        private void AddSkill(SkillDto skill)
-        {
-            if (!Skills.ContainsKey(skill.Id))
-            {
-                Skills.Add(skill.Id, skill);
-            }
-
-            if (!SkillsByCastId.ContainsKey(skill.CastId))
-            {
-                SkillsByCastId.Add(skill.CastId, skill);
+                this.AddSkill(SkillService.GetById(tmp + 9));
             }
         }
 
@@ -56,7 +44,7 @@ namespace ChickenAPI.Game.Skills
             foreach (CharacterSkillDto characterSkill in skills)
             {
                 CharacterSkills.Add(characterSkill.Id, characterSkill);
-                AddSkill(characterSkill.Skill);
+                this.AddSkill(characterSkill.Skill);
             }
         }
 

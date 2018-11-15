@@ -1,7 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Autofac;
+using ChickenAPI.Core.IoC;
+using ChickenAPI.Data.Skills;
 using ChickenAPI.Enums.Game.Items;
+using ChickenAPI.Game.Data.AccessLayer.Skill;
 using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Entities.Extensions;
 using ChickenAPI.Game.Entities.Player;
@@ -12,11 +16,14 @@ using ChickenAPI.Game.Features.Skills.Extensions;
 using ChickenAPI.Game.Features.Specialists.Args;
 using ChickenAPI.Game.Inventory.Extensions;
 using ChickenAPI.Game.Movements.Extensions;
+using ChickenAPI.Game.Specialists;
+using ChickenAPI.Game.Specialists.Extensions;
 
 namespace ChickenAPI.Game.Features.Specialists
 {
     public class SpecialistEventHandler : EventHandlerBase
     {
+        private static readonly ISkillService _skillService = new Lazy<ISkillService>(() => ChickenContainer.Instance.Resolve<ISkillService>()).Value;
         public override ISet<Type> HandledTypes => new HashSet<Type>();
 
         public override void Execute(IEntity entity, ChickenEventArgs args)
@@ -61,11 +68,14 @@ namespace ChickenAPI.Game.Features.Specialists
                 return;
             }
 
-            // check fairy element
+
+            player.SetMorph(player.Sp.Item.Morph);
+            player.SendPacket(player.GenerateLevPacket());
             // set last transform
             player.Broadcast(player.GenerateCModePacket());
             player.Broadcast(player.GenerateEffectPacket(196));
-            // Broadcast Guri 6 1
+            // guri packet
+            player.SendPacket(player.GenerateSpPacket());
             // remove buffs
             // transform
             player.SendPacket(player.GenerateLevPacket());
@@ -74,6 +84,11 @@ namespace ChickenAPI.Game.Features.Specialists
             player.SendPacket(player.GenerateStatCharPacket());
 
             // LoadSpSkills()
+            // todo find why 31
+            SkillDto[] skills = _skillService.GetByClassId((byte)(player.MorphId + 31));
+            player.AddSkills(skills);
+
+
             player.SendPacket(player.GenerateSkiPacket());
             player.SendPackets(player.GenerateQuicklistPacket());
             // WingsBuff
@@ -82,7 +97,6 @@ namespace ChickenAPI.Game.Features.Specialists
 
         private static void ChangePoints(IEntity entity, SpChangePointsEvent spChangePoints)
         {
-            throw new NotImplementedException();
         }
     }
 }

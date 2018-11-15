@@ -324,6 +324,8 @@ namespace ChickenAPI.Game.Entities.Player
         /// </summary>
         public short MorphId { get; set; }
 
+        public DateTime LastMorphUtc { get; set; }
+
         public bool HasSpWeared => Sp != null;
         public bool IsTransformedSp => HasSpWeared && MorphId == Sp.Item.Morph;
 

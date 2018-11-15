@@ -2,7 +2,7 @@
 
 namespace ChickenAPI.Game.Specialists
 {
-    public interface ISpecialistEntity : ISpecialistCapacity, IEntity
+    public interface ISpecialistEntity : ISpecialistCapacity, IMorphableEntity
     {
     }
 }
