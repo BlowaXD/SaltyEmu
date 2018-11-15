@@ -15,6 +15,7 @@
 
 
 ## Toolkit
+#### [How to build](build.md#Toolkit)
 - [x] .dat parsing
 - [x] packet text file parsing
 - [ ] Bulk generation `TODO`
