@@ -87,6 +87,7 @@ namespace ChickenAPI.Game.Battle
                             npc.EmitEvent(new NpcDeathEvent { Killer = hitRequest.Sender });
                             break;
                     }
+                    packets.Add(hitRequest.Sender.GenerateSuPacket(hitRequest, nextDamages));
                     break;
                 }
                 target.Hp -= nextDamages;
