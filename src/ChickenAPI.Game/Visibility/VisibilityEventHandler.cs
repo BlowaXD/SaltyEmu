@@ -14,7 +14,11 @@ namespace ChickenAPI.Game.Visibility
     {
         private readonly Logger _log = Logger.GetLogger<VisibilityEventHandler>();
 
-        public override ISet<Type> HandledTypes => new HashSet<Type>();
+        public override ISet<Type> HandledTypes => new HashSet<Type>
+        {
+            typeof(VisibilitySetInvisibleEventArgs),
+            typeof(VisibilitySetVisibleEventArgs)
+        };
 
         public override void Execute(IEntity entity, ChickenEventArgs e)
         {

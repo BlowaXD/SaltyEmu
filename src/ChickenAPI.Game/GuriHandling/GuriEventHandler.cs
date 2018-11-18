@@ -12,7 +12,11 @@ namespace ChickenAPI.Game.GuriHandling
 {
     public class GuriEventHandler : EventHandlerBase
     {
-        public override ISet<Type> HandledTypes => new HashSet<Type>();
+        public override ISet<Type> HandledTypes => new HashSet<Type>
+        {
+            typeof(GuriEventArgs)
+        };
+
         private readonly IGuriHandler _guriHandler = new Lazy<IGuriHandler>(() => ChickenContainer.Instance.Resolve<IGuriHandler>()).Value;
 
         public override void Execute(IEntity entity, ChickenEventArgs args)

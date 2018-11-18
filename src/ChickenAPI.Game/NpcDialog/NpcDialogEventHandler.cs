@@ -15,7 +15,11 @@ namespace ChickenAPI.Game.NpcDialog
         private static readonly Logger Log = Logger.GetLogger<NpcDialogEventArgs>();
         private static readonly INpcDialogHandler NpcDialogHandler = new Lazy<INpcDialogHandler>(() => ChickenContainer.Instance.Resolve<INpcDialogHandler>()).Value;
 
-        public override ISet<Type> HandledTypes => new HashSet<Type>();
+        public override ISet<Type> HandledTypes => new HashSet<Type>
+        {
+            typeof(NpcDialogEventArgs)
+        };
+
         public override void Execute(IEntity entity, ChickenEventArgs e)
         {
             switch (e)

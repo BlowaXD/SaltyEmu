@@ -19,7 +19,18 @@ namespace ChickenAPI.Game.Inventory
 {
     public class InventoryEventHandler : EventHandlerBase
     {
-        public override ISet<Type> HandledTypes => new HashSet<Type>();
+        public override ISet<Type> HandledTypes => new HashSet<Type>
+        {
+            typeof(InventoryAddItemEventArgs),
+            typeof(InventoryDropItemEventArgs),
+            typeof(InventoryDestroyItemEventArgs),
+            typeof(InventoryEqInfoEventArgs),
+            typeof(InventoryInitializeEventArgs),
+            typeof(InventoryMoveEventArgs),
+            typeof(InventoryUnwearEventArgs),
+            typeof(InventoryWearEventArgs)
+        };
+
         public override void Execute(IEntity entity, ChickenEventArgs e)
         {
             var inventory = entity.GetComponent<InventoryComponent>();
@@ -418,6 +429,16 @@ namespace ChickenAPI.Game.Inventory
         {
             switch (itemInstance.Type)
             {
+                case InventoryType.Specialist:
+                    return new IvnPacket
+                    {
+                        InventoryType = itemInstance.Type,
+                        ItemId = itemInstance.Item.Vnum,
+                        Slot = itemInstance.Slot,
+                        Upgrade = itemInstance.Upgrade,
+                        Rare = itemInstance.Rarity,
+                        SpStoneUpgrade = itemInstance.SpecialistUpgrade
+                    };
                 case InventoryType.Equipment:
                     return new IvnPacket
                     {

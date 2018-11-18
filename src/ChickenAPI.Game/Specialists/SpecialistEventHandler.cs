@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Autofac;
 using ChickenAPI.Core.IoC;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Data.Skills;
 using ChickenAPI.Enums.Game.Items;
 using ChickenAPI.Game.Data.AccessLayer.Skill;
@@ -22,8 +23,14 @@ namespace ChickenAPI.Game.Specialists
 {
     public class SpecialistEventHandler : EventHandlerBase
     {
-        private static readonly ISkillService _skillService = new Lazy<ISkillService>(() => ChickenContainer.Instance.Resolve<ISkillService>()).Value;
-        public override ISet<Type> HandledTypes => new HashSet<Type>();
+        private static readonly ISkillService SkillService = new Lazy<ISkillService>(() => ChickenContainer.Instance.Resolve<ISkillService>()).Value;
+        private static readonly Logger Log = Logger.GetLogger<SpecialistEventHandler>();
+
+        public override ISet<Type> HandledTypes => new HashSet<Type>
+        {
+            typeof(SpTransformEvent),
+            typeof(SpChangePointsEvent)
+        };
 
         public override void Execute(IEntity entity, ChickenEventArgs args)
         {
@@ -42,12 +49,14 @@ namespace ChickenAPI.Game.Specialists
         {
             if (player.SkillComponent.CooldownsBySkillId.Any())
             {
+                Log.Info("[SP_TRANSFORM] Cooldown needs to be clean");
                 // should have no cooldowns
                 return;
             }
 
             if (!player.HasSpWeared)
             {
+                Log.Info("[SP_TRANSFORM] You need to wear a SpecialistCard");
                 return;
             }
 
@@ -55,6 +64,7 @@ namespace ChickenAPI.Game.Specialists
 
             if (player.IsTransformedSp)
             {
+                Log.Info("[SP_TRANSFORM] You are already transformed but it's not yet implemented");
                 // remove sp
                 return;
             }
@@ -62,7 +72,7 @@ namespace ChickenAPI.Game.Specialists
 
             // check last sp usage + sp cooldown
 
-            if (player.Inventory.GetWeared(EquipmentType.Fairy).ElementType != player.Sp.ElementType)
+            if (player.Inventory.GetWeared(EquipmentType.Fairy)?.ElementType != player.Sp.ElementType)
             {
                 return;
             }
@@ -84,7 +94,7 @@ namespace ChickenAPI.Game.Specialists
 
             // LoadSpSkills()
             // todo find why 31
-            SkillDto[] skills = _skillService.GetByClassId((byte)(player.MorphId + 31));
+            SkillDto[] skills = SkillService.GetByClassId((byte)(player.MorphId + 31));
             player.AddSkills(skills);
 
 

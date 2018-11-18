@@ -13,7 +13,11 @@ namespace ChickenAPI.Game.Movements
 {
     public class MovementEventHandler : EventHandlerBase
     {
-        public override ISet<Type> HandledTypes => new HashSet<Type>();
+        public override ISet<Type> HandledTypes => new HashSet<Type>
+        {
+            typeof(TriggerSitEvent),
+            typeof(PlayerMovementRequestEvent)
+        };
 
         public override void Execute(IEntity entity, ChickenEventArgs args)
         {

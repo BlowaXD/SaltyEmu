@@ -8,7 +8,12 @@ namespace ChickenAPI.Game.Groups
 {
     public class GroupEventHandler : EventHandlerBase
     {
-        public override ISet<Type> HandledTypes => new HashSet<Type>();
+        public override ISet<Type> HandledTypes => new HashSet<Type>
+        {
+            typeof(GroupJoinEventArgs),
+            typeof(GroupInvitEventArgs),
+        };
+
         public override void Execute(IEntity entity, ChickenEventArgs e)
         {
             switch (e)

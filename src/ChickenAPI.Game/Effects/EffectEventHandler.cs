@@ -8,7 +8,11 @@ namespace ChickenAPI.Game.Effects
 {
     public class EffectEventHandler : EventHandlerBase
     {
-        public override ISet<Type> HandledTypes => new HashSet<Type>();
+        public override ISet<Type> HandledTypes => new HashSet<Type>
+        {
+            typeof(AddEffectArgument)
+        };
+
         public override void Execute(IEntity entity, ChickenEventArgs e)
         {
             switch (e)
