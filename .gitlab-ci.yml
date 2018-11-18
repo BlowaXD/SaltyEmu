@@ -12,9 +12,11 @@ variables:
   REVISION: 1
   DOCKER_VERSION: "18.04"
   DOCKER_HEALTHCHECK_TIMEOUT: "60"
-  CONTAINER_REGISTRY: registry.gitlab.com/gamefield/saltynos/Server/World
+  CONTAINER_REGISTRY: registry.gitlab.com/saltynos/Server/World
   CONTAINER_WORLD_BUILD_IMAGE: $CONTAINER_REGISTRY/saltyemu-world:$CI_BUILD_REF_NAME
   CONTAINER_WORLD_RELEASE_IMAGE: $CONTAINER_REGISTRY/saltyemu-world:latest
+  CONTAINER_LOGIN_BUILD_IMAGE: $CONTAINER_REGISTRY/saltyemu-login:$CI_BUILD_REF_NAME
+  CONTAINER_LOGIN_RELEASE_IMAGE: $CONTAINER_REGISTRY/saltyemu-login:latest
 
  
 build_project:
@@ -34,7 +36,7 @@ test_project:
 
 
 # Docker Building
-build_docker:
+build docker world:
   stage: build
   image: docker:stable
   tags:
@@ -44,22 +46,19 @@ build_docker:
   before_script:
     - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
   script:
-    - docker build -t $CONTAINER_WORLD_BUILD_IMAGE world/
-    - docker push $CONTAINER_WORLD_BUILD_IMAGE
-
-# Docker Building ${docker}:latest
-# master branch only
-release_docker:
-  stage: release
+    - docker build -t $CONTAINER_LOGIN_BUILD_IMAGE -f login.Dockerfile .
+    - docker push $CONTAINER_LOGIN_BUILD_IMAGE
+    
+# Docker Building Login
+build docker login:
+  stage: build
   image: docker:stable
   tags:
     - docker
   only:
-    - master
+    - tags
   before_script:
     - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
   script:
-    - docker build -t $CONTAINER_WORLD_RELEASE_IMAGE world/
-    - docker push $CONTAINER_WORLD_RELEASE_IMAGE
-  dependencies:
-    - build_docker
+    - docker build -t $CONTAINER_WORLD_BUILD_IMAGE -f world.Dockerfile .
+    - docker push $CONTAINER_WORLD_BUILD_IMAGE
