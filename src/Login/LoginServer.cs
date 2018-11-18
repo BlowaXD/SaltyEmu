@@ -7,16 +7,12 @@ using ChickenAPI.Core.Logging;
 using ChickenAPI.Core.Plugins;
 using ChickenAPI.Game.Data.AccessLayer.Account;
 using ChickenAPI.Game.Data.AccessLayer.Server;
-using Login;
+using Login.Cryptography.Factories;
 using Login.Network;
-using LoginServer.Cryptography.Factories;
-using LoginServer.Network;
 using SaltyEmu.DatabasePlugin;
-using NosSharp.RedisSessionPlugin;
-using SaltyEmu.DatabasePlugin.Utils;
 using SaltyEmu.RedisWrappers;
 
-namespace LoginServer
+namespace Login
 {
     internal class LoginServer
     {

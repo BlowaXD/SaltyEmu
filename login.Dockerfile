@@ -7,7 +7,6 @@ WORKDIR /saltyemu/
 
 # Copy everything
 COPY ./src/ ./
-# restore packages
 # build World as publishable application in Release mode
 RUN dotnet publish ./Login/Login.csproj -c Release -o /saltyemu/dist/
 

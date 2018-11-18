@@ -2,7 +2,7 @@
 using System.Security.Cryptography;
 using System.Text;
 
-namespace LoginServer.Extensions
+namespace Login.Extensions
 {
     public static class StringExtensions
     {

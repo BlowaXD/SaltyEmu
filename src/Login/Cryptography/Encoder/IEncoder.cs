@@ -1,4 +1,4 @@
-﻿namespace LoginServer.Cryptography.Encoder
+﻿namespace Login.Cryptography.Encoder
 {
     public interface IEncoder
     {

@@ -1,7 +1,7 @@
-﻿using LoginServer.Cryptography.Decoder;
-using LoginServer.Cryptography.Encoder;
+﻿using Login.Cryptography.Decoder;
+using Login.Cryptography.Encoder;
 
-namespace LoginServer.Cryptography.Factories
+namespace Login.Cryptography.Factories
 {
     public class LoginEncoderFactory : IPacketCryptoFactory
     {

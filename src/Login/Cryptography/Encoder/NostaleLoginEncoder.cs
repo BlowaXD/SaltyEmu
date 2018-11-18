@@ -6,7 +6,7 @@ using DotNetty.Buffers;
 using DotNetty.Codecs;
 using DotNetty.Transport.Channels;
 
-namespace LoginServer.Cryptography.Encoder
+namespace Login.Cryptography.Encoder
 {
     public class NostaleLoginEncoder : MessageToMessageEncoder<string>, IEncoder
     {
