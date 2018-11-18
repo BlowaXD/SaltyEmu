@@ -5,6 +5,6 @@ namespace ChickenAPI.Game.Entities.Monster.Events
 {
     public class MonsterDeathEvent : EntityDeathEvent
     {
-        public IBattleEntity killer { get; set; }
+
     }
 }

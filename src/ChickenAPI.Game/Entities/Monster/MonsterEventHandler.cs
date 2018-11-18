@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Entities.Monster.Events;
@@ -26,7 +26,7 @@ namespace ChickenAPI.Game.Entities.Monster
                     }
                     // Clear Buff/Debuff
                     // Set respawn
-                    if (death.killer is IPlayerEntity player)
+                    if (death.Killer is IPlayerEntity player)
                     {
                         var npcMonster = monster.NpcMonster;
                         float ExpPenality(int lvlDif) => lvlDif < 5 ? 1 : (lvlDif < 10 ? 0.9f - 0.2f * (lvlDif - 6) : lvlDif < 19 ? 0.1f : 0.05f) * (2 / 3f);
