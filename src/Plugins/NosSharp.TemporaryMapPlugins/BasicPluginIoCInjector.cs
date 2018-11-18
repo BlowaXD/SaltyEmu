@@ -8,11 +8,11 @@ using ChickenAPI.Game.Battle.Hitting;
 using ChickenAPI.Game.Battle.Interfaces;
 using ChickenAPI.Game.Data.AccessLayer.Item;
 using ChickenAPI.Game.ECS;
+using ChickenAPI.Game.Effects;
 using ChickenAPI.Game.Events;
-using ChickenAPI.Game.Features.Effects;
-using ChickenAPI.Game.Features.GuriHandling.Handling;
-using ChickenAPI.Game.Features.NpcDialog;
+using ChickenAPI.Game.GuriHandling.Handling;
 using ChickenAPI.Game.Managers;
+using ChickenAPI.Game.NpcDialog;
 using ChickenAPI.Game.PacketHandling;
 
 namespace SaltyEmu.BasicPlugin

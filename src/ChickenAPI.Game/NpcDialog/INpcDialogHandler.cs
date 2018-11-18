@@ -1,8 +1,8 @@
 ﻿using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Game.Features.NpcDialog.Events;
-using ChickenAPI.Game.Features.NpcDialog.Handlers;
+using ChickenAPI.Game.NpcDialog.Events;
+using ChickenAPI.Game.NpcDialog.Handlers;
 
-namespace ChickenAPI.Game.Features.NpcDialog
+namespace ChickenAPI.Game.NpcDialog
 {
     public interface INpcDialogHandler
     {

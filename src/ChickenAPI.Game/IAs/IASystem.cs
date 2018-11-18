@@ -10,7 +10,7 @@ using ChickenAPI.Game.ECS.Systems;
 using ChickenAPI.Game.Maps;
 using ChickenAPI.Game.Movements.DataObjects;
 
-namespace ChickenAPI.Game.Features.IAs
+namespace ChickenAPI.Game.IAs
 {
     public class IASystem : SystemBase
     {

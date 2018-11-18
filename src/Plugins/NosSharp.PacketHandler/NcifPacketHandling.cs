@@ -6,7 +6,7 @@ using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Entities.Extensions;
 using ChickenAPI.Game.Entities.Monster;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Packets.Game.Client._NotYetSorted;
+using ChickenAPI.Packets.Game.Client.Battle;
 
 namespace NosSharp.PacketHandler
 {

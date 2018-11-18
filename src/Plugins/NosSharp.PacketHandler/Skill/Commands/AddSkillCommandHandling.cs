@@ -4,8 +4,7 @@ using ChickenAPI.Data.Skills;
 using ChickenAPI.Enums;
 using ChickenAPI.Game.Data.AccessLayer.Skill;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Game.Features.Skills;
-using ChickenAPI.Game.Features.Skills.Args;
+using ChickenAPI.Game.Skills.Args;
 using ChickenAPI.Packets;
 using ChickenAPI.Packets.Attributes;
 

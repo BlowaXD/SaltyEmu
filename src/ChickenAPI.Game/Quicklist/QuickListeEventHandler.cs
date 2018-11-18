@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using ChickenAPI.Core.Logging;
-using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Game.Features.Quicklist.Args;
 using ChickenAPI.Data.Character;
 using ChickenAPI.Game.ECS.Entities;
+using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Events;
-using ChickenAPI.Game.Features.Quicklist.Extensions;
+using ChickenAPI.Game.Quicklist.Args;
+using ChickenAPI.Game.Quicklist.Extensions;
 
-namespace ChickenAPI.Game.Features.Quicklist
+namespace ChickenAPI.Game.Quicklist
 {
     public class QuickListEventHandler : EventHandlerBase
     {

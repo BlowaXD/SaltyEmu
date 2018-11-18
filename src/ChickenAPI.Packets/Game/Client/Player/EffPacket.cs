@@ -1,7 +1,7 @@
 ﻿using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Packets.Attributes;
 
-namespace ChickenAPI.Packets.Game.Client._NotYetSorted
+namespace ChickenAPI.Packets.Game.Client.Player
 {
     [PacketHeader("eff")]
     public class EffectPacket : PacketBase

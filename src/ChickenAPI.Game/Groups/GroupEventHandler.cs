@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Events;
-using ChickenAPI.Game.Features.Groups.Args;
+using ChickenAPI.Game.Groups.Args;
 
-namespace ChickenAPI.Game.Features.Groups
+namespace ChickenAPI.Game.Groups
 {
     public class GroupEventHandler : EventHandlerBase
     {

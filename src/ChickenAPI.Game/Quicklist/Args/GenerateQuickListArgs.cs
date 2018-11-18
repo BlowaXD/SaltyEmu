@@ -1,6 +1,6 @@
 ﻿using ChickenAPI.Game.Events;
 
-namespace ChickenAPI.Game.Features.Quicklist.Args
+namespace ChickenAPI.Game.Quicklist.Args
 {
     public class GenerateQuickListArgs : ChickenEventArgs
     {

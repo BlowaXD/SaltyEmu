@@ -3,7 +3,7 @@ using ChickenAPI.Enums.Game.Portals;
 using ChickenAPI.Game.ECS.Components;
 using ChickenAPI.Game.ECS.Entities;
 
-namespace ChickenAPI.Game.Features.Portals
+namespace ChickenAPI.Game.Portals
 {
     public class PortalComponent : IComponent
     {

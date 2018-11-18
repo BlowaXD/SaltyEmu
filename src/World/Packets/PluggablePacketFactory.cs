@@ -8,7 +8,6 @@ using System.Text;
 using System.Text.RegularExpressions;
 using ChickenAPI.Core.Logging;
 using ChickenAPI.Game.PacketHandling;
-using ChickenAPI.Game.Packets;
 using ChickenAPI.Packets;
 using ChickenAPI.Packets.Attributes;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;

@@ -5,7 +5,7 @@ using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Packets;
 using ChickenAPI.Packets.Attributes;
 
-namespace ChickenAPI.Game.Packets
+namespace ChickenAPI.Game.PacketHandling
 {
     /// <summary>
     ///     Game Packets only

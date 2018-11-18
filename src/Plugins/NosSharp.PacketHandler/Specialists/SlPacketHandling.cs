@@ -1,7 +1,7 @@
 ﻿using ChickenAPI.Core.Logging;
 using ChickenAPI.Enums.Packets;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Game.Features.Specialists.Args;
+using ChickenAPI.Game.Specialists.Args;
 using ChickenAPI.Packets.Game.Client.Specialists;
 
 namespace NosSharp.PacketHandler.Specialists

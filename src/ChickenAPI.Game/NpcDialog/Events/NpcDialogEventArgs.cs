@@ -1,6 +1,6 @@
 ﻿using ChickenAPI.Game.Events;
 
-namespace ChickenAPI.Game.Features.NpcDialog.Events
+namespace ChickenAPI.Game.NpcDialog.Events
 {
     public class NpcDialogEventArgs : ChickenEventArgs
     {

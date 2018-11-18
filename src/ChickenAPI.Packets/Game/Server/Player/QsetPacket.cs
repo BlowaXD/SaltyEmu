@@ -1,6 +1,6 @@
 ﻿using ChickenAPI.Packets.Attributes;
 
-namespace ChickenAPI.Packets.Game.Server.QuickList
+namespace ChickenAPI.Packets.Game.Server.Player
 {
     [PacketHeader("qset")]
     public class QsetPacketReceive : PacketBase

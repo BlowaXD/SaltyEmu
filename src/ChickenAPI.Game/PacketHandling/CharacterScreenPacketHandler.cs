@@ -5,7 +5,7 @@ using ChickenAPI.Game.Network;
 using ChickenAPI.Packets;
 using ChickenAPI.Packets.Attributes;
 
-namespace ChickenAPI.Game.Packets
+namespace ChickenAPI.Game.PacketHandling
 {
     /// <summary>
     ///     Packet that does not need to be ingame to be handled

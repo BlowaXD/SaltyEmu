@@ -5,7 +5,7 @@ using ChickenAPI.Game.Entities.Npc;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Packets.Game.Server.Entities;
 
-namespace ChickenAPI.Game.Packets.Extensions
+namespace ChickenAPI.Game.PacketHandling.Extensions
 {
     public static class MovableEntityExtensions
     {

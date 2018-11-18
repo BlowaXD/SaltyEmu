@@ -1,6 +1,5 @@
 ﻿using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Packets.Attributes;
-using ChickenAPI.Packets.Game.Server._NotYetSorted;
 
 namespace ChickenAPI.Packets.Game.Server.Visibility
 {

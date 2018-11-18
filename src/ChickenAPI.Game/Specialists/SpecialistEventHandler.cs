@@ -7,20 +7,18 @@ using ChickenAPI.Data.Skills;
 using ChickenAPI.Enums.Game.Items;
 using ChickenAPI.Game.Data.AccessLayer.Skill;
 using ChickenAPI.Game.ECS.Entities;
+using ChickenAPI.Game.Effects;
 using ChickenAPI.Game.Entities.Extensions;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Entities.Player.Extensions;
 using ChickenAPI.Game.Events;
-using ChickenAPI.Game.Features.Effects;
-using ChickenAPI.Game.Features.Skills.Extensions;
-using ChickenAPI.Game.Features.Specialists.Args;
 using ChickenAPI.Game.Inventory.Extensions;
 using ChickenAPI.Game.Movements.Extensions;
 using ChickenAPI.Game.Skills.Extensions;
-using ChickenAPI.Game.Specialists;
+using ChickenAPI.Game.Specialists.Args;
 using ChickenAPI.Game.Specialists.Extensions;
 
-namespace ChickenAPI.Game.Features.Specialists
+namespace ChickenAPI.Game.Specialists
 {
     public class SpecialistEventHandler : EventHandlerBase
     {

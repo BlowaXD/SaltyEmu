@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ChickenAPI.Game.Features.GuriHandling.Handling
+namespace ChickenAPI.Game.GuriHandling.Handling
 {
     [AttributeUsage(AttributeTargets.Method)]
     public class GuriEffectAttribute : Attribute

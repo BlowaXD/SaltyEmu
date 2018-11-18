@@ -16,7 +16,7 @@ namespace SaltyEmu.DatabasePlugin.Services.NpcMonster
 
         public NpcMonsterDao(DbContext context, IMapper mapper) : base(context, mapper)
         {
-            _monsters = new Dictionary<long, NpcMonsterDto>(Get().ToDictionary(s => s.Id, s => s));
+            _monsters = Get().ToDictionary(s => s.Id, s => s);
         }
 
         public override NpcMonsterDto GetById(long id)

@@ -1,5 +1,5 @@
 ﻿using ChickenAPI.Game.ECS.Entities;
-using ChickenAPI.Game.Features.Portals;
+using ChickenAPI.Game.Portals;
 
 namespace ChickenAPI.Game.Entities.Portal
 {

@@ -5,7 +5,6 @@ using System.Linq.Expressions;
 using System.Text;
 using ChickenAPI.Data.Skills;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Game.Features.Skills;
 
 namespace ChickenAPI.Game.Skills.Extensions
 {

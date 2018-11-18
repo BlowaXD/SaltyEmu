@@ -3,7 +3,7 @@ using ChickenAPI.Game.ECS.Components;
 using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Entities.Player;
 
-namespace ChickenAPI.Game.Features.Groups
+namespace ChickenAPI.Game.Groups
 {
     public class GroupComponent : IComponent
     {

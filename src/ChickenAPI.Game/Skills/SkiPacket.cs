@@ -1,7 +1,7 @@
 ﻿using ChickenAPI.Packets;
 using ChickenAPI.Packets.Attributes;
 
-namespace ChickenAPI.Game.Features.Skills
+namespace ChickenAPI.Game.Skills
 {
     [PacketHeader("ski")]
     public class SkiPacket : PacketBase

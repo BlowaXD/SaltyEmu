@@ -1,7 +1,7 @@
-﻿using ChickenAPI.Game.Features.Portals;
+﻿using ChickenAPI.Game.Portals;
 using ChickenAPI.Packets.Game.Server.Portals;
 
-namespace ChickenAPI.Game.Packets.Extensions
+namespace ChickenAPI.Game.PacketHandling.Extensions
 {
     public static class PortalPacketExtensions
     {

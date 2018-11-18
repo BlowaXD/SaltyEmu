@@ -4,7 +4,6 @@ using ChickenAPI.Core.Logging;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Network;
 using ChickenAPI.Game.PacketHandling;
-using ChickenAPI.Game.Packets;
 using ChickenAPI.Packets;
 
 namespace SaltyEmu.BasicPlugin

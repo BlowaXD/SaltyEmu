@@ -5,7 +5,6 @@ using ChickenAPI.Core.Logging;
 using ChickenAPI.Data.Map;
 using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Game.Features.Portals;
 using ChickenAPI.Game.Managers;
 using ChickenAPI.Game.Maps;
 using ChickenAPI.Game.Portals.Args;

@@ -1,9 +1,8 @@
 ﻿using System;
 using ChickenAPI.Core.Logging;
+using ChickenAPI.Game.Chat.Args;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Game.Features.Chat;
-using ChickenAPI.Game.Features.Chat.Args;
-using ChickenAPI.Packets.Game.Client._NotYetSorted;
+using ChickenAPI.Packets.Game.Client.Chat;
 
 namespace NosSharp.PacketHandler
 {

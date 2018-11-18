@@ -5,10 +5,10 @@ using ChickenAPI.Core.IoC;
 using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Events;
-using ChickenAPI.Game.Features.GuriHandling.Args;
-using ChickenAPI.Game.Features.GuriHandling.Handling;
+using ChickenAPI.Game.GuriHandling.Args;
+using ChickenAPI.Game.GuriHandling.Handling;
 
-namespace ChickenAPI.Game.Features.GuriHandling
+namespace ChickenAPI.Game.GuriHandling
 {
     public class GuriEventHandler : EventHandlerBase
     {

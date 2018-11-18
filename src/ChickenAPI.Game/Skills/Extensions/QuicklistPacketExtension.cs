@@ -4,7 +4,7 @@ using ChickenAPI.Data.Character;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Packets.Game.Server.Player;
 
-namespace ChickenAPI.Game.Features.Skills.Extensions
+namespace ChickenAPI.Game.Skills.Extensions
 {
     public static class QuicklistPacketExtension
     {

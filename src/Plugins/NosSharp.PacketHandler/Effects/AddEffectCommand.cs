@@ -1,7 +1,6 @@
 ﻿using ChickenAPI.Enums;
+using ChickenAPI.Game.Effects.Args;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Game.Features.Effects;
-using ChickenAPI.Game.Features.Effects.Args;
 using ChickenAPI.Packets;
 using ChickenAPI.Packets.Attributes;
 

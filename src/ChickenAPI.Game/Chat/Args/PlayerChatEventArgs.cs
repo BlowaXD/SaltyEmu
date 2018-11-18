@@ -1,6 +1,6 @@
 ﻿using ChickenAPI.Game.Events;
 
-namespace ChickenAPI.Game.Features.Chat.Args
+namespace ChickenAPI.Game.Chat.Args
 {
     public class PlayerChatEventArg : ChickenEventArgs
     {

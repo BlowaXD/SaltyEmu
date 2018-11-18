@@ -9,7 +9,6 @@ using ChickenAPI.Game.Data.AccessLayer.Skill;
 using ChickenAPI.Game.ECS.Components;
 using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Game.Features.Skills.Extensions;
 using ChickenAPI.Game.Skills.Extensions;
 
 namespace ChickenAPI.Game.Skills

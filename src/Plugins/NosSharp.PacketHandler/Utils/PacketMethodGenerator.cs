@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Network;
-using ChickenAPI.Game.Packets;
+using ChickenAPI.Game.PacketHandling;
 using ChickenAPI.Packets;
 
 namespace NosSharp.PacketHandler.Utils

@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using ChickenAPI.Core.IPC;
 using ChickenAPI.Core.Logging;
-using ChickenAPI.Game.Features.NpcDialog;
+using ChickenAPI.Game.NpcDialog;
 using SaltyEmu.IpcPlugin.Communicators;
 using SaltyEmu.IpcPlugin.Utils;
 using SaltyPoc.IPC.Packets;

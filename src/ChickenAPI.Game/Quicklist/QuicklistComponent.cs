@@ -4,7 +4,7 @@ using ChickenAPI.Data.Character;
 using ChickenAPI.Game.ECS.Components;
 using ChickenAPI.Game.ECS.Entities;
 
-namespace ChickenAPI.Game.Features.Quicklist
+namespace ChickenAPI.Game.Quicklist
 {
     public class QuicklistComponent : IComponent
     {

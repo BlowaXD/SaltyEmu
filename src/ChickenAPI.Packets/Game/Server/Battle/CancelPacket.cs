@@ -1,7 +1,7 @@
 ﻿using ChickenAPI.Enums.Packets;
 using ChickenAPI.Packets.Attributes;
 
-namespace ChickenAPI.Packets.Game.Server.QuickList.Battle
+namespace ChickenAPI.Packets.Game.Server.Battle
 {
     [PacketHeader("cancel")]
     public class CancelPacket : PacketBase

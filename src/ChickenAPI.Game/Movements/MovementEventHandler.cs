@@ -7,7 +7,7 @@ using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Events;
 using ChickenAPI.Game.Movements.Events;
 using ChickenAPI.Game.Movements.Extensions;
-using ChickenAPI.Game.Packets.Extensions;
+using ChickenAPI.Game.PacketHandling.Extensions;
 
 namespace ChickenAPI.Game.Movements
 {

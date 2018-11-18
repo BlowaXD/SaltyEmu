@@ -13,8 +13,8 @@ using ChickenAPI.Game.Battle.Interfaces;
 using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Events;
-using ChickenAPI.Game.Features.Skills.Args;
 using ChickenAPI.Game.Movements.Extensions;
+using ChickenAPI.Game.Skills.Args;
 
 namespace ChickenAPI.Game.Skills
 {

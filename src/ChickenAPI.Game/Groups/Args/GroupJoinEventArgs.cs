@@ -1,6 +1,6 @@
 ﻿using ChickenAPI.Game.Events;
 
-namespace ChickenAPI.Game.Features.Groups.Args
+namespace ChickenAPI.Game.Groups.Args
 {
     public class GroupJoinEventArgs : ChickenEventArgs
     {

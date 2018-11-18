@@ -9,7 +9,7 @@ using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Entities.Monster;
 using ChickenAPI.Game.Entities.Npc;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Game.Features.Skills.Args;
+using ChickenAPI.Game.Skills.Args;
 using ChickenAPI.Packets.Game.Client.Battle;
 using ChickenAPI.Packets.Game.Server.Battle;
 

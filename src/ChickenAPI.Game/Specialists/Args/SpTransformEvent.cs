@@ -1,6 +1,6 @@
 ﻿using ChickenAPI.Game.Events;
 
-namespace ChickenAPI.Game.Features.Specialists.Args
+namespace ChickenAPI.Game.Specialists.Args
 {
     public class SpTransformEvent : ChickenEventArgs
     {

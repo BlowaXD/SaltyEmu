@@ -11,7 +11,6 @@ using ChickenAPI.Game.Data.AccessLayer.Server;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Network;
 using ChickenAPI.Game.PacketHandling;
-using ChickenAPI.Game.Packets;
 using ChickenAPI.Packets;
 using DotNetty.Transport.Channels;
 using DotNetty.Transport.Channels.Groups;

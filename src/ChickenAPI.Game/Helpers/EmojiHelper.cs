@@ -1,7 +1,7 @@
 ﻿using ChickenAPI.Enums.Game.Effects;
 using ChickenAPI.Game.ECS.Entities;
-using ChickenAPI.Game.Features.Effects;
-using ChickenAPI.Packets.Game.Client._NotYetSorted;
+using ChickenAPI.Game.Effects;
+using ChickenAPI.Packets.Game.Client.Player;
 
 namespace ChickenAPI.Game.Helpers
 {

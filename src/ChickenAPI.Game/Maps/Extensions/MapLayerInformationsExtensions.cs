@@ -7,7 +7,6 @@ using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Entities.Player.Extensions;
 using ChickenAPI.Game.Entities.Portal;
 using ChickenAPI.Game.PacketHandling.Extensions;
-using ChickenAPI.Game.Packets.Extensions;
 using ChickenAPI.Game.Shops.Extensions;
 using ChickenAPI.Game.Visibility;
 using ChickenAPI.Packets.Game.Client.Shops;

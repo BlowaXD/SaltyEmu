@@ -1,7 +1,7 @@
 ﻿using ChickenAPI.Data.Character;
-using ChickenAPI.Packets.Game.Server.QuickList;
+using ChickenAPI.Packets.Game.Server.Player;
 
-namespace ChickenAPI.Game.Features.Quicklist.Extensions
+namespace ChickenAPI.Game.Quicklist.Extensions
 {
     public static class QsetGenerationExtension
     {

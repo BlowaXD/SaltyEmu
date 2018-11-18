@@ -1,6 +1,6 @@
 ﻿using ChickenAPI.Packets.Attributes;
 
-namespace ChickenAPI.Packets.Game.Client._NotYetSorted
+namespace ChickenAPI.Packets.Game.Client.Player
 {
     [PacketHeader("compl")]
     public class ComplimentPacket : PacketBase

@@ -1,6 +1,6 @@
 ﻿using ChickenAPI.Packets.Attributes;
 
-namespace ChickenAPI.Packets.Game.Client._NotYetSorted
+namespace ChickenAPI.Packets.Game.Client.Drops
 {
     [PacketHeader("drop")]
     internal class DropPacket : PacketBase

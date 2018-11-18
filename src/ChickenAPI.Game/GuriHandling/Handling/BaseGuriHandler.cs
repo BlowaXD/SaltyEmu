@@ -4,9 +4,9 @@ using System.Linq;
 using System.Reflection;
 using ChickenAPI.Core.Logging;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Game.Features.GuriHandling.Args;
+using ChickenAPI.Game.GuriHandling.Args;
 
-namespace ChickenAPI.Game.Features.GuriHandling.Handling
+namespace ChickenAPI.Game.GuriHandling.Handling
 {
     public class BaseGuriHandler : IGuriHandler
     {

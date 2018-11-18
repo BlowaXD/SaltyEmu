@@ -4,8 +4,7 @@ using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Entities.Npc;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Game.Features.Shops;
-using ChickenAPI.Game.Features.Shops.Args;
+using ChickenAPI.Game.Shops.Args;
 using ChickenAPI.Packets.Game.Client.Shops;
 
 namespace NosSharp.PacketHandler.Npc.Shops

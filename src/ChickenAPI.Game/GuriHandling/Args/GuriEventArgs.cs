@@ -1,6 +1,6 @@
 ﻿using ChickenAPI.Game.Events;
 
-namespace ChickenAPI.Game.Features.GuriHandling.Args
+namespace ChickenAPI.Game.GuriHandling.Args
 {
     public class GuriEventArgs : ChickenEventArgs
     {

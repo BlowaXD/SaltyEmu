@@ -1,7 +1,7 @@
 ﻿using ChickenAPI.Enums.Game.Items;
 using ChickenAPI.Packets.Attributes;
 
-namespace ChickenAPI.Packets.Game.Client._NotYetSorted
+namespace ChickenAPI.Packets.Game.Client.Inventory
 {
     [PacketHeader("b_i")]
     public class BiPacket : PacketBase

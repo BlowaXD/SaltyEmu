@@ -1,4 +1,4 @@
-﻿using ChickenAPI.Game.Features.Quicklist;
+﻿using ChickenAPI.Game.Quicklist;
 
 namespace ChickenAPI.Game.Entities
 {

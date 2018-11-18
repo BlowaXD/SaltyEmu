@@ -1,6 +1,6 @@
 ﻿using ChickenAPI.Packets.Attributes;
 
-namespace ChickenAPI.Packets.Game.Server._NotYetSorted
+namespace ChickenAPI.Packets.Game.Server.Visibility
 {
     [PacketHeader("in_npc_subpacket")]
     public class InNpcSubPacket : PacketBase

@@ -2,8 +2,7 @@
 using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Movements.Extensions;
-using ChickenAPI.Game.Packets;
-using ChickenAPI.Game.Packets.Extensions;
+using ChickenAPI.Game.PacketHandling.Extensions;
 using ChickenAPI.Packets.Game.Client.Movement;
 
 namespace NosSharp.PacketHandler.Move

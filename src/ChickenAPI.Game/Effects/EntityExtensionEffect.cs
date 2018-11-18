@@ -3,9 +3,9 @@ using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Entities.Monster;
 using ChickenAPI.Game.Entities.Npc;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Packets.Game.Client._NotYetSorted;
+using ChickenAPI.Packets.Game.Client.Player;
 
-namespace ChickenAPI.Game.Features.Effects
+namespace ChickenAPI.Game.Effects
 {
     public static class EntityExtensionEffect
     {

@@ -2,7 +2,7 @@
 using ChickenAPI.Game.Battle.Interfaces;
 using ChickenAPI.Game.Events;
 
-namespace ChickenAPI.Game.Features.Skills.Args
+namespace ChickenAPI.Game.Skills.Args
 {
     public class UseSkillArgs : ChickenEventArgs
     {

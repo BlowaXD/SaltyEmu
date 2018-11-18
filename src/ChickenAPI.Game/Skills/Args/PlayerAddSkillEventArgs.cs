@@ -1,7 +1,7 @@
 ﻿using ChickenAPI.Data.Skills;
 using ChickenAPI.Game.Events;
 
-namespace ChickenAPI.Game.Features.Skills.Args
+namespace ChickenAPI.Game.Skills.Args
 {
     public class PlayerAddSkillEventArgs : ChickenEventArgs
     {

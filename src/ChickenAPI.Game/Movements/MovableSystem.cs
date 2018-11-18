@@ -8,7 +8,7 @@ using ChickenAPI.Game.ECS.Systems;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Movements.DataObjects;
 using ChickenAPI.Game.Movements.Extensions;
-using ChickenAPI.Game.Packets.Extensions;
+using ChickenAPI.Game.PacketHandling.Extensions;
 using ChickenAPI.Packets.Game.Server.Entities;
 
 namespace ChickenAPI.Game.Movements

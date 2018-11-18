@@ -1,13 +1,13 @@
 ﻿using ChickenAPI.Core.Logging;
 using ChickenAPI.Enums.Game.Effects;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Game.Features.GuriHandling.Args;
-using ChickenAPI.Game.Features.GuriHandling.Handling;
-using ChickenAPI.Game.Features.NpcDialog.Handlers;
+using ChickenAPI.Game.GuriHandling.Args;
+using ChickenAPI.Game.GuriHandling.Handling;
 using ChickenAPI.Game.Helpers;
+using ChickenAPI.Game.NpcDialog.Handlers;
 using ChickenAPI.Game.Permissions;
 
-namespace ChickenAPI.Game.Features.GuriHandling.Handlers
+namespace ChickenAPI.Game.GuriHandling.Handlers
 {
     public class EmoticonGuriHandler
     {

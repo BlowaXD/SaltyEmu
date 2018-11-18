@@ -1,10 +1,10 @@
 ﻿using ChickenAPI.Core.Logging;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Game.Features.GuriHandling.Args;
-using ChickenAPI.Game.Features.GuriHandling.Handling;
+using ChickenAPI.Game.GuriHandling.Args;
+using ChickenAPI.Game.GuriHandling.Handling;
 using ChickenAPI.Game.Permissions;
 
-namespace ChickenAPI.Game.Features.GuriHandling.Handlers
+namespace ChickenAPI.Game.GuriHandling.Handlers
 {
     public class ShellIdentifyingGuriHandler
     {

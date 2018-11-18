@@ -10,7 +10,6 @@ using ChickenAPI.Enums.Game.Visibility;
 using ChickenAPI.Game.ECS.Components;
 using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Entities.Monster;
-using ChickenAPI.Game.Features.Shops;
 using ChickenAPI.Game.Movements.DataObjects;
 using ChickenAPI.Game.Shops;
 using ChickenAPI.Game.Skills;

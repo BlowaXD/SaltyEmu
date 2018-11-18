@@ -1,9 +1,8 @@
 ﻿using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Game.Features.NpcDialog;
-using ChickenAPI.Packets.Game.Client.Nrun;
-using ChickenAPI.Game.Features.NpcDialog.Events;
+using ChickenAPI.Game.NpcDialog.Events;
+using ChickenAPI.Packets.Game.Client.Npcs;
 
-namespace NosSharp.PacketHandler.Dialog
+namespace NosSharp.PacketHandler.Npc.Dialog
 {
     public class NRunPacketHandling
     {

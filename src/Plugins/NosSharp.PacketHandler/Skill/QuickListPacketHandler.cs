@@ -1,6 +1,6 @@
 ﻿using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Game.Features.Quicklist.Args;
-using ChickenAPI.Packets.Game.Client.QuickList;
+using ChickenAPI.Game.Quicklist.Args;
+using ChickenAPI.Packets.Game.Client.Player;
 
 namespace NosSharp.PacketHandler.Skill
 {

@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using ChickenAPI.Game.ECS.Entities;
+using ChickenAPI.Game.Effects.Args;
 using ChickenAPI.Game.Events;
-using ChickenAPI.Game.Features.Effects.Args;
 
-namespace ChickenAPI.Game.Features.Effects
+namespace ChickenAPI.Game.Effects
 {
     public class EffectEventHandler : EventHandlerBase
     {

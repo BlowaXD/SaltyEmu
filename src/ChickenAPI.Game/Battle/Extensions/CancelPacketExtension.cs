@@ -1,6 +1,6 @@
 ﻿using ChickenAPI.Enums.Packets;
 using ChickenAPI.Game.Battle.Interfaces;
-using ChickenAPI.Packets.Game.Server.QuickList.Battle;
+using ChickenAPI.Packets.Game.Server.Battle;
 
 namespace ChickenAPI.Game.Battle.Extensions
 {

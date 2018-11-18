@@ -3,7 +3,7 @@ using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Inventory;
 using ChickenAPI.Packets.Game.Server.Inventory;
 
-namespace ChickenAPI.Game.Packets.Extensions
+namespace ChickenAPI.Game.PacketHandling.Extensions
 {
     public static class InventoryWearPacketExtensions
     {

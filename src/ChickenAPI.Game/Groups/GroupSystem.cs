@@ -4,7 +4,7 @@ using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.ECS.Systems;
 using ChickenAPI.Game.Entities.Player;
 
-namespace ChickenAPI.Game.Features.Groups
+namespace ChickenAPI.Game.Groups
 {
     public class GroupSystem : SystemBase
     {

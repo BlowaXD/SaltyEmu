@@ -1,5 +1,4 @@
-﻿using ChickenAPI.Game.Features.Specialists;
-using ChickenAPI.Game.Specialists;
+﻿using ChickenAPI.Game.Specialists;
 using ChickenAPI.Packets.Game.Client.Specialists;
 
 namespace ChickenAPI.Game.Entities.Player.Extensions

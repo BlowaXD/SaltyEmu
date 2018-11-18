@@ -17,15 +17,13 @@ using ChickenAPI.Game.Entities.Npc;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Entities.Player.Extensions;
 using ChickenAPI.Game.Events;
-using ChickenAPI.Game.Features.Shops.Args;
-using ChickenAPI.Game.Features.Skills.Extensions;
 using ChickenAPI.Game.Inventory.Args;
 using ChickenAPI.Game.Inventory.Extensions;
-using ChickenAPI.Game.Shops;
+using ChickenAPI.Game.Shops.Args;
 using ChickenAPI.Game.Skills.Extensions;
 using ChickenAPI.Packets.Game.Client.Shops;
 
-namespace ChickenAPI.Game.Features.Shops
+namespace ChickenAPI.Game.Shops
 {
     public class ShopEventHandler : EventHandlerBase
     {

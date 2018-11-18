@@ -4,7 +4,7 @@ using ChickenAPI.Data.Map;
 using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Game.ECS.Components;
 using ChickenAPI.Game.ECS.Entities;
-using ChickenAPI.Game.Features.Portals;
+using ChickenAPI.Game.Portals;
 using ChickenAPI.Game.Visibility;
 
 namespace ChickenAPI.Game.Entities.Portal
