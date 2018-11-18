@@ -49,7 +49,7 @@ namespace LoginServer
 
         private static void InitializeConfiguration()
         {
-            string port = Environment.GetEnvironmentVariable("PORT");
+            string port = Environment.GetEnvironmentVariable("SERVER_PORT");
             if (port == null)
             {
                 _port = 4000;

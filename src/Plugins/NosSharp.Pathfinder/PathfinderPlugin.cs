@@ -23,26 +23,28 @@ namespace SaltyEmu.PathfinderPlugin
 
         public void ReloadConfig()
         {
-            throw new NotImplementedException();
+            // no config for pathfinding yet
         }
 
         public void SaveConfig()
         {
-            throw new NotImplementedException();
+            // no config for pathfinding yet
         }
 
         public void SaveDefaultConfig()
         {
-            throw new NotImplementedException();
+            // no config for pathfinding yet
         }
 
 
         public void OnDisable()
         {
+            // nothing to do
         }
 
         public void OnEnable()
         {
+            // maybe we will do that later
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Autofac;
 using ChickenAPI.Core.IoC;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Data.Item;
 using ChickenAPI.Enums.Game.Items;
 using ChickenAPI.Game.Data.AccessLayer.Item;
@@ -19,6 +20,7 @@ namespace ChickenAPI.Game.Inventory
 {
     public class InventoryEventHandler : EventHandlerBase
     {
+        private static readonly Logger Log = Logger.GetLogger<InventoryEventHandler>();
         public override ISet<Type> HandledTypes => new HashSet<Type>
         {
             typeof(InventoryAddItemEventArgs),
@@ -243,6 +245,7 @@ namespace ChickenAPI.Game.Inventory
 
             if (slot == -1)
             {
+                Log.Info("No available slot");
                 //Not enough space
                 return;
             }
@@ -451,7 +454,9 @@ namespace ChickenAPI.Game.Inventory
                 case InventoryType.Main:
                 case InventoryType.Etc:
                     return GenerateMainIvnPacket(itemInstance);
-                default: return null;
+                default:
+                    Log.Info($"{itemInstance.Type} not implemented");
+                    return null;
             }
         }
 

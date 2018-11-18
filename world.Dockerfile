@@ -6,11 +6,11 @@ FROM microsoft/dotnet:2.1-sdk-alpine as builder
 WORKDIR /saltyemu/
 
 # Copy everything
-COPY ./server ./
+COPY ./src ./
 # restore packages
 RUN dotnet restore 
 # build World as publishable application in Release mode
-RUN dotnet publish ./src/World/World.csproj -c Release -o /saltyemu/dist/
+RUN dotnet publish ./World/World.csproj -c Release -o /saltyemu/dist/
 
 ###
 ## Runtime Docker
@@ -43,7 +43,7 @@ VOLUME /server/plugins
 
 # SETUP DOCKER HEALTHCHECK
 # Every 5 seconds, it will try to curl
-HEALTHCHECK --interval=15s --timeout=5s --start-period=5s --retries=3 CMD [ "netstat -an | grep $SERVER_PORT > /dev/null; if [ 0 != $? ]; then exit 1; fi;" ]
+# HEALTHCHECK --interval=15s --timeout=5s --start-period=5s --retries=3 CMD [ "netstat -an | grep $SERVER_PORT > /dev/null; if [ 0 != $? ]; then exit 1; fi;" ]
 
 # Expose port 7777 tcp
 EXPOSE 7777

@@ -14,3 +14,4 @@ obj\
 .vs\ 
 .git\ 
 docs\
+dist\

@@ -4,7 +4,9 @@ using System.Linq;
 using Autofac;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Logging;
+using ChickenAPI.Data.Item;
 using ChickenAPI.Data.Skills;
+using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Enums.Game.Items;
 using ChickenAPI.Game.Data.AccessLayer.Skill;
 using ChickenAPI.Game.ECS.Entities;
@@ -72,7 +74,9 @@ namespace ChickenAPI.Game.Specialists
 
             // check last sp usage + sp cooldown
 
-            if (player.Inventory.GetWeared(EquipmentType.Fairy)?.ElementType != player.Sp.ElementType)
+            ItemInstanceDto fairy = player.Inventory.GetWeared(EquipmentType.Fairy);
+
+            if (player.Sp.ElementType != ElementType.Neutral && fairy.ElementType != player.Sp.ElementType)
             {
                 return;
             }
