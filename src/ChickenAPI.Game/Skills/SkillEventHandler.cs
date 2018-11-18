@@ -67,6 +67,7 @@ namespace ChickenAPI.Game.Skills
                     if (entity.GetDistance(target) > skill.Range + target.BasicArea + 1)
                     {
                         player?.SendPacket(target.GenerateTargetCancelPacket(CancelPacketType.InCombatMode));
+                        return;
                     }
 
                     targets.Add(target);

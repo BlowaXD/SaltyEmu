@@ -8,6 +8,7 @@ using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.ECS.Systems;
 using ChickenAPI.Game.Maps;
+using ChickenAPI.Game.Movements;
 using ChickenAPI.Game.Movements.DataObjects;
 
 namespace ChickenAPI.Game.IAs
@@ -36,20 +37,21 @@ namespace ChickenAPI.Game.IAs
                 return false;
             }
 
-            var movable = entity.GetComponent<MovableComponent>();
-            if (movable == null)
-            {
-                return false;
-            }
 
-            return movable.Speed != 0;
+            return entity is IMovableEntity;
         }
 
         protected override void Execute(IEntity entity)
         {
             int i = 0;
-            var movableComponent = entity.GetComponent<MovableComponent>();
-            if (movableComponent.Waypoints != null && movableComponent.Waypoints.Length != 0 || entity.Type == VisualType.Character)
+
+            if (!(entity is IMovableEntity mov))
+            {
+                return;
+            }
+
+            MovableComponent movableComponent = mov.Movable;
+            if (movableComponent.Waypoints != null && movableComponent.Waypoints.Length != 0 || entity.Type == VisualType.Character || movableComponent.Speed == 0)
             {
                 return;
             }
