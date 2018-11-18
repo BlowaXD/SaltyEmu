@@ -28,6 +28,7 @@ namespace World
     internal class WorldServer
     {
         private static readonly Logger Log = Logger.GetLogger<WorldServer>();
+        private static readonly IPluginManager PluginManager = new SimplePluginManager();
 
         private static readonly List<IPlugin> Plugins = new List<IPlugin>
         {
@@ -53,7 +54,7 @@ namespace World
                     plugin.OnLoad();
                 }
 
-                Plugins.AddRange(new SimplePluginManager().LoadPlugins(new DirectoryInfo("plugins")));
+                Plugins.AddRange(PluginManager.LoadPlugins(new DirectoryInfo("plugins")));
             }
             catch (Exception e)
             {
@@ -157,6 +158,7 @@ namespace World
             InitializeConfigs();
             InitializePlugins();
             EnablePlugins(PluginEnableTime.PreContainerBuild);
+            ChickenContainer.Builder.Register(s => PluginManager).As<IPluginManager>();
             ChickenContainer.Initialize();
             InitializeClientSession();
             if (Server.RegisterServer())

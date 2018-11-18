@@ -13,6 +13,7 @@ using LoginServer.Cryptography.Factories;
 using LoginServer.Network;
 using SaltyEmu.DatabasePlugin;
 using NosSharp.RedisSessionPlugin;
+using SaltyEmu.DatabasePlugin.Utils;
 using SaltyEmu.RedisWrappers;
 
 namespace LoginServer
@@ -20,6 +21,7 @@ namespace LoginServer
     internal class LoginServer
     {
         private static readonly Logger Log = Logger.GetLogger<LoginServer>();
+        private static readonly IPluginManager PluginManager = new SimplePluginManager();
 
         private static ushort _port;
 
@@ -63,7 +65,7 @@ namespace LoginServer
         {
             try
             {
-                IPlugin[] plugins = new SimplePluginManager().LoadPlugins(new DirectoryInfo("plugins"));
+                IPlugin[] plugins = PluginManager.LoadPlugins(new DirectoryInfo("plugins"));
                 var dbPlugin = new DatabasePlugin();
                 dbPlugin.OnLoad();
                 var redisPlugin = new RedisPlugin();
@@ -88,6 +90,7 @@ namespace LoginServer
             InitializeLogger();
             InitializeConfiguration();
             InitializePlugins();
+            ChickenContainer.Builder.Register(s => PluginManager).As<IPluginManager>();
             ChickenContainer.Initialize();
             ClientSession.AccountService = ChickenContainer.Instance.Resolve<IAccountService>();
             ClientSession.ServerApi = ChickenContainer.Instance.Resolve<IServerApiService>();
