@@ -35,21 +35,22 @@ namespace ChickenAPI.Game.PacketHandling.Extensions
                     MpPercentage = monster.MpPercentage,
                     Unknown1 = 0,
                     Unknown2 = 0,
-                    Unknown3 = -1,
+                    Unknown3 = 0,
+                    Unknown4 = -1,
                     NoAggressiveIcon = npcMonster.NoAggresiveIcon,
-                    Unknown4 = 0,
-                    Unknown5 = -1,
-                    Unknown6 = "-",
-                    Unknown7 = 0,
-                    Unknown8 = -1,
-                    Unknown9 = 0,
+                    Unknown5 = 0,
+                    Unknown6 = -1,
+                    Unknown7 = "-",
+                    Unknown8 = 0,
+                    Unknown9 = -1,
                     Unknown10 = 0,
                     Unknown11 = 0,
                     Unknown12 = 0,
                     Unknown13 = 0,
                     Unknown14 = 0,
                     Unknown15 = 0,
-                    Unknown16 = 0
+                    Unknown16 = 0,
+                    Unknown17 = 0
                 }
             };
         }

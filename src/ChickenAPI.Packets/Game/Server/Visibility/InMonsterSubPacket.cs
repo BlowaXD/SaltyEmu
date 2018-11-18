@@ -21,19 +21,19 @@ namespace ChickenAPI.Packets.Game.Server.Visibility
         public int Unknown3 { get; set; }
 
         [PacketIndex(5)]
-        public bool NoAggressiveIcon { get; set; }
+        public int Unknown4 { get; set; }
 
         [PacketIndex(6)]
-        public int Unknown4 { get; set; }
+        public bool NoAggressiveIcon { get; set; }
 
         [PacketIndex(7)]
         public int Unknown5 { get; set; }
 
         [PacketIndex(8)]
-        public string Unknown6 { get; set; }
+        public int Unknown6 { get; set; }
 
         [PacketIndex(9)]
-        public int Unknown7 { get; set; }
+        public string Unknown7 { get; set; }
 
         [PacketIndex(10)]
         public int Unknown8 { get; set; }
@@ -50,7 +50,6 @@ namespace ChickenAPI.Packets.Game.Server.Visibility
         [PacketIndex(14)]
         public int Unknown12 { get; set; }
 
-
         [PacketIndex(15)]
         public int Unknown13 { get; set; }
 
@@ -62,5 +61,8 @@ namespace ChickenAPI.Packets.Game.Server.Visibility
 
         [PacketIndex(18)]
         public int Unknown16 { get; set; }
+
+        [PacketIndex(19)]
+        public int Unknown17 { get; set; }
     }
 }
