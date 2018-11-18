@@ -36,8 +36,8 @@ test_project:
 
 
 # Docker Building
-build docker world:
-  stage: build
+release docker world:
+  stage: release
   image: docker:stable
   tags:
     - docker
@@ -50,8 +50,8 @@ build docker world:
     - docker push $CONTAINER_LOGIN_BUILD_IMAGE
     
 # Docker Building Login
-build docker login:
-  stage: build
+release docker login:
+  stage: release
   image: docker:stable
   tags:
     - docker
