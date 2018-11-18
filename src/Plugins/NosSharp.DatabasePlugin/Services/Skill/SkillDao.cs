@@ -14,11 +14,14 @@ namespace SaltyEmu.DatabasePlugin.Services.Skill
 {
     public class SkillDao : MappedRepositoryBase<SkillDto, SkillModel>, ISkillService
     {
-        private readonly Dictionary<long, SkillDto> _skills = new Dictionary<long, SkillDto>();
-        private readonly Dictionary<long, SkillDto[]> _skillsByClassId = new Dictionary<long, SkillDto[]>();
+        private readonly Dictionary<long, SkillDto> _skills;
+        private readonly Dictionary<long, SkillDto[]> _skillsByClassId;
 
         public SkillDao(DbContext context, IMapper mapper) : base(context, mapper)
         {
+            IEnumerable<SkillDto> tmp = Get();
+            _skills = tmp.ToDictionary(s => s.Id, s => s);
+            _skillsByClassId = tmp.GroupBy(s => s.Id).ToDictionary(s => s.Key, s => s.ToArray());
         }
 
         public override SkillDto GetById(long id)

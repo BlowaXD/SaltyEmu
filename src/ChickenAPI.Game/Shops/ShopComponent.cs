@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using ChickenAPI.Game.ECS.Components;
 using ChickenAPI.Game.ECS.Entities;
+using ChickenAPI.Game.Shops;
 
 namespace ChickenAPI.Game.Features.Shops
 {

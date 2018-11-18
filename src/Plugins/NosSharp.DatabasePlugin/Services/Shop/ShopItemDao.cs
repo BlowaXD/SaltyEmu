@@ -14,15 +14,24 @@ namespace SaltyEmu.DatabasePlugin.Services.Shop
 {
     public class ShopItemDao : MappedRepositoryBase<ShopItemDto, ShopItemModel>, IShopItemService
     {
+        private readonly Dictionary<long, ShopItemDto[]> _shops;
+
         public ShopItemDao(DbContext context, IMapper mapper) : base(context, mapper)
         {
+            _shops = new Dictionary<long, ShopItemDto[]>(Get().GroupBy(s => s.ShopId).ToDictionary(s => s.Key, s => s.ToArray()));
         }
 
         public IEnumerable<ShopItemDto> GetByShopId(long shopId)
         {
             try
             {
-                return DbSet.Where(s => s.ShopId == shopId).ToList().Select(Mapper.Map<ShopItemDto>);
+                if (!_shops.TryGetValue(shopId, out ShopItemDto[] items))
+                {
+                    items = DbSet.Where(s => s.ShopId == shopId).ToList().Select(Mapper.Map<ShopItemDto>).ToArray();
+                    _shops[shopId] = items;
+                }
+
+                return items;
             }
             catch (Exception e)
             {

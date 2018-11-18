@@ -66,7 +66,7 @@ namespace ChickenAPI.Game.Skills
                 case SkillTargetType.SingleBuff when skill.HitType == 0:
                     if (entity.GetDistance(target) > skill.Range + target.BasicArea + 1)
                     {
-                        goto default;
+                        player?.SendPacket(target.GenerateTargetCancelPacket(CancelPacketType.InCombatMode));
                     }
 
                     targets.Add(target);

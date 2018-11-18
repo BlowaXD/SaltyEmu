@@ -14,15 +14,24 @@ namespace SaltyEmu.DatabasePlugin.Services.Map
 {
     public class MapMonsterDao : MappedRepositoryBase<MapMonsterDto, MapMonsterModel>, IMapMonsterService
     {
+        private readonly Dictionary<short, MapMonsterDto[]> _monsters;
+
         public MapMonsterDao(DbContext context, IMapper mapper) : base(context, mapper)
         {
+            _monsters = new Dictionary<short, MapMonsterDto[]>(Get().GroupBy(s => s.MapId).ToDictionary(dtos => dtos.Key, dtos => dtos.ToArray()));
         }
 
         public IEnumerable<MapMonsterDto> GetByMapId(long mapId)
         {
             try
             {
-                return DbSet.Where(s => s.MapId == mapId).ToList().Select(Mapper.Map<MapMonsterDto>);
+                if (!_monsters.TryGetValue((short)mapId, out MapMonsterDto[] items))
+                {
+                    items = DbSet.Where(s => s.MapId == mapId).ToList().Select(Mapper.Map<MapMonsterDto>).ToArray();
+                    _monsters[(short)mapId] = items;
+                }
+
+                return items;
             }
             catch (Exception e)
             {

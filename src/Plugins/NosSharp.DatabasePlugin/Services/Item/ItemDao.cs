@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using ChickenAPI.Data.Item;
@@ -12,10 +13,11 @@ namespace SaltyEmu.DatabasePlugin.Services.Item
 {
     public class ItemDao : MappedRepositoryBase<ItemDto, ItemModel>, IItemService
     {
-        private readonly Dictionary<long, ItemDto> _items = new Dictionary<long, ItemDto>();
+        private readonly Dictionary<long, ItemDto> _items;
 
         public ItemDao(DbContext context, IMapper mapper) : base(context, mapper)
         {
+            _items = new Dictionary<long, ItemDto>(Get().ToDictionary(s => s.Id, s => s));
         }
 
         public override ItemDto GetById(long id)

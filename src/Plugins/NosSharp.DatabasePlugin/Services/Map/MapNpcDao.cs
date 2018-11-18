@@ -6,7 +6,6 @@ using AutoMapper;
 using ChickenAPI.Data.Map;
 using ChickenAPI.Game.Data.AccessLayer.Map;
 using Microsoft.EntityFrameworkCore;
-using SaltyEmu.DatabasePlugin.Context;
 using SaltyEmu.DatabasePlugin.Models.Map;
 using SaltyEmu.DatabasePlugin.Services.Base;
 
@@ -14,15 +13,24 @@ namespace SaltyEmu.DatabasePlugin.Services.Map
 {
     public class MapNpcDao : MappedRepositoryBase<MapNpcDto, MapNpcModel>, IMapNpcService
     {
+        private readonly Dictionary<long, MapNpcDto[]> _npcs;
+
         public MapNpcDao(DbContext context, IMapper mapper) : base(context, mapper)
         {
+            _npcs = new Dictionary<long, MapNpcDto[]>(Get().GroupBy(s => s.MapId).ToDictionary(s => (long)s.Key, s => s.ToArray()));
         }
 
         public IEnumerable<MapNpcDto> GetByMapId(long mapId)
         {
             try
             {
-                return DbSet.Where(s => s.MapId == mapId).AsEnumerable().Select(Mapper.Map<MapNpcDto>);
+                if (!_npcs.TryGetValue(mapId, out MapNpcDto[] dtos))
+                {
+                    dtos = DbSet.Where(s => s.MapId == mapId).AsEnumerable().Select(Mapper.Map<MapNpcDto>).ToArray();
+                    _npcs[mapId] = dtos;
+                }
+
+                return dtos;
             }
             catch (Exception e)
             {

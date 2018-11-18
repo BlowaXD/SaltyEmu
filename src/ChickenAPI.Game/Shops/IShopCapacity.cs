@@ -1,4 +1,4 @@
-﻿namespace ChickenAPI.Game.Features.Shops
+﻿namespace ChickenAPI.Game.Shops
 {
     public interface IShopCapacity
     {

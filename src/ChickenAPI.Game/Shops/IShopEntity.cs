@@ -1,6 +1,6 @@
 ﻿using ChickenAPI.Game.ECS.Entities;
 
-namespace ChickenAPI.Game.Features.Shops
+namespace ChickenAPI.Game.Shops
 {
     public interface IShopEntity : IEntity, IShopCapacity
     {

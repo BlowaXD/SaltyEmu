@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using ChickenAPI.Data.NpcMonster;
@@ -11,10 +12,11 @@ namespace SaltyEmu.DatabasePlugin.Services.NpcMonster
 {
     public class NpcMonsterDao : MappedRepositoryBase<NpcMonsterDto, NpcMonsterModel>, INpcMonsterService
     {
-        private readonly Dictionary<long, NpcMonsterDto> _monsters = new Dictionary<long, NpcMonsterDto>();
+        private readonly Dictionary<long, NpcMonsterDto> _monsters;
 
         public NpcMonsterDao(DbContext context, IMapper mapper) : base(context, mapper)
         {
+            _monsters = new Dictionary<long, NpcMonsterDto>(Get().ToDictionary(s => s.Id, s => s));
         }
 
         public override NpcMonsterDto GetById(long id)
