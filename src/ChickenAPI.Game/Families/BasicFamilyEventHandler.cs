@@ -75,6 +75,7 @@ namespace ChickenAPI.Game.Families
                 Log.Warn("CANT_LEAVE_FAMILY_LEADER");
                 return;
             }
+
             DetachFamily(leave.Player);
             leave.Player.Broadcast(leave.Player.GenerateGidxPacket());
         }
@@ -146,6 +147,11 @@ namespace ChickenAPI.Game.Families
 
         private static void DetachFamily(IPlayerEntity player)
         {
+            if (player.FamilyCharacter == null)
+            {
+                return;
+            }
+
             CharacterFamilyService.DeleteById(player.FamilyCharacter.Id);
             player.FamilyCharacter = null;
             player.Family = null;

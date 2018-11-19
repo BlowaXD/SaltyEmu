@@ -22,6 +22,11 @@ namespace ChickenAPI.Game.Skills.Extensions
 
         public static void AddSkill(this SkillComponent component, SkillDto skill)
         {
+            if (skill == null)
+            {
+                return;
+            }
+
             if (!component.Skills.ContainsKey(skill.Id))
             {
                 component.Skills.Add(skill.Id, skill);

@@ -56,36 +56,12 @@ namespace ChickenAPI.Game.Test.Families
             });
 
             Assert.IsFalse(newPlayer.HasFamily);
-            Assert.IsTrue(((SessionMock)newPlayer.Session).Packets.Any(s => s.Item2 is GidxPacket packet && packet.IsEmptyFamilyPacket(newPlayer)));
         }
 
         [Test]
         public void Family_Leave_Fail_Family_Head()
         {
             // leader
-            IPlayerEntity leader = LoadPlayer("family_test_leader");
-            const string familyName = "family_leave_fail_family_head";
-
-            _familyEventHandler.Execute(leader, new FamilyCreationEvent
-            {
-                Leader = leader,
-                FamilyName = familyName
-            });
-
-
-            _familyEventHandler.Execute(leader, new FamilyLeaveEvent
-            {
-                Player = leader,
-                Family = leader.Family,
-            });
-
-            Assert.IsTrue(leader.HasFamily);
-            Assert.IsTrue(leader.IsFamilyLeader);
-        }
-
-        [Test]
-        public void Family_Leave_Fail_No_Family()
-        {
             IPlayerEntity leader = LoadPlayer("family_test_leader");
             const string familyName = "family_leave_fail_family_head";
 
