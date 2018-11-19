@@ -15,7 +15,6 @@ using ChickenAPI.Game.Inventory.Extensions;
 using ChickenAPI.Game.Managers;
 using ChickenAPI.Game.Movements.Extensions;
 using ChickenAPI.Game.Network;
-using ChickenAPI.Game.Player;
 using ChickenAPI.Game.Skills.Extensions;
 using ChickenAPI.Packets.CharacterSelectionScreen.Client;
 using ChickenAPI.Packets.Game.Server.Map;
@@ -56,6 +55,8 @@ namespace NosSharp.PacketHandler
                 { Message = $"HEROXP : {dto.HeroXp}/{AlgorithmService.GetHeroLevelXp(dto.Class, dto.Level)}", Type = SayColorType.Yellow, VisualType = VisualType.Character });
             session.SendPacket(new SayPacket { Message = "└----------------------------------------------┘", Type = SayColorType.Yellow, VisualType = VisualType.Character });
             session.SendPacket(new MapoutPacket());
+            session.Player.Character.SpPoint = 10000;
+            session.Player.Character.SpAdditionPoint = 500000;
             session.Player.TransferEntity(mapLayer);
             session.SendPacket(session.Player.GenerateSkiPacket());
             session.SendPacket(session.Player.GenerateFdPacket());

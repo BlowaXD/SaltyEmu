@@ -18,7 +18,7 @@ namespace NosSharp.PacketHandler.Inventory.Commands
             var itemFactory = ChickenContainer.Instance.Resolve<IItemInstanceFactory>();
             ItemInstanceDto item = itemFactory.CreateItem(packet.ItemId, packet.Quantity);
 
-            player.EmitEvent(new InventoryAddItemEventArgs
+            player.EmitEvent(new InventoryAddItemEvent
             {
                 ItemInstance = item
             });

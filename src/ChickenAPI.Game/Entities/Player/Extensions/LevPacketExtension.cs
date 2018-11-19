@@ -28,5 +28,13 @@ namespace ChickenAPI.Game.Entities.Player.Extensions
                 HeroLevelXpMax = Algorithm.GetHeroLevelXp(player.Character.Class, player.HeroLevel)
             };
         }
+
+        public static LevelUpPacket GenerateLevelUpPacket(this IPlayerEntity player)
+        {
+            return new LevelUpPacket
+            {
+                CharacterId = player.Id
+            };
+        }
     }
 }

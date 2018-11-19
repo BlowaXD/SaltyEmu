@@ -1,7 +1,6 @@
-﻿using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Packets.Game.Server.Player;
+﻿using ChickenAPI.Packets.Game.Server.Player;
 
-namespace ChickenAPI.Game.Player
+namespace ChickenAPI.Game.Entities.Player.Extensions
 {
     public static class FsPacketExtension
     {

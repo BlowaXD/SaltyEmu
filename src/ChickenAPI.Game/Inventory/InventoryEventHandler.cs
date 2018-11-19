@@ -21,15 +21,16 @@ namespace ChickenAPI.Game.Inventory
     public class InventoryEventHandler : EventHandlerBase
     {
         private static readonly Logger Log = Logger.GetLogger<InventoryEventHandler>();
+
         public override ISet<Type> HandledTypes => new HashSet<Type>
         {
-            typeof(InventoryAddItemEventArgs),
+            typeof(InventoryAddItemEvent),
             typeof(InventoryDropItemEventArgs),
             typeof(InventoryDestroyItemEventArgs),
             typeof(InventoryEqInfoEventArgs),
             typeof(InventoryInitializeEventArgs),
             typeof(InventoryMoveEventArgs),
-            typeof(InventoryUnwearEventArgs),
+            typeof(InventoryUnequipEvent),
             typeof(InventoryWearEventArgs)
         };
 
@@ -43,7 +44,7 @@ namespace ChickenAPI.Game.Inventory
 
             switch (e)
             {
-                case InventoryAddItemEventArgs addItemEventArgs:
+                case InventoryAddItemEvent addItemEventArgs:
                     AddItem(inventory, addItemEventArgs);
                     break;
 
@@ -63,7 +64,7 @@ namespace ChickenAPI.Game.Inventory
                     WearItem(inventory, entity as IPlayerEntity, inventoryWear);
                     break;
 
-                case InventoryUnwearEventArgs inventoryUnwear:
+                case InventoryUnequipEvent inventoryUnwear:
                     UnequipItem(inventory, entity, inventoryUnwear);
                     break;
                 case InventoryInitializeEventArgs initEvent:
@@ -93,15 +94,16 @@ namespace ChickenAPI.Game.Inventory
             EquipItem(inventory, player, item);
             player.SendPacket(player.GenerateEffectPacket(123));
 
-            if (!(player.CurrentMap is IMapLayer broadcastable))
-            {
-                return;
-            }
 
-            broadcastable.Broadcast(player.GenerateEqPacket());
+            player.Broadcast(player.GenerateEqPacket());
             player.SendPacket(player.GenerateEquipmentPacket());
             player.SendPacket(player.GenerateStatCharPacket());
-            broadcastable.Broadcast(player.GeneratePairyPacket());
+            player.Broadcast(player.GeneratePairyPacket());
+
+            if (item.Item.EquipmentSlot == EquipmentType.Sp)
+            {
+                player.SendPacket(player.GenerateSpPacket());
+            }
         }
 
         /// <summary>
@@ -138,7 +140,7 @@ namespace ChickenAPI.Game.Inventory
             player?.SendPacket(GenerateIvnPacket(tmp));
         }
 
-        private void UnequipItem(InventoryComponent inventory, IEntity entity, InventoryUnwearEventArgs eventArgs)
+        private void UnequipItem(InventoryComponent inventory, IEntity entity, InventoryUnequipEvent @event)
         {
             short slot = inventory.GetFirstFreeSlot(InventoryType.Equipment);
             if (slot == -1)
@@ -146,7 +148,7 @@ namespace ChickenAPI.Game.Inventory
                 return;
             }
 
-            ItemInstanceDto item = eventArgs.ItemToUnwear;
+            ItemInstanceDto item = @event.ItemToUnwear;
 
             inventory.Wear[(int)item.Item.EquipmentSlot] = null;
             inventory.Equipment[slot] = item;
@@ -159,16 +161,12 @@ namespace ChickenAPI.Game.Inventory
             }
 
             player.SendPacket(GenerateIvnPacket(item));
+            
 
-            if (!(player.CurrentMap is IMapLayer broadcastable))
-            {
-                return;
-            }
-
-            broadcastable.Broadcast(player.GenerateEqPacket());
+            player.Broadcast(player.GenerateEqPacket());
             player.SendPacket(player.GenerateEquipmentPacket());
             player.SendPacket(player.GenerateStatCharPacket());
-            broadcastable.Broadcast(player.GeneratePairyPacket());
+            player.Broadcast(player.GeneratePairyPacket());
         }
 
         private static void InitializeInventory(InventoryComponent inventory, IPlayerEntity player)
@@ -237,7 +235,7 @@ namespace ChickenAPI.Game.Inventory
             player.SendPacket(GenerateInventoryPacket(InventoryType.Etc, inv.Etc));
         }
 
-        private static void AddItem(InventoryComponent inv, InventoryAddItemEventArgs args)
+        private static void AddItem(InventoryComponent inv, InventoryAddItemEvent args)
         {
             ItemInstanceDto[] subinv = inv.GetSubInvFromItemInstance(args.ItemInstance);
 

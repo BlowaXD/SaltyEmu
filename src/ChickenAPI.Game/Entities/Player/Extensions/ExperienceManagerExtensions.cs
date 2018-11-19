@@ -10,9 +10,8 @@ namespace ChickenAPI.Game.Entities.Player.Extensions
     {
         private static IAlgorithmService Algorithm => new Lazy<IAlgorithmService>(() => ChickenContainer.Instance.Resolve<IAlgorithmService>()).Value;
 
-        public static void AddExperience(this IPlayerEntity player, long amount)
+        public static void TryLevelUp(this IPlayerEntity player)
         {
-            player.LevelXp += amount;
             int levelXp = Algorithm.GetLevelXp(player.Character.Class, player.Level);
             while (player.LevelXp >= levelXp)
             {
@@ -25,12 +24,10 @@ namespace ChickenAPI.Game.Entities.Player.Extensions
                     LevelUpType = LevelUpType.Level,
                 });
             }
-            player.SendPacket(player.GenerateLevPacket());
         }
 
-        public static void AddJobExperience(this IPlayerEntity player, long amount)
+        public static void TryJobLevelUp(this IPlayerEntity player)
         {
-            player.JobLevelXp += amount;
             int jobXp = Algorithm.GetJobLevelXp(player.Character.Class, player.Level);
             while (player.JobLevelXp >= jobXp)
             {
@@ -43,13 +40,10 @@ namespace ChickenAPI.Game.Entities.Player.Extensions
                     LevelUpType = LevelUpType.JobLevel,
                 });
             }
-
-            player.SendPacket(player.GenerateLevPacket());
         }
 
-        public static void AddHeroExperience(this IPlayerEntity player, long amount)
+        public static void TryHeroLevelUp(this IPlayerEntity player)
         {
-            player.HeroLevelXp += amount;
             int heroXp = Algorithm.GetHeroLevelXp(player.Character.Class, player.Level);
             while (player.HeroLevelXp >= heroXp)
             {
@@ -62,7 +56,26 @@ namespace ChickenAPI.Game.Entities.Player.Extensions
                     LevelUpType = LevelUpType.HeroLevel,
                 });
             }
+        }
 
+        public static void AddExperience(this IPlayerEntity player, long amount)
+        {
+            player.LevelXp += amount;
+            player.TryLevelUp();
+            player.SendPacket(player.GenerateLevPacket());
+        }
+
+        public static void AddJobExperience(this IPlayerEntity player, long amount)
+        {
+            player.JobLevelXp += amount;
+            player.TryJobLevelUp();
+            player.SendPacket(player.GenerateLevPacket());
+        }
+
+        public static void AddHeroExperience(this IPlayerEntity player, long amount)
+        {
+            player.HeroLevelXp += amount;
+            player.TryHeroLevelUp();
             player.SendPacket(player.GenerateLevPacket());
         }
     }

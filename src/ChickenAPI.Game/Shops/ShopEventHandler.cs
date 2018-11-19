@@ -342,7 +342,7 @@ namespace ChickenAPI.Game.Shops
                 player.SendPacket(player.GenerateGoldPacket());
             }
 
-            player.EmitEvent(new InventoryAddItemEventArgs
+            player.EmitEvent(new InventoryAddItemEvent
             {
                 ItemInstance = newitem
             });

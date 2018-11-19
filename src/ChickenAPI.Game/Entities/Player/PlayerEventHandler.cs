@@ -34,6 +34,7 @@ namespace ChickenAPI.Game.Entities.Player
                     {
                         return;
                     }
+
                     player.AddExperience(expGain.Experience);
                     player.AddJobExperience(expGain.JobExperience);
                     player.AddHeroExperience(expGain.HeroExperience);
@@ -70,18 +71,19 @@ namespace ChickenAPI.Game.Entities.Player
                     play.MpMax = Algorithm.GetMpMax(play.Character.Class, play.Level);
                     play.Mp = play.MpMax;
                     play.SendPacket(play.GenerateStatPacket());
-                    play.SendPacket(new LevelUpPacket {CharacterId = play.Id});
+                    play.SendPacket(play.GenerateLevelUpPacket());
                     switch (levelUp.LevelUpType)
                     {
                         case LevelUpType.Level:
-                            play.GenerateEffectPacket(6);
+                            play.Broadcast(play.GenerateEffectPacket(6));
                             break;
                         case LevelUpType.HeroLevel:
                         case LevelUpType.JobLevel:
-                            play.GenerateEffectPacket(8);
+                            play.Broadcast(play.GenerateEffectPacket(8));
                             break;
                     }
-                    play.GenerateEffectPacket(198);
+
+                    play.Broadcast(play.GenerateEffectPacket(198));
                     break;
             }
         }

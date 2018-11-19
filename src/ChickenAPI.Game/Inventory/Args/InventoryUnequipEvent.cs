@@ -3,7 +3,7 @@ using ChickenAPI.Game.Events;
 
 namespace ChickenAPI.Game.Inventory.Args
 {
-    public class InventoryUnwearEventArgs : ChickenEventArgs
+    public class InventoryUnequipEvent : ChickenEventArgs
     {
         public ItemInstanceDto ItemToUnwear { get; set; }
     }

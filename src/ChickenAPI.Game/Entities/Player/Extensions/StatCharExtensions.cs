@@ -38,13 +38,13 @@ namespace ChickenAPI.Game.Entities.Player.Extensions
             return new ScPacket
             {
                 Type = type,
+                Type2 = subType,
                 MainWeaponUpgrade = player.Inventory.Wear[(int)EquipmentType.MainWeapon]?.Upgrade ?? 0,
                 MinHit = 0,
                 MaxHit = 0,
                 HitRate = 0,
                 CriticalHitRate = 0,
                 CriticalHitMultiplier = 0,
-                Type2 = subType,
                 SecondaryWeaponUpgrade = player.Inventory.Wear[(int)EquipmentType.MainWeapon]?.Upgrade ?? 0,
                 SecondaryMinHit = 0,
                 SecondaryMaxHit = 0,

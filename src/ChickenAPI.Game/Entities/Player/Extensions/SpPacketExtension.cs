@@ -5,7 +5,7 @@ namespace ChickenAPI.Game.Entities.Player.Extensions
 {
     public static class SpPacketExtension
     {
-        public const int MAX_SP_POINTS = 10000;
+        public const int MAX_SP_POINTS = 1000000;
         public const int MAX_SP_ADDITIONAL_POINTS = 10000000;
 
         public static SpPacket GenerateSpPacket(this IPlayerEntity player) => new SpPacket
