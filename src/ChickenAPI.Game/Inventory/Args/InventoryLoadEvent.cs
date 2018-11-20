@@ -2,7 +2,7 @@
 
 namespace ChickenAPI.Game.Inventory.Args
 {
-    public class InventoryInitializeEventArgs : ChickenEventArgs
+    public class InventoryLoadEvent : ChickenEventArgs
     {
     }
 }

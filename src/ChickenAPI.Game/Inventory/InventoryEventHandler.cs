@@ -15,6 +15,7 @@ using ChickenAPI.Game.Events;
 using ChickenAPI.Game.Inventory.Args;
 using ChickenAPI.Game.Inventory.Extensions;
 using ChickenAPI.Packets.Game.Server.Inventory;
+using Newtonsoft.Json;
 
 namespace ChickenAPI.Game.Inventory
 {
@@ -25,10 +26,10 @@ namespace ChickenAPI.Game.Inventory
         public override ISet<Type> HandledTypes => new HashSet<Type>
         {
             typeof(InventoryAddItemEvent),
-            typeof(InventoryDropItemEventArgs),
+            typeof(InventoryRemoveItemEvent),
             typeof(InventoryDestroyItemEventArgs),
             typeof(InventoryEqInfoEventArgs),
-            typeof(InventoryInitializeEventArgs),
+            typeof(InventoryLoadEvent),
             typeof(InventoryMoveEventArgs),
             typeof(InventoryUnequipEvent),
             typeof(InventoryWearEventArgs)
@@ -48,7 +49,7 @@ namespace ChickenAPI.Game.Inventory
                     AddItem(inventory, addItemEventArgs);
                     break;
 
-                case InventoryDropItemEventArgs dropItemEventArgs:
+                case InventoryRemoveItemEvent dropItemEventArgs:
                     DropItem(inventory, dropItemEventArgs);
                     break;
 
@@ -67,7 +68,7 @@ namespace ChickenAPI.Game.Inventory
                 case InventoryUnequipEvent inventoryUnwear:
                     UnequipItem(inventory, entity, inventoryUnwear);
                     break;
-                case InventoryInitializeEventArgs initEvent:
+                case InventoryLoadEvent initEvent:
                     InitializeInventory(inventory, entity as IPlayerEntity);
                     break;
 
@@ -80,9 +81,9 @@ namespace ChickenAPI.Game.Inventory
             }
         }
 
-        private void WearItem(InventoryComponent inventory, IPlayerEntity player, InventoryWearEventArgs inventoryWear)
+        private void WearItem(InventoryComponent inventory, IPlayerEntity player, InventoryWearEventArgs e)
         {
-            ItemInstanceDto item = inventory.GetItemFromSlotAndType(inventoryWear.InventorySlot, InventoryType.Equipment);
+            ItemInstanceDto item = inventory.GetItemFromSlotAndType(e.InventorySlot, InventoryType.Equipment);
             if (item == null)
             {
                 return;
@@ -112,32 +113,37 @@ namespace ChickenAPI.Game.Inventory
         /// </summary>
         /// <param name="inventory"></param>
         /// <param name="entity"></param>
-        /// <param name="item"></param>
-        private void EquipItem(InventoryComponent inventory, IEntity entity, ItemInstanceDto item)
+        /// <param name="itemToEquip"></param>
+        private static void EquipItem(InventoryComponent inventory, IEntity entity, ItemInstanceDto itemToEquip)
         {
             // check if slot already claimed
-            ItemInstanceDto tmp = inventory.GetWeared(item.Item.EquipmentSlot);
+            Log.Info($"ToEquip : {JsonConvert.SerializeObject(itemToEquip.Item)}");
+            ItemInstanceDto alreadyEquipped = inventory.GetWeared(itemToEquip.Item.EquipmentSlot);
             var player = entity as IPlayerEntity;
 
-            if (tmp != null)
+            if (alreadyEquipped != null)
             {
                 // todo refacto to "MoveSlot" method
-                inventory.Equipment[item.Slot] = tmp;
-                tmp.Slot = item.Slot;
-                tmp.Type = InventoryType.Equipment;
+                inventory.Equipment[itemToEquip.Slot] = alreadyEquipped;
+                alreadyEquipped.Slot = itemToEquip.Slot;
+                alreadyEquipped.Type = InventoryType.Equipment;
+            }
+            else
+            {
+                inventory.Equipment[itemToEquip.Slot] = null;
             }
 
-            player?.SendPacket(GenerateEmptyIvnPacket(item.Type, item.Slot));
-            inventory.Wear[(int)item.Item.EquipmentSlot] = item;
-            item.Slot = (short)item.Item.EquipmentSlot;
-            item.Type = InventoryType.Wear;
+            player?.SendPacket(GenerateEmptyIvnPacket(itemToEquip.Type, itemToEquip.Slot));
+            inventory.Wear[(int)itemToEquip.Item.EquipmentSlot] = itemToEquip;
+            itemToEquip.Slot = (short)itemToEquip.Item.EquipmentSlot;
+            itemToEquip.Type = InventoryType.Wear;
 
-            if (tmp == null)
+            if (alreadyEquipped == null)
             {
                 return;
             }
 
-            player?.SendPacket(GenerateIvnPacket(tmp));
+            player?.SendPacket(GenerateIvnPacket(alreadyEquipped));
         }
 
         private void UnequipItem(InventoryComponent inventory, IEntity entity, InventoryUnequipEvent @event)
@@ -161,7 +167,7 @@ namespace ChickenAPI.Game.Inventory
             }
 
             player.SendPacket(GenerateIvnPacket(item));
-            
+
 
             player.Broadcast(player.GenerateEqPacket());
             player.SendPacket(player.GenerateEquipmentPacket());
@@ -270,7 +276,7 @@ namespace ChickenAPI.Game.Inventory
             player.SendPacket(GenerateIvnPacket(args.ItemInstance));
         }
 
-        private static void DropItem(InventoryComponent inv, InventoryDropItemEventArgs args)
+        private static void DropItem(InventoryComponent inv, InventoryRemoveItemEvent args)
         {
             if (!args.ItemInstance.Item.IsDroppable)
             {

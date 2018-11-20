@@ -1,4 +1,5 @@
 ﻿using ChickenAPI.Enums.Game.Character;
+using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Packets.Attributes;
 
 namespace ChickenAPI.Packets.Game.Server.Inventory
@@ -10,7 +11,7 @@ namespace ChickenAPI.Packets.Game.Server.Inventory
         public long CharacterId { get; set; }
 
         [PacketIndex(1)]
-        public byte VisualType { get; set; }
+        public VisualType VisualType { get; set; }
 
         [PacketIndex(2)]
         public GenderType GenderType { get; set; }

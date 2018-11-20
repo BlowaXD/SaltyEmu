@@ -83,7 +83,7 @@ namespace NosSharp.PacketHandler
             // scN
 
 
-            session.Player.EmitEvent(new InventoryInitializeEventArgs());
+            session.Player.EmitEvent(new InventoryLoadEvent());
             session.Player.EmitEvent(new InventoryGeneratePacketDetailsEventArgs());
             session.SendPacket(session.Player.GenerateCondPacket());
 

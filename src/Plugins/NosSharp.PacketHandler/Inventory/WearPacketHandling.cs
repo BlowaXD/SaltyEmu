@@ -1,4 +1,5 @@
-﻿using ChickenAPI.Game.Entities.Player;
+﻿using System;
+using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Inventory.Args;
 using ChickenAPI.Packets.Game.Client.Inventory;
 

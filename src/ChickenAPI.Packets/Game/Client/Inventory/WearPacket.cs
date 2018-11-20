@@ -7,9 +7,9 @@ namespace ChickenAPI.Packets.Game.Client.Inventory
     public class WearPacket : PacketBase
     {
         [PacketIndex(0)]
-        public InventoryType InventoryType { get; set; }
+        public short ItemSlot { get; set; }
 
         [PacketIndex(1)]
-        public short ItemSlot { get; set; }
+        public InventoryType InventoryType { get; set; }
     }
 }
