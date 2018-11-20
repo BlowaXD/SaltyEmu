@@ -17,7 +17,7 @@ namespace ChickenAPI.Game.Entities.Player.Extensions
                 FamilyId = family?.Id ?? -1, // todo : family system
                 FamilyName = family?.Name ?? "-",
                 CharacterId = player.Character.Id,
-                Authority = player.Session.Account.Authority > AuthorityType.GameMaster ? (byte)2 : (byte)0,
+                Authority = player.Session.Account.Authority >= AuthorityType.GameMaster ? (byte)2 : (byte)0,
                 Gender = player.Character.Gender,
                 HairStyle = player.Character.HairStyle,
                 HairColor = player.Character.HairColor,

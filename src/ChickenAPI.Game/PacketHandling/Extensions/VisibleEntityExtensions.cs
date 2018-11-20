@@ -149,7 +149,7 @@ namespace ChickenAPI.Game.PacketHandling.Extensions
                 DirectionType = movable.DirectionType,
                 InCharacterSubPacket = new InCharacterSubPacketBase
                 {
-                    Authority = player.Session.Account.Authority > AuthorityType.GameMaster ? (byte)2 : (byte)0,
+                    Authority = player.Session.Account.Authority >= AuthorityType.GameMaster ? (byte)2 : (byte)0,
                     Gender = player.Character.Gender,
                     HairStyle = player.Character.HairStyle,
                     HairColor = player.Character.HairColor,

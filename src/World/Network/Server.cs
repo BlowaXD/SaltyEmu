@@ -96,7 +96,6 @@ namespace World.Network
                 {
                     Log.Error("[SERVER_LOOP]", e);
                 }
-
             }
         }
 
