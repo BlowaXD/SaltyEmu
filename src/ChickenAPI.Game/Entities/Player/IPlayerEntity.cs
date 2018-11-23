@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using ChickenAPI.Data.Character;
+using ChickenAPI.Enums.Game.Character;
 using ChickenAPI.Game.Battle.Interfaces;
 using ChickenAPI.Game.Families;
 using ChickenAPI.Game.Network;
@@ -11,6 +12,8 @@ namespace ChickenAPI.Game.Entities.Player
     public interface IPlayerEntity : IBattleEntity, IInventoriedEntity, IExperenciedEntity, ISpecialistEntity, IQuicklistEntity, IFamilyCapacities, IBroadcastable
     {
         CharacterDto Character { get; }
+
+        CharacterNameAppearance NameAppearance { get; }
 
         ISession Session { get; }
 

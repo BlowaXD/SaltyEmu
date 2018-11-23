@@ -72,7 +72,7 @@ namespace ChickenAPI.Game.PacketHandling.Extensions
             }
         }
 
-        public static OutPacketBase GenerateOutPacket(this IPlayerEntity player) => new OutPacketBase
+        public static OutPacket GenerateOutPacket(this IPlayerEntity player) => new OutPacket
         {
             Type = VisualType.Character,
             EntityId = player.Character.Id
@@ -149,7 +149,7 @@ namespace ChickenAPI.Game.PacketHandling.Extensions
                 DirectionType = movable.DirectionType,
                 InCharacterSubPacket = new InCharacterSubPacketBase
                 {
-                    Authority = player.Session.Account.Authority >= AuthorityType.GameMaster ? (byte)2 : (byte)0,
+                    NameAppearance = player.NameAppearance,
                     Gender = player.Character.Gender,
                     HairStyle = player.Character.HairStyle,
                     HairColor = player.Character.HairColor,

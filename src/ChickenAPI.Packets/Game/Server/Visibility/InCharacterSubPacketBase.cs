@@ -10,7 +10,7 @@ namespace ChickenAPI.Packets.Game.Server.Visibility
         #region Properties
 
         [PacketIndex(0)]
-        public byte Authority { get; set; }
+        public CharacterNameAppearance NameAppearance { get; set; }
 
         [PacketIndex(1)]
         public GenderType Gender { get; set; }

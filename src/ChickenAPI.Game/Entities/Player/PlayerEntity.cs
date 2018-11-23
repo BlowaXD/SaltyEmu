@@ -9,6 +9,8 @@ using ChickenAPI.Data.Character;
 using ChickenAPI.Data.Families;
 using ChickenAPI.Data.Item;
 using ChickenAPI.Data.Skills;
+using ChickenAPI.Enums;
+using ChickenAPI.Enums.Game.Character;
 using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Enums.Game.Families;
 using ChickenAPI.Enums.Game.Items;
@@ -84,6 +86,25 @@ namespace ChickenAPI.Game.Entities.Player
         public MovableComponent Movable { get; }
         public InventoryComponent Inventory { get; }
         public CharacterDto Character { get; }
+
+        public CharacterNameAppearance NameAppearance
+        {
+            get
+            {
+                if (IsInvisible)
+                {
+                    return CharacterNameAppearance.Invisible;
+                }
+
+                if (Session.Account.Authority >= AuthorityType.GameMaster)
+                {
+                    return CharacterNameAppearance.GameMaster;
+                }
+
+                return CharacterNameAppearance.Player;
+            }
+        }
+
         public QuicklistComponent Quicklist { get; }
 
         public ISession Session { get; }

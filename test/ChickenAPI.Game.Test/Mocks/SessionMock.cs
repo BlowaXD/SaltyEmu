@@ -38,7 +38,7 @@ namespace ChickenAPI.Game.Test.Mocks
 
         public IPlayerEntity Player => _session.Player;
 
-        public LanguageKey Langage => _session.Langage;
+        public LanguageKey Language => _session.Language;
 
         public void InitializeAccount(AccountDto dto)
         {

@@ -4,7 +4,7 @@ using ChickenAPI.Packets.Attributes;
 namespace ChickenAPI.Packets.Game.Server.Entities
 {
     [PacketHeader("out")]
-    public class OutPacketBase : PacketBase
+    public class OutPacket : PacketBase
     {
         public VisualType Type { get; set; }
 

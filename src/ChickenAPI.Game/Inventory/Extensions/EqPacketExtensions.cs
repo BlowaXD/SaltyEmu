@@ -32,7 +32,7 @@ namespace ChickenAPI.Game.Inventory.Extensions
         public static EqPacket GenerateEqPacket(this IPlayerEntity player) => new EqPacket
         {
             CharacterId = player.Id,
-            VisualType = player.Type,
+            NameAppearance = player.NameAppearance,
             GenderType = player.Character.Gender,
             HairStyleType = player.Character.HairStyle,
             HairColorType = player.Character.HairColor,

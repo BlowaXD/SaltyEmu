@@ -36,7 +36,7 @@ namespace World.Network
         public IPAddress Ip { get; private set; }
         public AccountDto Account { get; private set; }
         public IPlayerEntity Player { get; private set; }
-        public LanguageKey Langage => LanguageKey.EN;
+        public LanguageKey Language => LanguageKey.EN;
 
         public int LastKeepAliveIdentity { get; set; }
 

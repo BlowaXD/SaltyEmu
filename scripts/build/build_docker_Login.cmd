@@ -1,0 +1,1 @@
+docker build -t saltyemu-login -f login.Dockerfile .

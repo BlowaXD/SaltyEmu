@@ -1,6 +1,6 @@
 ﻿using ChickenAPI.Packets.Attributes;
 
-namespace ChickenAPI.Packets.CharacterSelectionScreen.Server
+namespace ChickenAPI.Packets.Game.Server.UserInterface
 {
     [PacketHeader("info")]
     public class InfoPacketBase : PacketBase

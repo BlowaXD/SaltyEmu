@@ -19,7 +19,7 @@ namespace ChickenAPI.Game.Network
 
         AccountDto Account { get; }
         IPlayerEntity Player { get; }
-        LanguageKey Langage { get; }
+        LanguageKey Language { get; }
 
         void InitializeAccount(AccountDto dto);
         void InitializeCharacterId(long id);

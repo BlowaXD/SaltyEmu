@@ -3,7 +3,7 @@ using ChickenAPI.Game.Events;
 
 namespace ChickenAPI.Game.Inventory.Args
 {
-    public class InventoryWearEventArgs : ChickenEventArgs
+    public class InventoryWearEvent : ChickenEventArgs
     {
         public short InventorySlot { get; set; }
         public InventoryType InventoryType { get; set; }

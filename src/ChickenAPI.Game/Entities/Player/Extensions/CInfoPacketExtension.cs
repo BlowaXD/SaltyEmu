@@ -1,5 +1,6 @@
 ﻿using ChickenAPI.Data.Families;
 using ChickenAPI.Enums;
+using ChickenAPI.Enums.Game.Character;
 using ChickenAPI.Packets.Game.Server.Player;
 
 namespace ChickenAPI.Game.Entities.Player.Extensions
@@ -17,7 +18,7 @@ namespace ChickenAPI.Game.Entities.Player.Extensions
                 FamilyId = family?.Id ?? -1, // todo : family system
                 FamilyName = family?.Name ?? "-",
                 CharacterId = player.Character.Id,
-                Authority = player.Session.Account.Authority >= AuthorityType.GameMaster ? (byte)2 : (byte)0,
+                NameAppearance = player.NameAppearance,
                 Gender = player.Character.Gender,
                 HairStyle = player.Character.HairStyle,
                 HairColor = player.Character.HairColor,

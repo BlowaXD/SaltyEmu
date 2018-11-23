@@ -1,0 +1,1 @@
+docker run -p 4000:4000 --link saltyemu-database:saltyemu-database --link saltyemu-session:session --name saltyemu-login -d saltyemu-login:latest

@@ -21,6 +21,7 @@ using ChickenAPI.Game.Data.AccessLayer.Server;
 using ChickenAPI.Game.Network;
 using ChickenAPI.Packets.CharacterSelectionScreen.Client;
 using ChickenAPI.Packets.CharacterSelectionScreen.Server;
+using ChickenAPI.Packets.Game.Server.UserInterface;
 
 namespace NosSharp.PacketHandler
 {
@@ -96,7 +97,7 @@ namespace NosSharp.PacketHandler
             {
                 session.SendPacket(new InfoPacketBase
                 {
-                    Message = Language.GetLanguage(ChickenI18NKey.CHARACTER_NAME_INVALID, session.Langage)
+                    Message = Language.GetLanguage(ChickenI18NKey.CHARACTER_NAME_INVALID, session.Language)
                 });
                 Log.Warn($"[CREATE_CHARACTER] INVALID_NAME {characterName}");
                 return;
@@ -107,7 +108,7 @@ namespace NosSharp.PacketHandler
             {
                 session.SendPacket(new InfoPacketBase
                 {
-                    Message = Language.GetLanguage(ChickenI18NKey.CHARACTER_NAME_ALREADY_TAKEN, session.Langage)
+                    Message = Language.GetLanguage(ChickenI18NKey.CHARACTER_NAME_ALREADY_TAKEN, session.Language)
                 });
                 Log.Warn($"[CREATE_CHARACTER] INVALID_NAME {characterName}");
                 return;

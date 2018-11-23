@@ -9,6 +9,7 @@ using ChickenAPI.Enums.Game.Items;
 using ChickenAPI.Game.Data.AccessLayer.Item;
 using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Effects;
+using ChickenAPI.Game.Entities;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Entities.Player.Extensions;
 using ChickenAPI.Game.Events;
@@ -27,17 +28,23 @@ namespace ChickenAPI.Game.Inventory
         {
             typeof(InventoryAddItemEvent),
             typeof(InventoryRemoveItemEvent),
-            typeof(InventoryDestroyItemEventArgs),
+            typeof(InventoryDestroyItemEvent),
             typeof(InventoryEqInfoEventArgs),
             typeof(InventoryLoadEvent),
             typeof(InventoryMoveEventArgs),
             typeof(InventoryUnequipEvent),
-            typeof(InventoryWearEventArgs)
+            typeof(InventoryWearEvent),
+            typeof(InventoryUseItemEvent),
         };
 
         public override void Execute(IEntity entity, ChickenEventArgs e)
         {
-            var inventory = entity.GetComponent<InventoryComponent>();
+            if (!(entity is IInventoriedEntity inventoried))
+            {
+                return;
+            }
+
+            InventoryComponent inventory = inventoried.Inventory;
             if (inventory == null)
             {
                 return;
@@ -53,15 +60,15 @@ namespace ChickenAPI.Game.Inventory
                     DropItem(inventory, dropItemEventArgs);
                     break;
 
-                case InventoryDestroyItemEventArgs destroyItemEventArgs:
+                case InventoryDestroyItemEvent destroyItemEventArgs:
                     DestroyItem(inventory, destroyItemEventArgs);
                     break;
 
-                case InventoryGeneratePacketDetailsEventArgs detailsEventArgs:
+                case InventoryRequestDetailsEvent detailsEventArgs:
                     GenerateInventoryPackets(inventory, entity as IPlayerEntity);
                     break;
 
-                case InventoryWearEventArgs inventoryWear:
+                case InventoryWearEvent inventoryWear:
                     WearItem(inventory, entity as IPlayerEntity, inventoryWear);
                     break;
 
@@ -81,7 +88,7 @@ namespace ChickenAPI.Game.Inventory
             }
         }
 
-        private void WearItem(InventoryComponent inventory, IPlayerEntity player, InventoryWearEventArgs e)
+        private void WearItem(InventoryComponent inventory, IPlayerEntity player, InventoryWearEvent e)
         {
             ItemInstanceDto item = inventory.GetItemFromSlotAndType(e.InventorySlot, InventoryType.Equipment);
             if (item == null)
@@ -99,11 +106,15 @@ namespace ChickenAPI.Game.Inventory
             player.Broadcast(player.GenerateEqPacket());
             player.SendPacket(player.GenerateEquipmentPacket());
             player.SendPacket(player.GenerateStatCharPacket());
-            player.Broadcast(player.GeneratePairyPacket());
 
-            if (item.Item.EquipmentSlot == EquipmentType.Sp)
+            switch (item.Item.EquipmentSlot)
             {
-                player.SendPacket(player.GenerateSpPacket());
+                case EquipmentType.Fairy:
+                    player.Broadcast(player.GeneratePairyPacket());
+                    break;
+                case EquipmentType.Sp:
+                    player.SendPacket(player.GenerateSpPacket());
+                    break;
             }
         }
 
@@ -181,6 +192,7 @@ namespace ChickenAPI.Game.Inventory
             IEnumerable<ItemInstanceDto> items = characterItemService.GetByCharacterId(player.Character.Id);
             if (items == null || !items.Any())
             {
+                return;
             }
 
             foreach (ItemInstanceDto item in items)
@@ -291,7 +303,7 @@ namespace ChickenAPI.Game.Inventory
             subinv[itemIndex] = null;
         }
 
-        private static void DestroyItem(InventoryComponent inv, InventoryDestroyItemEventArgs args)
+        private static void DestroyItem(InventoryComponent inv, InventoryDestroyItemEvent args)
         {
             ItemInstanceDto[] subinv = inv.GetSubInvFromItemInstance(args.ItemInstance);
 

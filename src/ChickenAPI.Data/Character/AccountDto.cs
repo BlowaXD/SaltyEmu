@@ -1,4 +1,5 @@
-﻿using ChickenAPI.Enums;
+﻿using ChickenAPI.Core.i18n;
+using ChickenAPI.Enums;
 using ChickenAPI.Game.Permissions;
 
 namespace ChickenAPI.Data.Character

@@ -84,7 +84,7 @@ namespace NosSharp.PacketHandler
 
 
             session.Player.EmitEvent(new InventoryLoadEvent());
-            session.Player.EmitEvent(new InventoryGeneratePacketDetailsEventArgs());
+            session.Player.EmitEvent(new InventoryRequestDetailsEvent());
             session.SendPacket(session.Player.GenerateCondPacket());
 
             session.SendPacket(session.Player.GenerateGoldPacket());

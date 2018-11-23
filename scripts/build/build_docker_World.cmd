@@ -1,0 +1,1 @@
+docker build -t saltyemu-world -f world.Dockerfile .

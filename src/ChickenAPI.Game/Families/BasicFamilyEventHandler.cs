@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Autofac;
+using ChickenAPI.Core.i18n;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Logging;
 using ChickenAPI.Data.Character;
@@ -12,10 +13,12 @@ using ChickenAPI.Game.Data.AccessLayer.Character;
 using ChickenAPI.Game.Data.AccessLayer.Families;
 using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Entities.Player;
+using ChickenAPI.Game.Entities.Player.Extensions;
 using ChickenAPI.Game.Events;
 using ChickenAPI.Game.Families.Events;
 using ChickenAPI.Game.Families.Extensions;
 using ChickenAPI.Game.Managers;
+using ChickenAPI.Game.UserInterface.Extensions;
 
 namespace ChickenAPI.Game.Families
 {
@@ -65,19 +68,19 @@ namespace ChickenAPI.Game.Families
 
         private void FamilyKickOffline(FamilyKickEvent kick)
         {
-            throw new NotImplementedException();
         }
 
         private void FamilyLeave(FamilyLeaveEvent leave)
         {
-            if (leave.Player.IsFamilyLeader)
+            IPlayerEntity player = leave.Player;
+            if (player.IsFamilyLeader)
             {
                 Log.Warn("CANT_LEAVE_FAMILY_LEADER");
                 return;
             }
 
-            DetachFamily(leave.Player);
-            leave.Player.Broadcast(leave.Player.GenerateGidxPacket());
+            DetachFamily(player);
+            player.Broadcast(player.GenerateGidxPacket());
         }
 
         private static void FamilyJoin(FamilyJoinEvent join)

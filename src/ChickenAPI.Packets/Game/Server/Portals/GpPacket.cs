@@ -4,8 +4,7 @@ using ChickenAPI.Packets.Attributes;
 namespace ChickenAPI.Packets.Game.Server.Portals
 {
     /// <summary>
-    ///     gp {SourceX} {SourceY} {ServerManager.Instance.GetMapInstance(DestinationMapInstanceId)?.Map.MapId ?? 0} {Type}
-    ///     {PortalId} {(IsDisabled ? 1 : 0)}
+    ///     gp {SourceX} {SourceY} {MapId} {Type} {PortalId} {IsDisabled}
     /// </summary>
     [PacketHeader("gp")]
     public class GpPacket : PacketBase
