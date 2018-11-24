@@ -36,5 +36,14 @@ namespace SaltyEmu.PathfinderPlugin.Algorithms
 
             return path;
         }
+
+
+        /// <summary>
+        ///     Returns an Array with the neighbors of the given position
+        /// </summary>
+        /// <param name="pos"></param>
+        /// <param name="map"></param>
+        /// <returns></returns>
+        public Position<short>[] GetNeighbors(Position<short> pos, IMap map) => PathfinderHelper.GetNeighbors(pos, map);
     }
 }

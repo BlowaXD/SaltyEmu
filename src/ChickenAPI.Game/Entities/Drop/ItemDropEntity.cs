@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using ChickenAPI.Core.Utils;
 using ChickenAPI.Data.Item;
 using ChickenAPI.Enums.Game.Entity;
+using ChickenAPI.Game.ECS.Components;
 using ChickenAPI.Game.ECS.Entities;
 
 namespace ChickenAPI.Game.Entities.Drop
@@ -10,7 +12,7 @@ namespace ChickenAPI.Game.Entities.Drop
     {
         public ItemDropEntity(long id) : base(VisualType.MapObject, id)
         {
-            // transport id should be its id
+            Components = new Dictionary<Type, IComponent>();
         }
 
         public ItemDto Item { get; set; }
