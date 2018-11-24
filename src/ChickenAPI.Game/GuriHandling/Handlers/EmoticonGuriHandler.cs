@@ -11,7 +11,7 @@ namespace ChickenAPI.Game.GuriHandling.Handlers
 {
     public class EmoticonGuriHandler
     {
-        private static readonly Logger Log = Logger.GetLogger<TeleporterHandler>();
+        private static readonly Logger Log = Logger.GetLogger<EmoticonGuriHandler>();
 
         /// <summary>
         /// This method will teleport the requester to Act 6
@@ -27,7 +27,6 @@ namespace ChickenAPI.Game.GuriHandling.Handlers
             {
                 return;
             }
-
 
             // todo receiver type
             player.Broadcast(player.EmojiToEffectPacket((EmojiType)e.Data));

@@ -3,7 +3,7 @@
 namespace ChickenAPI.Packets.Game.Client.Player
 {
     [PacketHeader("guri")]
-    public class ClientGuriPacket
+    public class ClientGuriPacket : PacketBase
     {
         [PacketIndex(0)]
         public int Type { get; set; }

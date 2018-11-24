@@ -215,12 +215,12 @@ namespace ChickenAPI.Game.Entities.Player
         public bool HasSkill(long skillId) => SkillComponent.Skills.ContainsKey(skillId);
 
         public bool CanCastSkill(long skillId) => SkillComponent.CooldownsBySkillId.Any(s => s.Item2 == skillId);
+
         public IDictionary<long, SkillDto> Skills { get; }
 
         public SkillComponent SkillComponent { get; }
 
-        #endregion
-
+        #endregion Skills
 
         #region Stats
 
@@ -235,12 +235,13 @@ namespace ChickenAPI.Game.Entities.Player
         public int HpMax { get; set; }
         public int MpMax { get; set; }
 
-        #endregion
+        #endregion Stats
 
         #region Movements
 
         // todo manage Position of player in instanciated mapLayers
         public Position<short> Position { get; }
+
         public bool IsSitting => Movable.IsSitting;
         public bool IsWalking => !Movable.IsSitting;
         public bool CanMove => !Movable.IsSitting;
@@ -256,9 +257,9 @@ namespace ChickenAPI.Game.Entities.Player
         public Position<short> Actual => Movable.Actual;
         public Position<short> Destination => Movable.Destination;
 
-        #endregion
+        #endregion Movements
 
-        #endregion
+        #endregion Battle
 
         #region Visibility
 
@@ -286,7 +287,7 @@ namespace ChickenAPI.Game.Entities.Player
 
         private VisibilityComponent _visibility { get; }
 
-        #endregion
+        #endregion Visibility
 
         #region Family
 
@@ -295,7 +296,7 @@ namespace ChickenAPI.Game.Entities.Player
         public FamilyDto Family { get; set; }
         public CharacterFamilyDto FamilyCharacter { get; set; }
 
-        #endregion
+        #endregion Family
 
         #region Experience
 
@@ -335,7 +336,7 @@ namespace ChickenAPI.Game.Entities.Player
             set => Character.JobLevelXp = value;
         }
 
-        #endregion
+        #endregion Experience
 
         #region Specialist
 
@@ -351,6 +352,14 @@ namespace ChickenAPI.Game.Entities.Player
 
         public ItemInstanceDto Sp => Inventory.Wear[(int)EquipmentType.Sp];
 
-        #endregion
+        #endregion Specialist
+
+        public long Gold
+        {
+            get => Character.Gold;
+            set => Character.Gold = value;
+        }
+
+        public double LastPortal { get; set; }
     }
 }

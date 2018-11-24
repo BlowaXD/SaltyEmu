@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using ChickenAPI.Data.Character;
 using ChickenAPI.Enums.Game.Character;
 using ChickenAPI.Game.Battle.Interfaces;
@@ -17,8 +18,10 @@ namespace ChickenAPI.Game.Entities.Player
 
         ISession Session { get; }
 
+        double LastPortal { get; set; }
+
         /// <summary>
-        /// 
+        ///
         /// </summary>
         long LastPulse { get; }
 
@@ -41,7 +44,6 @@ namespace ChickenAPI.Game.Entities.Player
         void SendPackets<T>(IEnumerable<T> packets) where T : IPacket;
 
         void SendPackets(IEnumerable<IPacket> packets);
-
 
         /// <summary>
         /// Saves player's state

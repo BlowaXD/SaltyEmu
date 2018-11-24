@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using ChickenAPI.Data.Character;
+﻿using ChickenAPI.Data.Character;
 using ChickenAPI.Data.Skills;
 using ChickenAPI.Enums.Game.Character;
 using ChickenAPI.Enums.Game.Skill;
@@ -15,6 +12,9 @@ using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Events;
 using ChickenAPI.Game.Movements.Extensions;
 using ChickenAPI.Game.Skills.Args;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace ChickenAPI.Game.Skills
 {
@@ -37,6 +37,7 @@ namespace ChickenAPI.Game.Skills
                 case UseSkillArgs useSkill:
                     UseSkill(battleEntity, useSkill);
                     break;
+
                 case PlayerAddSkillEventArgs addSkill:
                     AddSkill(entity as IPlayerEntity, addSkill);
                     break;
@@ -106,7 +107,6 @@ namespace ChickenAPI.Game.Skills
                     return;
             }
 
-
             entity.CurrentMap.Broadcast(entity.GenerateCtPacket(e.Target, e.Skill));
             entity.DecreaseMp(e.Skill.MpCost);
             //TODO: Skill Cooldown
@@ -175,18 +175,23 @@ namespace ChickenAPI.Game.Skills
                     case CharacterClassType.Adventurer:
                         classLevel = e.Skill.MinimumAdventurerLevel;
                         break;
+
                     case CharacterClassType.Swordman:
                         classLevel = e.Skill.MinimumSwordmanLevel;
                         break;
+
                     case CharacterClassType.Archer:
                         classLevel = e.Skill.MinimumArcherLevel;
                         break;
+
                     case CharacterClassType.Magician:
                         classLevel = e.Skill.MinimumMagicianLevel;
                         break;
+
                     case CharacterClassType.Wrestler:
                         classLevel = e.Skill.MinimumWrestlerLevel;
                         break;
+
                     case CharacterClassType.Unknown:
                         classLevel = e.Skill.LevelMinimum;
                         break;
