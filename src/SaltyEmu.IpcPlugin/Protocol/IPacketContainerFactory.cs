@@ -1,7 +1,7 @@
 ﻿using System;
 using ChickenAPI.Core.IPC.Protocol;
 
-namespace SaltyEmu.IpcPlugin.Protocol
+namespace SaltyEmu.Communication.Protocol
 {
     public interface IPacketContainerFactory
     {

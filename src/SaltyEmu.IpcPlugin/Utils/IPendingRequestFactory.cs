@@ -1,6 +1,6 @@
 ﻿using ChickenAPI.Core.IPC.Protocol;
 
-namespace SaltyEmu.IpcPlugin.Communicators
+namespace SaltyEmu.Communication.Utils
 {
     public interface IPendingRequestFactory
     {

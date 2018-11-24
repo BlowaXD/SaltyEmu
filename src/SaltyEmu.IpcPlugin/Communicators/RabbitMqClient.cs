@@ -8,24 +8,24 @@ using ChickenAPI.Core.Logging;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
-using SaltyEmu.IpcPlugin.Protocol;
+using SaltyEmu.Communication.Protocol;
+using SaltyEmu.Communication.Utils;
 
-namespace SaltyEmu.IpcPlugin.Communicators
+namespace SaltyEmu.Communication.Communicators
 {
     public class RabbitMqClient : IDisposable, IIpcClient
     {
-        private static readonly Logger Log = Logger.GetLogger<RabbitMqClient>();
-        private readonly IConnection _connection;
-        private readonly IModel _channel;
-
-        private readonly ConcurrentDictionary<Guid, PendingRequest> _pendingRequests;
-        private readonly IPacketContainerFactory _packetFactory;
-        private readonly IPendingRequestFactory _requestFactory;
-
         private const string RequestQueueName = "salty_requests";
         private const string ResponseQueueName = "salty_responses";
         private const string BroadcastQueueName = "salty_broadcast";
         private const string ExchangeName = ""; // default exchange
+        private static readonly Logger Log = Logger.GetLogger<RabbitMqClient>();
+        private readonly IModel _channel;
+        private readonly IConnection _connection;
+        private readonly IPacketContainerFactory _packetFactory;
+
+        private readonly ConcurrentDictionary<Guid, PendingRequest> _pendingRequests;
+        private readonly IPendingRequestFactory _requestFactory;
 
         public RabbitMqClient()
         {
@@ -47,6 +47,12 @@ namespace SaltyEmu.IpcPlugin.Communicators
 
             _pendingRequests = new ConcurrentDictionary<Guid, PendingRequest>();
             Log.Info("IPC Client launched !");
+        }
+
+        public void Dispose()
+        {
+            _connection?.Dispose();
+            _channel?.Dispose();
         }
 
         public async Task<T> RequestAsync<T>(IIpcRequest packet) where T : class, IIpcResponse
@@ -102,12 +108,6 @@ namespace SaltyEmu.IpcPlugin.Communicators
             IBasicProperties props = _channel.CreateBasicProperties();
             props.ReplyTo = queueName;
             _channel.BasicPublish(ExchangeName, queueName, props, messageBytes);
-        }
-
-        public void Dispose()
-        {
-            _connection?.Dispose();
-            _channel?.Dispose();
         }
     }
 }

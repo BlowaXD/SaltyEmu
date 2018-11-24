@@ -1,6 +1,6 @@
 ﻿using System;
 using ChickenAPI.Core.IPC.Protocol;
-using SaltyEmu.IpcPlugin.Protocol;
+using SaltyEmu.Communication.Protocol;
 
 namespace SaltyPoc.IPC.Packets
 {

@@ -21,7 +21,7 @@
     <ProjectReference Include="..\..\src\Plugins\NosSharp.Pathfinder\SaltyEmu.PathfinderPlugin.csproj" />
     <ProjectReference Include="..\..\src\Plugins\NosSharp.RedisSessionPlugin\SaltyEmu.RedisWrappers.csproj" />
     <ProjectReference Include="..\..\src\Plugins\NosSharp.TemporaryMapPlugins\SaltyEmu.BasicPlugin.csproj" />
-    <ProjectReference Include="..\..\src\SaltyEmu.IpcPlugin\SaltyEmu.IpcPlugin.csproj" />
+    <ProjectReference Include="..\..\src\SaltyEmu.IpcPlugin\SaltyEmu.Communication.csproj" />
   </ItemGroup>
 
 </Project>

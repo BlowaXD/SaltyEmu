@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Text;
 using System.Threading.Tasks;
 using ChickenAPI.Core.IPC;
@@ -8,30 +7,25 @@ using ChickenAPI.Core.Logging;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
-using SaltyEmu.IpcPlugin.Protocol;
+using SaltyEmu.Communication.Protocol;
 
-namespace SaltyEmu.IpcPlugin.Communicators
+namespace SaltyEmu.Communication.Communicators
 {
     public class RabbitMqServer : IIpcServer
     {
-        private static readonly Logger Log = Logger.GetLogger<RabbitMqServer>();
-
-        private readonly IIpcRequestHandler _requestHandler;
-        private readonly IPacketContainerFactory _packetContainerFactory;
-
-        private readonly IConnection _connection;
-        private readonly IModel _channel;
-
-
         private const string RequestQueueName = "salty_requests";
         private const string ResponseQueueName = "salty_responses";
         private const string BroadcastQueueName = "salty_broadcast";
         private const string ExchangeName = ""; // default exchange
+        private static readonly Logger Log = Logger.GetLogger<RabbitMqServer>();
+        private readonly IModel _channel;
 
-        public RabbitMqServer(IIpcRequestHandler requestHandler) : this()
-        {
-            _requestHandler = requestHandler;
-        }
+        private readonly IConnection _connection;
+        private readonly IPacketContainerFactory _packetContainerFactory;
+
+        private readonly IIpcRequestHandler _requestHandler;
+
+        public RabbitMqServer(IIpcRequestHandler requestHandler) : this() => _requestHandler = requestHandler;
 
         public RabbitMqServer()
         {
@@ -51,6 +45,11 @@ namespace SaltyEmu.IpcPlugin.Communicators
             _channel.BasicConsume(RequestQueueName, true, consumer);
             _channel.BasicConsume(BroadcastQueueName, true, consumer);
             Log.Info("IPC Server launched !");
+        }
+
+        public Task ResponseAsync<T>(T response) where T : IIpcResponse
+        {
+            return Task.Run(() => { Publish(_packetContainerFactory.ToPacket<T>(response), ResponseQueueName); });
         }
 
         private void OnMessage(object sender, BasicDeliverEventArgs e)
@@ -81,11 +80,6 @@ namespace SaltyEmu.IpcPlugin.Communicators
         {
             _connection?.Dispose();
             _channel?.Dispose();
-        }
-
-        public Task ResponseAsync<T>(T response) where T : IIpcResponse
-        {
-            return Task.Run(() => { Publish(_packetContainerFactory.ToPacket<T>(response), ResponseQueueName); });
         }
 
         private void Publish(PacketContainer container, string queueName)

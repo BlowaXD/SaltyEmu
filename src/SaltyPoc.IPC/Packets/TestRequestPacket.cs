@@ -1,4 +1,4 @@
-﻿using SaltyEmu.IpcPlugin.Protocol;
+﻿using SaltyEmu.Communication.Protocol;
 
 namespace SaltyPoc.IPC.Packets
 {
