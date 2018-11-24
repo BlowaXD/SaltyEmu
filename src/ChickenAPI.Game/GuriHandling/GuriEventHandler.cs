@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Autofac;
 using ChickenAPI.Core.IoC;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Events;
@@ -12,12 +13,13 @@ namespace ChickenAPI.Game.GuriHandling
 {
     public class GuriEventHandler : EventHandlerBase
     {
+        private static readonly Logger Log = Logger.GetLogger<GuriEventHandler>();
+        private static readonly IGuriHandler _guriHandler = new Lazy<IGuriHandler>(() => ChickenContainer.Instance.Resolve<IGuriHandler>()).Value;
+
         public override ISet<Type> HandledTypes => new HashSet<Type>
         {
             typeof(GuriEventArgs)
         };
-
-        private readonly IGuriHandler _guriHandler = new Lazy<IGuriHandler>(() => ChickenContainer.Instance.Resolve<IGuriHandler>()).Value;
 
         public override void Execute(IEntity entity, ChickenEventArgs args)
         {
