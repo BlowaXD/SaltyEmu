@@ -49,6 +49,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SaltyEmu.FamilyService", "s
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SaltyEmu.FamilyPlugin", "src\Plugins\SaltyEmu.FamilyPlugin\SaltyEmu.FamilyPlugin.csproj", "{A0DBCE58-3322-4539-BEAF-D9B577CBF3CF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SaltyEmu.RelationService", "src\services\SaltyEmu.RelationService\SaltyEmu.RelationService.csproj", "{9746EFA1-B25D-4945-A25C-3A960ACF2262}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -131,6 +133,10 @@ Global
 		{A0DBCE58-3322-4539-BEAF-D9B577CBF3CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A0DBCE58-3322-4539-BEAF-D9B577CBF3CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A0DBCE58-3322-4539-BEAF-D9B577CBF3CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9746EFA1-B25D-4945-A25C-3A960ACF2262}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9746EFA1-B25D-4945-A25C-3A960ACF2262}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9746EFA1-B25D-4945-A25C-3A960ACF2262}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9746EFA1-B25D-4945-A25C-3A960ACF2262}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -147,6 +153,7 @@ Global
 		{0C47ED85-6577-4338-9976-8A2B00016609} = {4E7156D8-18DC-4638-9C9B-5BE5CFF76F13}
 		{61CDB363-EC3A-47AA-A5CA-ABB4BCE2CC85} = {7A642CDF-7BF0-4D43-B5CB-430FC64A32D1}
 		{A0DBCE58-3322-4539-BEAF-D9B577CBF3CF} = {7A7E9A02-CEFC-4E77-A495-70804348CA47}
+		{9746EFA1-B25D-4945-A25C-3A960ACF2262} = {7A642CDF-7BF0-4D43-B5CB-430FC64A32D1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {33B1EC1B-965D-4770-B047-390647E82322}
