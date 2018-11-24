@@ -12,10 +12,12 @@ namespace SaltyEmu.Commands
         [Command("create")]
         [Description("Command that tries to create an item by specifying its id and the actual quantity we need.")]
         [Remarks("The two parameters are needed.")]
-        public Task CreateAsync([Description("ID of the item to create.")] int id, [Description("Amount of the item to create.")] int quantity)
+        public Task CreateAsync([Description("ID of the item to create.")]
+            int id, [Description("Amount of the item to create.")]
+            int quantity)
         {
             //do stuff
-            Console.WriteLine($"Creating {quantity} item(s) with ID#{id} for the entity {Context.Entity}");
+            Console.WriteLine($"Creating {quantity} item(s) with ID#{id} for the player {Context.Sender}");
 
             return Task.CompletedTask;
         }
@@ -23,10 +25,12 @@ namespace SaltyEmu.Commands
         [Command("delete")]
         [Description("Command that tries to delete an item by specifying its id and its position in the player's inventory.")]
         [Remarks("The two parameters are needed.")]
-        public Task DeleteAsync([Description("ID of the item to delete.")] int id, [Description("Position of the item in the player's inventory.")] int position)
+        public Task DeleteAsync([Description("ID of the item to delete.")]
+            int id, [Description("Position of the item in the player's inventory.")]
+            int position)
         {
             //do stuff
-            Console.WriteLine($"Deleting the item with ID#{id} for the entity {Context.Entity} at the inventory position {position}");
+            Console.WriteLine($"Deleting the item with ID#{id} for the entity {Context.Sender} at the inventory position {position}");
 
             return Task.CompletedTask;
         }

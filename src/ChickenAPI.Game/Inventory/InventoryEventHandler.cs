@@ -138,7 +138,6 @@ namespace ChickenAPI.Game.Inventory
         private static void EquipItem(InventoryComponent inventory, IEntity entity, ItemInstanceDto itemToEquip)
         {
             // check if slot already claimed
-            Log.Info($"ToEquip : {JsonConvert.SerializeObject(itemToEquip.Item)}");
             ItemInstanceDto alreadyEquipped = inventory.GetWeared(itemToEquip.Item.EquipmentSlot);
             var player = entity as IPlayerEntity;
 

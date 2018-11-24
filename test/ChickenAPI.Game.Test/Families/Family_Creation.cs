@@ -50,6 +50,7 @@ namespace ChickenAPI.Game.Test.Families
             Assert.IsNotNull(player.FamilyCharacter);
             Assert.AreEqual(player.Family.Id, player.FamilyCharacter.FamilyId);
             Assert.AreEqual(player.Family.Name, familyName);
+            Assert.Pass();
         }
 
         [Test]
@@ -92,6 +93,7 @@ namespace ChickenAPI.Game.Test.Families
                 Assert.AreEqual(assistant.Family.Name, familyName);
                 Assert.AreEqual(assistant.FamilyCharacter.CharacterId, assistant.Character.Id);
             }
+            Assert.Pass();
         }
 
         [Test]
@@ -110,6 +112,7 @@ namespace ChickenAPI.Game.Test.Families
             Assert.IsNull(player.FamilyCharacter);
             Assert.IsFalse(player.HasFamily);
             Assert.IsFalse(player.IsFamilyLeader);
+            Assert.Pass();
         }
 
         [Test]
@@ -140,6 +143,7 @@ namespace ChickenAPI.Game.Test.Families
             Assert.IsNotNull(player.FamilyCharacter);
             Assert.AreEqual(player.Family.Name, familyName);
             Assert.AreEqual(player.Family.Id, familyId);
+            Assert.Pass();
         }
     }
 }

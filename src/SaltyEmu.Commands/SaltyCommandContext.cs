@@ -1,4 +1,5 @@
-﻿using Qmmands;
+﻿using ChickenAPI.Game.Entities.Player;
+using Qmmands;
 
 namespace SaltyEmu.Commands
 {
@@ -6,9 +7,9 @@ namespace SaltyEmu.Commands
     {
         public Command Command { get; set; }
         public string Message { get; set; }
-        public object Entity { get; set; }
+        public object Sender { get; set; }
 
-        public SaltyCommandContext(string message, object entity)
+        public SaltyCommandContext(string message, object sender)
             => Message = message;
     }
 }

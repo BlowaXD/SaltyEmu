@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using ChickenAPI.Game.Entities.Player;
 using Qmmands;
 
 namespace SaltyEmu.Commands
@@ -57,14 +58,19 @@ namespace SaltyEmu.Commands
         /// <param name="entity">It represents the instance of the entity that performed the action of sending a message.</param>
         public async Task HandleMessageAsync(string message, object entity)
         {
-            var ctx = new SaltyCommandContext(message, entity);
+            if (!(entity is IPlayerEntity player))
+            {
+                return;
+            }
+
+            var ctx = new SaltyCommandContext(message, player);
 
             if (!CommandUtilities.HasPrefix(message, '$', out var output))
             {
                 return;
             }
 
-            var result = await _commands.ExecuteAsync(output, ctx);
+            IResult result = await _commands.ExecuteAsync(output, ctx);
 
             if (result.IsSuccessful)
             {

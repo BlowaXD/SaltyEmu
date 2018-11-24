@@ -10,4 +10,4 @@
 * OnEnable
     * Nothing yet
 * OnLoad
-    * Creates a config file in plugins/configs/DatabasePlugin/
+    * Creates a config file in plugins/configs/Redis/

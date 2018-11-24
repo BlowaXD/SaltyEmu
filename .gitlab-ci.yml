@@ -23,7 +23,7 @@ build_project:
   image: microsoft/dotnet:2.1-sdk-alpine
   stage: build
   script:
-   - dotnet restore
+   - dotnet restore --configfile Nuget.config
    - dotnet build
    
 # Test ChickenAPI.Game project with unit test
@@ -31,7 +31,7 @@ test_project:
     image: microsoft/dotnet:2.1-sdk-alpine
     stage: test
     script:
-    - dotnet restore
+    - dotnet restore --configfile Nuget.config
     - dotnet test test/ChickenAPI.Game.Test/
 
 
