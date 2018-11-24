@@ -7,7 +7,7 @@ using ChickenAPI.Game.Data.AccessLayer.Server;
 using Foundatio.Caching;
 using StackExchange.Redis;
 
-namespace NosSharp.RedisSessionPlugin.Redis
+namespace SaltyEmu.RedisWrappers.Redis
 {
     public class SessionService : ISessionService
     {

@@ -3,10 +3,9 @@ using System.Linq;
 using ChickenAPI.Data;
 using Foundatio.Caching;
 using Foundatio.Serializer;
-using Newtonsoft.Json;
 using StackExchange.Redis;
 
-namespace NosSharp.RedisSessionPlugin.Redis
+namespace SaltyEmu.RedisWrappers.Redis
 {
     public abstract class CacheClientBase<T> where T : IMappedDto
     {

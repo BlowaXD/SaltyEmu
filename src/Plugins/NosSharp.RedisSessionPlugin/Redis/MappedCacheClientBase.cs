@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ChickenAPI.Data;
@@ -8,9 +7,9 @@ using Foundatio.Serializer;
 using Newtonsoft.Json;
 using StackExchange.Redis;
 
-namespace NosSharp.RedisSessionPlugin.Redis
+namespace SaltyEmu.RedisWrappers.Redis
 {
-    public class NewCacheClientBase<TObject> : IMappedRepository<TObject> where TObject : class, IMappedDto
+    public class MappedCacheClientBase<TObject> : IMappedRepository<TObject> where TObject : class, IMappedDto
     {
         protected readonly string Prefix;
         protected readonly ICacheClient CacheClient;
@@ -22,11 +21,11 @@ namespace NosSharp.RedisSessionPlugin.Redis
 
         protected string ToKey(TObject obj) => ToKey(obj.Id);
 
-        protected NewCacheClientBase(RedisConfiguration conf) : this(typeof(TObject).Name, conf)
+        protected MappedCacheClientBase(RedisConfiguration conf) : this(typeof(TObject).Name, conf)
         {
         }
 
-        protected NewCacheClientBase(string prefix, RedisConfiguration conf)
+        protected MappedCacheClientBase(string prefix, RedisConfiguration conf)
         {
             Prefix = prefix;
             CacheClient = new RedisHybridCacheClient(new RedisCacheClientOptions

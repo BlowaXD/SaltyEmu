@@ -7,7 +7,7 @@ using ChickenAPI.Game.Data.AccessLayer.Server;
 using ServiceStack.Redis;
 using ServiceStack.Redis.Generic;
 
-namespace NosSharp.RedisSessionPlugin
+namespace SaltyEmu.RedisWrappers
 {
     public class RedisServerApi : IServerApiService
     {

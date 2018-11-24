@@ -6,7 +6,6 @@ using ChickenAPI.Core.Logging;
 using ChickenAPI.Core.Plugins;
 using ChickenAPI.Core.Utils;
 using ChickenAPI.Game.Data.AccessLayer.Server;
-using NosSharp.RedisSessionPlugin;
 
 namespace SaltyEmu.RedisWrappers
 {

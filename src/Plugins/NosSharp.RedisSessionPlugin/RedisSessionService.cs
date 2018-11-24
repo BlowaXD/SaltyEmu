@@ -4,11 +4,10 @@ using ChickenAPI.Core.Logging;
 using ChickenAPI.Data.Server;
 using ChickenAPI.Enums.Game;
 using ChickenAPI.Game.Data.AccessLayer.Server;
-using SaltyEmu.RedisWrappers;
 using ServiceStack.Redis;
 using ServiceStack.Redis.Generic;
 
-namespace NosSharp.RedisSessionPlugin
+namespace SaltyEmu.RedisWrappers
 {
     public class RedisSessionService : ISessionService
     {

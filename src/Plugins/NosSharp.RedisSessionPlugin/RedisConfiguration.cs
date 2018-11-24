@@ -1,4 +1,4 @@
-﻿namespace NosSharp.RedisSessionPlugin
+﻿namespace SaltyEmu.RedisWrappers
 {
     public class RedisConfiguration
     {
