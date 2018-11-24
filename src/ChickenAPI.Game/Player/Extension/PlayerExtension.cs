@@ -1,8 +1,10 @@
 ﻿using Autofac;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Maths;
+using ChickenAPI.Data.Item;
 using ChickenAPI.Data.Skills;
 using ChickenAPI.Enums.Game.Character;
+using ChickenAPI.Enums.Game.Items;
 using ChickenAPI.Game.Effects;
 using ChickenAPI.Game.Entities.Extensions;
 using ChickenAPI.Game.Entities.Player;
@@ -38,6 +40,76 @@ namespace ChickenAPI.Game.Player.Extension
         }
 
         #endregion Gold
+
+        public static TcInfoPacket GenerateReqInfo(this IPlayerEntity charac)
+        {
+            ItemInstanceDto fairy = null;
+            ItemInstanceDto armor = null;
+            ItemInstanceDto weapon2 = null;
+            ItemInstanceDto weapon = null;
+            if (charac.Inventory != null)
+            {
+                fairy = charac.Inventory.GetItemFromSlotAndType((byte)EquipmentType.Fairy, InventoryType.Wear);
+                armor = charac.Inventory.GetItemFromSlotAndType((byte)EquipmentType.Armor, InventoryType.Wear);
+                weapon2 = charac.Inventory.GetItemFromSlotAndType((byte)EquipmentType.SecondaryWeapon, InventoryType.Wear);
+                weapon = charac.Inventory.GetItemFromSlotAndType((byte)EquipmentType.MainWeapon, InventoryType.Wear);
+            }
+
+            bool isPvpPrimary = false;
+            bool isPvpSecondary = false;
+            bool isPvpArmor = false;
+
+            if (weapon?.Item.Name.Contains(": ") == true)
+            {
+                isPvpPrimary = true;
+            }
+            isPvpSecondary |= weapon2?.Item.Name.Contains(": ") == true;
+            isPvpArmor |= armor?.Item.Name.Contains(": ") == true;
+
+            // tc_info 0 name 0 0 0 0 -1 - 0 0 0 0 0 0 0 0 0 0 0 wins deaths reput 0 0 0 morph
+            // talentwin talentlose capitul rankingpoints arenapoints 0 0 ispvpprimary ispvpsecondary
+            // ispvparmor herolvl desc
+            return (new TcInfoPacket
+            {
+                Level = charac.Level,
+                Name = charac.Character.Name,
+                Element = 0,
+                ElementRate = 0,
+                Class = charac.Character.Class,
+                Gender = charac.Character.Gender,
+                Family = charac.HasFamily ? charac.Family.Name : "-1 -",
+                ReputationIco = charac.GetReputIcon(),
+                DignityIco = charac.GetDignityIcon(),
+                HaveWeapon = (weapon != null ? 1 : 0),
+                WeaponRare = weapon?.Rarity ?? 0,
+                WeaponUpgrade = weapon?.Upgrade ?? 0,
+                HaveSecondary = (weapon2 != null ? 1 : 0),
+                SecondaryRare = weapon2?.Rarity ?? 0,
+                SecondaryUpgrade = weapon?.Upgrade ?? 0,
+                HaveArmor = (armor != null ? 1 : 0),
+                ArmorRare = armor?.Rarity ?? 0,
+                ArmorUpgrade = armor?.Upgrade ?? 0,
+                Act4Kill = charac.Character.Act4Kill,
+                Act4Dead = charac.Character.Act4Dead,
+                Reputation = charac.Character.Reput,
+                Unknow = 0,
+                Unknow2 = 0,
+                Unknow3 = 0,
+                Unknow4 = 0,
+                Morph = charac.MorphId,
+                TalentLose = charac.Character.TalentLose,
+                TalentSurrender = charac.Character.TalentSurrender,
+                TalentWin = charac.Character.TalentWin,
+                MasterPoints = charac.Character.MasterPoints,
+                Compliments = charac.Character.Compliment,
+                Act4Points = charac.Character.Act4Points,
+                isPvpArmor = isPvpArmor,
+                isPvpPrimary = isPvpPrimary,
+                isPvpSecondary = isPvpSecondary,
+                HeroLevel = charac.HeroLevel,
+                Biography = (string.IsNullOrEmpty(charac.Character.Biography) ? " REKT BOY" : charac.Character.Biography)
+            });
+        }
 
         public static void ChangeClass(this IPlayerEntity charac, CharacterClassType type)
         {
