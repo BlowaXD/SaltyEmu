@@ -351,7 +351,7 @@ namespace World.Network
             }
         }
 
-        private static readonly char[] ChatDelimiter = { '/', ':', ';' };
+        private static readonly char[] ChatDelimiter = { '/', ':', ';', '$' };
 
         private void GameHandler(string packetHeader, string packet)
         {
