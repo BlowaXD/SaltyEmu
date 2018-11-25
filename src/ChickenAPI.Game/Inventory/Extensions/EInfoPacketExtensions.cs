@@ -62,7 +62,7 @@ namespace ChickenAPI.Game.Inventory.Extensions
                         Rare2 = 0,
                         BoundCharacterId = 0,
                         ShellEffectCount = 0,
-                        ShellEffect = 0
+                        ShellEffect = null
                     };
                 case (byte)ItemClassType.Unknown8:
                     return new EInfoPacket
@@ -85,7 +85,7 @@ namespace ChickenAPI.Game.Inventory.Extensions
                         Rare2 = 0,
                         BoundCharacterId = 0,
                         ShellEffectCount = 0,
-                        ShellEffect = 0
+                        ShellEffect = null
                     };
                 default:
                     return new EInfoPacket
@@ -108,7 +108,7 @@ namespace ChickenAPI.Game.Inventory.Extensions
                         Rare2 = 0,
                         BoundCharacterId = 0,
                         ShellEffectCount = 0,
-                        ShellEffect = 0
+                        ShellEffect = null
                     };
 
             }
@@ -141,7 +141,7 @@ namespace ChickenAPI.Game.Inventory.Extensions
                         Rare2 = 0,
                         BoundCharacterId = 0,
                         ShellEffectCount = 0,
-                        ShellEffect = 0
+                        ShellEffect = null
                     };
                 default:
                     return new EInfoPacket
@@ -164,7 +164,7 @@ namespace ChickenAPI.Game.Inventory.Extensions
                         Rare2 = 0,
                         BoundCharacterId = 0,
                         ShellEffectCount = 0,
-                        ShellEffect = 0
+                        ShellEffect = null
                     };
 
             }
