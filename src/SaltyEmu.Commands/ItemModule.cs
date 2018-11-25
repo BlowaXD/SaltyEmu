@@ -7,7 +7,7 @@ namespace SaltyEmu.Commands
     [Group("Item")]
     [Description("It's a module related to Item manipulation. It requires to be a GameMaster.")]
     [RequireGameMaster]
-    internal class ItemModule : SaltyModuleBase
+    public class ItemModule : SaltyModuleBase
     {
         [Command("create")]
         [Description("Command that tries to create an item by specifying its id and the actual quantity we need.")]

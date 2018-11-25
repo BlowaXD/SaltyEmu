@@ -3,7 +3,7 @@ using Qmmands;
 
 namespace SaltyEmu.Commands
 {
-    internal class SaltyModuleBase : ModuleBase<SaltyCommandContext>
+    public class SaltyModuleBase : ModuleBase<SaltyCommandContext>
     {
         /// <summary>
         ///     This intends to fill the current Context with the command being executed.

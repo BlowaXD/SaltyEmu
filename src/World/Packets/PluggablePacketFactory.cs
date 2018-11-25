@@ -281,7 +281,7 @@ namespace World.Packets
                 {
                     // get the value to the end and stop deserialization
                     int tmp = matches.Count > currentIndex ? matches[currentIndex].Index : packetContent.Length;
-                    string valueToEnd = packetContent.Substring(packetContent.Length, packetContent.Length - tmp);
+                    string valueToEnd = packetContent.Substring(tmp, packetContent.Length - tmp);
                     property.SetValue(packet, DeserializeValue(property.PropertyType, valueToEnd, index, validations, matches, includeKeepAlive));
                     break;
                 }

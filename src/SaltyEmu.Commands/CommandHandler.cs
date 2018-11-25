@@ -1,22 +1,31 @@
 ﻿using System;
 using System.Linq;
-using System.Reflection;
 using System.Threading.Tasks;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Game.Entities.Player;
 using Qmmands;
 
 namespace SaltyEmu.Commands
 {
-    internal class CommandHandler
+    public class CommandHandler
     {
         private readonly CommandService _commands;
+        private readonly Logger _logger;
 
         /// <summary>
         ///     This class should be instanciated with our Container.
         /// </summary>
-        /// <param name="commands">Instance of the Qmmands' CommandService.</param>
-        public CommandHandler(CommandService commands)
-            => _commands = commands;
+        public CommandHandler()
+        {
+            _logger = Logger.GetLogger<CommandHandler>();
+
+            _commands = new CommandService(new CommandServiceConfiguration
+            {
+                CaseSensitive = true
+            });
+
+            InitializeAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+        }
 
         /// <summary>
         ///     This method fetch for every command and/or module in our entry assembly.
@@ -24,9 +33,9 @@ namespace SaltyEmu.Commands
         /// <remarks>
         ///     The commands and modules must be public and must inherit from an inheritance of ModuleBase.
         /// </remarks>
-        internal async Task InitializeAsync()
+        public async Task InitializeAsync()
         {
-            await _commands.AddModulesAsync(Assembly.GetEntryAssembly());
+            await _commands.AddModuleAsync<ItemModule>();
 
             _commands.CommandExecuted += _commands_CommandExecuted;
         }
@@ -42,7 +51,9 @@ namespace SaltyEmu.Commands
         /// <returns></returns>
         private Task _commands_CommandExecuted(Command arg1, CommandResult arg2, ICommandContext arg3, IServiceProvider arg4)
         {
-            Console.WriteLine($"The command {arg1.Name} has successfully been executed.");
+            var ctx = arg3 as SaltyCommandContext;
+
+            _logger.Debug($"The command {arg1.Name} (from player {ctx.Sender.Character.Name} ({ctx.Sender.Character.Id}) has successfully been executed.");
 
             return Task.CompletedTask;
         }
@@ -54,7 +65,7 @@ namespace SaltyEmu.Commands
         ///     Then we will create a Context that will propagate onto the command. 
         ///     The CommandService will try to parse the message and find a command with the parsed arguments and will perform some checks, if necessary.
         /// </summary>
-        /// <param name="message">It represents the message sent in the in-game tchat.</param>
+        /// <param name="message">It represents the already parsed command with its parameters.</param>
         /// <param name="entity">It represents the instance of the entity that performed the action of sending a message.</param>
         public async Task HandleMessageAsync(string message, object entity)
         {
@@ -65,12 +76,10 @@ namespace SaltyEmu.Commands
 
             var ctx = new SaltyCommandContext(message, player);
 
-            if (!CommandUtilities.HasPrefix(message, '$', out var output))
-            {
-                return;
-            }
+            var pos = message.IndexOf('$') + 2;
+            var command = message.Substring(pos);
 
-            IResult result = await _commands.ExecuteAsync(output, ctx);
+            IResult result = await _commands.ExecuteAsync(command, ctx);
 
             if (result.IsSuccessful)
             {
@@ -85,14 +94,17 @@ namespace SaltyEmu.Commands
         /// </summary>
         /// <param name="result">This represents the generic result returned by the command service. We'll check what was wrong.</param>
         /// <param name="context">This represents our context for this result.</param>
-        private Task HandleErrorAsync(IResult result, SaltyCommandContext context)
+        private Task HandleErrorAsync(IResult result, SaltyCommandContext ctx)
         {
-            Console.WriteLine("The result of the command was unsuccessfull.");
+            _logger.Debug($"An error occured: {result}");
 
             switch (result)
             {
                 case ChecksFailedResult ex:
-                    Console.WriteLine(string.Join("\n", ex.FailedChecks.Select(x => $"A check has failed with this reason: {x.Error}")));
+                    _logger.Debug(string.Join("\n", ex.FailedChecks.Select(x => $"A check has failed with this reason: {x.Error}")));
+                    break;
+                case CommandNotFoundResult ex:
+                    ctx.Sender.SendPacket(ctx.Sender.GenerateMessage)
                     break;
             }
 

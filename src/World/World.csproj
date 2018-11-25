@@ -35,6 +35,7 @@
     <ProjectReference Include="..\Plugins\NosSharp.RedisSessionPlugin\SaltyEmu.RedisWrappers.csproj" />
     <ProjectReference Include="..\Plugins\NosSharp.TemporaryMapPlugins\SaltyEmu.BasicPlugin.csproj" />
     <ProjectReference Include="..\SaltyEmu.IpcPlugin\SaltyEmu.Communication.csproj" />
+    <ProjectReference Include="..\SaltyEmu.Commands\SaltyEmu.Commands.csproj" />
   </ItemGroup>
 
 </Project>

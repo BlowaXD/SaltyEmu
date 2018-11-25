@@ -3,7 +3,7 @@ using Qmmands;
 
 namespace SaltyEmu.Commands
 {
-    internal class SaltyCommandContext : ICommandContext
+    public class SaltyCommandContext : ICommandContext
     {
         public Command Command { get; set; }
 

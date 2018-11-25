@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\ChickenAPI.Game\ChickenAPI.Game.csproj" />
+    <ProjectReference Include="..\..\SaltyEmu.Commands\SaltyEmu.Commands.csproj" />
   </ItemGroup>
 
 </Project>
