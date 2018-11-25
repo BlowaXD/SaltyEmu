@@ -35,9 +35,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{4E7156D8
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PoCs", "PoCs", "{5FA5C728-C8F4-4931-B5B4-9B12CE0D938F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SaltyPoc.IPC", "src\SaltyPoc.IPC\SaltyPoc.IPC.csproj", "{414D415C-9A45-4B79-8BC4-7F3405EEA500}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SaltyEmu.Communication", "src\SaltyEmu.IpcPlugin\SaltyEmu.Communication.csproj", "{AA0972AB-A59A-4EB7-AF5A-B31F61D25644}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SaltyEmu.Communication", "src\libs\SaltyEmu.Communication\SaltyEmu.Communication.csproj", "{AA0972AB-A59A-4EB7-AF5A-B31F61D25644}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChickenAPI.Data", "src\ChickenAPI.Data\ChickenAPI.Data.csproj", "{548F9115-2EF6-4B73-B224-5CEB8D7F4276}"
 EndProject
@@ -57,7 +55,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SaltyEmu.Database", "src\li
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SaltyEmu.Redis", "src\libs\SaltyEmu.Redis\SaltyEmu.Redis.csproj", "{ED86A617-6DB1-4265-A64D-CA3CDD1FC0E2}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SaltyEmu.Commands", "src\SaltyEmu.Commands\SaltyEmu.Commands.csproj", "{ED00FA91-F486-420F-A884-B1B239501B8B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SaltyEmu.Commands", "src\libs\SaltyEmu.Commands\SaltyEmu.Commands.csproj", "{ED00FA91-F486-420F-A884-B1B239501B8B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SaltyEmu.Commands.Tests", "test\SaltyEmu.Commands.Tests\SaltyEmu.Commands.Tests.csproj", "{2977614E-2FFD-4211-97BE-D3C68A7631B3}"
 EndProject

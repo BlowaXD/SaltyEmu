@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\SaltyEmu.Commands\SaltyEmu.Commands.csproj" />
+    <ProjectReference Include="..\..\src\libs\SaltyEmu.Commands\SaltyEmu.Commands.csproj" />
   </ItemGroup>
 
 </Project>

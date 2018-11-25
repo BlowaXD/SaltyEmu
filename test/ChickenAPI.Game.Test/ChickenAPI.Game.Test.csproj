@@ -15,13 +15,13 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\ChickenAPI.Game\ChickenAPI.Game.csproj" />
+    <ProjectReference Include="..\..\src\libs\SaltyEmu.Communication\SaltyEmu.Communication.csproj" />
     <ProjectReference Include="..\..\src\Plugins\NosSharp.BasicAlgorithm\SaltyEmu.BasicAlgorithmPlugin.csproj" />
     <ProjectReference Include="..\..\src\Plugins\NosSharp.DatabasePlugin\SaltyEmu.DatabasePlugin.csproj" />
     <ProjectReference Include="..\..\src\Plugins\NosSharp.PacketHandler\SaltyEmu.BasicPacketHandlerPlugin.csproj" />
     <ProjectReference Include="..\..\src\Plugins\NosSharp.Pathfinder\SaltyEmu.PathfinderPlugin.csproj" />
     <ProjectReference Include="..\..\src\Plugins\NosSharp.RedisSessionPlugin\SaltyEmu.RedisWrappers.csproj" />
     <ProjectReference Include="..\..\src\Plugins\NosSharp.TemporaryMapPlugins\SaltyEmu.BasicPlugin.csproj" />
-    <ProjectReference Include="..\..\src\SaltyEmu.IpcPlugin\SaltyEmu.Communication.csproj" />
   </ItemGroup>
 
 </Project>
