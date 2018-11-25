@@ -17,37 +17,37 @@ namespace SaltyEmu.Communication.Communicators
 
         public IEnumerable<T> Get()
         {
-            return RequestAsync<RepositoryGetResponse<T>>(new RepositoryGetRequest<Guid> { ObjectIds = null }).GetAwaiter().GetResult().Objects;
+            return RequestAsync<RepositoryGetResponse<T>>(new RepositoryGetRequest<Guid> { ObjectIds = null }).ConfigureAwait(false).GetAwaiter().GetResult().Objects;
         }
 
         public T GetById(Guid id)
         {
-            return RequestAsync<RepositoryGetResponse<T>>(new RepositoryGetRequest<Guid> { ObjectIds = new[] { id } }).GetAwaiter().GetResult().Objects.ElementAt(0);
+            return RequestAsync<RepositoryGetResponse<T>>(new RepositoryGetRequest<Guid> { ObjectIds = new[] { id } }).ConfigureAwait(false).GetAwaiter().GetResult().Objects.ElementAt(0);
         }
 
         public IEnumerable<T> GetByIds(IEnumerable<Guid> ids)
         {
-            return RequestAsync<RepositoryGetResponse<T>>(new RepositoryGetRequest<Guid> { ObjectIds = ids }).GetAwaiter().GetResult().Objects;
+            return RequestAsync<RepositoryGetResponse<T>>(new RepositoryGetRequest<Guid> { ObjectIds = ids }).ConfigureAwait(false).GetAwaiter().GetResult().Objects;
         }
 
         public T Save(T obj)
         {
-            return RequestAsync<RepositorySaveResponse<T>>(new RepositorySaveRequest<T> { ObjectIds = new T[] { obj } }).GetAwaiter().GetResult().Objects.ElementAt(0);
+            return RequestAsync<RepositorySaveResponse<T>>(new RepositorySaveRequest<T> { ObjectIds = new[] { obj } }).ConfigureAwait(false).GetAwaiter().GetResult().Objects.ElementAt(0);
         }
 
         public void Save(IEnumerable<T> objs)
         {
-            RequestAsync<RepositorySaveResponse<T>>(new RepositorySaveRequest<T> { ObjectIds = objs }).GetAwaiter().GetResult();
+            RequestAsync<RepositorySaveResponse<T>>(new RepositorySaveRequest<T> { ObjectIds = objs }).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
         public void DeleteById(Guid id)
         {
-            BroadcastAsync(new RepositoryDeleteRequest<Guid> { ObjectId = new[] { id } }).GetAwaiter().GetResult();
+            BroadcastAsync(new RepositoryDeleteRequest<Guid> { ObjectId = new[] { id } }).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
         public void DeleteByIds(IEnumerable<Guid> ids)
         {
-            BroadcastAsync(new RepositoryDeleteRequest<Guid> { ObjectId = ids }).GetAwaiter().GetResult();
+            BroadcastAsync(new RepositoryDeleteRequest<Guid> { ObjectId = ids }).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
         public async Task<IEnumerable<T>> GetAsync()
