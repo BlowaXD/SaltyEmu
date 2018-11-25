@@ -18,7 +18,8 @@ namespace NosSharp.PacketHandler.Utils
             {
                 // include PacketDefinition
                 references.AddRange(handlerType.GetMethods()
-                    .Where(x => x.GetParameters().FirstOrDefault()?.ParameterType.BaseType == typeof(PacketBase) && x.GetParameters().Any(c => c.ParameterType == typeof(ISession))).Select(
+                    .Where(x => x.GetParameters().FirstOrDefault()?.ParameterType.BaseType == typeof(PacketBase) &&
+                        x.GetParameters().Any(c => c.ParameterType == typeof(ISession))).Select(
                         methodInfo =>
                             new CharacterScreenPacketHandler(DelegateBuilder.BuildDelegate<Action<IPacket, ISession>>(methodInfo),
                                 methodInfo.GetParameters().FirstOrDefault()?.ParameterType)));

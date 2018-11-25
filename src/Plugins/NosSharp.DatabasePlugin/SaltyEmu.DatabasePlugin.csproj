@@ -5,6 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Services\Base\**" />
+    <EmbeddedResource Remove="Services\Base\**" />
+    <None Remove="Services\Base\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="8.0.0" />
     <PackageReference Include="EFCore.BulkExtensions" Version="2.3.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.1.4" />
@@ -20,10 +26,6 @@
   <ItemGroup>
     <ProjectReference Include="..\..\ChickenAPI.Game\ChickenAPI.Game.csproj" />
     <ProjectReference Include="..\..\libs\SaltyEmu.Database\SaltyEmu.Database.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Services\Base\" />
   </ItemGroup>
 
 </Project>
