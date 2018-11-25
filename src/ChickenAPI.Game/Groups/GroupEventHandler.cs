@@ -10,29 +10,29 @@ namespace ChickenAPI.Game.Groups
     {
         public override ISet<Type> HandledTypes => new HashSet<Type>
         {
-            typeof(GroupJoinEventArgs),
-            typeof(GroupInvitEventArgs),
+            typeof(GroupJoinEvent),
+            typeof(GroupInvitationSendEvent),
         };
 
         public override void Execute(IEntity entity, ChickenEventArgs e)
         {
             switch (e)
             {
-                case GroupJoinEventArgs groupJoin:
+                case GroupJoinEvent groupJoin:
                     JoinGroup(entity, groupJoin);
                     break;
-                case GroupInvitEventArgs groupInvit:
+                case GroupInvitationSendEvent groupInvit:
                     GroupInvit(entity, groupInvit);
                     break;
             }
         }
 
-        private void GroupInvit(IEntity entity, GroupInvitEventArgs groupInvit)
+        private void GroupInvit(IEntity entity, GroupInvitationSendEvent groupInvitationSend)
         {
 
         }
 
-        private void JoinGroup(IEntity entity, GroupJoinEventArgs groupJoin)
+        private void JoinGroup(IEntity entity, GroupJoinEvent groupJoin)
         {
             throw new NotImplementedException();
         }

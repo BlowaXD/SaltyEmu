@@ -26,9 +26,8 @@ namespace NosSharp.PacketHandler.Groups
             switch (packet.RequestType)
             {
                 case PJoinPacketType.Requested:
-                    break;
                 case PJoinPacketType.Invited:
-                    player.EmitEvent(new GroupInvitEventArgs
+                    player.EmitEvent(new GroupInvitationSendEvent
                     {
                         Target = player.CurrentMap.GetPlayerById(packet.CharacterId)
                     });

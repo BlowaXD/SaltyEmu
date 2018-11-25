@@ -3,7 +3,7 @@ using ChickenAPI.Game.Events;
 
 namespace ChickenAPI.Game.Groups.Args
 {
-    public class GroupInvitEventArgs : ChickenEventArgs
+    public class GroupInvitationSendEvent : ChickenEventArgs
     {
         public IPlayerEntity Target { get; set; }
     }
