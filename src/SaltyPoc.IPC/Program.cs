@@ -30,7 +30,7 @@ namespace SaltyPoc.IPC
             Logger.Initialize();
             var tmp = new BasicNpcDialogHandler();
 
-            IIpcServer server = new RabbitMqServer(GetHandler());
+            //IIpcServer server = new RabbitMqServer(GetHandler());
             // _client = new RabbitMqClient();
             await Test();
             Console.ReadKey();

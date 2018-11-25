@@ -8,6 +8,7 @@ using ChickenAPI.Core.Logging;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
+using SaltyEmu.Communication.Configs;
 using SaltyEmu.Communication.Protocol;
 using SaltyEmu.Communication.Utils;
 
@@ -15,11 +16,12 @@ namespace SaltyEmu.Communication.Communicators
 {
     public abstract class RabbitMqClient : IDisposable, IIpcClient
     {
-        private const string RequestQueueName = "salty_requests";
-        private const string ResponseQueueName = "salty_responses";
-        private const string BroadcastQueueName = "salty_broadcast";
-        private const string ExchangeName = ""; // default exchange
         private static readonly Logger Log = Logger.GetLogger<RabbitMqClient>();
+        private readonly RabbitMqConfiguration _configuration;
+        private readonly string _requestQueueName;
+        private readonly string _responseQueueName;
+        private readonly string _broadcastQueueName;
+        private const string ExchangeName = ""; // default exchange
         private readonly IModel _channel;
         private readonly IConnection _connection;
         private readonly IPacketContainerFactory _packetFactory;
@@ -27,23 +29,29 @@ namespace SaltyEmu.Communication.Communicators
         private readonly ConcurrentDictionary<Guid, PendingRequest> _pendingRequests;
         private readonly IPendingRequestFactory _requestFactory;
 
-        protected RabbitMqClient()
+        protected RabbitMqClient(RabbitMqConfiguration config)
         {
-            var factory = new ConnectionFactory { HostName = "localhost" };
+            _configuration = config;
+            var factory = new ConnectionFactory { HostName = _configuration.Address, Password = _configuration.Password, Port = _configuration.Port };
+
+            _requestQueueName = _configuration.RequestQueueName;
+            _responseQueueName = _configuration.ResponseQueueName;
+            _broadcastQueueName = _configuration.BroadcastQueueName;
+
             _packetFactory = new PacketContainerFactory();
             _requestFactory = new PendingRequestFactory();
 
             _connection = factory.CreateConnection();
             _channel = _connection.CreateModel();
 
-            _channel.QueueDeclare(RequestQueueName, true, false, false, null);
-            _channel.QueueDeclare(ResponseQueueName, true, false, false, null);
-            _channel.QueueDeclare(BroadcastQueueName, true, false, false, null);
+            _channel.QueueDeclare(_requestQueueName, true, false, false, null);
+            _channel.QueueDeclare(_responseQueueName, true, false, false, null);
+            _channel.QueueDeclare(_broadcastQueueName, true, false, false, null);
 
             var consumer = new EventingBasicConsumer(_channel);
             consumer.Received += OnMessage;
 
-            _channel.BasicConsume(ResponseQueueName, true, consumer);
+            _channel.BasicConsume(_responseQueueName, true, consumer);
 
             _pendingRequests = new ConcurrentDictionary<Guid, PendingRequest>();
             Log.Info("IPC Client launched !");
@@ -67,7 +75,7 @@ namespace SaltyEmu.Communication.Communicators
             // create the packet container
             PacketContainer container = _packetFactory.ToPacket(packet.GetType(), packet);
 
-            Publish(container, RequestQueueName);
+            Publish(container, _requestQueueName);
 
             IIpcResponse tmp = await request.Response.Task;
             return tmp as T;
@@ -78,7 +86,7 @@ namespace SaltyEmu.Communication.Communicators
             return Task.Run(() =>
             {
                 PacketContainer tmp = _packetFactory.ToPacket<T>(packet);
-                Publish(tmp, BroadcastQueueName);
+                Publish(tmp, _broadcastQueueName);
             });
         }
 
