@@ -11,9 +11,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Storage;
 using Newtonsoft.Json;
-using SaltyEmu.DatabasePlugin.Models;
 
-namespace SaltyEmu.DatabasePlugin.Services.Base
+namespace SaltyEmu.Database
 {
     public class MappedRepositoryBase<TObject, TModel> : IMappedRepository<TObject> where TObject : class, IMappedDto where TModel : class, IMappedModel, new()
     {

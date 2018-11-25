@@ -1,4 +1,4 @@
-﻿namespace SaltyEmu.DatabasePlugin.Models
+﻿namespace SaltyEmu.Database
 {
     public interface IMappedModel
     {

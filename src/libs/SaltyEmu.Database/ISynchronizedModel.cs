@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SaltyEmu.DatabasePlugin.Models
+namespace SaltyEmu.Database
 {
     public interface ISynchronizedModel
     {

@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using ChickenAPI.Data;
 using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Enums.Game.Items;
+using SaltyEmu.Database;
 using SaltyEmu.DatabasePlugin.Models.Item;
 
 namespace SaltyEmu.DatabasePlugin.Models.Character

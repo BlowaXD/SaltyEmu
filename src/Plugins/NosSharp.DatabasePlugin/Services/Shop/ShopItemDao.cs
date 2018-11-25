@@ -6,9 +6,9 @@ using AutoMapper;
 using ChickenAPI.Data.Shop;
 using ChickenAPI.Game.Data.AccessLayer.Shop;
 using Microsoft.EntityFrameworkCore;
+using SaltyEmu.Database;
 using SaltyEmu.DatabasePlugin.Context;
 using SaltyEmu.DatabasePlugin.Models.Shop;
-using SaltyEmu.DatabasePlugin.Services.Base;
 
 namespace SaltyEmu.DatabasePlugin.Services.Shop
 {

@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using ChickenAPI.Data;
+using SaltyEmu.Database;
 using SaltyEmu.DatabasePlugin.Models.Skill;
 
 namespace SaltyEmu.DatabasePlugin.Models.Character

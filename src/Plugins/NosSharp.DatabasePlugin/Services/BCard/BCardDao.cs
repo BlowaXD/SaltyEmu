@@ -7,8 +7,8 @@ using ChickenAPI.Data.BCard;
 using ChickenAPI.Enums.Game.BCard;
 using ChickenAPI.Game.Data.AccessLayer.BCard;
 using Microsoft.EntityFrameworkCore;
+using SaltyEmu.Database;
 using SaltyEmu.DatabasePlugin.Models.BCard;
-using SaltyEmu.DatabasePlugin.Services.Base;
 
 namespace SaltyEmu.DatabasePlugin.Services.BCard
 {

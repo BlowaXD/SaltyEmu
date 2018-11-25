@@ -5,8 +5,8 @@ using AutoMapper;
 using ChickenAPI.Data.Drop;
 using ChickenAPI.Game.Data.AccessLayer.Drop;
 using Microsoft.EntityFrameworkCore;
+using SaltyEmu.Database;
 using SaltyEmu.DatabasePlugin.Models.Drops;
-using SaltyEmu.DatabasePlugin.Services.Base;
 
 namespace SaltyEmu.DatabasePlugin.Services.Drop
 {

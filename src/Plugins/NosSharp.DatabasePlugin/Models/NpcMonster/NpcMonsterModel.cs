@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using ChickenAPI.Data;
 using ChickenAPI.Enums.Game.Entity;
+using SaltyEmu.Database;
 using SaltyEmu.DatabasePlugin.Models.BCard;
 using SaltyEmu.DatabasePlugin.Models.Character;
 using SaltyEmu.DatabasePlugin.Models.Drops;

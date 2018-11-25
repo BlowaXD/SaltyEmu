@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using ChickenAPI.Data;
+using SaltyEmu.Database;
 
 namespace SaltyEmu.DatabasePlugin.Models.Drops
 {

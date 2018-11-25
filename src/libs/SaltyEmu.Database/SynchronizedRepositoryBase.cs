@@ -8,9 +8,8 @@ using ChickenAPI.Data;
 using EFCore.BulkExtensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
-using SaltyEmu.DatabasePlugin.Models;
 
-namespace SaltyEmu.DatabasePlugin.Services.Base
+namespace SaltyEmu.Database
 {
     public class SynchronizedRepositoryBase<TObject, TModel> : ISynchronizedRepository<TObject>
     where TObject : class, ISynchronizedDto where TModel : class, ISynchronizedModel, new()

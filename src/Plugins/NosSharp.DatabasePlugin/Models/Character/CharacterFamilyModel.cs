@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using ChickenAPI.Enums.Game.Families;
+using SaltyEmu.Database;
 using SaltyEmu.DatabasePlugin.Models.Families;
 
 namespace SaltyEmu.DatabasePlugin.Models.Character

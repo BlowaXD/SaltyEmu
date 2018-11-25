@@ -7,8 +7,8 @@ using ChickenAPI.Data.Character;
 using ChickenAPI.Enums.Game.Character;
 using ChickenAPI.Game.Data.AccessLayer.Character;
 using Microsoft.EntityFrameworkCore;
+using SaltyEmu.Database;
 using SaltyEmu.DatabasePlugin.Models.Character;
-using SaltyEmu.DatabasePlugin.Services.Base;
 
 namespace SaltyEmu.DatabasePlugin.Services.Character
 {
