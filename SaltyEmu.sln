@@ -55,6 +55,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "libs", "libs", "{86C4BB24-7
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SaltyEmu.Database", "src\libs\SaltyEmu.Database\SaltyEmu.Database.csproj", "{D1D3AC06-51BD-47FE-9627-596AC28E1299}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SaltyEmu.Redis", "src\libs\SaltyEmu.Redis\SaltyEmu.Redis.csproj", "{ED86A617-6DB1-4265-A64D-CA3CDD1FC0E2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -145,6 +147,10 @@ Global
 		{D1D3AC06-51BD-47FE-9627-596AC28E1299}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D1D3AC06-51BD-47FE-9627-596AC28E1299}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D1D3AC06-51BD-47FE-9627-596AC28E1299}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED86A617-6DB1-4265-A64D-CA3CDD1FC0E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED86A617-6DB1-4265-A64D-CA3CDD1FC0E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED86A617-6DB1-4265-A64D-CA3CDD1FC0E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED86A617-6DB1-4265-A64D-CA3CDD1FC0E2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -168,6 +174,7 @@ Global
 		{A0DBCE58-3322-4539-BEAF-D9B577CBF3CF} = {7A7E9A02-CEFC-4E77-A495-70804348CA47}
 		{9746EFA1-B25D-4945-A25C-3A960ACF2262} = {7A642CDF-7BF0-4D43-B5CB-430FC64A32D1}
 		{D1D3AC06-51BD-47FE-9627-596AC28E1299} = {86C4BB24-7456-4E42-B898-B7E8DEDFCF81}
+		{ED86A617-6DB1-4265-A64D-CA3CDD1FC0E2} = {86C4BB24-7456-4E42-B898-B7E8DEDFCF81}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {33B1EC1B-965D-4770-B047-390647E82322}

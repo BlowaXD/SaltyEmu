@@ -5,15 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Foundatio" Version="7.1.1845" />
     <PackageReference Include="Foundatio.JsonNet" Version="7.1.1845" />
     <PackageReference Include="Foundatio.Redis" Version="7.1.1608" />
-    <PackageReference Include="ServiceStack.Redis.Core" Version="5.4.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\ChickenAPI.Game\ChickenAPI.Game.csproj" />
-    <ProjectReference Include="..\..\libs\SaltyEmu.Redis\SaltyEmu.Redis.csproj" />
+    <ProjectReference Include="..\..\ChickenAPI.Data\ChickenAPI.Data.csproj" />
   </ItemGroup>
 
 </Project>
