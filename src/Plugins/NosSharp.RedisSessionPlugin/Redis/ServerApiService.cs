@@ -29,6 +29,9 @@ namespace SaltyEmu.RedisWrappers.Redis
         }
 
 
+        private WorldServerDto _worldInstance;
+        public WorldServerDto GetRunningServer => _worldInstance;
+
         public bool RegisterServer(WorldServerDto dto)
         {
             IDictionary<string, CacheValue<WorldServerDto>> servers = _cache.GetAllAsync<WorldServerDto>(AllKeys).GetAwaiter().GetResult();
@@ -38,6 +41,7 @@ namespace SaltyEmu.RedisWrappers.Redis
                 return true;
             }
 
+            _worldInstance = dto;
             _cache.AddAsync(ToKey(dto), dto);
             return false;
         }

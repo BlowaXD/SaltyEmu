@@ -303,6 +303,8 @@ namespace World.Network
             }
         }
 
+        private const char CommandPrefix = '$';
+
         private void BufferToPackets(string packets)
         {
             foreach (string packet in packets.Split((char)PACKET_SPLIT_CHARACTER, StringSplitOptions.RemoveEmptyEntries))
@@ -340,6 +342,7 @@ namespace World.Network
                     packetsplit[1] = packetsplit[1][0].ToString();
                     packetstring = packet.Insert(packet.IndexOf(' ') + 2, " ");
                 }
+
 
                 if (packetsplit[1] != "0")
                 {

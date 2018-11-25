@@ -42,10 +42,6 @@ namespace SaltyPoc.IPC
                 Log.Info($"Message Received {eventArgs.ApplicationMessage.Topic} : {Encoding.UTF8.GetString(eventArgs.ApplicationMessage.Payload)}");
             };
             mqttClient.ConnectingFailed += (sender, eventArgs) => { Log.Error("[CONNECTION_FAILED]", eventArgs.Exception); };
-
-
-            // StartAsync returns immediately, as it starts a new thread using Task.Run, 
-            // and so the calling thread needs to wait.
             Console.ReadLine();
         }
 

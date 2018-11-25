@@ -7,6 +7,11 @@ namespace ChickenAPI.Game.Data.AccessLayer.Server
     public interface IServerApiService
     {
         /// <summary>
+        /// Gets the running server from where you call that method
+        /// </summary>
+        WorldServerDto GetRunningServer { get; }
+
+        /// <summary>
         ///     Register the server in the global server list
         /// </summary>
         /// <param name="dto"></param>
