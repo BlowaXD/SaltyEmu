@@ -441,6 +441,7 @@ namespace ChickenAPI.Game.Inventory
                     {
                         return;
                     }
+                    break;
             }
 
             if (itemInstance == null) return;
