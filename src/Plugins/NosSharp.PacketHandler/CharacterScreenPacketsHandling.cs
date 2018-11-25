@@ -49,7 +49,7 @@ namespace NosSharp.PacketHandler
 
             if (!string.Equals(account.Password, characterDeletePacketBase.Password.ToSha512(), StringComparison.CurrentCultureIgnoreCase))
             {
-                session.SendPacket(new InfoPacketBase
+                session.SendPacket(new InfoPacket
                 {
                     Message = "bad_password"
                 });
@@ -95,7 +95,7 @@ namespace NosSharp.PacketHandler
             var rg = new Regex(@"^[\u0021-\u007E\u00A1-\u00AC\u00AE-\u00FF\u4E00-\u9FA5\u0E01-\u0E3A\u0E3F-\u0E5B\u002E]*$");
             if (rg.Matches(characterName).Count != 1)
             {
-                session.SendPacket(new InfoPacketBase
+                session.SendPacket(new InfoPacket
                 {
                     Message = Language.GetLanguage(ChickenI18NKey.CHARACTER_NAME_INVALID, session.Language)
                 });
@@ -106,7 +106,7 @@ namespace NosSharp.PacketHandler
             CharacterDto character = await characterService.GetActiveByNameAsync(characterName);
             if (character != null)
             {
-                session.SendPacket(new InfoPacketBase
+                session.SendPacket(new InfoPacket
                 {
                     Message = Language.GetLanguage(ChickenI18NKey.CHARACTER_NAME_ALREADY_TAKEN, session.Language)
                 });
@@ -150,7 +150,7 @@ namespace NosSharp.PacketHandler
 
             if (slot != 3)
             {
-                session.SendPacket(new InfoPacketBase
+                session.SendPacket(new InfoPacket
                 {
                     Message = "invalid_slot_wrestler"
                 });
@@ -160,7 +160,7 @@ namespace NosSharp.PacketHandler
 
             if (!characterService.GetActiveByAccountId(session.Account.Id).Any(s => s.Level >= 80))
             {
-                session.SendPacket(new InfoPacketBase
+                session.SendPacket(new InfoPacket
                 {
                     Message = "invalid_lvl_wrestler"
                 });
@@ -177,7 +177,7 @@ namespace NosSharp.PacketHandler
             var rg = new Regex(@"^[\u0021-\u007E\u00A1-\u00AC\u00AE-\u00FF\u4E00-\u9FA5\u0E01-\u0E3A\u0E3F-\u0E5B\u002E]*$");
             if (rg.Matches(characterName).Count != 1)
             {
-                session.SendPacket(new InfoPacketBase
+                session.SendPacket(new InfoPacket
                 {
                     Message = "invalid_charname"
                 });
@@ -188,7 +188,7 @@ namespace NosSharp.PacketHandler
             CharacterDto character = await characterService.GetActiveByNameAsync(characterName);
             if (character != null)
             {
-                session.SendPacket(new InfoPacketBase
+                session.SendPacket(new InfoPacket
                 {
                     Message = "Already_taken"
                 });
