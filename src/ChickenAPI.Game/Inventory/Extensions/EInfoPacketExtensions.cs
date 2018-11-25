@@ -8,11 +8,19 @@ namespace ChickenAPI.Game.Inventory.Extensions
     {
         public static EInfoPacket GenerateEInfoPacket(this ItemInstanceDto itemInstance)
         {
-
+            EquipmentType equipmentSlot = itemInstance.Item.EquipmentSlot;
             switch (itemInstance.Item.ItemType)
             {
                 case ItemType.Weapon:
-                    return GenerateEInfoWeapon(itemInstance);
+                    switch (equipmentSlot)
+                    {
+                        case EquipmentType.MainWeapon:
+                            return GenerateEInfoPrimaryWeapon(itemInstance);
+                        case EquipmentType.SecondaryWeapon:
+                            return GenerateSecondaryWeapon(itemInstance);
+                        default:
+                            return null;
+                    }
 
                 case ItemType.Armor:
                     return GenerateEInfoArmor(itemInstance);
@@ -28,143 +36,139 @@ namespace ChickenAPI.Game.Inventory.Extensions
             }
         }
 
-        private static EInfoPacket GenerateEInfoWeapon(ItemInstanceDto itemInstance)
+        private static EInfoPacket GenerateEInfoPrimaryWeapon(ItemInstanceDto itemInstance)
         {
-            EquipmentType equipmentSlot = itemInstance.Item.EquipmentSlot;
             byte classe = itemInstance.Item.Class;
-            switch (equipmentSlot)
+            switch (classe)
             {
-                case EquipmentType.MainWeapon:
-                    switch (classe)
+                case (byte)ItemClassType.Unknown4:
+                    return new EInfoPacket
                     {
-                        case 4:
-                            return new EInfoPacket
-                            {
-                                EInfoType = EInfoPacketType.MainWeaponArcher,
-                                ItemVNum = itemInstance.ItemId,
-                                Rare = itemInstance.Rarity,
-                                Upgrade = itemInstance.Upgrade,
-                                Fixed = false,
-                                LevelMinimum = itemInstance.Item.LevelMinimum,
-                                CloseDefense = itemInstance.Item.DamageMinimum, // review this
-                                RangeDefense = itemInstance.Item.DamageMaximum, // review this
-                                MagicDefense = itemInstance.Item.HitRate, // review this
-                                DefenseDodge = itemInstance.Item.CriticalLuckRate, // review this
-                                CriticalRate = itemInstance.Item.CriticalRate, // review this
-                                Ammo = itemInstance.Ammo,
-                                MaximumAmmo = itemInstance.Item.MaximumAmmo,
-                                Price = itemInstance.Item.Price,
-                                Unknown2 = -1,
-                                Rare2 = 0,
-                                BoundCharacterId = 0,
-                                ShellEffectCount = 0,
-                                ShellEffect = 0
-                            };
-                        case 8:
-                            return new EInfoPacket
-                            {
-                                EInfoType = EInfoPacketType.MainWeaponMagician,
-                                ItemVNum = itemInstance.ItemId,
-                                Rare = itemInstance.Rarity,
-                                Upgrade = itemInstance.Upgrade,
-                                Fixed = false,
-                                LevelMinimum = itemInstance.Item.LevelMinimum,
-                                CloseDefense = itemInstance.Item.DamageMinimum,
-                                RangeDefense = itemInstance.Item.DamageMaximum,
-                                MagicDefense = itemInstance.Item.HitRate,
-                                DefenseDodge = itemInstance.Item.CriticalLuckRate,
-                                CriticalRate = itemInstance.Item.CriticalRate,
-                                Ammo = itemInstance.Ammo,
-                                MaximumAmmo = itemInstance.Item.MaximumAmmo,
-                                Price = itemInstance.Item.Price,
-                                Unknown2 = -1,
-                                Rare2 = 0,
-                                BoundCharacterId = 0,
-                                ShellEffectCount = 0,
-                                ShellEffect = 0
-                            };
-                        default:
-                            return new EInfoPacket
-                            {
-                                EInfoType = EInfoPacketType.WeaponDefault,
-                                ItemVNum = itemInstance.ItemId,
-                                Rare = itemInstance.Rarity,
-                                Upgrade = itemInstance.Upgrade,
-                                Fixed = false,
-                                LevelMinimum = itemInstance.Item.LevelMinimum,
-                                CloseDefense = itemInstance.Item.DamageMinimum,
-                                RangeDefense = itemInstance.Item.DamageMaximum,
-                                MagicDefense = itemInstance.Item.HitRate,
-                                DefenseDodge = itemInstance.Item.CriticalLuckRate,
-                                CriticalRate = itemInstance.Item.CriticalRate,
-                                Ammo = itemInstance.Ammo,
-                                MaximumAmmo = itemInstance.Item.MaximumAmmo,
-                                Price = itemInstance.Item.Price,
-                                Unknown2 = -1,
-                                Rare2 = 0,
-                                BoundCharacterId = 0,
-                                ShellEffectCount = 0,
-                                ShellEffect = 0
-                            };
-
-                    }
-                case EquipmentType.SecondaryWeapon:
-                    switch (classe)
+                        EInfoType = EInfoPacketType.MainWeaponArcher,
+                        ItemVNum = itemInstance.ItemId,
+                        Rare = itemInstance.Rarity,
+                        Upgrade = itemInstance.Upgrade,
+                        Fixed = false,
+                        LevelMinimum = itemInstance.Item.LevelMinimum,
+                        CloseDefense = itemInstance.Item.DamageMinimum, // review this
+                        RangeDefense = itemInstance.Item.DamageMaximum, // review this
+                        MagicDefense = itemInstance.Item.HitRate, // review this
+                        DefenseDodge = itemInstance.Item.CriticalLuckRate, // review this
+                        CriticalRate = itemInstance.Item.CriticalRate, // review this
+                        Ammo = itemInstance.Ammo,
+                        MaximumAmmo = itemInstance.Item.MaximumAmmo,
+                        Price = itemInstance.Item.Price,
+                        Unknown2 = -1,
+                        Rare2 = 0,
+                        BoundCharacterId = 0,
+                        ShellEffectCount = 0,
+                        ShellEffect = 0
+                    };
+                case (byte)ItemClassType.Unknown8:
+                    return new EInfoPacket
                     {
-                        case 1:
-                        case 2:
-                            return new EInfoPacket
-                            {
-                                EInfoType = EInfoPacketType.MainWeaponArcher,
-                                ItemVNum = itemInstance.ItemId,
-                                Rare = itemInstance.Rarity,
-                                Upgrade = itemInstance.Upgrade,
-                                Fixed = false,
-                                LevelMinimum = itemInstance.Item.LevelMinimum,
-                                CloseDefense = itemInstance.Item.DamageMinimum,
-                                RangeDefense = itemInstance.Item.DamageMaximum,
-                                MagicDefense = itemInstance.Item.HitRate,
-                                DefenseDodge = itemInstance.Item.CriticalLuckRate,
-                                CriticalRate = itemInstance.Item.CriticalRate,
-                                Ammo = itemInstance.Ammo,
-                                MaximumAmmo = itemInstance.Item.MaximumAmmo,
-                                Price = itemInstance.Item.Price,
-                                Unknown2 = -1,
-                                Rare2 = 0,
-                                BoundCharacterId = 0,
-                                ShellEffectCount = 0,
-                                ShellEffect = 0
-                            };
-                        default:
-                            return new EInfoPacket
-                            {
-                                EInfoType = EInfoPacketType.WeaponDefault,
-                                ItemVNum = itemInstance.ItemId,
-                                Rare = itemInstance.Rarity,
-                                Upgrade = itemInstance.Upgrade,
-                                Fixed = false,
-                                LevelMinimum = itemInstance.Item.LevelMinimum,
-                                CloseDefense = itemInstance.Item.DamageMinimum,
-                                RangeDefense = itemInstance.Item.DamageMaximum,
-                                MagicDefense = itemInstance.Item.HitRate,
-                                DefenseDodge = itemInstance.Item.CriticalLuckRate,
-                                CriticalRate = itemInstance.Item.CriticalRate,
-                                Ammo = itemInstance.Ammo,
-                                MaximumAmmo = itemInstance.Item.MaximumAmmo,
-                                Price = itemInstance.Item.Price,
-                                Unknown2 = -1,
-                                Rare2 = 0,
-                                BoundCharacterId = 0,
-                                ShellEffectCount = 0,
-                                ShellEffect = 0
-                            };
-
-                    }
+                        EInfoType = EInfoPacketType.MainWeaponMagician,
+                        ItemVNum = itemInstance.ItemId,
+                        Rare = itemInstance.Rarity,
+                        Upgrade = itemInstance.Upgrade,
+                        Fixed = false,
+                        LevelMinimum = itemInstance.Item.LevelMinimum,
+                        CloseDefense = itemInstance.Item.DamageMinimum,
+                        RangeDefense = itemInstance.Item.DamageMaximum,
+                        MagicDefense = itemInstance.Item.HitRate,
+                        DefenseDodge = itemInstance.Item.CriticalLuckRate,
+                        CriticalRate = itemInstance.Item.CriticalRate,
+                        Ammo = itemInstance.Ammo,
+                        MaximumAmmo = itemInstance.Item.MaximumAmmo,
+                        Price = itemInstance.Item.Price,
+                        Unknown2 = -1,
+                        Rare2 = 0,
+                        BoundCharacterId = 0,
+                        ShellEffectCount = 0,
+                        ShellEffect = 0
+                    };
                 default:
-                    return null;
+                    return new EInfoPacket
+                    {
+                        EInfoType = EInfoPacketType.WeaponDefault,
+                        ItemVNum = itemInstance.ItemId,
+                        Rare = itemInstance.Rarity,
+                        Upgrade = itemInstance.Upgrade,
+                        Fixed = false,
+                        LevelMinimum = itemInstance.Item.LevelMinimum,
+                        CloseDefense = itemInstance.Item.DamageMinimum,
+                        RangeDefense = itemInstance.Item.DamageMaximum,
+                        MagicDefense = itemInstance.Item.HitRate,
+                        DefenseDodge = itemInstance.Item.CriticalLuckRate,
+                        CriticalRate = itemInstance.Item.CriticalRate,
+                        Ammo = itemInstance.Ammo,
+                        MaximumAmmo = itemInstance.Item.MaximumAmmo,
+                        Price = itemInstance.Item.Price,
+                        Unknown2 = -1,
+                        Rare2 = 0,
+                        BoundCharacterId = 0,
+                        ShellEffectCount = 0,
+                        ShellEffect = 0
+                    };
+
             }
         }
 
+        private static EInfoPacket GenerateSecondaryWeapon(ItemInstanceDto itemInstance)
+        {
+            byte classe = itemInstance.Item.Class;
+            switch (classe)
+            {
+                case (byte)ItemClassType.Unknown1:
+                case (byte)ItemClassType.Unknown2:
+                    return new EInfoPacket
+                    {
+                        EInfoType = EInfoPacketType.MainWeaponArcher,
+                        ItemVNum = itemInstance.ItemId,
+                        Rare = itemInstance.Rarity,
+                        Upgrade = itemInstance.Upgrade,
+                        Fixed = false,
+                        LevelMinimum = itemInstance.Item.LevelMinimum,
+                        CloseDefense = itemInstance.Item.DamageMinimum,
+                        RangeDefense = itemInstance.Item.DamageMaximum,
+                        MagicDefense = itemInstance.Item.HitRate,
+                        DefenseDodge = itemInstance.Item.CriticalLuckRate,
+                        CriticalRate = itemInstance.Item.CriticalRate,
+                        Ammo = itemInstance.Ammo,
+                        MaximumAmmo = itemInstance.Item.MaximumAmmo,
+                        Price = itemInstance.Item.Price,
+                        Unknown2 = -1,
+                        Rare2 = 0,
+                        BoundCharacterId = 0,
+                        ShellEffectCount = 0,
+                        ShellEffect = 0
+                    };
+                default:
+                    return new EInfoPacket
+                    {
+                        EInfoType = EInfoPacketType.WeaponDefault,
+                        ItemVNum = itemInstance.ItemId,
+                        Rare = itemInstance.Rarity,
+                        Upgrade = itemInstance.Upgrade,
+                        Fixed = false,
+                        LevelMinimum = itemInstance.Item.LevelMinimum,
+                        CloseDefense = itemInstance.Item.DamageMinimum,
+                        RangeDefense = itemInstance.Item.DamageMaximum,
+                        MagicDefense = itemInstance.Item.HitRate,
+                        DefenseDodge = itemInstance.Item.CriticalLuckRate,
+                        CriticalRate = itemInstance.Item.CriticalRate,
+                        Ammo = itemInstance.Ammo,
+                        MaximumAmmo = itemInstance.Item.MaximumAmmo,
+                        Price = itemInstance.Item.Price,
+                        Unknown2 = -1,
+                        Rare2 = 0,
+                        BoundCharacterId = 0,
+                        ShellEffectCount = 0,
+                        ShellEffect = 0
+                    };
+
+            }
+        }
         private static EInfoPacket GenerateEInfoArmor(ItemInstanceDto itemInstance)
         {
             return new EInfoPacket
