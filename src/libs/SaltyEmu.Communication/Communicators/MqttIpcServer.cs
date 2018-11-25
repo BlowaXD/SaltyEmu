@@ -15,9 +15,9 @@ using SaltyEmu.Communication.Utils;
 
 namespace SaltyEmu.Communication.Communicators
 {
-    public abstract class MqttIpcServer<T> : IIpcServer where T : class
+    public abstract class MqttIpcServer<TLogger> : IIpcServer where TLogger : class
     {
-        private readonly Logger Log = Logger.GetLogger<T>();
+        private readonly Logger Log = Logger.GetLogger<TLogger>();
         private readonly IManagedMqttClient _client;
         private readonly IIpcSerializer _serializer;
         private readonly IPacketContainerFactory _packetFactory;
