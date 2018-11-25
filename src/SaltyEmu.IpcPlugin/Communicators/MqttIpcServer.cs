@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Threading.Tasks;
 using ChickenAPI.Core.IPC;
 using ChickenAPI.Core.IPC.Protocol;
+using ChickenAPI.Core.Logging;
 using MQTTnet;
 using MQTTnet.Client;
 using MQTTnet.Extensions.ManagedClient;
@@ -14,27 +15,24 @@ using SaltyEmu.Communication.Utils;
 
 namespace SaltyEmu.Communication.Communicators
 {
-    public abstract class MqttClientCommunicator : IIpcClient
+    public abstract class MqttIpcServer<T> : IIpcServer where T : class
     {
-        protected event EventHandler<IIpcPacket> PacketReceived;
-
-
+        private readonly Logger Log = Logger.GetLogger<T>();
         private readonly IManagedMqttClient _client;
         private readonly IIpcSerializer _serializer;
         private readonly IPacketContainerFactory _packetFactory;
-        private readonly IPendingRequestFactory _requestFactory;
+
+        private readonly IIpcRequestHandler _requestHandler;
 
         private readonly RabbitMqConfiguration _configuration;
-        private readonly ConcurrentDictionary<Guid, PendingRequest> _pendingRequests;
 
-        protected MqttClientCommunicator(RabbitMqConfiguration config, IIpcSerializer serializer)
+        protected MqttIpcServer(RabbitMqConfiguration config, IIpcSerializer serializer, IIpcRequestHandler requestHandler)
         {
             _configuration = config;
+            _requestHandler = requestHandler;
             _client = new MqttFactory().CreateManagedMqttClient();
             _serializer = serializer;
-            _pendingRequests = new ConcurrentDictionary<Guid, PendingRequest>();
             _packetFactory = new PacketContainerFactory();
-            _requestFactory = new PendingRequestFactory();
         }
 
         public async Task InitializeAsync(string clientName)
@@ -55,34 +53,24 @@ namespace SaltyEmu.Communication.Communicators
             var container = _serializer.Deserialize<PacketContainer>(message.Payload);
             object packet = JsonConvert.DeserializeObject(container.Content, container.Type);
 
-            if (!(packet is BaseResponse response))
+            if (!(packet is BaseRequest request))
             {
                 return;
             }
 
-            if (!_pendingRequests.TryGetValue(response.RequestId, out PendingRequest request))
-            {
-                return;
-            }
-
-            request.Response.SetResult(response);
+            OnRequest(request, container.Type);
         }
 
-        public async Task<T> RequestAsync<T>(IIpcRequest packet) where T : class, IIpcResponse
+        public void OnRequest(BaseRequest request, Type type)
         {
-            // add packet to requests
-            PendingRequest request = _requestFactory.Create(packet);
-            if (!_pendingRequests.TryAdd(packet.Id, request))
-            {
-                return null;
-            }
+            request.Server = this;
+            _requestHandler.Handle(request, type);
+        }
 
-            // create the packet container
-            PacketContainer container = _packetFactory.ToPacket(packet.GetType(), packet);
-            await SendAsync(container);
 
-            IIpcResponse tmp = await request.Response.Task;
-            return tmp as T;
+        public async Task ResponseAsync<T>(T response) where T : IIpcResponse
+        {
+            await SendAsync(_packetFactory.ToPacket<T>(response));
         }
 
         private async Task SendAsync(PacketContainer container)
@@ -90,11 +78,6 @@ namespace SaltyEmu.Communication.Communicators
             await _client.PublishAsync(builder => builder
                 .WithPayload(_serializer.Serialize(container))
                 .WithTopic("topic"));
-        }
-
-        public Task BroadcastAsync<T>(T packet) where T : IIpcPacket
-        {
-            return Task.CompletedTask;
         }
     }
 }
