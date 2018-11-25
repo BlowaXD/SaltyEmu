@@ -8,6 +8,7 @@ using MQTTnet;
 using MQTTnet.Client;
 using MQTTnet.Extensions.ManagedClient;
 using SaltyEmu.Communication.Configs;
+using SaltyEmu.Communication.Serializers;
 
 namespace SaltyEmu.Communication.Communicators
 {
@@ -16,10 +17,11 @@ namespace SaltyEmu.Communication.Communicators
         private readonly IManagedMqttClient _client;
         private readonly RabbitMqConfiguration _configuration;
 
-        protected MqttCommunicator(RabbitMqConfiguration config)
+        protected MqttCommunicator(RabbitMqConfiguration config, IIpcSerializer serializer)
         {
             _configuration = config;
             _client = new MqttFactory().CreateManagedMqttClient();
+            _serializer = serializer;
         }
 
         public async Task InitializeAsync(string clientName)
