@@ -12,16 +12,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Foundatio" Version="7.1.1845" />
-    <PackageReference Include="Foundatio.RabbitMQ" Version="7.0.1488" />
-    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
-    <PackageReference Include="RabbitMQ.Client" Version="5.1.0" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\ChickenAPI.Core\ChickenAPI.Core.csproj" />
     <ProjectReference Include="..\ChickenAPI.Game\ChickenAPI.Game.csproj" />
     <ProjectReference Include="..\SaltyEmu.IpcPlugin\SaltyEmu.Communication.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="MQTTnet.Extensions.ManagedClient">
+      <HintPath>C:\Users\Blowa\.nuget\packages\mqttnet.extensions.managedclient\2.8.4\lib\netstandard2.0\MQTTnet.Extensions.ManagedClient.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

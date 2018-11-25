@@ -5,9 +5,10 @@ using ChickenAPI.Data;
 using Foundatio.Caching;
 using Foundatio.Serializer;
 using Newtonsoft.Json;
+using SaltyEmu.RedisWrappers;
 using StackExchange.Redis;
 
-namespace SaltyEmu.RedisWrappers.Redis
+namespace SaltyEmu.Redis
 {
     public class MappedCacheClientBase<TObject> : IMappedRepository<TObject> where TObject : class, IMappedDto
     {

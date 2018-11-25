@@ -9,6 +9,11 @@
     <ProjectReference Include="..\..\ChickenAPI.Core\ChickenAPI.Core.csproj" />
     <ProjectReference Include="..\..\ChickenAPI.Data\ChickenAPI.Data.csproj" />
     <ProjectReference Include="..\..\ChickenAPI.Enums\ChickenAPI.Enums.csproj" />
+    <ProjectReference Include="..\..\SaltyEmu.IpcPlugin\SaltyEmu.Communication.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Handlers\" />
   </ItemGroup>
 
 </Project>

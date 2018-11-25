@@ -3,7 +3,9 @@ using System.Threading.Tasks;
 using ChickenAPI.Core.IPC;
 using ChickenAPI.Core.Logging;
 using ChickenAPI.Game.NpcDialog;
-using SaltyEmu.Communication.Communicators;
+using MQTTnet;
+using MQTTnet.Client;
+using MQTTnet.Extensions.ManagedClient;
 using SaltyEmu.Communication.Utils;
 using SaltyPoc.IPC.Packets;
 
@@ -28,12 +30,23 @@ namespace SaltyPoc.IPC
         internal static async Task Main(string[] args)
         {
             Logger.Initialize();
-            var tmp = new BasicNpcDialogHandler();
+            // Setup and start a managed MQTT client.
 
-            //IIpcServer server = new RabbitMqServer(GetHandler());
-            // _client = new RabbitMqClient();
-            await Test();
-            Console.ReadKey();
+            ManagedMqttClientOptions options = new ManagedMqttClientOptionsBuilder()
+                .WithAutoReconnectDelay(TimeSpan.FromSeconds(5))
+                .WithClientOptions(new MqttClientOptionsBuilder()
+                    .WithClientId("Client1")
+                    .WithTcpServer("broker.hivemq.com")
+                    .WithTls().Build())
+                .Build();
+
+            IManagedMqttClient mqttClient = new MqttFactory().CreateManagedMqttClient();
+            await mqttClient.SubscribeAsync(new TopicFilterBuilder().WithTopic("my/topic").Build());
+            await mqttClient.StartAsync(options);
+
+            // StartAsync returns immediately, as it starts a new thread using Task.Run, 
+            // and so the calling thread needs to wait.
+            Console.ReadLine();
         }
 
         private static async Task Test()
