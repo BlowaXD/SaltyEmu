@@ -13,12 +13,12 @@ namespace ChickenAPI.Game.Player
         /// <summary>
         /// Is in group or not
         /// </summary>
-        bool HasGroup { get; set; }
+        bool HasGroup { get; }
 
         /// <summary>
         /// Tells if the player is the group Leader
         /// </summary>
-        bool IsGroupLeader { get; set; }
+        bool IsGroupLeader { get; }
     }
 
     public interface IGroupEntity : IGroupCapacity, IEntity

@@ -9,7 +9,7 @@ namespace ChickenAPI.Game.Groups
     {
         public static IEnumerable<PstPacket> GeneratePstPacket(this IPlayerEntity player)
         {
-            var group = player.GetComponent<GroupComponent>();
+            GroupDto group = player.Group;
             if (group == null)
             {
                 return null;
@@ -18,7 +18,7 @@ namespace ChickenAPI.Game.Groups
             List<PstPacket> tmp = new List<PstPacket>();
             int i = 0;
 
-            foreach (IPlayerEntity member in group.Members)
+            foreach (IPlayerEntity member in group.Players)
             {
                 if (player == member)
                 {
@@ -28,7 +28,7 @@ namespace ChickenAPI.Game.Groups
                 tmp.Add(new PstPacket
                 {
                     VisualType = VisualType.Character,
-                    GroupIndex = i,
+                    GroupIndex = i++,
                     Gender = member.Character.Gender,
                     VisualId = member.Character.Id,
                     Class = member.Character.Class,

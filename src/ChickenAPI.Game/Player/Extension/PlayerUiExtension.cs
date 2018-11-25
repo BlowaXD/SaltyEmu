@@ -1,6 +1,7 @@
 ﻿using ChickenAPI.Game.Entities.Extensions;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Entities.Player.Extensions;
+using ChickenAPI.Game.Groups;
 using ChickenAPI.Game.Inventory.Extensions;
 
 namespace ChickenAPI.Game.Player.Extension
@@ -25,6 +26,11 @@ namespace ChickenAPI.Game.Player.Extension
         public static void ActualiseUiHpBar(this IPlayerEntity player)
         {
             player.SendPacket(player.GenerateStatPacket());
+        }
+
+        public static void ActualiseUiGroupIcons(this IPlayerEntity player)
+        {
+            player.SendPackets(player.GeneratePstPacket());
         }
     }
 }

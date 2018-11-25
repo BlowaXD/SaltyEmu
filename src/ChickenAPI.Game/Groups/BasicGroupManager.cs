@@ -5,14 +5,18 @@ using Autofac;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Managers;
+using ChickenAPI.Game.Player.Extension;
 
 namespace ChickenAPI.Game.Groups
 {
     public class BasicGroupManager : IGroupManager
     {
         private readonly IPlayerManager PlayerManager = new Lazy<IPlayerManager>(() => ChickenContainer.Instance.Resolve<IPlayerManager>()).Value;
-        private Dictionary<Guid, GroupInvitDto> _pendingInvitations = new Dictionary<Guid, GroupInvitDto>();
-        private Dictionary<long, GroupDto> _groups = new Dictionary<long, GroupDto>();
+        private readonly Dictionary<Guid, GroupInvitDto> _pendingInvitations = new Dictionary<Guid, GroupInvitDto>();
+        private readonly Dictionary<long, GroupDto> _groups = new Dictionary<long, GroupDto>();
+        private long _lastGroupId;
+
+        protected long NextGroupId => ++_lastGroupId;
 
 
         public IReadOnlyCollection<GroupDto> Groups => _groups.Values;
@@ -44,24 +48,36 @@ namespace ChickenAPI.Game.Groups
             {
                 return;
             }
+
+            if (!dto.Sender.HasGroup && !dto.Target.HasGroup)
+            {
+                CreateGroup(dto.Sender);
+            }
+
+            dto.Target.JoinGroup(dto.Sender.Group);
         }
 
         private void CreateGroup(IPlayerEntity leader)
         {
-
+            leader.Group = new GroupDto
+            {
+                Id = NextGroupId,
+                Leader = leader,
+                Players = new List<IPlayerEntity>(new[] { leader })
+            };
         }
 
-        public void AddGroup(GroupDto @group)
+        public void AddGroup(GroupDto group)
         {
-            if (!_groups.TryGetValue(@group.Id, out GroupDto tmp))
+            if (!_groups.TryGetValue(group.Id, out GroupDto tmp))
             {
                 _groups.Add(group.Id, group);
             }
         }
 
-        public void RemoveGRoup(GroupDto @group)
+        public void RemoveGRoup(GroupDto group)
         {
-            if (_groups.ContainsKey(@group.Id))
+            if (_groups.ContainsKey(group.Id))
             {
                 _groups.Remove(group.Id);
             }
