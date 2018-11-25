@@ -4,16 +4,16 @@ using Newtonsoft.Json;
 
 namespace SaltyEmu.Communication.Serializers
 {
-    public class JsonSerializer<T> : IIpcSerializer<T> where T : class
+    public class JsonSerializer : IIpcSerializer
     {
-        public byte[] Serialize(T packet)
+        public byte[] Serialize<T>(T packet)
         {
             return Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(packet));
         }
 
-        public T Deserialize(byte[] buffer)
+        public T Deserialize<T>(byte[] buffer)
         {
-            return JsonConvert.DeserializeObject(Encoding.UTF8.GetString(buffer)) as T;
+            return JsonConvert.DeserializeObject<T>(Encoding.UTF8.GetString(buffer));
         }
     }
 }

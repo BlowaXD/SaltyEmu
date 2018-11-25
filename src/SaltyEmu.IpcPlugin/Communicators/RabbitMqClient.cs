@@ -25,9 +25,9 @@ namespace SaltyEmu.Communication.Communicators
         private readonly IModel _channel;
         private readonly IConnection _connection;
         private readonly IPacketContainerFactory _packetFactory;
+        private readonly IPendingRequestFactory _requestFactory;
 
         private readonly ConcurrentDictionary<Guid, PendingRequest> _pendingRequests;
-        private readonly IPendingRequestFactory _requestFactory;
 
         protected RabbitMqClient(RabbitMqConfiguration config)
         {
