@@ -24,8 +24,9 @@ namespace NosSharp.PacketHandler.Drops
             if (mapItem.ItemVnum == 1046) // Gold
             {
                 player.GoldUp(mapItem.Quantity);
-                player.CurrentMap.Broadcast(player.GenerateGetPacket(mapItem.Id));
-                // Should remove the entity
+                player.Broadcast(player.GenerateGetPacket(mapItem.Id));
+                mapItem.CurrentMap.UnregisterEntity(mapItem);
+                mapItem.Dispose();
             }
         }
     }

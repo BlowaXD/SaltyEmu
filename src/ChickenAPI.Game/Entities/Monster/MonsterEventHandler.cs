@@ -50,7 +50,7 @@ namespace ChickenAPI.Game.Entities.Monster
                     if (Random.Next(100) < 100) // 100 should be modified with GoldDropRate
                     {
                         Position<short>[] pos = PathFinder.GetNeighbors(monster.Actual, monster.CurrentMap.Map);
-                        IDropEntity drop = new ItemDropEntity(DropExtensions.GenerateTransportId())
+                        IDropEntity drop = new ItemDropEntity(monster.CurrentMap.GetNextId())
                         {
                             ItemVnum = 1046,
                             IsGold = true,

@@ -48,5 +48,11 @@ namespace ChickenAPI.Game.ECS.Entities
         /// <param name="range"></param>
         /// <returns></returns>
         IEnumerable<T> GetEntitiesInRange<T>(Position<short> pos, int range) where T : IEntity;
+
+        /// <summary>
+        ///     Get the current transportId and increment it
+        /// </summary>
+        /// <returns></returns>
+        long GetNextId();
     }
 }

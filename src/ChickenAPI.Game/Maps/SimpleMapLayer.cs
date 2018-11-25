@@ -87,6 +87,8 @@ namespace ChickenAPI.Game.Maps
             }
         }
 
+        private long _transportId = 10000;
+
         public Guid Id { get; set; }
         public IMap Map { get; }
         public IEnumerable<IPlayerEntity> Players => _players;
@@ -144,5 +146,7 @@ namespace ChickenAPI.Game.Maps
                 }
             }
         }
+
+        public long GetNextId() => _transportId++;
     }
 }
