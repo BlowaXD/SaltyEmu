@@ -2,7 +2,7 @@
 
 namespace ChickenAPI.Game.NpcDialog.Handlers
 {
-    [AttributeUsage(AttributeTargets.Method)]
+    [AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
     public class NpcDialogHandlerAttribute : Attribute
     {
         public NpcDialogHandlerAttribute(long npcDialogId)

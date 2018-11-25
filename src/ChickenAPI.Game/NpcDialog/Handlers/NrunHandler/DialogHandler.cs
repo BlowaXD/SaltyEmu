@@ -4,7 +4,7 @@ using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.NpcDialog.Events;
 using ChickenAPI.Game.Player.Extension;
 
-namespace ChickenAPI.Game.NpcDialog.Handlers
+namespace ChickenAPI.Game.NpcDialog.Handlers.NrunHandler
 {
     public class DialogHandler
     {
@@ -18,15 +18,18 @@ namespace ChickenAPI.Game.NpcDialog.Handlers
                 //Session.SendPacket(UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("NOT_ADVENTURER"), 0));
                 return;
             }
+
             if (player.Character.Level < 15 || player.Character.JobLevel < 20)
             {
                 //Session.SendPacket(UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("LOW_LVL"), 0));
                 return;
             }
+
             if (args.Type == (byte)player.Character.Class)
             {
                 return;
             }
+
             if (args.Type > 4)
             {
                 return;
