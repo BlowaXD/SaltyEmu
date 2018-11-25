@@ -18,6 +18,7 @@ using ChickenAPI.Packets.Game.Client.Player;
 using ChickenAPI.Packets.Game.Server.Player;
 using ChickenAPI.Packets.Game.Server.UserInterface;
 using System;
+using ChickenAPI.Game.PacketHandling.Extensions;
 
 namespace ChickenAPI.Game.Player.Extension
 {
@@ -26,7 +27,6 @@ namespace ChickenAPI.Game.Player.Extension
         private static readonly IRandomGenerator _randomGenerator = new Lazy<IRandomGenerator>(() => ChickenContainer.Instance.Resolve<IRandomGenerator>()).Value;
 
         #region Gold
-
 
         public static void GoldLess(this IPlayerEntity player, long amount)
         {
@@ -64,13 +64,14 @@ namespace ChickenAPI.Game.Player.Extension
             {
                 isPvpPrimary = true;
             }
+
             isPvpSecondary |= weapon2?.Item.Name.Contains(": ") == true;
             isPvpArmor |= armor?.Item.Name.Contains(": ") == true;
 
             // tc_info 0 name 0 0 0 0 -1 - 0 0 0 0 0 0 0 0 0 0 0 wins deaths reput 0 0 0 morph
             // talentwin talentlose capitul rankingpoints arenapoints 0 0 ispvpprimary ispvpsecondary
             // ispvparmor herolvl desc
-            return (new TcInfoPacket
+            return new TcInfoPacket
             {
                 Level = charac.Level,
                 Name = charac.Character.Name,
@@ -81,13 +82,13 @@ namespace ChickenAPI.Game.Player.Extension
                 Family = charac.HasFamily ? charac.Family.Name : "-1 -",
                 ReputationIco = charac.GetReputIcon(),
                 DignityIco = charac.GetDignityIcon(),
-                HaveWeapon = (weapon != null ? 1 : 0),
+                HaveWeapon = weapon != null ? 1 : 0,
                 WeaponRare = weapon?.Rarity ?? 0,
                 WeaponUpgrade = weapon?.Upgrade ?? 0,
-                HaveSecondary = (weapon2 != null ? 1 : 0),
+                HaveSecondary = weapon2 != null ? 1 : 0,
                 SecondaryRare = weapon2?.Rarity ?? 0,
                 SecondaryUpgrade = weapon?.Upgrade ?? 0,
-                HaveArmor = (armor != null ? 1 : 0),
+                HaveArmor = armor != null ? 1 : 0,
                 ArmorRare = armor?.Rarity ?? 0,
                 ArmorUpgrade = armor?.Upgrade ?? 0,
                 Act4Kill = charac.Character.Act4Kill,
@@ -108,16 +109,16 @@ namespace ChickenAPI.Game.Player.Extension
                 isPvpPrimary = isPvpPrimary,
                 isPvpSecondary = isPvpSecondary,
                 HeroLevel = charac.HeroLevel,
-                Biography = (string.IsNullOrEmpty(charac.Character.Biography) ? " REKT BOY" : charac.Character.Biography)
-            });
+                Biography = string.IsNullOrEmpty(charac.Character.Biography) ? " REKT BOY" : charac.Character.Biography
+            };
         }
 
         public static void ChangeClass(this IPlayerEntity charac, CharacterClassType type)
         {
-            charac.Level = 1;
+            charac.JobLevel = 1;
             charac.JobLevelXp = 0;
             charac.SendPacket(new NpInfoPacket { UnKnow = 0 });
-            charac.SendPacket(new PClearPacket { });
+            charac.SendPacket(new PClearPacket());
 
             if (type == (byte)CharacterClassType.Adventurer)
             {
@@ -130,9 +131,9 @@ namespace ChickenAPI.Game.Player.Extension
             charac.SendPacket(new TitPacket
             {
                 ClassType = type == CharacterClassType.Adventurer ? "Adventurer" :
-                type == CharacterClassType.Archer ? "Archer" :
-                type == CharacterClassType.Magician ? "Mage" :
-                type == CharacterClassType.Swordman ? "Swordman" : "Martial",
+                    type == CharacterClassType.Archer ? "Archer" :
+                    type == CharacterClassType.Magician ? "Mage" :
+                    type == CharacterClassType.Swordman ? "Swordman" : "Martial",
                 Name = charac.Character.Name
             });
             charac.SendPacket(charac.GenerateStatPacket());
@@ -141,9 +142,7 @@ namespace ChickenAPI.Game.Player.Extension
             charac.SendPacket(charac.GenerateEffectPacket(196));
             charac.SendPacket(new ScrPacket { Unknow1 = 0, Unknow2 = 0, Unknow3 = 0, Unknow4 = 0, Unknow5 = 0, Unknow6 = 0 });
             // Session.SendPacket(UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("CLASS_CHANGED"), 0));
-            charac.Character.Faction = charac.Family == null
-             ? (FactionType)(1 + _randomGenerator.Next(0, 2))
-             : (FactionType)charac.Family.FamilyFaction;
+            charac.Character.Faction = charac.Family?.FamilyFaction ?? (FactionType)(1 + _randomGenerator.Next(0, 2));
             // Session.SendPacket(UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey($"GET_PROTECTION_POWER_{Faction}"), 0));*/
             charac.SendPacket(charac.GenerateFsPacket());
             charac.SendPacket(charac.GenerateStatCharPacket());
@@ -151,11 +150,10 @@ namespace ChickenAPI.Game.Player.Extension
             charac.SendPacket(charac.GenerateCondPacket());
             charac.SendPacket(charac.GenerateLevPacket());
             charac.Broadcast(charac.GenerateCModePacket());
-            // GenerateIn()
+            charac.Broadcast(charac.GenerateInPacket());
             charac.Broadcast(charac.GenerateGidxPacket());
             charac.Broadcast(charac.GenerateEffectPacket(6));
             charac.Broadcast(charac.GenerateEffectPacket(196));
-            //Session.CurrentMapInstance?.Broadcast(Session, GenerateIn(), ReceiverType.AllExceptMe);
 
             SkillComponent component = charac.SkillComponent;
             foreach (SkillDto skill in component.Skills.Values)
