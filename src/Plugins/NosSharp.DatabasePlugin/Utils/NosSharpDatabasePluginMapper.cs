@@ -66,42 +66,42 @@ namespace SaltyEmu.DatabasePlugin.Utils
         {
             cfg.CreateMap<MapDto, MapModel>();
             cfg.CreateMap<MapModel, MapDto>()
-                .ForSourceMember(s => s.Npcs, expr => expr.Ignore())
-                .ForSourceMember(s => s.Monsters, expr => expr.Ignore())
-                .ForSourceMember(s => s.Portals, expr => expr.Ignore());
+                .ForSourceMember(s => s.Npcs, expr => expr.DoNotValidate())
+                .ForSourceMember(s => s.Monsters, expr => expr.DoNotValidate())
+                .ForSourceMember(s => s.Portals, expr => expr.DoNotValidate());
 
             cfg.CreateMap<MapNpcDto, MapNpcModel>()
                 .ForMember(s => s.NpcMonster, expr => expr.Ignore())
                 .ForMember(s => s.Map, expr => expr.Ignore());
 
             cfg.CreateMap<MapNpcModel, MapNpcDto>()
-                .ForSourceMember(s => s.NpcMonster, expr => expr.Ignore())
-                .ForMember(s => s.NpcMonster, expr => expr.ResolveUsing(origin => ChickenContainer.Instance.Resolve<INpcMonsterService>().GetById(origin.NpcMonsterId)));
+                .ForSourceMember(s => s.NpcMonster, expr => expr.DoNotValidate())
+                .ForMember(s => s.NpcMonster, expr => expr.MapFrom(origin => ChickenContainer.Instance.Resolve<INpcMonsterService>().GetById(origin.NpcMonsterId)));
 
             cfg.CreateMap<PortalDto, MapPortalModel>()
                 .ForMember(s => s.SourceMap, expr => expr.Ignore());
 
             cfg.CreateMap<MapPortalModel, PortalDto>()
-                .ForSourceMember(s => s.SourceMap, expr => expr.Ignore());
+                .ForSourceMember(s => s.SourceMap, expr => expr.DoNotValidate());
 
             cfg.CreateMap<MapMonsterDto, MapMonsterModel>()
                 .ForMember(s => s.NpcMonster, expr => expr.Ignore());
             cfg.CreateMap<MapMonsterModel, MapMonsterDto>()
-                .ForMember(s => s.NpcMonster, expr => expr.ResolveUsing(origin => ChickenContainer.Instance.Resolve<INpcMonsterService>().GetById(origin.NpcMonsterId)));
+                .ForMember(s => s.NpcMonster, expr => expr.MapFrom(origin => ChickenContainer.Instance.Resolve<INpcMonsterService>().GetById(origin.NpcMonsterId)));
         }
 
         private static void MapNpcMonster(IMapperConfigurationExpression cfg)
         {
             cfg.CreateMap<NpcMonsterDto, NpcMonsterModel>();
             cfg.CreateMap<NpcMonsterModel, NpcMonsterDto>()
-                .ForSourceMember(s => s.BCards, expression => expression.Ignore())
-                .ForSourceMember(s => s.Skills, expression => expression.Ignore())
-                .ForSourceMember(s => s.MapNpcMonsters, expression => expression.Ignore());
+                .ForSourceMember(s => s.BCards, expression => expression.DoNotValidate())
+                .ForSourceMember(s => s.Skills, expression => expression.DoNotValidate())
+                .ForSourceMember(s => s.MapNpcMonsters, expression => expression.DoNotValidate());
 
             cfg.CreateMap<NpcMonsterSkillDto, NpcMonsterSkillModel>();
             cfg.CreateMap<NpcMonsterSkillModel, NpcMonsterSkillDto>()
-                .ForSourceMember(s => s.NpcMonster, expression => expression.Ignore())
-                .ForSourceMember(s => s.Skill, expr => expr.Ignore());
+                .ForSourceMember(s => s.NpcMonster, expression => expression.DoNotValidate())
+                .ForSourceMember(s => s.Skill, expr => expr.DoNotValidate());
         }
 
         private static void MapBCards(IMapperConfigurationExpression cfg)
@@ -109,62 +109,62 @@ namespace SaltyEmu.DatabasePlugin.Utils
             var subConfig = new MapperConfiguration(cfgg =>
             {
                 cfg.CreateMap<BCardDto, BCardModel>()
-                    .ForSourceMember(src => src.RelationType, expression => expression.Ignore());
+                    .ForSourceMember(src => src.RelationType, expression => expression.DoNotValidate());
 
                 cfg.CreateMap<BCardDto, ItemBCardModel>()
-                    .ForSourceMember(src => src.RelationType, expression => expression.Ignore())
+                    .ForSourceMember(src => src.RelationType, expression => expression.DoNotValidate())
                     .IncludeBase<BCardDto, BCardModel>();
 
 
                 cfg.CreateMap<BCardDto, NpcMonsterBCardModel>()
-                    .ForSourceMember(src => src.RelationType, expression => expression.Ignore())
+                    .ForSourceMember(src => src.RelationType, expression => expression.DoNotValidate())
                     .IncludeBase<BCardDto, BCardModel>();
 
 
                 cfg.CreateMap<BCardDto, SkillBCardModel>()
-                    .ForSourceMember(src => src.RelationType, expression => expression.Ignore())
+                    .ForSourceMember(src => src.RelationType, expression => expression.DoNotValidate())
                     .IncludeBase<BCardDto, BCardModel>();
 
 
                 cfg.CreateMap<BCardDto, CardBCardModel>()
-                    .ForSourceMember(src => src.RelationType, expression => expression.Ignore())
+                    .ForSourceMember(src => src.RelationType, expression => expression.DoNotValidate())
                     .IncludeBase<BCardDto, BCardModel>();
             });
             IMapper subMapper = subConfig.CreateMapper();
             cfg.CreateMap<BCardDto, BCardModel>()
-                .ForSourceMember(s => s.RelationType, expr => expr.Ignore())
-                .ConstructUsing(s =>
+                .ForSourceMember(s => s.RelationType, expr => expr.DoNotValidate())
+                .ConstructUsing((dto, context) =>
                 {
-                    switch (s.RelationType)
+                    switch (dto.RelationType)
                     {
                         case BCardRelationType.NpcMonster:
-                            return subMapper.Map<NpcMonsterBCardModel>(s);
+                            return subMapper.Map<NpcMonsterBCardModel>(dto);
                         case BCardRelationType.Item:
-                            return subMapper.Map<ItemBCardModel>(s);
+                            return subMapper.Map<ItemBCardModel>(dto);
                         case BCardRelationType.Skill:
-                            return subMapper.Map<SkillBCardModel>(s);
+                            return subMapper.Map<SkillBCardModel>(dto);
                         case BCardRelationType.Card:
-                            return subMapper.Map<CardBCardModel>(s);
+                            return subMapper.Map<CardBCardModel>(dto);
                         case BCardRelationType.Global:
-                            return subMapper.Map<BCardModel>(s);
+                            return subMapper.Map<BCardModel>(dto);
                         default:
-                            throw new ArgumentOutOfRangeException();
+                            return null;
                     }
                 });
 
             cfg.CreateMap<BCardModel, BCardDto>()
-                .ForMember(s => s.RelationType, expr => expr.UseValue(BCardRelationType.Global));
+                .ForMember(s => s.RelationType, expr => expr.MapFrom(s => BCardRelationType.Global));
 
             cfg.CreateMap<CardBCardModel, BCardDto>()
-                .ForMember(s => s.RelationType, expression => expression.UseValue(BCardRelationType.Card))
+                .ForMember(s => s.RelationType, expression => expression.MapFrom(s => BCardRelationType.Card))
                 .IncludeBase<BCardModel, BCardDto>();
 
             cfg.CreateMap<ItemBCardModel, BCardDto>()
-                .ForMember(s => s.RelationType, expression => expression.UseValue(BCardRelationType.Item))
+                .ForMember(s => s.RelationType, expression => expression.MapFrom(s => BCardRelationType.Item))
                 .IncludeBase<BCardModel, BCardDto>();
 
             cfg.CreateMap<SkillBCardModel, BCardDto>()
-                .ForMember(s => s.RelationType, expression => expression.UseValue(BCardRelationType.Skill))
+                .ForMember(s => s.RelationType, expression => expression.MapFrom(s => BCardRelationType.Skill))
                 .IncludeBase<BCardModel, BCardDto>();
         }
 
@@ -175,11 +175,13 @@ namespace SaltyEmu.DatabasePlugin.Utils
             cfg.CreateMap<ItemDto, ItemModel>()
                 .ForMember(s => s.BCards, expr => expr.Ignore());
             cfg.CreateMap<ItemModel, ItemDto>()
-                .ForSourceMember(s => s.BCards, expr => expr.Ignore());
+                .ForSourceMember(s => s.BCards, expr => expr.DoNotValidate());
 
             cfg.CreateMap<ItemInstanceDto, CharacterItemModel>();
+            IItemService tmp = new Lazy<IItemService>(() => ChickenContainer.Instance.Resolve<IItemService>()).Value;
+
             cfg.CreateMap<CharacterItemModel, ItemInstanceDto>()
-                .ForMember(s => s.Item, expr => expr.ResolveUsing(origin => ChickenContainer.Instance.Resolve<IItemService>().GetById(origin.ItemId)));
+                .ForMember(s => s.Item, expr => expr.MapFrom(origin => tmp.GetById(origin.ItemId)));
         }
 
         private static void MapCharacters(IMapperConfigurationExpression cfg)
@@ -194,7 +196,7 @@ namespace SaltyEmu.DatabasePlugin.Utils
                 .ForMember(s => s.Skill, expr => expr.Ignore());
 
             cfg.CreateMap<CharacterSkillModel, CharacterSkillDto>()
-                .ForMember(s => s.Skill, expr => expr.ResolveUsing(origin => ChickenContainer.Instance.Resolve<ISkillService>().GetById(origin.SkillId)));
+                .ForMember(s => s.Skill, expr => expr.MapFrom(origin => ChickenContainer.Instance.Resolve<ISkillService>().GetById(origin.SkillId)));
 
             cfg.CreateMap<CharacterQuicklistDto, CharacterQuicklistModel>();
             cfg.CreateMap<CharacterQuicklistModel, CharacterQuicklistDto>();
@@ -208,23 +210,23 @@ namespace SaltyEmu.DatabasePlugin.Utils
             var subConfig = new MapperConfiguration(cfgg =>
             {
                 cfg.CreateMap<DropDto, DropModel>()
-                    .ForSourceMember(src => src.RelationType, expression => expression.Ignore());
+                    .ForSourceMember(src => src.RelationType, expression => expression.DoNotValidate());
 
                 cfg.CreateMap<DropDto, MapDropModel>()
-                    .ForSourceMember(src => src.RelationType, expression => expression.Ignore())
+                    .ForSourceMember(src => src.RelationType, expression => expression.DoNotValidate())
                     .IncludeBase<DropDto, DropModel>();
 
 
                 cfg.CreateMap<DropDto, NpcMonsterDropModel>()
-                    .ForSourceMember(src => src.RelationType, expression => expression.Ignore())
+                    .ForSourceMember(src => src.RelationType, expression => expression.DoNotValidate())
                     .IncludeBase<DropDto, DropModel>();
             });
 
 
             IMapper subMapper = subConfig.CreateMapper();
             cfg.CreateMap<DropDto, DropModel>()
-                .ForSourceMember(s => s.RelationType, expr => expr.Ignore())
-                .ConstructUsing(s =>
+                .ForSourceMember(s => s.RelationType, expr => expr.DoNotValidate())
+                .ConstructUsing((s, context) =>
                 {
                     switch (s.RelationType)
                     {
@@ -241,15 +243,15 @@ namespace SaltyEmu.DatabasePlugin.Utils
 
 
             cfg.CreateMap<NpcMonsterDropModel, DropDto>()
-                .ForSourceMember(s => s.NpcMonster, expression => expression.Ignore())
-                .ForMember(s => s.RelationType, expr => expr.UseValue(DropType.NpcMonster));
+                .ForSourceMember(s => s.NpcMonster, expression => expression.DoNotValidate())
+                .ForMember(s => s.RelationType, expr => expr.MapFrom(s => DropType.NpcMonster));
 
             cfg.CreateMap<MapDropModel, DropDto>()
-                .ForSourceMember(s => s.Map, expression => expression.Ignore())
-                .ForMember(s => s.RelationType, expr => expr.UseValue(DropType.MapType));
+                .ForSourceMember(s => s.Map, expression => expression.DoNotValidate())
+                .ForMember(s => s.RelationType, expr => expr.MapFrom(s => DropType.MapType));
 
             cfg.CreateMap<DropModel, DropDto>()
-                .ForMember(s => s.RelationType, expr => expr.UseValue(DropType.Global));
+                .ForMember(s => s.RelationType, expr => expr.MapFrom(s => DropType.Global));
         }
 
         private static void MappSkills(IMapperConfigurationExpression cfg)
@@ -273,11 +275,11 @@ namespace SaltyEmu.DatabasePlugin.Utils
 
             cfg.CreateMap<ShopItemDto, ShopItemModel>();
             cfg.CreateMap<ShopItemModel, ShopItemDto>()
-                .ForMember(s => s.Item, expression => expression.ResolveUsing(origin => ChickenContainer.Instance.Resolve<IItemService>().GetById(origin.ItemId)));
+                .ForMember(s => s.Item, expression => expression.MapFrom(origin => ChickenContainer.Instance.Resolve<IItemService>().GetById(origin.ItemId)));
 
             cfg.CreateMap<ShopSkillDto, ShopSkillModel>();
             cfg.CreateMap<ShopSkillModel, ShopSkillDto>()
-                .ForMember(s => s.Skill, expression => expression.ResolveUsing(origin => ChickenContainer.Instance.Resolve<ISkillService>().GetById(origin.SkillId)));
+                .ForMember(s => s.Skill, expression => expression.MapFrom(origin => ChickenContainer.Instance.Resolve<ISkillService>().GetById(origin.SkillId)));
 
             cfg.CreateMap<RecipeDto, RecipeModel>();
             cfg.CreateMap<RecipeModel, RecipeDto>();

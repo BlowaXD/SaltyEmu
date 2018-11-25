@@ -8,7 +8,6 @@ using ChickenAPI.Data;
 using EFCore.BulkExtensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
-using SaltyEmu.DatabasePlugin.Context;
 using SaltyEmu.DatabasePlugin.Models;
 
 namespace SaltyEmu.DatabasePlugin.Services.Base
