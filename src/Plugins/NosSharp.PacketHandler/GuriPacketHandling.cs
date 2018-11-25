@@ -1,6 +1,4 @@
-﻿using System;
-using ChickenAPI.Core.Logging;
-using ChickenAPI.Game.Chat.Args;
+﻿using ChickenAPI.Core.Logging;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.GuriHandling.Args;
 using ChickenAPI.Packets.Game.Client.Player;

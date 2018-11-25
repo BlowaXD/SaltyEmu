@@ -1,6 +1,8 @@
 ﻿using ChickenAPI.Data.Item;
 using ChickenAPI.Enums.Game.Items;
 using ChickenAPI.Game.Entities.Player;
+using ChickenAPI.Game.Inventory.Args;
+using ChickenAPI.Game.Inventory.ItemUsage.Handling;
 
 namespace ChickenAPI.Game.Inventory.ItemUsage
 {
@@ -18,8 +20,8 @@ namespace ChickenAPI.Game.Inventory.ItemUsage
 
     public interface IItemUsageContainer
     {
-        void RegisterItemUsageCallback(IItemUsageHandler handler);
+        void RegisterItemUsageCallback(UseItemRequestHandler handler);
 
-        void UseItem(IPlayerEntity player, ItemInstanceDto itemInstance);
+        void UseItem(IPlayerEntity player, InventoryUseItemEvent itemInstance);
     }
 }

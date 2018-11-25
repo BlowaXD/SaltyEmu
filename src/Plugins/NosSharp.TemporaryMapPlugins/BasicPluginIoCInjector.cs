@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Autofac;
-using ChickenAPI.Core.i18n;
+﻿using Autofac;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Maths;
 using ChickenAPI.Game.Battle.Hitting;
@@ -12,9 +8,14 @@ using ChickenAPI.Game.ECS;
 using ChickenAPI.Game.Effects;
 using ChickenAPI.Game.Events;
 using ChickenAPI.Game.GuriHandling.Handling;
+using ChickenAPI.Game.Inventory.ItemUsage;
+using ChickenAPI.Game.Inventory.ItemUsage.Handling;
 using ChickenAPI.Game.Managers;
 using ChickenAPI.Game.NpcDialog;
 using ChickenAPI.Game.PacketHandling;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace SaltyEmu.BasicPlugin
 {
@@ -56,6 +57,7 @@ namespace SaltyEmu.BasicPlugin
             ChickenContainer.Builder.Register(_ => new RandomGenerator()).As<IRandomGenerator>().SingleInstance();
             ChickenContainer.Builder.Register(_ => new BasicNpcDialogHandler()).As<INpcDialogHandler>().SingleInstance();
             ChickenContainer.Builder.Register(_ => new BaseGuriHandler()).As<IGuriHandler>().SingleInstance();
+            ChickenContainer.Builder.Register(_ => new BaseUseItemHandler()).As<IItemUsageContainer>().SingleInstance();
             ChickenContainer.Builder.Register(_ => new BasicHitRequestFactory()).As<IHitRequestFactory>().SingleInstance();
             ChickenContainer.Builder.Register(_ => new SimpleEntityManagerContainer()).As<IEntityManagerContainer>().SingleInstance();
             ChickenContainer.Builder.Register(_ => new SimplePlayerManager()).As<IPlayerManager>().SingleInstance();

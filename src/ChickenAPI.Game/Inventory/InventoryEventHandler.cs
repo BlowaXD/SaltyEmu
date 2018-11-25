@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Autofac;
+﻿using Autofac;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Logging;
 using ChickenAPI.Data.Item;
@@ -15,14 +12,20 @@ using ChickenAPI.Game.Entities.Player.Extensions;
 using ChickenAPI.Game.Events;
 using ChickenAPI.Game.Inventory.Args;
 using ChickenAPI.Game.Inventory.Extensions;
+using ChickenAPI.Game.Inventory.ItemUsage;
 using ChickenAPI.Packets.Game.Server.Inventory;
 using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace ChickenAPI.Game.Inventory
 {
     public class InventoryEventHandler : EventHandlerBase
     {
         private static readonly Logger Log = Logger.GetLogger<InventoryEventHandler>();
+
+        private static readonly IItemUsageContainer _ItemUsageHandler = new Lazy<IItemUsageContainer>(() => ChickenContainer.Instance.Resolve<IItemUsageContainer>()).Value;
 
         public override ISet<Type> HandledTypes => new HashSet<Type>
         {
@@ -34,7 +37,7 @@ namespace ChickenAPI.Game.Inventory
             typeof(InventoryMoveEventArgs),
             typeof(InventoryUnequipEvent),
             typeof(InventoryWearEvent),
-            typeof(InventoryUseItemEvent),
+            typeof(InventoryUseItemEvent)
         };
 
         public override void Execute(IEntity entity, ChickenEventArgs e)
@@ -75,6 +78,7 @@ namespace ChickenAPI.Game.Inventory
                 case InventoryUnequipEvent inventoryUnwear:
                     UnequipItem(inventory, entity, inventoryUnwear);
                     break;
+
                 case InventoryLoadEvent initEvent:
                     InitializeInventory(inventory, entity as IPlayerEntity);
                     break;
@@ -82,8 +86,13 @@ namespace ChickenAPI.Game.Inventory
                 case InventoryMoveEventArgs moveEvent:
                     MoveItem(inventory, moveEvent);
                     break;
+
                 case InventoryEqInfoEventArgs eqInfo:
                     GetItemInfo(inventory, eqInfo, entity as IPlayerEntity);
+                    break;
+
+                case InventoryUseItemEvent item:
+                    _ItemUsageHandler.UseItem(entity as IPlayerEntity, item);
                     break;
             }
         }
@@ -102,7 +111,6 @@ namespace ChickenAPI.Game.Inventory
             EquipItem(inventory, player, item);
             player.SendPacket(player.GenerateEffectPacket(123));
 
-
             player.Broadcast(player.GenerateEqPacket());
             player.SendPacket(player.GenerateEquipmentPacket());
             player.SendPacket(player.GenerateStatCharPacket());
@@ -112,6 +120,7 @@ namespace ChickenAPI.Game.Inventory
                 case EquipmentType.Fairy:
                     player.Broadcast(player.GeneratePairyPacket());
                     break;
+
                 case EquipmentType.Sp:
                     player.SendPacket(player.GenerateSpPacket());
                     break;
@@ -179,7 +188,6 @@ namespace ChickenAPI.Game.Inventory
 
             player.SendPacket(GenerateIvnPacket(item));
 
-
             player.Broadcast(player.GenerateEqPacket());
             player.SendPacket(player.GenerateEquipmentPacket());
             player.SendPacket(player.GenerateStatCharPacket());
@@ -202,12 +210,15 @@ namespace ChickenAPI.Game.Inventory
                     case InventoryType.Equipment:
                         inventory.Equipment[item.Slot] = item;
                         break;
+
                     case InventoryType.Etc:
                         inventory.Etc[item.Slot] = item;
                         break;
+
                     case InventoryType.Wear:
                         inventory.Wear[item.Slot] = item;
                         break;
+
                     case InventoryType.Main:
                         inventory.Main[item.Slot] = item;
                         break;
@@ -232,11 +243,13 @@ namespace ChickenAPI.Game.Inventory
                     packet.Items.AddRange(items.Where(s => s != null).Select(s =>
                         $"{s.Slot}.{s.ItemId}.{s.Rarity}.{(s.Item.IsColored && s.Item.EquipmentSlot == EquipmentType.Sp ? s.Design : s.Upgrade)}.{s.SpecialistUpgrade2}"));
                     break;
+
                 case InventoryType.Etc:
                 case InventoryType.Main:
                     packet.Items.AddRange(items.Where(s => s != null).Select(s =>
                         $"{s.Slot}.{s.ItemId}.{s.Amount}.0"));
                     break;
+
                 case InventoryType.Miniland:
                     packet.Items.AddRange(items.Where(s => s != null).Select(s =>
                         $"{s.Slot}.{s.ItemId}.{s.Amount}"));
@@ -377,7 +390,7 @@ namespace ChickenAPI.Game.Inventory
             player.SendPacket(GenerateIvnPacket(dest));
         }
 
-        #endregion
+        #endregion MoveItems
 
         #region ItemInfos
 
@@ -402,6 +415,7 @@ namespace ChickenAPI.Game.Inventory
 
                     itemInstance = subInv[eqInfo.Slot];
                     break;
+
                 case 1:
                     subInv = inventory.GetSubInvFromInventoryType(InventoryType.Equipment);
                     if (eqInfo.Slot > subInv.Length)
@@ -420,8 +434,7 @@ namespace ChickenAPI.Game.Inventory
 
         private static EInfoPacket GenerateEInfoPacket(ItemInstanceDto itemInstance) => new EInfoPacket();
 
-        #endregion
-
+        #endregion ItemInfos
 
         #region Utils
 
@@ -458,6 +471,7 @@ namespace ChickenAPI.Game.Inventory
                         Rare = itemInstance.Rarity,
                         SpStoneUpgrade = itemInstance.SpecialistUpgrade
                     };
+
                 case InventoryType.Equipment:
                     return new IvnPacket
                     {
@@ -467,15 +481,17 @@ namespace ChickenAPI.Game.Inventory
                         Rare = itemInstance.Rarity,
                         Upgrade = itemInstance.Upgrade
                     };
+
                 case InventoryType.Main:
                 case InventoryType.Etc:
                     return GenerateMainIvnPacket(itemInstance);
+
                 default:
                     Log.Info($"{itemInstance.Type} not implemented");
                     return null;
             }
         }
 
-        #endregion
+        #endregion Utils
     }
 }
