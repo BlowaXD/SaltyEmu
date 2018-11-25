@@ -15,38 +15,16 @@ namespace ChickenAPI.Game.Inventory.Extensions
                     return GenerateEInfoWeapon(itemInstance);
 
                 case ItemType.Armor:
-                    return new EInfoPacket
-                    {
-                        EInfoType = EInfoPacketType.Armor,
-                        ItemVNum = itemInstance.ItemId,
-                        Rare = itemInstance.Rarity,
-                        Upgrade = itemInstance.Upgrade,
-                        Fixed = false,
-                        LevelMinimum = itemInstance.Item.LevelMinimum,
-                        CloseDefense = itemInstance.Item.CloseDefence,
-                        RangeDefense = itemInstance.Item.DistanceDefence,
-                        MagicDefense = itemInstance.Item.MagicDefence,
-                        DefenseDodge = itemInstance.Item.DefenceDodge,
-                        Price = itemInstance.Item.Price,
-                        Unknown2 = -1,
-                        Rare2 = 0,
-                        BoundCharacterId = 0,
-                        ShellEffectCount = 0,
-                        ShellEffect = 0
-                    };
+                    return GenerateEInfoArmor(itemInstance);
 
                 case ItemType.Jewelery:
                     return GenerateEInfoJewelery(itemInstance);
 
                 case ItemType.Specialist:
-                    return new EInfoPacket
-                    {
-                        EInfoType = EInfoPacketType.Specialist,
-                        ItemVNum = itemInstance.ItemId
-                    };
+                    return GenerateEInfoSpecialist(itemInstance);
 
                 default:
-                    return null; // review this
+                    return null;
             }
         }
 
@@ -187,6 +165,29 @@ namespace ChickenAPI.Game.Inventory.Extensions
             }
         }
 
+        private static EInfoPacket GenerateEInfoArmor(ItemInstanceDto itemInstance)
+        {
+            return new EInfoPacket
+            {
+                EInfoType = EInfoPacketType.Armor,
+                ItemVNum = itemInstance.ItemId,
+                Rare = itemInstance.Rarity,
+                Upgrade = itemInstance.Upgrade,
+                Fixed = false,
+                LevelMinimum = itemInstance.Item.LevelMinimum,
+                CloseDefense = itemInstance.Item.CloseDefence,
+                RangeDefense = itemInstance.Item.DistanceDefence,
+                MagicDefense = itemInstance.Item.MagicDefence,
+                DefenseDodge = itemInstance.Item.DefenceDodge,
+                Price = itemInstance.Item.Price,
+                Unknown2 = -1,
+                Rare2 = 0,
+                BoundCharacterId = 0,
+                ShellEffectCount = 0,
+                ShellEffect = 0
+            };
+        }
+
         private static EInfoPacket GenerateEInfoJewelery(ItemInstanceDto itemInstance)
         {
             EquipmentType equipmentSlot = itemInstance.Item.EquipmentSlot;
@@ -230,6 +231,15 @@ namespace ChickenAPI.Game.Inventory.Extensions
                         Rare2 = 0 // Cellon Info
                     };
             }
+        }
+
+        private static EInfoPacket GenerateEInfoSpecialist(ItemInstanceDto itemInstance)
+        {
+            return new EInfoPacket
+            {
+                EInfoType = EInfoPacketType.Specialist,
+                ItemVNum = itemInstance.ItemId
+            };
         }
     }
 }
