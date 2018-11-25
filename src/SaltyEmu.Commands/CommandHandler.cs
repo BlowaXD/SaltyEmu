@@ -104,7 +104,7 @@ namespace SaltyEmu.Commands
                     _logger.Debug(string.Join("\n", ex.FailedChecks.Select(x => $"A check has failed with this reason: {x.Error}")));
                     break;
                 case CommandNotFoundResult ex:
-                    ctx.Sender.SendPacket(ctx.Sender.GenerateMessage)
+                    _logger.Debug("The command was not found. Raw input: " + ctx.Message);
                     break;
             }
 
