@@ -53,13 +53,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SaltyEmu.RelationService", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "libs", "libs", "{86C4BB24-7456-4E42-B898-B7E8DEDFCF81}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SaltyEmu.Database", "src\libs\SaltyEmu.Database\SaltyEmu.Database.csproj", "{D1D3AC06-51BD-47FE-9627-596AC28E1299}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SaltyEmu.Database", "src\libs\SaltyEmu.Database\SaltyEmu.Database.csproj", "{D1D3AC06-51BD-47FE-9627-596AC28E1299}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SaltyEmu.Redis", "src\libs\SaltyEmu.Redis\SaltyEmu.Redis.csproj", "{ED86A617-6DB1-4265-A64D-CA3CDD1FC0E2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SaltyEmu.Redis", "src\libs\SaltyEmu.Redis\SaltyEmu.Redis.csproj", "{ED86A617-6DB1-4265-A64D-CA3CDD1FC0E2}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SaltyEmu.Commands", "src\SaltyEmu.Commands\SaltyEmu.Commands.csproj", "{ED00FA91-F486-420F-A884-B1B239501B8B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SaltyEmu.Commands.Tests", "test\SaltyEmu.Commands.Tests\SaltyEmu.Commands.Tests.csproj", "{2977614E-2FFD-4211-97BE-D3C68A7631B3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SaltyEmu.Commands.Tests", "test\SaltyEmu.Commands.Tests\SaltyEmu.Commands.Tests.csproj", "{2977614E-2FFD-4211-97BE-D3C68A7631B3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -187,7 +187,7 @@ Global
 		{9746EFA1-B25D-4945-A25C-3A960ACF2262} = {7A642CDF-7BF0-4D43-B5CB-430FC64A32D1}
 		{D1D3AC06-51BD-47FE-9627-596AC28E1299} = {86C4BB24-7456-4E42-B898-B7E8DEDFCF81}
 		{ED86A617-6DB1-4265-A64D-CA3CDD1FC0E2} = {86C4BB24-7456-4E42-B898-B7E8DEDFCF81}
-		{ED00FA91-F486-420F-A884-B1B239501B8B} = {7A7E9A02-CEFC-4E77-A495-70804348CA47}
+		{ED00FA91-F486-420F-A884-B1B239501B8B} = {86C4BB24-7456-4E42-B898-B7E8DEDFCF81}
 		{2977614E-2FFD-4211-97BE-D3C68A7631B3} = {4E7156D8-18DC-4638-9C9B-5BE5CFF76F13}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution

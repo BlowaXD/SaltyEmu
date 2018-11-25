@@ -23,7 +23,7 @@ namespace SaltyEmu.Commands
 
             if (ctx.Sender is IPlayerEntity player && player.Session.Account.Authority < AuthorityType.GameMaster)
             {
-                return Task.FromResult(new CheckResult("Invalid authority"));
+                return Task.FromResult(new CheckResult("You need to be GameMaster"));
             }
 
             return Task.FromResult(CheckResult.Successful);

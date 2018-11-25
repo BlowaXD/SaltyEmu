@@ -1,16 +1,11 @@
 ﻿using System;
 using System.Collections.Concurrent;
-using System.ComponentModel;
 using System.Threading.Tasks;
-using Autofac;
-using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.IPC;
 using ChickenAPI.Core.IPC.Protocol;
-using ChickenAPI.Core.Utils;
 using MQTTnet;
 using MQTTnet.Client;
 using MQTTnet.Extensions.ManagedClient;
-using MQTTnet.Packets;
 using Newtonsoft.Json;
 using SaltyEmu.Communication.Configs;
 using SaltyEmu.Communication.Protocol;

@@ -26,7 +26,7 @@ namespace SaltyEmu.Redis
         {
         }
 
-        protected MappedCacheClientBase(string prefix, RedisConfiguration conf)
+        private MappedCacheClientBase(string prefix, RedisConfiguration conf)
         {
             Prefix = prefix;
             CacheClient = new RedisHybridCacheClient(new RedisCacheClientOptions

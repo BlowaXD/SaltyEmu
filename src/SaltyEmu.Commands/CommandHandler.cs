@@ -2,7 +2,9 @@
 using System.Linq;
 using System.Threading.Tasks;
 using ChickenAPI.Core.Logging;
+using ChickenAPI.Enums.Packets;
 using ChickenAPI.Game.Entities.Player;
+using ChickenAPI.Game.Player.Extension;
 using Qmmands;
 
 namespace SaltyEmu.Commands
@@ -24,7 +26,7 @@ namespace SaltyEmu.Commands
 
             _commands = new CommandService(new CommandServiceConfiguration
             {
-                CaseSensitive = true
+                CaseSensitive = false,
             });
 
             InitializeAsync().ConfigureAwait(false).GetAwaiter().GetResult();
@@ -108,6 +110,7 @@ namespace SaltyEmu.Commands
                     break;
                 case CommandNotFoundResult ex:
                     _logger.Debug("The command was not found. Raw input: " + ctx.Message);
+                    ctx.Sender.SendPacket(ctx.Sender.GenerateSayPacket("The command was not found" + ctx.Message, SayColorType.Yellow));
                     break;
             }
 
