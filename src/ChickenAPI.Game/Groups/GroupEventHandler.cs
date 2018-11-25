@@ -29,6 +29,7 @@ namespace ChickenAPI.Game.Groups
 
         private void GroupInvit(IEntity entity, GroupInvitEventArgs groupInvit)
         {
+
         }
 
         private void JoinGroup(IEntity entity, GroupJoinEventArgs groupJoin)

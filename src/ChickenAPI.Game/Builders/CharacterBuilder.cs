@@ -1,5 +1,4 @@
-﻿using System;
-using ChickenAPI.Data.Character;
+﻿using ChickenAPI.Data.Character;
 using ChickenAPI.Enums.Game.Character;
 
 namespace ChickenAPI.Game.Builders

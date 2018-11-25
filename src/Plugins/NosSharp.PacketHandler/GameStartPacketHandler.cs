@@ -24,6 +24,7 @@ namespace NosSharp.PacketHandler
 {
     public class GameStartPacketHandler
     {
+        private static readonly IPlayerManager PlayerManager = new Lazy<IPlayerManager>(ChickenContainer.Instance.Resolve<IPlayerManager>).Value;
         private static readonly IMapManager MapManager = new Lazy<IMapManager>(ChickenContainer.Instance.Resolve<IMapManager>).Value;
         private static readonly IAlgorithmService AlgorithmService = new Lazy<IAlgorithmService>(ChickenContainer.Instance.Resolve<IAlgorithmService>).Value;
         private static readonly ICharacterService CharacterService = new Lazy<ICharacterService>(ChickenContainer.Instance.Resolve<ICharacterService>).Value;
@@ -45,6 +46,11 @@ namespace NosSharp.PacketHandler
             IEnumerable<CharacterQuicklistDto> quicklist = await CharacterQuicklistService.GetByCharacterIdAsync(session.CharacterId);
             IMapLayer mapLayer = MapManager.GetBaseMapLayer(dto.MapId);
             session.InitializeEntity(new PlayerEntity(session, dto, skills, quicklist));
+
+            // Register Player
+            PlayerManager.RegisterPlayer(session.Player);
+
+
             session.SendPacket(new TitPacket { ClassType = "Adventurer", Name = dto.Name });
             session.SendPacket(new SayPacket { Message = "┌------------------[SaltyEmu]------------------┐", Type = SayColorType.Yellow, VisualType = VisualType.Character });
             session.SendPacket(new SayPacket

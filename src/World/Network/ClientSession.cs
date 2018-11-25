@@ -9,6 +9,7 @@ using ChickenAPI.Core.Logging;
 using ChickenAPI.Data.Character;
 using ChickenAPI.Game.Data.AccessLayer.Server;
 using ChickenAPI.Game.Entities.Player;
+using ChickenAPI.Game.Managers;
 using ChickenAPI.Game.Network;
 using ChickenAPI.Game.PacketHandling;
 using ChickenAPI.Packets;
@@ -21,6 +22,7 @@ namespace World.Network
     {
         private const byte PACKET_SPLIT_CHARACTER = 0xFF;
 
+        private static readonly IPlayerManager PlayerManager = new Lazy<IPlayerManager>(ChickenContainer.Instance.Resolve<IPlayerManager>).Value;
         private static readonly Logger Log = Logger.GetLogger<ClientSession>();
         private static Guid _worldServerId;
         private static IPacketFactory _packetFactory;
@@ -189,6 +191,8 @@ namespace World.Network
 #endif
 
             Log.Info($"[DISCONNECT] {Ip}");
+
+            PlayerManager.UnregisterPlayer(Player);
             Player?.CurrentMap.UnregisterEntity(Player);
             Player?.Save();
             _sessionService.UnregisterSession(SessionId);
