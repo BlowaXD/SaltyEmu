@@ -229,7 +229,7 @@ namespace ChickenAPI.Game.Inventory.Extensions
                         LevelMinimum = itemInstance.Item.LevelMinimum,
                         ElementRate = itemInstance.Item.MaxCellonLvl, // review this
                         Unknown = itemInstance.Item.MaxCellon, // review this
-                        Unknown1 = 0, // Cellon Options
+                        Unknown1 = null, // Cellon Options
                         Unknown2 = 0, // idk
                         Price = itemInstance.Item.Price,
                         Rare2 = 0 // Cellon Info

@@ -425,6 +425,22 @@ namespace ChickenAPI.Game.Inventory
 
                     itemInstance = subInv[eqInfo.Slot];
                     break;
+                case 7:
+                case 10:
+                    subInv = inventory.GetSubInvFromInventoryType(InventoryType.Specialist);
+                    if (eqInfo.Slot > subInv.Length)
+                    {
+                        return;
+                    }
+
+                    itemInstance = subInv[eqInfo.Slot];
+                    break;
+                case 11:
+                    subInv = inventory.GetSubInvFromInventoryType(InventoryType.Costume);
+                    if (eqInfo.Slot > subInv.Length)
+                    {
+                        return;
+                    }
             }
 
             if (itemInstance == null) return;
