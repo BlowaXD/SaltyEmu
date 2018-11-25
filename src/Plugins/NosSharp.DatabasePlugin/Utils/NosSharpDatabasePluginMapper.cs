@@ -178,10 +178,9 @@ namespace SaltyEmu.DatabasePlugin.Utils
                 .ForSourceMember(s => s.BCards, expr => expr.DoNotValidate());
 
             cfg.CreateMap<ItemInstanceDto, CharacterItemModel>();
-            IItemService tmp = new Lazy<IItemService>(() => ChickenContainer.Instance.Resolve<IItemService>()).Value;
 
             cfg.CreateMap<CharacterItemModel, ItemInstanceDto>()
-                .ForMember(s => s.Item, expr => expr.MapFrom(origin => tmp.GetById(origin.ItemId)));
+                .ForMember(s => s.Item, expr => expr.MapFrom(origin => ChickenContainer.Instance.Resolve<IItemService>().GetById(origin.ItemId)));
         }
 
         private static void MapCharacters(IMapperConfigurationExpression cfg)
