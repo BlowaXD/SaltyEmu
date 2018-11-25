@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Threading.Tasks;
+using ChickenAPI.Enums;
 using Qmmands;
+using SaltyEmu.Commands.Checks;
+using SaltyEmu.Commands.Entities;
 
-namespace SaltyEmu.Commands
+namespace SaltyEmu.Commands.Modules
 {
     [Group("Item")]
     [Description("It's a module related to Item manipulation. It requires to be a GameMaster.")]
-    [RequireGameMaster]
+    [RequireAuthority(AuthorityType.GameMaster)]
     public class ItemModule : SaltyModuleBase
     {
         [Command("create")]

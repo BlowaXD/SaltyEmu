@@ -306,7 +306,7 @@ namespace World.Network
             }
         }
 
-        private const char CommandPrefix = '$';
+        private const string CommandPrefix = "$";
 
         private void BufferToPackets(string packets)
         {
@@ -347,12 +347,11 @@ namespace World.Network
 
                     //^ wtf is this
 
-                    if (packetsplit[1] == "$") //it's a command
+                    if (packetsplit[1] == CommandPrefix) //it's a command
                     {
                         Commands.HandleMessageAsync(packetstring, Player).ConfigureAwait(false).GetAwaiter().GetResult();
                     }
                 }
-
 
                 if (packetsplit[1] != "0")
                 {

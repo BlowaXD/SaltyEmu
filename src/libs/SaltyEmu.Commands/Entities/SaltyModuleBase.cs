@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Qmmands;
 
-namespace SaltyEmu.Commands
+namespace SaltyEmu.Commands.Entities
 {
     public class SaltyModuleBase : ModuleBase<SaltyCommandContext>
     {

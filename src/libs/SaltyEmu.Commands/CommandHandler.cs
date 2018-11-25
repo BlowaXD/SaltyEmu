@@ -6,13 +6,16 @@ using ChickenAPI.Enums.Packets;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Player.Extension;
 using Qmmands;
+using SaltyEmu.Commands.Entities;
+using SaltyEmu.Commands.Interfaces;
+using SaltyEmu.Commands.Modules;
 
 namespace SaltyEmu.Commands
 {
     /* todo: find a better way to deal with TAP in world and here.
      *       handle errors correctly and return them to the user ingame.
      */
-    public class CommandHandler
+    public class CommandHandler : ICommandContainer
     {
         private readonly CommandService _commands;
         private readonly Logger _logger;
@@ -54,11 +57,11 @@ namespace SaltyEmu.Commands
         /// <param name="arg3">It represents the context. Must be casted to our custom context (SaltyCommandContext)</param>
         /// <param name="arg4">It represents the Container (Usually Microsoft's Dependency Injection). Not used in our case.</param>
         /// <returns></returns>
-        private Task _commands_CommandExecuted(Command arg1, CommandResult arg2, ICommandContext arg3, IServiceProvider arg4)
+        private Task _commands_CommandExecuted(Command command, CommandResult result, ICommandContext context, IServiceProvider services)
         {
-            var ctx = arg3 as SaltyCommandContext;
+            var ctx = context as SaltyCommandContext;
 
-            _logger.Debug($"The command {arg1.Name} (from player {ctx.Sender.Character.Name} ({ctx.Sender.Character.Id}) has successfully been executed.");
+            _logger.Debug($"The command {command.Name} (from player {ctx.Sender.Character.Name} ({ctx.Sender.Character.Id}) has successfully been executed.");
 
             return Task.CompletedTask;
         }
@@ -81,10 +84,7 @@ namespace SaltyEmu.Commands
 
             var ctx = new SaltyCommandContext(message, player);
 
-            var pos = message.IndexOf('$') + 2;
-            var command = message.Substring(pos);
-
-            IResult result = await _commands.ExecuteAsync(command, ctx);
+            IResult result = await _commands.ExecuteAsync(ctx.Input, ctx);
 
             if (result.IsSuccessful)
             {
@@ -110,7 +110,7 @@ namespace SaltyEmu.Commands
                     break;
                 case CommandNotFoundResult ex:
                     _logger.Debug("The command was not found. Raw input: " + ctx.Message);
-                    ctx.Sender.SendPacket(ctx.Sender.GenerateSayPacket("The command was not found" + ctx.Message, SayColorType.Yellow));
+                    ctx.Sender.SendPacket(ctx.Sender.GenerateSayPacket("The command was not found: " + ctx.Command.Name, SayColorType.Yellow));
                     break;
             }
 

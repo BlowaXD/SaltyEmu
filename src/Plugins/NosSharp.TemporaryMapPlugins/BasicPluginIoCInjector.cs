@@ -17,6 +17,7 @@ using ChickenAPI.Game.Managers;
 using ChickenAPI.Game.NpcDialog;
 using ChickenAPI.Game.PacketHandling;
 using SaltyEmu.Commands;
+using SaltyEmu.Commands.Interfaces;
 
 namespace SaltyEmu.BasicPlugin
 {
@@ -62,8 +63,8 @@ namespace SaltyEmu.BasicPlugin
             ChickenContainer.Builder.Register(_ => new BasicHitRequestFactory()).As<IHitRequestFactory>().SingleInstance();
             ChickenContainer.Builder.Register(_ => new SimpleEntityManagerContainer()).As<IEntityManagerContainer>().SingleInstance();
             ChickenContainer.Builder.Register(_ => new SimplePlayerManager()).As<IPlayerManager>().SingleInstance();
-            ChickenContainer.Builder.Register(s => new PacketHandler()).As<IPacketHandler>().SingleInstance();
-            ChickenContainer.Builder.Register(_ => new CommandHandler()).SingleInstance();
+            ChickenContainer.Builder.Register(_ => new PacketHandler()).As<IPacketHandler>().SingleInstance();
+            ChickenContainer.Builder.Register(_ => new CommandHandler()).As<ICommandContainer>().SingleInstance();
         }
     }
 }

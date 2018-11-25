@@ -3,11 +3,22 @@ using System.Threading.Tasks;
 using ChickenAPI.Enums;
 using ChickenAPI.Game.Entities.Player;
 using Qmmands;
+using SaltyEmu.Commands.Entities;
 
-namespace SaltyEmu.Commands
+namespace SaltyEmu.Commands.Checks
 {
-    public sealed class RequireGameMasterAttribute : CheckBaseAttribute
+    public sealed class RequireAuthorityAttribute : CheckBaseAttribute
     {
+        /// <summary>
+        /// This represents the Authority level required to execute a command.
+        /// </summary>
+        public AuthorityType Authority { get; }
+
+        public RequireAuthorityAttribute(AuthorityType authority)
+        {
+            Authority = authority;
+        }
+
         /// <inheritdoc />
         /// <summary>
         /// This is a check (pre-condition) before trying to execute a command that needs to pass this check.
