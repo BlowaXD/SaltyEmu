@@ -199,12 +199,10 @@ namespace ChickenAPI.Game.Entities.Player
         public void Save()
         {
             DateTime before = DateTime.UtcNow;
-            Task.WaitAll(
-                CharacterService.SaveAsync(Character),
-                CharacterSkillService.SaveAsync(SkillComponent.CharacterSkills.Values),
-                CharacterQuicklistService.SaveAsync(Quicklist.Quicklist),
-                ItemInstance.SaveAsync(Inventory.GetItems())
-            );
+            CharacterService.Save(Character);
+            CharacterSkillService.Save(SkillComponent.CharacterSkills.Values);
+            CharacterQuicklistService.Save(Quicklist.Quicklist);
+            ItemInstance.Save(Inventory.GetItems());
             Log.Info($"[SAVE] {Character.Name} saved in {(DateTime.UtcNow - before).TotalMilliseconds} ms");
         }
 

@@ -3,18 +3,13 @@ using System.Collections.Generic;
 using Autofac;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Logging;
-using ChickenAPI.Data.Item;
-using ChickenAPI.Enums.Game.Items;
-using ChickenAPI.Game.Data.AccessLayer.Character;
+using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Game.Entities.Player.Extensions;
 using ChickenAPI.Game.Entities.ReqInfo.Events;
 using ChickenAPI.Game.Events;
-using ChickenAPI.Game.Inventory.Extensions;
 using ChickenAPI.Game.Managers;
 using ChickenAPI.Game.Player.Extension;
-using ChickenAPI.Packets.Game.Client.Player;
 
 namespace ChickenAPI.Game.Entities.ReqInfo
 {
@@ -36,14 +31,14 @@ namespace ChickenAPI.Game.Entities.ReqInfo
                 case ReqInfoEvent aa:
                     switch (aa.ReqType)
                     {
-                        case Enums.Game.Entity.ReqInfoType.ItemInfo:
+                        case ReqInfoType.ItemInfo:
                             SenfInfoFromItem(entity as IInventoriedEntity, aa);
                             break;
 
-                        case Enums.Game.Entity.ReqInfoType.MateInfo:
+                        case ReqInfoType.MateInfo:
                             break;
 
-                        case Enums.Game.Entity.ReqInfoType.NpcInfo:
+                        case ReqInfoType.NpcInfo:
                             SendInfoFromMonster(entity as INpcMonsterEntity, aa);
                             break;
 
@@ -51,6 +46,7 @@ namespace ChickenAPI.Game.Entities.ReqInfo
                             SendInfoFromPlayer(entity as IPlayerEntity, aa);
                             break;
                     }
+
                     break;
             }
         }
@@ -58,9 +54,8 @@ namespace ChickenAPI.Game.Entities.ReqInfo
         public static void SendInfoFromPlayer(IPlayerEntity player, ReqInfoEvent e)
         {
             // -> Find why GetPlayerByChardId Not working
-            //player.SendPacket(PlayerManager.GetPlayerByCharacterId(e.TargetVNum)?.GenerateReqInfo());
+            player.SendPacket(player.CurrentMap.GetPlayerById(e.TargetVNum).GenerateReqInfo());
             player.SendPacket(player.GenerateReqInfo());
-            Log.Info($"cc je verif le Joueur x");
         }
 
         public void SendInfoFromMonster(INpcMonsterEntity npc, ReqInfoEvent e)

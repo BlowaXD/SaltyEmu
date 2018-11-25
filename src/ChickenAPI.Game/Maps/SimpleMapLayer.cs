@@ -4,6 +4,7 @@ using System.Linq;
 using ChickenAPI.Core.Utils;
 using ChickenAPI.Data.Map;
 using ChickenAPI.Data.Shop;
+using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Effects;
 using ChickenAPI.Game.Entities.Monster;
@@ -90,6 +91,11 @@ namespace ChickenAPI.Game.Maps
         public IMap Map { get; }
         public IEnumerable<IPlayerEntity> Players => _players;
 
+        public IPlayerEntity GetPlayerById(long id)
+        {
+            return GetEntity<IPlayerEntity>(id, VisualType.Character);
+        }
+
         public IEnumerable<IPlayerEntity> GetPlayersInRange(Position<short> pos, int range) =>
             _players.Where(e => PositionHelper.GetDistance(pos, e.Movable.Actual) < range);
 
@@ -98,6 +104,7 @@ namespace ChickenAPI.Game.Maps
 
         public IEnumerable<T> GetEntitiesInRange<T>(Position<short> pos, int range) where T : IEntity =>
             Entities.Where(e => e is T && e.HasComponent<MovableComponent>() && PositionHelper.GetDistance(pos, e.GetComponent<MovableComponent>().Actual) < range) as IEnumerable<T>;
+
         public void Broadcast<T>(T packet) where T : IPacket => Broadcast(packet, null);
 
 

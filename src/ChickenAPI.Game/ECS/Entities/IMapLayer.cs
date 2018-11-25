@@ -18,6 +18,13 @@ namespace ChickenAPI.Game.ECS.Entities
         IEnumerable<IPlayerEntity> Players { get; }
 
         /// <summary>
+        /// Returns the Player Entity with the given CharacterId
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        IPlayerEntity GetPlayerById(long id);
+
+        /// <summary>
         ///     Get all players in the area between X and Y
         /// </summary>
         /// <param name="pos"></param>
