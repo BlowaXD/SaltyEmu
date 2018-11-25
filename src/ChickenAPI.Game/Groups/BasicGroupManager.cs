@@ -32,12 +32,23 @@ namespace ChickenAPI.Game.Groups
 
         public void RemoveInvitation(GroupInvitDto dto)
         {
-            // event
+            if (_pendingInvitations.ContainsKey(dto.Id))
+            {
+                _pendingInvitations.Remove(dto.Id);
+            }
         }
 
         public void AcceptInvitation(GroupInvitDto dto)
         {
-            // event
+            if (!_pendingInvitations.TryGetValue(dto.Id, out dto))
+            {
+                return;
+            }
+        }
+
+        private void CreateGroup(IPlayerEntity leader)
+        {
+
         }
 
         public void AddGroup(GroupDto @group)

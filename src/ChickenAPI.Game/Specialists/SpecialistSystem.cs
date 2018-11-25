@@ -5,6 +5,7 @@ using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.ECS.Systems;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Entities.Player.Extensions;
+using ChickenAPI.Game.Player.Extension;
 
 namespace ChickenAPI.Game.Specialists
 {
@@ -31,7 +32,7 @@ namespace ChickenAPI.Game.Specialists
             }
             
             // remove points
-            player.SendPacket(player.GenerateSpPacket());
+            player.ActualiseUiSpPoints();
         }
     }
 }

@@ -27,16 +27,17 @@ namespace ChickenAPI.Game.Player.Extension
 
         #region Gold
 
-        public static void GoldLess(this IPlayerEntity charac, long amount)
+
+        public static void GoldLess(this IPlayerEntity player, long amount)
         {
-            charac.Character.Gold -= amount;
-            charac.SendPacket(charac.GenerateGoldPacket());
+            player.Character.Gold -= amount;
+            player.ActualiseUiGold();
         }
 
-        public static void GoldUp(this IPlayerEntity charac, long amount)
+        public static void GoldUp(this IPlayerEntity player, long amount)
         {
-            charac.Character.Gold += amount;
-            charac.SendPacket(charac.GenerateGoldPacket());
+            player.Character.Gold += amount;
+            player.ActualiseUiGold();
         }
 
         #endregion Gold

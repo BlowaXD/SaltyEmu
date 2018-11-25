@@ -19,6 +19,7 @@ using ChickenAPI.Game.Data.AccessLayer.Character;
 using ChickenAPI.Game.Data.AccessLayer.Item;
 using ChickenAPI.Game.ECS.Components;
 using ChickenAPI.Game.ECS.Entities;
+using ChickenAPI.Game.Groups;
 using ChickenAPI.Game.Inventory;
 using ChickenAPI.Game.Inventory.Extensions;
 using ChickenAPI.Game.Managers;
@@ -359,5 +360,15 @@ namespace ChickenAPI.Game.Entities.Player
         }
 
         public double LastPortal { get; set; }
+
+        public DateTime DateLastPortal { get; set; }
+
+        #region Group
+
+        public GroupDto Group { get; set; }
+        public bool HasGroup { get; set; }
+        public bool IsGroupLeader { get; set; }
+
+        #endregion
     }
 }

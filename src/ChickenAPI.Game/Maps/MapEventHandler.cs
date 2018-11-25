@@ -10,6 +10,7 @@ using ChickenAPI.Game.Maps.Events;
 using ChickenAPI.Game.Maps.Extensions;
 using ChickenAPI.Game.Movements.Extensions;
 using ChickenAPI.Game.PacketHandling.Extensions;
+using ChickenAPI.Game.Player.Extension;
 using ChickenAPI.Packets.Game.Server.Group;
 using ChickenAPI.Packets.Game.Server.Map;
 
@@ -70,7 +71,8 @@ namespace ChickenAPI.Game.Maps
             player.SendPacket(player.GenerateCModePacket());
             player.SendPacket(player.GenerateEqPacket());
             player.SendPacket(player.GenerateEquipmentPacket());
-            player.SendPacket(player.GenerateLevPacket());
+
+            player.ActualiseUiExpBar();
             player.SendPacket(player.GenerateStatPacket());
         }
 

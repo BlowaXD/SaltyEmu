@@ -1,13 +1,12 @@
-﻿using ChickenAPI.Core.Logging;
+﻿using System;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Helpers;
 using ChickenAPI.Game.NpcDialog.Events;
 using ChickenAPI.Game.Permissions;
 using ChickenAPI.Game.Player.Extension;
-using System;
-using System.Diagnostics;
 
-namespace ChickenAPI.Game.NpcDialog.Handlers
+namespace ChickenAPI.Game.NpcDialog.Handlers.NrunHandler
 {
     public class TeleporterHandler
     {
@@ -27,7 +26,7 @@ namespace ChickenAPI.Game.NpcDialog.Handlers
                 return;
             }
 
-            if ((player.Character.Gold <= 1000 * args.Type))
+            if (player.Character.Gold <= 1000 * args.Type)
             {
                 // No Money -> SendMsg(NOMONEY);
                 Log.Info($"[TELEPORT][NO-MONEY] {player.Character.Name}");
@@ -39,11 +38,11 @@ namespace ChickenAPI.Game.NpcDialog.Handlers
             switch (args.Type)
             {
                 case 1: // TeleportZapMtKrem
-                    TeleportationHelper.TeleportTo(player, 20, 10, 91);
+                    player.TeleportTo(20, 10, 91);
                     break;
 
                 case 2: // TeleportZapPortsAlveus
-                    TeleportationHelper.TeleportTo(player, 145, 8, 107);
+                    player.TeleportTo(145, 8, 107);
                     break;
             }
         }
@@ -52,8 +51,12 @@ namespace ChickenAPI.Game.NpcDialog.Handlers
         [NpcDialogHandler(17)]
         public static void EnterArenaInstance(IPlayerEntity player, NpcDialogEventArgs args)
         {
-            double currentRunningSeconds = (DateTime.Now - Process.GetCurrentProcess().StartTime.AddSeconds(-50)).TotalSeconds;
-            double timeSpanSinceLastPortal = currentRunningSeconds - player.LastPortal;
+            TimeSpan timeSpanSinceLastPortal = DateTime.Now - player.DateLastPortal;
+
+            if (timeSpanSinceLastPortal <= TimeSpan.FromSeconds(4))
+            {
+                return;
+            }
             /* if (!(timeSpanSinceLastPortal >= 4) || !Session.HasCurrentMapInstance || ServerManager.Instance.ChannelId == 51 ||
                  Session.CurrentMapInstance.MapInstanceId == ServerManager.Instance.ArenaInstance.MapInstanceId ||
                  Session.CurrentMapInstance.MapInstanceId == ServerManager.Instance.FamilyArenaInstance.MapInstanceId)
@@ -67,20 +70,20 @@ namespace ChickenAPI.Game.NpcDialog.Handlers
                 return;
             }
 
-            if ((player.Character.Gold <= 500 * (1 * args.Type)))
+            if (player.Character.Gold <= 500 * 1 * args.Type)
             {
                 // No Money -> SendMsg(NOMONEY);
                 Log.Info($"[TELEPORT][NO-MONEY] {player.Character.Name}");
                 return;
             }
 
-            player.GoldLess(500 * (1 * args.Type));
+            player.GoldLess(500 * 1 * args.Type);
 
             // MapCell pos = packet.Type == 0 ? ServerManager.Instance.ArenaInstance.Map.GetRandomPosition() : ServerManager.Instance.FamilyArenaInstance.Map.GetRandomPosition();
             // ServerManager.Instance.ChangeMapInstance(Session.Character.CharacterId, packet.Type == 0 ? ServerManager.Instance.ArenaInstance.MapInstanceId : ServerManager.Instance.FamilyArenaInstance.MapInstanceId, pos.X, pos.Y);
 
-            TeleportationHelper.TeleportTo(player, (short)(args.Type == 0 ? 2006 : 2106), (short)(args.Type == 0 ? 38 : 2007), (short)(args.Type == 0 ? 38 : 2007));
-            player.LastPortal = currentRunningSeconds;
+            player.TeleportTo((short)(args.Type == 0 ? 2006 : 2106), (short)(args.Type == 0 ? 38 : 2007), (short)(args.Type == 0 ? 38 : 2007));
+            player.DateLastPortal = DateTime.Now;
         }
 
         /// <summary>
@@ -107,7 +110,7 @@ namespace ChickenAPI.Game.NpcDialog.Handlers
                 return;
             }
 
-            if ((player.Character.Gold <= 5000 * args.Type))
+            if (player.Character.Gold <= 5000 * args.Type)
             {
                 // No Money -> SendMsg(NOMONEY);
                 Log.Info($"[TELEPORT][NO-MONEY] {player.Character.Name}");
@@ -176,6 +179,7 @@ namespace ChickenAPI.Game.NpcDialog.Handlers
                 //Session.SendPacket(UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("LOD_REQUIERE_LVL"), 0));
                 return;
             }
+
             if (player?.Family == null)
             {
                 /* Session.SendPacket(

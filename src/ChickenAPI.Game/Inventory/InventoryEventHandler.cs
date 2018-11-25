@@ -18,6 +18,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using ChickenAPI.Game.Player.Extension;
 
 namespace ChickenAPI.Game.Inventory
 {
@@ -122,7 +123,7 @@ namespace ChickenAPI.Game.Inventory
                     break;
 
                 case EquipmentType.Sp:
-                    player.SendPacket(player.GenerateSpPacket());
+                    player.ActualiseUiSpPoints();
                     break;
             }
         }

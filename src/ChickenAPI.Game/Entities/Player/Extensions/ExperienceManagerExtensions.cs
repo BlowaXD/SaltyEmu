@@ -3,6 +3,7 @@ using Autofac;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Game.Data.AccessLayer.Character;
 using ChickenAPI.Game.Entities.Player.Events;
+using ChickenAPI.Game.Player.Extension;
 
 namespace ChickenAPI.Game.Entities.Player.Extensions
 {
@@ -62,21 +63,21 @@ namespace ChickenAPI.Game.Entities.Player.Extensions
         {
             player.LevelXp += amount;
             player.TryLevelUp();
-            player.SendPacket(player.GenerateLevPacket());
+            player.ActualiseUiExpBar();
         }
 
         public static void AddJobExperience(this IPlayerEntity player, long amount)
         {
             player.JobLevelXp += amount;
             player.TryJobLevelUp();
-            player.SendPacket(player.GenerateLevPacket());
+            player.ActualiseUiExpBar();
         }
 
         public static void AddHeroExperience(this IPlayerEntity player, long amount)
         {
             player.HeroLevelXp += amount;
             player.TryHeroLevelUp();
-            player.SendPacket(player.GenerateLevPacket());
+            player.ActualiseUiExpBar();
         }
     }
 }

@@ -1,16 +1,17 @@
 ﻿using ChickenAPI.Game.Battle.Interfaces;
 using ChickenAPI.Game.Entities.Extensions;
 using ChickenAPI.Game.Entities.Player;
+using ChickenAPI.Game.Player.Extension;
 
 namespace ChickenAPI.Game.Battle.Extensions
 {
     public static class BattleEntityStatsManagement
     {
-        public static void CheckEntity(IBattleEntity entity)
+        private static void CheckEntity(IBattleEntity entity)
         {
             if (entity is IPlayerEntity session)
             {
-                session.SendPacket(session.GenerateStatPacket());
+                session.ActualiseUiHpBar();
             }
         }
 

@@ -5,18 +5,21 @@ using ChickenAPI.Enums.Game.Character;
 using ChickenAPI.Game.Battle.Interfaces;
 using ChickenAPI.Game.Families;
 using ChickenAPI.Game.Network;
+using ChickenAPI.Game.Player;
 using ChickenAPI.Game.Specialists;
 using ChickenAPI.Packets;
 
 namespace ChickenAPI.Game.Entities.Player
 {
-    public interface IPlayerEntity : IBattleEntity, IInventoriedEntity, IExperenciedEntity, ISpecialistEntity, IQuicklistEntity, IFamilyCapacities, IBroadcastable
+    public interface IPlayerEntity : IBattleEntity, IInventoriedEntity, IExperenciedEntity, ISpecialistEntity, IQuicklistEntity, IFamilyCapacities, IGroupEntity, IBroadcastable
     {
         CharacterDto Character { get; }
 
         CharacterNameAppearance NameAppearance { get; }
 
         ISession Session { get; }
+
+        DateTime DateLastPortal { get; set; }
 
         double LastPortal { get; set; }
 

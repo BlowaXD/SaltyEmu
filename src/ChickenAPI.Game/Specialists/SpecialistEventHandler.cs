@@ -17,6 +17,7 @@ using ChickenAPI.Game.Entities.Player.Extensions;
 using ChickenAPI.Game.Events;
 using ChickenAPI.Game.Inventory.Extensions;
 using ChickenAPI.Game.Movements.Extensions;
+using ChickenAPI.Game.Player.Extension;
 using ChickenAPI.Game.Skills.Extensions;
 using ChickenAPI.Game.Specialists.Args;
 using ChickenAPI.Game.Specialists.Extensions;
@@ -88,7 +89,7 @@ namespace ChickenAPI.Game.Specialists
             player.Broadcast(player.GenerateCModePacket());
             player.Broadcast(player.GenerateEffectPacket(196));
             // guri packet
-            player.SendPacket(player.GenerateSpPacket());
+            player.ActualiseUiSpPoints();
             // remove buffs
             // transform
             player.SendPacket(player.GenerateLevPacket());
