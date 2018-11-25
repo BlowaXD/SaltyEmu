@@ -31,7 +31,7 @@ namespace SaltyPoc.IPC
             var tmp = new BasicNpcDialogHandler();
 
             IIpcServer server = new RabbitMqServer(GetHandler());
-            _client = new RabbitMqClient();
+            // _client = new RabbitMqClient();
             await Test();
             Console.ReadKey();
         }
@@ -41,7 +41,10 @@ namespace SaltyPoc.IPC
             var req = new TestRequestPacket();
             Log.Info("RequestPacket : " + req.Id);
             TestResponsePacket resp = await _client.RequestAsync<TestResponsePacket>(req);
-            if (resp == null) return; // not handled correctly
+            if (resp == null)
+            {
+                return; // not handled correctly
+            }
 
             Log.Info("ResponsePacket : " + resp.Id);
             Log.Info("ResponsePacket : " + resp.RequestId);

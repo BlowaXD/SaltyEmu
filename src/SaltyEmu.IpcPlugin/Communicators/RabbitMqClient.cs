@@ -13,7 +13,7 @@ using SaltyEmu.Communication.Utils;
 
 namespace SaltyEmu.Communication.Communicators
 {
-    public class RabbitMqClient : IDisposable, IIpcClient
+    public abstract class RabbitMqClient : IDisposable, IIpcClient
     {
         private const string RequestQueueName = "salty_requests";
         private const string ResponseQueueName = "salty_responses";
@@ -27,7 +27,7 @@ namespace SaltyEmu.Communication.Communicators
         private readonly ConcurrentDictionary<Guid, PendingRequest> _pendingRequests;
         private readonly IPendingRequestFactory _requestFactory;
 
-        public RabbitMqClient()
+        protected RabbitMqClient()
         {
             var factory = new ConnectionFactory { HostName = "localhost" };
             _packetFactory = new PacketContainerFactory();

@@ -1,17 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using Autofac;
-using ChickenAPI.Core.IoC;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Game.Managers;
 using ChickenAPI.Game.Player.Extension;
 
 namespace ChickenAPI.Game.Groups
 {
     public class BasicGroupManager : IGroupManager
     {
-        private readonly IPlayerManager PlayerManager = new Lazy<IPlayerManager>(() => ChickenContainer.Instance.Resolve<IPlayerManager>()).Value;
         private readonly Dictionary<Guid, GroupInvitDto> _pendingInvitations = new Dictionary<Guid, GroupInvitDto>();
         private readonly Dictionary<long, GroupDto> _groups = new Dictionary<long, GroupDto>();
         private long _lastGroupId;
