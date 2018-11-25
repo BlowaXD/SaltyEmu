@@ -20,15 +20,19 @@ namespace SaltyEmu.Communication.Communicators
         private readonly IIpcSerializer _serializer;
         private readonly IPacketContainerFactory _packetFactory;
         private readonly IPendingRequestFactory _requestFactory;
+        private readonly string _requestTopic;
+        private readonly string _responseTopic;
 
         private readonly RabbitMqConfiguration _configuration;
         private readonly ConcurrentDictionary<Guid, PendingRequest> _pendingRequests;
 
-        protected MqttIpcClient(RabbitMqConfiguration config, IIpcSerializer serializer)
+        protected MqttIpcClient(RabbitMqConfiguration config, IIpcSerializer serializer, string requestTopic, string responseTopic)
         {
             _configuration = config;
             _client = new MqttFactory().CreateManagedMqttClient();
             _serializer = serializer;
+            _requestTopic = requestTopic;
+            _responseTopic = responseTopic;
             _pendingRequests = new ConcurrentDictionary<Guid, PendingRequest>();
             _packetFactory = new PacketContainerFactory();
             _requestFactory = new PendingRequestFactory();
@@ -44,6 +48,7 @@ namespace SaltyEmu.Communication.Communicators
                     .Build())
                 .Build();
             _client.ApplicationMessageReceived += (sender, args) => OnMessage(args.ClientId, args.ApplicationMessage);
+            await _client.SubscribeAsync(_responseTopic);
             await _client.StartAsync(options);
         }
 
@@ -86,12 +91,13 @@ namespace SaltyEmu.Communication.Communicators
         {
             await _client.PublishAsync(builder => builder
                 .WithPayload(_serializer.Serialize(container))
-                .WithTopic("topic"));
+                .WithTopic(_requestTopic));
         }
 
-        public Task BroadcastAsync<T>(T packet) where T : IIpcPacket
+        public async Task BroadcastAsync<T>(T packet) where T : IIpcPacket
         {
-            return Task.CompletedTask;
+            PacketContainer container = _packetFactory.ToPacket(packet.GetType(), packet);
+            await SendAsync(container);
         }
     }
 }

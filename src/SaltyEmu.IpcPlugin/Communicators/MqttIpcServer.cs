@@ -21,16 +21,19 @@ namespace SaltyEmu.Communication.Communicators
         private readonly IManagedMqttClient _client;
         private readonly IIpcSerializer _serializer;
         private readonly IPacketContainerFactory _packetFactory;
-
         private readonly IIpcRequestHandler _requestHandler;
+        private readonly string _responseTopic;
 
         private readonly RabbitMqConfiguration _configuration;
 
-        protected MqttIpcServer(RabbitMqConfiguration config, IIpcSerializer serializer, IIpcRequestHandler requestHandler)
+        protected MqttIpcServer(RabbitMqConfiguration config, IIpcSerializer serializer, IIpcRequestHandler requestHandler, string requestTopic, string responseTopic)
         {
             _configuration = config;
             _requestHandler = requestHandler;
             _client = new MqttFactory().CreateManagedMqttClient();
+            _client.SubscribeAsync(requestTopic);
+            _responseTopic = responseTopic;
+
             _serializer = serializer;
             _packetFactory = new PacketContainerFactory();
         }
@@ -77,7 +80,7 @@ namespace SaltyEmu.Communication.Communicators
         {
             await _client.PublishAsync(builder => builder
                 .WithPayload(_serializer.Serialize(container))
-                .WithTopic("topic"));
+                .WithTopic(_responseTopic));
         }
     }
 }

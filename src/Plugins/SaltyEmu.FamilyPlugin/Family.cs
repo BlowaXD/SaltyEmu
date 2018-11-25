@@ -7,7 +7,7 @@ namespace SaltyEmu.FamilyPlugin
     public class Family : MqttIpcClient
     {
         // todo
-        public Family(RabbitMqConfiguration config, IIpcSerializer serializer) : base(config, serializer)
+        public Family(RabbitMqConfiguration config, IIpcSerializer serializer) : base(config, serializer, "/family/request", "/family/response")
         {
         }
     }
