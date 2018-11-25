@@ -2,10 +2,10 @@
 
 namespace SaltyEmu.Communication.Serializers
 {
-    public interface IIpcSerializer
+    public interface IIpcSerializer<T>
     {
-        byte[] Serialize(IIpcPacket packet);
+        byte[] Serialize(T packet);
 
-        IIpcPacket Deserialize(byte[] buffer);
+        T Deserialize(byte[] buffer);
     }
 }

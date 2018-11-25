@@ -57,8 +57,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SaltyEmu.Database", "src\li
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SaltyEmu.Redis", "src\libs\SaltyEmu.Redis\SaltyEmu.Redis.csproj", "{ED86A617-6DB1-4265-A64D-CA3CDD1FC0E2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SaltyEmu.Commands", "SaltyEmu.Commands\SaltyEmu.Commands.csproj", "{ED00FA91-F486-420F-A884-B1B239501B8B}"
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SaltyEmu.Commands", "src\SaltyEmu.Commands\SaltyEmu.Commands.csproj", "{ED00FA91-F486-420F-A884-B1B239501B8B}"
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SaltyEmu.Commands", "src\SaltyEmu.Commands\SaltyEmu.Commands.csproj", "{ED00FA91-F486-420F-A884-B1B239501B8B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SaltyEmu.Commands.Tests", "test\SaltyEmu.Commands.Tests\SaltyEmu.Commands.Tests.csproj", "{2977614E-2FFD-4211-97BE-D3C68A7631B3}"
