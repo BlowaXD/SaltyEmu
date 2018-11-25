@@ -7,6 +7,9 @@ using Qmmands;
 
 namespace SaltyEmu.Commands
 {
+    /* todo: find a better way to deal with TAP in world and here.
+     *       handle errors correctly and return them to the user ingame.
+     */
     public class CommandHandler
     {
         private readonly CommandService _commands;
