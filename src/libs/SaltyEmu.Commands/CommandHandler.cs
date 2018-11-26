@@ -46,6 +46,19 @@ namespace SaltyEmu.Commands
             await _commands.AddModuleAsync<ItemModule>();
 
             _commands.CommandExecuted += _commands_CommandExecuted;
+            _commands.CommandErrored += _commands_CommandErrored;
+        }
+
+        /// <summary>
+        /// todo
+        /// </summary>
+        /// <param name="arg1"></param>
+        /// <param name="arg2"></param>
+        /// <param name="arg3"></param>
+        /// <returns></returns>
+        private Task _commands_CommandErrored(ExecutionFailedResult arg1, ICommandContext arg2, IServiceProvider arg3)
+        {
+            return Task.CompletedTask;
         }
 
         /// <summary>
@@ -65,6 +78,7 @@ namespace SaltyEmu.Commands
 
             return Task.CompletedTask;
         }
+
 
         /// <summary>
         ///     This is a 'fake' example of a way to handle a message. In our case, the parameter message represents the raw message sent by the user. 
@@ -111,6 +125,9 @@ namespace SaltyEmu.Commands
                 case CommandNotFoundResult ex:
                     _logger.Debug("The command was not found. Raw input: " + ctx.Message);
                     ctx.Sender.SendPacket(ctx.Sender.GenerateSayPacket("The command was not found: " + ctx.Command.Name, SayColorType.Yellow));
+                    break;
+                case SaltyCommandResult ex:
+                    ctx.Sender.SendPacket(ctx.Sender.GenerateSayPacket($"{ctx.Command.Name} : {ex.Message}", SayColorType.Green));
                     break;
             }
 

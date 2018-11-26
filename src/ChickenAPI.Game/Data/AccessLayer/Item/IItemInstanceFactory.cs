@@ -1,9 +1,12 @@
 ﻿using ChickenAPI.Data.Item;
+using ChickenAPI.Game.Builders;
 
 namespace ChickenAPI.Game.Data.AccessLayer.Item
 {
     public interface IItemInstanceFactory
     {
+        ItemInstanceDto CreateItem(ItemInstanceBuilder builder);
+
         ItemInstanceDto CreateItem(ItemDto item, short quantity);
         ItemInstanceDto CreateItem(ItemDto item, short quantity, byte rarity);
         ItemInstanceDto CreateItem(ItemDto item, short quantity, byte rarity, byte upgrade);

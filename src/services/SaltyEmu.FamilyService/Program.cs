@@ -54,6 +54,7 @@ namespace SaltyEmu.FamilyService
                 .WithResponseTopic("/family/response")
                 .WithSerializer(new JsonSerializer())
                 .WithRequestHandler(new RequestHandler());
+
             var tmp = new FamilyServer(builder);
             if (tmp is MqttIpcServer<FamilyServer> server)
             {

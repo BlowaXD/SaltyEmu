@@ -1,5 +1,6 @@
 ﻿using System;
 using ChickenAPI.Data.Item;
+using ChickenAPI.Game.Builders;
 
 namespace ChickenAPI.Game.Data.AccessLayer.Item
 {
@@ -9,6 +10,11 @@ namespace ChickenAPI.Game.Data.AccessLayer.Item
 
         public SimpleItemInstanceFactory(IItemService itemService) => _itemService = itemService;
 
+
+        public ItemInstanceDto CreateItem(ItemInstanceBuilder builder)
+        {
+            return Duplicate(builder.Build());
+        }
 
         public ItemInstanceDto CreateItem(ItemDto item, short quantity) => CreateItem(item, quantity, 0, 0);
 
@@ -30,6 +36,11 @@ namespace ChickenAPI.Game.Data.AccessLayer.Item
 
         public ItemInstanceDto CreateItem(long itemId, short quantity, byte rarity, byte upgrade) => CreateItem(_itemService.GetById(itemId), quantity, rarity, upgrade);
 
-        public ItemInstanceDto Duplicate(ItemInstanceDto original) => original.Clone() as ItemInstanceDto;
+        public ItemInstanceDto Duplicate(ItemInstanceDto original)
+        {
+            var tmp = original.Clone() as ItemInstanceDto;
+            tmp.Id = Guid.NewGuid();
+            return tmp;
+        }
     }
 }

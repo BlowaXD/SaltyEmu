@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\ChickenAPI.Core\ChickenAPI.Core.csproj" />
+    <ProjectReference Include="..\..\libs\SaltyEmu.Commands\SaltyEmu.Commands.csproj" />
+  </ItemGroup>
+
+</Project>
