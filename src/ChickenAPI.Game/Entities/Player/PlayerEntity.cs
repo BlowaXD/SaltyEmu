@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Autofac;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Utils;
@@ -29,7 +28,6 @@ using ChickenAPI.Game.Network;
 using ChickenAPI.Game.Network.BroadcastRules;
 using ChickenAPI.Game.Quicklist;
 using ChickenAPI.Game.Skills;
-using ChickenAPI.Game.Specialists;
 using ChickenAPI.Game.Visibility;
 using ChickenAPI.Game.Visibility.Events;
 using ChickenAPI.Packets;
