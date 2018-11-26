@@ -1,4 +1,5 @@
-﻿using ChickenAPI.Game.Battle.Hitting;
+﻿using ChickenAPI.Enums.Packets;
+using ChickenAPI.Game.Battle.Hitting;
 using ChickenAPI.Game.Battle.Interfaces;
 using ChickenAPI.Packets.Game.Server.Battle;
 
