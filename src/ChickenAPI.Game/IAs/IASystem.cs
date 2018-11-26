@@ -5,6 +5,7 @@ using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Maths;
 using ChickenAPI.Core.Utils;
 using ChickenAPI.Enums.Game.Entity;
+using ChickenAPI.Game.Battle.Interfaces;
 using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.ECS.Systems;
 using ChickenAPI.Game.Maps;
@@ -45,7 +46,12 @@ namespace ChickenAPI.Game.IAs
         {
             int i = 0;
 
-            if (!(entity is IMovableEntity mov))
+            if (!(entity is IBattleEntity mov))
+            {
+                return;
+            }
+
+            if (!mov.IsAlive)
             {
                 return;
             }
