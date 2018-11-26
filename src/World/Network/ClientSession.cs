@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Threading.Tasks;
 using Autofac;
 using ChickenAPI.Core.i18n;
 using ChickenAPI.Core.IoC;
@@ -16,7 +15,7 @@ using ChickenAPI.Game.PacketHandling;
 using ChickenAPI.Packets;
 using DotNetty.Transport.Channels;
 using DotNetty.Transport.Channels.Groups;
-using SaltyEmu.Commands;
+using SaltyEmu.Commands.Interfaces;
 
 namespace World.Network
 {
@@ -25,8 +24,8 @@ namespace World.Network
         private const byte PACKET_SPLIT_CHARACTER = 0xFF;
 
         private static readonly IPlayerManager PlayerManager = new Lazy<IPlayerManager>(ChickenContainer.Instance.Resolve<IPlayerManager>).Value;
+        private static readonly ICommandContainer Commands = new Lazy<ICommandContainer>(ChickenContainer.Instance.Resolve<ICommandContainer>).Value;
         private static readonly Logger Log = Logger.GetLogger<ClientSession>();
-        private static readonly CommandHandler Commands = ChickenContainer.Instance.Resolve<CommandHandler>();
         private static Guid _worldServerId;
         private static IPacketFactory _packetFactory;
         private static IPacketHandler _packetHandler;

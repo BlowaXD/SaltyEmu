@@ -4,6 +4,6 @@ namespace SaltyEmu.Communication.Protocol.RepositoryPacket
 {
     public class RepositoryDeleteRequest<TKey> : BaseRequest
     {
-        public IEnumerable<TKey> ObjectId { get; set; }
+        public IEnumerable<TKey> ObjectIds { get; set; }
     }
 }

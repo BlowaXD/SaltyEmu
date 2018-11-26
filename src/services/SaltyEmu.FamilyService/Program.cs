@@ -50,7 +50,7 @@ namespace SaltyEmu.FamilyService
             MqttServerConfigurationBuilder builder = new MqttServerConfigurationBuilder()
                 .ConnectTo("localhost")
                 .WithName("family-server")
-                .WithQueueName("/family/request")
+                .AddTopic("/family/request")
                 .WithResponseTopic("/family/response")
                 .WithSerializer(new JsonSerializer())
                 .WithRequestHandler(new RequestHandler());

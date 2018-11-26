@@ -27,7 +27,7 @@ namespace SaltyEmu.Communication.Configs
             return this;
         }
 
-        public MqttServerConfigurationBuilder WithQueueName(string requestQueue)
+        public MqttServerConfigurationBuilder AddTopic(string requestQueue)
         {
             _subscribedQueues.Add(requestQueue);
             return this;

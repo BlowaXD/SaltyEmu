@@ -11,14 +11,14 @@ namespace SaltyEmu.Communication.Utils
         private static readonly Logger Log = Logger.GetLogger<IIpcRequestHandler>();
         private readonly Dictionary<Type, Action<IIpcRequest>> _packetHandlers = new Dictionary<Type, Action<IIpcRequest>>();
 
-        public void Register<T>(Action<IIpcRequest> handler) where T : IIpcRequest
+        public void Register<T>(Action<T> handler) where T : IIpcRequest
         {
             if (_packetHandlers.ContainsKey(typeof(T)))
             {
                 return;
             }
 
-            _packetHandlers.Add(typeof(T), handler);
+            _packetHandlers.Add(typeof(T), handler as Action<IIpcRequest>);
         }
 
         public void Handle(IIpcRequest request, Type type)

@@ -17,7 +17,7 @@ namespace SaltyEmu.Communication.Protocol.RepositoryPacket
     /// 
     /// </summary>
     /// <typeparam name="TKey"></typeparam>
-    internal sealed class RepositoryGetRequest<TKey> : BaseRequest
+    public sealed class RepositoryGetRequest<TKey> : BaseRequest
     {
         /// <summary>
         /// if this property is null, means that you want to request every objects

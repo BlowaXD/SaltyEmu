@@ -32,22 +32,22 @@ namespace SaltyEmu.Communication.Communicators
 
         public T Save(T obj)
         {
-            return RequestAsync<RepositorySaveResponse<T>>(new RepositorySaveRequest<T> { ObjectIds = new[] { obj } }).ConfigureAwait(false).GetAwaiter().GetResult().Objects.ElementAt(0);
+            return RequestAsync<RepositorySaveResponse<T>>(new RepositorySaveRequest<T> { Objects = new[] { obj } }).ConfigureAwait(false).GetAwaiter().GetResult().Objects.ElementAt(0);
         }
 
         public void Save(IEnumerable<T> objs)
         {
-            RequestAsync<RepositorySaveResponse<T>>(new RepositorySaveRequest<T> { ObjectIds = objs }).ConfigureAwait(false).GetAwaiter().GetResult();
+            RequestAsync<RepositorySaveResponse<T>>(new RepositorySaveRequest<T> { Objects = objs }).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
         public void DeleteById(Guid id)
         {
-            BroadcastAsync(new RepositoryDeleteRequest<Guid> { ObjectId = new[] { id } }).ConfigureAwait(false).GetAwaiter().GetResult();
+            BroadcastAsync(new RepositoryDeleteRequest<Guid> { ObjectIds = new[] { id } }).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
         public void DeleteByIds(IEnumerable<Guid> ids)
         {
-            BroadcastAsync(new RepositoryDeleteRequest<Guid> { ObjectId = ids }).ConfigureAwait(false).GetAwaiter().GetResult();
+            BroadcastAsync(new RepositoryDeleteRequest<Guid> { ObjectIds = ids }).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
         public async Task<IEnumerable<T>> GetAsync()
@@ -67,22 +67,22 @@ namespace SaltyEmu.Communication.Communicators
 
         public async Task<T> SaveAsync(T obj)
         {
-            return (await RequestAsync<RepositorySaveResponse<T>>(new RepositorySaveRequest<T> { ObjectIds = new[] { obj } })).Objects.ElementAt(0);
+            return (await RequestAsync<RepositorySaveResponse<T>>(new RepositorySaveRequest<T> { Objects = new[] { obj } })).Objects.ElementAt(0);
         }
 
         public async Task SaveAsync(IEnumerable<T> objs)
         {
-            await RequestAsync<RepositorySaveResponse<T>>(new RepositorySaveRequest<T> { ObjectIds = objs });
+            await RequestAsync<RepositorySaveResponse<T>>(new RepositorySaveRequest<T> { Objects = objs });
         }
 
         public async Task DeleteByIdAsync(Guid id)
         {
-            await BroadcastAsync(new RepositoryDeleteRequest<Guid> { ObjectId = new[] { id } });
+            await BroadcastAsync(new RepositoryDeleteRequest<Guid> { ObjectIds = new[] { id } });
         }
 
         public async Task DeleteByIdsAsync(IEnumerable<Guid> ids)
         {
-            await BroadcastAsync(new RepositoryDeleteRequest<Guid> { ObjectId = ids });
+            await BroadcastAsync(new RepositoryDeleteRequest<Guid> { ObjectIds = ids });
         }
     }
 }
