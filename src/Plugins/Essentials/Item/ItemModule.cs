@@ -19,15 +19,15 @@ namespace Essentials.Item
         [Command("Create")]
         [Description("Command that creates an item for you.")]
         [Remarks("Quantity argument is facultative.")]
-        public async Task<SaltyCommandResult> ItemCreateAsync(long itemId, short quantity = 1)
+        public async Task<SaltyCommandResult> ItemCreateAsync(ItemDto item, short quantity = 1)
         {
             //todo: add a TypeParser for ItemInstanceDto.
             var itemFactory = ChickenContainer.Instance.Resolve<IItemInstanceFactory>();
-            ItemInstanceDto item = itemFactory.CreateItem(itemId, quantity);
+            ItemInstanceDto itemInstance = itemFactory.CreateItem(item, quantity);
 
             Context.Player.EmitEvent(new InventoryAddItemEvent
             {
-                ItemInstance = item
+                ItemInstance = itemInstance
             });
 
             return await Task.FromResult(new SaltyCommandResult(true, "Your item(s) have been created."));

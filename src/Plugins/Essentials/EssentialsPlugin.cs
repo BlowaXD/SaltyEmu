@@ -24,27 +24,27 @@ namespace Essentials
 
         public void OnEnable()
         {
-            RegisterTypeParsers();
+            var container = ChickenContainer.Instance.Resolve<ICommandContainer>();
+            RegisterTypeParsers(container);
 
             Task.Run(async () =>
             {
-                await RegisterCommands();
+                await RegisterCommands(container);
                 //await UnregisterCommands(); <-- this is intended to test command unregistering during runtime.
             });
         }
 
-        private static void RegisterTypeParsers()
+        private static void RegisterTypeParsers(ICommandContainer container)
         {
-            var container = ChickenContainer.Instance.Resolve<ICommandContainer>();
             container.AddTypeParser(new MapLayerTypeParser());
             container.AddTypeParser(new PlayerEntityTypeParser());
+            container.AddTypeParser(new ItemDtoTypeParser());
         }
 
-        private static async Task RegisterCommands()
+        private static async Task RegisterCommands(ICommandContainer container)
         {
             try
             {
-                var container = ChickenContainer.Instance.Resolve<ICommandContainer>();
                 await container.AddModuleAsync<TeleportModule>();
                 await container.AddModuleAsync<ButcherModule>();
                 await container.AddModuleAsync<ItemModule>();
