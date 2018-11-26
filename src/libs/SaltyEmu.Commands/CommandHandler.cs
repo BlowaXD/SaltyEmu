@@ -1,14 +1,14 @@
-﻿using System;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ChickenAPI.Core.Logging;
+﻿using ChickenAPI.Core.Logging;
 using ChickenAPI.Enums.Packets;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Player.Extension;
 using Qmmands;
 using SaltyEmu.Commands.Entities;
 using SaltyEmu.Commands.Interfaces;
+using System;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace SaltyEmu.Commands
 {
@@ -39,10 +39,97 @@ namespace SaltyEmu.Commands
         public async Task AddModuleAsync<T>() where T : SaltyModuleBase
         {
             await _commands.AddModuleAsync<T>();
+
             foreach (Command command in _commands.GetAllModules().FirstOrDefault(s => s.Type == typeof(T)).Commands)
             {
                 _logger.Info($"[ADD_COMMAND] {command}");
             }
+        }
+
+        public async Task RemoveModuleAsync<T>() where T : SaltyModuleBase
+        {
+            var module = _commands.GetAllModules().FirstOrDefault(s => s.Type == typeof(T));
+
+            if (module is null)
+            {
+                throw new ArgumentException("The given module is not registered in the command container.");
+            }
+
+            await _commands.RemoveModuleAsync(module);
+        }
+
+        public Module GetModuleByName(string name, bool caseSensitive = true)
+        {
+            return _commands.GetAllModules().FirstOrDefault(x => caseSensitive ? x.Name == name : x.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
+        }
+
+        public Command GetCommandByName(string name, bool caseSensitive = true)
+        {
+            return _commands.GetAllCommands().FirstOrDefault(x => caseSensitive ? x.Name == name : x.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
+        }
+
+        public Task RemoveCommandAsync(string commandName, bool caseSensitive = true)
+        {
+            return RemoveCommandAsync(GetCommandByName(commandName, caseSensitive));
+        }
+
+        public async Task RemoveCommandAsync(Command command)
+        {
+            var builder = new ModuleBuilder();
+
+            var oldModule = command.Module;
+            builder.AddAliases(oldModule.Aliases?.ToArray())
+                .AddAttributes(oldModule.Attributes?.ToArray())
+                .AddChecks(oldModule.Checks?.ToArray())
+                .WithDescription(oldModule.Description)
+                .WithIgnoreExtraArguments(oldModule.IgnoreExtraArguments)
+                .WithName(oldModule.Name)
+                .WithRemarks(oldModule.Remarks)
+                .WithRunMode(oldModule.RunMode);
+
+            foreach (var cmd in oldModule.Commands)
+            {
+                if (cmd.FullAliases[0] == command.FullAliases[0])
+                {
+                    continue;
+                }
+
+                var cmdBuilder = new CommandBuilder()
+                    .AddAliases(cmd.Aliases?.ToArray())
+                    .AddAttributes(cmd.Attributes?.ToArray())
+                    .AddChecks(cmd.Checks?.ToArray())
+                    .AddCooldowns(cmd.Cooldowns?.ToArray())
+                    .WithCallback(cmd.Callback)
+                    .WithDescription(cmd.Description)
+                    .WithIgnoreExtraArguments(cmd.IgnoreExtraArguments)
+                    .WithName(cmd.Name)
+                    .WithPriority(cmd.Priority)
+                    .WithRemarks(cmd.Remarks)
+                    .WithRunMode(cmd.RunMode);
+
+                foreach (var param in cmd.Parameters)
+                {
+                    var paramBuilder = new ParameterBuilder()
+                        .AddAttributes(param.Attributes?.ToArray())
+                        .AddChecks(param.Checks?.ToArray())
+                        .WithCustomTypeParserType(param.CustomTypeParserType)
+                        .WithDefaultValue(param.DefaultValue)
+                        .WithDescription(param.Description)
+                        .WithIsMultiple(param.IsMultiple)
+                        .WithIsOptional(param.IsOptional)
+                        .WithIsRemainder(param.IsRemainder)
+                        .WithName(param.Name)
+                        .WithRemarks(param.Remarks)
+                        .WithType(param.Type);
+
+                    cmdBuilder.AddParameter(paramBuilder);
+                }
+
+                builder.AddCommand(cmdBuilder);
+            }
+
+            await _commands.RemoveModuleAsync(oldModule);
+            await _commands.AddModuleAsync(builder);
         }
 
         public void AddTypeParser<T>(TypeParser<T> typeParser)
@@ -98,7 +185,6 @@ namespace SaltyEmu.Commands
 
             return Task.CompletedTask;
         }
-
 
         /// <summary>
         ///     This is where every message from the InGame tchat starting with our prefix will arrive. 
