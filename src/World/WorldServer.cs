@@ -11,6 +11,7 @@ using ChickenAPI.Data.Character;
 using ChickenAPI.Enums;
 using ChickenAPI.Game.Data.AccessLayer.Account;
 using ChickenAPI.Game.PacketHandling;
+using Essentials;
 using NLog;
 using NosSharp.PacketHandler;
 using SaltyEmu.BasicAlgorithmPlugin;
@@ -37,7 +38,8 @@ namespace World
             new RedisPlugin(),
             new BasicPlugin(),
             new PathfinderPlugin(),
-            new PacketHandlerPlugin()
+            new PacketHandlerPlugin(),
+            new EssentialsPlugin()
         };
 
         private static void InitializePlugins()

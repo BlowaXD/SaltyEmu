@@ -35,6 +35,15 @@ namespace SaltyEmu.Commands
             InitializeAsync().ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
+        public async Task AddModuleAsync<T>() where T : SaltyModuleBase
+        {
+            await _commands.AddModuleAsync<T>();
+            foreach (Command command in _commands.GetAllModules().FirstOrDefault(s => s.Type == typeof(T)).Commands)
+            {
+                _logger.Info($"[ADD_COMMAND] {command}");
+            }
+        }
+
         /// <summary>
         ///     This method fetch for every command and/or module in our entry assembly.
         /// </summary>

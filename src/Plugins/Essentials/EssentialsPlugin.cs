@@ -1,4 +1,9 @@
-﻿using ChickenAPI.Core.Plugins;
+﻿using Autofac;
+using ChickenAPI.Core.IoC;
+using ChickenAPI.Core.Logging;
+using ChickenAPI.Core.Plugins;
+using Essentials.Teleport;
+using SaltyEmu.Commands.Interfaces;
 
 namespace Essentials
 {
@@ -16,13 +21,15 @@ namespace Essentials
             RegisterCommands();
         }
 
-        private void RegisterCommands()
+        private static void RegisterCommands()
         {
+            var container = ChickenContainer.Instance.Resolve<ICommandContainer>();
+            container.AddModuleAsync<TeleportModule>();
         }
 
         public void OnLoad()
         {
-            throw new System.NotImplementedException();
+            
         }
 
         public void ReloadConfig()
