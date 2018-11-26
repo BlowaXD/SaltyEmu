@@ -1,4 +1,5 @@
 ﻿using ChickenAPI.Data.Item;
+using ChickenAPI.Game.Skills.Extensions;
 using ChickenAPI.Packets.Game.Server.Inventory;
 
 namespace ChickenAPI.Game.Inventory.Extensions
@@ -31,7 +32,7 @@ namespace ChickenAPI.Game.Inventory.Extensions
             DarkResistance = itemInstance.Item.DarkResistance,
             Xp = itemInstance.Xp,
             SPXpData = 0, // Sp xp calculation
-            Skill = null, // skill list
+            Skill = itemInstance.GetClassId(),
             TransportId = 0, // TODO: transport system
             FreeSpPoints = 0,
             SlHit = 0,
