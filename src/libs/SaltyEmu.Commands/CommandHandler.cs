@@ -136,7 +136,7 @@ namespace SaltyEmu.Commands
                     break;
                 case CommandNotFoundResult ex:
                     _logger.Debug("The command was not found. Raw input: " + ctx.Message);
-                    ctx.Player.SendPacket(ctx.Player.GenerateSayPacket("The command was not found: " + ctx.Command.Name, SayColorType.Yellow));
+                    ctx.Player.SendPacket(ctx.Player.GenerateSayPacket("The command was not found: " + ctx.Input, SayColorType.Yellow));
                     break;
                 case SaltyCommandResult ex:
                     ctx.Player.SendPacket(ctx.Player.GenerateSayPacket($"{ctx.Command.Name} : {ex.Message}", SayColorType.Green));

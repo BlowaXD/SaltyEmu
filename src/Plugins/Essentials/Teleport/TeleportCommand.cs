@@ -1,11 +1,8 @@
 ﻿using System.Threading.Tasks;
-using Autofac;
-using ChickenAPI.Core.IoC;
 using ChickenAPI.Enums;
 using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Helpers;
-using ChickenAPI.Game.Managers;
 using Qmmands;
 using SaltyEmu.Commands.Checks;
 using SaltyEmu.Commands.Entities;
@@ -59,8 +56,6 @@ namespace Essentials.Teleport
             [Description("Amount of milliseconds to wait before teleporting you to the specified location, by default no delay")]
             int delay = 0)
         {
-            var manager = ChickenContainer.Instance.Resolve<IMapManager>();
-
             // wait for x ms
             await Task.Delay(delay);
 
