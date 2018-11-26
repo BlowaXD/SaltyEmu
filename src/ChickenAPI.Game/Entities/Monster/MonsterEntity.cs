@@ -94,6 +94,7 @@ namespace ChickenAPI.Game.Entities.Monster
         #endregion
 
         public int MpMax { get; set; }
+        public DateTime LastTimeKilled { get; set; }
 
 
         public bool IsAlive => Hp > 0;

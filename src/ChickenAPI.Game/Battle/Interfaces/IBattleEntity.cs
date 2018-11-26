@@ -1,4 +1,5 @@
-﻿using ChickenAPI.Game.Entities;
+﻿using System;
+using ChickenAPI.Game.Entities;
 using ChickenAPI.Game.Movements;
 
 namespace ChickenAPI.Game.Battle.Interfaces
@@ -32,5 +33,7 @@ namespace ChickenAPI.Game.Battle.Interfaces
 
         int HpMax { get; set; }
         int MpMax { get; set; }
+
+        DateTime LastTimeKilled { get; set; }
     }
 }

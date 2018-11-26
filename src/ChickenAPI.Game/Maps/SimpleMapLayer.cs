@@ -58,6 +58,7 @@ namespace ChickenAPI.Game.Maps
             AddSystem(new MovableSystem(this));
             AddSystem(new IASystem(this, Map));
             AddSystem(new EffectSystem(this));
+            AddSystem(new RespawnSystem(this));
         }
 
         private void InitializeNpcs(IEnumerable<MapNpcDto> npcs, IEnumerable<ShopDto> shops)

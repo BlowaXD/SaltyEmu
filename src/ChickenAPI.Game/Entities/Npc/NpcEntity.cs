@@ -100,6 +100,7 @@ namespace ChickenAPI.Game.Entities.Npc
         #endregion
 
         public int MpMax { get; set; }
+        public DateTime LastTimeKilled { get; set; }
 
         public bool IsAlive => Hp > 0;
         public bool CanAttack => true;

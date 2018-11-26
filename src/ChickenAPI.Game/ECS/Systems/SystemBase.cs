@@ -25,7 +25,7 @@ namespace ChickenAPI.Game.ECS.Systems
         /// <remarks>
         ///     This filter is used to check if the entities needs to be updated by this system.
         /// </remarks>
-        protected virtual Expression<Func<IEntity, bool>> Filter { get; }
+        protected abstract Expression<Func<IEntity, bool>> Filter { get; }
 
         protected IEntity[] Entities { get; private set; }
 
@@ -64,8 +64,6 @@ namespace ChickenAPI.Game.ECS.Systems
             Entities = EntityManager.Entities.Where(Match).ToArray();
         }
 
-        protected virtual void Execute(IEntity entity)
-        {
-        }
+        protected abstract void Execute(IEntity entity);
     }
 }

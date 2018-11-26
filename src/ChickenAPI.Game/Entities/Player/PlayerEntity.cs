@@ -233,6 +233,7 @@ namespace ChickenAPI.Game.Entities.Player
         public int Mp { get; set; }
         public int HpMax { get; set; }
         public int MpMax { get; set; }
+        public DateTime LastTimeKilled { get; set; }
 
         #endregion Stats
 
