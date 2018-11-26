@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Plugins;
+using Essentials.Item;
 using Essentials.MapManagement;
 using Essentials.Teleport;
 using SaltyEmu.Commands.Interfaces;
@@ -26,6 +27,7 @@ namespace Essentials
             var container = ChickenContainer.Instance.Resolve<ICommandContainer>();
             container.AddModuleAsync<TeleportModule>();
             container.AddModuleAsync<ButcherModule>();
+            container.AddModuleAsync<ItemModule>();
         }
 
         public void OnLoad()

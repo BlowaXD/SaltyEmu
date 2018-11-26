@@ -8,7 +8,6 @@ using ChickenAPI.Game.Player.Extension;
 using Qmmands;
 using SaltyEmu.Commands.Entities;
 using SaltyEmu.Commands.Interfaces;
-using SaltyEmu.Commands.Modules;
 
 namespace SaltyEmu.Commands
 {
@@ -52,8 +51,6 @@ namespace SaltyEmu.Commands
         /// </remarks>
         public async Task InitializeAsync()
         {
-            await _commands.AddModuleAsync<ItemModule>();
-
             _commands.CommandExecuted += _commands_CommandExecuted;
             _commands.CommandErrored += _commands_CommandErrored;
         }
