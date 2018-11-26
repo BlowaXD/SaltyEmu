@@ -200,6 +200,9 @@ namespace ChickenAPI.Game.Entities.Player
         public void Save()
         {
             DateTime before = DateTime.UtcNow;
+            Character.MapX = Position.X;
+            Character.MapY = Position.Y;
+            Character.MapId = (short)CurrentMap.Map.Id;
             CharacterService.Save(Character);
             CharacterSkillService.Save(SkillComponent.CharacterSkills.Values);
             CharacterQuicklistService.Save(Quicklist.Quicklist);

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
+using ChickenAPI.Data.Item;
 using ChickenAPI.Data.Skills;
 using ChickenAPI.Game.Entities.Player;
 
@@ -12,7 +13,17 @@ namespace ChickenAPI.Game.Skills.Extensions
     {
         public static IOrderedEnumerable<SkillDto> GetSpSkillsByCastIdAscending(this IPlayerEntity player)
         {
-            return player.SkillComponent.Skills.Values.Where(s => s.Class == (player.MorphId + 31)).OrderBy(s => s.CastId);
+            return player.SkillComponent.Skills.Values.Where(s => s.Class == player.GetClassId()).OrderBy(s => s.CastId);
+        }
+
+        public static byte GetClassId(this IPlayerEntity player)
+        {
+            return player.Sp.GetClassId();
+        }
+
+        public static byte GetClassId(this ItemInstanceDto itemInstance)
+        {
+            return (byte)(itemInstance.Item.Morph + 31);
         }
 
         public static IOrderedEnumerable<SkillDto> GetSkillsByCastIdAscending(this IPlayerEntity player)

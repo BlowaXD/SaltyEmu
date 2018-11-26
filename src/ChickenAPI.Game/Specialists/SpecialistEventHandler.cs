@@ -98,8 +98,7 @@ namespace ChickenAPI.Game.Specialists
             player.SendPacket(player.GenerateStatCharPacket());
 
             // LoadSpSkills()
-            // todo find why 31
-            SkillDto[] skills = SkillService.GetByClassId((byte)(player.MorphId + 31));
+            SkillDto[] skills = SkillService.GetByClassId(player.GetClassId());
             player.AddSkills(skills);
 
 
