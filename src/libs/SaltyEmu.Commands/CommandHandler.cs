@@ -43,6 +43,12 @@ namespace SaltyEmu.Commands
             }
         }
 
+        public void AddTypeParser<T>(TypeParser<T> typeParser)
+        {
+            _commands.AddTypeParser(typeParser);
+            _logger.Info($"[ADD_TYPE_PARSER] {typeParser.GetType().Name}");
+        }
+
         /// <summary>
         ///     This method fetch for every command and/or module in our entry assembly.
         /// </summary>
@@ -80,7 +86,7 @@ namespace SaltyEmu.Commands
         {
             var ctx = context as SaltyCommandContext;
 
-            _logger.Debug($"The command {command.Name} (from player {ctx.Sender.Character.Name} ({ctx.Sender.Character.Id}) has successfully been executed.");
+            _logger.Debug($"The command {command.Name} (from player {ctx.Player.Character.Name} ({ctx.Player.Character.Id}) has successfully been executed.");
 
             return Task.CompletedTask;
         }
@@ -130,10 +136,10 @@ namespace SaltyEmu.Commands
                     break;
                 case CommandNotFoundResult ex:
                     _logger.Debug("The command was not found. Raw input: " + ctx.Message);
-                    ctx.Sender.SendPacket(ctx.Sender.GenerateSayPacket("The command was not found: " + ctx.Command.Name, SayColorType.Yellow));
+                    ctx.Player.SendPacket(ctx.Player.GenerateSayPacket("The command was not found: " + ctx.Command.Name, SayColorType.Yellow));
                     break;
                 case SaltyCommandResult ex:
-                    ctx.Sender.SendPacket(ctx.Sender.GenerateSayPacket($"{ctx.Command.Name} : {ex.Message}", SayColorType.Green));
+                    ctx.Player.SendPacket(ctx.Player.GenerateSayPacket($"{ctx.Command.Name} : {ex.Message}", SayColorType.Green));
                     break;
             }
 

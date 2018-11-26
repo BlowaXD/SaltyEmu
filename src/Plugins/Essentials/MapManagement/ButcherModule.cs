@@ -7,7 +7,6 @@ using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Enums.Packets;
 using ChickenAPI.Game.Battle.Extensions;
 using ChickenAPI.Game.Battle.Hitting;
-using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Entities.Monster;
 using Qmmands;
 using SaltyEmu.Commands.Checks;
@@ -18,9 +17,10 @@ namespace Essentials.MapManagement
     [Group("Butcher")]
     [Description("It's a module related to butching monsters. It requires to be a GameMaster.")]
     [RequireAuthority(AuthorityType.GameMaster)]
+    [PlayerInMap]
     public class ButcherModule : SaltyModuleBase
     {
-        private readonly SkillDto _skill = new SkillDto
+        private static readonly SkillDto _skill = new SkillDto
         {
             Id = 1114,
             Cooldown = 4,
@@ -32,9 +32,9 @@ namespace Essentials.MapManagement
         private void KillMonster(IMonsterEntity monster)
         {
             monster.Hp = 0;
-            Player.Broadcast(monster.GenerateSuPacket(new HitRequest
+            Context.Player.Broadcast(monster.GenerateSuPacket(new HitRequest
             {
-                Sender = Player,
+                Sender = Context.Player,
                 Target = monster,
                 HitMode = SuPacketHitMode.CriticalAttack,
                 Damages = (uint)(monster.HpMax > ushort.MaxValue ? ushort.MaxValue : monster.HpMax),
@@ -47,15 +47,7 @@ namespace Essentials.MapManagement
         [Remarks("Only the player paramter is needed")]
         public async Task<SaltyCommandResult> ButchAllMonstersAsync()
         {
-            IMapLayer map = Player.CurrentMap;
-
-            if (map == null)
-            {
-                return await Task.FromResult(new SaltyCommandResult(true, $"You need to be in a map"));
-            }
-
-
-            IEnumerable<IMonsterEntity> entities = map.GetEntitiesByType<IMonsterEntity>(VisualType.Monster);
+            IEnumerable<IMonsterEntity> entities = Context.Player.CurrentMap.GetEntitiesByType<IMonsterEntity>(VisualType.Monster);
             foreach (IMonsterEntity entity in entities)
             {
                 KillMonster(entity);
@@ -71,21 +63,13 @@ namespace Essentials.MapManagement
             [Description("Radius within the monsters should be killed")]
             short radius)
         {
-            IMapLayer map = Player.CurrentMap;
-
-            if (map == null)
-            {
-                return await Task.FromResult(new SaltyCommandResult(true, $"You need to be in a map"));
-            }
-
-
-            IEnumerable<IMonsterEntity> entities = map.GetEntitiesInRange<IMonsterEntity>(Player.Position, radius).Where(s => s.Type == VisualType.Monster);
+            IEnumerable<IMonsterEntity> entities = Context.Player.CurrentMap.GetEntitiesInRange<IMonsterEntity>(Context.Player.Position, radius).Where(s => s.Type == VisualType.Monster);
             foreach (IMonsterEntity entity in entities)
             {
                 KillMonster(entity);
             }
 
-            return await Task.FromResult(new SaltyCommandResult(true, $"All monsters within a radius of {radius} tiles"));
+            return await Task.FromResult(new SaltyCommandResult(true, $"All monsters within a radius of {radius} tiles have been killed."));
         }
     }
 }

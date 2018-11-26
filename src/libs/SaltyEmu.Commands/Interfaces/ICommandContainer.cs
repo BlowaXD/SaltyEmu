@@ -13,6 +13,13 @@ namespace SaltyEmu.Commands.Interfaces
         /// <returns></returns>
         Task AddModuleAsync<T>() where T : SaltyModuleBase;
 
+        /// <summary>
+        /// Adds a typeparser to the CommandContainer
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="typeParser">Instance of the TypeParser to add.</param>
+        void AddTypeParser<T>(TypeParser<T> typeParser);
+
         Task InitializeAsync();
         Task HandleMessageAsync(string message, object entity);
     }

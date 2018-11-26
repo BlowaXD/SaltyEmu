@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Autofac;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Data.Item;
 using ChickenAPI.Enums;
-using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Game.Data.AccessLayer.Item;
-using ChickenAPI.Game.ECS.Entities;
-using ChickenAPI.Game.Entities.Monster;
 using ChickenAPI.Game.Inventory.Args;
 using Qmmands;
 using SaltyEmu.Commands.Checks;
@@ -30,11 +24,12 @@ namespace Essentials.Item
             var itemFactory = ChickenContainer.Instance.Resolve<IItemInstanceFactory>();
             ItemInstanceDto item = itemFactory.CreateItem(itemId, quantity);
 
-            Player.EmitEvent(new InventoryAddItemEvent
+            Context.Player.EmitEvent(new InventoryAddItemEvent
             {
                 ItemInstance = item
             });
-            return await Task.FromResult(new SaltyCommandResult(true, $"Map have been cleaned"));
+
+            return await Task.FromResult(new SaltyCommandResult(true, "Map has been cleaned"));
         }
     }
 }

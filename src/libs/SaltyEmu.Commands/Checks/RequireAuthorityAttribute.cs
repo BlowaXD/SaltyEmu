@@ -32,9 +32,9 @@ namespace SaltyEmu.Commands.Checks
                 return Task.FromResult(new CheckResult("Invalid context."));
             }
 
-            if (ctx.Sender is IPlayerEntity player && player.Session.Account.Authority < AuthorityType.GameMaster)
+            if (ctx.Player is IPlayerEntity player && player.Session.Account.Authority < Authority)
             {
-                return Task.FromResult(new CheckResult("You need to be GameMaster"));
+                return Task.FromResult(new CheckResult("You (at least) need to be a " + Authority));
             }
 
             return Task.FromResult(CheckResult.Successful);

@@ -5,6 +5,7 @@ using Essentials.Item;
 using Essentials.MapManagement;
 using Essentials.Teleport;
 using SaltyEmu.Commands.Interfaces;
+using SaltyEmu.Commands.TypeParsers;
 
 namespace Essentials
 {
@@ -19,6 +20,7 @@ namespace Essentials
 
         public void OnEnable()
         {
+            RegisterTypeParsers();
             RegisterCommands();
         }
 
@@ -28,6 +30,13 @@ namespace Essentials
             container.AddModuleAsync<TeleportModule>();
             container.AddModuleAsync<ButcherModule>();
             container.AddModuleAsync<ItemModule>();
+        }
+
+        private static void RegisterTypeParsers()
+        {
+            var container = ChickenContainer.Instance.Resolve<ICommandContainer>();
+            container.AddTypeParser(new MapLayerTypeParser());
+            container.AddTypeParser(new PlayerEntityTypeParser());
         }
 
         public void OnLoad()
