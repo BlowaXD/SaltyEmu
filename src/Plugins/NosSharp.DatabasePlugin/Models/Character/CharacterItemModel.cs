@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using ChickenAPI.Data;
@@ -142,6 +143,7 @@ namespace SaltyEmu.DatabasePlugin.Models.Character
         public short DarkResistance { get; set; }
 
         public short DarkPower { get; set; }
+        public IEnumerable<CharacterItemOptionModel> ItemOptions { get; set; }
 
         #endregion
     }

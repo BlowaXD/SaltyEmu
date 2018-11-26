@@ -45,6 +45,8 @@ namespace SaltyEmu.DatabasePlugin.Context
 
         public DbSet<CharacterItemModel> CharacterItems { get; set; }
 
+        public DbSet<CharacterItemOptionModel> CharacterItemsOptions { get; set; }
+
         public DbSet<CharacterMateModel> CharacterMates { get; set; }
 
         public DbSet<CharacterSkillModel> CharacterSkills { get; set; }
@@ -176,6 +178,16 @@ namespace SaltyEmu.DatabasePlugin.Context
                 .HasOne(s => s.BoundCharacterModel)
                 .WithMany(s => s.BoundItems)
                 .HasForeignKey(s => s.BoundCharacterId);
+
+            modelBuilder.Entity<CharacterItemOptionModel>()
+                .HasOne(s => s.CharacterItem)
+                .WithMany(s => s.ItemOptions)
+                .HasForeignKey(s => s.WearableInstanceId);
+
+            modelBuilder.Entity<CharacterItemModel>()
+                .HasMany(s => s.ItemOptions)
+                .WithOne(s => s.CharacterItem)
+                .HasForeignKey(s => s.WearableInstanceId);
 
             modelBuilder.Entity<CharacterFamilyModel>()
                 .HasOne(s => s.Family)

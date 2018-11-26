@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SaltyEmu.DatabasePlugin.Context;
 
 namespace SaltyEmu.DatabasePlugin.Migrations
 {
     [DbContext(typeof(SaltyDbContext))]
-    partial class NosSharpContextModelSnapshot : ModelSnapshot
+    [Migration("20181126181409_EquipmentOptions")]
+    partial class EquipmentOptions
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
