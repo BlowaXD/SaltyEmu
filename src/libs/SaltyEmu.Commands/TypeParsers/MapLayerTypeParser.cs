@@ -21,7 +21,7 @@ namespace SaltyEmu.Commands.TypeParsers
             IMapLayer map = manager.GetBaseMapLayer(result);
 
             return map is null
-                ? Task.FromResult(new TypeParserResult<IMapLayer>($"A map with ID {result} doesn't exist."))
+                ? Task.FromResult(new TypeParserResult<IMapLayer>($"A map with ID#{result} doesn't exist."))
                 : Task.FromResult(new TypeParserResult<IMapLayer>(map));
         }
     }

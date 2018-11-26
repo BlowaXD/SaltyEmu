@@ -29,12 +29,12 @@ namespace SaltyEmu.Commands.Checks
         {
             if (!(context is SaltyCommandContext ctx))
             {
-                return Task.FromResult(new CheckResult("Invalid context."));
+                return Task.FromResult(new CheckResult("Invalid context. This is *very* bad. Please report this."));
             }
 
             if (ctx.Player is IPlayerEntity player && player.Session.Account.Authority < Authority)
             {
-                return Task.FromResult(new CheckResult("You (at least) need to be a " + Authority));
+                return Task.FromResult(new CheckResult("You (at least) need to be a " + Authority + " in order to execute that command."));
             }
 
             return Task.FromResult(CheckResult.Successful);

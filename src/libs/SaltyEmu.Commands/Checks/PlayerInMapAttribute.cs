@@ -12,7 +12,7 @@ namespace SaltyEmu.Commands.Checks
             var ctx = context as SaltyCommandContext;
 
             return ctx.Player.CurrentMap is null
-                ? Task.FromResult(new CheckResult("You need to be in a map"))
+                ? Task.FromResult(new CheckResult("You need to be in a map to execute that command."))
                 : Task.FromResult(CheckResult.Successful);
         }
     }

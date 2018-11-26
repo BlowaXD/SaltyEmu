@@ -15,7 +15,7 @@ using SaltyEmu.Commands.Entities;
 namespace Essentials.MapManagement
 {
     [Group("Butcher")]
-    [Description("It's a module related to butching monsters. It requires to be a GameMaster.")]
+    [Description("Module related to monsters butching. It requires to be a GameMaster and in a Map.")]
     [RequireAuthority(AuthorityType.GameMaster)]
     [PlayerInMap]
     public class ButcherModule : SaltyModuleBase
@@ -43,8 +43,7 @@ namespace Essentials.MapManagement
         }
 
         [Command("*")]
-        [Description("Command that teleports the given player to you")]
-        [Remarks("Only the player paramter is needed")]
+        [Description("Kills every monster in the current map.")]
         public async Task<SaltyCommandResult> ButchAllMonstersAsync()
         {
             IEnumerable<IMonsterEntity> entities = Context.Player.CurrentMap.GetEntitiesByType<IMonsterEntity>(VisualType.Monster);
@@ -53,17 +52,18 @@ namespace Essentials.MapManagement
                 KillMonster(entity);
             }
 
-            return await Task.FromResult(new SaltyCommandResult(true, $"Map have been cleaned"));
+            return await Task.FromResult(new SaltyCommandResult(true, $"Map have been cleaned from monsters."));
         }
 
         [Command("radius")]
-        [Description("Command that teleports the given player to you")]
-        [Remarks("Only the player paramter is needed")]
+        [Description("Kills every monster in the current map around you in the specified radius.")]
         public async Task<SaltyCommandResult> ButchAllMonstersAsync(
-            [Description("Radius within the monsters should be killed")]
-            short radius)
+            [Description("Radius within the monsters should be killed.")] short radius)
         {
-            IEnumerable<IMonsterEntity> entities = Context.Player.CurrentMap.GetEntitiesInRange<IMonsterEntity>(Context.Player.Position, radius).Where(s => s.Type == VisualType.Monster);
+            IEnumerable<IMonsterEntity> entities = Context.Player.CurrentMap
+                .GetEntitiesInRange<IMonsterEntity>(Context.Player.Position, radius)
+                .Where(s => s.Type == VisualType.Monster);
+
             foreach (IMonsterEntity entity in entities)
             {
                 KillMonster(entity);

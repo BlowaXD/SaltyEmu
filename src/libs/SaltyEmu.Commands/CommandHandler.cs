@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using ChickenAPI.Core.Logging;
 using ChickenAPI.Enums.Packets;
@@ -31,7 +32,8 @@ namespace SaltyEmu.Commands
                 CaseSensitive = false,
             });
 
-            InitializeAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+            _commands.CommandExecuted += _commands_CommandExecuted;
+            _commands.CommandErrored += _commands_CommandErrored;
         }
 
         public async Task AddModuleAsync<T>() where T : SaltyModuleBase
@@ -50,26 +52,23 @@ namespace SaltyEmu.Commands
         }
 
         /// <summary>
-        ///     This method fetch for every command and/or module in our entry assembly.
+        ///     This event is being invoked when the excecuted of a command threw an exception. 
+        ///     Error results are handled by the result of CommandService#ExecuteAsync.
         /// </summary>
-        /// <remarks>
-        ///     The commands and modules must be public and must inherit from an inheritance of ModuleBase.
-        /// </remarks>
-        public async Task InitializeAsync()
-        {
-            _commands.CommandExecuted += _commands_CommandExecuted;
-            _commands.CommandErrored += _commands_CommandErrored;
-        }
-
-        /// <summary>
-        /// todo
-        /// </summary>
-        /// <param name="arg1"></param>
-        /// <param name="arg2"></param>
-        /// <param name="arg3"></param>
+        /// <param name="result">Result with its associated exception.</param>
+        /// <param name="context">It represents the context. Must be casted to our custom context (SaltyCommandContext)</param>
+        /// <param name="services">It represents the Container (Usually Microsoft's Dependency Injection). Unused in our case.</param>
         /// <returns></returns>
-        private Task _commands_CommandErrored(ExecutionFailedResult arg1, ICommandContext arg2, IServiceProvider arg3)
+        private Task _commands_CommandErrored(ExecutionFailedResult result, ICommandContext context, IServiceProvider services)
         {
+            var str = new StringBuilder();
+            switch (result.Exception)
+            {
+                default:
+                    _logger.Debug($"{result.Exception.GetType()} occured.\nError message: {result.Exception.Message}.\nStack trace: {result.Exception.StackTrace}");
+                    break;
+            }
+
             return Task.CompletedTask;
         }
 
@@ -77,23 +76,33 @@ namespace SaltyEmu.Commands
         ///     This event is being invoked when the execution of a command is over. When the command returned a result.
         ///     It could be a custom result that we can cast from our instance of CommandResult.
         /// </summary>
-        /// <param name="arg1">It represents the command that has been executed.</param>
-        /// <param name="arg2">It represents the returned result. It can an 'empty' result when the command returned a Task, or a custom result.</param>
-        /// <param name="arg3">It represents the context. Must be casted to our custom context (SaltyCommandContext)</param>
-        /// <param name="arg4">It represents the Container (Usually Microsoft's Dependency Injection). Not used in our case.</param>
+        /// <param name="command">It represents the command that has been executed.</param>
+        /// <param name="result">It represents the returned result. It can an 'empty' result when the command returned a Task, or a custom result.</param>
+        /// <param name="context">It represents the context. Must be casted to our custom context (SaltyCommandContext)</param>
+        /// <param name="services">It represents the Container (Usually Microsoft's Dependency Injection). Unused in our case.</param>
         /// <returns></returns>
         private Task _commands_CommandExecuted(Command command, CommandResult result, ICommandContext context, IServiceProvider services)
         {
             var ctx = context as SaltyCommandContext;
+            if (ctx is null)
+            {
+                _logger.Debug($"Unknown context: {context.GetType()}. This is bad. Please report this.");
+            }
 
-            _logger.Debug($"The command {command.Name} (from player {ctx.Player.Character.Name} ({ctx.Player.Character.Id}) has successfully been executed.");
+            _logger.Debug($"The command {command.Name} (from player {ctx.Player.Character.Name} [{ctx.Player.Character.Id}]) has successfully been executed.");
+
+            if (result is SaltyCommandResult res && !string.IsNullOrWhiteSpace(res.Message))
+            {
+                ctx.Player.SendPacket(ctx.Player.GenerateSayPacket(res.Message, SayColorType.Yellow));
+            }
 
             return Task.CompletedTask;
         }
 
 
         /// <summary>
-        ///     This is a 'fake' example of a way to handle a message. In our case, the parameter message represents the raw message sent by the user. 
+        ///     This is where every message from the InGame tchat starting with our prefix will arrive. 
+        ///     In our case, the parameter message represents the raw message sent by the user. 
         ///     The parameter of type object would represent the instance of the entity that invoked the command.
         ///     That method could be called on each messages sent in the in-game tchat. We will just check that it starts with our prefix ($).
         ///     Then we will create a Context that will propagate onto the command. 
@@ -124,24 +133,40 @@ namespace SaltyEmu.Commands
         ///     This is being called when the CommandService returned an unsuccessfull result.
         /// </summary>
         /// <param name="result">This represents the generic result returned by the command service. We'll check what was wrong.</param>
-        /// <param name="context">This represents our context for this result.</param>
+        /// <param name="ctx">This represents our context for this result.</param>
         private Task HandleErrorAsync(IResult result, SaltyCommandContext ctx)
         {
             _logger.Debug($"An error occured: {result}");
 
+            StringBuilder errorBuilder = new StringBuilder();
+
             switch (result)
             {
                 case ChecksFailedResult ex:
-                    _logger.Debug(string.Join("\n", ex.FailedChecks.Select(x => $"A check has failed with this reason: {x.Error}")));
+                    _logger.Debug("Some checks have failed: " + string.Join("\n", ex.FailedChecks.Select(x => x.Error)));
+                    break;
+                case TypeParserFailedResult ex:
+                    errorBuilder.Append(ex.Reason);
+                    //redirect to help command.
                     break;
                 case CommandNotFoundResult ex:
-                    _logger.Debug("The command was not found. Raw input: " + ctx.Message);
-                    ctx.Player.SendPacket(ctx.Player.GenerateSayPacket("The command was not found: " + ctx.Input, SayColorType.Yellow));
+                    errorBuilder.Append($"The command was not found: {ctx.Input}");
+                    break;
+                case ParseFailedResult ex:
+                    errorBuilder.Append($"The argument for the parameter {ex.Parameter.Name} was invalid.");
+                    //redirect to help command.
                     break;
                 case SaltyCommandResult ex:
-                    ctx.Player.SendPacket(ctx.Player.GenerateSayPacket($"{ctx.Command.Name} : {ex.Message}", SayColorType.Green));
+                    errorBuilder.Append($"{ctx.Command.Name}: {ex.Message}");
                     break;
             }
+
+            if (errorBuilder.Length == 0)
+            {
+                return Task.CompletedTask;
+            }
+
+            ctx.Player.SendPacket(ctx.Player.GenerateSayPacket(errorBuilder.ToString(), SayColorType.Green));
 
             return Task.CompletedTask;
         }

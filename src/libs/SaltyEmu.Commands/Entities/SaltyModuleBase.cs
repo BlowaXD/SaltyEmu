@@ -1,5 +1,4 @@
 ﻿using System.Threading.Tasks;
-using ChickenAPI.Game.Entities.Player;
 using Qmmands;
 
 namespace SaltyEmu.Commands.Entities

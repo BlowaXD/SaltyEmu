@@ -2,7 +2,6 @@
 
 namespace SaltyEmu.Commands.Entities
 {
-
     public sealed class SaltyCommandResult : CommandResult
     {
         public override bool IsSuccessful { get; }

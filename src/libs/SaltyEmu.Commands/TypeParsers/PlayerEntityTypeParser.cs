@@ -16,7 +16,7 @@ namespace SaltyEmu.Commands.TypeParsers
             IPlayerEntity player = manager.GetPlayerByCharacterName(value);
 
             return player is null
-                ? Task.FromResult(new TypeParserResult<IPlayerEntity>($"{value} is not connected on your server"))
+                ? Task.FromResult(new TypeParserResult<IPlayerEntity>($"Player {value} is not connected or doesn't exist."))
                 : Task.FromResult(new TypeParserResult<IPlayerEntity>(player));
         }
     }

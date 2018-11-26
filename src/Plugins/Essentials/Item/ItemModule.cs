@@ -12,15 +12,16 @@ using SaltyEmu.Commands.Entities;
 namespace Essentials.Item
 {
     [Group("Item")]
-    [Description("It's a module related to butching monsters. It requires to be a GameMaster.")]
+    [Description("Module related to butching monsters. It requires to be a GameMaster.")]
     [RequireAuthority(AuthorityType.GameMaster)]
     public class ItemModule : SaltyModuleBase
     {
-        [Command("create")]
-        [Description("Command that creates the item for you")]
-        [Remarks("Only the itemId is needed")]
-        public async Task<SaltyCommandResult> CreateItemAsync(long itemId, short quantity = 1)
+        [Command("Create")]
+        [Description("Command that creates an item for you.")]
+        [Remarks("Quantity argument is facultative.")]
+        public async Task<SaltyCommandResult> ItemCreateAsync(long itemId, short quantity = 1)
         {
+            //todo: add a TypeParser for ItemInstanceDto.
             var itemFactory = ChickenContainer.Instance.Resolve<IItemInstanceFactory>();
             ItemInstanceDto item = itemFactory.CreateItem(itemId, quantity);
 
@@ -29,7 +30,7 @@ namespace Essentials.Item
                 ItemInstance = item
             });
 
-            return await Task.FromResult(new SaltyCommandResult(true, "Map has been cleaned"));
+            return await Task.FromResult(new SaltyCommandResult(true, "Your item(s) have been created."));
         }
     }
 }

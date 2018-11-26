@@ -44,6 +44,12 @@ namespace SaltyEmu.BasicPlugin
             }
 
             map = LoadMap(mapId);
+
+            if (map is null)
+            {
+                return null;
+            }
+
             _maps.Add(mapId, map);
             _mapLayers.Add(map.BaseLayer.Id, map.BaseLayer);
 
@@ -55,10 +61,17 @@ namespace SaltyEmu.BasicPlugin
         private static IMap LoadMap(long mapId)
         {
             MapDto map = ChickenContainer.Instance.Resolve<IMapService>().GetById(mapId);
+
+            if (map is null)
+            {
+                return null;
+            }
+
             IEnumerable<MapNpcDto> npcs = ChickenContainer.Instance.Resolve<IMapNpcService>().GetByMapId(mapId);
             IEnumerable<MapMonsterDto> monsters = ChickenContainer.Instance.Resolve<IMapMonsterService>().GetByMapId(mapId);
             IEnumerable<PortalDto> portals = ChickenContainer.Instance.Resolve<IPortalService>().GetByMapId(mapId);
             IEnumerable<ShopDto> shops = ChickenContainer.Instance.Resolve<IShopService>().GetByMapNpcIds(npcs.Select(s => s.Id));
+
             return new SimpleMap(map, monsters, npcs, portals, shops);
         }
     }
