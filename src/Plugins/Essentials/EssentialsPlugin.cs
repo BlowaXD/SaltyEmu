@@ -60,7 +60,7 @@ namespace Essentials
             try
             {
                 var container = ChickenContainer.Instance.Resolve<ICommandContainer>();
-                await container.RemoveCommandAsync("teleport map", false);
+                await container.RemoveCommandsAsync("teleport", false);
             }
             catch (Exception e)
             {

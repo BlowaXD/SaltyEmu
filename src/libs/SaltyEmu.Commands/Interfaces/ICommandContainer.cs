@@ -22,7 +22,7 @@ namespace SaltyEmu.Commands.Interfaces
         /// <param name="name">Name of the module. If the module has a Name attribute, the name will be the value of that attribute. If it doesn't, the name is the class name.</param>
         /// <param name="caseSensitive">Case sensitive.</param>
         /// <returns></returns>
-        Module GetModuleByName(string name, bool caseSensitive = true);
+        Module[] GetModulesByName(string name, bool caseSensitive = true);
 
         /// <summary>
         ///     Returns a command by its name.
@@ -30,7 +30,7 @@ namespace SaltyEmu.Commands.Interfaces
         /// <param name="name">Name of the command.</param>
         /// <param name="caseSensitive">Case sensitive.</param>
         /// <returns></returns>
-        Command GetCommandByName(string name, bool caseSensitive = true);
+        Command[] GetCommandsByName(string name, bool caseSensitive = true);
 
         /// <summary>
         ///     Removes a command by its name.
@@ -38,7 +38,15 @@ namespace SaltyEmu.Commands.Interfaces
         /// <param name="commandName">Name of the command.</param>
         /// <param name="caseSensitive">Case sensitive.</param>
         /// <returns></returns>
-        Task RemoveCommandAsync(string commandName, bool caseSensitive = true);
+        Task RemoveCommandsAsync(string commandName, bool caseSensitive = true);
+
+        /// <summary>
+        ///     Removes the specified commands from the CommandContainer. 
+        ///     As it doesn't internaly exist, we will find the module of this command and rebuilt it without that command.
+        /// </summary>
+        /// <param name="command">Commands to remove.</param>
+        /// <returns></returns>
+        Task RemoveCommandsAsync(Command[] command);
 
         /// <summary>
         ///     Removes the specified command from the CommandContainer. 

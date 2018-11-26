@@ -21,7 +21,6 @@ namespace Essentials.Item
         [Remarks("Quantity argument is facultative.")]
         public async Task<SaltyCommandResult> ItemCreateAsync(ItemDto item, short quantity = 1)
         {
-            //todo: add a TypeParser for ItemInstanceDto.
             var itemFactory = ChickenContainer.Instance.Resolve<IItemInstanceFactory>();
             ItemInstanceDto itemInstance = itemFactory.CreateItem(item, quantity);
 

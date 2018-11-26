@@ -58,19 +58,27 @@ namespace SaltyEmu.Commands
             await _commands.RemoveModuleAsync(module);
         }
 
-        public Module GetModuleByName(string name, bool caseSensitive = true)
+        public Module[] GetModulesByName(string name, bool caseSensitive = true)
         {
-            return _commands.GetAllModules().FirstOrDefault(x => caseSensitive ? x.Name == name : x.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
+            return _commands.GetAllModules().Where(x => caseSensitive ? x.Name == name : x.Name.Equals(name, StringComparison.OrdinalIgnoreCase)).ToArray();
         }
 
-        public Command GetCommandByName(string name, bool caseSensitive = true)
+        public Command[] GetCommandsByName(string name, bool caseSensitive = true)
         {
-            return _commands.GetAllCommands().FirstOrDefault(x => caseSensitive ? x.Name == name : x.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
+            return _commands.GetAllCommands().Where(x => caseSensitive ? x.Name == name : x.Name.Equals(name, StringComparison.OrdinalIgnoreCase)).ToArray();
         }
 
-        public Task RemoveCommandAsync(string commandName, bool caseSensitive = true)
+        public Task RemoveCommandsAsync(string commandName, bool caseSensitive = true)
         {
-            return RemoveCommandAsync(GetCommandByName(commandName, caseSensitive));
+            return RemoveCommandsAsync(GetCommandsByName(commandName, caseSensitive));
+        }
+
+        public async Task RemoveCommandsAsync(Command[] commands)
+        {
+            foreach (var command in commands)
+            {
+                await RemoveCommandAsync(command);
+            }
         }
 
         public async Task RemoveCommandAsync(Command command)
@@ -244,6 +252,11 @@ namespace SaltyEmu.Commands
                     break;
                 case SaltyCommandResult ex:
                     errorBuilder.Append($"{ctx.Command.Name}: {ex.Message}");
+                    break;
+                case OverloadsFailedResult ex:
+                    _logger.Debug($"Every overload failed: {string.Join("\n", ex.FailedOverloads.Select(x => x.Value.Reason))}");
+                    errorBuilder.Append("Your command syntax was wrong.");
+                    //redirect to help command.
                     break;
             }
 
