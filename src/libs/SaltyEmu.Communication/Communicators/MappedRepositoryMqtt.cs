@@ -8,9 +8,9 @@ using SaltyEmu.Communication.Serializers;
 
 namespace SaltyEmu.Communication.Communicators
 {
-    public abstract class MappedRepositoryMqtt<T> : MqttIpcClient, IMappedRepository<T> where T : class, IMappedDto
+    public abstract class MappedRepositoryMqtt<T> : MqttIpcClient<T>, IMappedRepository<T> where T : class, IMappedDto
     {
-        protected MappedRepositoryMqtt(RabbitMqConfiguration config, IIpcSerializer serializer, string requestTopic, string responseTopic) : base(config, serializer, requestTopic, responseTopic)
+        protected MappedRepositoryMqtt(MqttClientConfigurationBuilder builder) : base(builder)
         {
         }
 

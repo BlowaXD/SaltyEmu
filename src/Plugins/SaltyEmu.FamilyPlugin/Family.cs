@@ -4,10 +4,9 @@ using SaltyEmu.Communication.Serializers;
 
 namespace SaltyEmu.FamilyPlugin
 {
-    public class Family : MqttIpcClient
+    public class Family : MqttIpcClient<Family>
     {
-        // todo
-        public Family(RabbitMqConfiguration config, IIpcSerializer serializer) : base(config, serializer, "/family/request", "/family/response")
+        public Family(MqttClientConfigurationBuilder builder) : base(builder)
         {
         }
     }

@@ -1,7 +1,13 @@
 ﻿using System;
+using System.Collections.Immutable;
 using System.Linq;
 using System.Threading.Tasks;
 using ChickenAPI.Core.Logging;
+using SaltyEmu.Communication.Communicators;
+using SaltyEmu.Communication.Configs;
+using SaltyEmu.Communication.Serializers;
+using SaltyEmu.Communication.Utils;
+using SaltyEmu.FamilyPlugin;
 
 namespace SaltyEmu.FamilyService
 {
@@ -35,12 +41,24 @@ namespace SaltyEmu.FamilyService
         {
             PrintHeader();
             InitializeLogger();
-            InitializeAsync().Wait();
+            InitializeAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+            Console.ReadLine();
         }
 
-        private static Task InitializeAsync()
+        private static async Task InitializeAsync()
         {
-            return Task.CompletedTask;
+            MqttServerConfigurationBuilder builder = new MqttServerConfigurationBuilder()
+                .ConnectTo("localhost")
+                .WithName("family-server")
+                .WithQueueName("/family/request")
+                .WithResponseTopic("/family/response")
+                .WithSerializer(new JsonSerializer())
+                .WithRequestHandler(new RequestHandler());
+            var tmp = new FamilyServer(builder);
+            if (tmp is MqttIpcServer<FamilyServer> server)
+            {
+                await server.InitializeAsync();
+            }
         }
     }
 }
