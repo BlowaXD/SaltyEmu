@@ -446,6 +446,12 @@ namespace ChickenAPI.Game.Inventory
 
             if (itemInstance == null) return;
 
+            if (itemInstance.Item.ItemType == ItemType.Specialist)
+            {
+                playerEntity.SendPacket(itemInstance.GenerateSlInfoPacket());
+                return;
+            }
+
             playerEntity.SendPacket(itemInstance.GenerateEInfoPacket());
         }
 
