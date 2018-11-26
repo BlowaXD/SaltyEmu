@@ -1,4 +1,5 @@
 ﻿using ChickenAPI.Core.Logging;
+using ChickenAPI.Enums.Game.Items;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Inventory.Args;
 using ChickenAPI.Game.Inventory.ItemUsage.Handling;
@@ -17,7 +18,7 @@ namespace ChickenAPI.Game.Inventory.ItemUsage.Handlers
         /// <param name="player"></param>
         /// <param name="e"></param>
         //[PermissionsRequirements(PermissionType.INVENTORY_USE_ITEM)]
-        [UseItemEffect(1000)]
+        [UseItemEffect(1000, ItemType.Special)]
         public static void Locomotion(IPlayerEntity player, InventoryUseItemEvent e)
         {
             Log.Info($"[LOCOMOTION] {player.Character.Name} used locomotion : ");

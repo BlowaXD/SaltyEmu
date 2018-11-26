@@ -1,4 +1,5 @@
-﻿using ChickenAPI.Game.Entities.Player;
+﻿using ChickenAPI.Enums.Game.Items;
+using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Inventory.Args;
 using ChickenAPI.Game.Permissions;
 using System;
@@ -20,6 +21,7 @@ namespace ChickenAPI.Game.Inventory.ItemUsage.Handling
         {
             //Item = attribute.Item;
             Effect = attribute.EffectId;
+            IType = attribute.IType;
 
             if (method == null)
             {
@@ -42,5 +44,7 @@ namespace ChickenAPI.Game.Inventory.ItemUsage.Handling
         }
 
         public long Effect { get; }
+
+        public ItemType IType { get; }
     }
 }

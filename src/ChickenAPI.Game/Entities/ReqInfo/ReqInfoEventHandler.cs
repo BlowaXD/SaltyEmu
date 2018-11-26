@@ -53,9 +53,7 @@ namespace ChickenAPI.Game.Entities.ReqInfo
 
         public static void SendInfoFromPlayer(IPlayerEntity player, ReqInfoEvent e)
         {
-            // -> Find why GetPlayerByChardId Not working
             player.SendPacket(player.CurrentMap.GetPlayerById(e.TargetVNum).GenerateReqInfo());
-            player.SendPacket(player.GenerateReqInfo());
         }
 
         public void SendInfoFromMonster(INpcMonsterEntity npc, ReqInfoEvent e)

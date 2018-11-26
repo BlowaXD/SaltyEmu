@@ -1,4 +1,5 @@
 ﻿using ChickenAPI.Core.Logging;
+using ChickenAPI.Enums.Game.Items;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Inventory.Args;
 using System;
@@ -11,11 +12,13 @@ namespace ChickenAPI.Game.Inventory.ItemUsage.Handling
     public class BaseUseItemHandler : IItemUsageContainer
     {
         private static readonly Logger Log = Logger.GetLogger<BaseUseItemHandler>();
-        protected readonly Dictionary<long, UseItemRequestHandler> HandlersByDialogId;
+
+        protected readonly Dictionary<Tuple<long, ItemType>, UseItemRequestHandler> useitem;
 
         public BaseUseItemHandler()
         {
-            HandlersByDialogId = new Dictionary<long, UseItemRequestHandler>();
+            useitem = new Dictionary<Tuple<long, ItemType>, UseItemRequestHandler>();
+
             Assembly currentAsm = Assembly.GetAssembly(typeof(BaseUseItemHandler));
             // get types
             foreach (Type type in currentAsm.GetTypes().Where(s => s.GetMethods().Any(m => m.GetCustomAttribute<UseItemEffectAttribute>() != null)))
@@ -30,13 +33,13 @@ namespace ChickenAPI.Game.Inventory.ItemUsage.Handling
 
         public void RegisterItemUsageCallback(UseItemRequestHandler handler)
         {
-            if (HandlersByDialogId.ContainsKey(handler.Effect))
+            if (useitem.ContainsKey(Tuple.Create(handler.Effect, handler.IType)))
             {
                 return;
             }
 
-            Log.Info($"[REGISTER_HANDLER] UI_EFFECT : {handler.Effect} REGISTERED !");
-            HandlersByDialogId.Add(handler.Effect, handler);
+            useitem.Add(Tuple.Create(handler.Effect, handler.IType), handler);
+            Log.Info($"[REGISTER_HANDLER] UI_EFFECT : {handler.Effect} && ITYPE : {handler.IType} REGISTERED !");
         }
 
         public void UseItem(IPlayerEntity player, InventoryUseItemEvent args)
@@ -46,7 +49,7 @@ namespace ChickenAPI.Game.Inventory.ItemUsage.Handling
                 return;
             }
 
-            if (!HandlersByDialogId.TryGetValue(args.Item.Item.Effect, out UseItemRequestHandler handler))
+            if (!useitem.TryGetValue(Tuple.Create((long)args.Item.Item.Effect, args.Item.Item.ItemType), out UseItemRequestHandler handler))
             {
                 return;
             }
