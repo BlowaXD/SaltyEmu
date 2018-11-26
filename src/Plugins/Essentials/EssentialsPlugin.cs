@@ -5,7 +5,7 @@ namespace Essentials
     public class EssentialsPlugin : IPlugin
     {
         public PluginEnableTime EnableTime => PluginEnableTime.PostContainerBuild;
-        public string Name => "NosEssentials";
+        public string Name => "Essentials";
 
         public void OnDisable()
         {

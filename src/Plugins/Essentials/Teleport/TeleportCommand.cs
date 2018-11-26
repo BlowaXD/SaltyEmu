@@ -32,28 +32,37 @@ namespace Essentials.Teleport
 
             if (player == null)
             {
-                return await Task.FromResult(new SaltyCommandResult(false, "Player is not connected on your server"));
+                return await Task.FromResult(new SaltyCommandResult(false, $"{target} is not connected on your server"));
             }
 
             // wait for x ms
             await Task.Delay(delay);
 
             player.TeleportTo(Context.Sender.CurrentMap, Context.Sender.Position.X, Context.Sender.Position.Y);
-            return await Task.FromResult(new SaltyCommandResult(true, $"Player will be teleported in {delay}ms"));
+            return await Task.FromResult(new SaltyCommandResult(true, $"{target} has been teleported to you"));
         }
 
         [Command("To")]
-        [Description("Command that tries to delete an item by specifying its id and its position in the player's inventory.")]
-        [Remarks("The two parameters are needed.")]
-        public Task DeleteAsync([Description("ID of the item to delete.")]
-            int id,
-            [Description("Position of the item in the player's inventory.")]
-            int position)
+        [Description("Command that teleports the given player to you")]
+        [Remarks("Only the player paramter is needed")]
+        public async Task<SaltyCommandResult> DeleteAsync([Description("Name of the character you want to teleport to")]
+            string target,
+            [Description("Amount of milliseconds to wait before teleporting him to you, by default no delay")]
+            int delay = 0)
         {
-            //do stuff
-            Console.WriteLine($"Deleting the item with ID#{id} for the entity {Context.Sender.Id} at the inventory position {position}");
+            var manager = ChickenContainer.Instance.Resolve<IPlayerManager>();
+            IPlayerEntity player = manager.GetPlayerByCharacterName(target);
 
-            return Task.CompletedTask;
+            if (player == null)
+            {
+                return await Task.FromResult(new SaltyCommandResult(false, $"{target} is not connected on your server"));
+            }
+
+            // wait for x ms
+            await Task.Delay(delay);
+
+            player.TeleportTo(Context.Sender.CurrentMap, Context.Sender.Position.X, Context.Sender.Position.Y);
+            return await Task.FromResult(new SaltyCommandResult(true, $"You will be teleported to {target} in {delay}ms"));
         }
     }
 }
