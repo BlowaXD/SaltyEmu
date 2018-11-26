@@ -13,10 +13,10 @@ namespace ChickenAPI.Game.Skills.Extensions
     {
         public static IOrderedEnumerable<SkillDto> GetSpSkillsByCastIdAscending(this IPlayerEntity player)
         {
-            return player.SkillComponent.Skills.Values.Where(s => s.Class == player.GetClassId()).OrderBy(s => s.CastId);
+            return player.SkillComponent.Skills.Values.Where(s => s.Class == player.GetSpClassId()).OrderBy(s => s.CastId);
         }
 
-        public static byte GetClassId(this IPlayerEntity player)
+        public static byte GetSpClassId(this IPlayerEntity player)
         {
             return player.Sp.GetClassId();
         }

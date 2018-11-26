@@ -19,7 +19,7 @@ namespace SaltyEmu.DatabasePlugin.Services.Skill
         {
             IEnumerable<SkillDto> tmp = Get();
             _skills = tmp.ToDictionary(s => s.Id, s => s);
-            _skillsByClassId = tmp.GroupBy(s => s.Id).ToDictionary(s => s.Key, s => s.ToArray());
+            _skillsByClassId = tmp.GroupBy(s => (long)s.Class).ToDictionary(s => s.Key, s => s.ToArray());
         }
 
         public override SkillDto GetById(long id)
