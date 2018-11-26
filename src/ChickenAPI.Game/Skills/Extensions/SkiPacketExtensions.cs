@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
+using Autofac;
+using ChickenAPI.Core.IoC;
 using ChickenAPI.Data.Item;
 using ChickenAPI.Data.Skills;
+using ChickenAPI.Game.Data.AccessLayer.Skill;
 using ChickenAPI.Game.Entities.Player;
 
 namespace ChickenAPI.Game.Skills.Extensions

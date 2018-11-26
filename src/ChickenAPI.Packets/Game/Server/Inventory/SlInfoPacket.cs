@@ -67,7 +67,7 @@ namespace ChickenAPI.Packets.Game.Server.Inventory
         public short SPXpData { get; set; }
 
         [PacketIndex(20)]
-        public byte Skill { get; set; }
+        public string Skill { get; set; }
 
         [PacketIndex(21)]
         public int TransportId { get; set; }
@@ -100,16 +100,16 @@ namespace ChickenAPI.Packets.Game.Server.Inventory
         public byte IsSpDestroyed { get; set; }
 
         [PacketIndex(31)]
-        public int Unknown10 { get; set; }
+        public int ShellHit { get; set; }
 
         [PacketIndex(32)]
-        public int Unknown11 { get; set; }
+        public int ShellDefense { get; set; }
 
         [PacketIndex(33)]
-        public int Unknown12 { get; set; }
+        public int ShellElement { get; set; }
 
         [PacketIndex(34)]
-        public int Unknown13 { get; set; }
+        public int ShellHpMp { get; set; }
 
         [PacketIndex(35)]
         public short SpStoneUpgrade { get; set; }
