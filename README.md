@@ -21,8 +21,6 @@ SaltyEmu is an opensource project, made for fun and skill improvements, it will 
 ## Content
 
 ### [Getting Started](docs/started.md)
-### [Build](docs/build.md)
-### [Installation](docs/installation.md)
 ### [F.A.Q](docs/faq.md)
 ### [Plugins](docs/plugins.md)
 ### [Features](docs/features.md)
