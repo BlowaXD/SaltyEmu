@@ -1,7 +1,6 @@
 ﻿using ChickenAPI.Core.Logging;
 using ChickenAPI.Enums.Packets;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Game.Player.Extension;
 using Qmmands;
 using SaltyEmu.Commands.Entities;
 using SaltyEmu.Commands.Interfaces;

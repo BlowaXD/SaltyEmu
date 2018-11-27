@@ -37,7 +37,7 @@ Use [SSMS](https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-managem
 
 Pull the following [repository](https://gitlab.com/SaltyNos/Server/parsing)
 
-
+#### RUN THAT COMMAND IN YOUR TERMINAL (CMD / POWERSHELL / SHELL / BASH)
 > /!\ PARSING DIRECTORY HAS TO BE CHANGED BY THE DIRECTORY WHERE YOU JUST PULLED PARSING
 `dotnet dist/Debug/Toolkit/Toolkit.dll parse all -i {parsingDirectory}`
 
