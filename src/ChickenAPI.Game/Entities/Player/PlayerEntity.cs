@@ -21,6 +21,7 @@ using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Groups;
 using ChickenAPI.Game.Inventory;
 using ChickenAPI.Game.Inventory.Extensions;
+using ChickenAPI.Game.Locomotion.DataObjects;
 using ChickenAPI.Game.Managers;
 using ChickenAPI.Game.Maps.Events;
 using ChickenAPI.Game.Movements.DataObjects;
@@ -73,17 +74,20 @@ namespace ChickenAPI.Game.Entities.Player
             };
             _visibility = new VisibilityComponent(this);
             SkillComponent = new SkillComponent(this, skills);
+            Locomotion = new LocomotionComponent(this);
             Components = new Dictionary<Type, IComponent>
             {
                 { typeof(VisibilityComponent), _visibility },
                 { typeof(MovableComponent), Movable },
                 { typeof(InventoryComponent), Inventory },
-                { typeof(SkillComponent), SkillComponent }
+                { typeof(SkillComponent), SkillComponent },
+                { typeof(LocomotionComponent), Locomotion }
             };
         }
 
         public MovableComponent Movable { get; }
         public InventoryComponent Inventory { get; }
+        public LocomotionComponent Locomotion { get; }
         public CharacterDto Character { get; }
 
         public CharacterNameAppearance NameAppearance
@@ -251,6 +255,12 @@ namespace ChickenAPI.Game.Entities.Player
             set => Movable.Speed = value;
         }
 
+        public byte LocomotionSpeed
+        {
+            get => Locomotion.Speed;
+            set => Locomotion.Speed = value;
+        }
+
         public DateTime LastMove { get; }
 
         // todo manage Position of player in instanciated mapLayers
@@ -362,6 +372,8 @@ namespace ChickenAPI.Game.Entities.Player
 
         public double LastPortal { get; set; }
 
+        public bool IsTransformedLocomotion => Locomotion.IsVehicled;
+
         public DateTime DateLastPortal { get; set; }
 
         #region Group
@@ -370,6 +382,6 @@ namespace ChickenAPI.Game.Entities.Player
         public bool HasGroup => Group != null;
         public bool IsGroupLeader => HasGroup && Group.Leader == this;
 
-        #endregion
+        #endregion Group
     }
 }

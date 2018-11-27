@@ -3,6 +3,7 @@ using ChickenAPI.Enums.Game.Items;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Inventory.Args;
 using ChickenAPI.Game.Inventory.ItemUsage.Handling;
+using ChickenAPI.Game.Locomotion.Events;
 using ChickenAPI.Game.Permissions;
 
 namespace ChickenAPI.Game.Inventory.ItemUsage.Handlers
@@ -22,6 +23,14 @@ namespace ChickenAPI.Game.Inventory.ItemUsage.Handlers
         public static void Locomotion(IPlayerEntity player, InventoryUseItemEvent e)
         {
             Log.Info($"[LOCOMOTION] {player.Character.Name} used locomotion : ");
+            if (!player.IsTransformedLocomotion)
+            {
+                player.EmitEvent(new TransformationLocomotion { Item = e.Item });
+                Log.Info($"[LOCOMOTION] ON ");
+                return;
+            }
+            Log.Info($"[LOCOMOTION] OFF ");
+            player.EmitEvent(new UnTransformationLocomotion { });
         }
     }
 }
