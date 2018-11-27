@@ -1,4 +1,5 @@
 ﻿using ChickenAPI.Enums.Game.Character;
+using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Packets.Attributes;
 
 namespace ChickenAPI.Packets.Game.Client.Player
@@ -21,7 +22,7 @@ namespace ChickenAPI.Packets.Game.Client.Player
         public string Name { get; set; }
 
         [PacketIndex(2)]
-        public byte Element { get; set; }
+        public ElementType Element { get; set; }
 
         [PacketIndex(3)]
         public long ElementRate { get; set; }

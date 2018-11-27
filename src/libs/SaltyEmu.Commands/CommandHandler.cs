@@ -6,9 +6,11 @@ using Qmmands;
 using SaltyEmu.Commands.Entities;
 using SaltyEmu.Commands.Interfaces;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ChickenAPI.Game.Helpers;
 
 namespace SaltyEmu.Commands
 {
@@ -40,9 +42,13 @@ namespace SaltyEmu.Commands
         {
             await _commands.AddModuleAsync<T>();
 
-            foreach (Command command in _commands.GetAllModules().FirstOrDefault(s => s.Type == typeof(T)).Commands)
+            IReadOnlyList<Command> readOnlyList = _commands.GetAllModules().FirstOrDefault(s => s.Type == typeof(T))?.Commands;
+            if (readOnlyList != null)
             {
-                _logger.Info($"[ADD_COMMAND] {command}");
+                foreach (Command command in readOnlyList)
+                {
+                    _logger.Info($"[ADD_COMMAND] {command}");
+                }
             }
         }
 
@@ -189,7 +195,7 @@ namespace SaltyEmu.Commands
 
             if (result is SaltyCommandResult res && !string.IsNullOrWhiteSpace(res.Message))
             {
-                ctx.Player.SendPacket(ctx.Player.GenerateSayPacket(res.Message, SayColorType.Yellow));
+                ctx.Player.SendChatMessage(res.Message, SayColorType.Yellow);
             }
 
             return Task.CompletedTask;
@@ -266,7 +272,7 @@ namespace SaltyEmu.Commands
                 return Task.CompletedTask;
             }
 
-            ctx.Player.SendPacket(ctx.Player.GenerateSayPacket(errorBuilder.ToString(), SayColorType.Green));
+            ctx.Player.SendChatMessage(errorBuilder.ToString(), SayColorType.Green);
 
             return Task.CompletedTask;
         }

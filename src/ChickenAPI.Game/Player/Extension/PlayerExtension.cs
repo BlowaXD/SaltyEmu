@@ -18,7 +18,10 @@ using ChickenAPI.Packets.Game.Client.Player;
 using ChickenAPI.Packets.Game.Server.Player;
 using ChickenAPI.Packets.Game.Server.UserInterface;
 using System;
+using ChickenAPI.Core.i18n;
+using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Enums.Packets;
+using ChickenAPI.Game.Helpers;
 using ChickenAPI.Game.PacketHandling.Extensions;
 
 namespace ChickenAPI.Game.Player.Extension
@@ -51,10 +54,10 @@ namespace ChickenAPI.Game.Player.Extension
             ItemInstanceDto weapon = null;
             if (charac.Inventory != null)
             {
-                fairy = charac.Inventory.GetItemFromSlotAndType((byte)EquipmentType.Fairy, InventoryType.Wear);
-                armor = charac.Inventory.GetItemFromSlotAndType((byte)EquipmentType.Armor, InventoryType.Wear);
-                weapon2 = charac.Inventory.GetItemFromSlotAndType((byte)EquipmentType.SecondaryWeapon, InventoryType.Wear);
-                weapon = charac.Inventory.GetItemFromSlotAndType((byte)EquipmentType.MainWeapon, InventoryType.Wear);
+                fairy = charac.Inventory.GetWeared(EquipmentType.Fairy);
+                armor = charac.Inventory.GetWeared(EquipmentType.Armor);
+                weapon2 = charac.Inventory.GetWeared(EquipmentType.SecondaryWeapon);
+                weapon = charac.Inventory.GetWeared(EquipmentType.MainWeapon);
             }
 
             bool isPvpPrimary = false;
@@ -76,8 +79,8 @@ namespace ChickenAPI.Game.Player.Extension
             {
                 Level = charac.Level,
                 Name = charac.Character.Name,
-                Element = 0,
-                ElementRate = 0,
+                Element = fairy?.ElementType ?? ElementType.Neutral,
+                ElementRate = fairy?.ElementRate ?? 0,
                 Class = charac.Character.Class,
                 Gender = charac.Character.Gender,
                 Family = charac.HasFamily ? charac.Family.Name : "-1 -",
@@ -142,9 +145,9 @@ namespace ChickenAPI.Game.Player.Extension
             charac.SendPacket(charac.GenerateEffectPacket(8));
             charac.SendPacket(charac.GenerateEffectPacket(196));
             charac.SendPacket(new ScrPacket { Unknow1 = 0, Unknow2 = 0, Unknow3 = 0, Unknow4 = 0, Unknow5 = 0, Unknow6 = 0 });
-            charac.SendPacket(charac.GenerateSayPacket("CLASS_CHANGED", SayColorType.Blue));
+            charac.SendChatMessageFormat(ChickenI18NKey.CHARACTER_YOUR_CLASS_CHANGED_TO_X, SayColorType.Blue, type);
             charac.Character.Faction = charac.Family?.FamilyFaction ?? (FactionType)(1 + _randomGenerator.Next(0, 2));
-            charac.SendPacket(charac.GenerateSayPacket("FACTION_CHANGED", SayColorType.Blue));
+            charac.SendChatMessageFormat(ChickenI18NKey.CHARACTER_YOUR_FACTION_CHANGED_TO_X, SayColorType.Blue, charac.Character.Faction);
             charac.SendPacket(charac.GenerateFsPacket());
             charac.SendPacket(charac.GenerateStatCharPacket());
             charac.SendPacket(charac.GenerateEffectPacket((4799 + (byte)charac.Character.Faction)));

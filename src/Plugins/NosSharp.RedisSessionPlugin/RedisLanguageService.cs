@@ -43,7 +43,7 @@ namespace SaltyEmu.RedisWrappers
         {
             if (!GetSetByLanguageKey(type).TryGetValue(key, out string value))
             {
-                value = key + "_" + type + "_NOT_TRANSLATED";
+                value = type + "_" + key;
             }
 
             return value;

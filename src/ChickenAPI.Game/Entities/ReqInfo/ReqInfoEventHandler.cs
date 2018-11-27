@@ -65,7 +65,5 @@ namespace ChickenAPI.Game.Entities.ReqInfo
         {
             Log.Info($"cc je verif l'item");
         }
-
-        //public void SenInfoFromMate()
     }
 }

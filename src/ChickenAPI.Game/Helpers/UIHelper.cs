@@ -1,5 +1,10 @@
-﻿using ChickenAPI.Enums.Packets;
+﻿using System;
+using Autofac;
+using ChickenAPI.Core.i18n;
+using ChickenAPI.Core.IoC;
+using ChickenAPI.Enums.Packets;
 using ChickenAPI.Game.Entities.Player;
+using ChickenAPI.Game.Entities.Player.Extensions;
 using ChickenAPI.Game.Player.Extension;
 using ChickenAPI.Packets;
 using ChickenAPI.Packets.Game.Server.UserInterface;
@@ -8,12 +13,24 @@ namespace ChickenAPI.Game.Helpers
 {
     public static class UIHelper
     {
-        public static void GenerateChatMessage(this IPlayerEntity player, string msg, SayColorType type)
+        public static void SendChatMessageFormat(this IPlayerEntity player, ChickenI18NKey key, SayColorType color, params object[] objs)
         {
-            player.SendPacket(player.GenerateSayPacket(msg, type));
+            string msg = player.GetLanguageFormat(key, objs);
+            player.SendPacket(player.GenerateSayPacket(msg, color));
         }
 
-        public static void GenerateMessage(this IPlayerEntity player, string msg, MsgPacketType type)
+        public static void SendChatMessage(this IPlayerEntity player, ChickenI18NKey key, SayColorType color)
+        {
+            string msg = player.GetLanguage(key);
+            player.SendPacket(player.GenerateSayPacket(msg, color));
+        }
+
+        public static void SendChatMessage(this IPlayerEntity player, string msg, SayColorType color)
+        {
+            player.SendPacket(player.GenerateSayPacket(msg, color));
+        }
+
+        public static void SendTopscreenMessage(this IPlayerEntity player, string msg, MsgPacketType type)
         {
             player.SendPacket(player.GenerateMsgPacket(msg, type));
         }
