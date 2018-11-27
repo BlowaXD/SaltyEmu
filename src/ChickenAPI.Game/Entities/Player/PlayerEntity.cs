@@ -240,9 +240,6 @@ namespace ChickenAPI.Game.Entities.Player
 
         #region Movements
 
-        // todo manage Position of player in instanciated mapLayers
-        public Position<short> Position { get; }
-
         public bool IsSitting => Movable.IsSitting;
         public bool IsWalking => !Movable.IsSitting;
         public bool CanMove => !Movable.IsSitting;
@@ -255,7 +252,9 @@ namespace ChickenAPI.Game.Entities.Player
         }
 
         public DateTime LastMove { get; }
-        public Position<short> Actual => Movable.Actual;
+
+        // todo manage Position of player in instanciated mapLayers
+        public Position<short> Position => Movable.Actual;
         public Position<short> Destination => Movable.Destination;
 
         #endregion Movements

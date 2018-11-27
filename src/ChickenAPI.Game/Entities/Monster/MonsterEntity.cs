@@ -110,14 +110,13 @@ namespace ChickenAPI.Game.Entities.Monster
 
         #region Movements
 
-        public Position<short> Position { get; }
         public bool IsSitting { get; }
         public bool IsWalking { get; }
         public bool CanMove => !Movable.IsSitting;
         public bool IsStanding { get; }
         public byte Speed { get; set; }
         public DateTime LastMove { get; }
-        public Position<short> Actual => Movable.Actual;
+        public Position<short> Position => Movable.Actual;
         public Position<short> Destination => Movable.Destination;
 
         #endregion

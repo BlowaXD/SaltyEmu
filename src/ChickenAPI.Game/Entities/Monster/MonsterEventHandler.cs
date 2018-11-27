@@ -49,13 +49,13 @@ namespace ChickenAPI.Game.Entities.Monster
 
                     if (Random.Next(100) < 100) // 100 should be modified with GoldDropRate
                     {
-                        Position<short>[] pos = PathFinder.GetNeighbors(monster.Actual, monster.CurrentMap.Map);
+                        Position<short>[] pos = PathFinder.GetNeighbors(monster.Position, monster.CurrentMap.Map);
                         IDropEntity drop = new ItemDropEntity(monster.CurrentMap.GetNextId())
                         {
                             ItemVnum = 1046,
                             IsGold = true,
                             DroppedTimeUtc = DateTime.Now,
-                            Position = pos.Length > 1 ? pos[Random.Next(pos.Length)] : monster.Actual,
+                            Position = pos.Length > 1 ? pos[Random.Next(pos.Length)] : monster.Position,
                             Quantity = Random.Next(6 * monster.NpcMonster.Level, 12 * monster.NpcMonster.Level)
                         };
                         drop.TransferEntity(monster.CurrentMap);

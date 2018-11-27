@@ -65,6 +65,7 @@ namespace ChickenAPI.Game.Skills
             {
                 case SkillTargetType.SingleHit:
                 case SkillTargetType.SingleBuff when skill.HitType == 0:
+                    // if too much distance, send cancel packet
                     if (entity.GetDistance(target) > skill.Range + target.BasicArea + 1)
                     {
                         player?.SendPacket(target.GenerateTargetCancelPacket(CancelPacketType.InCombatMode));
@@ -111,7 +112,7 @@ namespace ChickenAPI.Game.Skills
             entity.DecreaseMp(e.Skill.MpCost);
             //TODO: Skill Cooldown
 
-            targets.ForEach(t =>
+            foreach (IBattleEntity t in targets)
             {
                 HitRequest hitRequest = entity.CreateHitRequest(t, e.Skill);
 
@@ -124,7 +125,7 @@ namespace ChickenAPI.Game.Skills
                 {
                     HitRequest = hitRequest
                 });
-            });
+            }
         }
 
         /// <summary>

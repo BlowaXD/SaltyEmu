@@ -15,15 +15,25 @@ namespace SaltyEmu.FamilyService.Handlers
                 return;
             }
 
-            await request.ReplyAsync(new GetFamilyInformationResponse
+            if (request.FamilyName == "test")
             {
-                Family = new FamilyDto
+                await request.ReplyAsync(new GetFamilyInformationResponse
                 {
-                    Id = 1,
-                    Name = "Test_RPC",
-                    FamilyLevel = 10,
-                }
-            });
+                    Family = null
+                });
+            }
+            else
+            {
+                await request.ReplyAsync(new GetFamilyInformationResponse
+                {
+                    Family = new FamilyDto
+                    {
+                        Id = 1,
+                        Name = "real",
+                        FamilyLevel = 10,
+                    }
+                });
+            }
         }
     }
 }

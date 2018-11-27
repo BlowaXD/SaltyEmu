@@ -42,7 +42,7 @@ namespace SaltyEmu.Communication.Communicators
 
             foreach (string topic in configuration.SubscribingQueues)
             {
-                _log.Info($"[RPC][TOPIC] Handling requests from : {topic}");
+                _log.Info($"[RPC] Waiting for requests from : {topic}...");
                 _client.SubscribeAsync(topic);
             }
 
@@ -60,7 +60,7 @@ namespace SaltyEmu.Communication.Communicators
                 .Build();
             _client.ApplicationMessageReceived += (sender, args) => OnMessage(args.ClientId, args.ApplicationMessage);
             await _client.StartAsync(options);
-            _client.Connected += (sender, args) => { _log.Info($"Connected to {_endPoint}"); };
+            _client.Connected += (sender, args) => _log.Info($"[CONNECTED] {_clientName} is connected on MQTT Broker {_endPoint}");
         }
 
         private void OnMessage(string clientId, MqttApplicationMessage message)

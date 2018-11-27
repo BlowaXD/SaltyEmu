@@ -13,10 +13,9 @@ namespace NosSharp.PacketHandler.Drops
     {
         public static void OnGetPacket(GetPacket packet, IPlayerEntity player)
         {
-            var mapItem = player.CurrentMap.GetEntitiesByType<IDropEntity>(VisualType.MapObject)
-                .FirstOrDefault(i => i.Id == packet.DropId);
+            var mapItem = player.CurrentMap.GetEntity<IDropEntity>(packet.DropId, VisualType.MapObject);
 
-            if (mapItem == null || PositionHelper.GetDistance(mapItem.Position, player.Actual) > 8)
+            if (mapItem == null || PositionHelper.GetDistance(mapItem.Position, player.Position) > 8)
             {
                 return;
             }

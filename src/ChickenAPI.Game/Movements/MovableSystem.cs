@@ -30,19 +30,17 @@ namespace ChickenAPI.Game.Movements
                 return false;
             }
 
-            var movable = entity.GetComponent<MovableComponent>();
-            if (movable == null)
+            if (!(entity is IMovableEntity mov))
             {
                 return false;
             }
 
-            return movable.Speed != 0;
+            return mov.Speed != 0;
         }
 
         protected override void Execute(IEntity entity)
         {
-            var movableComponent = entity.GetComponent<MovableComponent>();
-            ProcessMovement(entity, movableComponent);
+            ProcessMovement((IMovableEntity)entity);
         }
 
         private void Move(IEntity entity)
@@ -66,8 +64,9 @@ namespace ChickenAPI.Game.Movements
             }
         }
 
-        private void ProcessMovement(IEntity entity, MovableComponent movableComponent)
+        private void ProcessMovement(IMovableEntity entity)
         {
+            MovableComponent movableComponent = entity.Movable;
             if (movableComponent.Waypoints == null || movableComponent.Waypoints.Length <= 0)
             {
                 return;

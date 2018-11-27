@@ -17,6 +17,8 @@ namespace SaltyEmu.FamilyService
 {
     internal class Program
     {
+        private static readonly Logger Logger = Logger.GetLogger<Program>();
+
         private static void PrintHeader()
         {
             Console.Title = "SaltyEmu - Family";
@@ -67,7 +69,14 @@ namespace SaltyEmu.FamilyService
                 await server.InitializeAsync();
             }
 
-            client.GetByName("test");
+            Logger.Info("Asking to get family : \"test\"");
+            FamilyDto test = await client.GetByNameAsync("test");
+            Logger.Info($"{test?.Name} ID : {test?.Id}");
+
+
+            Logger.Info("Asking to get family : \"real\"");
+            FamilyDto real = await client.GetByNameAsync("real");
+            Logger.Info($"{real.Name} ID : {real.Id}");
         }
 
         private static async Task InitializeAsync()

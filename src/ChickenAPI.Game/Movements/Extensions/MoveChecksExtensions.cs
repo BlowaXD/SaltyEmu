@@ -34,14 +34,9 @@ namespace ChickenAPI.Game.Movements.Extensions
         /// <param name="src"></param>
         /// <param name="dest"></param>
         /// <returns></returns>
-        public static int GetDistance(this MovableComponent src, MovableComponent dest)
-        {
-            return PositionHelper.GetDistance(src.Actual, dest.Actual);
-        }
-
         public static int GetDistance(this IMovableEntity src, IMovableEntity dest)
         {
-            return PositionHelper.GetDistance(src.Actual, dest.Actual);
+            return PositionHelper.GetDistance(src.Position, dest.Position);
         }
     }
 }

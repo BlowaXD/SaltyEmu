@@ -47,7 +47,7 @@ namespace SaltyEmu.Communication.Communicators
             _requestFactory = new PendingRequestFactory();
             _client = new MqttFactory().CreateManagedMqttClient(new MqttNetLogger(conf.ClientName));
             _client.SubscribeAsync(conf.ResponseTopic);
-            _log.Info($"[RPC][TOPIC] Topic subscribed : {conf.ResponseTopic}");
+            _log.Info($"[RPC] Waiting for responses on : {conf.ResponseTopic}");
         }
 
         public async Task InitializeAsync()

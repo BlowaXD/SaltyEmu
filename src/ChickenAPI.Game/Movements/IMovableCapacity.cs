@@ -34,8 +34,6 @@ namespace ChickenAPI.Game.Movements
         byte Speed { get; set; }
 
         DateTime LastMove { get; }
-
-        Position<short> Actual { get; }
         Position<short> Destination { get; }
     }
 }
