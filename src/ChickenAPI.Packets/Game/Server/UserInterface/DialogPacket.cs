@@ -2,7 +2,7 @@
 
 namespace ChickenAPI.Packets.Game.Server.UserInterface
 {
-    [PacketHeader("dialog")]
+    [PacketHeader("dlg")]
     public class DialogPacket : PacketBase
     {
         [PacketIndex(0, IsReturnPacket = true)]

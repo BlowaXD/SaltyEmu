@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ChickenAPI.Game.Locomotion.Events
 {
-    internal class UnTransformationLocomotion : ChickenEventArgs
+    public class UnTransformationLocomotion : ChickenEventArgs
     {
     }
 }

@@ -6,7 +6,7 @@ using System.Text;
 
 namespace ChickenAPI.Game.Locomotion.Events
 {
-    internal class TransformationLocomotion : ChickenEventArgs
+    public class TransformationLocomotion : ChickenEventArgs
     {
         public ItemInstanceDto Item { get; set; }
     }
