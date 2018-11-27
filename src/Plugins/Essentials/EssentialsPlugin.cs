@@ -9,6 +9,7 @@ using SaltyEmu.Commands.Interfaces;
 using SaltyEmu.Commands.TypeParsers;
 using System;
 using System.Threading.Tasks;
+using Essentials.Character;
 
 namespace Essentials
 {
@@ -41,18 +42,24 @@ namespace Essentials
             container.AddTypeParser(new ItemDtoTypeParser());
         }
 
-        private static async Task RegisterCommands(ICommandContainer container)
+        private static Task RegisterCommands(ICommandContainer container)
         {
             try
             {
-                await container.AddModuleAsync<TeleportModule>();
-                await container.AddModuleAsync<ButcherModule>();
-                await container.AddModuleAsync<ItemModule>();
+                Task.WaitAll(new[]
+                {
+                    container.AddModuleAsync<TeleportModule>(),
+                    container.AddModuleAsync<ButcherModule>(),
+                    container.AddModuleAsync<ItemModule>(),
+                    container.AddModuleAsync<CharacterModule>()
+                });
             }
             catch (Exception e)
             {
                 _logger.Debug(e.StackTrace);
             }
+
+            return Task.CompletedTask;
         }
 
         private static async Task UnregisterCommands()

@@ -20,7 +20,7 @@ namespace Essentials.MapManagement
     [PlayerInMap]
     public class ButcherModule : SaltyModuleBase
     {
-        private static readonly SkillDto _skill = new SkillDto
+        private static readonly SkillDto Skill = new SkillDto
         {
             Id = 1114,
             Cooldown = 4,
@@ -38,13 +38,13 @@ namespace Essentials.MapManagement
                 Target = monster,
                 HitMode = SuPacketHitMode.CriticalAttack,
                 Damages = (uint)(monster.HpMax > ushort.MaxValue ? ushort.MaxValue : monster.HpMax),
-                UsedSkill = _skill
+                UsedSkill = Skill
             }));
         }
 
         [Command("*")]
         [Description("Kills every monster in the current map.")]
-        public async Task<SaltyCommandResult> ButchAllMonstersAsync()
+        public Task<SaltyCommandResult> ButchAllMonstersAsync()
         {
             IEnumerable<IMonsterEntity> entities = Context.Player.CurrentMap.GetEntitiesByType<IMonsterEntity>(VisualType.Monster);
             foreach (IMonsterEntity entity in entities)
@@ -52,12 +52,12 @@ namespace Essentials.MapManagement
                 KillMonster(entity);
             }
 
-            return await Task.FromResult(new SaltyCommandResult(true, $"Map have been cleaned from monsters."));
+            return Task.FromResult(new SaltyCommandResult(true, $"Map have been cleaned from monsters."));
         }
 
         [Command("radius")]
         [Description("Kills every monster in the current map around you in the specified radius.")]
-        public async Task<SaltyCommandResult> ButchAllMonstersAsync(
+        public Task<SaltyCommandResult> ButchAllMonstersAsync(
             [Description("Radius within the monsters should be killed.")] short radius)
         {
             IEnumerable<IMonsterEntity> entities = Context.Player.CurrentMap
@@ -69,7 +69,7 @@ namespace Essentials.MapManagement
                 KillMonster(entity);
             }
 
-            return await Task.FromResult(new SaltyCommandResult(true, $"All monsters within a radius of {radius} tiles have been killed."));
+            return Task.FromResult(new SaltyCommandResult(true, $"All monsters within a radius of {radius} tiles have been killed."));
         }
     }
 }

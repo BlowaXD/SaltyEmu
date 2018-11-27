@@ -9,14 +9,13 @@ namespace ChickenAPI.Game.Entities.Player.Extensions
     {
         public static CInfoPacket GenerateCInfoPacket(this IPlayerEntity player)
         {
-            FamilyDto family = player.Family;
             return new CInfoPacket
             {
                 Name = player.Character.Name,
                 Unknown1 = "-", //TODO: Find signification
                 GroupId = -1,
-                FamilyId = family?.Id ?? -1, // todo : family system
-                FamilyName = family?.Name ?? "-",
+                FamilyId = player.Family?.Id ?? -1, // todo : family system
+                FamilyName = player.Family?.Name ?? "-",
                 CharacterId = player.Character.Id,
                 NameAppearance = player.NameAppearance,
                 Gender = player.Character.Gender,

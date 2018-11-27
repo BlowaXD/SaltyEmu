@@ -19,7 +19,7 @@ namespace Essentials.Item
         [Command("Create")]
         [Description("Command that creates an item for you.")]
         [Remarks("Quantity argument is facultative.")]
-        public async Task<SaltyCommandResult> ItemCreateAsync(ItemDto item, short quantity = 1)
+        public Task<SaltyCommandResult> ItemCreateAsync(ItemDto item, short quantity = 1)
         {
             var itemFactory = ChickenContainer.Instance.Resolve<IItemInstanceFactory>();
             ItemInstanceDto itemInstance = itemFactory.CreateItem(item, quantity);
@@ -29,7 +29,7 @@ namespace Essentials.Item
                 ItemInstance = itemInstance
             });
 
-            return await Task.FromResult(new SaltyCommandResult(true, "Your item(s) have been created."));
+            return Task.FromResult(new SaltyCommandResult(true, "Your item(s) have been created."));
         }
     }
 }

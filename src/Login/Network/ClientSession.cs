@@ -166,8 +166,9 @@ namespace Login.Network
                 Log.Info($"[{_endPoint.Address.MapToIPv4()}][CONNECT_ACCEPT] Server list sent to {accountName}");
                 Disconnect();
             }
-            catch
+            catch (Exception e)
             {
+                Log.Error("[PACKET_RECV]", e);
                 _channel.WriteAndFlushAsync(GetFailPacket(AuthResponse.CantConnect)).Wait();
                 _channel.DisconnectAsync().Wait();
             }

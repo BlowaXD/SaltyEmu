@@ -18,6 +18,11 @@ namespace ChickenAPI.Game.Player.Extension
             player.SendPacket(player.GenerateSpPacket());
         }
 
+        public static void ActualiseUiReputation(this IPlayerEntity player)
+        {
+            player.Broadcast(player.GenerateFdPacket());
+        }
+
         public static void ActualiseUiExpBar(this IPlayerEntity player)
         {
             player.SendPacket(player.GenerateLevPacket());

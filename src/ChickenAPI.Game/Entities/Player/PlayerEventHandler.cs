@@ -70,6 +70,7 @@ namespace ChickenAPI.Game.Entities.Player
                     play.Hp = play.HpMax;
                     play.MpMax = Algorithm.GetMpMax(play.Character.Class, play.Level);
                     play.Mp = play.MpMax;
+                    play.SendPacket(play.GenerateLevPacket());
                     play.SendPacket(play.GenerateStatPacket());
                     play.SendPacket(play.GenerateLevelUpPacket());
                     switch (levelUp.LevelUpType)

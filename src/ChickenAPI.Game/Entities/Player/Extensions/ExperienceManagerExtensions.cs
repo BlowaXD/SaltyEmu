@@ -11,6 +11,33 @@ namespace ChickenAPI.Game.Entities.Player.Extensions
     {
         private static IAlgorithmService Algorithm => new Lazy<IAlgorithmService>(() => ChickenContainer.Instance.Resolve<IAlgorithmService>()).Value;
 
+        public static void ChangeLevel(this IPlayerEntity player, byte level)
+        {
+            player.Character.Level = level;
+            player.Character.LevelXp = 0;
+            player.ActualiseUiExpBar();
+        }
+
+        public static void ChangeJobLevel(this IPlayerEntity player, byte level)
+        {
+            player.Character.JobLevel = level;
+            player.Character.JobLevelXp = 0;
+            player.ActualiseUiExpBar();
+        }
+
+        public static void ChangeReputation(this IPlayerEntity player, long reputation)
+        {
+            player.Character.Reput = reputation;
+            player.ActualiseUiReputation();
+        }
+
+        public static void ChangeHeroLevel(this IPlayerEntity player, byte level)
+        {
+            player.Character.HeroLevel = level;
+            player.Character.HeroXp = 0;
+            player.ActualiseUiExpBar();
+        }
+
         public static void TryLevelUp(this IPlayerEntity player)
         {
             int levelXp = Algorithm.GetLevelXp(player.Character.Class, player.Level);

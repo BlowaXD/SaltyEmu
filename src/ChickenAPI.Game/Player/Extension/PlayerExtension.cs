@@ -18,6 +18,7 @@ using ChickenAPI.Packets.Game.Client.Player;
 using ChickenAPI.Packets.Game.Server.Player;
 using ChickenAPI.Packets.Game.Server.UserInterface;
 using System;
+using ChickenAPI.Enums.Packets;
 using ChickenAPI.Game.PacketHandling.Extensions;
 
 namespace ChickenAPI.Game.Player.Extension
@@ -141,9 +142,9 @@ namespace ChickenAPI.Game.Player.Extension
             charac.SendPacket(charac.GenerateEffectPacket(8));
             charac.SendPacket(charac.GenerateEffectPacket(196));
             charac.SendPacket(new ScrPacket { Unknow1 = 0, Unknow2 = 0, Unknow3 = 0, Unknow4 = 0, Unknow5 = 0, Unknow6 = 0 });
-            // Session.SendPacket(UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("CLASS_CHANGED"), 0));
+            charac.SendPacket(charac.GenerateSayPacket("CLASS_CHANGED", SayColorType.Blue));
             charac.Character.Faction = charac.Family?.FamilyFaction ?? (FactionType)(1 + _randomGenerator.Next(0, 2));
-            // Session.SendPacket(UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey($"GET_PROTECTION_POWER_{Faction}"), 0));*/
+            charac.SendPacket(charac.GenerateSayPacket("FACTION_CHANGED", SayColorType.Blue));
             charac.SendPacket(charac.GenerateFsPacket());
             charac.SendPacket(charac.GenerateStatCharPacket());
             charac.SendPacket(charac.GenerateEffectPacket((4799 + (byte)charac.Character.Faction)));
