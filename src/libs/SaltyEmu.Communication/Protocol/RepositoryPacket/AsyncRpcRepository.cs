@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using ChickenAPI.Core.IPC;
 using ChickenAPI.Data;
 
@@ -11,12 +12,14 @@ namespace SaltyEmu.Communication.Protocol.RepositoryPacket
         public AsyncRpcRepository(IAsyncRepository<T, TKey> repository, IIpcRequestHandler handler)
         {
             _repository = repository;
+            /*
             handler.Register<RepositoryGetRequest<TKey>>(OnMessage);
             handler.Register<RepositorySaveRequest<T>>(OnMessage);
             handler.Register<RepositoryDeleteRequest<TKey>>(OnMessage);
+            */
         }
 
-        public async void OnMessage(RepositoryGetRequest<TKey> request)
+        public async Task OnMessage(RepositoryGetRequest<TKey> request)
         {
             IEnumerable<T> tmp = await _repository.GetByIdsAsync(request.ObjectIds);
             await request.ReplyAsync(new RepositoryGetResponse<T>
@@ -25,7 +28,7 @@ namespace SaltyEmu.Communication.Protocol.RepositoryPacket
             });
         }
 
-        public async void OnMessage(RepositorySaveRequest<T> request)
+        public async Task OnMessage(RepositorySaveRequest<T> request)
         {
             await _repository.SaveAsync(request.Objects);
             await request.ReplyAsync(new RepositorySaveResponse<T>
@@ -34,7 +37,7 @@ namespace SaltyEmu.Communication.Protocol.RepositoryPacket
             });
         }
 
-        public async void OnMessage(RepositoryDeleteRequest<TKey> request)
+        public async Task OnMessage(RepositoryDeleteRequest<TKey> request)
         {
             await _repository.DeleteByIdsAsync(request.ObjectIds);
         }

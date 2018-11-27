@@ -18,14 +18,19 @@ namespace SaltyEmu.Communication.Communicators
 {
     public abstract class MqttIpcClient<TLogger> : IIpcClient where TLogger : class
     {
-        private readonly Logger Log = Logger.GetLogger<TLogger>();
-        private readonly IManagedMqttClient _client;
-        private readonly IIpcSerializer _serializer;
+        private readonly Logger _log = Logger.GetLogger<TLogger>();
+
+
         private readonly IPacketContainerFactory _packetFactory;
         private readonly IPendingRequestFactory _requestFactory;
+        private readonly ConcurrentDictionary<Guid, PendingRequest> _pendingRequests;
+
+        private readonly IIpcSerializer _serializer;
+        private readonly IManagedMqttClient _client;
+
         private readonly string _requestTopic;
         private readonly string _endPoint;
-        private readonly ConcurrentDictionary<Guid, PendingRequest> _pendingRequests;
+        private readonly string _name;
 
         protected MqttIpcClient(MqttClientConfigurationBuilder builder) : this(builder.Build())
         {
@@ -33,25 +38,28 @@ namespace SaltyEmu.Communication.Communicators
 
         protected MqttIpcClient(MqttIpcClientConfiguration conf)
         {
+            _endPoint = conf.EndPoint;
+            _name = conf.ClientName;
+            _serializer = conf.Serializer;
+            _requestTopic = conf.RequestTopic;
             _pendingRequests = new ConcurrentDictionary<Guid, PendingRequest>();
             _packetFactory = new PacketContainerFactory();
             _requestFactory = new PendingRequestFactory();
             _client = new MqttFactory().CreateManagedMqttClient(new MqttNetLogger(conf.ClientName));
             _client.SubscribeAsync(conf.ResponseTopic);
-
-            _serializer = conf.Serializer;
-            _requestTopic = conf.RequestTopic;
+            _log.Info($"[RPC][TOPIC] Topic subscribed : {conf.ResponseTopic}");
         }
 
-        public async Task InitializeAsync(string clientName)
+        public async Task InitializeAsync()
         {
             ManagedMqttClientOptions options = new ManagedMqttClientOptionsBuilder()
                 .WithAutoReconnectDelay(TimeSpan.FromSeconds(5))
                 .WithClientOptions(new MqttClientOptionsBuilder()
-                    .WithClientId(clientName)
+                    .WithClientId(_name)
                     .WithTcpServer(_endPoint)
                     .Build())
                 .Build();
+            _client.Connected += (sender, args) => _log.Info($"[CONNECTED] {_name} is connected on MQTT Broker {_endPoint}");
             _client.ApplicationMessageReceived += (sender, args) => OnMessage(args.ClientId, args.ApplicationMessage);
             await _client.StartAsync(options);
         }

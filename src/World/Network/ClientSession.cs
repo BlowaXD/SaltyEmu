@@ -345,7 +345,7 @@ namespace World.Network
                     packetstring = packet.Insert(packet.IndexOf(' ') + 2, " ");
 
                     //^ wtf is this
-
+                    
                     if (packetsplit[1] == CommandPrefix) //it's a command
                     {
                         Commands.HandleMessageAsync(packetstring, Player).ConfigureAwait(false).GetAwaiter().GetResult();

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
+using System.Threading.Tasks;
 using ChickenAPI.Core.IPC;
 using ChickenAPI.Core.IPC.Protocol;
 using ChickenAPI.Core.Logging;
@@ -9,32 +11,33 @@ namespace SaltyEmu.Communication.Utils
     public class RequestHandler : IIpcRequestHandler
     {
         private static readonly Logger Log = Logger.GetLogger<IIpcRequestHandler>();
-        private readonly Dictionary<Type, Action<IIpcRequest>> _packetHandlers = new Dictionary<Type, Action<IIpcRequest>>();
+        private readonly Dictionary<Type, Func<IIpcRequest, Task>> _packetHandlers = new Dictionary<Type, Func<IIpcRequest, Task>>();
 
-        public void Register<T>(Action<T> handler) where T : IIpcRequest
+        public void Register<T>(Func<IIpcRequest, Task> handler) where T : IIpcRequest
         {
             if (_packetHandlers.ContainsKey(typeof(T)))
             {
                 return;
             }
 
-            _packetHandlers.Add(typeof(T), handler as Action<IIpcRequest>);
+            _packetHandlers.Add(typeof(T), handler);
         }
 
-        public void Handle(IIpcRequest request, Type type)
+        public Task HandleAsync<T>(T request) where T : IIpcRequest
         {
-            if (!_packetHandlers.TryGetValue(type, out Action<IIpcRequest> handler))
+            return HandleAsync(request, typeof(T));
+        }
+
+        public async Task HandleAsync(IIpcRequest request, Type type)
+        {
+            if (!_packetHandlers.TryGetValue(type, out Func<IIpcRequest, Task> handler))
             {
                 return;
             }
 
-            Log.Info($"Handling {type.Name} packet");
-            handler.Invoke(request);
-        }
+            await Task.Run(() => handler.Invoke(request));
 
-        public void Handle<T>(T request) where T : IIpcRequest
-        {
-            Handle(request, typeof(T));
+            Log.Info($"Handling {type.Name} packet");
         }
     }
 }

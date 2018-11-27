@@ -6,7 +6,6 @@ namespace SaltyEmu.Communication.Configs
 {
     public class MqttClientConfigurationBuilder
     {
-        private readonly HashSet<string> _subscribedQueues = new HashSet<string>();
         private string _endpoint;
         private IIpcSerializer _serializer;
         private string _clientName;
@@ -22,12 +21,6 @@ namespace SaltyEmu.Communication.Configs
         public MqttClientConfigurationBuilder ConnectTo(string endpoint)
         {
             _endpoint = endpoint;
-            return this;
-        }
-
-        public MqttClientConfigurationBuilder WithQueueName(string requestQueue)
-        {
-            _subscribedQueues.Add(requestQueue);
             return this;
         }
 

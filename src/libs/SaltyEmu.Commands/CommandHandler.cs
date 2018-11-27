@@ -75,7 +75,8 @@ namespace SaltyEmu.Commands
 
         public async Task RemoveCommandsAsync(Command[] commands)
         {
-            foreach (var command in commands)
+            Task.WaitAll(commands.Select(RemoveCommandAsync).ToArray());
+            foreach (Command command in commands)
             {
                 await RemoveCommandAsync(command);
             }
@@ -232,7 +233,7 @@ namespace SaltyEmu.Commands
         {
             _logger.Debug($"An error occured: {result}");
 
-            StringBuilder errorBuilder = new StringBuilder();
+            var errorBuilder = new StringBuilder();
 
             switch (result)
             {

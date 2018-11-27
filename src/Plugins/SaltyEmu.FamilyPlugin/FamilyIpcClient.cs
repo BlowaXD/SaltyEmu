@@ -8,9 +8,9 @@ using SaltyEmu.FamilyPlugin.Communication;
 
 namespace SaltyEmu.FamilyPlugin
 {
-    public class Family : MappedRepositoryMqtt<FamilyDto>, IFamilyService
+    public class FamilyIpcClient : MappedRepositoryMqtt<FamilyDto>, IFamilyService
     {
-        public Family(MqttClientConfigurationBuilder builder) : base(builder)
+        public FamilyIpcClient(MqttClientConfigurationBuilder builder) : base(builder)
         {
         }
 

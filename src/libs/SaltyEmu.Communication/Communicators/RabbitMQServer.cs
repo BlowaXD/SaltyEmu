@@ -77,8 +77,11 @@ namespace SaltyEmu.Communication.Communicators
 
         public void OnRequest(BaseRequest request, Type type)
         {
+#if DEBUG
+            Log.Debug($"[RECEIVED] Packet [{request.Id}][{type}]");
+#endif
             request.Server = this;
-            _requestHandler.Handle(request, type);
+            _requestHandler.HandleAsync(request, type).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
 

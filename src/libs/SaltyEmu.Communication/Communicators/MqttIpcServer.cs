@@ -16,7 +16,7 @@ namespace SaltyEmu.Communication.Communicators
 {
     public abstract class MqttIpcServer<TLogger> : IIpcServer where TLogger : class
     {
-        private readonly Logger Log = Logger.GetLogger<TLogger>();
+        private readonly Logger _log = Logger.GetLogger<TLogger>();
         private readonly IManagedMqttClient _client;
         private readonly IIpcSerializer _serializer;
         private readonly IPacketContainerFactory _packetFactory;
@@ -42,7 +42,7 @@ namespace SaltyEmu.Communication.Communicators
 
             foreach (string topic in configuration.SubscribingQueues)
             {
-                Log.Info($"Subscribing topic : {topic}");
+                _log.Info($"[RPC][TOPIC] Topic subscribed : {topic}");
                 _client.SubscribeAsync(topic);
             }
 
@@ -60,11 +60,7 @@ namespace SaltyEmu.Communication.Communicators
                 .Build();
             _client.ApplicationMessageReceived += (sender, args) => OnMessage(args.ClientId, args.ApplicationMessage);
             await _client.StartAsync(options);
-            _client.Connected += (sender, args) =>
-            {
-                Log.Info($"Connected to {_endPoint}");
-                SendAsync(_packetFactory.Create<TLogger>("test")).ConfigureAwait(false).GetAwaiter().GetResult();
-            };
+            _client.Connected += (sender, args) => { _log.Info($"Connected to {_endPoint}"); };
         }
 
         private void OnMessage(string clientId, MqttApplicationMessage message)
@@ -83,10 +79,10 @@ namespace SaltyEmu.Communication.Communicators
         public void OnRequest(BaseRequest request, Type type)
         {
 #if DEBUG
-            Log.Debug($"[RECEIVED] Packet [{request.Id}][{type}]");
+            _log.Debug($"[RECEIVED] Packet [{request.Id}][{type}]");
 #endif
             request.Server = this;
-            _requestHandler.Handle(request, type);
+            _requestHandler.HandleAsync(request, type).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
 
@@ -98,7 +94,7 @@ namespace SaltyEmu.Communication.Communicators
         private async Task SendAsync(PacketContainer container)
         {
 #if DEBUG
-            Log.Debug($"[SENT] Packet [{container.Type}][{container.Content}]");
+            _log.Debug($"[SENT] Packet [{container.Type}]");
 #endif
             await _client.PublishAsync(builder => builder
                 .WithPayload(_serializer.Serialize(container))

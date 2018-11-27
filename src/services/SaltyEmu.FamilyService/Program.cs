@@ -3,11 +3,15 @@ using System.Collections.Immutable;
 using System.Linq;
 using System.Threading.Tasks;
 using ChickenAPI.Core.Logging;
+using ChickenAPI.Data.Families;
+using MessagePack.Resolvers;
 using SaltyEmu.Communication.Communicators;
 using SaltyEmu.Communication.Configs;
 using SaltyEmu.Communication.Serializers;
 using SaltyEmu.Communication.Utils;
 using SaltyEmu.FamilyPlugin;
+using SaltyEmu.FamilyPlugin.Communication;
+using SaltyEmu.FamilyService.Handlers;
 
 namespace SaltyEmu.FamilyService
 {
@@ -42,18 +46,42 @@ namespace SaltyEmu.FamilyService
             PrintHeader();
             InitializeLogger();
             InitializeAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+            InitializeClient().ConfigureAwait(false).GetAwaiter().GetResult();
+
+
             Console.ReadLine();
+        }
+
+        private static async Task InitializeClient()
+        {
+            MqttClientConfigurationBuilder builder = new MqttClientConfigurationBuilder()
+                .ConnectTo("localhost")
+                .WithName("family-client-test")
+                .WithRequestTopic("/family/request")
+                .WithResponseTopic("/family/response")
+                .WithSerializer(new JsonSerializer());
+
+            var client = new FamilyIpcClient(builder);
+            if (client is MappedRepositoryMqtt<FamilyDto> server)
+            {
+                await server.InitializeAsync();
+            }
+
+            client.GetByName("test");
         }
 
         private static async Task InitializeAsync()
         {
+            var handler = new RequestHandler();
+            handler.Register<GetFamilyInformationRequest>(FamilyGetInformationRequestHandler.OnMessage);
+
             MqttServerConfigurationBuilder builder = new MqttServerConfigurationBuilder()
                 .ConnectTo("localhost")
                 .WithName("family-server")
                 .AddTopic("/family/request")
                 .WithResponseTopic("/family/response")
                 .WithSerializer(new JsonSerializer())
-                .WithRequestHandler(new RequestHandler());
+                .WithRequestHandler(handler);
 
             var tmp = new FamilyServer(builder);
             if (tmp is MqttIpcServer<FamilyServer> server)
