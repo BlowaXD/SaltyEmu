@@ -42,7 +42,7 @@ namespace SaltyEmu.Communication.Communicators
 
             foreach (string topic in configuration.SubscribingQueues)
             {
-                _log.Info($"[RPC][TOPIC] Topic subscribed : {topic}");
+                _log.Info($"[RPC][TOPIC] Handling requests from : {topic}");
                 _client.SubscribeAsync(topic);
             }
 

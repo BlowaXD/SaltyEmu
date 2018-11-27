@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using Autofac;
 using ChickenAPI.Core.i18n;
 using ChickenAPI.Core.IoC;
@@ -345,10 +346,12 @@ namespace World.Network
                     packetstring = packet.Insert(packet.IndexOf(' ') + 2, " ");
 
                     //^ wtf is this
-                    
+
                     if (packetsplit[1] == CommandPrefix) //it's a command
                     {
-                        Commands.HandleMessageAsync(packetstring, Player).ConfigureAwait(false).GetAwaiter().GetResult();
+                        // temporary fix on the deadlock
+                        // todo fix where the deadlock appear
+                        _ = Task.Run(() => Commands.HandleMessageAsync(packetstring, Player));
                     }
                 }
 
