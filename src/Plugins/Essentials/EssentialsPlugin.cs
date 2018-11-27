@@ -10,6 +10,7 @@ using SaltyEmu.Commands.TypeParsers;
 using System;
 using System.Threading.Tasks;
 using Essentials.Character;
+using Essentials.Help;
 
 namespace Essentials
 {
@@ -51,7 +52,8 @@ namespace Essentials
                     container.AddModuleAsync<TeleportModule>(),
                     container.AddModuleAsync<ButcherModule>(),
                     container.AddModuleAsync<ItemModule>(),
-                    container.AddModuleAsync<CharacterModule>()
+                    container.AddModuleAsync<CharacterModule>(),
+                    container.AddModuleAsync<HelpModule>()
                 });
             }
             catch (Exception e)

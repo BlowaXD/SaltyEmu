@@ -11,6 +11,7 @@ using SaltyEmu.Commands.Entities;
 
 namespace Essentials.Item
 {
+    [Name("Item")]
     [Group("Item")]
     [Description("Module related to butching monsters. It requires to be a GameMaster.")]
     [RequireAuthority(AuthorityType.GameMaster)]

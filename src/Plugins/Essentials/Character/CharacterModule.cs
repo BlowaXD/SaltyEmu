@@ -13,6 +13,7 @@ using SaltyEmu.Commands.Entities;
 
 namespace Essentials.Character
 {
+    [Name("Character")]
     [Description("Module related to character. It requires to be a GameMaster.")]
     [RequireAuthority(AuthorityType.GameMaster)]
     internal sealed class CharacterModule : SaltyModuleBase

@@ -217,7 +217,7 @@ namespace SaltyEmu.Commands
                 return;
             }
 
-            var ctx = new SaltyCommandContext(message, player);
+            var ctx = new SaltyCommandContext(message, player, _commands);
 
             IResult result = await _commands.ExecuteAsync(ctx.Input, ctx);
 

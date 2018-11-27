@@ -5,6 +5,8 @@ namespace SaltyEmu.Commands.Entities
 {
     public sealed class SaltyCommandContext : ICommandContext
     {
+        public CommandService CommandService { get; }
+
         public Command Command { get; set; }
 
         public string Message { get; set; }
@@ -12,8 +14,10 @@ namespace SaltyEmu.Commands.Entities
 
         public string Input { get; set; }
 
-        public SaltyCommandContext(string message, IPlayerEntity sender)
+        public SaltyCommandContext(string message, IPlayerEntity sender, CommandService cmds)
         {
+            CommandService = cmds;
+
             Message = message;
             Player = sender;
 

@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace Essentials.Teleport
 {
+    [Name("Teleport")]
     [Description("Module related to entity teleportation. It requires to be a GameMaster.")]
     [RequireAuthority(AuthorityType.GameMaster)]
     public class TeleportModule : SaltyModuleBase

@@ -14,6 +14,7 @@ using SaltyEmu.Commands.Entities;
 
 namespace Essentials.MapManagement
 {
+    [Name("Butcher")]
     [Group("Butcher")]
     [Description("Module related to monsters butching. It requires to be a GameMaster and in a Map.")]
     [RequireAuthority(AuthorityType.GameMaster)]
