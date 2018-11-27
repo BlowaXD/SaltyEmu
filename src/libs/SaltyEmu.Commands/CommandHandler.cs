@@ -1,6 +1,7 @@
 ﻿using ChickenAPI.Core.Logging;
 using ChickenAPI.Enums.Packets;
 using ChickenAPI.Game.Entities.Player;
+using ChickenAPI.Game.Helpers;
 using Qmmands;
 using SaltyEmu.Commands.Entities;
 using SaltyEmu.Commands.Interfaces;
@@ -9,7 +10,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ChickenAPI.Game.Helpers;
 
 namespace SaltyEmu.Commands
 {
@@ -239,30 +239,35 @@ namespace SaltyEmu.Commands
             _logger.Debug($"An error occured: {result}");
 
             var errorBuilder = new StringBuilder();
+            var help = false;
 
             switch (result)
             {
                 case ChecksFailedResult ex:
+                    ctx.Command = ex.Command;
                     _logger.Debug("Some checks have failed: " + string.Join("\n", ex.FailedChecks.Select(x => x.Error)));
                     break;
                 case TypeParserFailedResult ex:
                     errorBuilder.Append(ex.Reason);
-                    //redirect to help command.
+                    ctx.Command = ex.Parameter.Command;
+                    help = true;
                     break;
                 case CommandNotFoundResult ex:
                     errorBuilder.Append($"The command was not found: {ctx.Input}");
                     break;
                 case ParseFailedResult ex:
+                    ctx.Command = ex.Command;
                     errorBuilder.Append($"The argument for the parameter {ex.Parameter.Name} was invalid.");
-                    //redirect to help command.
+                    help = true;
                     break;
                 case SaltyCommandResult ex:
                     errorBuilder.Append($"{ctx.Command.Name}: {ex.Message}");
                     break;
                 case OverloadsFailedResult ex:
+                    ctx.Command = ex.FailedOverloads.Select(x => x.Key).FirstOrDefault();
                     _logger.Debug($"Every overload failed: {string.Join("\n", ex.FailedOverloads.Select(x => x.Value.Reason))}");
                     errorBuilder.Append("Your command syntax was wrong.");
-                    //redirect to help command.
+                    help = true;
                     break;
             }
 
@@ -273,7 +278,9 @@ namespace SaltyEmu.Commands
 
             ctx.Player.SendChatMessage(errorBuilder.ToString(), SayColorType.Green);
 
-            return Task.CompletedTask;
+            return help
+                ? _commands.ExecuteAsync($"help {ctx.Command.FullAliases[0]}", ctx)
+                : Task.CompletedTask;
         }
     }
 }
