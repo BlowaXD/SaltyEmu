@@ -19,6 +19,7 @@ using ChickenAPI.Game.Skills.Extensions;
 using ChickenAPI.Packets.CharacterSelectionScreen.Client;
 using ChickenAPI.Packets.Game.Server.Map;
 using ChickenAPI.Packets.Game.Server.Player;
+using ChickenAPI.Packets.Game.Server.UserInterface;
 
 namespace NosSharp.PacketHandler
 {
@@ -79,7 +80,7 @@ namespace NosSharp.PacketHandler
 
             // exts
             // MlInfo
-            // PClear
+            session.SendPacket(new PClearPacket());
             // PInit
             // zzim
             // twk 2

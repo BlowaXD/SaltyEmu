@@ -120,9 +120,9 @@ namespace ChickenAPI.Game.Player.Extension
             charac.SendPacket(new NpInfoPacket { UnKnow = 0 });
             charac.SendPacket(new PClearPacket());
 
-            if (type == (byte)CharacterClassType.Adventurer)
+            if (type == CharacterClassType.Adventurer)
             {
-                charac.Character.HairStyle = (byte)charac.Character.HairStyle > 1 ? 0 : charac.Character.HairStyle;
+                charac.Character.HairStyle = charac.Character.HairStyle > HairStyleType.HairStyleB ? HairStyleType.HairStyleA : charac.Character.HairStyle;
             }
 
             charac.Character.Class = type;
