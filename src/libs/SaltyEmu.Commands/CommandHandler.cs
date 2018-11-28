@@ -200,6 +200,7 @@ namespace SaltyEmu.Commands
             return Task.CompletedTask;
         }
 
+        /// <inheritdoc />
         /// <summary>
         ///     This is where every message from the InGame tchat starting with our prefix will arrive. 
         ///     In our case, the parameter message represents the raw message sent by the user. 
