@@ -89,7 +89,7 @@ namespace Essentials.Character
             fairy.ElementRate = level;
             // stats infos
 
-            return Task.FromResult(new SaltyCommandResult(true, $"{player.Character.Name}'s HeroLevel has been changed to {level}."));
+            return Task.FromResult(new SaltyCommandResult(true, $"{player.Character.Name}'s FairyLevel has been changed to {level}."));
         }
 
         [Command("Reputation", "Reput", "rep")]
