@@ -6,5 +6,7 @@ namespace ChickenAPI.Game.Inventory.Args
     public class InventoryUseItemEvent : ChickenEventArgs
     {
         public ItemInstanceDto Item { get; set; }
+
+        public byte Option { get; set; }
     }
 }

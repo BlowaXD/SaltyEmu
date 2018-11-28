@@ -2,10 +2,16 @@
 {
     public enum DelayPacketType
     {
-        Unknown = 1,
-        Test = 3,
-        Unknown4 = 4,
-        Dialog = 7,
-        Unknown10 = 10,
+        Button = 1,
+        Exploration = 2,
+        Locomotion = 3,
+        InUse = 4,
+        UnFreeze = 5,
+        Cooking = 6,
+        ItemInUse = 7,
+        Identify = 8,
+        OpenChest = 9,
+        BackToMiniland = 10,
+        Invocation = 11,
     }
 }

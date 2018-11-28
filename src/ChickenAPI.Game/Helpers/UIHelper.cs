@@ -35,7 +35,27 @@ namespace ChickenAPI.Game.Helpers
             player.SendPacket(player.GenerateMsgPacket(msg, type));
         }
 
-        public static BSInfoPacket GenerateBSInfo(this IPlayerEntity player, byte mode, short title, short time, short text)
+        public static void GenerateBSInfo(this IPlayerEntity player, byte mode, short title, short time, short text)
+        {
+            player.SendPacket(player.GenerateBSInfoPacket(mode, title, time, text));
+        }
+
+        public static void GenerateCHDM(this IPlayerEntity player, int maxhp, int angeldmg, int demondmg, int time)
+        {
+            player.SendPacket(player.GenerateCHDMPacket(maxhp, angeldmg, demondmg, time));
+        }
+
+        public static void GenerateDialog(this IPlayerEntity player, PacketBase acceptpacket, PacketBase refusepacket, string question)
+        {
+            player.SendPacket(player.GenerateDialogPacket(acceptpacket, refusepacket, question));
+        }
+
+        public static void GenerateDelay(this IPlayerEntity player, int delay, DelayPacketType type, string argument)
+        {
+            player.SendPacket(player.GenerateDelayPacket(delay, type, argument));
+        }
+
+        public static BSInfoPacket GenerateBSInfoPacket(this IPlayerEntity player, byte mode, short title, short time, short text)
         {
             return new BSInfoPacket
             {
@@ -57,7 +77,7 @@ namespace ChickenAPI.Game.Helpers
             };
         }
 
-        public static DialogPacket GenerateDialog(this IPlayerEntity player, PacketBase acceptpacket, PacketBase refusepacket, string question)
+        public static DialogPacket GenerateDialogPacket(this IPlayerEntity player, PacketBase acceptpacket, PacketBase refusepacket, string question)
         {
             return new DialogPacket
             {
@@ -67,7 +87,7 @@ namespace ChickenAPI.Game.Helpers
             };
         }
 
-        public static DelayPacket GenerateDelay(this IPlayerEntity player, int delay, DelayPacketType type, string argument)
+        public static DelayPacket GenerateDelayPacket(this IPlayerEntity player, int delay, DelayPacketType type, string argument)
         {
             return new DelayPacket
             {

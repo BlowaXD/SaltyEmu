@@ -1,6 +1,8 @@
 ﻿using ChickenAPI.Core.Logging;
 using ChickenAPI.Enums.Game.Items;
+using ChickenAPI.Enums.Packets;
 using ChickenAPI.Game.Entities.Player;
+using ChickenAPI.Game.Helpers;
 using ChickenAPI.Game.Inventory.Args;
 using ChickenAPI.Game.Inventory.ItemUsage.Handling;
 using ChickenAPI.Game.Locomotion.Events;
@@ -13,8 +15,8 @@ namespace ChickenAPI.Game.Inventory.ItemUsage.Handlers
         private static readonly Logger Log = Logger.GetLogger<LocomotionHandler>();
 
         /// <summary>
-        /// This method will teleport the requester to Act 6
-        /// It requires the player to be near Graham
+        ///
+        ///
         /// </summary>
         /// <param name="player"></param>
         /// <param name="e"></param>
@@ -22,14 +24,16 @@ namespace ChickenAPI.Game.Inventory.ItemUsage.Handlers
         [UseItemEffect(1000, ItemType.Special)]
         public static void Locomotion(IPlayerEntity player, InventoryUseItemEvent e)
         {
-            Log.Info($"[LOCOMOTION] {player.Character.Name} used locomotion : ");
             if (!player.IsTransformedLocomotion)
             {
+                if (e.Option == 0)
+                {
+                    player.GenerateDelay(3000, DelayPacketType.Locomotion, $"#u_i^1^{player.Character.Id}^{(byte)e.Item.Type}^{e.Item.Slot}^2");
+                    return;
+                }
                 player.EmitEvent(new TransformationLocomotion { Item = e.Item });
-                Log.Info($"[LOCOMOTION] ON ");
                 return;
             }
-            Log.Info($"[LOCOMOTION] OFF ");
             player.EmitEvent(new UnTransformationLocomotion { });
         }
     }

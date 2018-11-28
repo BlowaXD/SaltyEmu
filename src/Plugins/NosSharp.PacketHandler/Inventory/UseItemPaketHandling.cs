@@ -4,6 +4,7 @@ using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Inventory.Args;
 using ChickenAPI.Game.Inventory.Extensions;
 using ChickenAPI.Packets.Game.Client.Inventory;
+using System.Linq;
 
 namespace NosSharp.PacketHandler
 {
@@ -11,7 +12,7 @@ namespace NosSharp.PacketHandler
     {
         private static readonly Logger Log = Logger.GetLogger<UseItemPaketHandling>();
 
-        public static void GuriPacket(UiPacket packet, IPlayerEntity session)
+        public static void UseItemPacket(UiPacket packet, IPlayerEntity session)
         {
             ItemInstanceDto item = session.Inventory.GetItemFromSlotAndType(packet.InventorySlot, packet.InventoryType);
 
@@ -20,9 +21,12 @@ namespace NosSharp.PacketHandler
                 return;
             }
 
+            string[] packetsplit = packet.OriginalContent.Split(' ', '^');
+
             session.EmitEvent(new InventoryUseItemEvent
             {
-                Item = item
+                Item = item,
+                Option = packetsplit[1].ElementAt(0) == '#' ? (byte)50 : (byte)0
             });
         }
     }
