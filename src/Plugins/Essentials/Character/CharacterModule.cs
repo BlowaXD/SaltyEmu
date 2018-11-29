@@ -95,8 +95,8 @@ namespace Essentials.Character
         [Command("Reputation", "Reput", "rep")]
         [Description("Change the character's reputation.")]
         public Task<SaltyCommandResult> ChangeReputationAsync(
-            [Description("Desired level.")] long reputation,
-            [Description("Character you want to change the level")] IPlayerEntity player = null)
+            [Description("Desired reputation.")] long reputation,
+            [Description("Character you want to change the reputation")] IPlayerEntity player = null)
         {
             if (player == null)
             {
@@ -110,10 +110,10 @@ namespace Essentials.Character
 
 
         [Command("ChangeClass", "Class")]
-        [Description("Change the character's herolevel.")]
+        [Description("Change the character's class.")]
         public Task<SaltyCommandResult> ChangeClassAsync(
             [Description("Class you want to change to")] CharacterClassType newClass,
-            [Description("Character you want to change the level")] IPlayerEntity player = null)
+            [Description("Character you want to change the class")] IPlayerEntity player = null)
         {
             if (player == null)
             {
@@ -123,6 +123,29 @@ namespace Essentials.Character
             player.ChangeClass(newClass);
 
             return Task.FromResult(new SaltyCommandResult(true, $"{player.Character.Name}'s class has been changed to {newClass.ToString()}."));
+        }
+
+        [Command("AddGold")]
+        [Description("Add the given amount of gold to the inventory.")]
+        public Task<SaltyCommandResult> AddGoldAsync(
+            [Description("Desired amount to add.")] long count)
+        {
+            IPlayerEntity player = Context.Player;
+            player.GoldUp(count);
+
+            return Task.FromResult(new SaltyCommandResult(true, $"{player.Character.Name}'s gold has been increased by {count}"));
+        }
+
+        [Command("SetGold")]
+        [Description("Set the given amount of gold to the inventory.")]
+        public Task<SaltyCommandResult> SetGoldAsync(
+            [Description("Desired amount to set.")] long count)
+        {
+            IPlayerEntity player = Context.Player;
+            player.Character.Gold = count;
+            player.ActualiseUiGold();
+
+            return Task.FromResult(new SaltyCommandResult(true, $"{player.Character.Name}'s gold has been set to {count}"));
         }
     }
 }
