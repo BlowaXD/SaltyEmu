@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ChickenAPI.Game.Helpers;
 
 namespace Essentials.Help
 {
@@ -31,41 +32,37 @@ namespace Essentials.Help
             var commands = new List<Command>();
             foreach (var command in modulelessCommands.ToList())
             {
-                if (commands.All(x => x.FullAliases[0] != command.FullAliases[0]))
+                if (commands.Any(x => x.FullAliases[0] == command.FullAliases[0]))
                 {
-                    var result = await command.RunChecksAsync(Context);
-                    if (result.IsSuccessful)
-                    {
-                        commands.Add(command);
-                    }
+                    continue;
+                }
+
+                var result = await command.RunChecksAsync(Context);
+                if (result.IsSuccessful)
+                {
+                    commands.Add(command);
                 }
             }
 
             StringBuilder str = new StringBuilder();
 
-            Context.Player.SendPacket(Context.Player.GenerateSayPacket("Help Command.", SayColorType.Yellow));
-            Context.Player.SendPacket(Context.Player.GenerateSayPacket("Modules available:", SayColorType.Yellow));
-            for (int i = 0; i < (modules.Count / 6) + 1; i++)
+            Context.Player.SendChatMessage("Help Command.", SayColorType.Yellow);
+            Context.Player.SendChatMessage("Modules available:", SayColorType.Yellow);
+            for (int i = 0; i < modules.Count / 6 + 1; i++)
             {
-                Context.Player.SendPacket(Context.Player.GenerateSayPacket(" -> " + string.Join(", ", modules.Skip(i * 6).Take(6).Select(x => x.Name)), SayColorType.Yellow));
+                Context.Player.SendChatMessage(" -> " + string.Join(", ", modules.Skip(i * 6).Take(6).Select(x => x.Name)), SayColorType.Yellow);
             }
 
-            Context.Player.SendPacket(Context.Player.GenerateSayPacket("Commands available:", SayColorType.Yellow));
+            Context.Player.SendChatMessage("Commands available:", SayColorType.Yellow);
             for (int i = 0; i < (modules.Count / 6) + 1; i++)
             {
-                Context.Player.SendPacket(Context.Player.GenerateSayPacket(" -> " + string.Join(", ", commands.Skip(i * 6).Take(6).Select(x => x.Name)), SayColorType.Yellow));
+                Context.Player.SendChatMessage(" -> " + string.Join(", ", commands.Skip(i * 6).Take(6).Select(x => x.Name)), SayColorType.Yellow);
             }
         }
 
         [Command("Help")]
         public async Task HelpAsync([Remainder] string command)
         {
-            if (string.IsNullOrWhiteSpace(command))
-            {
-                await HelpAsync();
-                return;
-            }
-
             if (string.IsNullOrWhiteSpace(command))
             {
                 await HelpAsync();
@@ -98,30 +95,32 @@ namespace Essentials.Help
                     return;
                 }
 
-                Context.Player.SendPacket(Context.Player.GenerateSayPacket($"Help: ({command})", SayColorType.Yellow));
+                Context.Player.SendChatMessage($"Help: ({command})", SayColorType.Yellow);
                 if (module.Submodules.Count > 0)
                 {
-                    Context.Player.SendPacket(Context.Player.GenerateSayPacket("Submodules:", SayColorType.Yellow));
+                    Context.Player.SendChatMessage("Submodules:", SayColorType.Yellow);
                     for (int i = 0; i < (module.Submodules.Count / 6) + 1; i++)
                     {
-                        Context.Player.SendPacket(Context.Player.GenerateSayPacket(" -> " + string.Join(", ", module.Submodules.Skip(i * 6).Take(6).Select(x => $"{x.Aliases[0]}")), SayColorType.Yellow));
+                        Context.Player.SendChatMessage(" -> " + string.Join(", ", module.Submodules.Skip(i * 6).Take(6).Select(x => $"{x.Aliases[0]}")),
+                            SayColorType.Yellow);
                     }
                 }
 
                 if (module.Commands.Count > 0)
                 {
-                    Context.Player.SendPacket(Context.Player.GenerateSayPacket("Commands:", SayColorType.Yellow));
+                    Context.Player.SendChatMessage("Commands:", SayColorType.Yellow);
                     for (int i = 0; i < (module.Commands.Count / 6) + 1; i++)
                     {
-                        Context.Player.SendPacket(Context.Player.GenerateSayPacket(" -> " + string.Join(", ", module.Commands.Skip(i * 6).Take(6).Select(x => $"{x.Aliases[0]}")), SayColorType.Yellow));
+                        Context.Player.SendChatMessage(" -> " + string.Join(", ", module.Commands.Skip(i * 6).Take(6).Select(x => $"{x.Aliases[0]}")), SayColorType.Yellow);
                     }
                 }
             }
 
-            Context.Player.SendPacket(Context.Player.GenerateSayPacket("Usages:", SayColorType.Yellow));
+            Context.Player.SendChatMessage("Usages:", SayColorType.Yellow);
             foreach (var cmd in cmds)
             {
-                Context.Player.SendPacket(Context.Player.GenerateSayPacket($"${cmd.Command.Name} {string.Join(" ", cmd.Command.Parameters.Select(x => x.IsOptional ? $"<{x.Name}>" : $"[{x.Name}]"))}".ToLowerInvariant(), SayColorType.Yellow));
+                Context.Player.SendChatMessage(
+                    $"${cmd.Command.Name} {string.Join(" ", cmd.Command.Parameters.Select(x => x.IsOptional ? $"<{x.Name}>" : $"[{x.Name}]"))}".ToLowerInvariant(), SayColorType.Yellow);
                 foreach (var param in cmd.Command.Parameters)
                 {
                     var str = "";
@@ -136,12 +135,12 @@ namespace Essentials.Help
                     }
 
                     str += $" {param.Description ?? "Undocumented yet."}";
-
-                    Context.Player.SendPacket(Context.Player.GenerateSayPacket(str, SayColorType.Yellow));
+                    ;
+                    Context.Player.SendChatMessage(str, SayColorType.Yellow);
                 }
 
-                Context.Player.SendPacket(Context.Player.GenerateSayPacket(cmd.Command.Description ?? "Undocumented yet.", SayColorType.Yellow));
-                Context.Player.SendPacket(Context.Player.GenerateSayPacket("-", SayColorType.Yellow));
+                Context.Player.SendChatMessage(cmd.Command.Description ?? "Undocumented yet.", SayColorType.Yellow);
+                Context.Player.SendChatMessage("-", SayColorType.Yellow);
             }
         }
     }
