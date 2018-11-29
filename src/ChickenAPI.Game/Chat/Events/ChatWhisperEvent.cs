@@ -1,4 +1,4 @@
-﻿namespace ChickenAPI.Game.Chat.Args
+﻿namespace ChickenAPI.Game.Chat.Events
 {
     public class ChatWhisperEvent
     {

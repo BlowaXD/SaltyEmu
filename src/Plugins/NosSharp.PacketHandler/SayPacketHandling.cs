@@ -1,6 +1,5 @@
 ﻿using System;
 using ChickenAPI.Core.Logging;
-using ChickenAPI.Game.Chat.Args;
 using ChickenAPI.Game.Chat.Events;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Packets.Game.Client.Chat;
