@@ -8,7 +8,7 @@ namespace SaltyEmu.Communication.Protocol.RepositoryPacket
     /// 
     /// </summary>
     /// <typeparam name="TObject"></typeparam>
-    internal sealed class RepositoryGetResponse<TObject> : BaseResponse
+    public sealed class RepositoryGetResponse<TObject> : BaseResponse
     {
         public IEnumerable<TObject> Objects { get; set; }
     }

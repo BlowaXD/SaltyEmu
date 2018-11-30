@@ -11,6 +11,7 @@ namespace SaltyEmu.Communication.Configs
         private string _clientName;
         private string _responseTopic;
         private string _requestTopic;
+        private string _broadcastTopic;
 
         public MqttClientConfigurationBuilder WithName(string name)
         {
@@ -39,6 +40,12 @@ namespace SaltyEmu.Communication.Configs
         public MqttClientConfigurationBuilder WithRequestTopic(string requestTopic)
         {
             _requestTopic = requestTopic;
+            return this;
+        }
+
+        public MqttClientConfigurationBuilder WithBroadcastTopic(string broadcastTopic)
+        {
+            _broadcastTopic = broadcastTopic;
             return this;
         }
 

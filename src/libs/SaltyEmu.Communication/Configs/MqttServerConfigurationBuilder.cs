@@ -14,6 +14,7 @@ namespace SaltyEmu.Communication.Configs
         private string _clientName;
         private string _responseTopic;
         private IIpcRequestHandler _handler;
+        private string _broadcastTopic;
 
         public MqttServerConfigurationBuilder WithName(string name)
         {
@@ -51,6 +52,12 @@ namespace SaltyEmu.Communication.Configs
             return this;
         }
 
+        public MqttServerConfigurationBuilder WithBroadcastTopic(string broadcastTopic)
+        {
+            _broadcastTopic = broadcastTopic;
+            return this;
+        }
+
         public MqttIpcServerConfiguration Build()
         {
             return new MqttIpcServerConfiguration
@@ -60,6 +67,7 @@ namespace SaltyEmu.Communication.Configs
                 EndPoint= _endpoint,
                 Serializer = _serializer,
                 ResponseTopic = _responseTopic,
+                BroadcastTopic = _broadcastTopic,
                 Handler = _handler
             };
         }

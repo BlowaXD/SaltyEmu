@@ -8,5 +8,6 @@ namespace SaltyEmu.Communication.Configs
         public string EndPoint { get; set; }
         public string ClientName { get; set; }
         public string ResponseTopic { get; set; }
+        public string BroadcastTopic { get; set; }
     }
 }

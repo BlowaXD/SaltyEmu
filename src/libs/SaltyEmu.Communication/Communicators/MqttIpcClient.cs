@@ -29,6 +29,7 @@ namespace SaltyEmu.Communication.Communicators
         private readonly IManagedMqttClient _client;
 
         private readonly string _requestTopic;
+        private readonly string _broadcastTopic;
         private readonly string _endPoint;
         private readonly string _name;
 

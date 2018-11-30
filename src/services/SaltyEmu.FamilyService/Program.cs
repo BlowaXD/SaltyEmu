@@ -7,6 +7,7 @@ using ChickenAPI.Data.Families;
 using MessagePack.Resolvers;
 using SaltyEmu.Communication.Communicators;
 using SaltyEmu.Communication.Configs;
+using SaltyEmu.Communication.Protocol.RepositoryPacket;
 using SaltyEmu.Communication.Serializers;
 using SaltyEmu.Communication.Utils;
 using SaltyEmu.FamilyPlugin;
@@ -30,6 +31,7 @@ namespace SaltyEmu.FamilyService
 ███████║██║  ██║███████╗██║      ██║   ███████╗██║ ╚═╝ ██║╚██████╔╝██╗██║     ██║  ██║██║ ╚═╝ ██║██║███████╗██║   
 ╚══════╝╚═╝  ╚═╝╚══════╝╚═╝      ╚═╝   ╚══════╝╚═╝     ╚═╝ ╚═════╝ ╚═╝╚═╝     ╚═╝  ╚═╝╚═╝     ╚═╝╚═╝╚══════╝╚═╝   
 ";
+            Console.WindowWidth = Console.WindowWidth < text.Split('\n')[1].Length ? text.Split('\n')[1].Length : Console.WindowWidth;
             string separator = new string('=', Console.WindowWidth);
             string logo = text.Split('\n').Select(s => string.Format("{0," + (Console.WindowWidth / 2 + s.Length / 2) + "}\n", s))
                 .Aggregate("", (current, i) => current + i);
@@ -48,46 +50,20 @@ namespace SaltyEmu.FamilyService
             PrintHeader();
             InitializeLogger();
             InitializeAsync().ConfigureAwait(false).GetAwaiter().GetResult();
-            InitializeClient().ConfigureAwait(false).GetAwaiter().GetResult();
-
-
             Console.ReadLine();
-        }
-
-        private static async Task InitializeClient()
-        {
-            MqttClientConfigurationBuilder builder = new MqttClientConfigurationBuilder()
-                .ConnectTo("localhost")
-                .WithName("family-client-test")
-                .WithRequestTopic("/family/request")
-                .WithResponseTopic("/family/response")
-                .WithSerializer(new JsonSerializer());
-
-            var client = new FamilyIpcClient(builder);
-            if (client is MappedRepositoryMqtt<FamilyDto> server)
-            {
-                await server.InitializeAsync();
-            }
-
-            Logger.Info("Asking to get family : \"test\"");
-            FamilyDto test = await client.GetByNameAsync("test");
-            Logger.Info($"{test?.Name} ID : {test?.Id}");
-
-
-            Logger.Info("Asking to get family : \"real\"");
-            FamilyDto real = await client.GetByNameAsync("real");
-            Logger.Info($"{real.Name} ID : {real.Id}");
         }
 
         private static async Task InitializeAsync()
         {
             var handler = new RequestHandler();
             handler.Register<GetFamilyInformationRequest>(FamilyGetInformationRequestHandler.OnMessage);
+            handler.Register<RepositorySaveRequest<FamilyDto>>(FamilyGetInformationRequestHandler.OnSaveMessage);
 
             MqttServerConfigurationBuilder builder = new MqttServerConfigurationBuilder()
                 .ConnectTo("localhost")
                 .WithName("family-server")
                 .AddTopic("/family/request")
+                .WithBroadcastTopic("/family/broadcast")
                 .WithResponseTopic("/family/response")
                 .WithSerializer(new JsonSerializer())
                 .WithRequestHandler(handler);

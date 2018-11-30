@@ -6,7 +6,7 @@ namespace SaltyEmu.Communication.Protocol.RepositoryPacket
     /// 
     /// </summary>
     /// <typeparam name="TObject"></typeparam>
-    internal sealed class RepositorySaveResponse<TObject> : BaseResponse
+    public sealed class RepositorySaveResponse<TObject> : BaseResponse
     {
         public IEnumerable<TObject> Objects { get; set; }
     }

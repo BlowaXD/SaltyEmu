@@ -46,6 +46,9 @@ namespace SaltyEmu.Communication.Communicators
                 _client.SubscribeAsync(topic);
             }
 
+            _log.Info($"[RPC] Waiting for broadcasts from : {configuration.BroadcastTopic}...");
+            _client.SubscribeAsync(configuration.BroadcastTopic);
+
             _packetFactory = new PacketContainerFactory();
         }
 
@@ -68,18 +71,28 @@ namespace SaltyEmu.Communication.Communicators
             var container = _serializer.Deserialize<PacketContainer>(message.Payload);
             object packet = JsonConvert.DeserializeObject(container.Content, container.Type);
 
-            if (!(packet is BaseRequest request))
+            switch (packet)
             {
-                return;
+                case BaseRequest request:
+                    OnRequest(request, container.Type);
+                    break;
+                case BaseBroadcastedPacket broadcasted:
+                    OnBroadcastPacket(broadcasted, container.Type);
+                    break;
             }
+        }
 
-            OnRequest(request, container.Type);
+        public void OnBroadcastPacket(BaseBroadcastedPacket broadcasted, Type type)
+        {
+#if DEBUG
+            _log.Debug($"[RECEIVED] Packet [{type}]");
+#endif
         }
 
         public void OnRequest(BaseRequest request, Type type)
         {
 #if DEBUG
-            _log.Debug($"[RECEIVED] Packet [{request.Id}][{type}]");
+            _log.Debug($"[RECEIVED] Request [{request.Id}][{type}]");
 #endif
             request.Server = this;
             _requestHandler.HandleAsync(request, type).ConfigureAwait(false).GetAwaiter().GetResult();

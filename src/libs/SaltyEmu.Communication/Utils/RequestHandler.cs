@@ -32,10 +32,11 @@ namespace SaltyEmu.Communication.Utils
         {
             if (!_packetHandlers.TryGetValue(type, out Func<IIpcRequest, Task> handler))
             {
+                Log.Warn($"{type} could not be found !");
                 return;
             }
 
-            await Task.Run(() => handler.Invoke(request));
+            await Task.Run(() => handler.Invoke(request).ConfigureAwait(false).GetAwaiter().GetResult());
 
             Log.Info($"Handling {type.Name} packet");
         }
