@@ -126,26 +126,49 @@ namespace Essentials.Character
         }
 
         [Command("AddGold")]
-        [Description("Add the given amount of gold to the inventory.")]
+        [Description("Add the given amount of gold to an inventory.")]
         public Task<SaltyCommandResult> AddGoldAsync(
-            [Description("Desired amount to add.")] long count)
+            [Description("Desired amount to add.")] long count,
+            [Description("Player you want to add gold.")] IPlayerEntity player = null)
         {
-            IPlayerEntity player = Context.Player;
+            if (player == null)
+            {
+                player = Context.Player;
+            }
+
             player.GoldUp(count);
 
             return Task.FromResult(new SaltyCommandResult(true, $"{player.Character.Name}'s gold has been increased by {count}"));
         }
 
         [Command("SetGold")]
-        [Description("Set the given amount of gold to the inventory.")]
+        [Description("Set the given amount of gold to an inventory.")]
         public Task<SaltyCommandResult> SetGoldAsync(
-            [Description("Desired amount to set.")] long count)
+            [Description("Desired amount to set.")] long count,
+            [Description("Player you want to set gold.")] IPlayerEntity player = null)
         {
-            IPlayerEntity player = Context.Player;
+            if (player == null)
+            {
+                player = Context.Player;
+            }
+
             player.Character.Gold = count;
             player.ActualiseUiGold();
 
             return Task.FromResult(new SaltyCommandResult(true, $"{player.Character.Name}'s gold has been set to {count}"));
+        }
+
+        [Command("Where")]
+        [Description("Provide the player's coordinates [x] [y] and name of the map in the chat.")]
+        public Task<SaltyCommandResult> WhereAsync(
+            [Description("Player you want to locate")] IPlayerEntity player = null)
+        {
+            if (player == null)
+            {
+                player = Context.Player;
+            }
+
+            return Task.FromResult(new SaltyCommandResult(true, $"{player.Character.Name}'s position: map {player.CurrentMap.Map.Id} [{player.Movable.Actual.X}, {player.Movable.Actual.Y}]"));
         }
     }
 }
