@@ -9,12 +9,12 @@ namespace ChickenAPI.Packets.Game.Client.Specialists
         public int AdditionalPoints { get; set; }
 
         [PacketIndex(1)]
-        public int MaxAdditionalPoints { get; set; }
+        public uint MaxAdditionalPoints { get; set; }
 
         [PacketIndex(2)]
         public int Points { get; set; }
 
         [PacketIndex(3)]
-        public int MaxPoints { get; set; }
+        public uint MaxDailyPoints { get; set; }
     }
 }

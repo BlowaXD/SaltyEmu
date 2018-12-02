@@ -11,5 +11,7 @@ namespace SaltyEmu.BasicPlugin
         public uint GlobalFairyXpMultiplier { get; set; } = 1;
         public uint GoldWinOnDropMultiplier { get; set; } = 1;
         public uint GlobalReputationMultiplier { get; set; } = 1;
+        public uint SpMaxDailyPoints { get; set; } = 10000;
+        public uint SpMaxAdditionalPoints { get; set; } = 1000000;
     }
 }

@@ -443,7 +443,10 @@ namespace ChickenAPI.Game.Inventory
                     break;
             }
 
-            if (itemInstance == null) return;
+            if (itemInstance == null)
+            {
+                return;
+            }
 
             if (itemInstance.Item.ItemType == ItemType.Specialist)
             {
