@@ -1,9 +1,9 @@
 ﻿using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Game.Events;
 
-namespace ChickenAPI.Game.Shops.Args
+namespace ChickenAPI.Game.Shops.Events
 {
-    public class BuyShopEventArgs : ChickenEventArgs
+    public class ShopBuyEvent : ChickenEventArgs
     {
         public VisualType Type { get; set; }
 

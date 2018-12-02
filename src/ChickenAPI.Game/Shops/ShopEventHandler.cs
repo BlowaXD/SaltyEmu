@@ -20,6 +20,7 @@ using ChickenAPI.Game.Inventory.Args;
 using ChickenAPI.Game.Inventory.Extensions;
 using ChickenAPI.Game.Player.Extension;
 using ChickenAPI.Game.Shops.Args;
+using ChickenAPI.Game.Shops.Events;
 using ChickenAPI.Game.Skills.Extensions;
 using ChickenAPI.Packets.Game.Client.Shops;
 
@@ -31,26 +32,26 @@ namespace ChickenAPI.Game.Shops
 
         public override ISet<Type> HandledTypes => new HashSet<Type>
         {
-            typeof(GetShopInformationEventArgs), typeof(BuyShopEventArgs), typeof(SellShopEventArgs)
+            typeof(ShopGetInformationEvent), typeof(ShopBuyEvent), typeof(ShopSellEvent)
         };
 
         public override void Execute(IEntity entity, ChickenEventArgs e)
         {
             switch (e)
             {
-                case GetShopInformationEventArgs getinfos:
+                case ShopGetInformationEvent getinfos:
                     SendInformations(getinfos, entity);
                     break;
-                case BuyShopEventArgs buy:
+                case ShopBuyEvent buy:
                     HandleBuyRequest(entity as IPlayerEntity, buy);
                     break;
-                case SellShopEventArgs sell:
+                case ShopSellEvent sell:
                     HandleSellRequest(entity as IPlayerEntity, sell);
                     break;
             }
         }
 
-        private static void SendInformations(GetShopInformationEventArgs getinfos, IEntity entity)
+        private static void SendInformations(ShopGetInformationEvent getinfos, IEntity entity)
         {
             if (!(entity is IPlayerEntity player))
             {
@@ -120,21 +121,21 @@ namespace ChickenAPI.Game.Shops
             });
         }
 
-        private static void HandleBuyRequest(IPlayerEntity player, BuyShopEventArgs buy)
+        private static void HandleBuyRequest(IPlayerEntity player, ShopBuyEvent shopBuy)
         {
-            switch (buy.Type)
+            switch (shopBuy.Type)
             {
                 case VisualType.Character:
-                    IPlayerEntity shop = player.CurrentMap.GetEntitiesByType<IPlayerEntity>(VisualType.Character).FirstOrDefault(s => s.Character.Id == buy.OwnerId);
+                    IPlayerEntity shop = player.CurrentMap.GetEntitiesByType<IPlayerEntity>(VisualType.Character).FirstOrDefault(s => s.Character.Id == shopBuy.OwnerId);
                     if (shop == null)
                     {
                         return;
                     }
 
-                    HandlePlayerShopBuyRequest(player, buy, shop);
+                    HandlePlayerShopBuyRequest(player, shopBuy, shop);
                     break;
                 case VisualType.Npc:
-                    INpcEntity npc = player.CurrentMap.GetEntitiesByType<INpcEntity>(VisualType.Npc).FirstOrDefault(s => s.MapNpc.Id == buy.OwnerId);
+                    INpcEntity npc = player.CurrentMap.GetEntitiesByType<INpcEntity>(VisualType.Npc).FirstOrDefault(s => s.MapNpc.Id == shopBuy.OwnerId);
                     if (npc == null || !(npc is NpcEntity npcEntity))
                     {
                         return;
@@ -143,20 +144,20 @@ namespace ChickenAPI.Game.Shops
                     Shop npcShop = npcEntity.Shop;
                     if (npcShop.Skills.Any())
                     {
-                        HandleNpcSkillBuyRequest(player, buy, npcShop);
+                        HandleNpcSkillBuyRequest(player, shopBuy, npcShop);
                     }
                     else
                     {
-                        HandleNpcItemBuyRequest(player, buy, npcShop);
+                        HandleNpcItemBuyRequest(player, shopBuy, npcShop);
                     }
 
                     break;
             }
         }
 
-        private static void HandleNpcSkillBuyRequest(IPlayerEntity player, BuyShopEventArgs buy, Shop shop)
+        private static void HandleNpcSkillBuyRequest(IPlayerEntity player, ShopBuyEvent shopBuy, Shop shop)
         {
-            ShopSkillDto skillShop = shop.Skills.FirstOrDefault(s => s.SkillId == buy.Slot);
+            ShopSkillDto skillShop = shop.Skills.FirstOrDefault(s => s.SkillId == shopBuy.Slot);
             if (skillShop == null)
             {
                 return;
@@ -165,13 +166,13 @@ namespace ChickenAPI.Game.Shops
             // check use sp
 
             // check skill cooldown
-            if (player.SkillComponent.CooldownsBySkillId.Any(s => s.Item2 == buy.Slot))
+            if (player.SkillComponent.CooldownsBySkillId.Any(s => s.Item2 == shopBuy.Slot))
             {
                 return;
             }
 
             // check skill already exists in player skills
-            if (player.SkillComponent.Skills.ContainsKey(buy.Slot))
+            if (player.SkillComponent.Skills.ContainsKey(shopBuy.Slot))
             {
                 return;
             }
@@ -233,10 +234,10 @@ namespace ChickenAPI.Game.Shops
             player.SendPacket(player.GenerateLevPacket());
         }
 
-        private static void HandleNpcItemBuyRequest(IPlayerEntity player, BuyShopEventArgs buy, Shop shop)
+        private static void HandleNpcItemBuyRequest(IPlayerEntity player, ShopBuyEvent shopBuy, Shop shop)
         {
-            ShopItemDto item = shop.Items.FirstOrDefault(s => s.Slot == buy.Slot);
-            short amount = buy.Amount;
+            ShopItemDto item = shop.Items.FirstOrDefault(s => s.Slot == shopBuy.Slot);
+            short amount = shopBuy.Amount;
 
             if (item == null || amount <= 0)
             {
@@ -329,12 +330,12 @@ namespace ChickenAPI.Game.Shops
             });
         }
 
-        private static void HandlePlayerShopBuyRequest(IPlayerEntity player, BuyShopEventArgs buy, IPlayerEntity shop)
+        private static void HandlePlayerShopBuyRequest(IPlayerEntity player, ShopBuyEvent shopBuy, IPlayerEntity shop)
         {
             throw new NotImplementedException();
         }
 
-        private static void HandleSellRequest(IPlayerEntity player, SellShopEventArgs sell)
+        private static void HandleSellRequest(IPlayerEntity player, ShopSellEvent shopSell)
         {
             throw new NotImplementedException();
         }

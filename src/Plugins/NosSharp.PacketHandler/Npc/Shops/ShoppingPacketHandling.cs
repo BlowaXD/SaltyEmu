@@ -5,6 +5,7 @@ using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Entities.Npc;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Shops.Args;
+using ChickenAPI.Game.Shops.Events;
 using ChickenAPI.Packets.Game.Client.Shops;
 
 namespace NosSharp.PacketHandler.Npc.Shops
@@ -21,7 +22,7 @@ namespace NosSharp.PacketHandler.Npc.Shops
                 return;
             }
 
-            player.EmitEvent(new GetShopInformationEventArgs { Shop = shopEntity.Shop, Type = packet.Type });
+            player.EmitEvent(new ShopGetInformationEvent { Shop = shopEntity.Shop, Type = packet.Type });
         }
     }
 }
