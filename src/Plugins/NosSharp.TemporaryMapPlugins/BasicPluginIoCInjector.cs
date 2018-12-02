@@ -4,7 +4,9 @@ using System.Linq;
 using Autofac;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Maths;
+using ChickenAPI.Core.Utils;
 using ChickenAPI.Data.Item;
+using ChickenAPI.Game;
 using ChickenAPI.Game.Battle.Hitting;
 using ChickenAPI.Game.Battle.Interfaces;
 using ChickenAPI.Game.ECS;
@@ -53,6 +55,9 @@ namespace SaltyEmu.BasicPlugin
 
         public static void InjectDependencies()
         {
+            ChickenContainer.Builder.Register(_ =>
+                    ConfigurationHelper.Load<JsonGameConfiguration>($"plugins/config/{nameof(BasicPlugin)}/rates.json", true))
+                .As<IGameConfiguration>().SingleInstance();
             ChickenContainer.Builder.Register(_ => new LazyMapManager()).As<IMapManager>().SingleInstance();
             ChickenContainer.Builder.Register(c => new SimpleItemInstanceFactory(c.Resolve<IItemService>())).As<IItemInstanceFactory>();
             ChickenContainer.Builder.Register(_ => new EventManager()).As<IEventManager>().SingleInstance();
