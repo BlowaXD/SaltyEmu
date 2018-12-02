@@ -109,29 +109,10 @@ namespace ChickenAPI.Game.Shops
                 tmp.Append(price);
             }
 
-            foreach (ShopSkillDto skill in getinfos.Shop.Skills.Where(s => s.Type.Equals(getinfos.Type)))
-            {
-                SkillDto skillinfo = skill.Skill;
-
-                tmp.Append(' ');
-
-                if (skill.Type != 0)
-                {
-                    typeshop = 1;
-                    if (skillinfo.Class == (byte)player.Character.Class)
-                    {
-                        tmp.Append(skillinfo.Id);
-                    }
-                }
-                else
-                {
-                    tmp.Append(skillinfo.Id);
-                }
-            }
-
             player.SendPacket(new NInvPacket
             {
                 ShopList = tmp.ToString().Trim(),
+                ShopSkills = getinfos.Shop.Skills.Where(s => s.Type.Equals(getinfos.Type)).Select(s => s.SkillId).ToList(),
                 ShopType = typeshop,
                 Unknown = 0,
                 VisualId = getinfos.Shop.MapNpcId,

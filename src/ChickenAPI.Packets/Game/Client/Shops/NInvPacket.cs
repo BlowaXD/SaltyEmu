@@ -1,4 +1,5 @@
-﻿using ChickenAPI.Packets.Attributes;
+﻿using System.Collections.Generic;
+using ChickenAPI.Packets.Attributes;
 
 namespace ChickenAPI.Packets.Game.Client.Shops
 {
@@ -19,5 +20,8 @@ namespace ChickenAPI.Packets.Game.Client.Shops
 
         [PacketIndex(4)]
         public string ShopList { get; set; }
+
+        [PacketIndex(5, SeparatorNestedElements = " ")]
+        public List<long> ShopSkills { get; set; }
     }
 }
