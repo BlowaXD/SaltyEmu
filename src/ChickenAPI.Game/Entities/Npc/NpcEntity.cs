@@ -7,6 +7,7 @@ using ChickenAPI.Data.Shop;
 using ChickenAPI.Data.Skills;
 using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Enums.Game.Visibility;
+using ChickenAPI.Game.Buffs;
 using ChickenAPI.Game.ECS.Components;
 using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Entities.Monster;
@@ -28,6 +29,7 @@ namespace ChickenAPI.Game.Entities.Npc
                 DirectionType = npc.Position
             };
             MapNpc = npc;
+            Level = npc.NpcMonster.Level;
             Hp = npc.NpcMonster.MaxHp;
             Mp = npc.NpcMonster.MaxMp;
             HpMax = npc.NpcMonster.MaxHp;
@@ -43,7 +45,48 @@ namespace ChickenAPI.Game.Entities.Npc
                 { typeof(NpcMonsterComponent), new NpcMonsterComponent(this, npc) },
                 { typeof(SkillComponent), SkillComponent }
             };
+
+            #region Stat
+
+            Defence = npc.NpcMonster.CloseDefence;
+            DefenceDodge = npc.NpcMonster.DefenceDodge;
+            DistanceDefence = npc.NpcMonster.DistanceDefence;
+            DistanceDefenceDodge = npc.NpcMonster.DistanceDefenceDodge;
+            MagicalDefence = npc.NpcMonster.MagicDefence;
+            MinHit = npc.NpcMonster.DamageMinimum;
+            MaxHit = npc.NpcMonster.DamageMaximum;
+            HitRate = (byte)npc.NpcMonster.Concentrate;
+
+            #endregion Stat
         }
+
+        #region stat
+
+        public int MinHit { get; set; }
+
+        public int MaxHit { get; set; }
+
+        public int HitRate { get; set; }
+        public int CriticalChance { get; set; }
+        public short CriticalRate { get; set; }
+        public int DistanceCriticalChance { get; set; }
+        public int DistanceCriticalRate { get; set; }
+        public short WaterResistance { get; set; }
+        public short FireResistance { get; set; }
+        public short LightResistance { get; set; }
+        public short DarkResistance { get; set; }
+
+        public short Defence { get; set; }
+
+        public short DefenceDodge { get; set; }
+
+        public short DistanceDefence { get; set; }
+
+        public short DistanceDefenceDodge { get; set; }
+
+        public short MagicalDefence { get; set; }
+
+        #endregion stat
 
         public bool HasShop => Shop != null;
         public Shop Shop { get; set; }
@@ -82,7 +125,7 @@ namespace ChickenAPI.Game.Entities.Npc
 
         public VisibilityComponent _visibility { get; }
 
-        #endregion
+        #endregion Visibility
 
         #region Battle
 
@@ -91,14 +134,18 @@ namespace ChickenAPI.Game.Entities.Npc
         public bool HasSkill(long skillId) => SkillComponent.Skills.ContainsKey(skillId);
 
         public bool CanCastSkill(long skillId) => SkillComponent.CooldownsBySkillId.Any(s => s.Item2 == skillId);
+
         public IDictionary<long, SkillDto> Skills { get; }
 
         public SkillComponent SkillComponent { get; }
 
-        #endregion
+        #endregion Skills
 
         public int MpMax { get; set; }
+        private readonly List<BuffContainer> _buffs = new List<BuffContainer>();
+        public ICollection<BuffContainer> Buffs => _buffs;
         public DateTime LastTimeKilled { get; set; }
+        public DateTime LastHitReceived { get; set; }
 
         public bool IsAlive => Hp > 0;
         public bool CanAttack => true;
@@ -109,7 +156,6 @@ namespace ChickenAPI.Game.Entities.Npc
         public int Hp { get; set; }
         public int Mp { get; set; }
         public int HpMax { get; set; }
-
 
         #region Movements
 
@@ -122,8 +168,15 @@ namespace ChickenAPI.Game.Entities.Npc
         public Position<short> Position => Movable.Actual;
         public Position<short> Destination => Movable.Destination;
 
-        #endregion
+        #endregion Movements
 
-        #endregion
+        #endregion Battle
+
+        public byte Level { get; set; }
+        public long LevelXp { get; set; }
+        public byte HeroLevel { get; set; }
+        public long HeroLevelXp { get; set; }
+        public byte JobLevel { get; set; }
+        public long JobLevelXp { get; set; }
     }
 }

@@ -43,7 +43,7 @@ We designed a tool which is able to parse Nostale's .dat files to fill your data
 
 
 ### Through dotnet
-`dotnet bin/Debug/World/World.dll`
+`dotnet dist/Debug/World/World.dll`
 > /!\ AT THE FIRST RUN YOU WILL HAVE TO CONFIGURE YOU DATABASE ACCESS RIGHTLY
 >
 > `dist/Debug/World/plugins/configs/DatabasePlugin/conf.json`

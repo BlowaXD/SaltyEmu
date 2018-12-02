@@ -13,12 +13,10 @@ namespace ChickenAPI.Game.Inventory.ItemUsage.Handling
     {
         private static readonly Logger Log = Logger.GetLogger<BaseUseItemHandler>();
 
-        protected readonly Dictionary<Tuple<long, ItemType>, UseItemRequestHandler> useitem;
+        protected readonly Dictionary<(long, ItemType), UseItemRequestHandler> Handlers = new Dictionary<(long, ItemType), UseItemRequestHandler>();
 
         public BaseUseItemHandler()
         {
-            useitem = new Dictionary<Tuple<long, ItemType>, UseItemRequestHandler>();
-
             Assembly currentAsm = Assembly.GetAssembly(typeof(BaseUseItemHandler));
             // get types
             foreach (Type type in currentAsm.GetTypes().Where(s => s.GetMethods().Any(m => m.GetCustomAttribute<UseItemEffectAttribute>() != null)))
@@ -33,12 +31,12 @@ namespace ChickenAPI.Game.Inventory.ItemUsage.Handling
 
         public void RegisterItemUsageCallback(UseItemRequestHandler handler)
         {
-            if (useitem.ContainsKey(Tuple.Create(handler.Effect, handler.IType)))
+            if (Handlers.ContainsKey((handler.Effect, handler.IType)))
             {
                 return;
             }
 
-            useitem.Add(Tuple.Create(handler.Effect, handler.IType), handler);
+            Handlers.Add((handler.Effect, handler.IType), handler);
             Log.Info($"[REGISTER_HANDLER] UI_EFFECT : {handler.Effect} && ITYPE : {handler.IType} REGISTERED !");
         }
 
@@ -49,7 +47,7 @@ namespace ChickenAPI.Game.Inventory.ItemUsage.Handling
                 return;
             }
 
-            if (!useitem.TryGetValue(Tuple.Create((long)args.Item.Item.Effect, args.Item.Item.ItemType), out UseItemRequestHandler handler))
+            if (!Handlers.TryGetValue((args.Item.Item.Effect, args.Item.Item.ItemType), out UseItemRequestHandler handler))
             {
                 return;
             }

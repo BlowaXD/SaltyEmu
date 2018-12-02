@@ -1,1 +1,1 @@
-docker build -t saltyemu-login -f login.Dockerfile .
+docker build -t saltyemu-login -f scripts/docker/login.Dockerfile .

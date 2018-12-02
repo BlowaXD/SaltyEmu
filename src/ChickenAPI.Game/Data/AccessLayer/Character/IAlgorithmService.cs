@@ -65,8 +65,7 @@ namespace ChickenAPI.Game.Data.AccessLayer.Character
         /// <returns></returns>
         int GetFamilyLevelXp(byte level);
 
-        #endregion
-
+        #endregion Xp
 
         #region Stats
 
@@ -150,8 +149,23 @@ namespace ChickenAPI.Game.Data.AccessLayer.Character
         /// <returns></returns>
         int GetMinimumAttackRange(CharacterClassType type, byte level);
 
-        #endregion
+        int GetDistCritical(CharacterClassType type, byte level);
 
+        int GetHitCritical(CharacterClassType type, byte level);
+
+        int GetHitCriticalRate(CharacterClassType type, byte level);
+
+        int GetHitRate(CharacterClassType type, byte level);
+
+        int GetDistCriticalRate(CharacterClassType type, byte level);
+
+        int GetMaxDistance(CharacterClassType type, byte level);
+
+        int GetMaxHit(CharacterClassType type, byte level);
+
+        int GetMinHit(CharacterClassType type, byte level);
+
+        #endregion Stats
 
         #region HpMp
 
@@ -184,7 +198,6 @@ namespace ChickenAPI.Game.Data.AccessLayer.Character
         /// <returns></returns>
         int GetHpRegen(CharacterClassType type, byte level);
 
-
         /// <summary>
         ///     Returns the HpRegen when player is sitting, based on class and level
         ///     /!\ Should return the highest value under level if level is out of range
@@ -203,7 +216,6 @@ namespace ChickenAPI.Game.Data.AccessLayer.Character
         /// <returns></returns>
         int GetMpRegen(CharacterClassType type, byte level);
 
-
         /// <summary>
         ///     Returns the HpRegen when player is sitting, based on class and level
         ///     /!\ Should return the highest value under level if level is out of range
@@ -213,8 +225,8 @@ namespace ChickenAPI.Game.Data.AccessLayer.Character
         /// <returns></returns>
         int GetMpRegenSitting(CharacterClassType type, byte level);
 
-        #endregion
+        #endregion HpMpRegen
 
-        #endregion
+        #endregion HpMp
     }
 }

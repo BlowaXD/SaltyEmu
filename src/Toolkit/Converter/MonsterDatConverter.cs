@@ -201,7 +201,7 @@ namespace Toolkit.Converter
                 {
                     RelationType = BCardRelationType.NpcMonster,
                     RelationId = monster.Id,
-                    Type = type,
+                    Type = (BCardType)type,
                     SubType = (byte)((int.Parse(currentLine[5 * i + 6]) + 1) * 10 + 1 + (first > 0 ? 0 : 1)),
                     FirstData = (short)((first > 0 ? first : -first) / 4),
                     SecondData = (short)(int.Parse(currentLine[5 * i + 4]) / 4),
@@ -230,7 +230,7 @@ namespace Toolkit.Converter
                 {
                     RelationType = BCardRelationType.NpcMonster,
                     RelationId = monster.Id,
-                    Type = type,
+                    Type = (BCardType)type,
                     SubType = (byte)(int.Parse(currentLine[5 * i + 5]) + 1 * 10 + 1 + (first > 0 ? 0 : 1)),
                     IsLevelScaled = Convert.ToBoolean(first % 4),
                     IsLevelDivided = (first % 4) == 2,

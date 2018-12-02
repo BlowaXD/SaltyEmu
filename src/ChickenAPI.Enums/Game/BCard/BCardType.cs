@@ -2,9 +2,7 @@
 
 namespace ChickenAPI.Enums.Game.BCard
 {
-    public static partial class BCardTypes
-    {
-        public enum CardTypes
+        public enum BCardType
         {
             SpecialAttack = 1,
             SpecialDefence = 2,
@@ -97,5 +95,4 @@ namespace ChickenAPI.Enums.Game.BCard
             Hero = 87,
             NewsClass = 89
         }
-    }
 }

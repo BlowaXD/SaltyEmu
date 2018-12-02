@@ -7,6 +7,7 @@ using ChickenAPI.Data.NpcMonster;
 using ChickenAPI.Data.Skills;
 using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Enums.Game.Visibility;
+using ChickenAPI.Game.Buffs;
 using ChickenAPI.Game.ECS.Components;
 using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Movements.DataObjects;
@@ -24,6 +25,7 @@ namespace ChickenAPI.Game.Entities.Monster
                 Actual = new Position<short> { X = dto.MapX, Y = dto.MapY },
                 Destination = new Position<short> { X = dto.MapX, Y = dto.MapY }
             };
+            Level = dto.NpcMonster.Level;
             Hp = dto.NpcMonster.MaxHp;
             HpMax = dto.NpcMonster.MaxHp;
             Mp = dto.NpcMonster.MaxMp;
@@ -40,7 +42,50 @@ namespace ChickenAPI.Game.Entities.Monster
                 { typeof(NpcMonsterComponent), new NpcMonsterComponent(this, dto) },
                 { typeof(SkillComponent), SkillComponent }
             };
+
+            #region Stat
+
+            Defence = dto.NpcMonster.CloseDefence;
+            DefenceDodge = dto.NpcMonster.DefenceDodge;
+            DistanceDefence = dto.NpcMonster.DistanceDefence;
+            DistanceDefenceDodge = dto.NpcMonster.DistanceDefenceDodge;
+            MagicalDefence = dto.NpcMonster.MagicDefence;
+            MinHit = dto.NpcMonster.DamageMinimum;
+            MaxHit = dto.NpcMonster.DamageMaximum;
+            HitRate = (byte)dto.NpcMonster.Concentrate;
+            CriticalChance = dto.NpcMonster.CriticalChance;
+            CriticalRate = dto.NpcMonster.CriticalRate;
+
+            #endregion Stat
         }
+
+        #region stat
+
+        public int MinHit { get; set; }
+
+        public int MaxHit { get; set; }
+
+        public int HitRate { get; set; }
+        public int CriticalChance { get; set; }
+        public short CriticalRate { get; set; }
+        public int DistanceCriticalChance { get; set; }
+        public int DistanceCriticalRate { get; set; }
+        public short WaterResistance { get; set; }
+        public short FireResistance { get; set; }
+        public short LightResistance { get; set; }
+        public short DarkResistance { get; set; }
+
+        public short Defence { get; set; }
+
+        public short DefenceDodge { get; set; }
+
+        public short DistanceDefence { get; set; }
+
+        public short DistanceDefenceDodge { get; set; }
+
+        public short MagicalDefence { get; set; }
+
+        #endregion stat
 
         public override void Dispose()
         {
@@ -77,7 +122,7 @@ namespace ChickenAPI.Game.Entities.Monster
             set => _visibility.Visibility = value;
         }
 
-        #endregion
+        #endregion Visibility
 
         #region Battle
 
@@ -91,11 +136,13 @@ namespace ChickenAPI.Game.Entities.Monster
 
         public SkillComponent SkillComponent { get; }
 
-        #endregion
+        #endregion Skills
 
         public int MpMax { get; set; }
+        private readonly List<BuffContainer> _buffs = new List<BuffContainer>();
+        public ICollection<BuffContainer> Buffs => _buffs;
         public DateTime LastTimeKilled { get; set; }
-
+        public DateTime LastHitReceived { get; set; }
 
         public bool IsAlive => Hp > 0;
         public bool CanAttack => true;
@@ -106,7 +153,6 @@ namespace ChickenAPI.Game.Entities.Monster
         public int Hp { get; set; }
         public int Mp { get; set; }
         public int HpMax { get; set; }
-
 
         #region Movements
 
@@ -119,8 +165,15 @@ namespace ChickenAPI.Game.Entities.Monster
         public Position<short> Position => Movable.Actual;
         public Position<short> Destination => Movable.Destination;
 
-        #endregion
+        #endregion Movements
 
-        #endregion
+        #endregion Battle
+
+        public byte Level { get; set; }
+        public long LevelXp { get; set; }
+        public byte HeroLevel { get; set; }
+        public long HeroLevelXp { get; set; }
+        public byte JobLevel { get; set; }
+        public long JobLevelXp { get; set; }
     }
 }

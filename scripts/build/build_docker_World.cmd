@@ -1,1 +1,1 @@
-docker build -t saltyemu-world -f world.Dockerfile .
+docker build -t saltyemu-world -f scripts/docker/world.Dockerfile .

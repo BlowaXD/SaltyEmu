@@ -307,7 +307,7 @@ namespace Toolkit.Converter
             {
                 RelationType = BCardRelationType.Skill,
                 RelationId = skill.Id,
-                Type = type,
+                Type = (BCardType)type,
                 SubType = (byte)((int.Parse(currentLine[4]) + 1) * 10 + 1 + (first < 0 ? 1 : 0)),
                 IsLevelScaled = Convert.ToBoolean(first % 4),
                 IsLevelDivided = (first % 4) == 2,

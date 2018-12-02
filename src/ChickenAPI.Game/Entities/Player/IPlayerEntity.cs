@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using ChickenAPI.Data.Character;
+using ChickenAPI.Data.Item;
 using ChickenAPI.Enums.Game.Character;
 using ChickenAPI.Game.Battle.Interfaces;
 using ChickenAPI.Game.Families;
@@ -23,6 +24,16 @@ namespace ChickenAPI.Game.Entities.Player
         DateTime DateLastPortal { get; set; }
 
         double LastPortal { get; set; }
+
+        #region Equipments
+
+        ItemInstanceDto Fairy { get; }
+        ItemInstanceDto Weapon { get; }
+        ItemInstanceDto SecondaryWeapon { get; }
+        ItemInstanceDto Armor { get; }
+
+        #endregion
+
 
         /// <summary>
         ///

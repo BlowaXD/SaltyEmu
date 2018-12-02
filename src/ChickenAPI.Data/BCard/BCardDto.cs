@@ -6,7 +6,7 @@ namespace ChickenAPI.Data.BCard
     {
         public byte SubType { get; set; }
 
-        public byte Type { get; set; }
+        public BCardType Type { get; set; }
 
         public int FirstData { get; set; }
 

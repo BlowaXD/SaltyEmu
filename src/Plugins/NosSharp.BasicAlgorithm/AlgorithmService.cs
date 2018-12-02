@@ -25,7 +25,15 @@ namespace NosSharp.BasicAlgorithm
         private readonly ILevelBasedDataAlgorithm _levelBasedAlgorithm;
         private readonly ICharacterStatAlgorithm _magicDefenceAlgorithm;
         private readonly ICharacterStatAlgorithm _magicDodgeAlgorithm;
-        private readonly ICharacterStatAlgorithm _minimumAttackRange;
+        private readonly ICharacterStatAlgorithm _minHit;
+        private readonly ICharacterStatAlgorithm _maxHit;
+        private readonly ICharacterStatAlgorithm _minDist;
+        private readonly ICharacterStatAlgorithm _maxDist;
+        private readonly ICharacterStatAlgorithm _hitRate;
+        private readonly ICharacterStatAlgorithm _criticalHitRate;
+        private readonly ICharacterStatAlgorithm _criticalHit;
+        private readonly ICharacterStatAlgorithm _criticalDistRate;
+        private readonly ICharacterStatAlgorithm _criticalDist;
         private readonly ICharacterStatAlgorithm _mpMax;
         private readonly ICharacterStatAlgorithm _mpRegen;
         private readonly ICharacterStatAlgorithm _mpRegenSitting;
@@ -53,7 +61,16 @@ namespace NosSharp.BasicAlgorithm
             _closeDodgeAlgorithm = new CloseDodgeAlgorithm();
             _rangedDodgeAlgorithm = new RangedDodgeAlgorithm();
             _magicDodgeAlgorithm = new MagicDodgeAlgorithm();
-            _minimumAttackRange = new AttackRangeAlgorithm();
+
+            _minHit = new MinHitAlgorithm();
+            _maxHit = new MaxHitAlgorithm();
+            _minDist = new MinDistanceAlgorithm();
+            _maxDist = new MaxDistanceAlgorithm();
+            _hitRate = new HitRateAlgorithm();
+            _criticalHitRate = new CriticalHitRateAlgorithm();
+            _criticalHit = new CriticalHitAlgorithm();
+            _criticalDistRate = new CriticalDistRateAlgorithm();
+            _criticalDist = new CriticalDistAlgorithm();
 
             _hpMax = new HpMax();
             _hpRegen = new HpRegen();
@@ -78,6 +95,15 @@ namespace NosSharp.BasicAlgorithm
             _rangedDodgeAlgorithm.Initialize();
             _magicDodgeAlgorithm.Initialize();
 
+            _minHit.Initialize();
+            _maxHit.Initialize();
+            _minDist.Initialize();
+            _maxDist.Initialize();
+            _hitRate.Initialize();
+            _criticalHitRate.Initialize();
+            _criticalHit.Initialize();
+            _criticalDistRate.Initialize();
+            _criticalDist.Initialize();
 
             _hpMax.Initialize();
             _hpRegen.Initialize();
@@ -86,6 +112,22 @@ namespace NosSharp.BasicAlgorithm
             _mpRegen.Initialize();
             _mpRegenSitting.Initialize();
         }
+
+        public int GetDistCritical(CharacterClassType type, byte level) => _criticalDist.GetStat(type, level);
+
+        public int GetDistCriticalRate(CharacterClassType type, byte level) => _criticalDistRate.GetStat(type, level);
+
+        public int GetHitCritical(CharacterClassType type, byte level) => _criticalHit.GetStat(type, level);
+
+        public int GetHitCriticalRate(CharacterClassType type, byte level) => _criticalHitRate.GetStat(type, level);
+
+        public int GetHitRate(CharacterClassType type, byte level) => _hitRate.GetStat(type, level);
+
+        public int GetMaxDistance(CharacterClassType type, byte level) => _maxDist.GetStat(type, level);
+
+        public int GetMaxHit(CharacterClassType type, byte level) => _maxHit.GetStat(type, level);
+
+        public int GetMinHit(CharacterClassType type, byte level) => _minHit.GetStat(type, level);
 
         public int GetLevelXp(CharacterClassType type, byte level) => (int)_levelBasedAlgorithm.Data[level];
 
@@ -114,7 +156,7 @@ namespace NosSharp.BasicAlgorithm
 
         public int GetDodgeMagic(CharacterClassType type, byte level) => _magicDodgeAlgorithm.GetStat(type, level);
 
-        public int GetMinimumAttackRange(CharacterClassType type, byte level) => _minimumAttackRange.GetStat(type, level);
+        public int GetMinimumAttackRange(CharacterClassType type, byte level) => _minDist.GetStat(type, level);
 
         public int GetHpMax(CharacterClassType type, byte level) => _hpMax.GetStat(type, level);
 

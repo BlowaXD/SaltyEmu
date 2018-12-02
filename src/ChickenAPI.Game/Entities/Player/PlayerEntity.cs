@@ -14,6 +14,7 @@ using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Enums.Game.Families;
 using ChickenAPI.Enums.Game.Items;
 using ChickenAPI.Enums.Game.Visibility;
+using ChickenAPI.Game.Buffs;
 using ChickenAPI.Game.Data.AccessLayer.Character;
 using ChickenAPI.Game.Data.AccessLayer.Item;
 using ChickenAPI.Game.ECS.Components;
@@ -83,7 +84,52 @@ namespace ChickenAPI.Game.Entities.Player
                 { typeof(SkillComponent), SkillComponent },
                 { typeof(LocomotionComponent), Locomotion }
             };
+
+            #region Stat
+
+            Defence = (short)Algorithm.GetDefenceClose(Character.Class, Level);
+            DefenceDodge = (short)Algorithm.GetDodgeClose(Character.Class, Level);
+            DistanceDefence = (short)Algorithm.GetDefenceRange(Character.Class, Level);
+            DistanceDefenceDodge = (short)Algorithm.GetDodgeRanged(Character.Class, Level);
+            MagicalDefence = (short)Algorithm.GetDefenceMagic(Character.Class, Level);
+            MinHit = (short)Algorithm.GetMinHit(Character.Class, Level);
+            MaxHit = (short)Algorithm.GetMaxHit(Character.Class, Level);
+            HitRate = (byte)Algorithm.GetHitRate(Character.Class, Level);
+            CriticalChance = Algorithm.GetHitCritical(Character.Class, Level);
+            CriticalRate = (byte)Algorithm.GetHitCriticalRate(Character.Class, Level);
+            DistanceCriticalChance = Algorithm.GetDistCritical(Character.Class, Level);
+            DistanceCriticalRate = Algorithm.GetDistCriticalRate(Character.Class, Level);
+
+            #endregion Stat
         }
+
+        #region stat
+
+        public int MinHit { get; set; }
+
+        public int MaxHit { get; set; }
+
+        public int HitRate { get; set; }
+        public int CriticalChance { get; set; }
+        public short CriticalRate { get; set; }
+        public int DistanceCriticalChance { get; set; }
+        public int DistanceCriticalRate { get; set; }
+        public short WaterResistance { get; set; }
+        public short FireResistance { get; set; }
+        public short LightResistance { get; set; }
+        public short DarkResistance { get; set; }
+
+        public short Defence { get; set; }
+
+        public short DefenceDodge { get; set; }
+
+        public short DistanceDefence { get; set; }
+
+        public short DistanceDefenceDodge { get; set; }
+
+        public short MagicalDefence { get; set; }
+
+        #endregion stat
 
         public MovableComponent Movable { get; }
         public InventoryComponent Inventory { get; }
@@ -238,7 +284,10 @@ namespace ChickenAPI.Game.Entities.Player
         public int Mp { get; set; }
         public int HpMax { get; set; }
         public int MpMax { get; set; }
+        private readonly List<BuffContainer> _buffs = new List<BuffContainer>();
+        public ICollection<BuffContainer> Buffs => _buffs;
         public DateTime LastTimeKilled { get; set; }
+        public DateTime LastHitReceived { get; set; }
 
         #endregion Stats
 
@@ -265,6 +314,7 @@ namespace ChickenAPI.Game.Entities.Player
 
         // todo manage Position of player in instanciated mapLayers
         public Position<short> Position => Movable.Actual;
+
         public Position<short> Destination => Movable.Destination;
 
         #endregion Movements
@@ -371,6 +421,10 @@ namespace ChickenAPI.Game.Entities.Player
         }
 
         public double LastPortal { get; set; }
+        public ItemInstanceDto Fairy => Inventory.GetWeared(EquipmentType.Fairy);
+        public ItemInstanceDto Weapon => Inventory.GetWeared(EquipmentType.MainWeapon);
+        public ItemInstanceDto SecondaryWeapon => Inventory.GetWeared(EquipmentType.SecondaryWeapon);
+        public ItemInstanceDto Armor => Inventory.GetWeared(EquipmentType.Armor);
 
         public bool IsTransformedLocomotion => Locomotion.IsVehicled;
 

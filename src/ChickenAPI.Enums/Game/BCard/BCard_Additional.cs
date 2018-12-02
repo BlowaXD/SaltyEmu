@@ -1,6 +1,6 @@
 ﻿namespace ChickenAPI.Enums.Game.BCard
 {
-    public static partial class BCardTypes
+    public static class BCardSubTypes
     {
         public enum NewsClass : byte
         {

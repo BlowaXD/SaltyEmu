@@ -3,7 +3,6 @@ using ChickenAPI.Data.Families;
 using ChickenAPI.Game.Data.AccessLayer.Families;
 using SaltyEmu.Communication.Communicators;
 using SaltyEmu.Communication.Configs;
-using SaltyEmu.Communication.Serializers;
 using SaltyEmu.FamilyPlugin.Communication;
 
 namespace SaltyEmu.FamilyPlugin

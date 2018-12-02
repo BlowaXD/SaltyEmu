@@ -18,13 +18,13 @@ namespace ChickenAPI.Packets.Game.Server.Player
         public int MaxHit { get; set; }
 
         [PacketIndex(4)]
-        public byte HitRate { get; set; }
+        public int HitRate { get; set; }
 
         [PacketIndex(5)]
-        public byte CriticalHitRate { get; set; }
+        public short CriticalHitRate { get; set; }
 
         [PacketIndex(6)]
-        public byte CriticalHitMultiplier { get; set; }
+        public int CriticalHitMultiplier { get; set; }
 
         [PacketIndex(7)]
         public byte Type2 { get; set; }
@@ -42,7 +42,7 @@ namespace ChickenAPI.Packets.Game.Server.Player
         public short SecondaryHitRate { get; set; }
 
         [PacketIndex(12)]
-        public byte SecondaryCriticalHitRate { get; set; }
+        public short SecondaryCriticalHitRate { get; set; }
 
         [PacketIndex(13)]
         public short SecondaryCriticalHitMultiplier { get; set; }

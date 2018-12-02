@@ -110,7 +110,7 @@ namespace Toolkit.Converter
                 {
                     RelationType = BCardRelationType.Card,
                     RelationId = card.Id,
-                    Type = byte.Parse(currentLine[2 + i * 6]),
+                    Type = (BCardType)byte.Parse(currentLine[2 + i * 6]),
                     SubType = (byte)((Convert.ToByte(currentLine[3 + i * 6]) + 1) * 10 + 1 + (first < 0 ? 1 : 0)),
                     FirstData = (first > 0 ? first : -first) / 4,
                     SecondData = int.Parse(currentLine[7 + i * 6]) / 4,
