@@ -5,6 +5,7 @@ using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Logging;
 using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Game.ECS.Entities;
+using ChickenAPI.Game.Entities.Npc;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Entities.ReqInfo.Events;
 using ChickenAPI.Game.Events;
@@ -51,14 +52,14 @@ namespace ChickenAPI.Game.Entities.ReqInfo
             }
         }
 
+        public static void SendInfoFromMonster(INpcMonsterEntity npc, ReqInfoEvent e)
+        {
+            Log.Info($"cc je verif le Npc");
+        }
+
         public static void SendInfoFromPlayer(IPlayerEntity player, ReqInfoEvent e)
         {
             player.SendPacket(player.CurrentMap.GetPlayerById(e.TargetVNum).GenerateReqInfo());
-        }
-
-        public void SendInfoFromMonster(INpcMonsterEntity npc, ReqInfoEvent e)
-        {
-            Log.Info($"cc je verif le Npc");
         }
 
         public void SenfInfoFromItem(IInventoriedEntity item, ReqInfoEvent e)

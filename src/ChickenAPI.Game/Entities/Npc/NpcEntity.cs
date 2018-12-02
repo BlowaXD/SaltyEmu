@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ChickenAPI.Core.Utils;
 using ChickenAPI.Data.Map;
+using ChickenAPI.Data.NpcMonster;
 using ChickenAPI.Data.Shop;
 using ChickenAPI.Data.Skills;
 using ChickenAPI.Enums.Game.Entity;
@@ -178,5 +179,6 @@ namespace ChickenAPI.Game.Entities.Npc
         public long HeroLevelXp { get; set; }
         public byte JobLevel { get; set; }
         public long JobLevelXp { get; set; }
+        public NpcMonsterDto NpcMonster => MapNpc.NpcMonster;
     }
 }
