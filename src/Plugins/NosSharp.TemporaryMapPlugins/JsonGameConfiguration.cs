@@ -4,12 +4,12 @@ namespace SaltyEmu.BasicPlugin
 {
     public class JsonGameConfiguration : IGameConfiguration
     {
-        public uint GlobalXpMultiplier { get; set; }
-        public uint GlobalJobXpMultiplier { get; set; }
-        public uint GlobalSpXpMultiplier { get; set; }
-        public uint GlobalHeroXpMultiplier { get; set; }
-        public uint GlobalFairyXpMultiplier { get; set; }
-        public uint GoldWinOnDropMultiplier { get; set; }
-        public uint GlobalReputationMultiplier { get; set; }
+        public uint GlobalXpMultiplier { get; set; } = 1;
+        public uint GlobalJobXpMultiplier { get; set; } = 1;
+        public uint GlobalSpXpMultiplier { get; set; } = 1;
+        public uint GlobalHeroXpMultiplier { get; set; } = 1;
+        public uint GlobalFairyXpMultiplier { get; set; } = 1;
+        public uint GoldWinOnDropMultiplier { get; set; } = 1;
+        public uint GlobalReputationMultiplier { get; set; } = 1;
     }
 }
