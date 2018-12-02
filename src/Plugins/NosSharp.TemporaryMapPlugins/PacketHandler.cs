@@ -99,7 +99,7 @@ namespace SaltyEmu.BasicPlugin
             {
                 return;
             }
-            
+
             _gameHandlersByType.Remove(packetType);
             _gameHandlerByHeader.Remove(method.Identification);
         }
@@ -125,7 +125,16 @@ namespace SaltyEmu.BasicPlugin
                 return;
             }
 
-            handler.Handler(packet, session);
+
+            try
+            {
+                handler.Handler(packet, session);
+            }
+            catch (Exception e)
+            {
+                Log.Error("[CHARACTER_SCREEN_HANDLING]", e);
+                throw;
+            }
         }
 
         public void Handle((IPacket, IPlayerEntity) handlingInfo)
@@ -148,7 +157,15 @@ namespace SaltyEmu.BasicPlugin
                 return;
             }
 
-            handler.HandlerMethod(packet, playerEntity);
+            try
+            {
+                handler.HandlerMethod(packet, playerEntity);
+            }
+            catch (Exception e)
+            {
+                Log.Error("[GAME_HANDLING]", e);
+                throw;
+            }
         }
     }
 }
