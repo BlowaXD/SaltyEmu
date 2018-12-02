@@ -53,7 +53,7 @@ namespace Essentials.Teleport
             await Task.Delay(delay);
 
             Context.Player.TeleportTo(map, x, y);
-            return new SaltyCommandResult(true, $"You have been teleported to the map #{map.Id} in positions x:{x}|y:{y}.");
+            return new SaltyCommandResult(true, $"You have been teleported to the map #{map.Map.Id} in positions x:{x}|y:{y}.");
         }
 
         [Command("Teleport")]
@@ -69,7 +69,7 @@ namespace Essentials.Teleport
             await Task.Delay(delay);
 
             target.TeleportTo(map, x, y);
-            return new SaltyCommandResult(true, $"You have been teleported to the map #{map.Id} in positions x:{x}|y:{y}.");
+            return new SaltyCommandResult(true, $"You have been teleported to the map #{map.Map.Id} in positions x:{x}|y:{y}.");
         }
     }
 }

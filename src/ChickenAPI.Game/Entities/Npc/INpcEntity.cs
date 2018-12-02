@@ -3,7 +3,7 @@ using ChickenAPI.Game.Shops;
 
 namespace ChickenAPI.Game.Entities.Npc
 {
-    public interface INpcEntity : IBattleEntity, IMapNpcEntity, IShopCapacity
+    public interface INpcEntity : IBattleEntity, IMapNpcEntity, IShopEntity
     {
     }
 }

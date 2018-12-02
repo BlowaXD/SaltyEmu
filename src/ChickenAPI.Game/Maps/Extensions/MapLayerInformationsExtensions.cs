@@ -20,7 +20,7 @@ namespace ChickenAPI.Game.Maps.Extensions
     {
         public static IEnumerable<ShopPacket> GetShopsPackets(this IMapLayer layer)
         {
-            return layer.GetEntitiesByType<INpcEntity>(VisualType.Npc).Select(s => s.GenerateShopPacket());
+            return layer.GetEntitiesByType<INpcEntity>(VisualType.Npc).Where(s => s.HasShop).Select(s => s.GenerateShopPacket());
         }
 
         public static IEnumerable<PairyPacket> GetPairyPackets(this IMapLayer layer, IPlayerEntity player)

@@ -7,10 +7,11 @@ namespace ChickenAPI.Game.Shops.Extensions
     {
         public static ShopPacket GenerateShopPacket(this INpcEntity npc)
         {
-            if (npc.Shop == null)
+            if (!npc.HasShop)
             {
                 return null;
             }
+
             return new ShopPacket
             {
                 VisualType = npc.Type,
