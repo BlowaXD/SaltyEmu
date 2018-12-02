@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using AutoMapper;
 using ChickenAPI.Data.Families;
-using ChickenAPI.Game.Data.AccessLayer.Families;
 using Microsoft.EntityFrameworkCore;
 using SaltyEmu.Database;
 using SaltyEmu.DatabasePlugin.Models.Families;

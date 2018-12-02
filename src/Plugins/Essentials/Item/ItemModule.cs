@@ -3,7 +3,6 @@ using Autofac;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Data.Item;
 using ChickenAPI.Enums;
-using ChickenAPI.Game.Data.AccessLayer.Item;
 using ChickenAPI.Game.Inventory.Args;
 using Qmmands;
 using SaltyEmu.Commands.Checks;

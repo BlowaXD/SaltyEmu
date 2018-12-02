@@ -9,8 +9,6 @@ using ChickenAPI.Data.BCard;
 using ChickenAPI.Data.Skills;
 using ChickenAPI.Enums.Game.BCard;
 using ChickenAPI.Enums.Game.Buffs;
-using ChickenAPI.Game.Data.AccessLayer.BCard;
-using ChickenAPI.Game.Data.AccessLayer.Skill;
 
 namespace Toolkit.Converter
 {

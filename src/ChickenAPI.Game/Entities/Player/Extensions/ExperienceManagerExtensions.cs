@@ -1,7 +1,7 @@
 ﻿using System;
 using Autofac;
 using ChickenAPI.Core.IoC;
-using ChickenAPI.Game.Data.AccessLayer.Character;
+using ChickenAPI.Data.Character;
 using ChickenAPI.Game.Entities.Player.Events;
 using ChickenAPI.Game.Player.Extension;
 
@@ -15,14 +15,14 @@ namespace ChickenAPI.Game.Entities.Player.Extensions
         {
             player.Character.Level = level;
             player.Character.LevelXp = 0;
-            player.ActualiseUiExpBar();
+            player.ActualizeUiExpBar();
         }
 
         public static void ChangeJobLevel(this IPlayerEntity player, byte level)
         {
             player.Character.JobLevel = level;
             player.Character.JobLevelXp = 0;
-            player.ActualiseUiExpBar();
+            player.ActualizeUiExpBar();
         }
 
         public static void ChangeReputation(this IPlayerEntity player, long reputation)
@@ -35,7 +35,7 @@ namespace ChickenAPI.Game.Entities.Player.Extensions
         {
             player.Character.HeroLevel = level;
             player.Character.HeroXp = 0;
-            player.ActualiseUiExpBar();
+            player.ActualizeUiExpBar();
         }
 
         public static void TryLevelUp(this IPlayerEntity player)
@@ -90,21 +90,21 @@ namespace ChickenAPI.Game.Entities.Player.Extensions
         {
             player.LevelXp += amount;
             player.TryLevelUp();
-            player.ActualiseUiExpBar();
+            player.ActualizeUiExpBar();
         }
 
         public static void AddJobExperience(this IPlayerEntity player, long amount)
         {
             player.JobLevelXp += amount;
             player.TryJobLevelUp();
-            player.ActualiseUiExpBar();
+            player.ActualizeUiExpBar();
         }
 
         public static void AddHeroExperience(this IPlayerEntity player, long amount)
         {
             player.HeroLevelXp += amount;
             player.TryHeroLevelUp();
-            player.ActualiseUiExpBar();
+            player.ActualizeUiExpBar();
         }
     }
 }

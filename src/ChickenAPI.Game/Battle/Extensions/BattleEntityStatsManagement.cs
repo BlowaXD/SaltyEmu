@@ -11,7 +11,7 @@ namespace ChickenAPI.Game.Battle.Extensions
         {
             if (entity is IPlayerEntity session)
             {
-                session.ActualiseUiHpBar();
+                session.ActualizeUiHpBar();
             }
         }
 

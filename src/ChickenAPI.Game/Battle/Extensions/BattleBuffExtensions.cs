@@ -1,6 +1,4 @@
 ﻿using System.Linq;
-using ChickenAPI.Data.Skills;
-using ChickenAPI.Enums.Game.BCard;
 using ChickenAPI.Game.Battle.Interfaces;
 using ChickenAPI.Game.Buffs;
 
@@ -10,7 +8,7 @@ namespace ChickenAPI.Game.Battle.Extensions
     {
         public static void AddBuff(this IBattleEntity entity, BuffContainer buffContainer)
         {
-            if (entity.GetBuffByCardId(buffContainer.Card.Id) == null)
+            if (entity.GetBuffByCardId(buffContainer.Id) == null)
             {
                 entity.Buffs.Add(buffContainer);
             }
@@ -33,7 +31,7 @@ namespace ChickenAPI.Game.Battle.Extensions
 
         public static BuffContainer GetBuffByCardId(this IBattleEntity entity, long id)
         {
-            return entity.Buffs.FirstOrDefault(s => s.Card.Id == id);
+            return entity.Buffs.FirstOrDefault(s => s.Id == id);
         }
     }
 }

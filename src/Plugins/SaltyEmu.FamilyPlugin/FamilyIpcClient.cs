@@ -1,6 +1,5 @@
 ﻿using System.Threading.Tasks;
 using ChickenAPI.Data.Families;
-using ChickenAPI.Game.Data.AccessLayer.Families;
 using SaltyEmu.Communication.Communicators;
 using SaltyEmu.Communication.Configs;
 using SaltyEmu.FamilyPlugin.Communication;

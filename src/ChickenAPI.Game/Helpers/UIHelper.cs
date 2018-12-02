@@ -1,7 +1,4 @@
-﻿using System;
-using Autofac;
-using ChickenAPI.Core.i18n;
-using ChickenAPI.Core.IoC;
+﻿using ChickenAPI.Core.i18n;
 using ChickenAPI.Enums.Packets;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Entities.Player.Extensions;

@@ -1,15 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Reflection;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.NpcDialog.Events;
-using ChickenAPI.Game.Permissions;
 
 namespace ChickenAPI.Game.NpcDialog.Handlers
 {
     public class NpcDialogHandler
     {
-        private readonly IEnumerable<PermissionsRequirementsAttribute> _permissions;
         private readonly Action<IPlayerEntity, NpcDialogEventArgs> _func;
 
         public NpcDialogHandler(MethodInfo method) : this(method.GetCustomAttribute<NpcDialogHandlerAttribute>(), method)
@@ -24,8 +21,7 @@ namespace ChickenAPI.Game.NpcDialog.Handlers
             {
                 throw new Exception($"Your handler for {DialogId} is wrong");
             }
-
-            _permissions = method.GetCustomAttributes<PermissionsRequirementsAttribute>();
+            
             _func = (Action<IPlayerEntity, NpcDialogEventArgs>)Delegate.CreateDelegate(typeof(Action<IPlayerEntity, NpcDialogEventArgs>), method);
         }
 

@@ -8,7 +8,6 @@ using ChickenAPI.Game.Battle.Extensions;
 using ChickenAPI.Game.Battle.Interfaces;
 using ChickenAPI.Game.BCards.Attributes;
 using ChickenAPI.Game.Buffs;
-using ChickenAPI.Game.Data.AccessLayer.Skill;
 
 namespace ChickenAPI.Game.BCards.Handlers
 {

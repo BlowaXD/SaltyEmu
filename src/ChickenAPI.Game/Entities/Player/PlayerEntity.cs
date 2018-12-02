@@ -15,8 +15,6 @@ using ChickenAPI.Enums.Game.Families;
 using ChickenAPI.Enums.Game.Items;
 using ChickenAPI.Enums.Game.Visibility;
 using ChickenAPI.Game.Buffs;
-using ChickenAPI.Game.Data.AccessLayer.Character;
-using ChickenAPI.Game.Data.AccessLayer.Item;
 using ChickenAPI.Game.ECS.Components;
 using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Groups;

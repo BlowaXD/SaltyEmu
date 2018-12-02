@@ -5,7 +5,6 @@ using ChickenAPI.Core.IoC;
 using ChickenAPI.Data.Character;
 using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Enums.Packets;
-using ChickenAPI.Game.Data.AccessLayer.Character;
 using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Entities.Player.Extensions;

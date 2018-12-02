@@ -8,7 +8,6 @@ using ChickenAPI.Data.Item;
 using ChickenAPI.Data.Skills;
 using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Enums.Game.Items;
-using ChickenAPI.Game.Data.AccessLayer.Skill;
 using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Effects;
 using ChickenAPI.Game.Entities.Extensions;

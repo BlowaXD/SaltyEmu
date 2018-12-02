@@ -10,8 +10,6 @@ using ChickenAPI.Data.BCard;
 using ChickenAPI.Data.Item;
 using ChickenAPI.Enums.Game.BCard;
 using ChickenAPI.Enums.Game.Items;
-using ChickenAPI.Game.Data.AccessLayer.BCard;
-using ChickenAPI.Game.Data.AccessLayer.Item;
 
 namespace Toolkit.Converter
 {

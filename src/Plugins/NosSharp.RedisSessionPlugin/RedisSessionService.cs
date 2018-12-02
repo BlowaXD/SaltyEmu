@@ -3,7 +3,6 @@ using System.Linq;
 using ChickenAPI.Core.Logging;
 using ChickenAPI.Data.Server;
 using ChickenAPI.Enums.Game;
-using ChickenAPI.Game.Data.AccessLayer.Server;
 using ServiceStack.Redis;
 using ServiceStack.Redis.Generic;
 

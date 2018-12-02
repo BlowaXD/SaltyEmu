@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using AutoMapper;
 using ChickenAPI.Data.Character;
 using ChickenAPI.Enums.Game.Character;
-using ChickenAPI.Game.Data.AccessLayer.Character;
 using Microsoft.EntityFrameworkCore;
 using SaltyEmu.Database;
 using SaltyEmu.DatabasePlugin.Models.Character;

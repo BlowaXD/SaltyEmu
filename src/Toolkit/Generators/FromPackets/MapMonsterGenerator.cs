@@ -9,7 +9,6 @@ using ChickenAPI.Core.Logging;
 using ChickenAPI.Data.Map;
 using ChickenAPI.Data.NpcMonster;
 using ChickenAPI.Enums.Game.Entity;
-using ChickenAPI.Game.Data.AccessLayer.Map;
 using ChickenAPI.Game.Data.AccessLayer.NpcMonster;
 
 namespace Toolkit.Generators.FromPackets

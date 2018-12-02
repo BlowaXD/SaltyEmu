@@ -3,7 +3,6 @@ using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Logging;
 using ChickenAPI.Data.Item;
 using ChickenAPI.Enums.Game.Items;
-using ChickenAPI.Game.Data.AccessLayer.Item;
 using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Effects;
 using ChickenAPI.Game.Entities;

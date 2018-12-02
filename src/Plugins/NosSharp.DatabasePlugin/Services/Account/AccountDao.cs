@@ -2,8 +2,8 @@
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using ChickenAPI.Data.Account;
 using ChickenAPI.Data.Character;
-using ChickenAPI.Game.Data.AccessLayer.Account;
 using Microsoft.EntityFrameworkCore;
 using SaltyEmu.Database;
 using SaltyEmu.DatabasePlugin.Context;

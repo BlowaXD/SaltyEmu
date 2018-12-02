@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using ChickenAPI.Data.Server;
 using ChickenAPI.Enums.Game;
-using ChickenAPI.Game.Data.AccessLayer.Server;
 using Foundatio.Caching;
 using StackExchange.Redis;
 

@@ -1,4 +1,5 @@
-﻿using ChickenAPI.Enums.Game.Entity;
+﻿using ChickenAPI.Data.NpcMonster;
+using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Game.Data.AccessLayer.NpcMonster;
 using NosSharp.BasicAlgorithm.NpcMonsterAlgorithms;
 

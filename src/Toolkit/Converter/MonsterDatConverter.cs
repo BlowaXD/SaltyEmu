@@ -14,10 +14,7 @@ using ChickenAPI.Data.Skills;
 using ChickenAPI.Enums.Game.BCard;
 using ChickenAPI.Enums.Game.Drop;
 using ChickenAPI.Enums.Game.Entity;
-using ChickenAPI.Game.Data.AccessLayer.BCard;
-using ChickenAPI.Game.Data.AccessLayer.Drop;
 using ChickenAPI.Game.Data.AccessLayer.NpcMonster;
-using ChickenAPI.Game.Data.AccessLayer.Skill;
 
 namespace Toolkit.Converter
 {

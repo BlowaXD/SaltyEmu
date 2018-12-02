@@ -6,9 +6,8 @@ using ChickenAPI.Game.Helpers;
 using ChickenAPI.Game.Inventory.Args;
 using ChickenAPI.Game.Inventory.ItemUsage.Handling;
 using ChickenAPI.Game.Locomotion.Events;
-using ChickenAPI.Game.Permissions;
 
-namespace ChickenAPI.Game.Inventory.ItemUsage.Handlers
+namespace ChickenAPI.Game.Inventory.ItemUsage.Handler
 {
     public class LocomotionHandler
     {
@@ -31,10 +30,10 @@ namespace ChickenAPI.Game.Inventory.ItemUsage.Handlers
                     player.GenerateDelay(3000, DelayPacketType.Locomotion, $"#u_i^1^{player.Character.Id}^{(byte)e.Item.Type}^{e.Item.Slot}^2");
                     return;
                 }
-                player.EmitEvent(new TransformationLocomotion { Item = e.Item });
+                player.EmitEvent(new LocomotionTransformEvent { Item = e.Item });
                 return;
             }
-            player.EmitEvent(new UnTransformationLocomotion { });
+            player.EmitEvent(new LocomotionUntransformEvent { });
         }
     }
 }

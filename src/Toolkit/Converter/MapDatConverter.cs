@@ -6,7 +6,6 @@ using Autofac;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Logging;
 using ChickenAPI.Data.Map;
-using ChickenAPI.Game.Data.AccessLayer.Map;
 
 namespace Toolkit.Converter
 {

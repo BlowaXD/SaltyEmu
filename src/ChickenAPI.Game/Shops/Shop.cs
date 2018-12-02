@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Autofac;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Data.Shop;
-using ChickenAPI.Game.Data.AccessLayer.Shop;
 
 namespace ChickenAPI.Game.Shops
 {

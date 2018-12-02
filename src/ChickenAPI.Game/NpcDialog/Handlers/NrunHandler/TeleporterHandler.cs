@@ -3,7 +3,6 @@ using ChickenAPI.Core.Logging;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Helpers;
 using ChickenAPI.Game.NpcDialog.Events;
-using ChickenAPI.Game.Permissions;
 using ChickenAPI.Game.Player.Extension;
 
 namespace ChickenAPI.Game.NpcDialog.Handlers.NrunHandler
@@ -17,7 +16,6 @@ namespace ChickenAPI.Game.NpcDialog.Handlers.NrunHandler
         /// </summary>
         /// <param name="player"></param>
         /// <param name="args"></param>
-        [PermissionsRequirements(PermissionType.NPC_DIALOG_TELEPORT)]
         [NpcDialogHandler(16)]
         public static void OnNpcDialogTeleport(IPlayerEntity player, NpcDialogEventArgs args)
         {
@@ -46,8 +44,7 @@ namespace ChickenAPI.Game.NpcDialog.Handlers.NrunHandler
                     break;
             }
         }
-
-        [PermissionsRequirements(PermissionType.NPC_DIALOG_TELEPORT)]
+        
         [NpcDialogHandler(17)]
         public static void EnterArenaInstance(IPlayerEntity player, NpcDialogEventArgs args)
         {
@@ -92,15 +89,13 @@ namespace ChickenAPI.Game.NpcDialog.Handlers.NrunHandler
         /// </summary>
         /// <param name="player"></param>
         /// <param name="args"></param>
-        [PermissionsRequirements(PermissionType.NPC_DIALOG_TELEPORT)]
         [NpcDialogHandler(301)]
         public static void OnGrahamDialogTeleport(IPlayerEntity player, NpcDialogEventArgs args)
         {
             Log.Info($"[TELEPORT][GRAHAM] {player.Character.Name}");
             // need to provide implementation
         }
-
-        [PermissionsRequirements(PermissionType.NPC_DIALOG_TELEPORT)]
+        
         [NpcDialogHandler(26)]
         public static void TeleportUnknow(IPlayerEntity player, NpcDialogEventArgs args)
         {
@@ -121,8 +116,7 @@ namespace ChickenAPI.Game.NpcDialog.Handlers.NrunHandler
 
             //TeleportationHelper.TeleportTo(player, 20, 10, 91);
         }
-
-        [PermissionsRequirements(PermissionType.NPC_DIALOG_TELEPORT)]
+        
         [NpcDialogHandler(45)]
         public static void TeleportUnknow2(IPlayerEntity player, NpcDialogEventArgs args)
         {
@@ -141,10 +135,9 @@ namespace ChickenAPI.Game.NpcDialog.Handlers.NrunHandler
 
             player.GoldLess(500);
 
-            //TeleportationHelper.TeleportTo(player, 20, 10, 91);
+            player.TeleportTo(20, 10, 91);
         }
-
-        [PermissionsRequirements(PermissionType.NPC_DIALOG_TELEPORT)]
+        
         [NpcDialogHandler(132)]
         public static void TeleportUnknow3(IPlayerEntity player, NpcDialogEventArgs args)
         {
@@ -156,8 +149,7 @@ namespace ChickenAPI.Game.NpcDialog.Handlers.NrunHandler
 
             //TeleportationHelper.TeleportTo(player, 20, 10, 91);
         }
-
-        [PermissionsRequirements(PermissionType.NPC_DIALOG_TELEPORT)]
+        
         [NpcDialogHandler(301)]
         public static void TeleportUnknow4(IPlayerEntity player, NpcDialogEventArgs args)
         {
@@ -169,8 +161,7 @@ namespace ChickenAPI.Game.NpcDialog.Handlers.NrunHandler
 
             //TeleportationHelper.TeleportTo(player, 20, 10, 91);
         }
-
-        [PermissionsRequirements(PermissionType.NPC_DIALOG_TELEPORT)]
+        
         [NpcDialogHandler(150)]
         public static void EnterLod(IPlayerEntity player, NpcDialogEventArgs args)
         {
@@ -199,24 +190,21 @@ namespace ChickenAPI.Game.NpcDialog.Handlers.NrunHandler
                  ServerManager.Instance.ChangeMapInstance(Session.Character.CharacterId, Session.Character.Family.LandOfDeath.MapInstanceId, 153, 145);
              }*/
 
-            TeleportationHelper.TeleportTo(player, 150, 153, 145);
+            player.TeleportTo(150, 153, 145);
         }
-
-        [PermissionsRequirements(PermissionType.NPC_DIALOG_TELEPORT)]
+        
         [NpcDialogHandler(5004)]
         public static void AlveusFromAct4(IPlayerEntity player, NpcDialogEventArgs args)
         {
-            TeleportationHelper.TeleportTo(player, 145, 50, 41);
+            player.TeleportTo(145, 50, 41);
         }
-
-        [PermissionsRequirements(PermissionType.NPC_DIALOG_TELEPORT)]
+        
         [NpcDialogHandler(5011)]
         public static void GoToAct5(IPlayerEntity player, NpcDialogEventArgs args)
         {
-            TeleportationHelper.TeleportTo(player, 170, 127, 46);
+            player.TeleportTo(170, 127, 46);
         }
-
-        [PermissionsRequirements(PermissionType.NPC_DIALOG_TELEPORT)]
+        
         [NpcDialogHandler(5012)]
         public static void TpUnknow(IPlayerEntity player, NpcDialogEventArgs args)
         {

@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using ChickenAPI.Data;
 using ChickenAPI.Data.Families;
-using ChickenAPI.Game.Data.AccessLayer.Families;
 using Foundatio.Utility;
 using SaltyEmu.Redis;
 using SaltyEmu.RedisWrappers;

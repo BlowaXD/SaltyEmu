@@ -140,7 +140,7 @@ namespace ChickenAPI.Game.Player.Extension
                     type == CharacterClassType.Swordman ? "Swordman" : "Martial",
                 Name = charac.Character.Name
             });
-            charac.SendPacket(charac.GenerateStatPacket());
+            charac.ActualizeUiHpBar();
             charac.SendPacket(charac.GenerateEqPacket());
             charac.SendPacket(charac.GenerateEffectPacket(8));
             charac.SendPacket(charac.GenerateEffectPacket(196));
@@ -151,8 +151,8 @@ namespace ChickenAPI.Game.Player.Extension
             charac.SendPacket(charac.GenerateFsPacket());
             charac.SendPacket(charac.GenerateStatCharPacket());
             charac.SendPacket(charac.GenerateEffectPacket((4799 + (byte)charac.Character.Faction)));
-            charac.SendPacket(charac.GenerateCondPacket());
-            charac.SendPacket(charac.GenerateLevPacket());
+            charac.ActualizePlayerCondition();
+            charac.ActualizeUiExpBar();
             charac.Broadcast(charac.GenerateCModePacket());
             charac.Broadcast(charac.GenerateInPacket());
             charac.Broadcast(charac.GenerateGidxPacket());

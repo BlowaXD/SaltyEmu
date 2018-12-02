@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using AutoMapper;
 using ChickenAPI.Data.BCard;
 using ChickenAPI.Enums.Game.BCard;
-using ChickenAPI.Game.Data.AccessLayer.BCard;
 using Microsoft.EntityFrameworkCore;
 using SaltyEmu.Database;
 using SaltyEmu.DatabasePlugin.Models.BCard;

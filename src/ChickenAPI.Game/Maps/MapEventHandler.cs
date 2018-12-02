@@ -72,14 +72,14 @@ namespace ChickenAPI.Game.Maps
             player.SendPacket(player.GenerateEqPacket());
             player.SendPacket(player.GenerateEquipmentPacket());
 
-            player.ActualiseUiExpBar();
+            player.ActualizeUiExpBar();
             player.SendPacket(player.GenerateStatPacket());
         }
 
         private static void SendRightPackets(IPlayerEntity player)
         {
             player.SendPacket(player.GenerateAtPacket());
-            player.SendPacket(player.GenerateCondPacket());
+            player.ActualizePlayerCondition();
             player.SendPacket(player.GenerateCMapPacket());
             player.SendPacket(player.GenerateStatCharPacket());
             player.SendPacket(player.GeneratePairyPacket());

@@ -1,11 +1,10 @@
 ﻿using ChickenAPI.Core.Logging;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.NpcDialog.Events;
-using ChickenAPI.Game.Permissions;
 using ChickenAPI.Packets.Game.Client.Npcs;
 using ChickenAPI.Packets.Game.Client.Shops;
 
-namespace ChickenAPI.Game.NpcDialog.Handlers
+namespace ChickenAPI.Game.NpcDialog.Handlers.NrunHandler
 {
     public class WopenHandler
     {
@@ -66,7 +65,6 @@ namespace ChickenAPI.Game.NpcDialog.Handlers
         /// </summary>
         /// <param name="player"></param>
         /// <param name="args"></param>
-        [PermissionsRequirements(PermissionType.NPC_DIALOG_TELEPORT)]
         [NpcDialogHandler(18)]
         public static void TimeCircle(IPlayerEntity player, NpcDialogEventArgs args)
         {

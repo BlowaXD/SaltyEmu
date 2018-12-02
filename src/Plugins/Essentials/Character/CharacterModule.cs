@@ -2,15 +2,14 @@
 using System.Threading.Tasks;
 using Autofac;
 using ChickenAPI.Core.IoC;
+using ChickenAPI.Data.Character;
 using ChickenAPI.Data.Item;
 using ChickenAPI.Enums;
 using ChickenAPI.Enums.Game.Character;
 using ChickenAPI.Enums.Game.Items;
-using ChickenAPI.Game.Data.AccessLayer.Character;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Entities.Player.Extensions;
 using ChickenAPI.Game.Inventory.Extensions;
-using ChickenAPI.Game.Movements.Extensions;
 using ChickenAPI.Game.Player.Extension;
 using Qmmands;
 using SaltyEmu.Commands.Checks;
@@ -187,34 +186,25 @@ namespace Essentials.Character
                 player = Context.Player;
             }
 
-            player.Speed = speed > (byte)55 ? (byte)55 : speed;
-            player.Broadcast(player.GenerateCondPacket());
+            player.Speed = speed > 59 ? (byte)59 : speed;
+            player.ActualizePlayerCondition();
 
             return Task.FromResult(new SaltyCommandResult(true, $"{player.Character.Name}'s speed is now {player.Speed}"));
         }
 
-        [Command("Speed")]
+        [Command("SpeedReset", "rspeed", "resetspeed")]
         [Description("Reset the speed of the character.")]
-        public Task<SaltyCommandResult> SpeedAsync(
-            [Description("Sould be \"off\".")] string speed,
-            [Description("Player you want to reset the speed")] IPlayerEntity player = null)
+        public Task<SaltyCommandResult> SpeedAsync([Description("Player you want to reset the speed")] IPlayerEntity player = null)
         {
             if (player == null)
             {
                 player = Context.Player;
             }
 
-            if (speed != "off")
-            {
-                return Task.FromResult(new SaltyCommandResult(false, "Speed argument should be \"off\""));
-            }
-
-            player.Speed = (byte)Algorithm.GetSpeed(player.Character.Class, player.Level);
-            player.Broadcast(player.GenerateCondPacket());
+            player.Speed = (byte)ChickenContainer.Instance.Resolve<IAlgorithmService>().GetSpeed(player.Character.Class, player.Level);
+            player.ActualizePlayerCondition();
 
             return Task.FromResult(new SaltyCommandResult(true, $"{player.Character.Name}'s speed is now {player.Speed}"));
         }
-
-        private static IAlgorithmService Algorithm => new Lazy<IAlgorithmService>(() => ChickenContainer.Instance.Resolve<IAlgorithmService>()).Value;
     }
 }

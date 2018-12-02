@@ -4,8 +4,6 @@ using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.GuriHandling.Args;
 using ChickenAPI.Game.GuriHandling.Handling;
 using ChickenAPI.Game.Helpers;
-using ChickenAPI.Game.NpcDialog.Handlers;
-using ChickenAPI.Game.Permissions;
 
 namespace ChickenAPI.Game.GuriHandling.Handlers
 {
@@ -19,7 +17,6 @@ namespace ChickenAPI.Game.GuriHandling.Handlers
         /// </summary>
         /// <param name="player"></param>
         /// <param name="e"></param>
-        [PermissionsRequirements(PermissionType.GURI_EMOTICON)]
         [GuriEffect(10)]
         public static void OnEmoticonRequest(IPlayerEntity player, GuriEventArgs e)
         {

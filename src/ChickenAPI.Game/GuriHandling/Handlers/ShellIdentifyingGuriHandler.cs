@@ -2,7 +2,6 @@
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.GuriHandling.Args;
 using ChickenAPI.Game.GuriHandling.Handling;
-using ChickenAPI.Game.Permissions;
 
 namespace ChickenAPI.Game.GuriHandling.Handlers
 {
@@ -16,7 +15,6 @@ namespace ChickenAPI.Game.GuriHandling.Handlers
         /// </summary>
         /// <param name="player"></param>
         /// <param name="e"></param>
-        [PermissionsRequirements(PermissionType.GURI_IDENTIFY_SHELL)]
         [GuriEffect(204)]
         public static void OnShellIdentifyRequest(IPlayerEntity player, GuriEventArgs e)
         {

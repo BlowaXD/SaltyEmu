@@ -49,7 +49,7 @@ namespace ChickenAPI.Packets.Game.Server.Visibility
         public byte IsBoostedFairy { get; set; }
 
         [PacketIndex(13)]
-        public byte FairyMorph { get; set; }
+        public short FairyMorph { get; set; }
 
         [PacketIndex(14)]
         public byte EntryType { get; set; }
@@ -58,10 +58,10 @@ namespace ChickenAPI.Packets.Game.Server.Visibility
         public long Morph { get; set; }
 
         [PacketIndex(16)]
-        public string EquipmentRare { get; set; }
+        public string WeaponRareAndUpgradeInfo { get; set; }
 
         [PacketIndex(17)]
-        public string EquipmentRareTwo { get; set; }
+        public string ArmorRareAndUpgradeInfo { get; set; }
 
         [PacketIndex(18)]
         public long FamilyId { get; set; }
@@ -70,7 +70,7 @@ namespace ChickenAPI.Packets.Game.Server.Visibility
         public string FamilyName { get; set; }
 
         [PacketIndex(20)]
-        public short ReputationIcon { get; set; }
+        public CharacterRep ReputationIcon { get; set; }
 
         [PacketIndex(21)]
         public bool Invisible { get; set; }

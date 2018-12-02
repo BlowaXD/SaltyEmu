@@ -2,7 +2,6 @@
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Data.Skills;
 using ChickenAPI.Enums;
-using ChickenAPI.Game.Data.AccessLayer.Skill;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Skills.Args;
 using ChickenAPI.Packets;

@@ -11,7 +11,6 @@ using ChickenAPI.Data.Skills;
 using ChickenAPI.Enums.Game.Character;
 using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Enums.Game.Items;
-using ChickenAPI.Game.Data.AccessLayer.Item;
 using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Entities.Npc;
 using ChickenAPI.Game.Entities.Player;
@@ -19,6 +18,7 @@ using ChickenAPI.Game.Entities.Player.Extensions;
 using ChickenAPI.Game.Events;
 using ChickenAPI.Game.Inventory.Args;
 using ChickenAPI.Game.Inventory.Extensions;
+using ChickenAPI.Game.Player.Extension;
 using ChickenAPI.Game.Shops.Args;
 using ChickenAPI.Game.Skills.Extensions;
 using ChickenAPI.Packets.Game.Client.Shops;
@@ -333,7 +333,7 @@ namespace ChickenAPI.Game.Shops
             if (isReputBuy)
             {
                 player.Character.Reput -= price;
-                player.SendPacket(player.GenerateFdPacket());
+                player.ActualiseUiReputation();
                 // player.SendPacket "reput decreased"
             }
             else

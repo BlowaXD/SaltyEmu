@@ -6,7 +6,6 @@ using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Logging;
 using ChickenAPI.Data.Server;
 using ChickenAPI.Enums.Game.Character;
-using ChickenAPI.Game.Data.AccessLayer.Server;
 using ChickenAPI.Game.ECS;
 using ChickenAPI.Game.ECS.Entities;
 using DotNetty.Common.Concurrency;

@@ -12,6 +12,7 @@ using ChickenAPI.Packets.Game.Server.Entities;
 using ChickenAPI.Packets.Game.Server.MiniMap;
 using ChickenAPI.Packets.Game.Server.Visibility;
 using System;
+using ChickenAPI.Game.Entities.Player.Extensions;
 
 namespace ChickenAPI.Game.PacketHandling.Extensions
 {
@@ -159,23 +160,23 @@ namespace ChickenAPI.Game.PacketHandling.Extensions
                     MpPercentage = player.MpPercentage,
                     IsSitting = false,
                     GroupId = -1,
-                    FairyId = 0,
-                    FairyElement = 0,
+                    FairyId = (byte)(player.Fairy != null ? 4 : 0),
+                    FairyElement = (byte)(player.Fairy?.ElementType ?? 0),
                     IsBoostedFairy = 0,
-                    FairyMorph = 0,
+                    FairyMorph = player.Fairy?.Item.Morph ?? 0,
                     EntryType = 0,
                     Morph = player.MorphId,
-                    EquipmentRare = "00",
-                    EquipmentRareTwo = "00",
+                    WeaponRareAndUpgradeInfo = $"{player.Weapon?.Rarity ?? 0}{player.Weapon?.Upgrade ?? 0}",
+                    ArmorRareAndUpgradeInfo = $"{player.Armor?.Rarity ?? 0}{player.Armor?.Upgrade ?? 0}",
                     FamilyId = player.HasFamily ? player.Family.Id : -1,
                     FamilyName = player.HasFamily ? player.Family.Name : "-", // if not put -1
-                    ReputationIcon = 27,
+                    ReputationIcon = player.GetReputIcon(),
                     Invisible = player.IsInvisible,
                     SpUpgrade = player.Sp?.Upgrade ?? 0,
                     Faction = FactionType.Neutral, // todo faction system
                     SpDesign = player.Sp?.Design ?? 0,
                     Level = player.Level,
-                    FamilyLevel = 0,
+                    FamilyLevel = player.Family?.FamilyLevel ?? 0,
                     ArenaWinner = player.Character.ArenaWinner,
                     Compliment = player.Character.Compliment,
                     Size = 10,

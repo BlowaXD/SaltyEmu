@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using Autofac;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Logging;
+using ChickenAPI.Data.Character;
 using ChickenAPI.Data.Item;
-using ChickenAPI.Game.Data.AccessLayer.Character;
 using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Effects;
 using ChickenAPI.Game.Entities.Player;
@@ -21,25 +21,25 @@ namespace ChickenAPI.Game.Locomotion
 
         public override ISet<Type> HandledTypes => new HashSet<Type>
         {
-            typeof(TransformationLocomotion),
-            typeof(UnTransformationLocomotion)
+            typeof(LocomotionTransformEvent),
+            typeof(LocomotionUntransformEvent)
         };
 
         public override void Execute(IEntity entity, ChickenEventArgs args)
         {
             switch (args)
             {
-                case TransformationLocomotion locoevent:
+                case LocomotionTransformEvent locoevent:
                     MorphLoco(entity as IPlayerEntity, locoevent);
                     break;
 
-                case UnTransformationLocomotion unmorphoevent:
+                case LocomotionUntransformEvent unmorphoevent:
                     UnMorphLoco(entity as IPlayerEntity, unmorphoevent);
                     break;
             }
         }
 
-        private void MorphLoco(IPlayerEntity player, TransformationLocomotion args)
+        private void MorphLoco(IPlayerEntity player, LocomotionTransformEvent args)
         {
             if (player.IsSitting)
             {
@@ -57,7 +57,7 @@ namespace ChickenAPI.Game.Locomotion
             player.Broadcast(player.GenerateCondPacket());
         }
 
-        private void UnMorphLoco(IPlayerEntity player, UnTransformationLocomotion args)
+        private void UnMorphLoco(IPlayerEntity player, LocomotionUntransformEvent args)
         {
             player.Locomotion.IsVehicled = false;
 

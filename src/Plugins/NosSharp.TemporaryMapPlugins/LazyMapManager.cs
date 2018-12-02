@@ -5,10 +5,7 @@ using Autofac;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Data.Map;
 using ChickenAPI.Data.Shop;
-using ChickenAPI.Game.Data.AccessLayer.Map;
-using ChickenAPI.Game.Data.AccessLayer.Shop;
 using ChickenAPI.Game.ECS.Entities;
-using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Managers;
 using ChickenAPI.Game.Maps;
 
@@ -19,22 +16,8 @@ namespace SaltyEmu.BasicPlugin
         private readonly Dictionary<Guid, IMapLayer> _mapLayers = new Dictionary<Guid, IMapLayer>();
         private readonly Dictionary<long, IMap> _maps = new Dictionary<long, IMap>();
 
-        public IReadOnlyDictionary<long, IMap> Maps { get; }
+        public IReadOnlyDictionary<long, IMap> Maps => _maps;
 
-        public void ChangeMap(IPlayerEntity player, long mapId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void ChangeMapLayer(IPlayerEntity player, Guid mapLayerId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void ChangeMapLayer(IPlayerEntity player, IMapLayer layer)
-        {
-            throw new NotImplementedException();
-        }
 
         public IMapLayer GetBaseMapLayer(long mapId)
         {

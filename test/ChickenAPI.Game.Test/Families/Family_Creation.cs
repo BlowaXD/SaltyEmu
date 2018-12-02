@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Autofac;
 using ChickenAPI.Core.IoC;
-using ChickenAPI.Game.Data.AccessLayer.Character;
+using ChickenAPI.Data.Character;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Families;
 using ChickenAPI.Game.Families.Events;

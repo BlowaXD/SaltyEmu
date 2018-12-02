@@ -6,7 +6,6 @@ using AutoMapper;
 using ChickenAPI.Data.Item;
 using ChickenAPI.Enums;
 using ChickenAPI.Enums.Game.Items;
-using ChickenAPI.Game.Data.AccessLayer.Item;
 using Microsoft.EntityFrameworkCore;
 using SaltyEmu.Database;
 using SaltyEmu.DatabasePlugin.Models.Character;

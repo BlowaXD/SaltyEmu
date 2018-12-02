@@ -7,7 +7,6 @@ using Autofac;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Data.Item;
 using ChickenAPI.Data.Skills;
-using ChickenAPI.Game.Data.AccessLayer.Skill;
 using ChickenAPI.Game.Entities.Player;
 
 namespace ChickenAPI.Game.Skills.Extensions

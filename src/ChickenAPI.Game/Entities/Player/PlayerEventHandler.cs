@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Autofac;
 using ChickenAPI.Core.IoC;
-using ChickenAPI.Game.Data.AccessLayer.Character;
+using ChickenAPI.Data.Character;
 using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Effects;
 using ChickenAPI.Game.Entities.Extensions;
