@@ -59,7 +59,7 @@ namespace ChickenAPI.Game.Entities.ReqInfo
 
         public static void SendInfoFromPlayer(IPlayerEntity player, ReqInfoEvent e)
         {
-            player.SendPacket(player.CurrentMap.GetPlayerById(e.TargetVNum).GenerateReqInfo());
+            player.SendPacket(player.CurrentMap.GetPlayerById(e.TargetVNum)?.GenerateReqInfo());
         }
 
         public void SenfInfoFromItem(IInventoriedEntity item, ReqInfoEvent e)
