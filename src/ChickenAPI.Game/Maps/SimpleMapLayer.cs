@@ -92,6 +92,7 @@ namespace ChickenAPI.Game.Maps
 
         public Guid Id { get; set; }
         public IMap Map { get; }
+        public bool IsPvpEnabled => false;
         public IEnumerable<IPlayerEntity> Players => _players;
 
         public IPlayerEntity GetPlayerById(long id)

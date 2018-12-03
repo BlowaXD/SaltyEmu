@@ -18,8 +18,21 @@
 
         #endregion
 
+        #region Family
+
         FAMILY_PLAYERX_HAS_ALREADY_FAMILY,
         FAMILY_ALREADY_LEADER,
-        FAMILY_PLAYERX_JOINED_FAMILYX
+        FAMILY_PLAYERX_JOINED_FAMILYX,
+
+        #endregion
+
+        #region You don't have requirements
+
+        YOU_DONT_HAVE_ENOUGH_GOLD,
+        YOU_DONT_HAVE_ENOUGH_REPUTATION,
+        YOU_DONT_HAVE_ENOUGH_SPACE_IN_INVENTORY
+
+        #endregion Gold
+
     }
 }

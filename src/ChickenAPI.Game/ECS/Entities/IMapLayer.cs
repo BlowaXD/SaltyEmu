@@ -15,6 +15,8 @@ namespace ChickenAPI.Game.ECS.Entities
         /// </summary>
         IMap Map { get; }
 
+        bool IsPvpEnabled { get; }
+
         IEnumerable<IPlayerEntity> Players { get; }
 
         /// <summary>

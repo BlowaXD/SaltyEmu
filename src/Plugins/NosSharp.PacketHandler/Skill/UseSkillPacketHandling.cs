@@ -21,8 +21,6 @@ namespace NosSharp.PacketHandler.Skill
 
         public static void OnUseSkillPacket(UseSkillPacket packet, IPlayerEntity player)
         {
-            Log.Warn($"{packet.OriginalContent}");
-
             if (packet.CastId != 0)
             {
                 player.SendPacket(new MscPacket());
@@ -41,17 +39,17 @@ namespace NosSharp.PacketHandler.Skill
                 return;
             }
 
-            IEntity target = null;
+            IBattleEntity target = null;
             switch (packet.TargetVisualType)
             {
                 case VisualType.Character:
-                    target = player.CurrentMap.GetEntitiesByType<IPlayerEntity>(VisualType.Character).FirstOrDefault(s => s.Character.Id == packet.TargetId);
+                    target = player.CurrentMap.GetEntity<IPlayerEntity>(packet.TargetId, VisualType.Character);
                     break;
                 case VisualType.Monster:
-                    target = player.CurrentMap.GetEntitiesByType<IMonsterEntity>(VisualType.Monster).FirstOrDefault(s => s.MapMonster.Id == packet.TargetId);
+                    target = player.CurrentMap.GetEntity<IMonsterEntity>(packet.TargetId, VisualType.Monster);
                     break;
                 case VisualType.Npc:
-                    target = player.CurrentMap.GetEntitiesByType<INpcEntity>(VisualType.Npc).FirstOrDefault(s => s.MapNpc.Id == packet.TargetId);
+                    target = player.CurrentMap.GetEntity<INpcEntity>(packet.TargetId, VisualType.Npc);
                     break;
             }
 
@@ -61,6 +59,7 @@ namespace NosSharp.PacketHandler.Skill
                     player.SendPacket(player.GenerateEmptyCancelPacket(CancelPacketType.InCombatMode));
                     return;
                 case IBattleEntity battleEntity:
+
                     player.EmitEvent(new UseSkillArgs
                     {
                         Skill = skill,

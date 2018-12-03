@@ -15,6 +15,7 @@ using ChickenAPI.Game.Skills.Args;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using ChickenAPI.Enums.Game.Entity;
 
 namespace ChickenAPI.Game.Skills
 {
@@ -67,6 +68,11 @@ namespace ChickenAPI.Game.Skills
                 case SkillTargetType.SingleBuff when skill.HitType == 0:
                     // if too much distance, send cancel packet
                     if (entity.GetDistance(target) > skill.Range + target.BasicArea + 1)
+                    {
+                        player?.SendPacket(target.GenerateTargetCancelPacket(CancelPacketType.InCombatMode));
+                        return;
+                    }
+                    if (entity.Type == VisualType.Character && !entity.CurrentMap.IsPvpEnabled && skill.HitType != 1)
                     {
                         player?.SendPacket(target.GenerateTargetCancelPacket(CancelPacketType.InCombatMode));
                         return;

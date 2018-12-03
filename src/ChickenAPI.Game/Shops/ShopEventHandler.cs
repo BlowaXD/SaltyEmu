@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Autofac;
+using ChickenAPI.Core.i18n;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Maths;
 using ChickenAPI.Data.Item;
@@ -11,6 +12,7 @@ using ChickenAPI.Data.Skills;
 using ChickenAPI.Enums.Game.Character;
 using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Enums.Game.Items;
+using ChickenAPI.Enums.Packets;
 using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Entities.Npc;
 using ChickenAPI.Game.Entities.Player;
@@ -21,6 +23,7 @@ using ChickenAPI.Game.Inventory.Extensions;
 using ChickenAPI.Game.Player.Extension;
 using ChickenAPI.Game.Shops.Args;
 using ChickenAPI.Game.Shops.Events;
+using ChickenAPI.Game.Shops.Extensions;
 using ChickenAPI.Game.Skills.Extensions;
 using ChickenAPI.Packets.Game.Client.Shops;
 
@@ -136,7 +139,7 @@ namespace ChickenAPI.Game.Shops
                     break;
                 case VisualType.Npc:
                     INpcEntity npc = player.CurrentMap.GetEntitiesByType<INpcEntity>(VisualType.Npc).FirstOrDefault(s => s.MapNpc.Id == shopBuy.OwnerId);
-                    if (npc == null || !(npc is NpcEntity npcEntity))
+                    if (npc == null || !(npc is INpcEntity npcEntity))
                     {
                         return;
                     }
@@ -271,7 +274,7 @@ namespace ChickenAPI.Game.Shops
 
             if (!isReputBuy && price < 0 && price * percent > player.Character.Gold)
             {
-                // not enough gold
+                player.SendPacket(player.GenerateShopMemoPacket(SMemoPacketType.FailNpc, player.GetLanguage(ChickenI18NKey.YOU_DONT_HAVE_ENOUGH_GOLD)));
                 return;
             }
 
@@ -279,7 +282,7 @@ namespace ChickenAPI.Game.Shops
             {
                 if (price > player.Character.Reput)
                 {
-                    // not enough reputation
+                    player.SendPacket(player.GenerateShopMemoPacket(SMemoPacketType.FailNpc, player.GetLanguage(ChickenI18NKey.YOU_DONT_HAVE_ENOUGH_REPUTATION)));
                     return;
                 }
 
@@ -304,7 +307,7 @@ namespace ChickenAPI.Game.Shops
             bool canAddItem = player.Inventory.CanAddItem(item.Item, amount);
             if (!canAddItem)
             {
-                // no available slot
+                player.SendPacket(player.GenerateShopMemoPacket(SMemoPacketType.FailNpc, player.GetLanguage(ChickenI18NKey.YOU_DONT_HAVE_ENOUGH_SPACE_IN_INVENTORY)));
                 return;
             }
 
@@ -332,12 +335,12 @@ namespace ChickenAPI.Game.Shops
 
         private static void HandlePlayerShopBuyRequest(IPlayerEntity player, ShopBuyEvent shopBuy, IPlayerEntity shop)
         {
-            throw new NotImplementedException();
+            // todo
         }
 
         private static void HandleSellRequest(IPlayerEntity player, ShopSellEvent shopSell)
         {
-            throw new NotImplementedException();
+            // todo
         }
     }
 }
