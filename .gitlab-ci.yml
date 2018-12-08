@@ -9,10 +9,10 @@ stages:
 
 variables:
   GIT_SUBMODULE_STRATEGY: recursive
-  REVISION: 1
   DOCKER_VERSION: "18.06"
   DOCKER_HEALTHCHECK_TIMEOUT: "60"
-  CONTAINER_REGISTRY: registry.gitlab.com/saltynos/Server/SaltyEmu
+  REGISTRY_DOMAIN: registry.gitlab.com
+  CONTAINER_REGISTRY: $REGISTRY_DOMAIN/saltynos/Server/SaltyEmu
   CONTAINER_WORLD_BUILD_IMAGE: $CONTAINER_REGISTRY/saltyemu-world:$CI_BUILD_REF_NAME
   CONTAINER_WORLD_RELEASE_IMAGE: $CONTAINER_REGISTRY/saltyemu-world:latest
   CONTAINER_LOGIN_BUILD_IMAGE: $CONTAINER_REGISTRY/saltyemu-login:$CI_BUILD_REF_NAME
@@ -20,7 +20,7 @@ variables:
 
  
 build_project:
-  image: microsoft/dotnet:2.1-sdk-alpine
+  image: microsoft/dotnet:2.2-sdk-alpine
   stage: build
   script:
    - dotnet restore --configfile Nuget.config
@@ -28,7 +28,7 @@ build_project:
    
 # Test ChickenAPI.Game project with unit test
 test_project:
-    image: microsoft/dotnet:2.1-sdk-alpine
+    image: microsoft/dotnet:2.2-sdk-alpine
     stage: test
     script:
     - dotnet restore --configfile Nuget.config
@@ -44,7 +44,7 @@ release docker world:
   only:
     - tags
   before_script:
-    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
+    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $REGISTRY_DOMAIN
   script:
     - docker build -t $CONTAINER_LOGIN_BUILD_IMAGE -f login.Dockerfile .
     - docker push $CONTAINER_LOGIN_BUILD_IMAGE
@@ -58,7 +58,7 @@ release docker login:
   only:
     - tags
   before_script:
-    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
+    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $REGISTRY_DOMAIN
   script:
     - docker build -t $CONTAINER_WORLD_BUILD_IMAGE -f world.Dockerfile .
     - docker push $CONTAINER_WORLD_BUILD_IMAGE
