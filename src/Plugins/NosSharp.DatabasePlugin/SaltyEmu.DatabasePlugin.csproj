@@ -16,10 +16,10 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="8.0.0" />
     <PackageReference Include="EFCore.BulkExtensions" Version="2.1.8" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.1.4" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="2.1.4" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.1.4" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.1.4">
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="2.2.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.2.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
@@ -29,6 +29,12 @@
   <ItemGroup>
     <ProjectReference Include="..\..\ChickenAPI.Game\ChickenAPI.Game.csproj" />
     <ProjectReference Include="..\..\libs\SaltyEmu.Database\SaltyEmu.Database.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Migrations\20181207084709_ItemInstance_FixedMode.Designer.cs">
+      <DependentUpon>20181207084709_ItemInstance_FixedMode.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
 
 </Project>

@@ -17,7 +17,7 @@ using ChickenAPI.Game.Entities.Npc;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Entities.Player.Extensions;
 using ChickenAPI.Game.Events;
-using ChickenAPI.Game.Inventory.Args;
+using ChickenAPI.Game.Inventory.Events;
 using ChickenAPI.Game.Inventory.Extensions;
 using ChickenAPI.Game.Movements.Extensions;
 using ChickenAPI.Game.Player.Extension;
@@ -47,9 +47,11 @@ namespace ChickenAPI.Game.Shops
                 case ShopGetInformationEvent getinfos:
                     SendInformations(entity as IPlayerEntity, getinfos);
                     break;
+
                 case ShopBuyEvent buy:
                     HandleBuyRequest(entity as IPlayerEntity, buy);
                     break;
+
                 case ShopSellEvent sell:
                     HandleSellRequest(entity as IPlayerEntity, sell);
                     break;
@@ -109,6 +111,7 @@ namespace ChickenAPI.Game.Shops
 
                     HandlePlayerShopBuyRequest(player, shopBuy, shop);
                     break;
+
                 case VisualType.Npc:
                     INpcEntity npc = player.CurrentMap.GetEntitiesByType<INpcEntity>(VisualType.Npc).FirstOrDefault(s => s.MapNpc.Id == shopBuy.OwnerId);
                     if (npc == null || !(npc is INpcEntity npcEntity))
@@ -158,7 +161,6 @@ namespace ChickenAPI.Game.Shops
                 return;
             }
 
-
             // check skill price
             if (player.Character.Gold < skillShop.Skill.Price)
             {
@@ -178,18 +180,23 @@ namespace ChickenAPI.Game.Shops
                 case CharacterClassType.Adventurer:
                     minimumLevel = skillShop.Skill.MinimumAdventurerLevel;
                     break;
+
                 case CharacterClassType.Swordman:
                     minimumLevel = skillShop.Skill.MinimumSwordmanLevel;
                     break;
+
                 case CharacterClassType.Archer:
                     minimumLevel = skillShop.Skill.MinimumArcherLevel;
                     break;
+
                 case CharacterClassType.Magician:
                     minimumLevel = skillShop.Skill.MinimumMagicianLevel;
                     break;
+
                 case CharacterClassType.Wrestler:
                     minimumLevel = skillShop.Skill.MinimumWrestlerLevel;
                     break;
+
                 case CharacterClassType.Unknown:
                     break;
             }
@@ -202,7 +209,7 @@ namespace ChickenAPI.Game.Shops
             // check skill upgrades
 
             player.Character.Gold -= skillShop.Skill.Price;
-            player.SendPacket(player.GenerateGoldPacket());
+            player.ActualizeUiGold();
             player.SendPacket(player.GenerateSkiPacket());
             player.SendPackets(player.GenerateQuicklistPacket());
             // player.SendPacket(UserInterfaceHelper.Instance.GenerateMsg(Language.Instance.GetMessageFromKey("SKILL_LEARNED"), 0));
@@ -226,9 +233,11 @@ namespace ChickenAPI.Game.Shops
                 case CharacterDignity.BluffedNameOnly:
                     percent = 1.10;
                     break;
+
                 case CharacterDignity.NotQualifiedFor:
                     percent = 1.20;
                     break;
+
                 case CharacterDignity.Useless:
                 case CharacterDignity.StupidMinded:
                     percent = 1.5;
@@ -284,8 +293,8 @@ namespace ChickenAPI.Game.Shops
             }
 
             // add item to inventory
-            var itemFactory = ChickenContainer.Instance.Resolve<IItemInstanceFactory>();
-            ItemInstanceDto newitem = itemFactory.CreateItem(item.ItemId, amount, (byte)rare);
+            var itemFactory = ChickenContainer.Instance.Resolve<IItemInstanceDtoFactory>();
+            ItemInstanceDto newitem = itemFactory.CreateItem(item.ItemId, amount, (sbyte)rare);
 
             if (isReputBuy)
             {

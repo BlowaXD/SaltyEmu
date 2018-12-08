@@ -32,6 +32,16 @@ namespace ChickenAPI.Game.Movements
             }
         }
 
+        private void TriggerSit(IEntity entity, TriggerSitEvent triggerSit)
+        {
+            if (!(entity is IMovableEntity movable))
+            {
+                return;
+            }
+
+            movable.Movable.IsSitting = !movable.Movable.IsSitting;
+        }
+
         private static bool PreMovementChecks(IPlayerEntity player, PlayerMovementRequestEvent e)
         {
             // check for player' diseases
@@ -79,25 +89,6 @@ namespace ChickenAPI.Game.Movements
             if (player.CurrentMap is IMapLayer broadcastable)
             {
                 broadcastable.Broadcast(player.GenerateMvPacket());
-            }
-        }
-
-        private void TriggerSit(IEntity entity, TriggerSitEvent triggerSit)
-        {
-            switch (entity)
-            {
-                case IPlayerEntity player:
-
-                    player.Movable.IsSitting = !player.Movable.IsSitting;
-
-                    // pets should sit
-                    break;
-                case IMonsterEntity monster:
-                    monster.Movable.IsSitting = !monster.Movable.IsSitting;
-                    break;
-                case INpcEntity npc:
-                    npc.Movable.IsSitting = !npc.Movable.IsSitting;
-                    break;
             }
         }
     }

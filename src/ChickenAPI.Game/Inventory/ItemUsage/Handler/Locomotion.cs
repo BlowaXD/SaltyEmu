@@ -3,7 +3,7 @@ using ChickenAPI.Enums.Game.Items;
 using ChickenAPI.Enums.Packets;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Helpers;
-using ChickenAPI.Game.Inventory.Args;
+using ChickenAPI.Game.Inventory.Events;
 using ChickenAPI.Game.Inventory.ItemUsage.Handling;
 using ChickenAPI.Game.Locomotion.Events;
 

@@ -4,12 +4,51 @@ using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Entities.Player.Extensions;
 using ChickenAPI.Game.Player.Extension;
 using ChickenAPI.Packets;
+using ChickenAPI.Packets.Game.Client.Inventory;
+using ChickenAPI.Packets.Game.Server.Inventory;
 using ChickenAPI.Packets.Game.Server.UserInterface;
 
 namespace ChickenAPI.Game.Helpers
 {
     public static class UIHelper
     {
+
+        public static void SendGuri(this IPlayerEntity player, byte type, byte argument, int value = 0)
+        {
+            player.SendPacket(player.GenerateGuriPacket(type, argument, value));
+        }
+        public static ServerGuriPacket GenerateGuriPacket(this IPlayerEntity player, byte type, byte argument, int value = 0)
+        {
+            switch (type)
+            {
+                case 2:
+                    return new ServerGuriPacket
+                    {
+                        Type = 2, Argument = argument, VisualId = player.Id
+                    };
+                case 6:
+                    return new ServerGuriPacket
+                    {
+                        Type = 6, Argument = 1, VisualId = player.Id, Value = 0, Data = 0
+                    };
+                case 10:
+                    return new ServerGuriPacket
+                    {
+                        Type = 10, Argument = argument, VisualId = value, Value = player.Id
+                    };
+                case 15:
+                    return new ServerGuriPacket
+                    {
+                        Type = 15, Argument = argument , VisualId = 0, Data = 0
+                    };
+                default:
+                    return new ServerGuriPacket
+                    {
+                        Type = type, Argument = argument, VisualId = player.Id, Value = value
+                    };
+            }
+        }
+
         public static void SendChatMessageFormat(this IPlayerEntity player, ChickenI18NKey key, SayColorType color, params object[] objs)
         {
             string msg = player.GetLanguageFormat(key, objs);

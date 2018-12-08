@@ -23,12 +23,15 @@ using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Enums.Packets;
 using ChickenAPI.Game.Helpers;
 using ChickenAPI.Game.PacketHandling.Extensions;
+using ChickenAPI.Data.Character;
+using ChickenAPI.Packets.Game.Server.Shop;
 
 namespace ChickenAPI.Game.Player.Extension
 {
     public static class PlayerExtension
     {
         private static readonly IRandomGenerator _randomGenerator = new Lazy<IRandomGenerator>(() => ChickenContainer.Instance.Resolve<IRandomGenerator>()).Value;
+        private static readonly IAlgorithmService Algorithm = new Lazy<IAlgorithmService>(() => ChickenContainer.Instance.Resolve<IAlgorithmService>()).Value;
 
         #region Gold
 
@@ -130,6 +133,8 @@ namespace ChickenAPI.Game.Player.Extension
             }
 
             charac.Character.Class = type;
+            charac.HpMax = Algorithm.GetHpMax(type, charac.Level);
+            charac.MpMax = Algorithm.GetMpMax(type, charac.Level);
             charac.Hp = charac.HpMax;
             charac.Mp = charac.MpMax;
             charac.SendPacket(new TitPacket
@@ -193,6 +198,15 @@ namespace ChickenAPI.Game.Player.Extension
              {
                  Session.CurrentMapInstance?.Broadcast(Session, $"pidx 1 1.{CharacterId}", ReceiverType.AllExceptMe);
              }*/
+        }
+
+        public static void NotifyRarifyResult(this IPlayerEntity player, sbyte rare)
+        {
+            player.SendPacket(player.GenerateMsgPacket("RARIFY_SUCCESS", MsgPacketType.Whisper));
+            player.SendPacket(player.GenerateSayPacket("RARIFY_SUCCESS", SayColorType.Green));
+            player.SendPacket(player.GenerateSayPacket($"{rare}", SayColorType.Green));
+            player.Broadcast(player.GenerateEffectPacket(3005));
+            player.SendPacket(new ShopEndPacket { PacketType = ShopEndPacketType.CloseSubWindow });
         }
     }
 }

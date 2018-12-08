@@ -9,14 +9,13 @@ using ChickenAPI.Game.Entities;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Entities.Player.Extensions;
 using ChickenAPI.Game.Events;
-using ChickenAPI.Game.Inventory.Args;
 using ChickenAPI.Game.Inventory.Extensions;
 using ChickenAPI.Game.Inventory.ItemUsage;
 using ChickenAPI.Packets.Game.Server.Inventory;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using ChickenAPI.Game.Inventory.Events;
 using ChickenAPI.Game.Player.Extension;
 
 namespace ChickenAPI.Game.Inventory
@@ -152,7 +151,7 @@ namespace ChickenAPI.Game.Inventory
                 inventory.Equipment[itemToEquip.Slot] = null;
             }
 
-            player?.SendPacket(GenerateEmptyIvnPacket(itemToEquip.Type, itemToEquip.Slot));
+            player?.SendPacket(player.GenerateEmptyIvnPacket(itemToEquip.Type, itemToEquip.Slot));
             inventory.Wear[(int)itemToEquip.Item.EquipmentSlot] = itemToEquip;
             itemToEquip.Slot = (short)itemToEquip.Item.EquipmentSlot;
             itemToEquip.Type = InventoryType.Wear;
@@ -162,7 +161,7 @@ namespace ChickenAPI.Game.Inventory
                 return;
             }
 
-            player?.SendPacket(GenerateIvnPacket(alreadyEquipped));
+            player?.SendPacket(alreadyEquipped.GenerateIvnPacket());
         }
 
         private void UnequipItem(InventoryComponent inventory, IEntity entity, InventoryUnequipEvent @event)
@@ -185,7 +184,7 @@ namespace ChickenAPI.Game.Inventory
                 return;
             }
 
-            player.SendPacket(GenerateIvnPacket(item));
+            player.SendPacket(item.GenerateIvnPacket());
 
             player.Broadcast(player.GenerateEqPacket());
             player.SendPacket(player.GenerateEquipmentPacket());
@@ -240,7 +239,7 @@ namespace ChickenAPI.Game.Inventory
             {
                 case InventoryType.Equipment:
                     packet.Items.AddRange(items.Where(s => s != null).Select(s =>
-                        $"{s.Slot}.{s.ItemId}.{s.Rarity}.{(s.Item.IsColored && s.Item.EquipmentSlot == EquipmentType.Sp ? s.Design : s.Upgrade)}.{s.SpecialistUpgrade2}"));
+                        $"{s.Slot}.{s.ItemId}.{s.Rarity}.{(s.Item.IsColored && s.Item.EquipmentSlot == EquipmentType.Sp ? s.Design : s.Upgrade)}.{s.SpStoneUpgrade}"));
                     break;
 
                 case InventoryType.Etc:
@@ -297,7 +296,7 @@ namespace ChickenAPI.Game.Inventory
             }
 
             args.ItemInstance.CharacterId = player.Character.Id;
-            player.SendPacket(GenerateIvnPacket(args.ItemInstance));
+            player.SendPacket(args.ItemInstance.GenerateIvnPacket());
         }
 
         private static void DropItem(InventoryComponent inv, InventoryRemoveItemEvent args)
@@ -366,8 +365,8 @@ namespace ChickenAPI.Game.Inventory
                 return;
             }
 
-            player.SendPacket(GenerateEmptyIvnPacket(args.InventoryType, args.SourceSlot));
-            player.SendPacket(GenerateIvnPacket(source));
+            player.SendPacket(player.GenerateEmptyIvnPacket(args.InventoryType, args.SourceSlot));
+            player.SendPacket(source.GenerateIvnPacket());
         }
 
         private static void MoveItems(InventoryComponent inv, ItemInstanceDto source, ItemInstanceDto dest)
@@ -385,8 +384,8 @@ namespace ChickenAPI.Game.Inventory
                 return;
             }
 
-            player.SendPacket(GenerateIvnPacket(source));
-            player.SendPacket(GenerateIvnPacket(dest));
+            player.SendPacket(source.GenerateIvnPacket());
+            player.SendPacket(dest.GenerateIvnPacket());
         }
 
         #endregion MoveItems
@@ -424,6 +423,7 @@ namespace ChickenAPI.Game.Inventory
 
                     itemInstance = subInv[eqInfo.Slot];
                     break;
+
                 case 7:
                 case 10:
                     subInv = inventory.GetSubInvFromInventoryType(InventoryType.Specialist);
@@ -434,6 +434,7 @@ namespace ChickenAPI.Game.Inventory
 
                     itemInstance = subInv[eqInfo.Slot];
                     break;
+
                 case 11:
                     subInv = inventory.GetSubInvFromInventoryType(InventoryType.Costume);
                     if (eqInfo.Slot > subInv.Length)
@@ -457,63 +458,9 @@ namespace ChickenAPI.Game.Inventory
             playerEntity.SendPacket(itemInstance.GenerateEInfoPacket());
         }
 
-        #endregion
+        #endregion ItemInfos
 
         #region Utils
-
-        private static IvnPacket GenerateEmptyIvnPacket(InventoryType type, short slot) => new IvnPacket
-        {
-            InventoryType = type,
-            Slot = slot,
-            ItemId = -1,
-            Upgrade = 0,
-            Rare = 0,
-            SpStoneUpgrade = 0
-        };
-
-        private static IvnPacket GenerateMainIvnPacket(ItemInstanceDto itemInstance) => new IvnPacket
-        {
-            InventoryType = itemInstance.Type,
-            Slot = itemInstance.Slot,
-            ItemId = itemInstance.ItemId,
-            Rare = itemInstance.Amount,
-            Upgrade = 0
-        };
-
-        private static IvnPacket GenerateIvnPacket(ItemInstanceDto itemInstance)
-        {
-            switch (itemInstance.Type)
-            {
-                case InventoryType.Specialist:
-                    return new IvnPacket
-                    {
-                        InventoryType = itemInstance.Type,
-                        ItemId = itemInstance.Item.Vnum,
-                        Slot = itemInstance.Slot,
-                        Upgrade = itemInstance.Upgrade,
-                        Rare = itemInstance.Rarity,
-                        SpStoneUpgrade = itemInstance.SpecialistUpgrade
-                    };
-
-                case InventoryType.Equipment:
-                    return new IvnPacket
-                    {
-                        InventoryType = itemInstance.Type,
-                        ItemId = itemInstance.ItemId,
-                        Slot = itemInstance.Slot,
-                        Rare = itemInstance.Rarity,
-                        Upgrade = itemInstance.Upgrade
-                    };
-
-                case InventoryType.Main:
-                case InventoryType.Etc:
-                    return GenerateMainIvnPacket(itemInstance);
-
-                default:
-                    Log.Info($"{itemInstance.Type} not implemented");
-                    return null;
-            }
-        }
 
         #endregion Utils
     }

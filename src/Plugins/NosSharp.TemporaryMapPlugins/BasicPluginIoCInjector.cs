@@ -13,6 +13,7 @@ using ChickenAPI.Game.ECS;
 using ChickenAPI.Game.Effects;
 using ChickenAPI.Game.Events;
 using ChickenAPI.Game.GuriHandling.Handling;
+using ChickenAPI.Game.Inventory.ItemUpgrade;
 using ChickenAPI.Game.Inventory.ItemUsage;
 using ChickenAPI.Game.Inventory.ItemUsage.Handling;
 using ChickenAPI.Game.Managers;
@@ -59,7 +60,7 @@ namespace SaltyEmu.BasicPlugin
                     ConfigurationHelper.Load<JsonGameConfiguration>($"plugins/config/{nameof(BasicPlugin)}/rates.json", true))
                 .As<IGameConfiguration>().SingleInstance();
             ChickenContainer.Builder.Register(_ => new LazyMapManager()).As<IMapManager>().SingleInstance();
-            ChickenContainer.Builder.Register(c => new SimpleItemInstanceFactory(c.Resolve<IItemService>())).As<IItemInstanceFactory>();
+            ChickenContainer.Builder.Register(c => new SimpleItemInstanceDtoFactory(c.Resolve<IItemService>())).As<IItemInstanceDtoFactory>();
             ChickenContainer.Builder.Register(_ => new EventManager()).As<IEventManager>().SingleInstance();
             ChickenContainer.Builder.Register(_ => new RandomGenerator()).As<IRandomGenerator>().SingleInstance();
             ChickenContainer.Builder.Register(_ => new BasicNpcDialogHandler()).As<INpcDialogHandler>().SingleInstance();
@@ -70,6 +71,7 @@ namespace SaltyEmu.BasicPlugin
             ChickenContainer.Builder.Register(_ => new SimplePlayerManager()).As<IPlayerManager>().SingleInstance();
             ChickenContainer.Builder.Register(_ => new PacketHandler()).As<IPacketHandler>().SingleInstance();
             ChickenContainer.Builder.Register(_ => new CommandHandler()).As<ICommandContainer>().SingleInstance();
+            ChickenContainer.Builder.Register(_ => new BasicUpgradeHandler()).As<IItemUpgradeHandler>().SingleInstance();
         }
     }
 }

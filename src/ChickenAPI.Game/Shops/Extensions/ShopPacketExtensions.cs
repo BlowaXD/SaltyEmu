@@ -8,6 +8,14 @@ namespace ChickenAPI.Game.Shops.Extensions
 {
     public static class ShopPacketExtensions
     {
+        public static ShopEndPacket GenerateShopEndPacket(this IPlayerEntity player, ShopEndPacketType type)
+        {
+            return new ShopEndPacket
+            {
+                PacketType = type
+            };
+        }
+
         public static SMemoPacket GenerateShopMemoPacket(this IPlayerEntity player, SMemoPacketType type, string message)
         {
             return new SMemoPacket

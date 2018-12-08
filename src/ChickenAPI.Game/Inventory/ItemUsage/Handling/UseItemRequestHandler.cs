@@ -1,8 +1,8 @@
 ﻿using ChickenAPI.Enums.Game.Items;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Game.Inventory.Args;
 using System;
 using System.Reflection;
+using ChickenAPI.Game.Inventory.Events;
 
 namespace ChickenAPI.Game.Inventory.ItemUsage.Handling
 {

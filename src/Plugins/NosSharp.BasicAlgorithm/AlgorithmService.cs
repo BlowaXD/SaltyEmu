@@ -76,9 +76,9 @@ namespace NosSharp.BasicAlgorithm
             _hpRegen = new HpRegen();
             _hpRegenSitting = new HpRegenSitting();
 
-            _mpMax = new HpMax();
-            _mpRegen = new HpRegen();
-            _mpRegenSitting = new HpRegenSitting();
+            _mpMax = new MpMax();
+            _mpRegen = new MpRegen();
+            _mpRegenSitting = new MpRegenSitting();
 
             _levelBasedAlgorithm.Initialize();
             _jobLevelBasedAlgorithm.Initialize();

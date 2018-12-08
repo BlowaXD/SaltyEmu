@@ -15,7 +15,7 @@ namespace SaltyEmu.DatabasePlugin.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.4-rtm-31024")
+                .HasAnnotation("ProductVersion", "2.2.0-rtm-35687")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -246,7 +246,7 @@ namespace SaltyEmu.DatabasePlugin.Migrations
 
                     b.Property<short>("Amount");
 
-                    b.Property<byte>("AttackPoints");
+                    b.Property<short>("AttackPoints");
 
                     b.Property<long?>("BoundCharacterId");
 
@@ -274,11 +274,11 @@ namespace SaltyEmu.DatabasePlugin.Migrations
 
                     b.Property<short>("DarkResistance");
 
-                    b.Property<byte>("DefensePoints");
+                    b.Property<short>("DefensePoints");
 
                     b.Property<byte>("Design");
 
-                    b.Property<byte>("ElementPoints");
+                    b.Property<short>("ElementPoints");
 
                     b.Property<short>("ElementRate");
 
@@ -292,7 +292,9 @@ namespace SaltyEmu.DatabasePlugin.Migrations
 
                     b.Property<short>("Hp");
 
-                    b.Property<byte>("HpMpPoints");
+                    b.Property<short>("HpMpPoints");
+
+                    b.Property<bool>("IsFixed");
 
                     b.Property<long>("ItemId");
 
@@ -312,13 +314,29 @@ namespace SaltyEmu.DatabasePlugin.Migrations
 
                     b.Property<short>("RangeDodge");
 
-                    b.Property<byte>("Rarity");
+                    b.Property<short>("Rarity");
 
                     b.Property<short>("Slot");
 
-                    b.Property<byte>("SpecialistUpgrade");
+                    b.Property<short>("SpDamage");
 
-                    b.Property<byte>("SpecialistUpgrade2");
+                    b.Property<short>("SpDark");
+
+                    b.Property<short>("SpDefence");
+
+                    b.Property<short>("SpElement");
+
+                    b.Property<short>("SpFire");
+
+                    b.Property<short>("SpHP");
+
+                    b.Property<short>("SpLight");
+
+                    b.Property<byte>("SpStoneUpgrade");
+
+                    b.Property<short>("SpWater");
+
+                    b.Property<byte>("SpecialistUpgrade");
 
                     b.Property<byte>("Sum");
 

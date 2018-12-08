@@ -9,11 +9,11 @@ using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Entities.Player.Extensions;
 using ChickenAPI.Game.Families.Extensions;
-using ChickenAPI.Game.Inventory.Args;
-using ChickenAPI.Game.Inventory.Extensions;
+using ChickenAPI.Game.Helpers;
+using ChickenAPI.Game.Inventory.Events;
 using ChickenAPI.Game.Managers;
-using ChickenAPI.Game.Movements.Extensions;
 using ChickenAPI.Game.Network;
+using ChickenAPI.Game.Player.Extension;
 using ChickenAPI.Game.Skills.Extensions;
 using ChickenAPI.Packets.CharacterSelectionScreen.Client;
 using ChickenAPI.Packets.Game.Server.Map;
@@ -91,9 +91,8 @@ namespace NosSharp.PacketHandler
 
             session.Player.EmitEvent(new InventoryLoadEvent());
             session.Player.EmitEvent(new InventoryRequestDetailsEvent());
-            session.SendPacket(session.Player.GenerateCondPacket());
-
-            session.SendPacket(session.Player.GenerateGoldPacket());
+            session.Player.ActualizePlayerCondition();
+            session.Player.ActualizeUiGold();
             //  session.SendPackets(session.Player.GenerateQuicklistPacket());
             // finit
             // Blinit

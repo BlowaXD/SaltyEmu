@@ -2,7 +2,6 @@
 {
     public enum JewelOptionType
     {
-
         Hp,
         Mp,
         HpRecovery,

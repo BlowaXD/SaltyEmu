@@ -7,7 +7,6 @@ using ChickenAPI.Data.BCard;
 using ChickenAPI.Enums.Game.BCard;
 using ChickenAPI.Game.Battle.Interfaces;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Game.Inventory.Args;
 using ChickenAPI.Game.Inventory.ItemUsage.Handling;
 using NLog.Targets;
 

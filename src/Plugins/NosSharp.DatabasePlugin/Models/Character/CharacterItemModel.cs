@@ -28,7 +28,6 @@ namespace SaltyEmu.DatabasePlugin.Models.Character
         [ForeignKey(nameof(ItemId))]
         public long ItemId { get; set; }
 
-
         public short Amount { get; set; }
 
         public short Slot { get; set; }
@@ -44,20 +43,22 @@ namespace SaltyEmu.DatabasePlugin.Models.Character
         /// </summary>
         public byte Cellon { get; set; }
 
-        #endregion
+        #endregion Jewels
 
         #region GlovesAndBoots
 
         public byte Sum { get; set; }
 
-        #endregion
+        #endregion GlovesAndBoots
 
         [Key]
         public Guid Id { get; set; }
 
         #region WeaponsAndArmors
 
-        public byte Rarity { get; set; }
+        public sbyte Rarity { get; set; }
+
+        public bool IsFixed { get; set; }
 
         public byte Upgrade { get; set; }
 
@@ -92,7 +93,7 @@ namespace SaltyEmu.DatabasePlugin.Models.Character
 
         public short CriticalDamageRate { get; set; }
 
-        #endregion
+        #endregion WeaponsAndArmors
 
         #region SpecialistCards
 
@@ -102,17 +103,25 @@ namespace SaltyEmu.DatabasePlugin.Models.Character
 
         public byte SpecialistUpgrade { get; set; }
 
-        public byte SpecialistUpgrade2 { get; set; }
+        public byte SpStoneUpgrade { get; set; }
 
-        public byte AttackPoints { get; set; }
+        public short AttackPoints { get; set; }
 
-        public byte DefensePoints { get; set; }
+        public short DefensePoints { get; set; }
 
-        public byte ElementPoints { get; set; }
+        public short ElementPoints { get; set; }
 
-        public byte HpMpPoints { get; set; }
+        public short HpMpPoints { get; set; }
+        public short SpDamage { get; set; }
+        public short SpDark { get; set; }
+        public short SpDefence { get; set; }
+        public short SpElement { get; set; }
+        public short SpFire { get; set; }
+        public short SpHP { get; set; }
+        public short SpLight { get; set; }
+        public short SpWater { get; set; }
 
-        #endregion
+        #endregion SpecialistCards
 
         #region Fairy
 
@@ -145,6 +154,6 @@ namespace SaltyEmu.DatabasePlugin.Models.Character
         public short DarkPower { get; set; }
         public IEnumerable<CharacterItemOptionModel> ItemOptions { get; set; }
 
-        #endregion
+        #endregion CommonToAllWearables
     }
 }

@@ -3,7 +3,7 @@ using Autofac;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Data.Item;
 using ChickenAPI.Enums;
-using ChickenAPI.Game.Inventory.Args;
+using ChickenAPI.Game.Inventory.Events;
 using Qmmands;
 using SaltyEmu.Commands.Checks;
 using SaltyEmu.Commands.Entities;
@@ -21,7 +21,7 @@ namespace Essentials.Item
         [Remarks("Quantity argument is facultative.")]
         public Task<SaltyCommandResult> ItemCreateAsync(ItemDto item, short quantity = 1)
         {
-            var itemFactory = ChickenContainer.Instance.Resolve<IItemInstanceFactory>();
+            var itemFactory = ChickenContainer.Instance.Resolve<IItemInstanceDtoFactory>();
             ItemInstanceDto itemInstance = itemFactory.CreateItem(item, quantity);
 
             Context.Player.EmitEvent(new InventoryAddItemEvent

@@ -22,6 +22,16 @@ namespace ChickenAPI.Game.Inventory.Extensions
             GetFirstFreeSlot(inv, subInventory, source.Item, source.Amount);
 
 
+        public static bool HasItem(this InventoryComponent inv, long itemId)
+        {
+            return GetItems(inv).Any(s => s.ItemId == itemId);
+        }
+
+        public static int GetItemQuantityById(this InventoryComponent inv, long itemId)
+        {
+            return GetItems(inv).Count(s => s.ItemId == itemId);
+        }
+
         public static short GetFirstFreeSlot(this InventoryComponent inv, IReadOnlyCollection<ItemInstanceDto> subinventory)
         {
             for (int i = 0; i < subinventory.Count; i++)

@@ -115,16 +115,16 @@ namespace ChickenAPI.Packets.Game.Server.Inventory
         public short SpStoneUpgrade { get; set; }
 
         [PacketIndex(36)]
-        public byte AttackPoints { get; set; }
+        public short AttackPoints { get; set; }
 
         [PacketIndex(37)]
-        public byte DefensePoints { get; set; }
+        public short DefensePoints { get; set; }
 
         [PacketIndex(38)]
-        public byte ElementPoints { get; set; }
+        public short ElementPoints { get; set; }
 
         [PacketIndex(39)]
-        public byte HpMpPoints { get; set; }
+        public short HpMpPoints { get; set; }
 
         [PacketIndex(40)]
         public short SpFireResistance { get; set; }

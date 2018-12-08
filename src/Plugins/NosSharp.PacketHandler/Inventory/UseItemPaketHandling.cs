@@ -1,10 +1,10 @@
 ﻿using ChickenAPI.Core.Logging;
 using ChickenAPI.Data.Item;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Game.Inventory.Args;
 using ChickenAPI.Game.Inventory.Extensions;
 using ChickenAPI.Packets.Game.Client.Inventory;
 using System.Linq;
+using ChickenAPI.Game.Inventory.Events;
 
 namespace NosSharp.PacketHandler
 {

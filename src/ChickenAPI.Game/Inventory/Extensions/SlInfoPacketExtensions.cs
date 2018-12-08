@@ -63,7 +63,7 @@ namespace ChickenAPI.Game.Inventory.Extensions
                 ShellDefense = 0,
                 ShellElement = 0,
                 ShellHpMp = 0,
-                SpStoneUpgrade = 0, // TODO: sp stone upgrade
+                SpStoneUpgrade = itemInstance.SpStoneUpgrade, // TODO: sp stone upgrade
                 AttackPoints = itemInstance.AttackPoints,
                 DefensePoints = itemInstance.DefensePoints,
                 ElementPoints = itemInstance.ElementPoints,
