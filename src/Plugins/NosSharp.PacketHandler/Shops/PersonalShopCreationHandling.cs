@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using ChickenAPI.Core.Utils;
 using ChickenAPI.Data.Item;
@@ -47,7 +48,10 @@ namespace NosSharp.PacketHandler.Shops
 
         public static ShopPlayerShopCreateEvent ParseMShopPacket(string data, IPlayerEntity player)
         {
-            var tmp = new ShopPlayerShopCreateEvent();
+            var tmp = new ShopPlayerShopCreateEvent
+            {
+                ShopItems = new List<PersonalShopItem>(),
+            };
 
             string[] packetsplit = data.Split(' ');
             InventoryType[] type = new InventoryType[20];
@@ -57,9 +61,9 @@ namespace NosSharp.PacketHandler.Shops
             string shopname = string.Empty;
             short shopSlot = 0;
 
-            if (packetsplit.Length > 82)
+            if (packetsplit.Length > 79)
             {
-                for (short j = 3, i = 0; j < 82; j += 4, i++)
+                for (short j = 0, i = 0; j < 79; j += 4, i++)
                 {
                     Enum.TryParse(packetsplit[j], out type[i]);
                     short.TryParse(packetsplit[j + 1], out slot[i]);
@@ -87,10 +91,9 @@ namespace NosSharp.PacketHandler.Shops
                         return null;
                     }
 
-                    if (!itemFromSlotAndType.Item.IsTradable || itemFromSlotAndType.BoundCharacterId != 0)
+                    if (!itemFromSlotAndType.Item.IsTradable || itemFromSlotAndType.BoundCharacterId.HasValue)
                     {
                         // Session.SendPacket(Session.Character.GenerateSay(Language.Instance.GetMessageFromKey("SHOP_ONLY_TRADABLE_ITEMS"), 10));
-                        // Session.SendPacket("shop_end 0");
                         return null;
                     }
 
@@ -105,26 +108,23 @@ namespace NosSharp.PacketHandler.Shops
                 }
             }
 
-            if (!tmp.ShopItems.Any(s => !s.ItemInstance.Item.IsSoldable || s.ItemInstance.BoundCharacterId != 0))
+            for (int i = 80; i < packetsplit.Length; i++)
             {
-                for (int i = 83; i < packetsplit.Length; i++)
-                {
-                    shopname += $"{packetsplit[i]} ";
-                }
-
-                // trim shopname
-                shopname = shopname.TrimEnd(' ');
-
-                // create default shopname if it's empty
-                if (string.IsNullOrWhiteSpace(shopname) || string.IsNullOrEmpty(shopname))
-                {
-                    shopname = "SHOP_PRIVATE_SHOP";
-                }
-
-                // truncate the string to a max-length of 20
-                shopname = shopname.Truncate(20);
-                tmp.Name = shopname;
+                shopname += $"{packetsplit[i]} ";
             }
+
+            // trim shopname
+            shopname = shopname.TrimEnd(' ');
+
+            // create default shopname if it's empty
+            if (string.IsNullOrWhiteSpace(shopname) || string.IsNullOrEmpty(shopname))
+            {
+                shopname = "SHOP_PRIVATE_SHOP";
+            }
+
+            // truncate the string to a max-length of 20
+            shopname = shopname.Truncate(20);
+            tmp.Name = shopname;
 
             return tmp;
         }

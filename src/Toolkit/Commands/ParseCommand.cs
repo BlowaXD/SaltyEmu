@@ -25,39 +25,27 @@ namespace Toolkit.Commands
         [Option('i', "input", HelpText = "Input directory", Required = true)]
         public string InputDirectory { get; set; }
 
+        public static bool CheckFile(string inputDirectory, string subDirectory, string file)
+        {
+            string tmp = inputDirectory + Path.AltDirectorySeparatorChar + subDirectory + Path.AltDirectorySeparatorChar + file;
+            if (File.Exists(tmp))
+            {
+                return false;
+            }
+
+            Console.WriteLine($"{tmp} is missing in your directory !");
+            return true;
+
+        }
+
         public static bool CheckFiles(string inputDirectory)
         {
-            if (!File.Exists(inputDirectory + "/dats/Skill.dat"))
-            {
-                return true;
-            }
-
-            if (!File.Exists(inputDirectory + "/dats/Monster.dat"))
-            {
-                return true;
-            }
-
-            if (!File.Exists(inputDirectory + "/dats/Item.dat"))
-            {
-                return true;
-            }
-
-            if (!File.Exists(inputDirectory + "/dats/Card.dat"))
-            {
-                return true;
-            }
-
-            if (!File.Exists(inputDirectory + "/packets/einfo.packets"))
-            {
-                return true;
-            }
-
-            if (!File.Exists(inputDirectory + "/packets/packet.txt"))
-            {
-                return true;
-            }
-
-            return false;
+            return !CheckFile(inputDirectory, "dats", "Skill.dat") ||
+                !CheckFile(inputDirectory, "dats", "Monster.dat") ||
+                !CheckFile(inputDirectory, "dats", "Item.dat") ||
+                !CheckFile(inputDirectory, "dats", "Card.dat") ||
+                !CheckFile(inputDirectory, "packets", "einfo.packets") ||
+                !CheckFile(inputDirectory, "packets", "packet.txt");
         }
 
         public static int Handle(ParseCommand command)

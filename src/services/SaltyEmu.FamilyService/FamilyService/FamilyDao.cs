@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using ChickenAPI.Data;
 using ChickenAPI.Data.Families;
-using Foundatio.Utility;
 using SaltyEmu.Redis;
 using SaltyEmu.RedisWrappers;
 
@@ -13,7 +9,7 @@ namespace SaltyEmu.FamilyService.FamilyService
 {
     public class FamilyDao : MappedCacheClientBase<FamilyDto>, IFamilyService
     {
-        protected FamilyDao(RedisConfiguration conf) : base(conf)
+        public FamilyDao(RedisConfiguration conf) : base(conf)
         {
         }
 

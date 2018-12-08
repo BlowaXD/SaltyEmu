@@ -35,13 +35,13 @@ namespace ChickenAPI.Game.Player.Extension
         public static void GoldLess(this IPlayerEntity player, long amount)
         {
             player.Character.Gold -= amount;
-            player.ActualiseUiGold();
+            player.ActualizeUiGold();
         }
 
         public static void GoldUp(this IPlayerEntity player, long amount)
         {
             player.Character.Gold += amount;
-            player.ActualiseUiGold();
+            player.ActualizeUiGold();
         }
 
         #endregion Gold

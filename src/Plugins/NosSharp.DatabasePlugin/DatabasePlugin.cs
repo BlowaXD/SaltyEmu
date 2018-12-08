@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Data.SqlClient;
 using ChickenAPI.Core.Logging;
 using ChickenAPI.Core.Plugins;
+using ChickenAPI.Core.Plugins.Exceptions;
 using ChickenAPI.Core.Utils;
 using Microsoft.EntityFrameworkCore;
 using SaltyEmu.DatabasePlugin.Configuration;
@@ -23,7 +25,7 @@ namespace SaltyEmu.DatabasePlugin
             _configuration = ConfigurationHelper.Load<DatabaseConfiguration>(_configurationFilePath, true); // database configuration
             if (!Initialize())
             {
-                return;
+                throw new CriticalPluginException(this, "Verify your configuration in : " + _configurationFilePath);
             }
 
             PluginDependencyInjector.RegisterDbContext(_configuration);
@@ -63,7 +65,13 @@ namespace SaltyEmu.DatabasePlugin
                 }
                 catch (Exception ex)
                 {
-                    Log.Error("Database Error", ex);
+                    switch (ex)
+                    {
+                        case SqlException sql:
+                            return false;
+                    }
+
+                    Log.Error("[DB_INIT]", ex);
                     return false;
                 }
 

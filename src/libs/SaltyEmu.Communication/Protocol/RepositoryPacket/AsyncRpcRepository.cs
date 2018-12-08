@@ -2,20 +2,26 @@
 using System.Threading.Tasks;
 using ChickenAPI.Core.IPC;
 using ChickenAPI.Core.IPC.Protocol;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Data;
 
 namespace SaltyEmu.Communication.Protocol.RepositoryPacket
 {
     public class AsyncRpcRepository<T, TKey> where T : class
     {
+        private readonly Logger _log = Logger.GetLogger<T>();
         private readonly IAsyncRepository<T, TKey> _repository;
 
         public AsyncRpcRepository(IAsyncRepository<T, TKey> repository, IIpcRequestHandler handler)
         {
             _repository = repository;
             // todo create delegates to remove the first parameter (which is supposed to be this)
+
+            _log.Info("Registering OnGet()");
             handler.Register<RepositoryGetRequest<TKey>>(OnGet);
+            _log.Info("Registering OnSave()");
             handler.Register<RepositorySaveRequest<T>>(OnSave);
+            _log.Info("Registering OnDelete()");
             handler.Register<RepositoryDeleteRequest<TKey>>(OnDelete);
         }
 
@@ -39,6 +45,7 @@ namespace SaltyEmu.Communication.Protocol.RepositoryPacket
             {
                 return;
             }
+
             await _repository.SaveAsync(request.Objects);
             await request.ReplyAsync(new RepositorySaveResponse<T>
             {
@@ -52,6 +59,7 @@ namespace SaltyEmu.Communication.Protocol.RepositoryPacket
             {
                 return;
             }
+
             await _repository.DeleteByIdsAsync(request.ObjectIds);
         }
     }

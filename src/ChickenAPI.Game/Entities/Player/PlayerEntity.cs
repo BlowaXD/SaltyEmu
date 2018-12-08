@@ -27,6 +27,7 @@ using ChickenAPI.Game.Movements.DataObjects;
 using ChickenAPI.Game.Network;
 using ChickenAPI.Game.Network.BroadcastRules;
 using ChickenAPI.Game.Quicklist;
+using ChickenAPI.Game.Shops;
 using ChickenAPI.Game.Skills;
 using ChickenAPI.Game.Visibility;
 using ChickenAPI.Game.Visibility.Events;
@@ -239,6 +240,7 @@ namespace ChickenAPI.Game.Entities.Player
 
         public override void Dispose()
         {
+            EmitEvent(new MapLeaveEvent { Map = CurrentMap });
             PlayerManager.UnregisterPlayer(this);
             GC.SuppressFinalize(this);
         }
@@ -435,5 +437,8 @@ namespace ChickenAPI.Game.Entities.Player
         public bool IsGroupLeader => HasGroup && Group.Leader == this;
 
         #endregion Group
+
+        public bool HasShop => Shop != null;
+        public PersonalShop Shop { get; set; }
     }
 }

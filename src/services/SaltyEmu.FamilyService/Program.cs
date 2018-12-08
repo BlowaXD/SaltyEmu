@@ -12,7 +12,10 @@ using SaltyEmu.Communication.Serializers;
 using SaltyEmu.Communication.Utils;
 using SaltyEmu.FamilyPlugin;
 using SaltyEmu.FamilyPlugin.Communication;
+using SaltyEmu.FamilyService.FamilyService;
 using SaltyEmu.FamilyService.Handlers;
+using SaltyEmu.Redis;
+using SaltyEmu.RedisWrappers;
 
 namespace SaltyEmu.FamilyService
 {
@@ -56,8 +59,14 @@ namespace SaltyEmu.FamilyService
         private static async Task InitializeAsync()
         {
             var handler = new RequestHandler();
-            handler.Register<GetFamilyInformationRequest>(FamilyGetInformationRequestHandler.OnMessage);
-            handler.Register<RepositorySaveRequest<FamilyDto>>(FamilyGetInformationRequestHandler.OnSaveMessage);
+
+            AsyncRpcRepository<FamilyDto, long> test = new AsyncRpcRepository<FamilyDto, long>(
+                new FamilyDao(new RedisConfiguration
+                {
+                    Host = "localhost",
+                    Port = 6379
+                }), handler);
+
 
             MqttServerConfigurationBuilder builder = new MqttServerConfigurationBuilder()
                 .ConnectTo("localhost")

@@ -6,6 +6,7 @@ using System.Text;
 using Autofac;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Plugins;
+using ChickenAPI.Core.Plugins.Exceptions;
 using ChickenAPI.Core.Utils;
 using ChickenAPI.Data.Account;
 using ChickenAPI.Data.Character;
@@ -42,7 +43,8 @@ namespace World
             new EssentialsPlugin()
         };
 
-        private static void InitializePlugins()
+
+        private static bool InitializePlugins()
         {
             try
             {
@@ -58,10 +60,17 @@ namespace World
 
                 Plugins.AddRange(PluginManager.LoadPlugins(new DirectoryInfo("plugins")));
             }
+            catch (CriticalPluginException e)
+            {
+                Log.Error("[PLUGIN]", e);
+                return true;
+            }
             catch (Exception e)
             {
                 Log.Error("Plugins load", e);
             }
+
+            return false;
         }
 
         private static void InitializeConfigs()
@@ -158,7 +167,11 @@ namespace World
             PrintHeader();
             InitializeLogger();
             InitializeConfigs();
-            InitializePlugins();
+            if (InitializePlugins())
+            {
+                return;
+            }
+
             EnablePlugins(PluginEnableTime.PreContainerBuild);
             ChickenContainer.Builder.Register(s => PluginManager).As<IPluginManager>();
             ChickenContainer.Initialize();

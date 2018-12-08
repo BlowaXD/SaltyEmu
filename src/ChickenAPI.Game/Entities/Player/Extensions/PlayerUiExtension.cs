@@ -15,7 +15,7 @@ namespace ChickenAPI.Game.Player.Extension
         /// Actualizes the gold in the player's inventory (ClientSide)
         /// </summary>
         /// <param name="player"></param>
-        public static void ActualiseUiGold(this IPlayerEntity player)
+        public static void ActualizeUiGold(this IPlayerEntity player)
         {
             player.SendPacket(player.GenerateGoldPacket());
         }

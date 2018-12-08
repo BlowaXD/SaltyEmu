@@ -14,15 +14,13 @@ namespace NosSharp.PacketHandler.Npc.Shops
     {
         public static void OnShoppingPacketReceived(ShoppingPacket packet, IPlayerEntity player)
         {
-            IEnumerable<INpcEntity> npcs = player.CurrentMap.GetEntitiesByType<INpcEntity>(VisualType.Npc);
-
-            INpcEntity npc = npcs.FirstOrDefault(s => s.MapNpc.Id == packet.NpcId);
-            if (npc == null || !(npc is NpcEntity shopEntity))
+            var npc = player.CurrentMap.GetEntity<INpcEntity>(packet.NpcId, VisualType.Npc);
+            if (npc == null)
             {
                 return;
             }
 
-            player.EmitEvent(new ShopGetInformationEvent { Shop = shopEntity.Shop, Type = packet.Type });
+            player.EmitEvent(new ShopGetInformationEvent { Shop = npc, Type = packet.Type });
         }
     }
 }

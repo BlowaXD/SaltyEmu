@@ -8,7 +8,6 @@ using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Maths;
 using ChickenAPI.Data.Item;
 using ChickenAPI.Data.Shop;
-using ChickenAPI.Data.Skills;
 using ChickenAPI.Enums.Game.Character;
 using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Enums.Game.Items;
@@ -20,8 +19,8 @@ using ChickenAPI.Game.Entities.Player.Extensions;
 using ChickenAPI.Game.Events;
 using ChickenAPI.Game.Inventory.Args;
 using ChickenAPI.Game.Inventory.Extensions;
+using ChickenAPI.Game.Movements.Extensions;
 using ChickenAPI.Game.Player.Extension;
-using ChickenAPI.Game.Shops.Args;
 using ChickenAPI.Game.Shops.Events;
 using ChickenAPI.Game.Shops.Extensions;
 using ChickenAPI.Game.Skills.Extensions;
@@ -35,7 +34,10 @@ namespace ChickenAPI.Game.Shops
 
         public override ISet<Type> HandledTypes => new HashSet<Type>
         {
-            typeof(ShopGetInformationEvent), typeof(ShopBuyEvent), typeof(ShopSellEvent)
+            typeof(ShopGetInformationEvent),
+            typeof(ShopBuyEvent),
+            typeof(ShopSellEvent),
+            typeof(ShopPlayerShopCreateEvent)
         };
 
         public override void Execute(IEntity entity, ChickenEventArgs e)
@@ -43,7 +45,7 @@ namespace ChickenAPI.Game.Shops
             switch (e)
             {
                 case ShopGetInformationEvent getinfos:
-                    SendInformations(getinfos, entity);
+                    SendInformations(entity as IPlayerEntity, getinfos);
                     break;
                 case ShopBuyEvent buy:
                     HandleBuyRequest(entity as IPlayerEntity, buy);
@@ -51,77 +53,47 @@ namespace ChickenAPI.Game.Shops
                 case ShopSellEvent sell:
                     HandleSellRequest(entity as IPlayerEntity, sell);
                     break;
+                case ShopPlayerShopCreateEvent ev:
+                    CreatePlayerShop(entity as IPlayerEntity, ev);
+                    break;
             }
         }
 
-        private static void SendInformations(ShopGetInformationEvent getinfos, IEntity entity)
+        private static void CreatePlayerShop(IPlayerEntity player, ShopPlayerShopCreateEvent ev)
         {
-            if (!(entity is IPlayerEntity player))
+            if (player.HasShop)
             {
-                // not a player, no need to send packets
                 return;
             }
 
-            int typeshop = 0;
-
-            var tmp = new StringBuilder();
-            double percent = 1.0;
-
-            switch (player.GetDignityIcon())
+            var shop = new PersonalShop(player, player.CurrentMap.GetNextId())
             {
-                case CharacterDignity.BluffedNameOnly:
-                    percent = 1.1;
-                    typeshop = 110;
+                ShopItems = ev.ShopItems,
+                ShopName = ev.Name
+            };
+            player.Shop = shop;
+            player.BroadcastExceptSender(player.GeneratePFlagPacket());
+            player.Broadcast(player.GenerateShopPacket());
+            // SHOP OPENED
+
+            // ActualizeSpeed
+            player.Movable.IsSitting = true;
+            player.ActualizePlayerCondition();
+            // sitting
+        }
+
+        private static void SendInformations(IPlayerEntity player, ShopGetInformationEvent getinfos)
+        {
+            switch (getinfos.Shop)
+            {
+                case INpcEntity npc:
+                    player.SendPacket(player.GenerateNInvPacket(npc.Shop, getinfos.Type));
                     break;
-                case CharacterDignity.NotQualifiedFor:
-                    percent = 1.2;
-                    typeshop = 120;
-                    break;
-                case CharacterDignity.Useless:
-                case CharacterDignity.StupidMinded:
-                    percent = 1.5;
-                    typeshop = 150;
+                case IPlayerEntity playerShop:
+                    player.SendPacket(player.GenerateNInvPacket(playerShop.Shop));
                     break;
             }
 
-            foreach (ShopItemDto itemInfo in getinfos.Shop.Items.Where(s => s.Type == getinfos.Type))
-            {
-                if (typeshop == 0)
-                {
-                    typeshop = 100;
-                }
-
-                tmp.Append(' ');
-                double price = itemInfo.Item.ReputPrice > 0 ? itemInfo.Item.ReputPrice : itemInfo.Item.Price * percent;
-                byte color = itemInfo.Color != 0 ? itemInfo.Item.Color : itemInfo.Item.BasicUpgrade;
-                int rare = itemInfo.Item.Type != InventoryType.Equipment ? -1 : itemInfo.Rare;
-
-                tmp.Append((byte)itemInfo.Item.Type);
-                tmp.Append('.');
-                tmp.Append(itemInfo.Slot);
-                tmp.Append('.');
-                tmp.Append(itemInfo.ItemId);
-                tmp.Append('.');
-                tmp.Append(rare);
-                tmp.Append('.');
-                if (itemInfo.Item.Type == InventoryType.Equipment)
-                {
-                    tmp.Append(color);
-                    tmp.Append('.');
-                }
-
-                tmp.Append(price);
-            }
-
-            player.SendPacket(new NInvPacket
-            {
-                ShopList = tmp.ToString().Trim(),
-                ShopSkills = getinfos.Shop.Skills.Where(s => s.Type.Equals(getinfos.Type)).Select(s => s.SkillId).ToList(),
-                ShopType = typeshop,
-                Unknown = 0,
-                VisualId = getinfos.Shop.MapNpcId,
-                VisualType = 2
-            });
         }
 
         private static void HandleBuyRequest(IPlayerEntity player, ShopBuyEvent shopBuy)
@@ -324,7 +296,7 @@ namespace ChickenAPI.Game.Shops
             else
             {
                 player.Character.Gold -= (long)(price * percent);
-                player.SendPacket(player.GenerateGoldPacket());
+                player.ActualizeUiGold();
             }
 
             player.EmitEvent(new InventoryAddItemEvent

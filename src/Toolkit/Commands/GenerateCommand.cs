@@ -23,25 +23,14 @@ namespace Toolkit.Commands
         [Option('i', "input", HelpText = "Input directory", Required = true)]
         public string Input { get; set; }
 
-        [Option('o', "output", HelpText = "Output directory")]
-        public string Output { get; set; }
-
         public static int Handle(GenerateCommand command)
         {
             var algo = new BasicAlgorithmPlugin();
             algo.OnLoad();
             algo.OnEnable();
-            if (command.IsDb)
-            {
-                var tmp = new DatabasePlugin();
-                tmp.OnLoad();
-                tmp.OnEnable();
-            }
-
-            if (command.Verbose)
-            {
-                Logger.Initialize();
-            }
+            var tmp = new DatabasePlugin();
+            tmp.OnLoad();
+            tmp.OnEnable();
 
             ChickenContainer.Initialize();
             var portal = new PacketPortalGenerator();

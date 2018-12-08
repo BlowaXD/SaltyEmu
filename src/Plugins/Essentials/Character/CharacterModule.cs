@@ -157,7 +157,7 @@ namespace Essentials.Character
             }
 
             player.Character.Gold = count;
-            player.ActualiseUiGold();
+            player.ActualizeUiGold();
 
             return Task.FromResult(new SaltyCommandResult(true, $"{player.Character.Name}'s gold has been set to {count}"));
         }

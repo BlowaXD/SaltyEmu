@@ -36,7 +36,7 @@ namespace ChickenAPI.Game.Entities.Npc
             HpMax = npc.NpcMonster.MaxHp;
             MpMax = npc.NpcMonster.MaxMp;
             BasicArea = npc.NpcMonster.BasicArea;
-            Shop = shop != null ? new Shop(shop) : null;
+            Shop = shop != null ? new Shop(shop, this) : null;
             SkillComponent = new SkillComponent(this);
             _visibility = new VisibilityComponent(this);
             Components = new Dictionary<Type, IComponent>

@@ -6,21 +6,29 @@ using ChickenAPI.Game.Entities.Npc;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Shops.Args;
 using ChickenAPI.Game.Shops.Events;
+using ChickenAPI.Game.Shops.Extensions;
 using ChickenAPI.Packets.Game.Client.Shops;
+using NLog.LayoutRenderers;
 
 namespace NosSharp.PacketHandler.Npc.Shops
 {
     public class NpcReqPacketHandling
     {
-        public static void OnShoppingPacketReceived(ReceivedNpcReqPacket packet, IPlayerEntity player)
+        public static void OnNpcReqReceived(ReceivedNpcReqPacket packet, IPlayerEntity player)
         {
-            IEnumerable<INpcEntity> npcs = player.CurrentMap.GetEntitiesByType<INpcEntity>(VisualType.Npc);
-
-            INpcEntity npc = npcs.FirstOrDefault(s => s.MapNpc.Id == packet.VisualId);
-            if (npc == null || !(npc is NpcEntity npcEntity))
+            if (packet.VisualType == VisualType.Character)
             {
+                IPlayerEntity shop = player.CurrentMap.GetPlayerById(packet.VisualId);
+                if (shop == null)
+                {
+                    return;
+                }
+
+                player.EmitEvent(new ShopGetInformationEvent { Shop = shop, Type = 0 });
                 return;
             }
+
+            var npc = player.CurrentMap.GetEntity<INpcEntity>(packet.VisualId, VisualType.Npc);
 
             player.SendPacket(new SentNpcReqPacket
             {

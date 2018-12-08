@@ -12,7 +12,7 @@ namespace ChickenAPI.Packets.Game.Client.Shops
         /// <summary>
         /// Todo write a better way to handle that
         /// </summary>
-        [PacketIndex(1)]
+        [PacketIndex(1, SerializeToEnd = true)]
         public string PacketData { get; set; }
     }
 }

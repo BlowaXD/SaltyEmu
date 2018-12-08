@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using Autofac;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Data.Shop;
+using ChickenAPI.Game.Entities.Npc;
+using ChickenAPI.Game.Entities.Player;
 
 namespace ChickenAPI.Game.Shops
 {
@@ -13,16 +15,19 @@ namespace ChickenAPI.Game.Shops
         public readonly HashSet<ShopItemDto> Items;
         public readonly HashSet<ShopSkillDto> Skills;
 
-        public Shop(ShopDto shop)
+        public Shop(ShopDto shop, INpcEntity npc)
         {
             Id = shop.Id;
             MapNpcId = shop.MapNpcId;
             Name = shop.Name;
             MenuType = shop.MenuType;
             ShopType = shop.ShopType;
+            Owner = npc;
 
             Items = new HashSet<ShopItemDto>(_shopItemService.GetByShopId(Id));
             Skills = new HashSet<ShopSkillDto>(_shopSkillService.GetByShopId(Id));
         }
+
+        public INpcEntity Owner { get; set; }
     }
 }

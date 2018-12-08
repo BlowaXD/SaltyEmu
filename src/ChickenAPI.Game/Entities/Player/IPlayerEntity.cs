@@ -8,18 +8,20 @@ using ChickenAPI.Game.Families;
 using ChickenAPI.Game.Locomotion;
 using ChickenAPI.Game.Network;
 using ChickenAPI.Game.Player;
+using ChickenAPI.Game.Shops;
 using ChickenAPI.Game.Specialists;
 using ChickenAPI.Packets;
 
 namespace ChickenAPI.Game.Entities.Player
 {
-    public interface IPlayerEntity : ILocomotionEntity, IBattleEntity, IInventoriedEntity, IExperenciedEntity, ISpecialistEntity, IQuicklistEntity, IFamilyCapacities, IGroupEntity, IBroadcastable
+    public interface IPlayerEntity : ILocomotionEntity, IBattleEntity, IInventoriedEntity, IShopEntity, ISpecialistEntity, IQuicklistEntity, IFamilyCapacities, IGroupEntity, IBroadcastable
     {
         CharacterDto Character { get; }
 
         CharacterNameAppearance NameAppearance { get; }
 
         ISession Session { get; }
+        PersonalShop Shop { get; set; }
 
         DateTime DateLastPortal { get; set; }
 
