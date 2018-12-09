@@ -17,6 +17,11 @@ using System.Collections.Generic;
 using System.Linq;
 using ChickenAPI.Game.Inventory.Events;
 using ChickenAPI.Game.Player.Extension;
+using ChickenAPI.Core.Utils;
+using ChickenAPI.Game.Maps;
+using ChickenAPI.Game.Entities.Drop;
+using ChickenAPI.Game.Entities.Drop.Extensions;
+using ChickenAPI.Core.Maths;
 
 namespace ChickenAPI.Game.Inventory
 {
@@ -25,6 +30,10 @@ namespace ChickenAPI.Game.Inventory
         private static readonly Logger Log = Logger.GetLogger<InventoryEventHandler>();
 
         private static readonly IItemUsageContainer _ItemUsageHandler = new Lazy<IItemUsageContainer>(() => ChickenContainer.Instance.Resolve<IItemUsageContainer>()).Value;
+
+        private static IRandomGenerator Random => new Lazy<IRandomGenerator>(() => ChickenContainer.Instance.Resolve<IRandomGenerator>()).Value;
+        private static IPathfinder PathFinder => new Lazy<IPathfinder>(() => ChickenContainer.Instance.Resolve<IPathfinder>()).Value;
+        private static IItemInstanceDtoFactory ItemFactory => new Lazy<IItemInstanceDtoFactory>(() => ChickenContainer.Instance.Resolve<IItemInstanceDtoFactory>()).Value;
 
         public override ISet<Type> HandledTypes => new HashSet<Type>
         {
@@ -36,7 +45,8 @@ namespace ChickenAPI.Game.Inventory
             typeof(InventoryMoveEventArgs),
             typeof(InventoryUnequipEvent),
             typeof(InventoryWearEvent),
-            typeof(InventoryUseItemEvent)
+            typeof(InventoryUseItemEvent),
+            typeof(InventoryPickUpEvent)
         };
 
         public override void Execute(IEntity entity, ChickenEventArgs e)
@@ -59,7 +69,7 @@ namespace ChickenAPI.Game.Inventory
                     break;
 
                 case InventoryRemoveItemEvent dropItemEventArgs:
-                    DropItem(inventory, dropItemEventArgs);
+                    DropItem(inventory, dropItemEventArgs, entity as IPlayerEntity);
                     break;
 
                 case InventoryDestroyItemEvent destroyItemEventArgs:
@@ -93,7 +103,32 @@ namespace ChickenAPI.Game.Inventory
                 case InventoryUseItemEvent item:
                     _ItemUsageHandler.UseItem(entity as IPlayerEntity, item);
                     break;
+
+                case InventoryPickUpEvent pickUpEvent:
+                    PickUpItem(inventory, pickUpEvent, entity as IPlayerEntity);
+                    break;
             }
+        }
+
+        private void PickUpItem(InventoryComponent inv, InventoryPickUpEvent args, IPlayerEntity player)
+        {
+            ItemInstanceDto[] subinv = inv.GetSubInvFromItem(args.Drop.Item);
+            short slot = inv.GetFirstFreeSlot(subinv, args.Drop.Item, (short)args.Drop.Quantity);
+            if (slot == -1)
+            {
+                Log.Info("No available slot");
+                return;
+            }
+
+            ItemInstanceDto itemInstance = args.Drop.ItemInstance;
+            if (itemInstance == null) // Monster Drop
+            {
+                itemInstance = ItemFactory.CreateItem(args.Drop.Item, (short) args.Drop.Quantity);
+            }
+            AddItem(inv, new InventoryAddItemEvent() {ItemInstance = itemInstance});
+            player.Broadcast(player.GenerateGetPacket(args.Drop.Id));
+            args.Drop.CurrentMap.UnregisterEntity(args.Drop);
+            args.Drop.Dispose();
         }
 
         private void WearItem(InventoryComponent inventory, IPlayerEntity player, InventoryWearEvent e)
@@ -299,19 +334,36 @@ namespace ChickenAPI.Game.Inventory
             player.SendPacket(args.ItemInstance.GenerateIvnPacket());
         }
 
-        private static void DropItem(InventoryComponent inv, InventoryRemoveItemEvent args)
+        private static void DropItem(InventoryComponent inv, InventoryRemoveItemEvent args, IPlayerEntity player)
         {
-            if (!args.ItemInstance.Item.IsDroppable)
+            if (args.ItemInstance?.Item.IsDroppable == false)
             {
                 //Item is not droppable
                 return;
             }
 
             ItemInstanceDto[] subinv = inv.GetSubInvFromItem(args.ItemInstance.Item);
-
             int itemIndex = Array.FindIndex(subinv, x => x.Slot == args.ItemInstance.Slot);
 
-            subinv[itemIndex] = null;
+            Position<short>[] pos = PathFinder.GetNeighbors(player.Position, player.CurrentMap.Map);
+            IDropEntity drop = new ItemDropEntity(player.CurrentMap.GetNextId())
+            {
+                ItemVnum = args.ItemInstance.ItemId,
+                ItemInstance = args.ItemInstance,
+                DroppedTimeUtc = DateTime.Now,
+                Position = pos.Length > 1 ? pos[Random.Next(pos.Length)] : player.Position,
+                Quantity = args.Amount
+            };
+            drop.TransferEntity(player.CurrentMap);
+            player.CurrentMap.Broadcast(drop.GenerateDropPacket());
+
+            if (args.Amount >= subinv[itemIndex].Amount)
+            {
+                subinv[itemIndex] = null;
+                return;
+            }
+
+            subinv[itemIndex].Amount -= args.Amount;
         }
 
         private static void DestroyItem(InventoryComponent inv, InventoryDestroyItemEvent args)

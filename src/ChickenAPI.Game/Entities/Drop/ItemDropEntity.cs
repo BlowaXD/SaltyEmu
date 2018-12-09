@@ -16,6 +16,7 @@ namespace ChickenAPI.Game.Entities.Drop
         }
 
         public ItemDto Item { get; set; }
+        public ItemInstanceDto ItemInstance { get; set; }
         public bool IsQuestDrop { get; set; }
         public long Quantity { get; set; }
         public long ItemVnum { get; set; }

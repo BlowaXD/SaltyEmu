@@ -1,5 +1,6 @@
 ﻿using System;
 using ChickenAPI.Core.Utils;
+using ChickenAPI.Data.Item;
 using ChickenAPI.Game.ECS.Entities;
 
 namespace ChickenAPI.Game.Entities.Drop
@@ -23,6 +24,16 @@ namespace ChickenAPI.Game.Entities.Drop
         /// Itemvnum (to display)
         /// </summary>
         long ItemVnum { get; set; }
+
+        /// <summary>
+        /// ItemInstance
+        /// </summary>
+        ItemDto Item { get; set; }
+
+        /// <summary>
+        /// ItemInstance
+        /// </summary>
+        ItemInstanceDto ItemInstance { get; set; }
 
         /// <summary>
         /// Dropped Item spawn time at UTC timezone

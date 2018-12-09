@@ -6,5 +6,7 @@ namespace ChickenAPI.Game.Inventory.Events
     public class InventoryRemoveItemEvent : ChickenEventArgs
     {
         public ItemInstanceDto ItemInstance { get; set; }
+
+        public short Amount { get; set; }
     }
 }

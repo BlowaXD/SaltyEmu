@@ -4,6 +4,7 @@ using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Game.Entities.Drop;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Entities.Player.Extensions;
+using ChickenAPI.Game.Inventory.Events;
 using ChickenAPI.Game.Player.Extension;
 using ChickenAPI.Packets.Game.Client.Drops;
 
@@ -26,7 +27,12 @@ namespace NosSharp.PacketHandler.Drops
                 player.Broadcast(player.GenerateGetPacket(mapItem.Id));
                 mapItem.CurrentMap.UnregisterEntity(mapItem);
                 mapItem.Dispose();
+                return;
             }
+            player.EmitEvent(new InventoryPickUpEvent
+            {
+                Drop = mapItem
+            });
         }
     }
 }
