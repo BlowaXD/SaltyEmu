@@ -349,6 +349,7 @@ namespace ChickenAPI.Game.Inventory
             IDropEntity drop = new ItemDropEntity(player.CurrentMap.GetNextId())
             {
                 ItemVnum = args.ItemInstance.ItemId,
+                Item = args.ItemInstance.Item,
                 ItemInstance = args.ItemInstance,
                 DroppedTimeUtc = DateTime.Now,
                 Position = pos.Length > 1 ? pos[Random.Next(pos.Length)] : player.Position,
@@ -360,10 +361,11 @@ namespace ChickenAPI.Game.Inventory
             if (args.Amount >= subinv[itemIndex].Amount)
             {
                 subinv[itemIndex] = null;
+                player.SendPacket(player.GenerateEmptyIvnPacket(args.ItemInstance.Type, args.ItemInstance.Slot));
                 return;
             }
-
             subinv[itemIndex].Amount -= args.Amount;
+            player.SendPacket(subinv[itemIndex].GenerateIvnPacket());
         }
 
         private static void DestroyItem(InventoryComponent inv, InventoryDestroyItemEvent args)
