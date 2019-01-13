@@ -20,7 +20,7 @@ namespace ChickenAPI.Game.ECS.Entities
         IEnumerable<IPlayerEntity> Players { get; }
 
         /// <summary>
-        /// Returns the Player Entity with the given CharacterId
+        ///     Returns the Player Entity with the given CharacterId
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>

@@ -2,8 +2,7 @@
 
 namespace ChickenAPI.Game.NosBazaar.Events
 {
-    public class NosBazaarBuyItemEvent : ChickenEventArgs
+    public class NosBazaarBuyItemEvent : GameEntityEvent
     {
-        
     }
 }

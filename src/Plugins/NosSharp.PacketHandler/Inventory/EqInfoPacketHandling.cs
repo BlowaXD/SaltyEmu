@@ -1,19 +1,19 @@
-﻿using ChickenAPI.Game.Entities.Player;
+﻿using System.Threading.Tasks;
+using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Inventory.Events;
 using ChickenAPI.Packets.Game.Server.Inventory;
+using NW.Plugins.PacketHandling.Utils;
 
-namespace NosSharp.PacketHandler.Inventory
+namespace NW.Plugins.PacketHandling.Inventory
 {
-    public class EqInfoPacketHandling
+    public class EqInfoPacketHandling : GenericGamePacketHandlerAsync<EquipmentInfoPacket>
     {
-        public static void OnEqInfoPacket(EquipmentInfoPacket packet, IPlayerEntity player)
-        {
-            player.EmitEvent(new InventoryEqInfoEventArgs
+        protected override Task Handle(EquipmentInfoPacket packet, IPlayerEntity player) =>
+            player.EmitEventAsync(new InventoryEqInfoEvent
             {
                 Type = packet.Type,
                 Slot = packet.Slot,
                 ShopOwnerId = packet.ShopOwnerId
             });
-        }
     }
 }

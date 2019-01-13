@@ -3,10 +3,11 @@ using Autofac;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Logging;
 using ChickenAPI.Core.Plugins;
+using ChickenAPI.Core.Utils;
 using ChickenAPI.Game.PacketHandling;
-using NosSharp.PacketHandler.Utils;
+using NW.Plugins.PacketHandling.Utils;
 
-namespace NosSharp.PacketHandler
+namespace NW.Plugins.PacketHandling
 {
     public class PacketHandlerPlugin : IPlugin
     {
@@ -22,29 +23,61 @@ namespace NosSharp.PacketHandler
         {
             try
             {
-                var packetHandler = ChickenContainer.Instance.Resolve<IPacketHandler>();
-                foreach (CharacterScreenPacketHandler handler in PacketMethodGenerator.GetCharacterScreenPacketHandlers())
+                var packetPipeline = ChickenContainer.Instance.Resolve<IPacketPipelineAsync>();
+
+                foreach (Type handlerType in typeof(PacketHandlerPlugin).Assembly.GetTypesImplementingGenericClass(typeof(GenericSessionPacketHandlerAsync<>)))
                 {
-                    Log.Info($"[PACKET_ADD][CHARACTERSCREEN] {handler.Identification}...");
-                    packetHandler.Register(handler);
+                    try
+                    {
+                        object tmp = ChickenContainer.Instance.Resolve(handlerType);
+                        if (!(tmp is IPacketProcessor handler))
+                        {
+                            continue;
+                        }
+
+                        Type type = handlerType.BaseType.GenericTypeArguments[0];
+
+                        Log.Info($"[CHARACTER_SCREEN][HANDLING] {handlerType}");
+                        packetPipeline.RegisterAsync(handler, type).ConfigureAwait(false).GetAwaiter().GetResult();
+                    }
+                    catch (Exception)
+                    {
+                        // ignored
+                    }
                 }
 
-                foreach (GamePacketHandler handler in PacketMethodGenerator.GetGamePacketHandlers())
+                foreach (Type handlerType in typeof(PacketHandlerPlugin).Assembly.GetTypesImplementingGenericClass(typeof(GenericGamePacketHandlerAsync<>)))
                 {
-                    Log.Info($"[PACKET_ADD][GAME] {handler.Identification}...");
-                    packetHandler.Register(handler);
+                    try
+                    {
+                        object tmp = ChickenContainer.Instance.Resolve(handlerType);
+                        if (!(tmp is IPacketProcessor handler))
+                        {
+                            continue;
+                        }
+
+                        Type type = handlerType.BaseType.GenericTypeArguments[0];
+
+                        Log.Info($"[GAME][HANDLING] {handlerType}");
+                        packetPipeline.RegisterAsync(handler, type).ConfigureAwait(false).GetAwaiter().GetResult();
+                    }
+                    catch (Exception)
+                    {
+                        // ignored
+                    }
                 }
             }
             catch (Exception e)
             {
                 Log.Error("OnEnable", e);
-                return;
             }
         }
 
         public void OnLoad()
         {
             Log.Info("Loading...");
+            ChickenContainer.Builder.RegisterAssemblyTypes(typeof(PacketHandlerPlugin).Assembly).AsClosedTypesOf(typeof(GenericSessionPacketHandlerAsync<>)).PropertiesAutowired();
+            ChickenContainer.Builder.RegisterAssemblyTypes(typeof(PacketHandlerPlugin).Assembly).AsClosedTypesOf(typeof(GenericGamePacketHandlerAsync<>)).PropertiesAutowired();
         }
 
         public void ReloadConfig()

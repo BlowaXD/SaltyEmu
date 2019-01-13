@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Autofac;
+using ChickenAPI.Core.Events;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Logging;
 using ChickenAPI.Enums.Game.Entity;
@@ -12,8 +14,9 @@ namespace ChickenAPI.Game.ECS.Entities
     public abstract class EntityBase : IEntity
     {
         protected static readonly Logger Log = Logger.GetLogger<EntityBase>();
+        protected static readonly IEventPipeline EventPipelineAsync = new Lazy<IEventPipeline>(() => ChickenContainer.Instance.Resolve<IEventPipeline>()).Value;
         protected static readonly IEventManager EventManager = new Lazy<IEventManager>(() => ChickenContainer.Instance.Resolve<IEventManager>()).Value;
-        protected Dictionary<Type, IComponent> Components;
+        protected Dictionary<Type, IComponent> Components = new Dictionary<Type, IComponent>();
 
         protected EntityBase(VisualType type, long id)
         {
@@ -30,10 +33,16 @@ namespace ChickenAPI.Game.ECS.Entities
 
         public IMapLayer CurrentMap { get; protected set; }
 
-        public void EmitEvent<T>(T e) where T : ChickenEventArgs
+        public void EmitEvent<T>(T e) where T : GameEntityEvent
         {
             e.Sender = this;
-            EventManager.Notify(this, e);
+            EventPipelineAsync.Notify(e).ConfigureAwait(false).GetAwaiter().GetResult();
+        }
+
+        public Task EmitEventAsync<T>(T e) where T : GameEntityEvent
+        {
+            e.Sender = this;
+            return EventPipelineAsync.Notify(e);
         }
 
         public virtual void TransferEntity(IMapLayer map)

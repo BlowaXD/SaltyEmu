@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Net;
+using System.Threading.Tasks;
 using ChickenAPI.Core.i18n;
-using ChickenAPI.Data.Character;
+using ChickenAPI.Data.Account;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Packets;
 
@@ -28,6 +29,11 @@ namespace ChickenAPI.Game.Network
         void SendPacket<T>(T packet) where T : IPacket;
         void SendPackets<T>(IEnumerable<T> packets) where T : IPacket;
         void SendPackets(IEnumerable<IPacket> packets);
+
+        Task SendPacketAsync<T>(T packet) where T : IPacket;
+
+        Task SendPacketsAsync<T>(IEnumerable<T> packets) where T : IPacket;
+        Task SendPacketsAsync(IEnumerable<IPacket> packets);
 
         void Disconnect();
     }

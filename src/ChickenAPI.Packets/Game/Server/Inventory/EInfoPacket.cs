@@ -24,31 +24,6 @@ namespace ChickenAPI.Packets.Game.Server.Inventory
         [PacketIndex(5)]
         public byte LevelMinimum { get; set; }
 
-        #region Armor
-        [PacketIndex(6, IsOptional = true)]
-        public short? CloseDefense { get; set; }
-
-        [PacketIndex(7, IsOptional = true)]
-        public short? RangeDefense { get; set; }
-
-        [PacketIndex(8, IsOptional = true)]
-        public short? MagicDefense { get; set; }
-
-        [PacketIndex(9, IsOptional = true)]
-        public short? DefenseDodge { get; set; }
-
-        [PacketIndex(10, IsOptional = true)]
-        public short? CriticalRate { get; set; }
-        #endregion
-
-        #region Weapon
-        [PacketIndex(11, IsOptional = true)]
-        public byte? Ammo { get; set; }
-
-        [PacketIndex(12, IsOptional = true)]
-        public byte? MaximumAmmo { get; set; }
-        #endregion
-
         [PacketIndex(13, IsOptional = true)]
         public short? DurabilityPoint { get; set; }
 
@@ -81,5 +56,34 @@ namespace ChickenAPI.Packets.Game.Server.Inventory
 
         [PacketIndex(23, IsOptional = true)]
         public byte? ShellEffect { get; set; } // Review this
+
+        #region Armor
+
+        [PacketIndex(6, IsOptional = true)]
+        public short? CloseDefense { get; set; }
+
+        [PacketIndex(7, IsOptional = true)]
+        public short? RangeDefense { get; set; }
+
+        [PacketIndex(8, IsOptional = true)]
+        public short? MagicDefense { get; set; }
+
+        [PacketIndex(9, IsOptional = true)]
+        public short? DefenseDodge { get; set; }
+
+        [PacketIndex(10, IsOptional = true)]
+        public short? CriticalRate { get; set; }
+
+        #endregion
+
+        #region Weapon
+
+        [PacketIndex(11, IsOptional = true)]
+        public byte? Ammo { get; set; }
+
+        [PacketIndex(12, IsOptional = true)]
+        public byte? MaximumAmmo { get; set; }
+
+        #endregion
     }
 }

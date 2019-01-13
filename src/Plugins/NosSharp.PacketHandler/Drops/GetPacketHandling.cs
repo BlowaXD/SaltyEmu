@@ -1,4 +1,4 @@
-﻿using System.Linq;
+﻿using System.Threading.Tasks;
 using ChickenAPI.Core.Utils;
 using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Game.Entities.Drop;
@@ -7,12 +7,13 @@ using ChickenAPI.Game.Entities.Player.Extensions;
 using ChickenAPI.Game.Inventory.Events;
 using ChickenAPI.Game.Player.Extension;
 using ChickenAPI.Packets.Game.Client.Drops;
+using NW.Plugins.PacketHandling.Utils;
 
-namespace NosSharp.PacketHandler.Drops
+namespace NW.Plugins.PacketHandling.Drops
 {
-    public class GetPacketHandling
+    public class GetPacketHandling : GenericGamePacketHandlerAsync<GetPacket>
     {
-        public static void OnGetPacket(GetPacket packet, IPlayerEntity player)
+        protected override async Task Handle(GetPacket packet, IPlayerEntity player)
         {
             var mapItem = player.CurrentMap.GetEntity<IDropEntity>(packet.DropId, VisualType.MapObject);
 
@@ -24,12 +25,13 @@ namespace NosSharp.PacketHandler.Drops
             if (mapItem.ItemVnum == 1046) // Gold
             {
                 player.GoldUp(mapItem.Quantity);
-                player.Broadcast(player.GenerateGetPacket(mapItem.Id));
+                await player.BroadcastAsync(player.GenerateGetPacket(mapItem.Id));
                 mapItem.CurrentMap.UnregisterEntity(mapItem);
                 mapItem.Dispose();
                 return;
             }
-            player.EmitEvent(new InventoryPickUpEvent
+
+            await player.EmitEventAsync(new InventoryPickUpEvent
             {
                 Drop = mapItem
             });

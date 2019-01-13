@@ -17,7 +17,7 @@ namespace ChickenAPI.Data.Character
         /// <param name="type"></param>
         /// <param name="level"></param>
         /// <returns></returns>
-        int GetLevelXp(CharacterClassType type, byte level);
+        long GetLevelXp(CharacterClassType type, byte level);
 
         /// <summary>
         ///     This method will search through algorithm service and return the JobLevelXp stat based on

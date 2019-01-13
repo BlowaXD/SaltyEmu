@@ -20,21 +20,23 @@ namespace SaltyEmu.Communication.Communicators
         private readonly IManagedMqttClient _client;
         private readonly IIpcSerializer _serializer;
         private readonly IPacketContainerFactory _packetFactory;
-        private readonly IIpcRequestHandler _requestHandler;
         private readonly string _clientName;
         private readonly string _responseTopic;
         private readonly string _endPoint;
+
+        // handling
+        protected readonly IIpcRequestHandler RequestHandler;
 
         protected MqttIpcServer(MqttServerConfigurationBuilder builder) : this(builder.Build())
         {
         }
 
-        protected MqttIpcServer(MqttIpcServerConfiguration configuration)
+        private MqttIpcServer(MqttIpcServerConfiguration configuration)
         {
             _clientName = configuration.ClientName;
             _responseTopic = configuration.ResponseTopic;
             _serializer = configuration.Serializer;
-            _requestHandler = configuration.Handler;
+            RequestHandler = configuration.Handler;
             _endPoint = configuration.EndPoint;
 
 
@@ -52,7 +54,7 @@ namespace SaltyEmu.Communication.Communicators
             _packetFactory = new PacketContainerFactory();
         }
 
-        public async Task InitializeAsync()
+        protected async Task InitializeAsync()
         {
             ManagedMqttClientOptions options = new ManagedMqttClientOptionsBuilder()
                 .WithAutoReconnectDelay(TimeSpan.FromSeconds(5))
@@ -64,6 +66,7 @@ namespace SaltyEmu.Communication.Communicators
             _client.ApplicationMessageReceived += (sender, args) => OnMessage(args.ClientId, args.ApplicationMessage);
             await _client.StartAsync(options);
             _client.Connected += (sender, args) => _log.Info($"[CONNECTED] {_clientName} is connected on MQTT Broker {_endPoint}");
+            _client.Disconnected += (sender, args) => _log.Info($"[DISCONNECTED] {_clientName} has been disconnected on MQTT Broker {_endPoint}");
         }
 
         private void OnMessage(string clientId, MqttApplicationMessage message)
@@ -86,6 +89,7 @@ namespace SaltyEmu.Communication.Communicators
         {
 #if DEBUG
             _log.Debug($"[RECEIVED] Packet [{type}]");
+            RequestHandler.HandleBroadcastAsync(broadcasted, type).ConfigureAwait(false).GetAwaiter().GetResult();
 #endif
         }
 
@@ -95,7 +99,7 @@ namespace SaltyEmu.Communication.Communicators
             _log.Debug($"[RECEIVED] Request [{request.Id}][{type}]");
 #endif
             request.Server = this;
-            _requestHandler.HandleAsync(request, type).ConfigureAwait(false).GetAwaiter().GetResult();
+            RequestHandler.HandleAsync(request, type).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
 

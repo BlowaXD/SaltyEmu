@@ -1,14 +1,15 @@
 ﻿using ChickenAPI.Data.Character;
 using ChickenAPI.Enums.Game.Character;
-using NosSharp.BasicAlgorithm.CharacterAlgorithms;
-using NosSharp.BasicAlgorithm.CharacterAlgorithms.Close;
-using NosSharp.BasicAlgorithm.CharacterAlgorithms.Distance;
-using NosSharp.BasicAlgorithm.CharacterAlgorithms.HpMp;
-using NosSharp.BasicAlgorithm.CharacterAlgorithms.Magical;
-using NosSharp.BasicAlgorithm.CharacterAlgorithms.Xp;
-using NosSharp.BasicAlgorithm.FamilyAlgorithms;
+using SaltyEmu.BasicAlgorithmPlugin.CharacterAlgorithms;
+using SaltyEmu.BasicAlgorithmPlugin.CharacterAlgorithms.Close;
+using SaltyEmu.BasicAlgorithmPlugin.CharacterAlgorithms.Damage;
+using SaltyEmu.BasicAlgorithmPlugin.CharacterAlgorithms.Distance;
+using SaltyEmu.BasicAlgorithmPlugin.CharacterAlgorithms.HpMp;
+using SaltyEmu.BasicAlgorithmPlugin.CharacterAlgorithms.Magical;
+using SaltyEmu.BasicAlgorithmPlugin.CharacterAlgorithms.Xp;
+using SaltyEmu.BasicAlgorithmPlugin.FamilyAlgorithms;
 
-namespace NosSharp.BasicAlgorithm
+namespace SaltyEmu.BasicAlgorithmPlugin
 {
     public class AlgorithmService : IAlgorithmService
     {
@@ -129,18 +130,18 @@ namespace NosSharp.BasicAlgorithm
 
         public int GetMinHit(CharacterClassType type, byte level) => _minHit.GetStat(type, level);
 
-        public int GetLevelXp(CharacterClassType type, byte level) => (int)_levelBasedAlgorithm.Data[level];
+        public long GetLevelXp(CharacterClassType type, byte level) => _levelBasedAlgorithm.Data[level - 1 > 0 ? level - 1 : 0];
 
         public int GetJobLevelXp(CharacterClassType type, byte level) =>
-            (int)(type == CharacterClassType.Adventurer ? _jobLevelBasedAlgorithm.FirstJobXpData[level] : _jobLevelBasedAlgorithm.Data[level]);
+            (int)(type == CharacterClassType.Adventurer ? _jobLevelBasedAlgorithm.FirstJobXpData[level - 1 > 0 ? level - 1 : 0] : _jobLevelBasedAlgorithm.Data[level - 1 > 0 ? level - 1 : 0]);
 
-        public int GetHeroLevelXp(CharacterClassType type, byte level) => (int)_heroLevelBasedAlgorithm.Data[level];
+        public int GetHeroLevelXp(CharacterClassType type, byte level) => (int)_heroLevelBasedAlgorithm.Data[level - 1 > 0 ? level - 1 : 0];
 
-        public int GetSpLevelXp(byte level) => (int)_spLevelBasedAlgorithm.Data[level];
+        public int GetSpLevelXp(byte level) => (int)_spLevelBasedAlgorithm.Data[level - 1];
 
-        public int GetFairyLevelXp(byte level) => (int)_fairyLevelBasedAlgorithm.Data[level];
+        public int GetFairyLevelXp(byte level) => (int)_fairyLevelBasedAlgorithm.Data[level - 1];
 
-        public int GetFamilyLevelXp(byte level) => (int)_familyLevelBasedAlgorithm.Data[level > _familyLevelBasedAlgorithm.Data.Length ? _familyLevelBasedAlgorithm.Data.Length - 1 : level];
+        public int GetFamilyLevelXp(byte level) => (int)_familyLevelBasedAlgorithm.Data[level > _familyLevelBasedAlgorithm.Data.Length ? _familyLevelBasedAlgorithm.Data.Length - 1 : level - 1];
 
         public int GetSpeed(CharacterClassType type, byte level) => _speedAlgorithm.GetStat(type, level);
 

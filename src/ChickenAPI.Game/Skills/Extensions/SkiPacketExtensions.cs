@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Text;
-using Autofac;
-using ChickenAPI.Core.IoC;
 using ChickenAPI.Data.Item;
 using ChickenAPI.Data.Skills;
 using ChickenAPI.Game.Entities.Player;
@@ -18,15 +14,9 @@ namespace ChickenAPI.Game.Skills.Extensions
             return player.SkillComponent.Skills.Values.Where(s => s.Class == player.GetSpClassId()).OrderBy(s => s.CastId);
         }
 
-        public static byte GetSpClassId(this IPlayerEntity player)
-        {
-            return player.Sp.GetClassId();
-        }
+        public static byte GetSpClassId(this IPlayerEntity player) => player.Sp.GetClassId();
 
-        public static byte GetClassId(this ItemInstanceDto itemInstance)
-        {
-            return (byte)(itemInstance.Item.Morph + 31);
-        }
+        public static byte GetClassId(this ItemInstanceDto itemInstance) => (byte)(itemInstance.Item.Morph + 31);
 
         public static IOrderedEnumerable<SkillDto> GetSkillsByCastIdAscending(this IPlayerEntity player)
         {

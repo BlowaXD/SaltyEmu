@@ -32,12 +32,12 @@ namespace SaltyEmu.Communication.Communicators
 
         public T Save(T obj)
         {
-            return RequestAsync<RepositorySaveResponse<T>>(new RepositorySaveRequest<T> { Objects = new[] { obj } }).ConfigureAwait(false).GetAwaiter().GetResult().Objects.ElementAt(0);
+            return RequestAsync<RepositorySaveRequest<T>.Response>(new RepositorySaveRequest<T> { Objects = new[] { obj } }).ConfigureAwait(false).GetAwaiter().GetResult().Objects.ElementAt(0);
         }
 
         public void Save(IEnumerable<T> objs)
         {
-            RequestAsync<RepositorySaveResponse<T>>(new RepositorySaveRequest<T> { Objects = objs }).ConfigureAwait(false).GetAwaiter().GetResult();
+            RequestAsync<RepositorySaveRequest<T>.Response>(new RepositorySaveRequest<T> { Objects = objs }).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
         public void DeleteById(Guid id)
@@ -67,12 +67,12 @@ namespace SaltyEmu.Communication.Communicators
 
         public async Task<T> SaveAsync(T obj)
         {
-            return (await RequestAsync<RepositorySaveResponse<T>>(new RepositorySaveRequest<T> { Objects = new[] { obj } })).Objects.ElementAt(0);
+            return (await RequestAsync<RepositorySaveRequest<T>.Response>(new RepositorySaveRequest<T> { Objects = new[] { obj } })).Objects.ElementAt(0);
         }
 
         public async Task SaveAsync(IEnumerable<T> objs)
         {
-            await RequestAsync<RepositorySaveResponse<T>>(new RepositorySaveRequest<T> { Objects = objs });
+            await RequestAsync<RepositorySaveRequest<T>.Response>(new RepositorySaveRequest<T> { Objects = objs });
         }
 
         public async Task DeleteByIdAsync(Guid id)

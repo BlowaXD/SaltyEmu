@@ -15,7 +15,10 @@
     <ProjectReference Include="..\..\ChickenAPI.Data\ChickenAPI.Data.csproj" />
     <ProjectReference Include="..\..\ChickenAPI.Enums\ChickenAPI.Enums.csproj" />
     <ProjectReference Include="..\..\libs\SaltyEmu.Communication\SaltyEmu.Communication.csproj" />
-    <ProjectReference Include="..\..\Plugins\SaltyEmu.FamilyPlugin\SaltyEmu.FamilyPlugin.csproj" />
+    <ProjectReference Include="..\..\libs\SaltyEmu.Core\SaltyEmu.Core.csproj" />
+    <ProjectReference Include="..\..\libs\SaltyEmu.Redis\SaltyEmu.Redis.csproj" />
+    <ProjectReference Include="..\..\Plugins\NosSharp.DatabasePlugin\SaltyEmu.DatabasePlugin.csproj" />
+    <ProjectReference Include="..\..\Plugins\SaltyEmu.FriendsPlugin\SaltyEmu.FriendsPlugin.csproj" />
   </ItemGroup>
 
 </Project>

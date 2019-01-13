@@ -11,32 +11,32 @@ namespace ChickenAPI.Game.Entities.Drop
         bool IsGold { get; set; }
 
         /// <summary>
-        /// Is the dropped item a drop
+        ///     Is the dropped item a drop
         /// </summary>
         bool IsQuestDrop { get; set; }
 
         /// <summary>
-        /// Dropped item quantity (to display)
+        ///     Dropped item quantity (to display)
         /// </summary>
         long Quantity { get; set; }
 
         /// <summary>
-        /// Itemvnum (to display)
+        ///     Itemvnum (to display)
         /// </summary>
         long ItemVnum { get; set; }
 
         /// <summary>
-        /// ItemInstance
+        ///     ItemInstance
         /// </summary>
         ItemDto Item { get; set; }
 
         /// <summary>
-        /// ItemInstance
+        ///     ItemInstance
         /// </summary>
         ItemInstanceDto ItemInstance { get; set; }
 
         /// <summary>
-        /// Dropped Item spawn time at UTC timezone
+        ///     Dropped Item spawn time at UTC timezone
         /// </summary>
         DateTime DroppedTimeUtc { get; set; }
     }

@@ -1,10 +1,8 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using ChickenAPI.Core.IPC.Protocol;
 using ChickenAPI.Core.Logging;
 using ChickenAPI.Data.Families;
 using SaltyEmu.Communication.Protocol.RepositoryPacket;
-using SaltyEmu.Communication.Utils;
 using SaltyEmu.FamilyPlugin.Communication;
 
 namespace SaltyEmu.FamilyService.Handlers
@@ -12,6 +10,7 @@ namespace SaltyEmu.FamilyService.Handlers
     public class FamilyGetInformationRequestHandler
     {
         private static readonly Logger Log = Logger.GetLogger<FamilyGetInformationRequestHandler>();
+
         public static async Task OnMessage(IIpcRequest packet)
         {
             if (!(packet is GetFamilyInformationRequest request))
@@ -52,7 +51,7 @@ namespace SaltyEmu.FamilyService.Handlers
                 return;
             }
 
-            await request.ReplyAsync(new RepositorySaveResponse<FamilyDto>
+            await request.ReplyAsync(new RepositorySaveRequest<FamilyDto>.Response
             {
                 Objects = request.Objects
             });

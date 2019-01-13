@@ -1,7 +1,7 @@
 ﻿using System;
 using ChickenAPI.Enums.Game.Character;
 
-namespace NosSharp.BasicAlgorithm.CharacterAlgorithms.HpMp
+namespace SaltyEmu.BasicAlgorithmPlugin.CharacterAlgorithms.HpMp
 {
     public class HpRegen : ICharacterStatAlgorithm
     {

@@ -1,5 +1,4 @@
 ﻿using ChickenAPI.Enums.Game.Character;
-using ChickenAPI.Enums.Game.Items;
 using ChickenAPI.Packets.Game.Server.Player;
 
 namespace ChickenAPI.Game.Entities.Player.Extensions

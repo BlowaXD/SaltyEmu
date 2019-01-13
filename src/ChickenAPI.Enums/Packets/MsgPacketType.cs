@@ -6,6 +6,6 @@
         PrivateChat = 1,
         Shout = 2,
         White = 3,
-        FamilyChat = 4,
+        FamilyChat = 4
     }
 }

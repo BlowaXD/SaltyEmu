@@ -2,7 +2,7 @@
 
 namespace ChickenAPI.Game.Entities.Player.Events
 {
-    public class ExperienceGainEvent : ChickenEventArgs
+    public class ExperienceGainEvent : GameEntityEvent
     {
         public long Experience { get; set; }
         public long JobExperience { get; set; }

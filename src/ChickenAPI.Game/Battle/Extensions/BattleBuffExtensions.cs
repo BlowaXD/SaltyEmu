@@ -24,10 +24,7 @@ namespace ChickenAPI.Game.Battle.Extensions
             }
         }
 
-        public static bool HasBuff(this IBattleEntity entity, long id)
-        {
-            return GetBuffByCardId(entity, id) != null;
-        }
+        public static bool HasBuff(this IBattleEntity entity, long id) => GetBuffByCardId(entity, id) != null;
 
         public static BuffContainer GetBuffByCardId(this IBattleEntity entity, long id)
         {

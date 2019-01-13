@@ -19,7 +19,7 @@ namespace ChickenAPI.Game.Families.Extensions
                 FamilyId = player.Family.Id,
                 FamilyName = player.Family.Name,
                 FamilyLevel = player.Family.FamilyLevel,
-                FamilyCustomRank = "(i18nRANKTODO)",
+                FamilyCustomRank = "(i18nRANKTODO)"
             };
         }
     }

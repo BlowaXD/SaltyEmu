@@ -1,24 +1,30 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
+using Autofac;
+using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Logging;
-using ChickenAPI.Data.Families;
-using NLog.Fluent;
-using SaltyEmu.Communication.Communicators;
+using ChickenAPI.Core.Plugins;
+using ChickenAPI.Core.Plugins.Exceptions;
 using SaltyEmu.Communication.Configs;
 using SaltyEmu.Communication.Serializers;
-using SaltyEmu.FamilyPlugin;
-using SaltyEmu.RelationService.String;
+using SaltyEmu.Communication.Utils;
+using SaltyEmu.Core.Plugins;
+using SaltyEmu.FriendsPlugin;
+using SaltyEmu.Redis;
 
 namespace SaltyEmu.RelationService
 {
     internal class Program
     {
-        private static int _ids = 1;
+        private static readonly IPluginManager PluginManager = new SimplePluginManager();
+        private static readonly Logger Log = Logger.GetLogger("RelationService");
+
         private static void PrintHeader()
         {
-            Console.Title = "SaltyEmu - Family";
+            Console.Title = "SaltyEmu - RelationService";
             const string text = @"
 ███████╗ █████╗ ██╗  ████████╗██╗   ██╗███████╗███╗   ███╗██╗   ██╗    ███████╗██████╗ ██╗███████╗███╗   ██╗██████╗ ███████╗
 ██╔════╝██╔══██╗██║  ╚══██╔══╝╚██╗ ██╔╝██╔════╝████╗ ████║██║   ██║    ██╔════╝██╔══██╗██║██╔════╝████╗  ██║██╔══██╗██╔════╝
@@ -36,58 +42,87 @@ namespace SaltyEmu.RelationService
             Console.ForegroundColor = ConsoleColor.White;
         }
 
+        private static readonly List<IPlugin> Plugins = new List<IPlugin>
+        {
+            new DatabasePlugin.DatabasePlugin(),
+        };
+
+
+        private static bool InitializePlugins()
+        {
+            try
+            {
+                ChickenContainer.Builder.Register(s => PluginManager).As<IPluginManager>();
+                if (!Directory.Exists("plugins"))
+                {
+                    Directory.CreateDirectory("plugins");
+                }
+
+                foreach (IPlugin plugin in Plugins)
+                {
+                    plugin.OnLoad();
+                }
+
+                Plugins.AddRange(PluginManager.LoadPlugins(new DirectoryInfo("plugins")));
+            }
+            catch (CriticalPluginException e)
+            {
+                Log.Error("[PLUGIN]", e);
+                return true;
+            }
+            catch (Exception e)
+            {
+                Log.Error("Plugins load", e);
+            }
+
+            return false;
+        }
+
         private static void InitializeLogger()
         {
             Logger.Initialize();
+        }
+
+        private static void EnablePlugins(PluginEnableTime enableTime)
+        {
+            Log.Info($"Enabling plugins of type {enableTime}");
+            foreach (IPlugin plugin in Plugins.Where(s => s.EnableTime == enableTime))
+            {
+                plugin.OnEnable();
+            }
         }
 
         private static void Main()
         {
             PrintHeader();
             InitializeLogger();
-            InitializeAsync().ConfigureAwait(false).GetAwaiter().GetResult();
-            Logger log = Logger.GetLogger<Program>();
-            Thread.Sleep(TimeSpan.FromSeconds(1));
-            while (true)
+            if (InitializePlugins())
             {
-                string yoyo = "".RandomString(10);
-                log.Info($"Asking to save family : \"{yoyo}\"");
-                FamilyDto test = client.Save(new FamilyDto
-                {
-                    Id = ++_ids,
-                    Name = yoyo
-                });
-
-                if (test == null)
-                {
-                    Log.Warn($"{yoyo} could not be saved");
-                    break;
-                }
-
-                log.Info($"{test?.Name} ID : {test?.Id}");
-                Thread.Sleep(TimeSpan.FromSeconds(1));
+                return;
             }
 
+            EnablePlugins(PluginEnableTime.PreContainerBuild);
+            ChickenContainer.Initialize();
+            EnablePlugins(PluginEnableTime.PostContainerBuild);
+            InitializeAsync().ConfigureAwait(false).GetAwaiter().GetResult();
             Console.ReadLine();
         }
 
-        private static FamilyIpcClient client;
 
         private static async Task InitializeAsync()
         {
-            MqttClientConfigurationBuilder builder = new MqttClientConfigurationBuilder()
-                .ConnectTo("localhost")
-                .WithName("family-client-test")
-                .WithRequestTopic("/family/request")
-                .WithBroadcastTopic("/family/broadcast")
-                .WithResponseTopic("/family/response")
-                .WithSerializer(new JsonSerializer());
+            var conf = new RedisConfiguration();
 
-            client = new FamilyIpcClient(builder);
-            if (client is MappedRepositoryMqtt<FamilyDto> server)
-            {
-                await server.InitializeAsync();
-            }
+            MqttServerConfigurationBuilder builder = new MqttServerConfigurationBuilder()
+                .ConnectTo("localhost")
+                .WithName("relations-server")
+                .AddTopic(Configuration.RequestQueue)
+                .WithBroadcastTopic(Configuration.BroadcastQueue)
+                .WithResponseTopic(Configuration.ResponseQueue)
+                .WithSerializer(new JsonSerializer())
+                .WithRequestHandler(new RequestHandler());
+
+            RelationServer tmp = await new RelationServer(builder, conf).InitializeAsync();
         }
     }
 }

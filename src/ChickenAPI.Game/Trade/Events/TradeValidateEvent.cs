@@ -2,8 +2,7 @@
 
 namespace ChickenAPI.Game.Trade.Events
 {
-    public class TradeValidateEvent : ChickenEventArgs
+    public class TradeValidateEvent : GameEntityEvent
     {
-        
     }
 }

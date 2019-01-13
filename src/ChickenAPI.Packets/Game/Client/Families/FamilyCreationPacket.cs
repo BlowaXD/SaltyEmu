@@ -2,7 +2,6 @@
 
 namespace ChickenAPI.Packets.Game.Client.Families
 {
-
     [PacketHeader("glmk")]
     public class CreateFamilyPacket : PacketBase
     {

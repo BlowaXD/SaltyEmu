@@ -1,21 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using ChickenAPI.Core.i18n;
+using ChickenAPI.Game.Network;
 using DotNetty.Buffers;
 using DotNetty.Codecs;
+using DotNetty.Common.Utilities;
 using DotNetty.Transport.Channels;
 using World.Network;
+using World.Utils;
 
 namespace World.Cryptography.Decoder
 {
     public class WorldDecoder : MessageToMessageDecoder<IByteBuffer>, IDecoder
     {
-        private static string DecryptPrivate(string str)
+        private Encoding _encoding = Encoding.Default;
+        private ISession _session;
+        private LanguageKey _language = LanguageKey.EN;
+        private int _sessionId = -1;
+
+        private string DecryptPrivate(string str)
         {
             List<byte> receiveData = new List<byte>();
             char[] table = { ' ', '-', '.', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'n' };
-            int count;
-            for (count = 0; count < str.Length; count++)
+            for (int count = 0; count < str.Length; count++)
             {
                 if (str[count] <= 0x7A)
                 {
@@ -82,7 +90,7 @@ namespace World.Cryptography.Decoder
                 }
             }
 
-            return Encoding.UTF8.GetString(Encoding.Convert(Encoding.Default, Encoding.UTF8, receiveData.ToArray()));
+            return _encoding.GetString(receiveData.ToArray());
         }
 
         public string DecryptCustomParameter(Span<byte> str)
@@ -99,9 +107,9 @@ namespace World.Cryptography.Decoder
 
                     int firstbyte = Convert.ToInt32(str[i] - 0xF);
                     int secondbyte = firstbyte;
-                    secondbyte &= 0xF0;
+                    secondbyte &= 240;
                     firstbyte = Convert.ToInt32(firstbyte - secondbyte);
-                    secondbyte >>= 0x4;
+                    secondbyte >>= 4;
 
                     switch (secondbyte)
                     {
@@ -157,21 +165,12 @@ namespace World.Cryptography.Decoder
             }
         }
 
-        protected override void Decode(IChannelHandlerContext context, IByteBuffer message, List<object> output)
+        private string Decode(Span<byte> str)
         {
-            Span<byte> str = message.Array;
-            str = str.Slice(message.ArrayOffset, message.ReadableBytes);
-
-            if (!SessionManager.Instance.GetSession(context.Channel.Id.AsLongText(), out int sessionId))
-            {
-                output.Add(DecryptCustomParameter(str));
-                return;
-            }
-
             var encryptedString = new StringBuilder();
 
-            int sessionKey = sessionId & 0xFF;
-            byte sessionNumber = unchecked((byte)(sessionId >> 6));
+            int sessionKey = _sessionId & 0xFF;
+            byte sessionNumber = unchecked((byte)(_sessionId >> 6));
             sessionNumber &= 0xFF;
             sessionNumber &= 3;
 
@@ -181,8 +180,8 @@ namespace World.Cryptography.Decoder
                     foreach (byte character in str)
                     {
                         byte firstbyte = unchecked((byte)(sessionKey + 0x40));
-                        byte b = unchecked((byte)(character - firstbyte));
-                        encryptedString.Append((char)b);
+                        byte highbyte = unchecked((byte)(character - firstbyte));
+                        encryptedString.Append((char)highbyte);
                     }
 
                     break;
@@ -191,8 +190,8 @@ namespace World.Cryptography.Decoder
                     foreach (byte character in str)
                     {
                         byte firstbyte = unchecked((byte)(sessionKey + 0x40));
-                        byte b = unchecked((byte)(character + firstbyte));
-                        encryptedString.Append((char)b);
+                        byte highbyte = unchecked((byte)(character + firstbyte));
+                        encryptedString.Append((char)highbyte);
                     }
 
                     break;
@@ -201,8 +200,8 @@ namespace World.Cryptography.Decoder
                     foreach (byte character in str)
                     {
                         byte firstbyte = unchecked((byte)(sessionKey + 0x40));
-                        byte b = unchecked((byte)(character - firstbyte ^ 0xC3));
-                        encryptedString.Append((char)b);
+                        byte highbyte = unchecked((byte)(character - firstbyte ^ 0xC3));
+                        encryptedString.Append((char)highbyte);
                     }
 
                     break;
@@ -211,8 +210,8 @@ namespace World.Cryptography.Decoder
                     foreach (byte character in str)
                     {
                         byte firstbyte = unchecked((byte)(sessionKey + 0x40));
-                        byte b = unchecked((byte)(character + firstbyte ^ 0xC3));
-                        encryptedString.Append((char)b);
+                        byte highbyte = unchecked((byte)(character + firstbyte ^ 0xC3));
+                        encryptedString.Append((char)highbyte);
                     }
 
                     break;
@@ -223,6 +222,7 @@ namespace World.Cryptography.Decoder
             }
 
             Span<string> temp = encryptedString.ToString().Split((char)0xFF);
+
             var save = new StringBuilder();
 
             for (int i = 0; i < temp.Length; i++)
@@ -234,7 +234,39 @@ namespace World.Cryptography.Decoder
                 }
             }
 
-            output.Add(save.ToString());
+            return save.ToString();
+        }
+
+        protected override void Decode(IChannelHandlerContext context, IByteBuffer message, List<object> output)
+        {
+            if (!message.IsReadable())
+            {
+                return;
+            }
+
+            Span<byte> str = message.Array.Slice(message.ArrayOffset, message.ReadableBytes);
+
+            // _sessionId will only change
+            if (_sessionId == -1)
+            {
+                if (!SessionManager.Instance.GetSession(context.Channel.Id.AsLongText(), out ISession psession))
+                {
+                    output.Add(DecryptCustomParameter(str));
+                    return;
+                }
+
+                _session = psession;
+                _sessionId = _session.SessionId;
+                _language = _session.Language;
+            }
+
+            // made for runtime language changes
+            if (_language != _session.Language)
+            {
+                _encoding = _language.GetEncoding();
+            }
+
+            output.Add(Decode(str));
         }
     }
 }

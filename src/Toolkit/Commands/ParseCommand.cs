@@ -1,9 +1,14 @@
 ﻿using System;
 using System.IO;
+using Autofac;
+using ChickenAPI.Core.i18n;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Logging;
+using ChickenAPI.Core.Utils;
+using ChickenAPI.Data.Account;
+using ChickenAPI.Data.Character;
+using ChickenAPI.Enums;
 using CommandLine;
-using NosSharp.BasicAlgorithm;
 using SaltyEmu.BasicAlgorithmPlugin;
 using SaltyEmu.DatabasePlugin;
 using Toolkit.Converter;
@@ -25,32 +30,61 @@ namespace Toolkit.Commands
         [Option('i', "input", HelpText = "Input directory", Required = true)]
         public string InputDirectory { get; set; }
 
-        public static bool CheckFile(string inputDirectory, string subDirectory, string file)
+        public static bool DoesFileExist(string inputDirectory, string subDirectory, string file)
         {
-            string tmp = inputDirectory + Path.AltDirectorySeparatorChar + subDirectory + Path.AltDirectorySeparatorChar + file;
+            string tmp = inputDirectory + Path.DirectorySeparatorChar + subDirectory + Path.DirectorySeparatorChar + file;
             if (File.Exists(tmp))
             {
-                return false;
+                Log.Info($"{file} OK !");
+                return true;
             }
 
-            Console.WriteLine($"{tmp} is missing in your directory !");
-            return true;
-
+            Log.Warn($"{tmp} is missing in your directory !");
+            return false;
         }
 
         public static bool CheckFiles(string inputDirectory)
         {
-            return !CheckFile(inputDirectory, "dats", "Skill.dat") ||
-                !CheckFile(inputDirectory, "dats", "Monster.dat") ||
-                !CheckFile(inputDirectory, "dats", "Item.dat") ||
-                !CheckFile(inputDirectory, "dats", "Card.dat") ||
-                !CheckFile(inputDirectory, "packets", "einfo.packets") ||
-                !CheckFile(inputDirectory, "packets", "packet.txt");
+            return DoesFileExist(inputDirectory, "dats", "Skill.dat") &&
+                DoesFileExist(inputDirectory, "dats", "Monster.dat") &&
+                DoesFileExist(inputDirectory, "dats", "Item.dat") &&
+                DoesFileExist(inputDirectory, "dats", "Card.dat") &&
+                DoesFileExist(inputDirectory, "packets", "einfo.packets") &&
+                DoesFileExist(inputDirectory, "packets", "packet.txt");
+        }
+
+
+        private static void InitializeAccounts()
+        {
+            var acc = ChickenContainer.Instance.Resolve<IAccountService>();
+            if (acc.GetByName("admin") != null)
+            {
+                return;
+            }
+
+            var account = new AccountDto
+            {
+                Authority = AuthorityType.Administrator,
+                Name = "admin",
+                Language = LanguageKey.EN,
+                Password = "admin".ToSha512()
+            };
+            Log.Info($"Added account : {account.Name}:{account.Password}:{account.Authority.ToString()}");
+            acc.Save(account);
+            account = new AccountDto
+            {
+                Authority = AuthorityType.User,
+                Name = "user",
+                Language = LanguageKey.EN,
+                Password = "user".ToSha512()
+            };
+            Log.Info($"Added account : {account.Name}:{account.Password}:{account.Authority.ToString()}");
+            acc.Save(account);
         }
 
         public static int Handle(ParseCommand command)
         {
-            if (CheckFiles(command.InputDirectory))
+            if (!CheckFiles(command.InputDirectory))
             {
                 Log.Warn("Respect the following parsing directory layer : ");
                 Console.WriteLine($"{command.InputDirectory}/");
@@ -108,6 +142,7 @@ namespace Toolkit.Commands
                     break;
                 case "all":
                     Log.Info("Parsing...");
+                    InitializeAccounts();
                     map.Extract(command.InputDirectory + "/maps");
                     skill.Extract(command.InputDirectory + "/dats");
                     item.Extract(command.InputDirectory + "/dats");

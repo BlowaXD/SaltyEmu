@@ -4,8 +4,6 @@ namespace ChickenAPI.Data.Item
 {
     public class EquipmentOptionDto : ISynchronizedDto
     {
-        public Guid Id { get; set; }
-
         public byte Level { get; set; }
 
         public byte Type { get; set; }
@@ -13,5 +11,6 @@ namespace ChickenAPI.Data.Item
         public long Value { get; set; }
 
         public Guid WearableInstanceId { get; set; }
+        public Guid Id { get; set; }
     }
 }

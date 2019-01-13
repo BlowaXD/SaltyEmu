@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using ChickenAPI.Core.Utils;
 using ChickenAPI.Data.Item;
 using ChickenAPI.Enums.Game.Items;
@@ -9,48 +10,20 @@ using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Inventory.Extensions;
 using ChickenAPI.Game.Shops;
 using ChickenAPI.Game.Shops.Events;
+using ChickenAPI.Game.Shops.Extensions;
 using ChickenAPI.Packets.Game.Client.Shops;
 using ChickenAPI.Packets.Game.Server.Shop;
+using NW.Plugins.PacketHandling.Utils;
 
-namespace NosSharp.PacketHandler.Shops
+namespace NW.Plugins.PacketHandling.Shops
 {
-    public class PersonalShopCreationHandling
+    public class PersonalShopCreationHandling : GenericGamePacketHandlerAsync<MShopPacket>
     {
-        public static void OnMShopPacketReceived(MShopPacket packet, IPlayerEntity player)
-        {
-            switch (packet.PacketType)
-            {
-                case MShopPacketType.OpenShop:
-                    try
-                    {
-                        ShopPlayerShopCreateEvent e = ParseMShopPacket(packet.PacketData, player);
-                        if (e.ShopItems.Any())
-                        {
-                            player.EmitEvent(e);
-                        }
-                    }
-                    catch (Exception e)
-                    {
-                        return;
-                    }
-
-                    break;
-                case MShopPacketType.CloseShop:
-                    player.SendPacket(new ShopEndPacket { PacketType = ShopEndPacketType.PersonalShop });
-                    return;
-                case MShopPacketType.OpenDialog:
-                    player.SendPacket(new IShopPacket());
-                    return;
-                default:
-                    return;
-            }
-        }
-
-        public static ShopPlayerShopCreateEvent ParseMShopPacket(string data, IPlayerEntity player)
+        private static ShopPlayerShopCreateEvent ParseMShopPacket(string data, IPlayerEntity player)
         {
             var tmp = new ShopPlayerShopCreateEvent
             {
-                ShopItems = new List<PersonalShopItem>(),
+                ShopItems = new List<PersonalShopItem>()
             };
 
             string[] packetsplit = data.Split(' ');
@@ -93,7 +66,7 @@ namespace NosSharp.PacketHandler.Shops
 
                     if (!itemFromSlotAndType.Item.IsTradable || itemFromSlotAndType.BoundCharacterId.HasValue)
                     {
-                        // Session.SendPacket(Session.Character.GenerateSay(Language.Instance.GetMessageFromKey("SHOP_ONLY_TRADABLE_ITEMS"), 10));
+                        // await session.SendPacketAsync(Session.Character.GenerateSay(Language.Instance.GetMessageFromKey("SHOP_ONLY_TRADABLE_ITEMS"), 10));
                         return null;
                     }
 
@@ -127,6 +100,35 @@ namespace NosSharp.PacketHandler.Shops
             tmp.Name = shopname;
 
             return tmp;
+        }
+
+        protected override async Task Handle(MShopPacket packet, IPlayerEntity player)
+        {
+            switch (packet.Type)
+            {
+                case MShopPacketType.OpenShop:
+                    try
+                    {
+                        ShopPlayerShopCreateEvent e = ParseMShopPacket(packet.PacketData, player);
+                        if (e.ShopItems.Any())
+                        {
+                            await player.EmitEventAsync(e);
+                        }
+                    }
+                    catch (Exception)
+                    {
+                    }
+
+                    break;
+                case MShopPacketType.CloseShop:
+                    await player.SendPacketAsync(player.GenerateShopEndPacket(ShopEndPacketType.PersonalShop));
+                    return;
+                case MShopPacketType.OpenDialog:
+                    await player.SendPacketAsync(new IShopPacket());
+                    return;
+                default:
+                    return;
+            }
         }
     }
 }

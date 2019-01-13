@@ -1,5 +1,4 @@
-﻿using ChickenAPI.Enums.Game.Entity;
-using ChickenAPI.Enums.Game.Items;
+﻿using ChickenAPI.Enums.Game.Items;
 using ChickenAPI.Enums.Packets;
 using ChickenAPI.Packets.Attributes;
 
@@ -19,16 +18,16 @@ namespace ChickenAPI.Packets.Game.Client
         [PacketIndex(2)]
         public byte Slot { get; set; }
 
-        [PacketIndex(3)]
+        [PacketIndex(3, IsOptional = true)]
         public InventoryType? InventoryType2 { get; set; }
 
-        [PacketIndex(4)]
+        [PacketIndex(4, IsOptional = true)]
         public byte? Slot2 { get; set; }
 
-        [PacketIndex(5)]
+        [PacketIndex(5, IsOptional = true)]
         public InventoryType? CellonInventoryType { get; set; }
 
-        [PacketIndex(6)]
+        [PacketIndex(6, IsOptional = true)]
         public byte? CellonSlot { get; set; }
 
         #endregion Properties

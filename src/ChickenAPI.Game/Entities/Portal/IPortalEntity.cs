@@ -4,7 +4,7 @@ using ChickenAPI.Game.Portals;
 namespace ChickenAPI.Game.Entities.Portal
 {
     /// <summary>
-    /// Portals
+    ///     Portals
     /// </summary>
     public interface IPortalEntity : IEntity
     {

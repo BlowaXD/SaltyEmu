@@ -44,6 +44,9 @@ namespace ChickenAPI.Packets.Game.Server.Visibility
         [PacketIndex(10, IsOptional = true, RemoveSeparator = true)]
         public InItemSubPacketBase InDropSubPacket { get; set; }
 
-        #endregion
+        [PacketIndex(10, IsOptional = true, RemoveSeparator = true)]
+        public InMateSubPacket InMateSubPacket { get; set; }
+
+        #endregion Properties
     }
 }

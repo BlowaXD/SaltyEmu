@@ -2,8 +2,7 @@
 
 namespace ChickenAPI.Game.Relations.Events
 {
-    public class RelationBlockedRemoveEvent : ChickenEventArgs
+    public class RelationBlockedRemoveEvent : GameEntityEvent
     {
-        
     }
 }

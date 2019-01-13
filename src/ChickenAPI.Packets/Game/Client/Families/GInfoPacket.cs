@@ -14,7 +14,7 @@ namespace ChickenAPI.Packets.Game.Client.Families
         public string CharacterName { get; set; }
 
         /// <summary>
-        /// Todo to confirm
+        ///     Todo to confirm
         /// </summary>
         [PacketIndex(2)]
         public GenderType FamilyHeadGenderType { get; set; }
@@ -59,7 +59,7 @@ namespace ChickenAPI.Packets.Game.Client.Families
         public FamilyAuthorityType FamilyMemberAuthorityType { get; set; }
 
         /// <summary>
-        /// Should replace ' ' by '^'
+        ///     Should replace ' ' by '^'
         /// </summary>
         [PacketIndex(16)]
         public string FamilyMessage { get; set; }

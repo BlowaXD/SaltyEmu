@@ -3,6 +3,7 @@ using System.Linq;
 using ChickenAPI.Data;
 using Foundatio.Caching;
 using Foundatio.Serializer;
+using SaltyEmu.Redis;
 using StackExchange.Redis;
 
 namespace SaltyEmu.RedisWrappers.Redis

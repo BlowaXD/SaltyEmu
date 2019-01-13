@@ -4,7 +4,7 @@ using ChickenAPI.Game.Events;
 
 namespace ChickenAPI.Game.Families.Events
 {
-    public class FamilyCreationEvent : ChickenEventArgs
+    public class FamilyCreationEvent : GameEntityEvent
     {
         public IPlayerEntity Leader { get; set; }
         public IEnumerable<IPlayerEntity> Assistants { get; set; }

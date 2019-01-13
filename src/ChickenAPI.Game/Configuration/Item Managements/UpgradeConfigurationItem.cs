@@ -3,6 +3,7 @@
     public struct UpgradeConfigurationItem
     {
         #region Item
+
         public short[] UpFail { get; set; }
         public short[] UpFailR8 { get; set; }
         public short[] UpFix { get; set; }
@@ -20,6 +21,7 @@
         public double ReducedPriceFactor { get; set; }
         public short NormalScrollVnum { get; set; }
         public short GoldScrollVnum { get; set; }
+
         #endregion
     }
 }

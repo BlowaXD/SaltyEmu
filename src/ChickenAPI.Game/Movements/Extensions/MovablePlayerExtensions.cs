@@ -1,5 +1,4 @@
-﻿using ChickenAPI.Enums.Game.Entity;
-using ChickenAPI.Game.Entities.Player;
+﻿using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Packets.Game.Server.Player;
 
 namespace ChickenAPI.Game.Movements.Extensions
@@ -10,9 +9,9 @@ namespace ChickenAPI.Game.Movements.Extensions
         {
             NoAttack = !entity.CanAttack,
             NoMove = !entity.CanMove,
-            VisualType = VisualType.Character,
-            VisualId = entity.Character.Id,
-            Speed = entity.Movable.Speed
+            VisualType = entity.Type,
+            VisualId = entity.Id,
+            Speed = entity.Speed
         };
     }
 }

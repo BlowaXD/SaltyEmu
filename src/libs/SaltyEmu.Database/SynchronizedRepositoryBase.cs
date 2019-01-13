@@ -8,6 +8,7 @@ using ChickenAPI.Data;
 using EFCore.BulkExtensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
+using Z.EntityFramework.Plus;
 
 namespace SaltyEmu.Database
 {
@@ -92,6 +93,7 @@ namespace SaltyEmu.Database
                 {
                     return;
                 }
+
 
                 List<TModel> tmp = enumerable.Where(s => s != null).Select(Mapper.Map<TModel>).ToList();
                 using (IDbContextTransaction transaction = Context.Database.BeginTransaction())
@@ -243,25 +245,16 @@ namespace SaltyEmu.Database
             }
         }
 
-        public async Task DeleteByIdsAsync(IEnumerable<Guid> ids)
+        public Task DeleteByIdsAsync(IEnumerable<Guid> ids)
         {
             try
             {
-                List<TModel> tmp = DbSet.Where(f => ids.Contains(f.Id)).ToList();
-                using (IDbContextTransaction transaction = Context.Database.BeginTransaction())
-                {
-                    await Context.BulkDeleteAsync(tmp, new BulkConfig
-                    {
-                        PreserveInsertOrder = true
-                    });
-                    transaction.Commit();
-                }
-
-                Context.SaveChanges();
+                return DbSet.Where(f => ids.Contains(f.Id)).DeleteAsync();
             }
             catch (Exception e)
             {
                 Log.Error("[DELETE]", e);
+                return Task.CompletedTask;
             }
         }
     }

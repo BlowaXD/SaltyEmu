@@ -1,6 +1,6 @@
 ﻿using ChickenAPI.Enums.Game.Entity;
 
-namespace NosSharp.BasicAlgorithm
+namespace SaltyEmu.BasicAlgorithmPlugin.NpcMonsterAlgorithms
 {
     public interface IMonsterRaceStatAlgorithm
     {

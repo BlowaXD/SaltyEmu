@@ -1,4 +1,4 @@
-﻿namespace NosSharp.BasicAlgorithm.CharacterAlgorithms.Xp
+﻿namespace SaltyEmu.BasicAlgorithmPlugin.CharacterAlgorithms.Xp
 {
     public class SpLevelBasedAlgorithm : ILevelBasedDataAlgorithm
     {

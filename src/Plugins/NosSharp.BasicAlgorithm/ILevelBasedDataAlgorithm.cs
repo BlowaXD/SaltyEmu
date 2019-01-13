@@ -1,4 +1,4 @@
-﻿namespace NosSharp.BasicAlgorithm
+﻿namespace SaltyEmu.BasicAlgorithmPlugin
 {
     public interface ILevelBasedDataAlgorithm
     {

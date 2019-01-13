@@ -14,11 +14,11 @@ namespace ChickenAPI.Game.Maps
 {
     public class SimpleMap : EntityManagerBase, IMap
     {
+        private readonly bool _initSystems;
         private readonly MapDto _map;
         private readonly IEnumerable<MapMonsterDto> _monsters;
         private readonly IEnumerable<MapNpcDto> _npcs;
         private readonly IEnumerable<PortalDto> _portals;
-        private readonly bool _initSystems;
 
         private readonly IRandomGenerator _random;
         private readonly IEnumerable<ShopDto> _shops;
@@ -87,13 +87,12 @@ namespace ChickenAPI.Game.Maps
             return _walkableGrid.Where(s => s.Y >= minY && s.Y <= maxY && s.X >= minX && s.X <= maxX).OrderBy(s => _random.Next(int.MaxValue)).FirstOrDefault(cell => IsWalkable(cell.X, cell.Y));
         }
 
-        private static bool IsWalkable(byte cell) => cell == 0 || cell == 2 || cell >= 16 && cell <= 19;
-
         public PortalDto GetPortalFromPosition(short x, short y, short range = 2)
         {
             return _portals.FirstOrDefault(portal =>
-                (x <= portal.SourceX + range && x >= portal.SourceX - range) &&
-                (y <= portal.SourceY + range && y >= portal.SourceY - range));
+                x <= portal.SourceX + range && x >= portal.SourceX - range && y <= portal.SourceY + range && y >= portal.SourceY - range);
         }
+
+        private static bool IsWalkable(byte cell) => cell == 0 || cell == 2 || cell >= 16 && cell <= 19;
     }
 }

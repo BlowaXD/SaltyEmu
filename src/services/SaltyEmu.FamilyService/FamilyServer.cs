@@ -1,7 +1,6 @@
-﻿using ChickenAPI.Core.IPC;
+﻿using System.Threading.Tasks;
 using SaltyEmu.Communication.Communicators;
 using SaltyEmu.Communication.Configs;
-using SaltyEmu.Communication.Serializers;
 
 namespace SaltyEmu.FamilyService
 {
@@ -9,6 +8,12 @@ namespace SaltyEmu.FamilyService
     {
         public FamilyServer(MqttServerConfigurationBuilder builder) : base(builder)
         {
+        }
+
+        public new async Task<FamilyServer> InitializeAsync()
+        {
+            await base.InitializeAsync();
+            return this;
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using ChickenAPI.Enums.Game.Character;
 
-namespace NosSharp.BasicAlgorithm.CharacterAlgorithms.Magical
+namespace SaltyEmu.BasicAlgorithmPlugin.CharacterAlgorithms.Magical
 {
     public class MagicDefenceAlgorithm : ICharacterStatAlgorithm
     {
@@ -22,6 +22,6 @@ namespace NosSharp.BasicAlgorithm.CharacterAlgorithms.Magical
             }
         }
 
-        public int GetStat(CharacterClassType type, byte level) => _stats[(int)type, level];
+        public int GetStat(CharacterClassType type, byte level) => _stats[(int)type, level - 1 > 0 ? level - 1 : 0];
     }
 }

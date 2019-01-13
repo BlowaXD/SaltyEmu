@@ -2,7 +2,7 @@
 
 namespace ChickenAPI.Game.Specialists.Args
 {
-    public class SpTransformEvent : ChickenEventArgs
+    public class SpTransformEvent : GameEntityEvent
     {
     }
 }

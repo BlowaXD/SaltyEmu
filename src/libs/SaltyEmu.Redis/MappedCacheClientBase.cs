@@ -5,7 +5,6 @@ using ChickenAPI.Data;
 using Foundatio.Caching;
 using Foundatio.Serializer;
 using Newtonsoft.Json;
-using SaltyEmu.RedisWrappers;
 using StackExchange.Redis;
 
 namespace SaltyEmu.Redis

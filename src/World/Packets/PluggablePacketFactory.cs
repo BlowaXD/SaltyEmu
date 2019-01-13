@@ -19,9 +19,14 @@ namespace World.Packets
     public class PluggablePacketFactory : IPacketFactory
     {
         private static readonly Logger Log = Logger.GetLogger<PluggablePacketFactory>();
+        private readonly Dictionary<string, Type> _packetTypesByHeader = new Dictionary<string, Type>();
         private readonly Dictionary<Type, PacketInformation> _deserializationInformations = new Dictionary<Type, PacketInformation>();
 
-        public string Serialize<TPacket>(TPacket packet) where TPacket : IPacket => Serialize(packet, typeof(TPacket));
+
+        public string Serialize(IPacket packet) => Serialize(packet, packet.GetType());
+
+        public string Serialize<TPacket>(TPacket packet) where TPacket : IPacket =>
+            Serialize(packet, typeof(TPacket));
 
         public string Serialize(IPacket packet, Type type)
         {
@@ -79,7 +84,7 @@ namespace World.Packets
             {
                 PacketInformation serializationInformation = GetSerializationInformation(packetType);
                 var deserializedPacket = (PacketBase)packetType.CreateInstance();
-                SetDeserializationInformations(deserializedPacket, packetContent, serializationInformation.Header);
+                SetDeserializationInformations(deserializedPacket, packetContent, serializationInformation.Header, packetType);
                 return Deserialize(packetContent, deserializedPacket, serializationInformation, includesKeepAliveIdentity);
             }
             catch (Exception e)
@@ -126,6 +131,12 @@ namespace World.Packets
                 return Convert.ToBoolean(value) ? $"{packetIndexAttribute?.SeparatorBeforeProperty}1" : $"{packetIndexAttribute?.SeparatorBeforeProperty}0";
             }
 
+            if (value is PacketBase)
+            {
+                PacketInformation subpacketSerializationInfo = GetSerializationInformation(value.GetType());
+                return SerializeSubpacket(value, subpacketSerializationInfo, packetIndexAttribute?.IsReturnPacket ?? false, packetIndexAttribute?.RemoveSeparator ?? false);
+            }
+
             if (propertyType.BaseType?.Equals(typeof(PacketBase)) == true)
             {
                 PacketInformation subpacketSerializationInfo = GetSerializationInformation(propertyType);
@@ -140,13 +151,13 @@ namespace World.Packets
 
             if (propertyType.IsGenericType && propertyType.GetGenericTypeDefinition().IsAssignableFrom(typeof(List<>))) //simple list
             {
-                return packetIndexAttribute?.SeparatorBeforeProperty + SerializeSimpleList((IList)value, propertyType);
+                return packetIndexAttribute?.SeparatorBeforeProperty + SerializeSimpleList((IList)value, propertyType, packetIndexAttribute);
             }
 
             return $"{packetIndexAttribute?.SeparatorBeforeProperty}{value}";
         }
 
-        private string SerializeSimpleList(IList listValues, Type propertyType)
+        private string SerializeSimpleList(IList listValues, Type propertyType, PacketIndexAttribute index)
         {
             string resultListPacket = string.Empty;
             int listValueCount = listValues.Count;
@@ -160,7 +171,7 @@ namespace World.Packets
             for (int i = 1; i < listValueCount; i++)
             {
                 resultListPacket +=
-                    $".{SerializeValue(propertyType.GenericTypeArguments[0], listValues[i], propertyType.GenericTypeArguments[0].GetCustomAttributes<ValidationAttribute>()).Replace(" ", "")}";
+                    $"{index.SeparatorNestedElements}{SerializeValue(propertyType.GenericTypeArguments[0], listValues[i], propertyType.GenericTypeArguments[0].GetCustomAttributes<ValidationAttribute>()).Replace(" ", "")}";
             }
 
             return resultListPacket;
@@ -202,20 +213,15 @@ namespace World.Packets
             IEnumerable<PropertyInfo> packetIndexProperties = serializationType.GetProperties().Where(x => x.GetCustomAttributes(false).OfType<PacketIndexAttribute>().Any()).ToArray();
 
 
-            List<PacketPropertyContainer> packetProperties = new List<PacketPropertyContainer>();
-            foreach (PropertyInfo packetBasePropertyInfo in packetIndexProperties.OrderBy(s => s.GetCustomAttribute<PacketIndexAttribute>(false).Index))
-            {
-                PacketIndexAttribute indexAttribute = packetBasePropertyInfo.GetCustomAttributes(false).OfType<PacketIndexAttribute>().FirstOrDefault();
-                if (indexAttribute != null)
-                {
-                    packetProperties.Add(new PacketPropertyContainer
-                    {
-                        PacketIndex = indexAttribute,
-                        PropertyInfo = packetBasePropertyInfo,
-                        Validations = packetBasePropertyInfo.GetCustomAttributes<ValidationAttribute>()
-                    });
-                }
-            }
+            List<PacketPropertyContainer> packetProperties =
+                (from packetBasePropertyInfo in packetIndexProperties.OrderBy(s => s.GetCustomAttribute<PacketIndexAttribute>(false).Index)
+                 let indexAttribute = packetBasePropertyInfo.GetCustomAttributes(false).OfType<PacketIndexAttribute>().FirstOrDefault()
+                 where indexAttribute != null
+                 select new PacketPropertyContainer
+                 {
+                     PacketIndex = indexAttribute, PropertyInfo = packetBasePropertyInfo,
+                     Validations = packetBasePropertyInfo.GetCustomAttributes<ValidationAttribute>()
+                 }).ToList();
 
             var tmp = new PacketInformation
             {
@@ -223,6 +229,12 @@ namespace World.Packets
                 Header = header,
                 PacketProps = packetProperties.OrderBy(container => container.PacketIndex.Index).ToArray()
             };
+
+            if (!_packetTypesByHeader.ContainsKey(tmp.Header))
+            {
+                _packetTypesByHeader.Add(tmp.Header, serializationType);
+            }
+
             _deserializationInformations.Add(serializationType, tmp);
 
             return tmp;
@@ -243,7 +255,7 @@ namespace World.Packets
             string serializedSubPacket = string.Empty;
             PacketInformation subpacketSerializationInfo = GetSerializationInformation(packetBasePropertyType.GetGenericArguments()[0]);
 
-            if (listValues.Count > 0)
+            if (listValues?.Count > 0)
             {
                 serializedSubPacket = listValues.Cast<object>().Aggregate(serializedSubPacket,
                     (current, listValue) => current + SerializeSubpacket(listValue, subpacketSerializationInfo, false, shouldRemoveSeparator));
@@ -473,11 +485,12 @@ namespace World.Packets
         }
 
 
-        private static void SetDeserializationInformations(PacketBase packetBaseDefinition, string packetContent, string packetHeader)
+        private static void SetDeserializationInformations(PacketBase packetBaseDefinition, string packetContent, string packetHeader, Type packetType)
         {
             packetBaseDefinition.OriginalContent = packetContent;
             packetBaseDefinition.SentDateUtc = DateTime.UtcNow;
             packetBaseDefinition.Header = packetHeader;
+            packetBaseDefinition.PacketType = packetType;
         }
 
         #endregion

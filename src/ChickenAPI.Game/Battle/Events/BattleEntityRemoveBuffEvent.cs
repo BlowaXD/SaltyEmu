@@ -3,7 +3,7 @@ using ChickenAPI.Game.Events;
 
 namespace ChickenAPI.Game.Battle.Events
 {
-    public class BattleEntityRemoveBuffEvent : ChickenEventArgs
+    public class BattleEntityRemoveBuffEvent : GameEntityEvent
     {
         public CardDto Card { get; set; }
     }

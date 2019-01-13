@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using ChickenAPI.Enums;
 using ChickenAPI.Game.Network;
 using ChickenAPI.Packets;
@@ -13,19 +12,6 @@ namespace ChickenAPI.Game.PacketHandling
     public class CharacterScreenPacketHandler
     {
         #region Instantiation
-
-        public CharacterScreenPacketHandler(Action<IPacket, ISession> handler, Type packetBaseParameterType)
-        {
-            Handler = handler;
-            PacketType = packetBaseParameterType;
-            PacketHeader = PacketType.GetCustomAttributes(typeof(PacketHeaderAttribute), true).FirstOrDefault() as PacketHeaderAttribute;
-            Identification = PacketHeader?.Identification;
-            Authority = PacketHeader?.Authority ?? AuthorityType.User;
-            if (PacketHeader != null)
-            {
-                NeedCharacter = PacketHeader.NeedCharacter;
-            }
-        }
 
         #endregion
 

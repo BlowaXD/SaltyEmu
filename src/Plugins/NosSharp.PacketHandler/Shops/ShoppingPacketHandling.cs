@@ -1,26 +1,28 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Threading.Tasks;
 using ChickenAPI.Enums.Game.Entity;
-using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Entities.Npc;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Game.Shops.Args;
 using ChickenAPI.Game.Shops.Events;
 using ChickenAPI.Packets.Game.Client.Shops;
+using NW.Plugins.PacketHandling.Utils;
 
-namespace NosSharp.PacketHandler.Npc.Shops
+namespace NW.Plugins.PacketHandling.Shops
 {
-    public class ShoppingPacketHandling
+    public class ShoppingPacketHandling : GenericGamePacketHandlerAsync<ShoppingPacket>
     {
-        public static void OnShoppingPacketReceived(ShoppingPacket packet, IPlayerEntity player)
+        protected override Task Handle(ShoppingPacket packet, IPlayerEntity player)
         {
             var npc = player.CurrentMap.GetEntity<INpcEntity>(packet.NpcId, VisualType.Npc);
             if (npc == null)
             {
-                return;
+                return Task.CompletedTask;
             }
 
-            player.EmitEvent(new ShopGetInformationEvent { Shop = npc, Type = packet.Type });
+            return player.EmitEventAsync(new ShopGetInformationEvent
+            {
+                Shop = npc,
+                Type = packet.Type
+            });
         }
     }
 }

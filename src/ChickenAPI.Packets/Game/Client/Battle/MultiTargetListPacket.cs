@@ -1,6 +1,5 @@
-﻿using ChickenAPI.Enums.Game.Entity;
+﻿using System.Collections.Generic;
 using ChickenAPI.Packets.Attributes;
-using System.Collections.Generic;
 
 namespace ChickenAPI.Packets.Game.Client.Battle
 {

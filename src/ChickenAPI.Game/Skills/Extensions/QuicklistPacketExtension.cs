@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using ChickenAPI.Data.Character;
 using ChickenAPI.Game.Entities.Player;
@@ -16,36 +17,35 @@ namespace ChickenAPI.Game.Skills.Extensions
 
             var tmp = new StringBuilder();
             var tmpOne = new StringBuilder();
-            for (int i = 0; i < 60; i++)
+
+            for (int i = 0; i < 30; i++)
             {
-                tmp.Append(' ');
-                CharacterQuicklistDto dto = player.Quicklist.Quicklist[i];
-                if (i < 30)
+                for (int j = 0; j < 2; j++)
                 {
+                    CharacterQuicklistDto dto =
+                        player.Quicklist.Quicklist.FirstOrDefault(n => n.Q1 == j && n.Q2 == i && n.Morph == (player.HasSpWeared ? player.MorphId : 0));
                     if (dto == null)
                     {
-                        tmp.Append("0.255.-1");
-                        continue;
-                    }
-                }
-                else
-                {
-                    if (dto == null)
-                    {
-                        tmp.Append("7.7.-1");
+                        if (j == 0)
+                        {
+                            tmp.Append("0.255.-1");
+                            continue;
+                        }
+
+                        tmpOne.Append("7.7.-1");
                         continue;
                     }
 
-                }
 
-                string lel = $"{dto.Type}.{dto.Position}.{dto.Slot}";
-                if (i < 30)
-                {
-                    tmp.Append(lel);
-                }
-                else
-                {
-                    tmpOne.Append(lel);
+                    string lel = $"{dto.Type}.{dto.Position}.{dto.Slot}";
+                    if (j == 0)
+                    {
+                        tmp.Append(lel);
+                    }
+                    else
+                    {
+                        tmpOne.Append(lel);
+                    }
                 }
             }
 

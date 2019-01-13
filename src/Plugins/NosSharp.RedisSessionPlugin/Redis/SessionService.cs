@@ -4,6 +4,7 @@ using System.Linq;
 using ChickenAPI.Data.Server;
 using ChickenAPI.Enums.Game;
 using Foundatio.Caching;
+using SaltyEmu.Redis;
 using StackExchange.Redis;
 
 namespace SaltyEmu.RedisWrappers.Redis

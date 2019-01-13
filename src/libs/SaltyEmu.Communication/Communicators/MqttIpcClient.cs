@@ -18,7 +18,7 @@ namespace SaltyEmu.Communication.Communicators
 {
     public abstract class MqttIpcClient<TLogger> : IIpcClient where TLogger : class
     {
-        private readonly Logger _log = Logger.GetLogger<TLogger>();
+        protected readonly Logger Log = Logger.GetLogger<TLogger>();
 
 
         private readonly IPacketContainerFactory _packetFactory;
@@ -43,12 +43,13 @@ namespace SaltyEmu.Communication.Communicators
             _name = conf.ClientName;
             _serializer = conf.Serializer;
             _requestTopic = conf.RequestTopic;
+            _broadcastTopic = conf.BroadcastTopic;
             _pendingRequests = new ConcurrentDictionary<Guid, PendingRequest>();
             _packetFactory = new PacketContainerFactory();
             _requestFactory = new PendingRequestFactory();
             _client = new MqttFactory().CreateManagedMqttClient(new MqttNetLogger(conf.ClientName));
             _client.SubscribeAsync(conf.ResponseTopic);
-            _log.Info($"[RPC] Waiting for responses on : {conf.ResponseTopic}");
+            Log.Info($"[RPC] Waiting for responses on : {conf.ResponseTopic}");
         }
 
         public async Task InitializeAsync()
@@ -60,7 +61,7 @@ namespace SaltyEmu.Communication.Communicators
                     .WithTcpServer(_endPoint)
                     .Build())
                 .Build();
-            _client.Connected += (sender, args) => _log.Info($"[CONNECTED] {_name} is connected on MQTT Broker {_endPoint}");
+            _client.Connected += (sender, args) => Log.Info($"[CONNECTED] {_name} is connected on MQTT Broker {_endPoint}");
             _client.ApplicationMessageReceived += (sender, args) => OnMessage(args.ClientId, args.ApplicationMessage);
             await _client.StartAsync(options);
         }
@@ -94,23 +95,25 @@ namespace SaltyEmu.Communication.Communicators
 
             // create the packet container
             PacketContainer container = _packetFactory.ToPacket(packet.GetType(), packet);
-            await SendAsync(container);
+            await SendAsync(container, _requestTopic);
 
             IIpcResponse tmp = await request.Response.Task;
             return tmp as T;
         }
 
-        private async Task SendAsync(PacketContainer container)
+        private async Task SendAsync(PacketContainer container, string topic)
         {
-            await _client.PublishAsync(builder => builder
-                .WithPayload(_serializer.Serialize(container))
-                .WithTopic(_requestTopic));
+            await _client.PublishAsync(builder =>
+                builder
+                    .WithPayload(_serializer.Serialize(container))
+                    .WithTopic(topic)
+            );
         }
 
         public async Task BroadcastAsync<T>(T packet) where T : IIpcPacket
         {
             PacketContainer container = _packetFactory.ToPacket(packet.GetType(), packet);
-            await SendAsync(container);
+            await SendAsync(container, _broadcastTopic);
         }
     }
 }

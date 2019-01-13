@@ -5,12 +5,10 @@ using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Maths;
 using ChickenAPI.Core.Utils;
 using ChickenAPI.Enums.Game.Entity;
-using ChickenAPI.Game.Battle.Interfaces;
 using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.ECS.Systems;
 using ChickenAPI.Game.Maps;
 using ChickenAPI.Game.Movements;
-using ChickenAPI.Game.Movements.DataObjects;
 
 namespace ChickenAPI.Game.IAs
 {
@@ -44,9 +42,7 @@ namespace ChickenAPI.Game.IAs
 
         protected override void Execute(IEntity entity)
         {
-            int i = 0;
-
-            if (!(entity is IBattleEntity mov))
+            if (!(entity is IAiEntity mov))
             {
                 return;
             }
@@ -56,8 +52,10 @@ namespace ChickenAPI.Game.IAs
                 return;
             }
 
-            MovableComponent movableComponent = mov.Movable;
-            if (movableComponent.Waypoints != null && movableComponent.Waypoints.Length != 0 || entity.Type == VisualType.Character || movableComponent.Speed == 0)
+            int i = 0;
+
+
+            if (mov.Waypoints != null && mov.Waypoints.Length != 0 || entity.Type == VisualType.Character || mov.Speed == 0)
             {
                 return;
             }
@@ -65,7 +63,7 @@ namespace ChickenAPI.Game.IAs
             if (_random.Next(0, 100) < 35)
             {
                 // wait max 2500 millisecs before having a new movement
-                movableComponent.LastMove = DateTime.UtcNow.AddMilliseconds(_random.Next(2500));
+                mov.LastMove = DateTime.UtcNow.AddMilliseconds(_random.Next(2500));
                 return;
             }
 
@@ -74,8 +72,8 @@ namespace ChickenAPI.Game.IAs
             {
                 short xpoint = (short)_random.Next(0, 4);
                 short ypoint = (short)_random.Next(0, 4);
-                short firstX = movableComponent.Actual.X;
-                short firstY = movableComponent.Actual.Y;
+                short firstX = mov.Position.X;
+                short firstY = mov.Position.Y;
                 dest = _map.GetFreePosition(firstX, firstY, xpoint, ypoint);
 
                 i++;
@@ -86,7 +84,7 @@ namespace ChickenAPI.Game.IAs
                 return;
             }
 
-            movableComponent.Waypoints = _pathfinder.FindPath(movableComponent.Actual, dest, _map);
+            mov.Waypoints = _pathfinder.FindPath(mov.Position, dest, _map);
         }
     }
 }

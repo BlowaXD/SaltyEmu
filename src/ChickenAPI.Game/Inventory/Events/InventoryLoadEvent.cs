@@ -2,7 +2,11 @@
 
 namespace ChickenAPI.Game.Inventory.Events
 {
-    public class InventoryLoadEvent : ChickenEventArgs
+    /// <summary>
+    ///     Inventory Loading request event
+    ///     This event is meant to
+    /// </summary>
+    public class InventoryLoadEvent : GameEntityEvent
     {
     }
 }

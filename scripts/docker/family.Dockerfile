@@ -1,7 +1,7 @@
 ###
 ## Build docker
 ### 
-FROM microsoft/dotnet:2.1-sdk-alpine as builder
+FROM microsoft/dotnet:2.2-sdk-alpine as builder
 
 WORKDIR /saltyemu/
 
@@ -15,12 +15,11 @@ RUN dotnet publish ./services/SaltyEmu.Family/SaltyEmu.Family.csproj -c Release 
 ###
 
 ## Use alpine as basis
-FROM microsoft/dotnet:2.1-runtime-alpine
+FROM microsoft/dotnet:2.2-runtime-alpine
 
-# Output Server Port (that will be sent to IServerApiService)
-ENV SERVER_PORT=7777 \
-    SERVER_IP=127.0.0.1 \
-    SERVER_WORLDGROUP=SaltyNos
+# IPC_BROKER_ENDPOINT and IPC_CLIENT_NAME are used to manage IPC
+ENV IPC_BROKER_ENDPOINT=127.0.0.1 \
+    IPC_CLIENT_NAME=saltyemu-relations-server
 
 LABEL name="saltyemu-family" \
     author="BlowaXD" \

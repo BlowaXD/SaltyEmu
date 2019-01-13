@@ -7,9 +7,8 @@ namespace ChickenAPI.Game.Inventory.Extensions
 {
     public static class IvnPacketExtension
     {
-        public static IvnPacket GenerateEmptyIvnPacket(this IPlayerEntity player, InventoryType type, short slot)
-        {
-            return new IvnPacket
+        public static IvnPacket GenerateEmptyIvnPacket(this IPlayerEntity player, InventoryType type, short slot) =>
+            new IvnPacket
             {
                 InventoryType = type,
                 Slot = slot,
@@ -18,7 +17,6 @@ namespace ChickenAPI.Game.Inventory.Extensions
                 Rare = 0,
                 SpStoneUpgrade = 0
             };
-        }
 
         public static IvnPacket GenerateIvnPacket(this ItemInstanceDto itemInstance)
         {

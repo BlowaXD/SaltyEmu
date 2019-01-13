@@ -2,7 +2,7 @@
 
 namespace ChickenAPI.Game.Locomotion.Events
 {
-    public class LocomotionUntransformEvent : ChickenEventArgs
+    public class LocomotionUntransformEvent : GameEntityEvent
     {
     }
 }

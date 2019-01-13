@@ -3,7 +3,7 @@ using ChickenAPI.Game.Events;
 
 namespace ChickenAPI.Game.Shops.Events
 {
-    public class ShopBuyEvent : ChickenEventArgs
+    public class ShopBuyEvent : GameEntityEvent
     {
         public VisualType Type { get; set; }
 

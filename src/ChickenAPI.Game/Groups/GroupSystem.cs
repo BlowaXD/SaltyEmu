@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Linq;
 using System.Linq.Expressions;
 using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.ECS.Systems;
 using ChickenAPI.Game.Entities.Player;
+using ChickenAPI.Game.Entities.Player.Extensions;
 
 namespace ChickenAPI.Game.Groups
 {
@@ -15,12 +17,9 @@ namespace ChickenAPI.Game.Groups
         /// <summary>
         ///     3 ticks per second
         /// </summary>
-        protected override double RefreshRate => 3;
+        protected override double RefreshRate => 0.5;
 
-        protected override Expression<Func<IEntity, bool>> Filter
-        {
-            get { return entity => entity.HasComponent<GroupComponent>(); }
-        }
+        protected override Expression<Func<IEntity, bool>> Filter => entity => entity is IPlayerEntity;
 
         protected override void Execute(IEntity entity)
         {
@@ -29,7 +28,10 @@ namespace ChickenAPI.Game.Groups
                 return;
             }
 
-            player.SendPackets(player.GeneratePstPacket());
+            if (player.HasGroup || player.ActualMates.Any())
+            {
+                player.ActualizeUiGroupStats();
+            }
         }
     }
 }

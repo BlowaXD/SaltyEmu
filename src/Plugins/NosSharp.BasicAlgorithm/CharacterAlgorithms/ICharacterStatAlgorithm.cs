@@ -1,6 +1,6 @@
 ﻿using ChickenAPI.Enums.Game.Character;
 
-namespace NosSharp.BasicAlgorithm
+namespace SaltyEmu.BasicAlgorithmPlugin.CharacterAlgorithms
 {
     public interface ICharacterStatAlgorithm
     {

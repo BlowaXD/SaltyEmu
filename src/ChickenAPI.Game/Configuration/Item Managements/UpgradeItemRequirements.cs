@@ -2,30 +2,10 @@
 
 namespace ChickenAPI.Game.Configuration.Item_Managements
 {
-    public class UpgradeItem
-    {
-        public long Id { get; set; }
-        public long Quantity { get; set; }
-    }
-
-    public enum ProtectionItemBenefit
-    {
-        ItemNotDestroyedOnFail,
-        ItemKeepUpgradeOnFail,
-        SuccessGuaranteed,
-        UpgradeChanceImproved,
-        CostReduced
-    }
-
-    public class ProtectionItem : UpgradeItem
-    {
-        public Dictionary<ProtectionItemBenefit, float> Benefits { get; set; }
-    }
-
     public class UpgradeItemRequirements
     {
         /// <summary>
-        /// Upgrade rank (from +1 to +255)
+        ///     Upgrade rank (from +1 to +255)
         /// </summary>
         public byte UpgradeRank { get; set; }
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Autofac;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Utils;
@@ -14,9 +15,11 @@ using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Enums.Game.Families;
 using ChickenAPI.Enums.Game.Items;
 using ChickenAPI.Enums.Game.Visibility;
+using ChickenAPI.Game.Battle.Interfaces;
 using ChickenAPI.Game.Buffs;
 using ChickenAPI.Game.ECS.Components;
 using ChickenAPI.Game.ECS.Entities;
+using ChickenAPI.Game.Entities.Mates;
 using ChickenAPI.Game.Groups;
 using ChickenAPI.Game.Inventory;
 using ChickenAPI.Game.Inventory.Extensions;
@@ -37,6 +40,7 @@ namespace ChickenAPI.Game.Entities.Player
 {
     public class PlayerEntity : EntityBase, IPlayerEntity
     {
+        private const int NcifDelay = 400;
         private static readonly IAlgorithmService Algorithm = new Lazy<IAlgorithmService>(() => ChickenContainer.Instance.Resolve<IAlgorithmService>()).Value;
         private static readonly IItemInstanceService ItemInstance = new Lazy<IItemInstanceService>(() => ChickenContainer.Instance.Resolve<IItemInstanceService>()).Value;
         private static readonly ICharacterService CharacterService = new Lazy<ICharacterService>(() => ChickenContainer.Instance.Resolve<ICharacterService>()).Value;
@@ -78,11 +82,11 @@ namespace ChickenAPI.Game.Entities.Player
             Components = new Dictionary<Type, IComponent>
             {
                 { typeof(VisibilityComponent), _visibility },
-                { typeof(MovableComponent), Movable },
                 { typeof(InventoryComponent), Inventory },
                 { typeof(SkillComponent), SkillComponent },
                 { typeof(LocomotionComponent), Locomotion }
             };
+            Mates = new List<IMateEntity>();
 
             #region Stat
 
@@ -101,6 +105,120 @@ namespace ChickenAPI.Game.Entities.Player
 
             #endregion Stat
         }
+
+        private MovableComponent Movable { get; }
+
+        public long Gold
+        {
+            get => Character.Gold;
+            set => Character.Gold = value;
+        }
+
+        public InventoryComponent Inventory { get; }
+        public LocomotionComponent Locomotion { get; }
+        public IRelationList Relations { get; }
+        public CharacterDto Character { get; }
+        public List<IMateEntity> Mates { get; set; }
+        public IEnumerable<IMateEntity> ActualMates => Mates.Where(s => s.Mate.IsTeamMember).OrderByDescending(s => s.Mate.MateType);
+
+        public CharacterNameAppearance NameAppearance
+        {
+            get
+            {
+                if (IsInvisible)
+                {
+                    return CharacterNameAppearance.Invisible;
+                }
+
+                if (Session.Account.Authority >= AuthorityType.GameMaster)
+                {
+                    return CharacterNameAppearance.GameMaster;
+                }
+
+                return CharacterNameAppearance.Player;
+            }
+        }
+
+        public QuicklistComponent Quicklist { get; }
+
+        public ISession Session { get; }
+
+        public long LastPulse { get; }
+
+        public override void TransferEntity(IMapLayer map)
+        {
+            if (CurrentMap == map)
+            {
+                return;
+            }
+
+            if (CurrentMap != null)
+            {
+                EmitEvent(new MapLeaveEvent { Map = CurrentMap });
+            }
+
+            base.TransferEntity(map);
+
+            EmitEvent(new MapJoinEvent { Map = map });
+            EmitEvent(new VisibilitySetVisibleEvent
+            {
+                Broadcast = true,
+                IsChangingMapLayer = true
+            });
+        }
+
+        public void SendPacket<T>(T packetBase) where T : IPacket => Session.SendPacket(packetBase);
+
+        public void SendPackets<T>(IEnumerable<T> packets) where T : IPacket
+        {
+            if (packets == null)
+            {
+                return;
+            }
+
+            Session.SendPackets(packets);
+        }
+
+        public void SendPackets(IEnumerable<IPacket> packets) => Session.SendPackets(packets);
+
+        public Task SendPacketAsync<T>(T packet) where T : IPacket => Session.SendPacketAsync(packet);
+
+        public Task SendPacketsAsync<T>(IEnumerable<T> packets) where T : IPacket => Session.SendPacketsAsync(packets);
+
+        public Task SendPacketsAsync(IEnumerable<IPacket> packets) => Session.SendPacketsAsync(packets);
+
+        public override void Dispose()
+        {
+            EmitEvent(new MapLeaveEvent { Map = CurrentMap });
+            PlayerManager.UnregisterPlayer(this);
+            GC.SuppressFinalize(this);
+        }
+
+        public void Save()
+        {
+            DateTime before = DateTime.UtcNow;
+            Character.MapX = Position.X;
+            Character.MapY = Position.Y;
+            Character.MapId = (short)CurrentMap.Map.Id;
+            CharacterService.Save(Character);
+            CharacterSkillService.Save(SkillComponent.CharacterSkills.Values);
+            CharacterQuicklistService.Save(Quicklist.Quicklist);
+            ItemInstance.Save(Inventory.GetItems());
+            Log.Info($"[SAVE] {Character.Name} saved in {(DateTime.UtcNow - before).TotalMilliseconds} ms");
+        }
+
+        public double LastPortal { get; set; }
+        public ItemInstanceDto Fairy => Inventory.GetWeared(EquipmentType.Fairy);
+        public ItemInstanceDto Weapon => Inventory.GetWeared(EquipmentType.MainWeapon);
+        public ItemInstanceDto SecondaryWeapon => Inventory.GetWeared(EquipmentType.SecondaryWeapon);
+        public ItemInstanceDto Armor => Inventory.GetWeared(EquipmentType.Armor);
+
+        public bool IsTransformedLocomotion => Locomotion.IsVehicled;
+
+        public DateTime DateLastPortal { get; set; }
+
+        public bool HasShop => Shop != null;
+        public PersonalShop Shop { get; set; }
 
         #region stat
 
@@ -130,34 +248,19 @@ namespace ChickenAPI.Game.Entities.Player
 
         #endregion stat
 
-        public MovableComponent Movable { get; }
-        public InventoryComponent Inventory { get; }
-        public LocomotionComponent Locomotion { get; }
-        public CharacterDto Character { get; }
+        #region Broadcast
 
-        public CharacterNameAppearance NameAppearance
-        {
-            get
-            {
-                if (IsInvisible)
-                {
-                    return CharacterNameAppearance.Invisible;
-                }
+        public Task BroadcastAsync<T>(T packet) where T : IPacket => BroadcastAsync(packet, null);
 
-                if (Session.Account.Authority >= AuthorityType.GameMaster)
-                {
-                    return CharacterNameAppearance.GameMaster;
-                }
+        public Task BroadcastAsync<T>(T packet, IBroadcastRule rule) where T : IPacket => CurrentMap?.BroadcastAsync(packet, rule);
 
-                return CharacterNameAppearance.Player;
-            }
-        }
+        public Task BroadcastAsync<T>(IEnumerable<T> packets) where T : IPacket => BroadcastAsync(packets, null);
 
-        public QuicklistComponent Quicklist { get; }
+        public Task BroadcastAsync<T>(IEnumerable<T> packets, IBroadcastRule rule) where T : IPacket => CurrentMap?.BroadcastAsync(packets, rule);
 
-        public ISession Session { get; }
+        public Task BroadcastAsync(IEnumerable<IPacket> packets) => BroadcastAsync(packets, null);
 
-        public long LastPulse { get; }
+        public Task BroadcastAsync(IEnumerable<IPacket> packets, IBroadcastRule rule) => CurrentMap?.BroadcastAsync(packets, rule);
 
         public void Broadcast<T>(T packet) where T : IPacket
         {
@@ -179,6 +282,10 @@ namespace ChickenAPI.Game.Entities.Player
             Broadcast(packets, new AllExpectOne(this));
         }
 
+        public Task BroadcastExceptSenderAsync<T>(T packet) where T : IPacket => BroadcastAsync(packet, new AllExpectOne(this));
+
+        public Task BroadcastExceptSenderAsync<T>(IEnumerable<T> packets) where T : IPacket => BroadcastAsync(packets, new AllExpectOne(this));
+
         public void Broadcast<T>(T packet, IBroadcastRule rule) where T : IPacket
         {
             CurrentMap?.Broadcast(packet, rule);
@@ -199,64 +306,7 @@ namespace ChickenAPI.Game.Entities.Player
             CurrentMap?.Broadcast(packets, rule);
         }
 
-        public override void TransferEntity(IMapLayer map)
-        {
-            if (CurrentMap == map)
-            {
-                return;
-            }
-
-            if (CurrentMap != null)
-            {
-                EmitEvent(new MapLeaveEvent { Map = CurrentMap });
-            }
-
-            base.TransferEntity(map);
-
-            EmitEvent(new MapJoinEvent { Map = map });
-            EmitEvent(new VisibilitySetVisibleEventArgs
-            {
-                Broadcast = true,
-                IsChangingMapLayer = true,
-            });
-        }
-
-        public void SendPacket<T>(T packetBase) where T : IPacket => Session.SendPacket(packetBase);
-
-        public void SendPackets<T>(IEnumerable<T> packets) where T : IPacket
-        {
-            if (packets == null)
-            {
-                return;
-            }
-
-            foreach (T i in packets)
-            {
-                Session.SendPacket(i);
-            }
-        }
-
-        public void SendPackets(IEnumerable<IPacket> packets) => Session.SendPackets(packets);
-
-        public override void Dispose()
-        {
-            EmitEvent(new MapLeaveEvent { Map = CurrentMap });
-            PlayerManager.UnregisterPlayer(this);
-            GC.SuppressFinalize(this);
-        }
-
-        public void Save()
-        {
-            DateTime before = DateTime.UtcNow;
-            Character.MapX = Position.X;
-            Character.MapY = Position.Y;
-            Character.MapId = (short)CurrentMap.Map.Id;
-            CharacterService.Save(Character);
-            CharacterSkillService.Save(SkillComponent.CharacterSkills.Values);
-            CharacterQuicklistService.Save(Quicklist.Quicklist);
-            ItemInstance.Save(Inventory.GetItems());
-            Log.Info($"[SAVE] {Character.Name} saved in {(DateTime.UtcNow - before).TotalMilliseconds} ms");
-        }
+        #endregion
 
         #region Battle
 
@@ -286,6 +336,34 @@ namespace ChickenAPI.Game.Entities.Player
         public int MpMax { get; set; }
         private readonly List<BuffContainer> _buffs = new List<BuffContainer>();
         public ICollection<BuffContainer> Buffs => _buffs;
+
+        #region Target
+
+        private IBattleEntity _target;
+        public bool HasTarget => Target != null;
+
+        public IBattleEntity Target
+        {
+            get
+            {
+                if (LastTarget.AddMilliseconds(NcifDelay) <= DateTime.Now)
+                {
+                    _target = null;
+                }
+
+                return _target;
+            }
+            set
+            {
+                _target = value;
+                LastTarget = DateTime.Now;
+            }
+        }
+
+        public DateTime LastTarget { get; private set; }
+
+        #endregion Target
+
         public DateTime LastTimeKilled { get; set; }
         public DateTime LastHitReceived { get; set; }
 
@@ -293,7 +371,14 @@ namespace ChickenAPI.Game.Entities.Player
 
         #region Movements
 
-        public bool IsSitting => Movable.IsSitting;
+        public DirectionType DirectionType => Movable.DirectionType;
+
+        public bool IsSitting
+        {
+            get => Movable.IsSitting;
+            set => Movable.IsSitting = value;
+        }
+
         public bool IsWalking => !Movable.IsSitting;
         public bool CanMove => !Movable.IsSitting;
         public bool IsStanding => !Movable.IsSitting;
@@ -310,10 +395,14 @@ namespace ChickenAPI.Game.Entities.Player
             set => Locomotion.Speed = value;
         }
 
-        public DateTime LastMove { get; }
+        public DateTime LastMove { get; set; }
 
         // todo manage Position of player in instanciated mapLayers
-        public Position<short> Position => Movable.Actual;
+        public Position<short> Position
+        {
+            get => Movable.Actual;
+            set => Movable.Actual = value;
+        }
 
         public Position<short> Destination => Movable.Destination;
 
@@ -401,7 +490,7 @@ namespace ChickenAPI.Game.Entities.Player
         #region Specialist
 
         /// <summary>
-        /// Find a better way to manage it
+        ///     Find a better way to manage it
         /// </summary>
         public short MorphId { get; set; }
 
@@ -414,31 +503,13 @@ namespace ChickenAPI.Game.Entities.Player
 
         #endregion Specialist
 
-        public long Gold
-        {
-            get => Character.Gold;
-            set => Character.Gold = value;
-        }
-
-        public double LastPortal { get; set; }
-        public ItemInstanceDto Fairy => Inventory.GetWeared(EquipmentType.Fairy);
-        public ItemInstanceDto Weapon => Inventory.GetWeared(EquipmentType.MainWeapon);
-        public ItemInstanceDto SecondaryWeapon => Inventory.GetWeared(EquipmentType.SecondaryWeapon);
-        public ItemInstanceDto Armor => Inventory.GetWeared(EquipmentType.Armor);
-
-        public bool IsTransformedLocomotion => Locomotion.IsVehicled;
-
-        public DateTime DateLastPortal { get; set; }
-
         #region Group
 
         public GroupDto Group { get; set; }
         public bool HasGroup => Group != null;
         public bool IsGroupLeader => HasGroup && Group.Leader == this;
+        public int GroupMembersCount => HasGroup ? Group.Players.Count : 0;
 
         #endregion Group
-
-        public bool HasShop => Shop != null;
-        public PersonalShop Shop { get; set; }
     }
 }

@@ -22,19 +22,21 @@
     <PackageReference Include="DotNetty.Codecs" Version="0.6.0" />
     <PackageReference Include="DotNetty.Common" Version="0.6.0" />
     <PackageReference Include="DotNetty.Transport" Version="0.6.0" />
-    <PackageReference Include="System.Memory" Version="4.5.1" />
-    <PackageReference Include="System.Text.Encoding.CodePages" Version="4.5.0" />
+    <PackageReference Include="System.Memory" Version="4.5.2" />
+    <PackageReference Include="System.Text.Encoding.CodePages" Version="4.5.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\ChickenAPI.Game\ChickenAPI.Game.csproj" />
+    <ProjectReference Include="..\libs\SaltyEmu.Core\SaltyEmu.Core.csproj" />
     <ProjectReference Include="..\Plugins\Essentials\Essentials.csproj" />
     <ProjectReference Include="..\Plugins\NosSharp.BasicAlgorithm\SaltyEmu.BasicAlgorithmPlugin.csproj" />
     <ProjectReference Include="..\Plugins\NosSharp.DatabasePlugin\SaltyEmu.DatabasePlugin.csproj" />
-    <ProjectReference Include="..\Plugins\NosSharp.PacketHandler\SaltyEmu.BasicPacketHandlerPlugin.csproj" />
+    <ProjectReference Include="..\Plugins\NosSharp.PacketHandler\NW.Plugins.PacketHandling.csproj" />
     <ProjectReference Include="..\Plugins\NosSharp.Pathfinder\SaltyEmu.PathfinderPlugin.csproj" />
     <ProjectReference Include="..\Plugins\NosSharp.RedisSessionPlugin\SaltyEmu.RedisWrappers.csproj" />
     <ProjectReference Include="..\Plugins\NosSharp.TemporaryMapPlugins\SaltyEmu.BasicPlugin.csproj" />
+    <ProjectReference Include="..\Plugins\SaltyEmu.FriendsPlugin\SaltyEmu.FriendsPlugin.csproj" />
   </ItemGroup>
 
 </Project>

@@ -16,7 +16,13 @@ namespace SaltyEmu.BasicPlugin
             GlobalXpMultiplier = 1.0f,
         };
 
+        public InventoryConfiguration Inventory { get; set; } = new InventoryConfiguration
+        {
+            MaxItemPerSlot = short.MaxValue
+        };
+
         #region UpgradeConfig
+
         public RarifyChancesConfiguration RarifyChances { get; set; } = new RarifyChancesConfiguration
         {
             Raren2 = 80,
@@ -68,7 +74,7 @@ namespace SaltyEmu.BasicPlugin
             },
             Destroy = new short[] { 0, 0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 70 },
             UpFail = new short[] { 20, 25, 30, 40, 50, 60, 65, 70, 75, 80, 90, 93, 95, 97, 99 },
-            Feather = new short[] { 3, 5, 8, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 70 },          
+            Feather = new short[] { 3, 5, 8, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 70 },
             FullMoon = new short[] { 1, 3, 5, 7, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30 },
             Soul = new short[] { 2, 4, 6, 8, 10, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5 },
             FeatherVnum = 2282,
@@ -99,6 +105,7 @@ namespace SaltyEmu.BasicPlugin
             StonePrice = new short[] { 1, 2, 3, 4, 5 },
             UpSuccess = new short[] { 50, 40, 30, 20, 10 }
         };
+
         #endregion
 
         public uint SpMaxDailyPoints { get; set; } = 10000;

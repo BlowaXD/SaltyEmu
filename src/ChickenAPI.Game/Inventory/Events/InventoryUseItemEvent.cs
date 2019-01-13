@@ -3,7 +3,7 @@ using ChickenAPI.Game.Events;
 
 namespace ChickenAPI.Game.Inventory.Events
 {
-    public class InventoryUseItemEvent : ChickenEventArgs
+    public class InventoryUseItemEvent : GameEntityEvent
     {
         public ItemInstanceDto Item { get; set; }
 

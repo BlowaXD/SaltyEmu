@@ -6,7 +6,7 @@ namespace ChickenAPI.Data.Server
     public interface IServerApiService
     {
         /// <summary>
-        /// Gets the running server from where you call that method
+        ///     Gets the running server from where you call that method
         /// </summary>
         WorldServerDto GetRunningServer { get; }
 

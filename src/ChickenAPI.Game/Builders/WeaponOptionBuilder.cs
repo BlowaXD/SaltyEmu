@@ -6,13 +6,13 @@ namespace ChickenAPI.Game.Builders
 {
     public class WeaponOptionBuilder
     {
-        private Guid _weaponId;
-        private long _value;
         private WeaponOptionLevelType _level;
         private WeaponOptionType _option;
+        private long _value;
+        private Guid _weaponId;
 
         /// <summary>
-        /// Binds builded Equipment Option to the given item
+        ///     Binds builded Equipment Option to the given item
         /// </summary>
         /// <param name="itemInstance"></param>
         public void ForWeapon(ItemInstanceDto itemInstance)
@@ -26,7 +26,7 @@ namespace ChickenAPI.Game.Builders
         }
 
         /// <summary>
-        /// Sets the level of the builded Equipment Option to the given one
+        ///     Sets the level of the builded Equipment Option to the given one
         /// </summary>
         /// <param name="level"></param>
         /// <returns></returns>
@@ -37,7 +37,7 @@ namespace ChickenAPI.Game.Builders
         }
 
         /// <summary>
-        /// Sets the option of the builded Equipment Option to the given one
+        ///     Sets the option of the builded Equipment Option to the given one
         /// </summary>
         /// <param name="option"></param>
         /// <returns></returns>
@@ -48,7 +48,7 @@ namespace ChickenAPI.Game.Builders
         }
 
         /// <summary>
-        /// Sets the value of the builded Equipment Option to the given one
+        ///     Sets the value of the builded Equipment Option to the given one
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
@@ -66,7 +66,7 @@ namespace ChickenAPI.Game.Builders
                 WearableInstanceId = _weaponId,
                 Value = _value,
                 Level = (byte)_level,
-                Type = (byte)_option,
+                Type = (byte)_option
             };
 
         public static implicit operator EquipmentOptionDto(WeaponOptionBuilder builder) => builder.Build();

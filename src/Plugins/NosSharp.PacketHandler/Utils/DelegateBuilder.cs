@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using FastExpressionCompiler;
 
-namespace NosSharp.PacketHandler.Utils
+namespace NW.Plugins.PacketHandling.Utils
 {
     public static class DelegateBuilder
     {
@@ -34,7 +33,7 @@ namespace NosSharp.PacketHandler.Utils
                     Expression.Call(method, paramsToPass),
                     paramsOfDelegate);
 
-                return expr.CompileFast();
+                return expr.Compile();
             }
             else
             {
@@ -48,7 +47,7 @@ namespace NosSharp.PacketHandler.Utils
                     Expression.Call(paramThis, method, paramsToPass),
                     paramsOfDelegate);
 
-                return expr.CompileFast();
+                return expr.Compile();
             }
         }
 

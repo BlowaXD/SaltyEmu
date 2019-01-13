@@ -10,10 +10,7 @@ namespace ChickenAPI.Game.Entities.Drop
 {
     public class ItemDropEntity : EntityBase, IDropEntity
     {
-        public ItemDropEntity(long id) : base(VisualType.MapObject, id)
-        {
-            Components = new Dictionary<Type, IComponent>();
-        }
+        public ItemDropEntity(long id) : base(VisualType.MapObject, id) => Components = new Dictionary<Type, IComponent>();
 
         public ItemDto Item { get; set; }
         public ItemInstanceDto ItemInstance { get; set; }

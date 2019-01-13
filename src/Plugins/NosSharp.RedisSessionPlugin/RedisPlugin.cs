@@ -6,6 +6,7 @@ using ChickenAPI.Core.Logging;
 using ChickenAPI.Core.Plugins;
 using ChickenAPI.Core.Utils;
 using ChickenAPI.Data.Server;
+using SaltyEmu.Redis;
 
 namespace SaltyEmu.RedisWrappers
 {

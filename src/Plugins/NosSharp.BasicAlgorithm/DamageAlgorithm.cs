@@ -1,7 +1,7 @@
 ﻿using ChickenAPI.Game.Battle.Hitting;
 using ChickenAPI.Game.Battle.Interfaces;
 
-namespace NosSharp.BasicAlgorithm
+namespace SaltyEmu.BasicAlgorithmPlugin
 {
     public class DamageAlgorithm : IDamageAlgorithm
     {

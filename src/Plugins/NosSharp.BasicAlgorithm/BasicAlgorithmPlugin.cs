@@ -1,7 +1,7 @@
 ﻿using System;
 using ChickenAPI.Core.Logging;
 using ChickenAPI.Core.Plugins;
-using NosSharp.BasicAlgorithm;
+using SaltyEmu.BasicAlgorithmPlugin.IoC;
 
 namespace SaltyEmu.BasicAlgorithmPlugin
 {

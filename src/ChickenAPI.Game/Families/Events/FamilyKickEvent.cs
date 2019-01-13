@@ -4,7 +4,7 @@ using ChickenAPI.Game.Events;
 
 namespace ChickenAPI.Game.Families.Events
 {
-    public class FamilyKickEvent : ChickenEventArgs
+    public class FamilyKickEvent : GameEntityEvent
     {
         public IPlayerEntity Kicker { get; set; }
         public FamilyDto Family { get; set; }

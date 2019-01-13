@@ -1,4 +1,5 @@
-﻿using ChickenAPI.Enums.Game.Character;
+﻿using System.Collections.Generic;
+using ChickenAPI.Enums.Game.Character;
 using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Packets.Attributes;
 
@@ -37,7 +38,7 @@ namespace ChickenAPI.Packets.Game.Server.Group
         [PacketIndex(9)]
         public int Morph { get; set; }
 
-        [PacketIndex(10)]
-        public string Buffs { get; set; }
+        [PacketIndex(10, SeparatorNestedElements = " ")]
+        public List<long> Buffs { get; set; }
     }
 }

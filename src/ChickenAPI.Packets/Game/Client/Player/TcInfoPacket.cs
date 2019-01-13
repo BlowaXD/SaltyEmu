@@ -100,7 +100,7 @@ namespace ChickenAPI.Packets.Game.Client.Player
         public long TalentSurrender { get; set; }
 
         [PacketIndex(28)]
-        public long Unknow4 { get; set; } = 0;// always 0
+        public long Unknow4 { get; set; } = 0; // always 0
 
         [PacketIndex(29)]
         public long MasterPoints { get; set; }

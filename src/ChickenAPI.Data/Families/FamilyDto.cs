@@ -5,7 +5,6 @@ namespace ChickenAPI.Data.Families
 {
     public class FamilyDto : IMappedDto
     {
-        public long Id { get; set; }
         public int FamilyExperience { get; set; }
 
         public GenderType FamilyHeadGender { get; set; }
@@ -35,5 +34,6 @@ namespace ChickenAPI.Data.Families
         public string Name { get; set; }
 
         public byte WarehouseSize { get; set; }
+        public long Id { get; set; }
     }
 }

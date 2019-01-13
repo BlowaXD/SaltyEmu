@@ -3,6 +3,7 @@ using System.Linq;
 using ChickenAPI.Core.Logging;
 using ChickenAPI.Data.Server;
 using ChickenAPI.Enums.Game;
+using SaltyEmu.Redis;
 using ServiceStack.Redis;
 using ServiceStack.Redis.Generic;
 
@@ -67,12 +68,6 @@ namespace SaltyEmu.RedisWrappers
                 i.State = PlayerSessionState.Unauthed;
                 _client.Store(i);
             }
-        }
-
-        public void UnregisterSession(PlayerSessionDto dto)
-        {
-            dto.State = PlayerSessionState.Unauthed;
-            _client.Store(dto);
         }
     }
 }

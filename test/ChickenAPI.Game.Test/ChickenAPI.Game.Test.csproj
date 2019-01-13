@@ -9,7 +9,7 @@
   <ItemGroup>
     <PackageReference Include="Moq" Version="4.10.1" />
     <PackageReference Include="nunit" Version="3.11.0" />
-    <PackageReference Include="NUnit3TestAdapter" Version="3.11.2" />
+    <PackageReference Include="NUnit3TestAdapter" Version="3.12.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.9.0" />
   </ItemGroup>
 
@@ -18,7 +18,7 @@
     <ProjectReference Include="..\..\src\libs\SaltyEmu.Communication\SaltyEmu.Communication.csproj" />
     <ProjectReference Include="..\..\src\Plugins\NosSharp.BasicAlgorithm\SaltyEmu.BasicAlgorithmPlugin.csproj" />
     <ProjectReference Include="..\..\src\Plugins\NosSharp.DatabasePlugin\SaltyEmu.DatabasePlugin.csproj" />
-    <ProjectReference Include="..\..\src\Plugins\NosSharp.PacketHandler\SaltyEmu.BasicPacketHandlerPlugin.csproj" />
+    <ProjectReference Include="..\..\src\Plugins\NosSharp.PacketHandler\NW.Plugins.PacketHandling.csproj" />
     <ProjectReference Include="..\..\src\Plugins\NosSharp.Pathfinder\SaltyEmu.PathfinderPlugin.csproj" />
     <ProjectReference Include="..\..\src\Plugins\NosSharp.RedisSessionPlugin\SaltyEmu.RedisWrappers.csproj" />
     <ProjectReference Include="..\..\src\Plugins\NosSharp.TemporaryMapPlugins\SaltyEmu.BasicPlugin.csproj" />

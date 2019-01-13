@@ -2,7 +2,7 @@
 
 namespace ChickenAPI.Game.Groups.Args
 {
-    public class GroupJoinEvent : ChickenEventArgs
+    public class GroupJoinEvent : GameEntityEvent
     {
         public GroupDto Group { get; set; }
     }

@@ -3,7 +3,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using ChickenAPI.Data.Families;
 using SaltyEmu.Redis;
-using SaltyEmu.RedisWrappers;
 
 namespace SaltyEmu.FamilyService.FamilyService
 {

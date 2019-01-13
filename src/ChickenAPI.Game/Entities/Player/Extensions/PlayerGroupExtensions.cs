@@ -1,4 +1,5 @@
 ﻿using ChickenAPI.Game.Entities.Player;
+using ChickenAPI.Game.Entities.Player.Extensions;
 using ChickenAPI.Game.Groups;
 
 namespace ChickenAPI.Game.Player.Extension

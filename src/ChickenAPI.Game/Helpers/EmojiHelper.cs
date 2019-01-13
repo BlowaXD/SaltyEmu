@@ -9,9 +9,6 @@ namespace ChickenAPI.Game.Helpers
     {
         private const int EMOJI_EFFECT_OFFSET = 4099;
 
-        public static EffectPacket EmojiToEffectPacket(this IEntity entity, EmojiType type)
-        {
-            return entity.GenerateEffectPacket((int)type + EMOJI_EFFECT_OFFSET);
-        }
+        public static EffectPacket EmojiToEffectPacket(this IEntity entity, EmojiType type) => entity.GenerateEffectPacket((int)type + EMOJI_EFFECT_OFFSET);
     }
 }

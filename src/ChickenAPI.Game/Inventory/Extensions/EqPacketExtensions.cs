@@ -24,9 +24,9 @@ namespace ChickenAPI.Game.Inventory.Extensions
         public static EqRareInfo GenerateEqRareInfoPacket(this InventoryComponent inventory) => new EqRareInfo
         {
             WeaponUpgrade = inventory.Wear[(int)EquipmentType.MainWeapon]?.Upgrade ?? 0,
-            WeaponRarity = (sbyte)(inventory.Wear[(int)EquipmentType.MainWeapon]?.Rarity ?? 0),
+            WeaponRarity = inventory.Wear[(int)EquipmentType.MainWeapon]?.Rarity ?? 0,
             ArmorUpgrade = inventory.Wear[(int)EquipmentType.Armor]?.Upgrade ?? 0,
-            ArmorRarity = (sbyte)(inventory.Wear[(int)EquipmentType.MainWeapon]?.Rarity ?? 0)
+            ArmorRarity = inventory.Wear[(int)EquipmentType.MainWeapon]?.Rarity ?? 0
         };
 
         public static EqPacket GenerateEqPacket(this IPlayerEntity player) => new EqPacket

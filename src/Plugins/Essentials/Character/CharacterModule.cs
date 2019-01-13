@@ -172,7 +172,7 @@ namespace Essentials.Character
                 player = Context.Player;
             }
 
-            return Task.FromResult(new SaltyCommandResult(true, $"{player.Character.Name}'s position: map {player.CurrentMap.Map.Id} [{player.Movable.Actual.X}, {player.Movable.Actual.Y}]"));
+            return Task.FromResult(new SaltyCommandResult(true, $"{player.Character.Name}'s position: map {player.CurrentMap.Map.Id} [{player.Position.X}, {player.Position.Y}]"));
         }
 
         [Command("Speed")]

@@ -30,9 +30,29 @@
 
         YOU_DONT_HAVE_ENOUGH_GOLD,
         YOU_DONT_HAVE_ENOUGH_REPUTATION,
-        YOU_DONT_HAVE_ENOUGH_SPACE_IN_INVENTORY
+        YOU_DONT_HAVE_ENOUGH_SPACE_IN_INVENTORY,
 
         #endregion Gold
 
+        #region RELATIONS
+
+        FRIEND_X_INVITED_YOU_TO_JOIN_HIS_FRIENDLIST,
+        FRIEND_X_IS_NOW_IN_YOUR_FRIENDLIST,
+
+        #endregion
+
+        #region PETS
+
+        PETS_YOU_GET_X_AS_A_NEW_PET,
+        PETS_YOU_GET_X_AS_A_NEW_PARTNER,
+
+        #endregion
+
+        #region GROUP
+
+        PLAYER_X_INVITED_YOU_TO_JOIN_HIS_GROUP,
+        PLAYER_X_INVITED_TO_YOUR_GROUP
+
+        #endregion
     }
 }

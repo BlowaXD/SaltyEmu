@@ -18,9 +18,9 @@ namespace ChickenAPI.Game.PacketHandling.Extensions
                     {
                         VisualType = VisualType.Monster,
                         VisualId = monster.MapMonster.Id,
-                        Speed = monster.Movable.Speed,
-                        MapX = monster.Movable.Actual.X,
-                        MapY = monster.Movable.Actual.Y
+                        Speed = monster.Speed,
+                        MapX = monster.Position.X,
+                        MapY = monster.Position.Y
                     };
 
                 case INpcEntity npc:
@@ -28,18 +28,18 @@ namespace ChickenAPI.Game.PacketHandling.Extensions
                     {
                         VisualType = VisualType.Npc,
                         VisualId = npc.MapNpc.Id,
-                        Speed = npc.Movable.Speed,
-                        MapX = npc.Movable.Actual.X,
-                        MapY = npc.Movable.Actual.Y
+                        Speed = npc.Speed,
+                        MapX = npc.Position.X,
+                        MapY = npc.Position.Y
                     };
                 case IPlayerEntity player:
                     return new MvPacket
                     {
                         VisualType = VisualType.Character,
                         VisualId = player.Character.Id,
-                        Speed = player.Movable.Speed,
-                        MapX = player.Movable.Actual.X,
-                        MapY = player.Movable.Actual.Y
+                        Speed = player.Speed,
+                        MapX = player.Position.X,
+                        MapY = player.Position.Y
                     };
                 default:
                     return null;

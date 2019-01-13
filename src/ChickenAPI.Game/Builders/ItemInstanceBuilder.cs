@@ -1,5 +1,4 @@
 ﻿using ChickenAPI.Data.Item;
-using ChickenAPI.Enums.Game.BCard;
 
 namespace ChickenAPI.Game.Builders
 {
@@ -13,17 +12,12 @@ namespace ChickenAPI.Game.Builders
             return this;
         }
 
-        public ItemInstanceDto Build()
-        {
-            return new ItemInstanceDto
+        public ItemInstanceDto Build() =>
+            new ItemInstanceDto
             {
                 Item = _item
             };
-        }
 
-        public static implicit operator ItemInstanceDto(ItemInstanceBuilder builder)
-        {
-            return builder.Build();
-        }
+        public static implicit operator ItemInstanceDto(ItemInstanceBuilder builder) => builder.Build();
     }
 }

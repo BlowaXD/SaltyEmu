@@ -5,9 +5,8 @@ namespace ChickenAPI.Game.Entities.Extensions
 {
     public static class StatPacketExtensions
     {
-        public static StatPacket GenerateStatPacket(this IPlayerEntity player)
-        {
-            return new StatPacket
+        public static StatPacket GenerateStatPacket(this IPlayerEntity player) =>
+            new StatPacket
             {
                 Hp = player.Hp,
                 HpMax = player.HpMax,
@@ -16,6 +15,5 @@ namespace ChickenAPI.Game.Entities.Extensions
                 Unknown = 0,
                 CharacterOption = 0
             };
-        }
     }
 }

@@ -8,6 +8,6 @@ namespace ChickenAPI.Game.GuriHandling.Handling
         void Register(GuriRequestHandler handler);
         void Unregister(long guriEffectId);
 
-        void Handle(IPlayerEntity player, GuriEventArgs args);
+        void Handle(IPlayerEntity player, GuriEvent args);
     }
 }

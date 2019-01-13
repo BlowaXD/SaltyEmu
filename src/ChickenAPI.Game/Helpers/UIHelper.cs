@@ -1,136 +1,137 @@
-﻿using ChickenAPI.Core.i18n;
+﻿using System.Threading.Tasks;
+using ChickenAPI.Core.i18n;
 using ChickenAPI.Enums.Packets;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Entities.Player.Extensions;
 using ChickenAPI.Game.Player.Extension;
 using ChickenAPI.Packets;
-using ChickenAPI.Packets.Game.Client.Inventory;
-using ChickenAPI.Packets.Game.Server.Inventory;
+using ChickenAPI.Packets.Game.Client.Player;
 using ChickenAPI.Packets.Game.Server.UserInterface;
 
 namespace ChickenAPI.Game.Helpers
 {
     public static class UIHelper
     {
+        public static Task SendGuri(this IPlayerEntity player, GuriPacketType type, byte argument, int value = 0) => player.SendPacketAsync(player.GenerateGuriPacket(type, argument, value));
 
-        public static void SendGuri(this IPlayerEntity player, byte type, byte argument, int value = 0)
-        {
-            player.SendPacket(player.GenerateGuriPacket(type, argument, value));
-        }
-        public static ServerGuriPacket GenerateGuriPacket(this IPlayerEntity player, byte type, byte argument, int value = 0)
+        public static ClientGuriPacket GenerateGuriPacket(this IPlayerEntity player, GuriPacketType type, byte argument, int value = 0)
         {
             switch (type)
             {
-                case 2:
-                    return new ServerGuriPacket
+                case GuriPacketType.Unknow:
+                    return new ClientGuriPacket
                     {
-                        Type = 2, Argument = argument, VisualId = player.Id
+                        Type = 2,
+                        Argument = argument,
+                        VisualId = player.Id
                     };
-                case 6:
-                    return new ServerGuriPacket
+
+                case GuriPacketType.Unknow2:
+                    return new ClientGuriPacket
                     {
-                        Type = 6, Argument = 1, VisualId = player.Id, Value = 0, Data = 0
+                        Type = 6,
+                        Argument = 1,
+                        VisualId = player.Id,
+                        Value = 0,
+                        Data = 0
                     };
-                case 10:
-                    return new ServerGuriPacket
+
+                case GuriPacketType.Unknow3:
+                    return new ClientGuriPacket
                     {
-                        Type = 10, Argument = argument, VisualId = value, Value = player.Id
+                        Type = 10,
+                        Argument = argument,
+                        VisualId = value,
+                        Value = player.Id
                     };
-                case 15:
-                    return new ServerGuriPacket
+
+                case GuriPacketType.Unknow4:
+                    return new ClientGuriPacket
                     {
-                        Type = 15, Argument = argument , VisualId = 0, Data = 0
+                        Type = 15,
+                        Argument = argument,
+                        VisualId = 0,
+                        Data = 0
                     };
+
                 default:
-                    return new ServerGuriPacket
+                    return new ClientGuriPacket
                     {
-                        Type = type, Argument = argument, VisualId = player.Id, Value = value
+                        Type = (int)type,
+                        Argument = argument,
+                        VisualId = player.Id,
+                        Value = value
                     };
             }
         }
 
-        public static void SendChatMessageFormat(this IPlayerEntity player, ChickenI18NKey key, SayColorType color, params object[] objs)
+        public static Task SendChatMessageFormat(this IPlayerEntity player, ChickenI18NKey key, SayColorType color, params object[] objs)
         {
             string msg = player.GetLanguageFormat(key, objs);
-            player.SendPacket(player.GenerateSayPacket(msg, color));
+            return player.SendPacketAsync(player.GenerateSayPacket(msg, color));
         }
 
-        public static void SendChatMessage(this IPlayerEntity player, ChickenI18NKey key, SayColorType color)
+        public static Task SendChatMessage(this IPlayerEntity player, ChickenI18NKey key, SayColorType color)
         {
             string msg = player.GetLanguage(key);
-            player.SendPacket(player.GenerateSayPacket(msg, color));
+            return player.SendPacketAsync(player.GenerateSayPacket(msg, color));
         }
 
-        public static void SendChatMessage(this IPlayerEntity player, string msg, SayColorType color)
-        {
-            player.SendPacket(player.GenerateSayPacket(msg, color));
-        }
+        public static Task SendChatMessage(this IPlayerEntity player, string msg, SayColorType color) => player.SendPacketAsync(player.GenerateSayPacket(msg, color));
 
-        public static void SendTopscreenMessage(this IPlayerEntity player, string msg, MsgPacketType type)
-        {
-            player.SendPacket(player.GenerateMsgPacket(msg, type));
-        }
+        public static Task SendTopscreenMessage(this IPlayerEntity player, string msg, MsgPacketType type) => player.SendPacketAsync(player.GenerateMsgPacket(msg, type));
 
-        public static void GenerateBSInfo(this IPlayerEntity player, byte mode, short title, short time, short text)
-        {
-            player.SendPacket(player.GenerateBSInfoPacket(mode, title, time, text));
-        }
+        public static Task GenerateBSInfo(this IPlayerEntity player, byte mode, short title, short time, short text) => player.SendPacketAsync(player.GenerateBSInfoPacket(mode, title, time, text));
 
-        public static void GenerateCHDM(this IPlayerEntity player, int maxhp, int angeldmg, int demondmg, int time)
-        {
-            player.SendPacket(player.GenerateCHDMPacket(maxhp, angeldmg, demondmg, time));
-        }
+        public static Task GenerateCHDM(this IPlayerEntity player, int maxhp, int angeldmg, int demondmg, int time) =>
+            player.SendPacketAsync(player.GenerateCHDMPacket(maxhp, angeldmg, demondmg, time));
 
-        public static void GenerateDialog(this IPlayerEntity player, PacketBase acceptpacket, PacketBase refusepacket, string question)
-        {
-            player.SendPacket(player.GenerateDialogPacket(acceptpacket, refusepacket, question));
-        }
+        public static Task SendDialog(this IPlayerEntity player, PacketBase acceptpacket, PacketBase refusepacket, string question) =>
+            player.SendPacketAsync(player.GenerateDialogPacket(acceptpacket, refusepacket, question));
 
-        public static void GenerateDelay(this IPlayerEntity player, int delay, DelayPacketType type, string argument)
-        {
-            player.SendPacket(player.GenerateDelayPacket(delay, type, argument));
-        }
+        public static Task GenerateQna(this IPlayerEntity player, PacketBase acceptpacket, string question) => player.SendPacketAsync(player.GenerateQnaPacket(acceptpacket, question));
 
-        public static BSInfoPacket GenerateBSInfoPacket(this IPlayerEntity player, byte mode, short title, short time, short text)
-        {
-            return new BSInfoPacket
+        public static Task GenerateDelay(this IPlayerEntity player, int delay, DelayPacketType type, string argument) => player.SendPacketAsync(player.GenerateDelayPacket(delay, type, argument));
+
+        public static QnaPacket GenerateQnaPacket(this IPlayerEntity player, PacketBase acceptpacket, string question) =>
+            new QnaPacket
+            {
+                AcceptPacket = acceptpacket,
+                Question = question
+            };
+
+        public static BSInfoPacket GenerateBSInfoPacket(this IPlayerEntity player, byte mode, short title, short time, short text) =>
+            new BSInfoPacket
             {
                 Mode = mode,
                 Title = title,
                 Time = time,
                 Text = text
             };
-        }
 
-        public static ChDMPacket GenerateCHDMPacket(this IPlayerEntity player, int maxhp, int angeldmg, int demondmg, int time)
-        {
-            return new ChDMPacket
+        public static ChDMPacket GenerateCHDMPacket(this IPlayerEntity player, int maxhp, int angeldmg, int demondmg, int time) =>
+            new ChDMPacket
             {
                 Maxhp = maxhp,
                 AngelDMG = angeldmg,
                 DemonDMG = demondmg,
                 Time = time
             };
-        }
 
-        public static DialogPacket GenerateDialogPacket(this IPlayerEntity player, PacketBase acceptpacket, PacketBase refusepacket, string question)
-        {
-            return new DialogPacket
+        public static DialogPacket GenerateDialogPacket(this IPlayerEntity player, PacketBase acceptpacket, PacketBase refusepacket, string question) =>
+            new DialogPacket
             {
                 AcceptPacket = acceptpacket,
                 RefusePacket = refusepacket,
                 Question = question
             };
-        }
 
-        public static DelayPacket GenerateDelayPacket(this IPlayerEntity player, int delay, DelayPacketType type, string argument)
-        {
-            return new DelayPacket
+        public static DelayPacket GenerateDelayPacket(this IPlayerEntity player, int delay, DelayPacketType type, string argument) =>
+            new DelayPacket
             {
                 Delay = delay,
                 Type = type,
                 Argument = argument
             };
-        }
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace ChickenAPI.Data.Character
+﻿using ChickenAPI.Enums.Game.Entity;
+
+namespace ChickenAPI.Data.Character
 {
     public class CharacterMateDto : IMappedDto
     {
@@ -30,9 +32,13 @@
 
         public int Mp { get; set; }
 
+        public MateType MateType { get; set; }
+
+        public byte Agility { get; set; }
+
         public string Name { get; set; }
 
-        public short VNum { get; set; }
+        public short NpcMonsterId { get; set; }
 
         public short Skin { get; set; }
         public long Id { get; set; }

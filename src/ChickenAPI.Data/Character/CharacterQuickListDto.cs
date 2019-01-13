@@ -4,8 +4,6 @@ namespace ChickenAPI.Data.Character
 {
     public class CharacterQuicklistDto : ISynchronizedDto
     {
-        public Guid Id { get; set; }
-
         public long CharacterId { get; set; }
 
         public short Morph { get; set; }
@@ -17,5 +15,6 @@ namespace ChickenAPI.Data.Character
         public short Q2 { get; set; }
 
         public short Slot { get; set; }
+        public Guid Id { get; set; }
     }
 }

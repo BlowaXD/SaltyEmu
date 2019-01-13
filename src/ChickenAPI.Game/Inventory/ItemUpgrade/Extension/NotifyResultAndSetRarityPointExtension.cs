@@ -1,4 +1,5 @@
-﻿using ChickenAPI.Enums.Game.Items;
+﻿using ChickenAPI.Data.Item;
+using ChickenAPI.Enums.Game.Items;
 using ChickenAPI.Enums.Packets;
 using ChickenAPI.Game.Effects;
 using ChickenAPI.Game.Entities.Player;
@@ -11,18 +12,19 @@ namespace ChickenAPI.Game.Inventory.ItemUpgrade.Extension
 {
     public static class NotifyResultAndSetRarityPointExtension
     {
-        public static void Rarify(this RarifyEventArgs e, IPlayerEntity player, sbyte rarity)
+        public static void Rarify(this RarifyEvent e, IPlayerEntity player, sbyte rarity)
         {
             if (e.Mode != RarifyMode.Drop)
             {
                 player.NotifyRarifyResult(rarity);
             }
+
             e.Item.Rarity = rarity;
             /* GenerateHeroicShell(protection);*/
             e.Item.SetRarityPoint();
         }
 
-        public static void Fails(this RarifyEventArgs e, IPlayerEntity player)
+        public static void Fails(this RarifyEvent e, IPlayerEntity player)
         {
             if (e.Mode != RarifyMode.Drop)
             {
@@ -32,7 +34,7 @@ namespace ChickenAPI.Game.Inventory.ItemUpgrade.Extension
                     case RarifyProtection.RedAmulet:
                     case RarifyProtection.HeroicAmulet:
                     case RarifyProtection.RandomHeroicAmulet:
-                        var amulets = player.Inventory.GetItemFromSlotAndType((short)EquipmentType.Amulet, InventoryType.Wear);
+                        ItemInstanceDto amulets = player.Inventory.GetItemFromSlotAndType((short)EquipmentType.Amulet, InventoryType.Wear);
                         if (amulets == null)
                         {
                             return;
@@ -42,8 +44,8 @@ namespace ChickenAPI.Game.Inventory.ItemUpgrade.Extension
                          if (amulet.DurabilityPoint <= 0)
                          {
                              session.Character.DeleteItemByItemInstanceId(amulet.Id);
-                             session.SendPacket($"info {Language.Instance.GetMessageFromKey("AMULET_DESTROYED")}");
-                             session.SendPacket(session.Character.GenerateEquipment());
+                             await session.SendPacketAsync($"info {Language.Instance.GetMessageFromKey("AMULET_DESTROYED")}");
+                             await session.SendPacketAsync(session.Character.GenerateEquipment());
                          }*/
                         player.SendTopscreenMessage("AMULET_FAIL_SAVED", MsgPacketType.Whisper);
                         player.SendChatMessage("AMULET_FAIL_SAVED", SayColorType.Purple);
@@ -61,7 +63,6 @@ namespace ChickenAPI.Game.Inventory.ItemUpgrade.Extension
                 player.SendTopscreenMessage("RARIFY_FAILED_ITEM_SAVED", MsgPacketType.Whisper);
                 player.SendChatMessage("RARIFY_FAILED_ITEM_SAVED", SayColorType.Purple);
                 player.Broadcast(player.GenerateEffectPacket(3004));
-                return;
             }
         }
     }

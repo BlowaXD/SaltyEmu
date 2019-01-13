@@ -1,0 +1,24 @@
+﻿using System.Threading;
+using System.Threading.Tasks;
+using ChickenAPI.Core.Events;
+using ChickenAPI.Game.Entities.Player;
+using ChickenAPI.Game.Inventory.ItemUpgrade;
+using ChickenAPI.Game.Inventory.ItemUpgrade.Events;
+
+namespace SaltyEmu.BasicPlugin.EventHandlers
+{
+    public class Upgrading_ItemUpgrading_Handler : GenericEventPostProcessorBase<ItemUpgradeEvent>
+    {
+        private readonly IItemUpgradeHandler _itemUpgradeHandler;
+
+        public Upgrading_ItemUpgrading_Handler(IItemUpgradeHandler itemUpgradeHandler)
+        {
+            _itemUpgradeHandler = itemUpgradeHandler;
+        }
+
+        protected override Task Handle(ItemUpgradeEvent e, CancellationToken cancellation)
+        {
+            return Task.Run(() => _itemUpgradeHandler.Execute(e.Sender as IPlayerEntity, e), cancellation);
+        }
+    }
+}

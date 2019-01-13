@@ -7,6 +7,7 @@ namespace ChickenAPI.Packets
         #region Properties
 
         public DateTime SentDateUtc { get; set; }
+        public Type PacketType { get; set; }
         public string Header { get; set; }
 
         // get the packet without the sessionId

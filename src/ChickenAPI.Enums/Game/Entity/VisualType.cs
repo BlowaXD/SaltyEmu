@@ -8,6 +8,6 @@
         MapObject = 9,
 
 
-        Portal = 1000, // unknown yet 
+        Portal = 1000 // unknown yet 
     }
 }

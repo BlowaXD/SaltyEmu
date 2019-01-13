@@ -2,7 +2,7 @@
 
 namespace ChickenAPI.Game.Entities.Player.Events
 {
-    public class ReputationGainEvent : ChickenEventArgs
+    public class ReputationGainEvent : GameEntityEvent
     {
         public long Reputation { get; set; }
         public long Dignity { get; set; }

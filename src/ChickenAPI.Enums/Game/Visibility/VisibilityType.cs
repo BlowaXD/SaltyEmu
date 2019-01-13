@@ -3,6 +3,6 @@
     public enum VisibilityType
     {
         Invisible,
-        Visible,
+        Visible
     }
 }

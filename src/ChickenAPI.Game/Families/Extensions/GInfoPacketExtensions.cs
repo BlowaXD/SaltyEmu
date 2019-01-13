@@ -11,6 +11,7 @@ namespace ChickenAPI.Game.Families.Extensions
             {
                 return null;
             }
+
             return new GInfoPacket
             {
                 FamilyName = player.Family.Name,
@@ -29,7 +30,7 @@ namespace ChickenAPI.Game.Families.Extensions
                 FamilyXp = player.Family.FamilyExperience,
                 MaxFamilyXp = 100000, // todo algorithm
                 MembersCapacity = 50, // todo level capacity
-                MembersCount = 1, // todo 
+                MembersCount = 1 // todo 
             };
         }
     }

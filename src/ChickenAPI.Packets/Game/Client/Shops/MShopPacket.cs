@@ -7,10 +7,10 @@ namespace ChickenAPI.Packets.Game.Client.Shops
     public class MShopPacket : PacketBase
     {
         [PacketIndex(0)]
-        public MShopPacketType PacketType { get; set; }
+        public MShopPacketType Type { get; set; }
 
         /// <summary>
-        /// Todo write a better way to handle that
+        ///     Todo write a better way to handle that
         /// </summary>
         [PacketIndex(1, SerializeToEnd = true)]
         public string PacketData { get; set; }

@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using ChickenAPI.Data.Skills;
 using ChickenAPI.Game.Buffs;
 
 namespace ChickenAPI.Game.Battle.Interfaces
@@ -9,22 +7,22 @@ namespace ChickenAPI.Game.Battle.Interfaces
     public interface IBattleCapacity
     {
         /// <summary>
-        /// Tells if the entity is alive
+        ///     Tells if the entity is alive
         /// </summary>
         bool IsAlive { get; }
 
         /// <summary>
-        /// Tells if the entity can attack or not
+        ///     Tells if the entity can attack or not
         /// </summary>
         bool CanAttack { get; }
 
         /// <summary>
-        /// Gives the actual Hp Percentage (0-100%)
+        ///     Gives the actual Hp Percentage (0-100%)
         /// </summary>
         byte HpPercentage { get; }
 
         /// <summary>
-        /// Gives the actual Mp Percentage (0-100%)
+        ///     Gives the actual Mp Percentage (0-100%)
         /// </summary>
         byte MpPercentage { get; }
 
@@ -35,6 +33,15 @@ namespace ChickenAPI.Game.Battle.Interfaces
 
         int HpMax { get; set; }
         int MpMax { get; set; }
+
+        #region Buffs
+
+        ICollection<BuffContainer> Buffs { get; }
+
+        #endregion
+
+        DateTime LastTimeKilled { get; set; }
+        DateTime LastHitReceived { get; set; }
 
         #region Stats
 
@@ -65,13 +72,13 @@ namespace ChickenAPI.Game.Battle.Interfaces
 
         #endregion
 
-        #region Buffs
+        #region Target
 
-        ICollection<BuffContainer> Buffs { get; }
+        bool HasTarget { get; }
+
+        IBattleEntity Target { get; set; }
+        DateTime LastTarget { get; }
 
         #endregion
-
-        DateTime LastTimeKilled { get; set; }
-        DateTime LastHitReceived { get; set; }
     }
 }

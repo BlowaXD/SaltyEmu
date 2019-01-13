@@ -3,8 +3,8 @@ using ChickenAPI.Game.Events;
 
 namespace ChickenAPI.Game.Battle.Events
 {
-    public class ProcessHitRequestEvent : ChickenEventArgs
+    public class ProcessHitRequestEvent : GameEntityEvent
     {
-      public HitRequest HitRequest { get; set; }  
+        public HitRequest HitRequest { get; set; }
     }
 }

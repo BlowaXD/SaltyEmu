@@ -1,17 +1,17 @@
-﻿using ChickenAPI.Game.Entities.Player;
+﻿using System.Threading.Tasks;
+using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Inventory.Events;
 using ChickenAPI.Packets.Game.Client.Inventory;
+using NW.Plugins.PacketHandling.Utils;
 
-namespace NosSharp.PacketHandler.Inventory
+namespace NW.Plugins.PacketHandling.Inventory
 {
-    public class RemovePacketHandling
+    public class RemovePacketHandling : GenericGamePacketHandlerAsync<RemovePacket>
     {
-        public static void OnRemovePacket(RemovePacket packet, IPlayerEntity player)
-        {
-            player.EmitEvent(new InventoryUnequipEvent
+        protected override Task Handle(RemovePacket packet, IPlayerEntity player) =>
+            player.EmitEventAsync(new InventoryUnequipEvent
             {
                 ItemToUnwear = player.Inventory.Wear[packet.InventorySlot]
             });
-        }
     }
 }

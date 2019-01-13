@@ -15,11 +15,12 @@ namespace ChickenAPI.Game.Quicklist
             {
                 return;
             }
+
             Quicklist.AddRange(quicklist.OrderBy(s => s.Position));
         }
 
-        public IEntity Entity { get; }
-
         public List<CharacterQuicklistDto> Quicklist { get; set; } = new List<CharacterQuicklistDto>();
+
+        public IEntity Entity { get; }
     }
 }

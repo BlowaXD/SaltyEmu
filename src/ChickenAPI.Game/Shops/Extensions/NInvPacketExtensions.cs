@@ -54,9 +54,8 @@ namespace ChickenAPI.Game.Shops.Extensions
         }
 
 
-        public static NInvPacket GenerateNInvPacket(this IPlayerEntity player, PersonalShop shop)
-        {
-            return new NInvPacket
+        public static NInvPacket GenerateNInvPacket(this IPlayerEntity player, PersonalShop shop) =>
+            new NInvPacket
             {
                 VisualType = shop.Owner.Type,
                 VisualId = shop.Owner.Id,
@@ -65,7 +64,6 @@ namespace ChickenAPI.Game.Shops.Extensions
                 ShopList = GetShopList(shop.ShopItems),
                 ShopSkills = null
             };
-        }
 
         public static NInvPacket GenerateNInvPacket(this IPlayerEntity player, Shop shop, byte type)
         {
@@ -101,7 +99,7 @@ namespace ChickenAPI.Game.Shops.Extensions
                 ShopType = typeshop,
                 Unknown = 0,
                 ShopList = GetShopList(shop.Items.Where(s => s.Type == type), percent),
-                ShopSkills = shop.Skills.Where(s => s.Type.Equals(type)).Select(s => s.SkillId).ToList(),
+                ShopSkills = shop.Skills.Where(s => s.Type.Equals(type)).Select(s => s.SkillId).ToList()
             };
         }
     }

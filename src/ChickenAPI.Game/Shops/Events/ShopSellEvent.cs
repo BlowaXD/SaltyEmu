@@ -2,7 +2,7 @@
 
 namespace ChickenAPI.Game.Shops.Events
 {
-    public class ShopSellEvent : ChickenEventArgs
+    public class ShopSellEvent : GameEntityEvent
     {
     }
 }

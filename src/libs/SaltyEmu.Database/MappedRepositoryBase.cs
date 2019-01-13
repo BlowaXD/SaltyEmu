@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Storage;
 using Newtonsoft.Json;
+using Z.EntityFramework.Plus;
 
 namespace SaltyEmu.Database
 {
@@ -305,25 +306,16 @@ namespace SaltyEmu.Database
             }
         }
 
-        public virtual async Task DeleteByIdsAsync(IEnumerable<long> ids)
+        public virtual Task DeleteByIdsAsync(IEnumerable<long> ids)
         {
             try
             {
-                List<TModel> tmp = DbSet.Where(f => ids.Contains(f.Id)).ToList();
-                using (IDbContextTransaction transaction = Context.Database.BeginTransaction())
-                {
-                    await Context.BulkDeleteAsync(tmp, new BulkConfig
-                    {
-                        PreserveInsertOrder = true
-                    });
-                    transaction.Commit();
-                }
-
-                Context.SaveChanges();
+                return DbSet.Where(f => ids.Contains(f.Id)).DeleteAsync();
             }
             catch (Exception e)
             {
                 Log.Error("[DELETE]", e);
+                return Task.CompletedTask;
             }
         }
     }

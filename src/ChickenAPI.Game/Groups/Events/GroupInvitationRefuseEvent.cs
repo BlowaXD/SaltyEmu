@@ -2,7 +2,7 @@
 
 namespace ChickenAPI.Game.Groups.Args
 {
-    public class GroupInvitationRefuseEvent : ChickenEventArgs
+    public class GroupInvitationRefuseEvent : GameEntityEvent
     {
         public GroupInvitDto Invitation { get; set; }
     }

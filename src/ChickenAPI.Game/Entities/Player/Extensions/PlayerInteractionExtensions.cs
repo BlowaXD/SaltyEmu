@@ -1,5 +1,4 @@
-﻿using System;
-using ChickenAPI.Enums.Packets;
+﻿using ChickenAPI.Enums.Packets;
 using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Packets.Game.Server.Player;
@@ -9,32 +8,26 @@ namespace ChickenAPI.Game.Player.Extension
 {
     public static class PlayerInteractionExtensions
     {
-        public static MsgPacket GenerateMsgPacket(this IPlayerEntity player, string msg, MsgPacketType type)
-        {
-            return new MsgPacket
+        public static MsgPacket GenerateMsgPacket(this IPlayerEntity player, string msg, MsgPacketType type) =>
+            new MsgPacket
             {
                 Message = msg,
-                Type = type,
+                Type = type
             };
-        }
 
-        public static SayPacket GenerateSayPacket(this IEntity entity, string msg, SayColorType color)
-        {
-            return new SayPacket
+        public static SayPacket GenerateSayPacket(this IEntity entity, string msg, SayColorType color) =>
+            new SayPacket
             {
                 VisualId = entity.Id,
                 VisualType = entity.Type,
                 Message = msg,
                 Type = color
             };
-        }
 
-        public static InfoPacket GenerateInfoBubble(this IPlayerEntity player, string text)
-        {
-            return new InfoPacket
+        public static InfoPacket GenerateInfoBubble(this IPlayerEntity player, string text) =>
+            new InfoPacket
             {
                 Message = text
             };
-        }
     }
 }

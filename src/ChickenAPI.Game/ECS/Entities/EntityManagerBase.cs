@@ -17,8 +17,9 @@ namespace ChickenAPI.Game.ECS.Entities
 
         // entities
         protected readonly HashSet<IPlayerEntity> _players = new HashSet<IPlayerEntity>();
-        protected readonly HashSet<IEntity> EntitiesSet = new HashSet<IEntity>();
         protected readonly Dictionary<VisualType, Dictionary<long, IEntity>> EntitiesByVisualType = new Dictionary<VisualType, Dictionary<long, IEntity>>();
+        protected readonly HashSet<IEntity> EntitiesSet = new HashSet<IEntity>();
+        protected readonly object LockObj = new object();
 
         protected List<ISystem> _systems = new List<ISystem>();
 
@@ -48,41 +49,47 @@ namespace ChickenAPI.Game.ECS.Entities
 
         public void RegisterEntity<T>(T entity) where T : IEntity
         {
-            if (entity.Type == VisualType.Character)
+            lock(LockObj)
             {
-                _players.Add(entity as IPlayerEntity);
-            }
+                if (entity.Type == VisualType.Character)
+                {
+                    _players.Add(entity as IPlayerEntity);
+                }
 
-            EntitiesSet.Add(entity);
-            if (!EntitiesByVisualType.TryGetValue(entity.Type, out Dictionary<long, IEntity> entities))
-            {
-                entities = new Dictionary<long, IEntity>();
-                EntitiesByVisualType[entity.Type] = entities;
-            }
+                EntitiesSet.Add(entity);
+                if (!EntitiesByVisualType.TryGetValue(entity.Type, out Dictionary<long, IEntity> entities))
+                {
+                    entities = new Dictionary<long, IEntity>();
+                    EntitiesByVisualType[entity.Type] = entities;
+                }
 
-            entities.Add(entity.Id, entity);
-            UpdateCache();
-            // player cache
-            if (!ShouldUpdate && entity.Type == VisualType.Character)
-            {
-                StartSystemUpdate();
+                entities.Add(entity.Id, entity);
+                UpdateCache();
+                // player cache
+                if (!ShouldUpdate && entity.Type == VisualType.Character)
+                {
+                    StartSystemUpdate();
+                }
             }
         }
 
         public void UnregisterEntity<T>(T entity) where T : IEntity
         {
-            if (entity.Type == VisualType.Character)
+            lock(LockObj)
             {
-                _players.Remove(entity as IPlayerEntity);
-            }
+                if (entity.Type == VisualType.Character)
+                {
+                    _players.Remove(entity as IPlayerEntity);
+                }
 
-            EntitiesSet.Remove(entity);
-            if (EntitiesByVisualType.TryGetValue(entity.Type, out Dictionary<long, IEntity> entities))
-            {
-                entities.Remove(entity.Id);
-            }
+                EntitiesSet.Remove(entity);
+                if (EntitiesByVisualType.TryGetValue(entity.Type, out Dictionary<long, IEntity> entities))
+                {
+                    entities.Remove(entity.Id);
+                }
 
-            UpdateCache();
+                UpdateCache();
+            }
         }
 
         public bool HasEntity(IEntity entity) => HasEntity(entity.Id, entity.Type);
@@ -104,9 +111,12 @@ namespace ChickenAPI.Game.ECS.Entities
                 return;
             }
 
-            foreach (ISystem i in Systems)
+            lock(LockObj)
             {
-                i.Update(date);
+                foreach (ISystem i in Systems)
+                {
+                    i.Update(date);
+                }
             }
         }
 
@@ -124,19 +134,28 @@ namespace ChickenAPI.Game.ECS.Entities
 
         public void AddSystem(ISystem system)
         {
-            _systems.Add(system);
+            lock(LockObj)
+            {
+                _systems.Add(system);
+            }
         }
 
         public void RemoveSystem(ISystem system)
         {
-            _systems.Remove(system);
+            lock(LockObj)
+            {
+                _systems.Remove(system);
+            }
         }
 
         private void UpdateCache()
         {
-            foreach (ISystem system in _systems)
+            lock(LockObj)
             {
-                system.UpdateCache();
+                foreach (ISystem system in _systems)
+                {
+                    system.UpdateCache();
+                }
             }
         }
     }

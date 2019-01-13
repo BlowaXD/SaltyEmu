@@ -1,19 +1,62 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Autofac;
+using ChickenAPI.Core.IoC;
 using ChickenAPI.Data.Item;
 using ChickenAPI.Enums.Game.Items;
+using ChickenAPI.Game.Entities.Player;
+using ChickenAPI.Packets.Game.Server.Inventory;
 
 namespace ChickenAPI.Game.Inventory.Extensions
 {
     public static class InventoryGetExtensions
     {
+        private static readonly IGameConfiguration GameConf = new Lazy<IGameConfiguration>(ChickenContainer.Instance.Resolve<IGameConfiguration>).Value;
         public static ItemInstanceDto GetWeared(this InventoryComponent inv, EquipmentType equipmentType) => inv.Wear[(int)equipmentType];
+
+
+        public static InvPacket GenerateInventoryPacket(this IPlayerEntity player, InventoryType type)
+        {
+            ItemInstanceDto[] items = player.Inventory.GetSubInvFromInventoryType(type);
+
+            var packet = new InvPacket
+            {
+                InventoryType = type,
+                Items = new List<string>()
+            };
+
+            if (items.All(s => s == null))
+            {
+                return packet;
+            }
+
+            switch (type)
+            {
+                case InventoryType.Equipment:
+                    packet.Items.AddRange(items.Where(s => s != null).Select(s =>
+                        $"{s.Slot}.{s.ItemId}.{s.Rarity}.{(s.Item.IsColored && s.Item.EquipmentSlot == EquipmentType.Sp ? s.Design : s.Upgrade)}.{s.SpStoneUpgrade}"));
+                    break;
+
+                case InventoryType.Etc:
+                case InventoryType.Main:
+                    packet.Items.AddRange(items.Where(s => s != null).Select(s =>
+                        $"{s.Slot}.{s.ItemId}.{s.Amount}.0"));
+                    break;
+
+                case InventoryType.Miniland:
+                    packet.Items.AddRange(items.Where(s => s != null).Select(s =>
+                        $"{s.Slot}.{s.ItemId}.{s.Amount}"));
+                    break;
+            }
+
+            return packet;
+        }
 
         public static short GetFirstFreeSlot(this InventoryComponent inv, IReadOnlyCollection<ItemInstanceDto> subInventory, ItemDto source, short amount)
         {
             ItemInstanceDto item = subInventory.FirstOrDefault(x => x != null &&
-                x.Amount + amount <= InventoryComponent.MAX_ITEM_PER_SLOT && x.ItemId == source.Id && x.Item.Type != InventoryType.Equipment);
+                x.Amount + amount < GameConf.Inventory.MaxItemPerSlot && x.ItemId == source.Id && x.Item.Type != InventoryType.Equipment);
 
             return item?.Slot ?? GetFirstFreeSlot(inv, subInventory);
         }
@@ -29,7 +72,7 @@ namespace ChickenAPI.Game.Inventory.Extensions
 
         public static int GetItemQuantityById(this InventoryComponent inv, long itemId)
         {
-            return GetItems(inv).Count(s => s.ItemId == itemId);
+            return GetItems(inv).Where(s => s.ItemId == itemId).Sum(s => s.Amount);
         }
 
         public static short GetFirstFreeSlot(this InventoryComponent inv, IReadOnlyCollection<ItemInstanceDto> subinventory)

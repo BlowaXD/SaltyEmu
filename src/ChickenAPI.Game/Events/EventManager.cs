@@ -12,7 +12,7 @@ namespace ChickenAPI.Game.Events
         private readonly Dictionary<Type, List<IEventFilter>> _eventFiltersByType = new Dictionary<Type, List<IEventFilter>>();
         private readonly Dictionary<Type, List<IEventHandler>> _eventHandlersByType = new Dictionary<Type, List<IEventHandler>>();
 
-        public void Register<T>(IEventFilter filter) where T : ChickenEventArgs
+        public void Register<T>(IEventFilter filter) where T : GameEntityEvent
         {
             Register(filter, typeof(T));
         }
@@ -28,7 +28,7 @@ namespace ChickenAPI.Game.Events
             filters.Add(filter);
         }
 
-        public void Register<T>(IEventHandler handler) where T : ChickenEventArgs
+        public void Register<T>(IEventHandler handler) where T : GameEntityEvent
         {
             Register(handler, typeof(T));
         }
@@ -54,7 +54,7 @@ namespace ChickenAPI.Game.Events
             handlers.Remove(handler);
         }
 
-        public void Notify<T>(IEntity sender, T args) where T : ChickenEventArgs
+        public void Notify<T>(IEntity sender, T args) where T : GameEntityEvent
         {
             if (!_eventHandlersByType.TryGetValue(typeof(T), out List<IEventHandler> handlers))
             {
@@ -85,12 +85,7 @@ namespace ChickenAPI.Game.Events
             }
         }
 
-        private bool CanSendEvent(IEntity entity, ChickenEventArgs e, Type type)
-        {
-            return !_eventFiltersByType.TryGetValue(type, out List<IEventFilter> filters) || filters.All(filter => filter.Filter(entity, e));
-        }
-
-        public void Notify(IEntity sender, ChickenEventArgs args)
+        public void Notify(IEntity sender, GameEntityEvent args)
         {
             if (args.Sender == null)
             {
@@ -116,6 +111,11 @@ namespace ChickenAPI.Game.Events
                     }
                 }
             }
+        }
+
+        private bool CanSendEvent(IEntity entity, GameEntityEvent e, Type type)
+        {
+            return !_eventFiltersByType.TryGetValue(type, out List<IEventFilter> filters) || filters.All(filter => filter.Filter(entity, e));
         }
     }
 }

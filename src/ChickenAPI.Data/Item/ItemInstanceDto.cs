@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Enums.Game.Items;
 
 namespace ChickenAPI.Data.Item
 {
-    public class ItemInstanceDto : ISynchronizedDto, ICloneable
+    public class ItemInstanceDto : ISynchronizedDto
     {
-        public List<EquipmentOptionDto> EquipmentOptions { get; set; }
-
         public ItemDto Item { get; set; }
 
         public long ItemId { get; set; }
@@ -38,19 +35,8 @@ namespace ChickenAPI.Data.Item
 
         #endregion GlovesAndBoots
 
-        public object Clone()
-        {
-            object tmp = MemberwiseClone();
-            if (!(tmp is ItemInstanceDto newObject))
-            {
-                return null;
-            }
-
-            newObject.Id = Guid.NewGuid();
-            return newObject;
-        }
-
         public Guid Id { get; set; }
+
 
         #region WeaponsAndArmors
 

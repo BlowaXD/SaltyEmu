@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ChickenAPI.Game.Specialists.Extensions
+﻿namespace ChickenAPI.Game.Specialists.Extensions
 {
     public static class SpecialistExtensions
     {

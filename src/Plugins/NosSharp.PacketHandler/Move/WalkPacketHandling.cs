@@ -1,36 +1,35 @@
-﻿using ChickenAPI.Core.Logging;
+﻿using System.Threading.Tasks;
 using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Movements.Extensions;
 using ChickenAPI.Game.PacketHandling.Extensions;
 using ChickenAPI.Packets.Game.Client.Movement;
+using NW.Plugins.PacketHandling.Utils;
 
-namespace NosSharp.PacketHandler.Move
+namespace NW.Plugins.PacketHandling.Move
 {
-    public class WalkPacketHandling
+    public class WalkPacketHandling : GenericGamePacketHandlerAsync<WalkPacket>
     {
-        private static readonly Logger Log = Logger.GetLogger<WalkPacketHandling>();
-
-        public static void OnWalkPacket(WalkPacket packet, IPlayerEntity session)
+        protected override async Task Handle(WalkPacket packet, IPlayerEntity player)
         {
-            if (session.Movable.Actual.X == packet.XCoordinate && session.Movable.Actual.Y == packet.YCoordinate)
+            if (player.Position.X == packet.XCoordinate && player.Position.Y == packet.YCoordinate)
             {
                 return;
             }
 
-            if (session.Movable.Speed < packet.Speed)
+            if (player.Speed < packet.Speed)
             {
                 return;
             }
 
-            session.Movable.Actual.X = packet.XCoordinate;
-            session.Movable.Actual.Y = packet.YCoordinate;
-            session.Movable.Speed = packet.Speed;
+            player.Position.X = packet.XCoordinate;
+            player.Position.Y = packet.YCoordinate;
+            player.Speed = packet.Speed;
 
-            session.SendPacket(session.GenerateCondPacket());
-            if (session.CurrentMap is IMapLayer broadcastable)
+            await player.SendPacketAsync(player.GenerateCondPacket());
+            if (player.CurrentMap is IMapLayer broadcastable)
             {
-                broadcastable.Broadcast(session.GenerateMvPacket());
+                broadcastable.Broadcast(player.GenerateMvPacket());
             }
         }
     }

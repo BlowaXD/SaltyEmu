@@ -1,22 +1,23 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using ChickenAPI.Game.Network;
 
 namespace World.Network
 {
     public class SessionManager
     {
-        private readonly ConcurrentDictionary<string, int> _sessions = new ConcurrentDictionary<string, int>();
+        private readonly ConcurrentDictionary<string, ISession> _sessions = new ConcurrentDictionary<string, ISession>();
 
-        public void RegisterSession(string key, int sessionId)
+        public void RegisterSession(string key, ISession sessionId)
         {
             _sessions.TryAdd(key, sessionId);
         }
 
-        public bool GetSession(string key, out int sessionId) => _sessions.TryGetValue(key, out sessionId);
+        public bool GetSession(string key, out ISession sessionId) => _sessions.TryGetValue(key, out sessionId);
 
         public void UnregisterSession(string key)
         {
-            _sessions.TryRemove(key, out int _);
+            _sessions.TryRemove(key, out ISession _);
         }
 
         #region Singleton

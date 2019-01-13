@@ -9,7 +9,7 @@
         CellonItem = 3,
         RarifyItem = 7, // mode, protection
         UpgradeItemProtected = 20, // UpgradeMode.Normal, UpgradeProtection.Protected, hasAmulet: HasAmulet
-        RarifyItemProtected = 21,  // RarifyMode.Normal, RarifyProtection.Scroll
+        RarifyItemProtected = 21, // RarifyMode.Normal, RarifyProtection.Scroll
         UpgradeItemGoldScroll = 43, // UpgradeMode.Reduced, UpgradeProtection.Protected, hasAmulet: hasAmulet ( Gold scroll)
         FusionItem = 53,
 
@@ -31,6 +31,6 @@
 
         CreateFairyFernon = 52,
         CreateFairyErenia = 51,
-        CreateFairyZenas = 50,
+        CreateFairyZenas = 50
     }
 }

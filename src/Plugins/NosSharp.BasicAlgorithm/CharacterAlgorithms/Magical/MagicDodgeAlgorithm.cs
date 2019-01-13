@@ -1,6 +1,6 @@
 ﻿using ChickenAPI.Enums.Game.Character;
 
-namespace NosSharp.BasicAlgorithm.CharacterAlgorithms.Magical
+namespace SaltyEmu.BasicAlgorithmPlugin.CharacterAlgorithms.Magical
 {
     public class MagicDodgeAlgorithm : ICharacterStatAlgorithm
     {

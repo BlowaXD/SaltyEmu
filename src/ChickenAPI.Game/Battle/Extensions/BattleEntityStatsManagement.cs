@@ -1,7 +1,6 @@
 ﻿using ChickenAPI.Game.Battle.Interfaces;
-using ChickenAPI.Game.Entities.Extensions;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Game.Player.Extension;
+using ChickenAPI.Game.Entities.Player.Extensions;
 
 namespace ChickenAPI.Game.Battle.Extensions
 {

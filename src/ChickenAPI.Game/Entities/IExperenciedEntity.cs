@@ -1,6 +1,8 @@
-﻿namespace ChickenAPI.Game.Entities
+﻿using ChickenAPI.Game.ECS.Entities;
+
+namespace ChickenAPI.Game.Entities
 {
-    public interface IExperenciedEntity
+    public interface IExperenciedEntity : IEntity
     {
         byte Level { get; set; }
         long LevelXp { get; set; }

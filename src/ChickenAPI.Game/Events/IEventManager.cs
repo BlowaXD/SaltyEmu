@@ -6,42 +6,43 @@ namespace ChickenAPI.Game.Events
     public interface IEventManager
     {
         /// <summary>
-        /// Register a filter in filters pipeline for events of Type T
+        ///     Register a filter in filters pipeline for events of Type T
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="filter"></param>
-        void Register<T>(IEventFilter filter) where T : ChickenEventArgs;
+        void Register<T>(IEventFilter filter) where T : GameEntityEvent;
 
         /// <summary>
-        /// Register a filter in filters in piepline for event
+        ///     Register a filter in filters in piepline for event
         /// </summary>
         /// <param name="filter"></param>
         /// <param name="type"></param>
         void Register(IEventFilter filter, Type type);
 
         /// <summary>
-        /// Registers an handler that takes type T
+        ///     Registers an handler that takes type T
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="handler"></param>
-        void Register<T>(IEventHandler handler) where T : ChickenEventArgs;
+        void Register<T>(IEventHandler handler) where T : GameEntityEvent;
 
         void Register(IEventHandler handler, Type type);
         void Unregister<T>(T handler) where T : IEventHandler;
 
         /// <summary>
-        /// Notifies only event handlers that registered themselves for event of type <typeparam name="T"></typeparam> 
+        ///     Notifies only event handlers that registered themselves for event of type
+        ///     <typeparam name="T"></typeparam>
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="sender"></param>
         /// <param name="args"></param>
-        void Notify<T>(IEntity sender, T args) where T : ChickenEventArgs;
+        void Notify<T>(IEntity sender, T args) where T : GameEntityEvent;
 
         /// <summary>
-        /// Notifies every registered event handler
+        ///     Notifies every registered event handler
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
-        void Notify(IEntity sender, ChickenEventArgs args);
+        void Notify(IEntity sender, GameEntityEvent args);
     }
 }

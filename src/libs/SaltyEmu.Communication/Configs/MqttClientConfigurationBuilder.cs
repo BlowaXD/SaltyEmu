@@ -57,7 +57,8 @@ namespace SaltyEmu.Communication.Configs
                 EndPoint = _endpoint,
                 Serializer = _serializer,
                 ResponseTopic = _responseTopic,
-                RequestTopic = _requestTopic
+                RequestTopic = _requestTopic,
+                BroadcastTopic = _broadcastTopic
             };
         }
 

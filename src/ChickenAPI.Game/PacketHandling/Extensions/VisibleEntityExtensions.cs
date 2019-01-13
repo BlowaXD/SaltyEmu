@@ -1,18 +1,17 @@
-﻿using ChickenAPI.Data.NpcMonster;
-using ChickenAPI.Enums;
+﻿using System;
+using ChickenAPI.Data.NpcMonster;
 using ChickenAPI.Enums.Game.Character;
 using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Entities.Drop;
+using ChickenAPI.Game.Entities.Mates;
 using ChickenAPI.Game.Entities.Monster;
 using ChickenAPI.Game.Entities.Npc;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Game.Movements.DataObjects;
+using ChickenAPI.Game.Entities.Player.Extensions;
 using ChickenAPI.Packets.Game.Server.Entities;
 using ChickenAPI.Packets.Game.Server.MiniMap;
 using ChickenAPI.Packets.Game.Server.Visibility;
-using System;
-using ChickenAPI.Game.Entities.Player.Extensions;
 
 namespace ChickenAPI.Game.PacketHandling.Extensions
 {
@@ -21,15 +20,14 @@ namespace ChickenAPI.Game.PacketHandling.Extensions
         private static InPacket GenerateInMonster(IMonsterEntity monster)
         {
             NpcMonsterDto npcMonster = monster.NpcMonster;
-            MovableComponent movable = monster.Movable;
             return new InPacket
             {
                 VisualType = VisualType.Monster,
                 Name = npcMonster.Id.ToString(),
                 TransportId = monster.MapMonster.Id.ToString(),
-                PositionX = movable.Actual.X,
-                PositionY = movable.Actual.Y,
-                DirectionType = movable.DirectionType,
+                PositionX = monster.Position.X,
+                PositionY = monster.Position.Y,
+                DirectionType = monster.DirectionType,
                 InMonsterSubPacket = new InMonsterSubPacket
                 {
                     HpPercentage = monster.HpPercentage,
@@ -62,35 +60,72 @@ namespace ChickenAPI.Game.PacketHandling.Extensions
             {
                 case IMonsterEntity monster:
                     return GenerateInMonster(monster);
+
                 case IPlayerEntity player:
                     return GenerateInPlayer(player);
+
                 case INpcEntity npc:
                     return GenerateInNpc(npc);
+
+                case IMateEntity mate:
+                    return GenerateInMate(mate);
+
                 case ItemDropEntity drop:
                     return GenerateInDrop(drop);
+
                 default:
                     return null;
             }
         }
 
-        public static OutPacket GenerateOutPacket(this IPlayerEntity player) => new OutPacket
+        public static OutPacket GenerateOutPacket(this IEntity entity) => new OutPacket
         {
-            Type = VisualType.Character,
-            EntityId = player.Character.Id
+            Type = entity.Type,
+            EntityId = entity.Id
         };
 
-        private static InPacket GenerateInNpc(INpcEntity npcEntity)
-        {
-            var npcMonster = npcEntity.GetComponent<NpcMonsterComponent>();
-            MovableComponent movable = npcEntity.Movable;
-            return new InPacket
+        private static InPacket GenerateInMate(IMateEntity mate) =>
+            new InPacket
             {
                 VisualType = VisualType.Npc,
-                Name = npcMonster.Vnum.ToString(),
-                TransportId = npcMonster.MapNpcMonsterId.ToString(),
-                PositionX = movable.Actual.X,
-                PositionY = movable.Actual.Y,
-                DirectionType = movable.DirectionType,
+                Name = mate.Mate.NpcMonsterId.ToString(),
+                TransportId = mate.Id.ToString(),
+                PositionX = mate.Position.X,
+                PositionY = mate.Position.Y,
+                DirectionType = mate.DirectionType,
+                InMateSubPacket = new InMateSubPacket
+                {
+                    HpPercentage = mate.HpPercentage,
+                    MpPercentage = mate.MpPercentage,
+                    Unknow = 0,
+                    Faction = 0, // TODO: Faction syst ( In act4 owner.faction +2 )
+                    Unknow2 = 3,
+                    OwnerId = mate.Mate.CharacterId,
+                    Unknow3 = 1,
+                    Unknow4 = 0,
+                    Morph = mate.Mate.Skin != 0 ? mate.Mate.Skin : -1, // (IsUsingSp && SpInstance != null ? SpInstance.Item.Morph : (Skin != 0 ? Skin : -1))
+                    Name = mate.Mate.Name,
+                    MateType = (byte)(mate.Mate.MateType + 1), // ( IsUsingSp && SpInstance != null ? 1 : MateType + 1 )
+                    Unknow5 = 1,
+                    Unknow6 = 0, // ( IsUsingSp && SpInstance != null ? 1 : 0 )
+                    SPSkill1 = 0,
+                    SPSkill2 = 0,
+                    SPSkill3 = 0,
+                    SPRank1 = 0, // If Rank = 7 { (SpInstance.SkillRank1 == 7 ? "4237" : "0")
+                    SPRank2 = 0, // if rank = 7 (SpInstance.SkillRank1 == 7 ? "4238" : "0")
+                    SPRank3 = 0 // xxx (SpInstance.SkillRank1 == 7 ? "4239" : "0")
+                }
+            };
+
+        private static InPacket GenerateInNpc(INpcEntity npcEntity) =>
+            new InPacket
+            {
+                VisualType = VisualType.Npc,
+                Name = npcEntity.NpcMonster.Id.ToString(),
+                TransportId = npcEntity.Id.ToString(),
+                PositionX = npcEntity.Position.X,
+                PositionY = npcEntity.Position.Y,
+                DirectionType = npcEntity.DirectionType,
                 InNpcSubPacket = new InNpcSubPacket
                 {
                     HpPercentage = npcEntity.HpPercentage,
@@ -115,11 +150,9 @@ namespace ChickenAPI.Game.PacketHandling.Extensions
                     Unknown16 = 0
                 }
             };
-        }
 
-        private static InPacket GenerateInDrop(IDropEntity drop)
-        {
-            return new InPacket
+        private static InPacket GenerateInDrop(IDropEntity drop) =>
+            new InPacket
             {
                 VisualType = drop.Type,
                 Name = drop.ItemVnum.ToString(),
@@ -131,23 +164,20 @@ namespace ChickenAPI.Game.PacketHandling.Extensions
                 {
                     Unknown = 0,
                     Unknown1 = 0,
-                    Unknown2 = 0,
+                    Unknown2 = 0
                 }
             };
-        }
 
-        private static InPacket GenerateInPlayer(IPlayerEntity player)
-        {
-            MovableComponent movable = player.Movable;
-            return new InPacket
+        private static InPacket GenerateInPlayer(IPlayerEntity player) =>
+            new InPacket
             {
                 VisualType = VisualType.Character,
                 Name = player.Character.Name,
                 TransportId = "-",
                 VNum = player.Character.Id,
-                PositionX = movable.Actual.X,
-                PositionY = movable.Actual.Y,
-                DirectionType = movable.DirectionType,
+                PositionX = player.Position.X,
+                PositionY = player.Position.Y,
+                DirectionType = player.DirectionType,
                 InCharacterSubPacket = new InCharacterSubPacketBase
                 {
                     NameAppearance = player.NameAppearance,
@@ -183,21 +213,18 @@ namespace ChickenAPI.Game.PacketHandling.Extensions
                     HeroLevel = player.HeroLevel
                 }
             };
-        }
 
-        public static AtPacketBase GenerateAtPacket(this IPlayerEntity player)
-        {
-            return new AtPacketBase
+        public static AtPacketBase GenerateAtPacket(this IPlayerEntity player) =>
+            new AtPacketBase
             {
                 CharacterId = player.Character.Id,
                 MapId = Convert.ToInt16(player.CurrentMap.Map.Id),
-                PositionX = player.Movable.Actual.X,
-                PositionY = player.Movable.Actual.Y,
+                PositionX = player.Position.X,
+                PositionY = player.Position.Y,
                 Unknown1 = 2, // TODO: Find signification
                 Unknown2 = 0, // TODO: Find signification
                 Music = player.CurrentMap.Map.MusicId, //layer.Map.MusicId;
                 Unknown3 = -1 // TODO: Find signification
             };
-        }
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using ChickenAPI.Core.Logging;
 using ChickenAPI.Data.Server;
 using Foundatio.Caching;
+using SaltyEmu.Redis;
 using StackExchange.Redis;
 
 namespace SaltyEmu.RedisWrappers.Redis

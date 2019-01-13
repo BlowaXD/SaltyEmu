@@ -5,8 +5,6 @@ namespace ChickenAPI.Data.Character
 {
     public class CharacterFamilyDto : IMappedDto
     {
-        public long Id { get; set; }
-
         public long CharacterId { get; set; }
 
 
@@ -21,5 +19,6 @@ namespace ChickenAPI.Data.Character
         public FamilyMemberRank Rank { get; set; }
 
         public DateTime JoinDate { get; set; }
+        public long Id { get; set; }
     }
 }

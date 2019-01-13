@@ -1,6 +1,7 @@
 ﻿using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.NpcDialog.Events;
 using ChickenAPI.Game.NpcDialog.Handlers;
+using ChickenAPI.Game.NpcDialog.Handling;
 
 namespace ChickenAPI.Game.NpcDialog
 {
@@ -11,6 +12,6 @@ namespace ChickenAPI.Game.NpcDialog
         void Unregister(long npcDialogId);
         void Unregister(NpcDialogHandlerAttribute handlerAttribute);
 
-        void Execute(IPlayerEntity player, NpcDialogEventArgs eventArgs);
+        void Execute(IPlayerEntity player, NpcDialogEvent @event);
     }
 }

@@ -1,6 +1,6 @@
 ﻿using ChickenAPI.Enums.Game.Character;
 
-namespace NosSharp.BasicAlgorithm.CharacterAlgorithms.Close
+namespace SaltyEmu.BasicAlgorithmPlugin.CharacterAlgorithms.Damage
 {
     public class MaxDistanceAlgorithm : ICharacterStatAlgorithm
     {
@@ -21,6 +21,6 @@ namespace NosSharp.BasicAlgorithm.CharacterAlgorithms.Close
             }
         }
 
-        public int GetStat(CharacterClassType type, byte level) => _maxDist[(int)type, level];
+        public int GetStat(CharacterClassType type, byte level) => _maxDist[(int)type, level - 1 > 0 ? level - 1 : 0];
     }
 }

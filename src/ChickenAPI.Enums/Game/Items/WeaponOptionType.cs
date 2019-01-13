@@ -67,6 +67,6 @@
         PvpIgnoreResistanceDark = 47,
         RegenSpecialistPointPerKill = 48,
         IncreasePrecision = 49,
-        IncreaseConcentration = 50,
+        IncreaseConcentration = 50
     }
 }

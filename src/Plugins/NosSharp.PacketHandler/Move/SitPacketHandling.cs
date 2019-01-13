@@ -1,29 +1,27 @@
 ﻿using System.Linq;
-using ChickenAPI.Core.Logging;
+using System.Threading.Tasks;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Game.Movements;
 using ChickenAPI.Game.Movements.Events;
 using ChickenAPI.Packets.Game.Client.Movement;
+using NW.Plugins.PacketHandling.Utils;
 
-namespace NosSharp.PacketHandler.Move
+namespace NW.Plugins.PacketHandling.Move
 {
-    public class SitPacketHandling
+    public class SitPacketHandling : GenericGamePacketHandlerAsync<SitPacket>
     {
-        private static readonly Logger Log = Logger.GetLogger<SitPacket>();
-
-        public static void OnPacketReceived(SitPacket packet, IPlayerEntity player)
+        protected override Task Handle(SitPacket packet, IPlayerEntity player)
         {
             foreach (SitSubPacket u in packet.Users)
             {
                 if (u.UserType == 1 && u.UserId != player.Character.Id)
                 {
-                    return;
+                    return Task.CompletedTask;
                 }
 
                 //TODO: rest on mate
             }
 
-            player.EmitEvent(new TriggerSitEvent
+            return player.EmitEventAsync(new TriggerSitEvent
             {
                 ChildsId = packet.Users.Select(s => s.UserId)
             });

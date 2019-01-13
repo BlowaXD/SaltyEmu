@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using ChickenAPI.Data;
+using ChickenAPI.Enums.Game.Entity;
 using SaltyEmu.Database;
 using SaltyEmu.DatabasePlugin.Models.NpcMonster;
 
@@ -39,6 +40,10 @@ namespace SaltyEmu.DatabasePlugin.Models.Character
         public short MapY { get; set; }
 
         public int Mp { get; set; }
+
+        public MateType MateType { get; set; }
+
+        public byte Agility { get; set; }
 
         public string Name { get; set; }
 

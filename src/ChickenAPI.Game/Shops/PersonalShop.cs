@@ -10,6 +10,7 @@ namespace ChickenAPI.Game.Shops
             Id = id;
             Owner = player;
         }
+
         public long Id { get; }
 
         public IPlayerEntity Owner { get; }

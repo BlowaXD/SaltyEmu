@@ -1,43 +1,27 @@
-﻿using System;
-using Autofac;
-using ChickenAPI.Core.IoC;
-using ChickenAPI.Core.Logging;
+﻿using System.Threading.Tasks;
 using ChickenAPI.Data.Map;
-using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Game.Managers;
-using ChickenAPI.Game.Maps;
 using ChickenAPI.Game.Portals.Args;
 using ChickenAPI.Packets.Game.Client.Movement;
+using NW.Plugins.PacketHandling.Utils;
 
-namespace NosSharp.PacketHandler.Move
+namespace NW.Plugins.PacketHandling.Move
 {
-    public class PreqPacketHandling
+    public class PreqPacketHandling : GenericGamePacketHandlerAsync<PreqPacket>
     {
-        private static readonly Logger Log = Logger.GetLogger<PreqPacketHandling>();
-
-        private static readonly IMapManager MapManager = new Lazy<IMapManager>(ChickenContainer.Instance.Resolve<IMapManager>).Value;
-
-        public static void OnPreqPacket(PreqPacket packet, IPlayerEntity session)
+        protected override async Task Handle(PreqPacket packet, IPlayerEntity player)
         {
-            if (!(session.CurrentMap is IMapLayer mapLayer))
-            {
-                Log.Warn("Should be in a map");
-                return;
-            }
-
-            IMapLayer currentMap = mapLayer;
-            PortalDto currentPortal = currentMap.Map.GetPortalFromPosition(session.Movable.Actual.X, session.Movable.Actual.Y);
+            PortalDto currentPortal = player.CurrentMap.Map.GetPortalFromPosition(player.Position.X, player.Position.Y);
 
             if (currentPortal == null)
             {
-                Log.Warn($"Cannot find a valid portal at {session.Movable.Actual.X}x{session.Movable.Actual.Y} (Map ID: {session.Character.MapId}.");
+                Log.Warn($"Cannot find a valid portal at {player.Position.X}x{player.Position.Y} (Map ID: {player.Character.MapId}.");
                 return;
             }
 
-            session.EmitEvent(new PortalTriggerEvent
+            await player.EmitEventAsync(new PortalTriggerEvent
             {
-                Portal = currentPortal,
+                Portal = currentPortal
             });
         }
     }

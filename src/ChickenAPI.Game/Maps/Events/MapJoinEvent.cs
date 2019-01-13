@@ -3,7 +3,7 @@ using ChickenAPI.Game.Events;
 
 namespace ChickenAPI.Game.Maps.Events
 {
-    public class MapJoinEvent : ChickenEventArgs
+    public class MapJoinEvent : GameEntityEvent
     {
         public IMapLayer Map { get; set; }
     }

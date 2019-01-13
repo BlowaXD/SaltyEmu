@@ -183,8 +183,7 @@ namespace SaltyEmu.DatabasePlugin.Migrations
 
                     b.Property<short>("Authority");
 
-                    b.Property<string>("Email")
-                        .HasMaxLength(50);
+                    b.Property<int>("Language");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -192,15 +191,6 @@ namespace SaltyEmu.DatabasePlugin.Migrations
 
                     b.Property<string>("Password")
                         .IsRequired();
-
-                    b.Property<string>("RegistrationEmail")
-                        .HasMaxLength(50);
-
-                    b.Property<string>("RegistrationIp")
-                        .HasMaxLength(50);
-
-                    b.Property<string>("RegistrationToken")
-                        .HasMaxLength(32);
 
                     b.HasKey("Id");
 
@@ -387,6 +377,8 @@ namespace SaltyEmu.DatabasePlugin.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<byte>("Agility");
+
                     b.Property<byte>("Attack");
 
                     b.Property<bool>("CanPickUp");
@@ -412,6 +404,8 @@ namespace SaltyEmu.DatabasePlugin.Migrations
                     b.Property<short>("MapX");
 
                     b.Property<short>("MapY");
+
+                    b.Property<byte>("MateType");
 
                     b.Property<int>("Mp");
 

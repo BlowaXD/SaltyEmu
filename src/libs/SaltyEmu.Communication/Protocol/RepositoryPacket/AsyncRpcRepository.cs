@@ -17,11 +17,8 @@ namespace SaltyEmu.Communication.Protocol.RepositoryPacket
             _repository = repository;
             // todo create delegates to remove the first parameter (which is supposed to be this)
 
-            _log.Info("Registering OnGet()");
             handler.Register<RepositoryGetRequest<TKey>>(OnGet);
-            _log.Info("Registering OnSave()");
             handler.Register<RepositorySaveRequest<T>>(OnSave);
-            _log.Info("Registering OnDelete()");
             handler.Register<RepositoryDeleteRequest<TKey>>(OnDelete);
         }
 
@@ -47,7 +44,7 @@ namespace SaltyEmu.Communication.Protocol.RepositoryPacket
             }
 
             await _repository.SaveAsync(request.Objects);
-            await request.ReplyAsync(new RepositorySaveResponse<T>
+            await request.ReplyAsync(new RepositorySaveRequest<T>.Response
             {
                 Objects = request.Objects
             });

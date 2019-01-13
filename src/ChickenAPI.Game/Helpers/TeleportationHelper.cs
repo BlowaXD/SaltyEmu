@@ -11,7 +11,7 @@ namespace ChickenAPI.Game.Helpers
     public static class TeleportationHelper
     {
         private static readonly IMapManager MapManager = new Lazy<IMapManager>(() => ChickenContainer.Instance.Resolve<IMapManager>()).Value;
-        
+
         public static void TeleportTo(this IPlayerEntity player, IMapLayer layer, short x, short y)
         {
             if (player.CurrentMap == layer)
@@ -20,8 +20,8 @@ namespace ChickenAPI.Game.Helpers
                 return;
             }
 
-            player.Movable.Actual.X = x;
-            player.Movable.Actual.Y = y;
+            player.Position.X = x;
+            player.Position.Y = y;
             player.TransferEntity(layer);
         }
 
@@ -34,8 +34,8 @@ namespace ChickenAPI.Game.Helpers
         public static void TeleportTo(this IPlayerEntity player, short x, short y)
         {
             // improve that
-            player.Movable.Actual.X = x;
-            player.Movable.Actual.Y = y;
+            player.Position.X = x;
+            player.Position.Y = y;
             player.Broadcast(player.GenerateTpPacket(x, y));
         }
     }

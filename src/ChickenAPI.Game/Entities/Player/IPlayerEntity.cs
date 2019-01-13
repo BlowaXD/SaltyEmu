@@ -1,21 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using ChickenAPI.Data.Character;
 using ChickenAPI.Data.Item;
 using ChickenAPI.Enums.Game.Character;
 using ChickenAPI.Game.Battle.Interfaces;
+using ChickenAPI.Game.Entities.Mates;
 using ChickenAPI.Game.Families;
 using ChickenAPI.Game.Locomotion;
 using ChickenAPI.Game.Network;
 using ChickenAPI.Game.Player;
+using ChickenAPI.Game.Quicklist;
 using ChickenAPI.Game.Shops;
 using ChickenAPI.Game.Specialists;
 using ChickenAPI.Packets;
 
 namespace ChickenAPI.Game.Entities.Player
 {
-    public interface IPlayerEntity : ILocomotionEntity, IBattleEntity, IInventoriedEntity, IShopEntity, ISpecialistEntity, IQuicklistEntity, IFamilyCapacities, IGroupEntity, IBroadcastable
+    public interface IPlayerEntity : ILocomotionEntity, IBattleEntity, IInventoriedEntity, IShopEntity, ISpecialistEntity, IQuicklistEntity, IFamilyEntity, IGroupEntity, IBroadcastable
     {
+        IRelationList Relations { get; }
+
+
         CharacterDto Character { get; }
 
         CharacterNameAppearance NameAppearance { get; }
@@ -27,34 +33,29 @@ namespace ChickenAPI.Game.Entities.Player
 
         double LastPortal { get; set; }
 
-        #region Equipments
-
-        ItemInstanceDto Fairy { get; }
-        ItemInstanceDto Weapon { get; }
-        ItemInstanceDto SecondaryWeapon { get; }
-        ItemInstanceDto Armor { get; }
-
-        #endregion
-
+        List<IMateEntity> Mates { get; set; }
+        IEnumerable<IMateEntity> ActualMates { get; }
 
         /// <summary>
-        ///
         /// </summary>
         long LastPulse { get; }
 
         /// <summary>
-        /// Broadcasts to every players on the current map except the sender
+        ///     Broadcasts to every players on the current map except the sender
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="packet"></param>
         void BroadcastExceptSender<T>(T packet) where T : IPacket;
 
         /// <summary>
-        /// Broadcasts to every players on the current map except the sender
+        ///     Broadcasts to every players on the current map except the sender
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="packets"></param>
         void BroadcastExceptSender<T>(IEnumerable<T> packets) where T : IPacket;
+
+        Task BroadcastExceptSenderAsync<T>(T packet) where T : IPacket;
+        Task BroadcastExceptSenderAsync<T>(IEnumerable<T> packets) where T : IPacket;
 
         void SendPacket<T>(T packetBase) where T : IPacket;
 
@@ -62,9 +63,24 @@ namespace ChickenAPI.Game.Entities.Player
 
         void SendPackets(IEnumerable<IPacket> packets);
 
+        Task SendPacketAsync<T>(T packet) where T : IPacket;
+
+        Task SendPacketsAsync<T>(IEnumerable<T> packets) where T : IPacket;
+
+        Task SendPacketsAsync(IEnumerable<IPacket> packets);
+
         /// <summary>
-        /// Saves player's state
+        ///     Saves player's state
         /// </summary>
         void Save();
+
+        #region Equipments
+
+        ItemInstanceDto Fairy { get; }
+        ItemInstanceDto Weapon { get; }
+        ItemInstanceDto SecondaryWeapon { get; }
+        ItemInstanceDto Armor { get; }
+
+        #endregion Equipments
     }
 }

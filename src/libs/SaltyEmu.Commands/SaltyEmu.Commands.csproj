@@ -8,7 +8,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Qmmands" Version="1.0.3-nightly-00075" />
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.3.1" />
+    <PackageReference Include="Qmmands" Version="2.0.0" />
   </ItemGroup>
 
   <ItemGroup>

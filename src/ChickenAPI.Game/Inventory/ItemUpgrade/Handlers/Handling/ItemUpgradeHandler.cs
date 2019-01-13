@@ -8,11 +8,7 @@ namespace ChickenAPI.Game.Inventory.ItemUpgrade.Handlers
 {
     public class ItemUpgradeHandler
     {
-        private readonly Action<IPlayerEntity, ItemUpgradeEventArgs> _func;
-
-        public ItemUpgradeHandler(MethodInfo method) : this(method.GetCustomAttribute<ItemUpgradeHandlerAttribute>(), method)
-        {
-        }
+        private readonly Action<IPlayerEntity, ItemUpgradeEvent> _func;
 
         public ItemUpgradeHandler(ItemUpgradeHandlerAttribute attribute, MethodInfo method)
         {
@@ -23,12 +19,12 @@ namespace ChickenAPI.Game.Inventory.ItemUpgrade.Handlers
                 throw new Exception($"Your handler for {Type} is wrong");
             }
 
-            _func = (Action<IPlayerEntity, ItemUpgradeEventArgs>)Delegate.CreateDelegate(typeof(Action<IPlayerEntity, ItemUpgradeEventArgs>), method);
+            _func = (Action<IPlayerEntity, ItemUpgradeEvent>)Delegate.CreateDelegate(typeof(Action<IPlayerEntity, ItemUpgradeEvent>), method);
         }
 
         public UpgradePacketType Type { get; }
 
-        public void Handle(IPlayerEntity player, ItemUpgradeEventArgs e)
+        public void Handle(IPlayerEntity player, ItemUpgradeEvent e)
         {
             if (e.Type != Type)
             {

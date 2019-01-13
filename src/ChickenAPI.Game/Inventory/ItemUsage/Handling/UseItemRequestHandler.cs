@@ -1,7 +1,7 @@
-﻿using ChickenAPI.Enums.Game.Items;
-using ChickenAPI.Game.Entities.Player;
-using System;
+﻿using System;
 using System.Reflection;
+using ChickenAPI.Enums.Game.Items;
+using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Inventory.Events;
 
 namespace ChickenAPI.Game.Inventory.ItemUsage.Handling
@@ -27,13 +27,13 @@ namespace ChickenAPI.Game.Inventory.ItemUsage.Handling
             _func = (Action<IPlayerEntity, InventoryUseItemEvent>)Delegate.CreateDelegate(typeof(Action<IPlayerEntity, InventoryUseItemEvent>), method);
         }
 
+        public long Effect { get; }
+
+        public ItemType IType { get; }
+
         public void Handle(IPlayerEntity player, InventoryUseItemEvent e)
         {
             _func(player, e);
         }
-
-        public long Effect { get; }
-
-        public ItemType IType { get; }
     }
 }

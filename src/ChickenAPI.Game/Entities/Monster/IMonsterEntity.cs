@@ -1,9 +1,8 @@
 ﻿using ChickenAPI.Game.Battle.Interfaces;
-using ChickenAPI.Game.ECS.Entities;
 
 namespace ChickenAPI.Game.Entities.Monster
 {
-    public interface IMonsterEntity : IEntity, IBattleEntity, INpcMonsterEntity, IMapMonsterEntity
+    public interface IMonsterEntity : IBattleEntity, INpcMonsterEntity, IMapMonsterEntity
     {
     }
 }

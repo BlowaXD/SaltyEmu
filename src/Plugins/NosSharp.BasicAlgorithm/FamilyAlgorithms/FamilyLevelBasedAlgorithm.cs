@@ -1,4 +1,4 @@
-﻿namespace NosSharp.BasicAlgorithm.FamilyAlgorithms
+﻿namespace SaltyEmu.BasicAlgorithmPlugin.FamilyAlgorithms
 {
     public class FamilyLevelBasedAlgorithm : ILevelBasedDataAlgorithm
     {

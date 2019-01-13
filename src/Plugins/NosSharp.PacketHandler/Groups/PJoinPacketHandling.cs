@@ -1,35 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
-using Autofac;
-using ChickenAPI.Core.IoC;
-using ChickenAPI.Core.Logging;
+﻿using System.Threading.Tasks;
 using ChickenAPI.Enums.Packets;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Game.Events;
 using ChickenAPI.Game.Groups.Args;
 using ChickenAPI.Game.Managers;
-using ChickenAPI.Packets.Game.Client.Movement;
 using ChickenAPI.Packets.Game.Server.Group;
-using NosSharp.PacketHandler.Move;
+using NW.Plugins.PacketHandling.Utils;
 
-namespace NosSharp.PacketHandler.Groups
+namespace NW.Plugins.PacketHandling.Groups
 {
-    public class PJoinPacketHandling
+    public class PJoinPacketHandling : GenericGamePacketHandlerAsync<PJoinPacket>
     {
-        private static readonly IPlayerManager Manager = new Lazy<IPlayerManager>(() => ChickenContainer.Instance.Resolve<IPlayerManager>()).Value;
-        private static readonly Logger Log = Logger.GetLogger<PreqPacketHandling>();
+        private readonly IPlayerManager _manager;
 
-        public static void OnPreqPacket(PJoinPacket packet, IPlayerEntity player)
+        public PJoinPacketHandling(IPlayerManager manager) => _manager = manager;
+
+        protected override async Task Handle(PJoinPacket packet, IPlayerEntity player)
         {
             switch (packet.RequestType)
             {
                 case PJoinPacketType.Requested:
                 case PJoinPacketType.Invited:
-                    player.EmitEvent(new GroupInvitationSendEvent
+                    await player.EmitEventAsync(new GroupInvitationSendEvent
                     {
-                        Target = player.CurrentMap.GetPlayerById(packet.CharacterId)
+                        Target = _manager.GetPlayerByCharacterId(packet.CharacterId)
                     });
                     break;
                 case PJoinPacketType.Accepted:
@@ -41,8 +34,6 @@ namespace NosSharp.PacketHandler.Groups
                 case PJoinPacketType.AcceptedShare:
                     break;
                 case PJoinPacketType.DeclinedShare:
-                    break;
-                default:
                     break;
             }
         }

@@ -2,20 +2,10 @@
 
 namespace ChickenAPI.Game.Entities.Player.Events
 {
-    public class PlayerLevelUpEvent : ChickenEventArgs
+    public class PlayerLevelUpEvent : GameEntityEvent
     {
         public IPlayerEntity Player { get; set; }
 
         public LevelUpType LevelUpType { get; set; }
-    }
-}
-
-namespace ChickenAPI.Game.Entities.Player.Events
-{
-    public enum LevelUpType
-    {
-        Level,
-        JobLevel,
-        HeroLevel
     }
 }

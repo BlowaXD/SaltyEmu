@@ -3,9 +3,9 @@ using ChickenAPI.Game.Events;
 
 namespace ChickenAPI.Game.Inventory.Events
 {
-    public class InventoryWearEvent : ChickenEventArgs
+    public class InventoryWearEvent : GameEntityEvent
     {
         public short InventorySlot { get; set; }
-        public InventoryType InventoryType { get; set; }
+        public ItemWearType ItemWearType { get; set; }
     }
 }

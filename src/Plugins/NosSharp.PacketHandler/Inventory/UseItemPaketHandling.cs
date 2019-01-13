@@ -1,20 +1,19 @@
-﻿using ChickenAPI.Core.Logging;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using ChickenAPI.Data.Item;
 using ChickenAPI.Game.Entities.Player;
+using ChickenAPI.Game.Inventory.Events;
 using ChickenAPI.Game.Inventory.Extensions;
 using ChickenAPI.Packets.Game.Client.Inventory;
-using System.Linq;
-using ChickenAPI.Game.Inventory.Events;
+using NW.Plugins.PacketHandling.Utils;
 
-namespace NosSharp.PacketHandler
+namespace NW.Plugins.PacketHandling.Inventory
 {
-    public class UseItemPaketHandling
+    public class UseItemPaketHandling : GenericGamePacketHandlerAsync<UiPacket>
     {
-        private static readonly Logger Log = Logger.GetLogger<UseItemPaketHandling>();
-
-        public static void UseItemPacket(UiPacket packet, IPlayerEntity session)
+        protected override async Task Handle(UiPacket packet, IPlayerEntity player)
         {
-            ItemInstanceDto item = session.Inventory.GetItemFromSlotAndType(packet.InventorySlot, packet.InventoryType);
+            ItemInstanceDto item = player.Inventory.GetItemFromSlotAndType(packet.InventorySlot, packet.InventoryType);
 
             if (item == null)
             {
@@ -23,7 +22,7 @@ namespace NosSharp.PacketHandler
 
             string[] packetsplit = packet.OriginalContent.Split(' ', '^');
 
-            session.EmitEvent(new InventoryUseItemEvent
+            await player.EmitEventAsync(new InventoryUseItemEvent
             {
                 Item = item,
                 Option = packetsplit[1].ElementAt(0) == '#' ? (byte)50 : (byte)0

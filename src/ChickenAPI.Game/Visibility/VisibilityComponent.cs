@@ -10,16 +10,16 @@ namespace ChickenAPI.Game.Visibility
     {
         private VisibilityType _visibility;
 
+        #region Ctors
+
+        public VisibilityComponent(IEntity entity) : base(entity) => Visibility = VisibilityType.Visible;
+
+        #endregion
+
         #region Events
 
         public event EventHandlerWithoutArgs<IVisibleEntity> Invisible;
         public event EventHandlerWithoutArgs<IVisibleEntity> Visible;
-
-        #endregion
-
-        #region Ctors
-
-        public VisibilityComponent(IEntity entity) : base(entity) => Visibility = VisibilityType.Visible;
 
         #endregion
 
@@ -50,10 +50,5 @@ namespace ChickenAPI.Game.Visibility
         }
 
         #endregion
-    }
-
-    public class VisibilityChangeEventArgs : EventArgs
-    {
-        public VisibilityType Visibility { get; set; }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using ChickenAPI.Core.i18n;
+using SaltyEmu.Redis;
 using SaltyEmu.RedisWrappers.Languages;
 using SaltyEmu.RedisWrappers.Redis;
 using ServiceStack.Redis;
@@ -23,14 +24,21 @@ namespace SaltyEmu.RedisWrappers
             }).As<string>();
         }
 
-        private Dictionary<ChickenI18NKey, string> GetSetByLanguageKey(LanguageKey key)
+        private static Dictionary<ChickenI18NKey, string> GetSetByLanguageKey(LanguageKey key)
         {
             switch (key)
             {
                 case LanguageKey.EN:
                     return EnglishI18n.Languages;
+                case LanguageKey.FR:
+                case LanguageKey.DE:
+                case LanguageKey.PL:
+                case LanguageKey.IT:
+                case LanguageKey.ES:
+                case LanguageKey.CZ:
+                case LanguageKey.TR:
                 default:
-                    return null;
+                    return EnglishI18n.Languages;
             }
         }
 
@@ -41,7 +49,8 @@ namespace SaltyEmu.RedisWrappers
 
         public string GetLanguage(ChickenI18NKey key, LanguageKey type)
         {
-            if (!GetSetByLanguageKey(type).TryGetValue(key, out string value))
+            string value = "";
+            if (GetSetByLanguageKey(type)?.TryGetValue(key, out value) == false)
             {
                 value = type + "_" + key;
             }

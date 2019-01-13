@@ -8,6 +8,7 @@ using ChickenAPI.Enums.Game.Character;
 using Microsoft.EntityFrameworkCore;
 using SaltyEmu.Database;
 using SaltyEmu.DatabasePlugin.Models.Character;
+using Z.EntityFramework.Plus;
 
 namespace SaltyEmu.DatabasePlugin.Services.Character
 {
@@ -86,15 +87,7 @@ namespace SaltyEmu.DatabasePlugin.Services.Character
         {
             try
             {
-                CharacterModel model = DbSet.Find(id);
-                if (model == null)
-                {
-                    return;
-                }
-
-                model.State = CharacterState.Inactive;
-                DbSet.Update(model);
-                Context.SaveChanges();
+                DbSet.Where(s => s.Id == id).Update(model => new CharacterModel { State = CharacterState.Inactive });
             }
             catch (Exception e)
             {
@@ -102,23 +95,16 @@ namespace SaltyEmu.DatabasePlugin.Services.Character
             }
         }
 
-        public override async Task DeleteByIdAsync(long id)
+        public override Task DeleteByIdAsync(long id)
         {
             try
             {
-                CharacterModel model = await DbSet.FindAsync(id);
-                if (model == null)
-                {
-                    return;
-                }
-
-                model.State = CharacterState.Inactive;
-                DbSet.Update(model);
-                await Context.SaveChangesAsync();
+                return DbSet.Where(s => s.Id == id).UpdateAsync(model => new CharacterModel { State = CharacterState.Inactive });
             }
             catch (Exception e)
             {
                 Log.Error("[DELETE_BY_ID]", e);
+                return Task.CompletedTask;
             }
         }
 

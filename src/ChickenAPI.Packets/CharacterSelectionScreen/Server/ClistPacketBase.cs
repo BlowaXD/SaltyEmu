@@ -39,7 +39,7 @@ namespace ChickenAPI.Packets.CharacterSelectionScreen.Server
         [PacketIndex(9)]
         public ushort HeroLevel { get; set; }
 
-        [PacketIndex(10, SeparatorBeforeProperty = " ")]
+        [PacketIndex(10, SeparatorBeforeProperty = " ", SeparatorNestedElements = ".")]
         public List<short?> Equipments { get; set; }
 
         [PacketIndex(11)]
@@ -51,7 +51,7 @@ namespace ChickenAPI.Packets.CharacterSelectionScreen.Server
         [PacketIndex(13)]
         public byte QuestPart { get; set; }
 
-        [PacketIndex(14)]
+        [PacketIndex(14, SeparatorBeforeProperty = " ", SeparatorNestedElements = ".")]
         public List<short?> Pets { get; set; }
 
         [PacketIndex(15)]

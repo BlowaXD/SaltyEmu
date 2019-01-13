@@ -1,7 +1,7 @@
 ###
 ## Build docker
 ### 
-FROM microsoft/dotnet:2.1-sdk-alpine as builder
+FROM microsoft/dotnet:2.2-sdk-alpine as builder
 
 WORKDIR /saltyemu/
 
@@ -15,7 +15,7 @@ RUN dotnet publish ./World/World.csproj -c Release -o /saltyemu/dist/
 ###
 
 ## Use alpine as basis
-FROM microsoft/dotnet:2.1-runtime-alpine
+FROM microsoft/dotnet:2.2-runtime-alpine
 
 # Output Server Port (that will be sent to IServerApiService)
 ENV SERVER_PORT=7777 \

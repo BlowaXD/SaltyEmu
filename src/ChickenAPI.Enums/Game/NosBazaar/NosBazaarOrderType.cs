@@ -5,6 +5,6 @@
         PriceAscending,
         PriceDescending,
         QuantityAscending,
-        QuantityDescending,
+        QuantityDescending
     }
 }

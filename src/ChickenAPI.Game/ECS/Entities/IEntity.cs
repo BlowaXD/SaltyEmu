@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Game.ECS.Components;
 using ChickenAPI.Game.Events;
@@ -28,7 +29,9 @@ namespace ChickenAPI.Game.ECS.Entities
         /// </summary>
         /// <typeparam name="T">System type</typeparam>
         /// <param name="e">Arguments</param>
-        void EmitEvent<T>(T e) where T : ChickenEventArgs;
+        void EmitEvent<T>(T e) where T : GameEntityEvent;
+
+        Task EmitEventAsync<T>(T e) where T : GameEntityEvent;
 
         /// <summary>
         ///     Will transfer the Entity to another entity manager

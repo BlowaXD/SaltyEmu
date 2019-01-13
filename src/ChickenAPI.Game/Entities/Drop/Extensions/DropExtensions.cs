@@ -4,9 +4,8 @@ namespace ChickenAPI.Game.Entities.Drop.Extensions
 {
     public static class DropExtensions
     {
-        public static DropPacket GenerateDropPacket(this IDropEntity drop)
-        {
-            return new DropPacket
+        public static DropPacket GenerateDropPacket(this IDropEntity drop) =>
+            new DropPacket
             {
                 ItemVnum = drop.ItemVnum,
                 Quantity = drop.Quantity,
@@ -15,8 +14,7 @@ namespace ChickenAPI.Game.Entities.Drop.Extensions
                 TransportId = drop.Id,
                 IsQuestDrop = drop.IsQuestDrop,
                 Unknown = 0,
-                Unknown2 = -1,
+                Unknown2 = -1
             };
-        }
     }
 }

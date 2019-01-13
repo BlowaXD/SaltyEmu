@@ -31,13 +31,13 @@ namespace ChickenAPI.Data.Server
         PlayerSessionDto GetBySessionId(int id);
 
         /// <summary>
-        ///     Unregister the session from SessionService
+        ///     Unregisters the session from SessionService
         /// </summary>
         /// <param name="sessionId"></param>
         void UnregisterSession(int sessionId);
 
         /// <summary>
-        ///     Unregister all the session connected on the server with ServerId
+        ///     Unregisters all the session connected on the server with ServerId
         /// </summary>
         /// <param name="serverId"></param>
         void UnregisterSessions(Guid serverId);

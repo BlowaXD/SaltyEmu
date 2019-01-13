@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Linq.Expressions;
 using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Game.Battle.Interfaces;

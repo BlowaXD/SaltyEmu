@@ -1,19 +1,19 @@
-﻿using System;
+﻿using System.Threading.Tasks;
+using ChickenAPI.Enums.Game.Items;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Inventory.Events;
 using ChickenAPI.Packets.Game.Client.Inventory;
+using NW.Plugins.PacketHandling.Utils;
 
-namespace NosSharp.PacketHandler.Inventory
+namespace NW.Plugins.PacketHandling.Inventory
 {
-    public class WearPacketHandling
+    public class WearPacketHandling : GenericGamePacketHandlerAsync<WearPacket>
     {
-        public static void OnWearPacket(WearPacket packet, IPlayerEntity player)
-        {
-            player.EmitEvent(new InventoryWearEvent
+        protected override Task Handle(WearPacket packet, IPlayerEntity player) =>
+            player.EmitEventAsync(new InventoryWearEvent
             {
-                InventoryType = packet.InventoryType,
+                ItemWearType = packet.WearPacketType == 0 ? ItemWearType.Player : ItemWearType.Partner,
                 InventorySlot = packet.ItemSlot
             });
-        }
     }
 }

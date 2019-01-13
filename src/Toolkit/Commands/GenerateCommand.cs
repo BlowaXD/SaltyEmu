@@ -1,7 +1,6 @@
 ﻿using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Logging;
 using CommandLine;
-using NosSharp.BasicAlgorithm;
 using SaltyEmu.BasicAlgorithmPlugin;
 using SaltyEmu.DatabasePlugin;
 using Toolkit.Generators.FromPackets;
@@ -13,12 +12,6 @@ namespace Toolkit.Commands
     {
         [Value(0, HelpText = "npc, monster, portal, all")]
         public string GeneratorType { get; set; }
-
-        [Option("db", HelpText = "Generates directly into db")]
-        public bool IsDb { get; set; }
-
-        [Option('v', "verbose", Default = false, HelpText = "Prints all messages to standard output.")]
-        public bool Verbose { get; set; }
 
         [Option('i', "input", HelpText = "Input directory", Required = true)]
         public string Input { get; set; }

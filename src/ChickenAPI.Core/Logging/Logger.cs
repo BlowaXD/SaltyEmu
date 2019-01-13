@@ -11,6 +11,7 @@ namespace ChickenAPI.Core.Logging
         private const string DefaultLayout = "[${date}][${level:uppercase=true}][${logger:shortName=true}] ${message} ${exception:format=tostring}";
 
         private Logger(Type type) => Log = LogManager.GetLogger(type.ToString());
+        private Logger(string prefix) => Log = LogManager.GetLogger(prefix);
 
         private ILogger Log { get; }
 
@@ -66,6 +67,8 @@ namespace ChickenAPI.Core.Logging
         {
             Initialize(DefaultLayout, DefaultLayout);
         }
+
+        public static Logger GetLogger(string prefix) => new Logger(prefix);
 
         public static Logger GetLogger<TClass>() where TClass : class => new Logger(typeof(TClass));
 

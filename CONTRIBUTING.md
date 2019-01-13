@@ -1,9 +1,15 @@
 # Contribution Guide
 
 ## Requirements
-- Issue
-- Merge Request
-- Coding style
+* Issues Creation
+* Merge Request
+* Coding style
+
+## Branch rules
+* `master` is designed to be the actual production branch
+* `develop` is used as a pre-production branch (dev environment)
+* `feature/*` branches are used to add new features to the project
+* `fix/*` branches are used to fix things
 
 ### How to create a good issue
  

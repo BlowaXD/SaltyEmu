@@ -22,10 +22,10 @@ namespace ChickenAPI.Packets.Game.Server.Player
         public int JobLevelXp { get; set; }
 
         [PacketIndex(4)]
-        public int LevelXpMax { get; set; }
+        public long LevelXpMax { get; set; }
 
         [PacketIndex(5)]
-        public int JobLevelXpMax { get; set; }
+        public long JobLevelXpMax { get; set; }
 
         [PacketIndex(6)]
         public long Reputation { get; set; }

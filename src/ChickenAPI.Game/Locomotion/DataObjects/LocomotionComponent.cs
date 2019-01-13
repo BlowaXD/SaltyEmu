@@ -9,15 +9,12 @@ namespace ChickenAPI.Game.Locomotion.DataObjects
     /// </summary>
     public class LocomotionComponent : IComponent
     {
-        public LocomotionComponent(IPlayerEntity entity)
-        {
-            Entity = entity;
-        }
+        public LocomotionComponent(IPlayerEntity entity) => Entity = entity;
 
         public bool IsVehicled { get; set; }
 
-        public IEntity Entity { get; set; }
-
         public byte Speed { get; set; }
+
+        public IEntity Entity { get; set; }
     }
 }

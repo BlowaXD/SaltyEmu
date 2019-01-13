@@ -3,7 +3,6 @@ using ChickenAPI.Packets.Attributes;
 
 namespace ChickenAPI.Packets.Game.Server.Group
 {
-
     [PacketHeader("pjoin")]
     public class PJoinPacket : PacketBase
     {

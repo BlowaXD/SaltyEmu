@@ -31,9 +31,14 @@ namespace ChickenAPI.Data.Item
 
         public ItemInstanceDto Duplicate(ItemInstanceDto original)
         {
-            var tmp = original.Clone() as ItemInstanceDto;
-            tmp.Id = Guid.NewGuid();
-            return tmp;
+            object tmp = MemberwiseClone();
+            if (!(tmp is ItemInstanceDto newObject))
+            {
+                return null;
+            }
+
+            newObject.Id = Guid.NewGuid();
+            return newObject;
         }
     }
 }

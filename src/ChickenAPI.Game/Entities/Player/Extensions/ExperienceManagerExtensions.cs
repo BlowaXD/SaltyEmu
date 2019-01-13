@@ -1,9 +1,9 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Autofac;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Data.Character;
 using ChickenAPI.Game.Entities.Player.Events;
-using ChickenAPI.Game.Player.Extension;
 
 namespace ChickenAPI.Game.Entities.Player.Extensions
 {
@@ -11,50 +11,50 @@ namespace ChickenAPI.Game.Entities.Player.Extensions
     {
         private static IAlgorithmService Algorithm => new Lazy<IAlgorithmService>(() => ChickenContainer.Instance.Resolve<IAlgorithmService>()).Value;
 
-        public static void ChangeLevel(this IPlayerEntity player, byte level)
+        public static Task ChangeLevel(this IPlayerEntity player, byte level)
         {
             player.Character.Level = level;
             player.Character.LevelXp = 0;
-            player.ActualizeUiExpBar();
+            return player.ActualizeUiExpBar();
         }
 
-        public static void ChangeJobLevel(this IPlayerEntity player, byte level)
+        public static Task ChangeJobLevel(this IPlayerEntity player, byte level)
         {
             player.Character.JobLevel = level;
             player.Character.JobLevelXp = 0;
-            player.ActualizeUiExpBar();
+            return player.ActualizeUiExpBar();
         }
 
-        public static void ChangeReputation(this IPlayerEntity player, long reputation)
+        public static Task ChangeReputation(this IPlayerEntity player, long reputation)
         {
             player.Character.Reput = reputation;
-            player.ActualiseUiReputation();
+            return player.ActualizeUiReputation();
         }
 
-        public static void ChangeHeroLevel(this IPlayerEntity player, byte level)
+        public static Task ChangeHeroLevel(this IPlayerEntity player, byte level)
         {
             player.Character.HeroLevel = level;
             player.Character.HeroXp = 0;
-            player.ActualizeUiExpBar();
+            return player.ActualizeUiExpBar();
         }
 
-        public static void TryLevelUp(this IPlayerEntity player)
+        public static async Task TryLevelUp(this IPlayerEntity player)
         {
-            int levelXp = Algorithm.GetLevelXp(player.Character.Class, player.Level);
+            long levelXp = Algorithm.GetLevelXp(player.Character.Class, player.Level);
             while (player.LevelXp >= levelXp)
             {
                 player.LevelXp -= levelXp;
                 player.Level++;
                 levelXp = Algorithm.GetLevelXp(player.Character.Class, player.Level);
-                player.EmitEvent(new PlayerLevelUpEvent
+                await player.EmitEventAsync(new PlayerLevelUpEvent
                 {
                     Player = player,
-                    LevelUpType = LevelUpType.Level,
+                    LevelUpType = LevelUpType.Level
                 });
             }
         }
 
-        public static void TryJobLevelUp(this IPlayerEntity player)
+        public static async Task TryJobLevelUp(this IPlayerEntity player)
         {
             int jobXp = Algorithm.GetJobLevelXp(player.Character.Class, player.Level);
             while (player.JobLevelXp >= jobXp)
@@ -62,15 +62,15 @@ namespace ChickenAPI.Game.Entities.Player.Extensions
                 player.JobLevelXp -= jobXp;
                 player.JobLevel++;
                 jobXp = Algorithm.GetJobLevelXp(player.Character.Class, player.Level);
-                player.EmitEvent(new PlayerLevelUpEvent
+                await player.EmitEventAsync(new PlayerLevelUpEvent
                 {
                     Player = player,
-                    LevelUpType = LevelUpType.JobLevel,
+                    LevelUpType = LevelUpType.JobLevel
                 });
             }
         }
 
-        public static void TryHeroLevelUp(this IPlayerEntity player)
+        public static async Task TryHeroLevelUp(this IPlayerEntity player)
         {
             int heroXp = Algorithm.GetHeroLevelXp(player.Character.Class, player.Level);
             while (player.HeroLevelXp >= heroXp)
@@ -78,33 +78,33 @@ namespace ChickenAPI.Game.Entities.Player.Extensions
                 player.HeroLevelXp -= heroXp;
                 player.HeroLevel++;
                 heroXp = Algorithm.GetHeroLevelXp(player.Character.Class, player.Level);
-                player.EmitEvent(new PlayerLevelUpEvent
+                await player.EmitEventAsync(new PlayerLevelUpEvent
                 {
                     Player = player,
-                    LevelUpType = LevelUpType.HeroLevel,
+                    LevelUpType = LevelUpType.HeroLevel
                 });
             }
         }
 
-        public static void AddExperience(this IPlayerEntity player, long amount)
+        public static async Task AddExperience(this IPlayerEntity player, long amount)
         {
             player.LevelXp += amount;
-            player.TryLevelUp();
-            player.ActualizeUiExpBar();
+            await player.TryLevelUp();
+            await player.ActualizeUiExpBar();
         }
 
-        public static void AddJobExperience(this IPlayerEntity player, long amount)
+        public static async Task AddJobExperience(this IPlayerEntity player, long amount)
         {
             player.JobLevelXp += amount;
-            player.TryJobLevelUp();
-            player.ActualizeUiExpBar();
+            await player.TryJobLevelUp();
+            await player.ActualizeUiExpBar();
         }
 
-        public static void AddHeroExperience(this IPlayerEntity player, long amount)
+        public static async Task AddHeroExperience(this IPlayerEntity player, long amount)
         {
             player.HeroLevelXp += amount;
-            player.TryHeroLevelUp();
-            player.ActualizeUiExpBar();
+            await player.TryHeroLevelUp();
+            await player.ActualizeUiExpBar();
         }
     }
 }

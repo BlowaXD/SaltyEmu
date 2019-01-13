@@ -3,6 +3,6 @@
     public enum CancelPacketType
     {
         NotInCombatMode = 0,
-        InCombatMode = 2,
+        InCombatMode = 2
     }
 }

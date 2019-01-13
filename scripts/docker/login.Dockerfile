@@ -1,7 +1,7 @@
 ###
 ## Build docker
 ### 
-FROM microsoft/dotnet:2.1-sdk-alpine as builder
+FROM microsoft/dotnet:2.2-sdk-alpine as builder
 
 WORKDIR /saltyemu/
 
@@ -15,7 +15,7 @@ RUN dotnet publish ./Login/Login.csproj -c Release -o /saltyemu/dist/
 ###
 
 ## Use alpine as basis
-FROM microsoft/dotnet:2.1-runtime-alpine
+FROM microsoft/dotnet:2.2-runtime-alpine
 
 # Server listening port
 ENV SERVER_PORT=4000

@@ -5,7 +5,7 @@ using ChickenAPI.Game.Events;
 
 namespace ChickenAPI.Game.Families.Events
 {
-    public class FamilyJoinEvent : ChickenEventArgs
+    public class FamilyJoinEvent : GameEntityEvent
     {
         public FamilyDto Family { get; set; }
         public IPlayerEntity Player { get; set; }

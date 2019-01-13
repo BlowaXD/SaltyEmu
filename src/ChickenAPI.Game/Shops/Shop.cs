@@ -4,7 +4,6 @@ using Autofac;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Data.Shop;
 using ChickenAPI.Game.Entities.Npc;
-using ChickenAPI.Game.Entities.Player;
 
 namespace ChickenAPI.Game.Shops
 {

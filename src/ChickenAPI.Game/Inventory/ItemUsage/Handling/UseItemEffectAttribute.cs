@@ -1,5 +1,5 @@
-﻿using ChickenAPI.Enums.Game.Items;
-using System;
+﻿using System;
+using ChickenAPI.Enums.Game.Items;
 
 namespace ChickenAPI.Game.Inventory.ItemUsage.Handling
 {

@@ -7,22 +7,20 @@ using Autofac;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Plugins;
 using ChickenAPI.Core.Plugins.Exceptions;
-using ChickenAPI.Core.Utils;
-using ChickenAPI.Data.Account;
-using ChickenAPI.Data.Character;
-using ChickenAPI.Enums;
 using ChickenAPI.Game.PacketHandling;
+using ChickenAPI.Packets;
 using Essentials;
 using NLog;
-using NosSharp.PacketHandler;
+using NW.Plugins.PacketHandling;
 using SaltyEmu.BasicAlgorithmPlugin;
 using SaltyEmu.BasicPlugin;
+using SaltyEmu.Core.Plugins;
 using SaltyEmu.DatabasePlugin;
+using SaltyEmu.FriendsPlugin;
 using SaltyEmu.PathfinderPlugin;
 using SaltyEmu.RedisWrappers;
 using World.Network;
 using World.Packets;
-using World.Utils;
 using Logger = ChickenAPI.Core.Logging.Logger;
 
 namespace World
@@ -40,7 +38,8 @@ namespace World
             new BasicPlugin(),
             new PathfinderPlugin(),
             new PacketHandlerPlugin(),
-            new EssentialsPlugin()
+            new EssentialsPlugin(),
+            new RelationsPlugin()
         };
 
 
@@ -48,6 +47,7 @@ namespace World
         {
             try
             {
+                ChickenContainer.Builder.Register(s => PluginManager).As<IPluginManager>();
                 if (!Directory.Exists("plugins"))
                 {
                     Directory.CreateDirectory("plugins");
@@ -75,8 +75,6 @@ namespace World
 
         private static void InitializeConfigs()
         {
-            Environment.SetEnvironmentVariable("io.netty.allocator.type", "unpooled");
-            Environment.SetEnvironmentVariable("io.netty.allocator.maxOrder", "10");
             string port = Environment.GetEnvironmentVariable("SERVER_PORT") ?? "1337";
             if (!int.TryParse(port, out int intPort))
             {
@@ -123,32 +121,6 @@ namespace World
             Logger.Initialize();
         }
 
-        private static void InitializeAccounts()
-        {
-            var acc = ChickenContainer.Instance.Resolve<IAccountService>();
-            if (acc.GetByName("admin") != null)
-            {
-                return;
-            }
-
-            var account = new AccountDto
-            {
-                Authority = AuthorityType.Administrator,
-                Email = "admin@chickenapi.com",
-                Name = "admin",
-                Password = "admin".ToSha512()
-            };
-            acc.Save(account);
-            account = new AccountDto
-            {
-                Authority = AuthorityType.User,
-                Email = "user@chickenapi.com",
-                Name = "user",
-                Password = "user".ToSha512()
-            };
-            acc.Save(account);
-        }
-
         private static void EnablePlugins(PluginEnableTime enableTime)
         {
             Log.Info($"Enabling plugins of type {enableTime}");
@@ -161,39 +133,29 @@ namespace World
         private static void Main()
         {
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
-            AppDomain.CurrentDomain.UnhandledException += Exit;
-            AppDomain.CurrentDomain.ProcessExit += Exit;
-            Console.CancelKeyPress += Exit;
             PrintHeader();
             InitializeLogger();
             InitializeConfigs();
+            ChickenContainer.Builder.Register(_ => new PluggablePacketFactory()).As<IPacketFactory>().SingleInstance();
             if (InitializePlugins())
             {
                 return;
             }
 
             EnablePlugins(PluginEnableTime.PreContainerBuild);
-            ChickenContainer.Builder.Register(s => PluginManager).As<IPluginManager>();
             ChickenContainer.Initialize();
-            InitializeClientSession();
             if (Server.RegisterServer())
             {
-                Log.Info("Failed to register to ServerAPI");
+                Log.Info("REGISTER_FAIL_SERVER_API");
                 return;
             }
 
-#if DEBUG
-            InitializeAccounts();
-#endif
             EnablePlugins(PluginEnableTime.PostContainerBuild);
-            Server.RunServerAsync(1337).Wait();
+            Server.RunServerAsync(1337).ConfigureAwait(false).GetAwaiter().GetResult();
+            Server.UnregisterServer();
+            LogManager.Shutdown();
         }
-
-        private static void InitializeClientSession()
-        {
-            ClientSession.SetPacketFactory(new PluggablePacketFactory());
-            ClientSession.SetPacketHandler(ChickenContainer.Instance.Resolve<IPacketHandler>());
-        }
+        
 
         private static void Exit(object sender, EventArgs e)
         {

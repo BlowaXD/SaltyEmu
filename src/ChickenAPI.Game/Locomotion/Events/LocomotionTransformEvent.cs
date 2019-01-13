@@ -3,7 +3,7 @@ using ChickenAPI.Game.Events;
 
 namespace ChickenAPI.Game.Locomotion.Events
 {
-    public class LocomotionTransformEvent : ChickenEventArgs
+    public class LocomotionTransformEvent : GameEntityEvent
     {
         public ItemInstanceDto Item { get; set; }
     }

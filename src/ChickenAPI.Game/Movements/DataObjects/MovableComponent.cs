@@ -83,11 +83,4 @@ namespace ChickenAPI.Game.Movements.DataObjects
             Move?.Invoke(sender, e);
         }
     }
-
-    public class MoveEventArgs : EventArgs
-    {
-        public MovableComponent Component { get; set; }
-        public Position<short> Old { get; set; }
-        public Position<short> New { get; set; }
-    }
 }

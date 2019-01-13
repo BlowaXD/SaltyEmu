@@ -4,6 +4,5 @@ namespace ChickenAPI.Game.Shops
 {
     public interface IShopEntity : IEntity, IShopCapacity
     {
-        
     }
 }

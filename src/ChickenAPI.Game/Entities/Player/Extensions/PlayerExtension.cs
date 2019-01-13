@@ -1,30 +1,27 @@
-﻿using Autofac;
+﻿using System;
+using Autofac;
+using ChickenAPI.Core.i18n;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Maths;
+using ChickenAPI.Data.Character;
 using ChickenAPI.Data.Item;
 using ChickenAPI.Data.Skills;
 using ChickenAPI.Enums.Game.Character;
+using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Enums.Game.Items;
+using ChickenAPI.Enums.Packets;
 using ChickenAPI.Game.Effects;
-using ChickenAPI.Game.Entities.Extensions;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Entities.Player.Extensions;
 using ChickenAPI.Game.Families.Extensions;
+using ChickenAPI.Game.Helpers;
 using ChickenAPI.Game.Inventory.Extensions;
-using ChickenAPI.Game.Movements.Extensions;
+using ChickenAPI.Game.PacketHandling.Extensions;
+using ChickenAPI.Game.Shops.Extensions;
 using ChickenAPI.Game.Skills;
-using ChickenAPI.Game.Skills.Extensions;
 using ChickenAPI.Packets.Game.Client.Player;
 using ChickenAPI.Packets.Game.Server.Player;
 using ChickenAPI.Packets.Game.Server.UserInterface;
-using System;
-using ChickenAPI.Core.i18n;
-using ChickenAPI.Enums.Game.Entity;
-using ChickenAPI.Enums.Packets;
-using ChickenAPI.Game.Helpers;
-using ChickenAPI.Game.PacketHandling.Extensions;
-using ChickenAPI.Data.Character;
-using ChickenAPI.Packets.Game.Server.Shop;
 
 namespace ChickenAPI.Game.Player.Extension
 {
@@ -32,22 +29,6 @@ namespace ChickenAPI.Game.Player.Extension
     {
         private static readonly IRandomGenerator _randomGenerator = new Lazy<IRandomGenerator>(() => ChickenContainer.Instance.Resolve<IRandomGenerator>()).Value;
         private static readonly IAlgorithmService Algorithm = new Lazy<IAlgorithmService>(() => ChickenContainer.Instance.Resolve<IAlgorithmService>()).Value;
-
-        #region Gold
-
-        public static void GoldLess(this IPlayerEntity player, long amount)
-        {
-            player.Character.Gold -= amount;
-            player.ActualizeUiGold();
-        }
-
-        public static void GoldUp(this IPlayerEntity player, long amount)
-        {
-            player.Character.Gold += amount;
-            player.ActualizeUiGold();
-        }
-
-        #endregion Gold
 
         public static TcInfoPacket GenerateReqInfo(this IPlayerEntity charac)
         {
@@ -155,7 +136,7 @@ namespace ChickenAPI.Game.Player.Extension
             charac.SendChatMessageFormat(ChickenI18NKey.CHARACTER_YOUR_FACTION_CHANGED_TO_X, SayColorType.Blue, charac.Character.Faction);
             charac.SendPacket(charac.GenerateFsPacket());
             charac.SendPacket(charac.GenerateStatCharPacket());
-            charac.SendPacket(charac.GenerateEffectPacket((4799 + (byte)charac.Character.Faction)));
+            charac.SendPacket(charac.GenerateEffectPacket(4799 + (byte)charac.Character.Faction));
             charac.ActualizePlayerCondition();
             charac.ActualizeUiExpBar();
             charac.Broadcast(charac.GenerateCModePacket());
@@ -174,7 +155,7 @@ namespace ChickenAPI.Game.Player.Extension
             }
 
             // TODO : LATER ADD SKILL
-            charac.SendPacket(charac.GenerateSkiPacket());
+            charac.ActualizeUiSkillList();
 
             // Later too
             /* foreach (QuicklistEntryDTO quicklists in DAOFactory.QuicklistEntryDAO.LoadByCharacterId(CharacterId).Where(quicklists => QuicklistEntries.Any(qle => qle.Id == quicklists.Id)))
@@ -206,7 +187,23 @@ namespace ChickenAPI.Game.Player.Extension
             player.SendPacket(player.GenerateSayPacket("RARIFY_SUCCESS", SayColorType.Green));
             player.SendPacket(player.GenerateSayPacket($"{rare}", SayColorType.Green));
             player.Broadcast(player.GenerateEffectPacket(3005));
-            player.SendPacket(new ShopEndPacket { PacketType = ShopEndPacketType.CloseSubWindow });
+            player.SendPacket(player.GenerateShopEndPacket(ShopEndPacketType.CloseSubWindow));
         }
+
+        #region Gold
+
+        public static void GoldLess(this IPlayerEntity player, long amount)
+        {
+            player.Character.Gold -= amount;
+            player.ActualizeUiGold();
+        }
+
+        public static void GoldUp(this IPlayerEntity player, long amount)
+        {
+            player.Character.Gold += amount;
+            player.ActualizeUiGold();
+        }
+
+        #endregion Gold
     }
 }

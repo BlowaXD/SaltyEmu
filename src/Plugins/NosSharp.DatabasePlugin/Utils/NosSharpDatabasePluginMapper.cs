@@ -2,6 +2,7 @@
 using Autofac;
 using AutoMapper;
 using ChickenAPI.Core.IoC;
+using ChickenAPI.Data.Account;
 using ChickenAPI.Data.BCard;
 using ChickenAPI.Data.Character;
 using ChickenAPI.Data.Drop;
@@ -13,8 +14,6 @@ using ChickenAPI.Data.Shop;
 using ChickenAPI.Data.Skills;
 using ChickenAPI.Enums.Game.BCard;
 using ChickenAPI.Enums.Game.Drop;
-using ChickenAPI.Game.Data.AccessLayer.NpcMonster;
-using SaltyEmu.DatabasePlugin.Models;
 using SaltyEmu.DatabasePlugin.Models.BCard;
 using SaltyEmu.DatabasePlugin.Models.Cards;
 using SaltyEmu.DatabasePlugin.Models.Character;

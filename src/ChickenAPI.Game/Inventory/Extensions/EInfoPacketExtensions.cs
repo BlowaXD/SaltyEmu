@@ -110,7 +110,6 @@ namespace ChickenAPI.Game.Inventory.Extensions
                         ShellEffectCount = 0,
                         ShellEffect = null
                     };
-
             }
         }
 
@@ -166,12 +165,11 @@ namespace ChickenAPI.Game.Inventory.Extensions
                         ShellEffectCount = 0,
                         ShellEffect = null
                     };
-
             }
         }
-        private static EInfoPacket GenerateEInfoArmor(ItemInstanceDto itemInstance)
-        {
-            return new EInfoPacket
+
+        private static EInfoPacket GenerateEInfoArmor(ItemInstanceDto itemInstance) =>
+            new EInfoPacket
             {
                 EInfoType = EInfoPacketType.Armor,
                 ItemVNum = itemInstance.ItemId,
@@ -190,7 +188,6 @@ namespace ChickenAPI.Game.Inventory.Extensions
                 ShellEffectCount = 0,
                 ShellEffect = 0
             };
-        }
 
         private static EInfoPacket GenerateEInfoJewelery(ItemInstanceDto itemInstance)
         {
@@ -237,13 +234,11 @@ namespace ChickenAPI.Game.Inventory.Extensions
             }
         }
 
-        private static EInfoPacket GenerateEInfoSpecialist(ItemInstanceDto itemInstance)
-        {
-            return new EInfoPacket
+        private static EInfoPacket GenerateEInfoSpecialist(ItemInstanceDto itemInstance) =>
+            new EInfoPacket
             {
                 EInfoType = EInfoPacketType.Specialist,
                 ItemVNum = itemInstance.ItemId
             };
-        }
     }
 }

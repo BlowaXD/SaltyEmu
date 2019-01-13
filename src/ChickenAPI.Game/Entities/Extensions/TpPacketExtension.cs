@@ -17,7 +17,7 @@ namespace ChickenAPI.Game.Entities.Extensions
                 return null;
             }
 
-            return entity.GenerateTpPacket(movable.Movable.Actual.X, movable.Movable.Actual.Y);
+            return entity.GenerateTpPacket(movable.Position.X, movable.Position.Y);
         }
 
         public static TpPacket GenerateTpPacket(this IEntity entity, short x, short y)

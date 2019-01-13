@@ -1,40 +1,37 @@
-﻿using System.Linq;
-using ChickenAPI.Core.Logging;
+﻿using System.Threading.Tasks;
 using ChickenAPI.Data.Skills;
 using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Enums.Packets;
 using ChickenAPI.Game.Battle.Extensions;
 using ChickenAPI.Game.Battle.Interfaces;
-using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Entities.Monster;
 using ChickenAPI.Game.Entities.Npc;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Skills.Args;
 using ChickenAPI.Packets.Game.Client.Battle;
 using ChickenAPI.Packets.Game.Server.Battle;
+using NW.Plugins.PacketHandling.Utils;
 
-namespace NosSharp.PacketHandler.Skill
+namespace NW.Plugins.PacketHandling.Skill
 {
-    public class UseSkillPacketHandling
+    public class UseSkillPacketHandling : GenericGamePacketHandlerAsync<UseSkillPacket>
     {
-        private static readonly Logger Log = Logger.GetLogger<UseSkillPacketHandling>();
-
-        public static void OnUseSkillPacket(UseSkillPacket packet, IPlayerEntity player)
+        protected override async Task Handle(UseSkillPacket packet, IPlayerEntity player)
         {
             if (packet.CastId != 0)
             {
-                player.SendPacket(new MscPacket());
+                await player.SendPacketAsync(new MscPacket());
             }
 
-            if (player.Movable.IsSitting)
+            if (player.IsSitting)
             {
-                player.Movable.IsSitting = false;
+                player.IsSitting = false;
             }
 
             if (!player.SkillComponent.SkillsByCastId.TryGetValue(packet.CastId, out SkillDto skill))
             {
                 // skill does not exist
-                player.SendPacket(player.GenerateEmptyCancelPacket(CancelPacketType.NotInCombatMode));
+                await player.SendPacketAsync(player.GenerateEmptyCancelPacket(CancelPacketType.NotInCombatMode));
                 Log.Warn($"{player.Character.Name} Trying to cast unowned skill");
                 return;
             }
@@ -56,11 +53,11 @@ namespace NosSharp.PacketHandler.Skill
             switch (target)
             {
                 case null:
-                    player.SendPacket(player.GenerateEmptyCancelPacket(CancelPacketType.InCombatMode));
+                    await player.SendPacketAsync(player.GenerateEmptyCancelPacket(CancelPacketType.InCombatMode));
                     return;
                 case IBattleEntity battleEntity:
 
-                    player.EmitEvent(new UseSkillArgs
+                    await player.EmitEventAsync(new UseSkillEvent
                     {
                         Skill = skill,
                         Target = battleEntity

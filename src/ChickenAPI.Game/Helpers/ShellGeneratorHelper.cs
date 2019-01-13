@@ -1,17 +1,15 @@
-﻿using ChickenAPI.Data.Item;
+﻿using System;
 using System.Collections.Generic;
-using System;
 using Autofac;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Maths;
+using ChickenAPI.Data.Item;
 
 namespace ChickenAPI.Game.Helpers
 {
     //TODO REVIEW MY RUSHED CODE
     public class ShellGeneratorHelper
     {
-        private static IRandomGenerator _rand => new Lazy<IRandomGenerator>(() => ChickenContainer.Instance.Resolve<IRandomGenerator>()).Value;
-
         #region ShellOptionLevel
 
         public static readonly Dictionary<int, List<object>> ShellOptionLevel = new Dictionary<int, List<object>>
@@ -10179,6 +10177,166 @@ namespace ChickenAPI.Game.Helpers
             { 608, 9 } /* HALF SHELL */
         };
 
+        private static IRandomGenerator _rand => new Lazy<IRandomGenerator>(() => ChickenContainer.Instance.Resolve<IRandomGenerator>()).Value;
+
+        private int? GenerateOptionValue(int randomOptionId, int d, int shellLevel)
+        {
+            int optionLevel = (d % 4) == 0 ? 4 : d % 4;
+            int? minimum = (int?)ShellOptionType[randomOptionId][(optionLevel - 1) * 2];
+            int? maximum = (int?)ShellOptionType[randomOptionId][1 + (optionLevel - 1) * 2];
+
+            if (!minimum.HasValue || !maximum.HasValue)
+            {
+                return null;
+            }
+
+            int m = _rand.Next(minimum.Value, maximum.Value + 1);
+            int value = (int)Math.Round((double)m / 1000 * shellLevel);
+
+            if (m != 0)
+            {
+                return value == 0 ? 1 : value;
+            }
+
+            return null;
+        }
+
+        public List<EquipmentOptionDto> GenerateShell(byte shellType, int shellRarity, int shellLevel)
+        {
+            int w;
+            List<int> factor;
+            int letterMultiplier = 1;
+            List<EquipmentOptionDto> shellOptions = new List<EquipmentOptionDto>();
+            List<object> optionsAlreadyOn = new List<object>();
+
+            if (shellType < 8)
+            {
+                letterMultiplier = shellLevel <= 70 ? 1 :
+                    shellLevel <= 80 ? 3 :
+                    shellLevel <= 90 ? 5 : 1;
+            }
+            else if (shellType < 10)
+            {
+                letterMultiplier = shellLevel * 2 + 1;
+            }
+
+            switch (shellType)
+            {
+                case 0:
+                    w = 1 + 7 * letterMultiplier - 8 + shellRarity;
+                    break;
+                case 1:
+                    w = 8 + 7 * letterMultiplier - 8 + shellRarity;
+                    break;
+                case 2:
+                    w = 43 + 7 * letterMultiplier - 8 + shellRarity;
+                    break;
+                case 3:
+                    w = 50 + 7 * letterMultiplier - 8 + shellRarity;
+                    break;
+                case 4:
+                    w = 85 + 7 * letterMultiplier - 8 + shellRarity;
+                    break;
+                case 5:
+                    w = 92 + 7 * letterMultiplier - 8 + shellRarity;
+                    break;
+                case 6:
+                    w = 127 + 7 * letterMultiplier - 8 + shellRarity;
+                    break;
+                case 7:
+                    w = 134 + 7 * letterMultiplier - 8 + shellRarity;
+                    break;
+                case 8:
+                    w = 169 + 7 * letterMultiplier - 8 + shellRarity;
+                    break;
+                case 9:
+                    w = 176 + 7 * letterMultiplier - 8 + shellRarity;
+                    break;
+                case 10:
+                    factor = new List<int> { 1, 43, 85, 127 };
+                    w = factor[_rand.Next(factor.Count)] + 7 * letterMultiplier - 8 + shellRarity;
+                    break;
+                case 11:
+                    factor = new List<int> { 8, 50, 92, 134 };
+                    w = factor[_rand.Next(factor.Count)] + 7 * letterMultiplier - 8 + shellRarity;
+                    break;
+                default:
+                    return null;
+            }
+
+            if (!ShellType.ContainsKey(w))
+            {
+                return shellOptions;
+            }
+
+            for (int g = 3; g <= 23; g += 2)
+            {
+                if (ShellType[w][g] == null)
+                {
+                    continue;
+                }
+
+                List<object> possibleOptions = new List<object>();
+
+                for (int i = 1; i <= 20; ++i)
+                {
+                    int? index = (int?)ShellType[w][g];
+                    if (index == null)
+                    {
+                        continue;
+                    }
+
+                    object option = ShellOptionLevel[index.Value]?[i];
+                    if (option == null)
+                    {
+                        continue;
+                    }
+
+                    possibleOptions.Add(option);
+                }
+
+                foreach (object t in optionsAlreadyOn)
+                {
+                    if (possibleOptions.Contains(t))
+                    {
+                        possibleOptions.Remove(t);
+                    }
+                }
+
+                if (possibleOptions.Count == 0)
+                {
+                    continue;
+                }
+
+                object generatedOption = possibleOptions[_rand.Next(possibleOptions.Count)];
+
+                int? shellTyp = (int?)ShellType[w][g + 1];
+                if (shellTyp.HasValue && shellTyp.Value != 1 && _rand.Next(2) != 0)
+                {
+                    continue;
+                }
+
+                int? optionValue = GenerateOptionValue((int)generatedOption, (int)ShellType[w][g], shellLevel);
+                int optionType = (int)generatedOption;
+                int optionLevel = (int)ShellType[w][g];
+
+                if (optionValue == null)
+                {
+                    continue;
+                }
+
+                optionsAlreadyOn.Add(generatedOption);
+                shellOptions.Add(new EquipmentOptionDto
+                {
+                    Level = (byte)optionLevel,
+                    Type = (byte)optionType,
+                    Value = (int)optionValue
+                });
+            }
+
+            return shellOptions;
+        }
+
         #region Perfume
 
         public int PerfumeGoldAmountFromLevel(short level)
@@ -10387,172 +10545,11 @@ namespace ChickenAPI.Game.Helpers
 
         #endregion Perfume
 
-        private int? GenerateOptionValue(int randomOptionId, int d, int shellLevel)
-        {
-            int optionLevel = (d % 4) == 0 ? 4 : d % 4;
-            int? minimum = (int?)ShellOptionType[randomOptionId][(optionLevel - 1) * 2];
-            int? maximum = (int?)ShellOptionType[randomOptionId][1 + (optionLevel - 1) * 2];
-
-            if (!minimum.HasValue || !maximum.HasValue)
-            {
-                return null;
-            }
-
-            int m = _rand.Next(minimum.Value, maximum.Value + 1);
-            int value = (int)Math.Round((double)m / 1000 * shellLevel);
-
-            if (m != 0)
-            {
-                return value == 0 ? 1 : value;
-            }
-
-            return null;
-        }
-
-        public List<EquipmentOptionDto> GenerateShell(byte shellType, int shellRarity, int shellLevel)
-        {
-            int w;
-            List<int> factor;
-            int letterMultiplier = 1;
-            List<EquipmentOptionDto> shellOptions = new List<EquipmentOptionDto>();
-            List<object> optionsAlreadyOn = new List<object>();
-
-            if (shellType < 8)
-            {
-                letterMultiplier = shellLevel <= 70 ? 1 :
-                    shellLevel <= 80 ? 3 :
-                    shellLevel <= 90 ? 5 : 1;
-            }
-            else if (shellType < 10)
-            {
-                letterMultiplier = shellLevel * 2 + 1;
-            }
-
-            switch (shellType)
-            {
-                case 0:
-                    w = 1 + 7 * letterMultiplier - 8 + shellRarity;
-                    break;
-                case 1:
-                    w = 8 + 7 * letterMultiplier - 8 + shellRarity;
-                    break;
-                case 2:
-                    w = 43 + 7 * letterMultiplier - 8 + shellRarity;
-                    break;
-                case 3:
-                    w = 50 + 7 * letterMultiplier - 8 + shellRarity;
-                    break;
-                case 4:
-                    w = 85 + 7 * letterMultiplier - 8 + shellRarity;
-                    break;
-                case 5:
-                    w = 92 + 7 * letterMultiplier - 8 + shellRarity;
-                    break;
-                case 6:
-                    w = 127 + 7 * letterMultiplier - 8 + shellRarity;
-                    break;
-                case 7:
-                    w = 134 + 7 * letterMultiplier - 8 + shellRarity;
-                    break;
-                case 8:
-                    w = 169 + 7 * letterMultiplier - 8 + shellRarity;
-                    break;
-                case 9:
-                    w = 176 + 7 * letterMultiplier - 8 + shellRarity;
-                    break;
-                case 10:
-                    factor = new List<int> { 1, 43, 85, 127 };
-                    w = factor[_rand.Next(factor.Count)] + 7 * letterMultiplier - 8 + shellRarity;
-                    break;
-                case 11:
-                    factor = new List<int> { 8, 50, 92, 134 };
-                    w = factor[_rand.Next(factor.Count)] + 7 * letterMultiplier - 8 + shellRarity;
-                    break;
-                default:
-                    return null;
-            }
-
-            if (!ShellType.ContainsKey(w))
-            {
-                return shellOptions;
-            }
-
-            for (int g = 3; g <= 23; g += 2)
-            {
-                if (ShellType[w][g] == null)
-                {
-                    continue;
-                }
-
-                List<object> possibleOptions = new List<object>();
-
-                for (int i = 1; i <= 20; ++i)
-                {
-                    int? index = (int?)ShellType[w][g];
-                    if (index == null)
-                    {
-                        continue;
-                    }
-
-                    object option = ShellOptionLevel[index.Value]?[i];
-                    if (option == null)
-                    {
-                        continue;
-                    }
-
-                    possibleOptions.Add(option);
-                }
-
-                foreach (object t in optionsAlreadyOn)
-                {
-                    if (possibleOptions.Contains(t))
-                    {
-                        possibleOptions.Remove(t);
-                    }
-                }
-
-                if (possibleOptions.Count == 0)
-                {
-                    continue;
-                }
-
-                object generatedOption = possibleOptions[_rand.Next(possibleOptions.Count)];
-
-                int? shellTyp = (int?)ShellType[w][g + 1];
-                if (shellTyp.HasValue && shellTyp.Value != 1 && _rand.Next(2) != 0)
-                {
-                    continue;
-                }
-
-                int? optionValue = GenerateOptionValue((int)generatedOption, (int)ShellType[w][g], shellLevel);
-                int optionType = (int)generatedOption;
-                int optionLevel = (int)ShellType[w][g];
-
-                if (optionValue == null)
-                {
-                    continue;
-                }
-
-                optionsAlreadyOn.Add(generatedOption);
-                shellOptions.Add(new EquipmentOptionDto
-                {
-                    Level = (byte)optionLevel,
-                    Type = (byte)optionType,
-                    Value = (int)optionValue
-                });
-            }
-
-            return shellOptions;
-        }
-
         #region Singleton
 
         private static ShellGeneratorHelper _instance;
 
-        public static ShellGeneratorHelper Instance
-        {
-            get { return _instance ?? (_instance = new ShellGeneratorHelper()); }
-        }
+        public static ShellGeneratorHelper Instance => _instance ?? (_instance = new ShellGeneratorHelper());
 
         #endregion
     }

@@ -1,16 +1,18 @@
-﻿using ChickenAPI.Game.Entities.Player;
+﻿using System.Threading.Tasks;
+using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Entities.ReqInfo.Events;
 using ChickenAPI.Packets.Game.Server.Entities;
+using NW.Plugins.PacketHandling.Utils;
 
-namespace NosSharp.PacketHandler.Entity
+namespace NW.Plugins.PacketHandling.Entity
 {
-    public class ReqInfoPacketHandling
+    public class ReqInfoPacketHandling : GenericGamePacketHandlerAsync<ReqInfoPacket>
     {
-        public static void ReqInfoPacket(ReqInfoPacket packet, IPlayerEntity player)
+        protected override async Task Handle(ReqInfoPacket packet, IPlayerEntity player)
         {
             if (packet.MateVNum.HasValue)
             {
-                player.EmitEvent(new ReqInfoEvent
+                await player.EmitEventAsync(new ReqInfoEvent
                 {
                     MateVNum = packet.MateVNum,
                     TargetVNum = packet.TargetVNum,
@@ -19,7 +21,7 @@ namespace NosSharp.PacketHandler.Entity
                 return;
             }
 
-            player.EmitEvent(new ReqInfoEvent
+            await player.EmitEventAsync(new ReqInfoEvent
             {
                 TargetVNum = packet.TargetVNum,
                 ReqType = packet.ReqType

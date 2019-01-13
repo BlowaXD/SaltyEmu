@@ -1,11 +1,17 @@
 ﻿using Qmmands;
 using SaltyEmu.Commands.Entities;
+using System;
 using System.Threading.Tasks;
 
 namespace SaltyEmu.Commands.Interfaces
 {
     public interface ICommandContainer
     {
+        /// <summary>
+        ///     Represents the Qmmands Container for DependencyInjection
+        /// </summary>
+        IServiceProvider Services { get; }
+
         /// <summary>
         ///     Asynchronously adds a module to CommandContainer.
         /// </summary>

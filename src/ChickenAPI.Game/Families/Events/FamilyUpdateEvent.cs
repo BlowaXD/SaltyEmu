@@ -2,8 +2,7 @@
 
 namespace ChickenAPI.Game.Families.Events
 {
-    public class FamilyUpdateEvent : ChickenEventArgs
+    public class FamilyUpdateEvent : GameEntityEvent
     {
-        
     }
 }

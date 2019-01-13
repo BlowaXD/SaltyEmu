@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ChickenAPI.Enums.Game.Items
+﻿namespace ChickenAPI.Enums.Game.Items
 {
     public enum ItemClassType
     {

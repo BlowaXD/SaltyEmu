@@ -7,6 +7,6 @@ namespace ChickenAPI.Packets.Game.Server.Shop
     public class ShopEndPacket : PacketBase
     {
         [PacketIndex(0)]
-        public ShopEndPacketType PacketType { get; set; }
+        public ShopEndPacketType Type { get; set; }
     }
 }

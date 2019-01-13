@@ -14,14 +14,6 @@ namespace ChickenAPI.Core.Utils
             }
         }
 
-        public static string Truncate(this string str, int length)
-        {
-            if (str.Length > length)
-            {
-                return str.Substring(0, length);
-            }
-
-            return str;
-        }
+        public static string Truncate(this string str, int length) => str.Length > length ? str.Substring(0, length) : str;
     }
 }

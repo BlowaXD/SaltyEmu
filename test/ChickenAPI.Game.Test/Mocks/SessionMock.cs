@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Threading.Tasks;
 using ChickenAPI.Core.i18n;
+using ChickenAPI.Data.Account;
 using ChickenAPI.Data.Character;
 using ChickenAPI.Enums;
 using ChickenAPI.Game.Entities.Player;
@@ -79,6 +81,12 @@ namespace ChickenAPI.Game.Test.Mocks
                 _session.SendPacket(packet);
             }
         }
+
+        public Task SendPacketAsync<T>(T packet) where T : IPacket => throw new NotImplementedException();
+
+        public Task SendPacketsAsync<T>(IEnumerable<T> packets) where T : IPacket => throw new NotImplementedException();
+
+        public Task SendPacketsAsync(IEnumerable<IPacket> packets) => throw new NotImplementedException();
 
         public void Disconnect()
         {

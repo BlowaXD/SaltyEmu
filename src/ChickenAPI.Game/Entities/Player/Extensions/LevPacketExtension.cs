@@ -11,9 +11,8 @@ namespace ChickenAPI.Game.Entities.Player.Extensions
         private static IAlgorithmService _algorithmService;
         private static IAlgorithmService Algorithm => _algorithmService ?? (_algorithmService = ChickenContainer.Instance.Resolve<IAlgorithmService>());
 
-        public static LevPacket GenerateLevPacket(this IPlayerEntity player)
-        {
-            return new LevPacket
+        public static LevPacket GenerateLevPacket(this IPlayerEntity player) =>
+            new LevPacket
             {
                 Level = player.Level,
                 LevelXp = (int)player.LevelXp,
@@ -27,14 +26,11 @@ namespace ChickenAPI.Game.Entities.Player.Extensions
                 HeroLevelXp = (int)player.HeroLevelXp,
                 HeroLevelXpMax = Algorithm.GetHeroLevelXp(player.Character.Class, player.HeroLevel)
             };
-        }
 
-        public static LevelUpPacket GenerateLevelUpPacket(this IPlayerEntity player)
-        {
-            return new LevelUpPacket
+        public static LevelUpPacket GenerateLevelUpPacket(this IPlayerEntity player) =>
+            new LevelUpPacket
             {
                 CharacterId = player.Id
             };
-        }
     }
 }

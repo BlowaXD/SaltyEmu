@@ -1,7 +1,7 @@
 ﻿using System;
 using ChickenAPI.Enums.Game.Character;
 
-namespace NosSharp.BasicAlgorithm.CharacterAlgorithms
+namespace SaltyEmu.BasicAlgorithmPlugin.CharacterAlgorithms
 {
     public class SpeedAlgorithm : ICharacterStatAlgorithm
     {

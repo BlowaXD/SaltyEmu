@@ -1,9 +1,9 @@
-﻿using Autofac;
+﻿using System;
+using Autofac;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Maths;
 using ChickenAPI.Data.Item;
 using ChickenAPI.Enums.Game.Items;
-using System;
 
 namespace ChickenAPI.Game.Inventory.Extensions
 {
@@ -17,76 +17,76 @@ namespace ChickenAPI.Game.Inventory.Extensions
             {
                 case EquipmentType.MainWeapon:
                 case EquipmentType.SecondaryWeapon:
+                {
+                    int point = RarityPoint(item.Rarity, item.Item.IsHeroic ? (short)(95 + item.Item.LevelMinimum) : item.Item.LevelMinimum);
+                    item.Concentration = 0;
+                    item.HitRate = 0;
+                    item.DamageMinimum = 0;
+                    item.DamageMaximum = 0;
+                    if (item.Rarity >= 0)
                     {
-                        int point = RarityPoint(item.Rarity, item.Item.IsHeroic ? (short)(95 + item.Item.LevelMinimum) : item.Item.LevelMinimum);
-                        item.Concentration = 0;
-                        item.HitRate = 0;
-                        item.DamageMinimum = 0;
-                        item.DamageMaximum = 0;
-                        if (item.Rarity >= 0)
+                        for (int i = 0; i < point; i++)
                         {
-                            for (int i = 0; i < point; i++)
+                            int rndn = Random.Next(0, 3);
+                            if (rndn == 0)
                             {
-                                int rndn = Random.Next(0, 3);
-                                if (rndn == 0)
-                                {
-                                    item.Concentration++;
-                                    item.HitRate++;
-                                }
-                                else
-                                {
-                                    item.DamageMinimum++;
-                                    item.DamageMaximum++;
-                                }
+                                item.Concentration++;
+                                item.HitRate++;
                             }
-                        }
-                        else
-                        {
-                            for (int i = 0; i > item.Rarity * 10; i--)
+                            else
                             {
-                                item.DamageMinimum--;
-                                item.DamageMaximum--;
+                                item.DamageMinimum++;
+                                item.DamageMaximum++;
                             }
                         }
                     }
+                    else
+                    {
+                        for (int i = 0; i > item.Rarity * 10; i--)
+                        {
+                            item.DamageMinimum--;
+                            item.DamageMaximum--;
+                        }
+                    }
+                }
                     break;
 
                 case EquipmentType.Armor:
+                {
+                    int point = RarityPoint(item.Rarity, item.Item.IsHeroic ? (short)(95 + item.Item.LevelMinimum) : item.Item.LevelMinimum);
+                    item.CloseDodge = 0;
+                    item.RangeDodge = 0;
+                    item.RangeDefense = 0;
+                    item.MagicDefense = 0;
+                    item.CloseDefense = 0;
+                    if (item.Rarity >= 0)
                     {
-                        int point = RarityPoint(item.Rarity, item.Item.IsHeroic ? (short)(95 + item.Item.LevelMinimum) : item.Item.LevelMinimum);
-                        item.CloseDodge = 0;
-                        item.RangeDodge = 0;
-                        item.RangeDefense = 0;
-                        item.MagicDefense = 0;
-                        item.CloseDefense = 0;
-                        if (item.Rarity >= 0)
+                        for (int i = 0; i < point; i++)
                         {
-                            for (int i = 0; i < point; i++)
+                            int rndn = Random.Next(0, 3);
+                            if (rndn == 0)
                             {
-                                int rndn = Random.Next(0, 3);
-                                if (rndn == 0)
-                                {
-                                    item.CloseDodge++;
-                                    item.RangeDodge++;
-                                }
-                                else
-                                {
-                                    item.RangeDefense++;
-                                    item.MagicDefense++;
-                                    item.CloseDefense++;
-                                }
+                                item.CloseDodge++;
+                                item.RangeDodge++;
                             }
-                        }
-                        else
-                        {
-                            for (int i = 0; i > item.Rarity * 10; i--)
+                            else
                             {
-                                item.RangeDefense--;
-                                item.MagicDefense--;
-                                item.CloseDefense--;
+                                item.RangeDefense++;
+                                item.MagicDefense++;
+                                item.CloseDefense++;
                             }
                         }
                     }
+                    else
+                    {
+                        for (int i = 0; i > item.Rarity * 10; i--)
+                        {
+                            item.RangeDefense--;
+                            item.MagicDefense--;
+                            item.CloseDefense--;
+                        }
+                    }
+                }
                     break;
             }
         }

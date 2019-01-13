@@ -1,4 +1,6 @@
-﻿using ChickenAPI.Core.Logging;
+﻿using Autofac.Extensions.DependencyInjection;
+using ChickenAPI.Core.IoC;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Enums.Packets;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Helpers;
@@ -21,6 +23,8 @@ namespace SaltyEmu.Commands
         private readonly CommandService _commands;
         private readonly Logger _logger;
 
+        public IServiceProvider Services { get; }
+
         /// <summary>
         ///     This class should be instanciated with our Container.
         /// </summary>
@@ -35,6 +39,8 @@ namespace SaltyEmu.Commands
 
             _commands.CommandExecuted += _commands_CommandExecuted;
             _commands.CommandErrored += _commands_CommandErrored;
+
+            Services = new AutofacServiceProvider(ChickenContainer.Instance);
         }
 
         public async Task AddModuleAsync<T>() where T : SaltyModuleBase
@@ -158,11 +164,9 @@ namespace SaltyEmu.Commands
         /// </summary>
         /// <param name="result">Result with its associated exception.</param>
         /// <param name="context">It represents the context. Must be casted to our custom context (SaltyCommandContext)</param>
-        /// <param name="services">It represents the Container (Usually Microsoft's Dependency Injection). Unused in our case.</param>
         /// <returns></returns>
         private Task _commands_CommandErrored(ExecutionFailedResult result, ICommandContext context, IServiceProvider services)
         {
-            var str = new StringBuilder();
             switch (result.Exception)
             {
                 default:
@@ -180,7 +184,6 @@ namespace SaltyEmu.Commands
         /// <param name="command">It represents the command that has been executed.</param>
         /// <param name="result">It represents the returned result. It can an 'empty' result when the command returned a Task, or a custom result.</param>
         /// <param name="context">It represents the context. Must be casted to our custom context (SaltyCommandContext)</param>
-        /// <param name="services">It represents the Container (Usually Microsoft's Dependency Injection). Unused in our case.</param>
         /// <returns></returns>
         private Task _commands_CommandExecuted(Command command, CommandResult result, ICommandContext context, IServiceProvider services)
         {
@@ -220,7 +223,7 @@ namespace SaltyEmu.Commands
 
             var ctx = new SaltyCommandContext(message, player, _commands);
 
-            IResult result = await _commands.ExecuteAsync(ctx.Input, ctx);
+            IResult result = await _commands.ExecuteAsync(ctx.Input, ctx, Services);
 
             if (result.IsSuccessful)
             {
@@ -248,7 +251,7 @@ namespace SaltyEmu.Commands
                     ctx.Command = ex.Command;
                     _logger.Debug("Some checks have failed: " + string.Join("\n", ex.FailedChecks.Select(x => x.Error)));
                     break;
-                case TypeParserFailedResult ex:
+                case TypeParseFailedResult ex:
                     errorBuilder.Append(ex.Reason);
                     ctx.Command = ex.Parameter.Command;
                     help = true;
@@ -256,7 +259,7 @@ namespace SaltyEmu.Commands
                 case CommandNotFoundResult ex:
                     errorBuilder.Append($"The command was not found: {ctx.Input}");
                     break;
-                case ParseFailedResult ex:
+                case ArgumentParseFailedResult ex:
                     ctx.Command = ex.Command;
                     errorBuilder.Append($"The argument for the parameter {ex.Parameter.Name} was invalid.");
                     help = true;

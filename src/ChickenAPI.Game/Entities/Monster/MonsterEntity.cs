@@ -7,6 +7,7 @@ using ChickenAPI.Data.NpcMonster;
 using ChickenAPI.Data.Skills;
 using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Enums.Game.Visibility;
+using ChickenAPI.Game.Battle.Interfaces;
 using ChickenAPI.Game.Buffs;
 using ChickenAPI.Game.ECS.Components;
 using ChickenAPI.Game.ECS.Entities;
@@ -59,6 +60,23 @@ namespace ChickenAPI.Game.Entities.Monster
             #endregion Stat
         }
 
+        private MovableComponent Movable { get; }
+
+        public override void Dispose()
+        {
+            GC.SuppressFinalize(this);
+        }
+
+        public NpcMonsterDto NpcMonster { get; }
+        public MapMonsterDto MapMonster { get; }
+
+        public byte Level { get; set; }
+        public long LevelXp { get; set; }
+        public byte HeroLevel { get; set; }
+        public long HeroLevelXp { get; set; }
+        public byte JobLevel { get; set; }
+        public long JobLevelXp { get; set; }
+
         #region stat
 
         public int MinHit { get; set; }
@@ -86,15 +104,6 @@ namespace ChickenAPI.Game.Entities.Monster
         public short MagicalDefence { get; set; }
 
         #endregion stat
-
-        public override void Dispose()
-        {
-            GC.SuppressFinalize(this);
-        }
-
-        public MovableComponent Movable { get; }
-        public NpcMonsterDto NpcMonster { get; }
-        public MapMonsterDto MapMonster { get; }
 
         #region Visibility
 
@@ -147,6 +156,26 @@ namespace ChickenAPI.Game.Entities.Monster
         public bool IsAlive => Hp > 0;
         public bool CanAttack => true;
 
+
+        #region Target
+
+        private IBattleEntity _target;
+        public bool HasTarget => Target != null;
+
+        public IBattleEntity Target
+        {
+            get => _target;
+            set
+            {
+                _target = value;
+                LastTarget = DateTime.Now;
+            }
+        }
+
+        public DateTime LastTarget { get; private set; }
+
+        #endregion
+
         public byte HpPercentage => Convert.ToByte((int)(Hp / (float)HpMax * 100));
         public byte MpPercentage => Convert.ToByte((int)(Mp / (float)MpMax * 100.0));
         public byte BasicArea { get; }
@@ -156,24 +185,30 @@ namespace ChickenAPI.Game.Entities.Monster
 
         #region Movements
 
-        public bool IsSitting { get; }
-        public bool IsWalking { get; }
+        public DirectionType DirectionType => Movable.DirectionType;
+
+        public bool IsSitting
+        {
+            get => Movable.IsSitting;
+            set => Movable.IsSitting = value;
+        }
+
+        public bool IsWalking => !Movable.IsSitting;
         public bool CanMove => !Movable.IsSitting;
-        public bool IsStanding { get; }
+        public bool IsStanding => !Movable.IsSitting;
         public byte Speed { get; set; }
-        public DateTime LastMove { get; }
-        public Position<short> Position => Movable.Actual;
+        public DateTime LastMove { get; set; }
+
+        public Position<short> Position
+        {
+            get => Movable.Actual;
+            set => Movable.Actual = value;
+        }
+
         public Position<short> Destination => Movable.Destination;
 
         #endregion Movements
 
         #endregion Battle
-
-        public byte Level { get; set; }
-        public long LevelXp { get; set; }
-        public byte HeroLevel { get; set; }
-        public long HeroLevelXp { get; set; }
-        public byte JobLevel { get; set; }
-        public long JobLevelXp { get; set; }
     }
 }

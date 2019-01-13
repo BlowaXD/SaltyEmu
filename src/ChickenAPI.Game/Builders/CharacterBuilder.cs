@@ -1,19 +1,20 @@
-﻿using ChickenAPI.Data.Character;
+﻿using ChickenAPI.Data.Account;
+using ChickenAPI.Data.Character;
 using ChickenAPI.Enums.Game.Character;
 
 namespace ChickenAPI.Game.Builders
 {
     public class CharacterBuilder
     {
-        private CharacterClassType _class;
         private long _accountId;
-        private string _name;
-        private GenderType _gender;
+        private CharacterClassType _class;
         private FactionType _faction;
-        private byte _slot;
+        private GenderType _gender;
         private long _gold;
         private byte _jobLevel;
         private byte _level;
+        private string _name;
+        private byte _slot;
 
         public CharacterBuilder WithFaction(FactionType faction)
         {
@@ -71,9 +72,8 @@ namespace ChickenAPI.Game.Builders
         }
 
 
-        public CharacterDto Build()
-        {
-            return new CharacterDto
+        public CharacterDto Build() =>
+            new CharacterDto
             {
                 Name = _name,
                 AccountId = _accountId,
@@ -85,11 +85,7 @@ namespace ChickenAPI.Game.Builders
                 Level = _level,
                 JobLevel = _jobLevel
             };
-        }
 
-        public static implicit operator CharacterDto(CharacterBuilder builder)
-        {
-            return builder.Build();
-        }
+        public static implicit operator CharacterDto(CharacterBuilder builder) => builder.Build();
     }
 }

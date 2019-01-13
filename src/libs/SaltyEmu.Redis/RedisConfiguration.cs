@@ -1,4 +1,4 @@
-﻿namespace SaltyEmu.RedisWrappers
+﻿namespace SaltyEmu.Redis
 {
     public class RedisConfiguration
     {
