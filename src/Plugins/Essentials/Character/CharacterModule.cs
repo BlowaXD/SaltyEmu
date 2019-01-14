@@ -145,7 +145,7 @@ namespace Essentials.Character
             return Task.FromResult(new SaltyCommandResult(true, $"{player.Character.Name}'s gold has been increased by {count}"));
         }
 
-        [Command("SetGold")]
+        [Command("SetGold", "Gold")]
         [Description("Set the given amount of gold to an inventory.")]
         public Task<SaltyCommandResult> SetGoldAsync(
             [Description("Desired amount to set.")] long count,

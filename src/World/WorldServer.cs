@@ -89,7 +89,7 @@ namespace World
 
             Server.Port = intPort;
             Server.Ip = Environment.GetEnvironmentVariable("SERVER_IP") ?? "127.0.0.1";
-            Server.WorldGroup = Environment.GetEnvironmentVariable("SERVER_WORLDGROUP") ?? "SaltyNos";
+            Server.WorldGroup = Environment.GetEnvironmentVariable("SERVER_WORLDGROUP") ?? "NosWings";
             Server.TickRate = tickRate;
             Log.Info($"SERVER_IP : {Server.Ip}");
             Log.Info($"SERVER_PORT : {Server.Port}");

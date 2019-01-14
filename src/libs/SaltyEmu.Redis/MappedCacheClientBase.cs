@@ -16,7 +16,7 @@ namespace SaltyEmu.Redis
 
         protected string ToKey(long id)
         {
-            return Prefix + "_" + id;
+            return Prefix + ":" + id;
         }
 
         protected string ToKey(TObject obj) => ToKey(obj.Id);
@@ -37,7 +37,7 @@ namespace SaltyEmu.Redis
                 }),
                 Serializer = new JsonNetSerializer(new JsonSerializerSettings
                 {
-                })
+                }),
             });
         }
 

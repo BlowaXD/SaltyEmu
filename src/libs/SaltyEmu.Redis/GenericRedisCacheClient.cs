@@ -19,7 +19,7 @@ namespace SaltyEmu.Redis
 
         protected string ToKey(Guid id)
         {
-            return Prefix + "_" + id;
+            return Prefix + ":" + id;
         }
 
         protected string ToKey(TObject obj) => ToKey(obj.Id);

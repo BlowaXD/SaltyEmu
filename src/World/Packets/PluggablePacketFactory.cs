@@ -9,6 +9,7 @@ using System.Text.RegularExpressions;
 using ChickenAPI.Core.Logging;
 using ChickenAPI.Packets;
 using ChickenAPI.Packets.Attributes;
+using ChickenAPI.Packets.Game.Server.Entities;
 using World.Extensions;
 
 namespace World.Packets
@@ -39,6 +40,7 @@ namespace World.Packets
                 builder.Append(serializationInformation.Header);
 
                 int lastIndex = 0;
+                
                 foreach (PacketPropertyContainer property in serializationInformation.PacketProps)
                 {
                     PacketIndexAttribute packetIndex = property.PacketIndex;

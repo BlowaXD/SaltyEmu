@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using ChickenAPI.Core.i18n;
 using SaltyEmu.Redis;
 using SaltyEmu.RedisWrappers.Languages;
-using SaltyEmu.RedisWrappers.Redis;
 using ServiceStack.Redis;
 using ServiceStack.Redis.Generic;
 

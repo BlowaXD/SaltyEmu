@@ -7,6 +7,7 @@ using ChickenAPI.Core.Plugins;
 using ChickenAPI.Core.Utils;
 using ChickenAPI.Data.Server;
 using SaltyEmu.Redis;
+using SaltyEmu.RedisWrappers.Redis;
 
 namespace SaltyEmu.RedisWrappers
 {
@@ -34,7 +35,7 @@ namespace SaltyEmu.RedisWrappers
             _configuration = ConfigurationHelper.Load<RedisConfiguration>(_configurationPath, true);
             ChickenContainer.Builder.Register(s => new RedisSessionService(_configuration)).As<ISessionService>();
             Log.Info("ISessionService registered !");
-            ChickenContainer.Builder.Register(s => new RedisServerApi(_configuration)).As<IServerApiService>();
+            ChickenContainer.Builder.Register(s => new ServerApiService(_configuration)).As<IServerApiService>();
             Log.Info("IServerApiService registered !");
             ChickenContainer.Builder.Register(s => new RedisLanguageService(_configuration)).As<ILanguageService>();
             Log.Info("ILanguageService registered !");

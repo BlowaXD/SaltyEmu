@@ -53,6 +53,10 @@ namespace SaltyEmu.Communication.Communicators
             Log.Info("IPC Server launched !");
         }
 
+        public async Task RegisterRequestsAsync<T>(T packet) where T : IIpcRequest => throw new NotImplementedException();
+
+        public async Task RegisterPacketsAsync<T>(T packet) where T : IIpcPacket => throw new NotImplementedException();
+
         public Task ResponseAsync<T>(T response) where T : IIpcResponse
         {
             return Task.Run(() => { Publish(_packetContainerFactory.ToPacket<T>(response), _responseQueueName); });

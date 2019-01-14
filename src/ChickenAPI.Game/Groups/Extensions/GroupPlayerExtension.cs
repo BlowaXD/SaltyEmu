@@ -103,8 +103,12 @@ namespace ChickenAPI.Game.Groups.Extensions
 
             List<PInitPacket.PInitMateSubPacket> mates = new List<PInitPacket.PInitMateSubPacket>();
             List<PInitPacket.PInitPlayerSubPacket> players = new List<PInitPacket.PInitPlayerSubPacket>();
-            mates.AddRange(player.ActualMates.Where(s => s != null).Select(s => s?.GeneratePInitSubPacket(ref tmp)).Where(s => s != null));
-            players.AddRange(player.Group.Players.Where(s => s != null && s != player).Select(s => s.GeneratePinitSubPacket(ref tmp)).Where(s => s != null));
+            mates.AddRange(player.ActualMates.Where(s => s != null)?.Select(s => s.GeneratePInitSubPacket(ref tmp)).Where(s => s != null));
+
+            if (player.HasGroup)
+            {
+                players.AddRange(player.Group.Players.Where(s => s != null && s != player)?.Select(s => s.GeneratePinitSubPacket(ref tmp)).Where(s => s != null));
+            }
 
             return new PInitPacket
             {

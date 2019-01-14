@@ -71,7 +71,7 @@ namespace ChickenAPI.Game.Maps
         {
             lock(LockObj)
             {
-                return Task.WhenAll(_players.Select(s => Task.Run(() => rule.Match(s) ? s.SendPacketAsync(packet) : Task.CompletedTask)));
+                return Task.WhenAll(_players.Select(s => Task.Run(() => rule == null || rule.Match(s) ? s.SendPacketAsync(packet) : Task.CompletedTask)));
             }
         }
 
@@ -81,7 +81,7 @@ namespace ChickenAPI.Game.Maps
         {
             lock(LockObj)
             {
-                return Task.WhenAll(_players.Select(s => Task.Run(() => rule.Match(s) ? s.SendPacketsAsync(packets) : Task.CompletedTask)));
+                return Task.WhenAll(_players.Select(s => Task.Run(() => rule == null || rule.Match(s) ? s.SendPacketsAsync(packets) : Task.CompletedTask)));
             }
         }
 
@@ -91,7 +91,7 @@ namespace ChickenAPI.Game.Maps
         {
             lock(LockObj)
             {
-                return Task.WhenAll(_players.Select(s => Task.Run(() => rule.Match(s) ? s.SendPacketsAsync(packets) : Task.CompletedTask)));
+                return Task.WhenAll(_players.Select(s => Task.Run(() => rule == null || rule.Match(s) ? s.SendPacketsAsync(packets) : Task.CompletedTask)));
             }
         }
 

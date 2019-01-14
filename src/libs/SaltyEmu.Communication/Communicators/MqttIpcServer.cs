@@ -103,6 +103,10 @@ namespace SaltyEmu.Communication.Communicators
         }
 
 
+        public async Task RegisterRequestsAsync<T>(T packet) where T : IIpcRequest => throw new NotImplementedException();
+
+        public async Task RegisterPacketsAsync<T>(T packet) where T : IIpcPacket => throw new NotImplementedException();
+
         public async Task ResponseAsync<T>(T response) where T : IIpcResponse
         {
             await SendAsync(_packetFactory.ToPacket<T>(response));

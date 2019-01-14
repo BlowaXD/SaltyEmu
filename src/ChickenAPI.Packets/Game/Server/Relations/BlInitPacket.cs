@@ -9,6 +9,7 @@ namespace ChickenAPI.Packets.Game.Server.Relations
         [PacketIndex(0, SeparatorNestedElements = " ")]
         public List<BlInitSubPacket> SubPackets { get; set; }
 
+        [PacketHeader("blinit_subpacket")]
         public class BlInitSubPacket
         {
             [PacketIndex(0)]

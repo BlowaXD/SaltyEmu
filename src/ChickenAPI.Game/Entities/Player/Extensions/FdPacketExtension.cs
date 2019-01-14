@@ -38,6 +38,25 @@ namespace ChickenAPI.Game.Entities.Player.Extensions
 
         public static CharacterRep GetReputIcon(this IPlayerEntity player)
         {
+            CharacterDignity dignity = player.GetDignityIcon();
+            if (dignity != CharacterDignity.Basic)
+            {
+                switch (dignity)
+                {
+                    case CharacterDignity.Basic:
+                        break;
+                    case CharacterDignity.Suspected:
+                        return CharacterRep.Suspected;
+                    case CharacterDignity.BluffedNameOnly:
+                        return CharacterRep.BluffedNameOnly;
+                    case CharacterDignity.NotQualifiedFor:
+                        return CharacterRep.NotQualifiedFor;
+                    case CharacterDignity.Useless:
+                        return CharacterRep.Useless;
+                    case CharacterDignity.StupidMinded:
+                        return CharacterRep.StupidMinded;
+                }
+            }
             /*
             if (player >= 5000001)
             {
@@ -189,12 +208,15 @@ namespace ChickenAPI.Game.Entities.Player.Extensions
             return player.Character.Reput <= 5000000 ? CharacterRep.EliteB : CharacterRep.EliteR;
         }
 
-        public static FdPacket GenerateFdPacket(this IPlayerEntity player) => new FdPacket
+        public static FdPacket GenerateFdPacket(this IPlayerEntity player)
         {
-            Dignity = (int)player.Character.Dignity,
-            Reput = player.Character.Reput,
-            DignityIcon = Math.Abs((int)player.GetDignityIcon()),
-            ReputIcon = (int)player.GetReputIcon()
-        };
+            return new FdPacket
+            {
+                Reput = player.Character.Reput,
+                ReputIcon = player.GetDignityIcon() == CharacterDignity.Basic ? (int)player.GetReputIcon() : (int)player.GetDignityIcon(),
+                Dignity = (int)player.Character.Dignity,
+                DignityIcon = Math.Abs((int)player.GetDignityIcon())
+            };
+        }
     }
 }

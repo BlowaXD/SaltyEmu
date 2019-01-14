@@ -3,7 +3,7 @@ using ChickenAPI.Enums.Game.Character;
 
 namespace ChickenAPI.Data.Server
 {
-    public class WorldServerDto
+    public class WorldServerDto : ISynchronizedDto
     {
         public Guid Id { get; set; }
         public short ChannelId { get; set; }

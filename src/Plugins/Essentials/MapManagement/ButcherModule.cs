@@ -7,6 +7,7 @@ using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Enums.Packets;
 using ChickenAPI.Game.Battle.Extensions;
 using ChickenAPI.Game.Battle.Hitting;
+using ChickenAPI.Game.Battle.Interfaces;
 using ChickenAPI.Game.Entities.Monster;
 using Qmmands;
 using SaltyEmu.Commands.Checks;
@@ -30,7 +31,7 @@ namespace Essentials.MapManagement
             SkillType = 1
         };
 
-        private void KillMonster(IMonsterEntity monster)
+        private void KillMonster(IBattleEntity monster)
         {
             monster.Hp = 0;
             Context.Player.Broadcast(monster.GenerateSuPacket(new HitRequest

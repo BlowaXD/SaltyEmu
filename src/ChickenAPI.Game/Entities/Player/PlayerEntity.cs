@@ -30,6 +30,7 @@ using ChickenAPI.Game.Movements.DataObjects;
 using ChickenAPI.Game.Network;
 using ChickenAPI.Game.Network.BroadcastRules;
 using ChickenAPI.Game.Quicklist;
+using ChickenAPI.Game.Relations;
 using ChickenAPI.Game.Shops;
 using ChickenAPI.Game.Skills;
 using ChickenAPI.Game.Visibility;
@@ -55,6 +56,7 @@ namespace ChickenAPI.Game.Entities.Player
         {
             Session = session;
             Character = dto;
+            Relations = new RelationList();
             Quicklist = new QuicklistComponent(this, quicklist);
 
             HpMax = Algorithm.GetHpMax(dto.Class, dto.Level);

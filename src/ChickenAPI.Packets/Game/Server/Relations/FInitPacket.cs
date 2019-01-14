@@ -10,6 +10,7 @@ namespace ChickenAPI.Packets.Game.Server.Relations
         [PacketIndex(0, SeparatorNestedElements = " ")]
         public List<FInitSubPacket> Packets { get; set; }
 
+        [PacketHeader("finit_subpacket")]
         public class FInitSubPacket : PacketBase
         {
             [PacketIndex(0)]

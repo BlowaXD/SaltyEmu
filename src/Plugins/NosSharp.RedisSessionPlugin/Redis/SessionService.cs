@@ -11,7 +11,7 @@ namespace SaltyEmu.RedisWrappers.Redis
 {
     public class SessionService : ISessionService
     {
-        private const string KeyPrefix = nameof(PlayerSessionDto) + "_";
+        private const string KeyPrefix = nameof(PlayerSessionDto) + ":";
         private const string AllKeys = KeyPrefix + "*";
         private readonly ICacheClient _cache;
 
@@ -68,6 +68,6 @@ namespace SaltyEmu.RedisWrappers.Redis
 
         private static string ToKey(int sessionId) => KeyPrefix + sessionId;
 
-        private static string ToKey(PlayerSessionDto obj) => KeyPrefix + obj.Id;
+        private static string ToKey(PlayerSessionDto obj) => ToKey(obj.Id);
     }
 }

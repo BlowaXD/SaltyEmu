@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using ChickenAPI.Core.Logging;
 using ChickenAPI.Data.Server;
 using SaltyEmu.Redis;
 using ServiceStack.Redis;
@@ -11,7 +10,6 @@ namespace SaltyEmu.RedisWrappers
 {
     public class RedisServerApi : IServerApiService
     {
-        private static readonly Logger Log = Logger.GetLogger<RedisServerApi>();
         private readonly IRedisTypedClient<WorldServerDto> _client;
         private readonly IRedisSet<WorldServerDto> _set;
 
