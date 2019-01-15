@@ -15,6 +15,7 @@ namespace NW.Plugins.PacketHandling.Shops
             var npc = player.CurrentMap.GetEntity<INpcEntity>(packet.NpcId, VisualType.Npc);
             if (npc == null)
             {
+                Log.Info("npc null");
                 return Task.CompletedTask;
             }
 

@@ -42,6 +42,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Skills
                 {
                     await player.SendPacketAsync(target.GenerateTargetCancelPacket(CancelPacketType.InCombatMode));
                 }
+
                 return;
             }
 
@@ -57,15 +58,17 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Skills
                         {
                             await player.SendPacketAsync(target.GenerateTargetCancelPacket(CancelPacketType.InCombatMode));
                         }
+
                         return;
                     }
 
-                    if (entity.Type == VisualType.Character && !entity.CurrentMap.IsPvpEnabled && skill.HitType != 1)
+                    if (entity.Type == VisualType.Character && target.Type == VisualType.Character && !entity.CurrentMap.IsPvpEnabled && skill.HitType != 1)
                     {
                         if (!(player is null))
                         {
                             await player.SendPacketAsync(target.GenerateTargetCancelPacket(CancelPacketType.InCombatMode));
                         }
+
                         return;
                     }
 
@@ -94,6 +97,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Skills
                                 {
                                     await player.SendPacketAsync(target.GenerateTargetCancelPacket(CancelPacketType.InCombatMode));
                                 }
+
                                 return;
                             }
 
@@ -108,6 +112,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Skills
                     {
                         await player.SendPacketAsync(target.GenerateTargetCancelPacket(CancelPacketType.InCombatMode));
                     }
+
                     return;
             }
 

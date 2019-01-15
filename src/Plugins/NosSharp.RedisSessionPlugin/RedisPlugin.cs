@@ -37,8 +37,8 @@ namespace SaltyEmu.RedisWrappers
             Log.Info("ISessionService registered !");
             ChickenContainer.Builder.Register(s => new RedisServerApi(_configuration)).As<IServerApiService>();
             Log.Info("IServerApiService registered !");
-            ChickenContainer.Builder.Register(s => new RedisLanguageService(_configuration)).As<ILanguageService>();
-            Log.Info("ILanguageService registered !");
+            ChickenContainer.Builder.Register(s => new RedisGameLanguageService(_configuration)).As<IGameLanguageService>();
+            Log.Info("IGameLanguageService registered !");
         }
 
         public void ReloadConfig()

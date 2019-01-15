@@ -131,9 +131,9 @@ namespace ChickenAPI.Game.Player.Extension
             charac.SendPacket(charac.GenerateEffectPacket(8));
             charac.SendPacket(charac.GenerateEffectPacket(196));
             charac.SendPacket(new ScrPacket { Unknow1 = 0, Unknow2 = 0, Unknow3 = 0, Unknow4 = 0, Unknow5 = 0, Unknow6 = 0 });
-            charac.SendChatMessageFormat(ChickenI18NKey.CHARACTER_YOUR_CLASS_CHANGED_TO_X, SayColorType.Blue, type);
+            charac.SendChatMessageFormat(PlayerMessages.CHARACTER_YOUR_CLASS_CHANGED_TO_X, SayColorType.Blue, type);
             charac.Character.Faction = charac.Family?.FamilyFaction ?? (FactionType)(1 + _randomGenerator.Next(0, 2));
-            charac.SendChatMessageFormat(ChickenI18NKey.CHARACTER_YOUR_FACTION_CHANGED_TO_X, SayColorType.Blue, charac.Character.Faction);
+            charac.SendChatMessageFormat(PlayerMessages.CHARACTER_YOUR_FACTION_CHANGED_TO_X, SayColorType.Blue, charac.Character.Faction);
             charac.SendPacket(charac.GenerateFsPacket());
             charac.SendPacket(charac.GenerateStatCharPacket());
             charac.SendPacket(charac.GenerateEffectPacket(4799 + (byte)charac.Character.Faction));

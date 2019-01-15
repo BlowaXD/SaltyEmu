@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Autofac;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Data.Character;
@@ -29,9 +30,17 @@ namespace ChickenAPI.Game.Skills
             this.AddSkill(SkillService.GetById(tmp));
             this.AddSkill(SkillService.GetById(tmp + 1));
 
-            if (player.Character.Class == CharacterClassType.Adventurer)
+            if (player.Character.Class != CharacterClassType.Adventurer)
             {
-                this.AddSkill(SkillService.GetById(tmp + 9));
+                return;
+            }
+
+            this.AddSkill(SkillService.GetById(tmp + 9));
+
+            IEnumerable<SkillDto> skills = SkillService.GetByClassIdAsync((byte)player.Character.Class).ConfigureAwait(false).GetAwaiter().GetResult();
+            foreach (SkillDto skillDto in skills.Where(s => s.LevelMinimum < player.JobLevel && s.Id >= 200 && s.Id != 209 && s.Id <= 210))
+            {
+                this.AddSkill(skillDto);
             }
         }
 

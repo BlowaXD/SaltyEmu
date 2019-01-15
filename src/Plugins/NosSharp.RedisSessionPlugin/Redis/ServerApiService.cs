@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using ChickenAPI.Core.Logging;
 using ChickenAPI.Data;
 using ChickenAPI.Data.Server;
@@ -51,6 +52,11 @@ namespace SaltyEmu.RedisWrappers.Redis
         public void UnregisterServer(Guid id)
         {
             _cache.RemoveAllAsync(new[] { ToKey(id) });
+        }
+
+        private async Task<IEnumerable<WorldServerDto>> GetServersAsync()
+        {
+            return (await _cache.GetAllAsync<WorldServerDto>()).Where(s => s.Value.HasValue).Select(s => s.Value.Value);
         }
 
         public IEnumerable<WorldServerDto> GetServers()

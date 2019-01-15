@@ -1,6 +1,6 @@
 ﻿namespace ChickenAPI.Core.i18n
 {
-    public interface ILanguageService
+    public interface IGameLanguageService
     {
         /// <summary>
         ///     Will return the string by its Key & Region
@@ -18,7 +18,7 @@
         /// <param name="key"></param>
         /// <param name="type"></param>
         /// <returns></returns>
-        string GetLanguage(ChickenI18NKey key, LanguageKey type);
+        string GetLanguage(PlayerMessages key, LanguageKey type);
 
         /// <summary>
         ///     Will register the key and value by its region type
@@ -36,6 +36,6 @@
         /// <param name="key"></param>
         /// <param name="value"></param>
         /// <param name="type"></param>
-        void SetLanguage(ChickenI18NKey key, string value, LanguageKey type);
+        void SetLanguage(PlayerMessages key, string value, LanguageKey type);
     }
 }

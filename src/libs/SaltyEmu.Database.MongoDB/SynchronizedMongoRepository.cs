@@ -1,21 +1,38 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Data;
 using MongoDB.Driver;
 
 namespace SaltyEmu.Database.MongoDB
 {
-    public class MongoAsyncRepository<TObject> : IMappedRepository<TObject> where TObject : class, IMappedDto
+    public abstract class SynchronizedMongoRepository<TObject> : ISynchronizedRepository<TObject> where TObject : class, ISynchronizedDto
     {
+        protected readonly Logger Log = Logger.GetLogger($"Mongo-{typeof(TObject).Name}");
         protected readonly IMongoDatabase Database;
         protected readonly IMongoCollection<TObject> Collection;
 
-        public MongoAsyncRepository(string dbName)
+        protected SynchronizedMongoRepository(MongoConfigurationBuilder builder) : this(builder.Build())
         {
-            var client = new MongoClient("mongodb://localhost:27017");
-            Database = client.GetDatabase(dbName);
+        }
+
+        private SynchronizedMongoRepository(MongoConfiguration conf)
+        {
+            MongoClientSettings settings = MongoClientSettings.FromConnectionString($"mongodb://{conf.Endpoint}:{conf.Port}");
+            var client = new MongoClient(settings);
+            client.Cluster.Initialize();
+            List<string> tmp = client.ListDatabaseNames().ToList();
+            foreach (string s in tmp)
+            {
+                Log.Info(s);
+            }
+
+            Database = client.GetDatabase(conf.DatabaseName);
             Collection = Database.GetCollection<TObject>(typeof(TObject).Name);
+            Log.Info($"Connected to {conf.Endpoint}:{conf.Port}");
         }
 
         public async Task<IEnumerable<TObject>> GetAsync()
@@ -23,12 +40,12 @@ namespace SaltyEmu.Database.MongoDB
             return await (await Collection.FindAsync(FilterDefinition<TObject>.Empty)).ToListAsync();
         }
 
-        public async Task<TObject> GetByIdAsync(long id)
+        public async Task<TObject> GetByIdAsync(Guid id)
         {
             return await (await Collection.FindAsync(o => o.Id == id)).FirstOrDefaultAsync();
         }
 
-        public async Task<IEnumerable<TObject>> GetByIdsAsync(IEnumerable<long> ids)
+        public async Task<IEnumerable<TObject>> GetByIdsAsync(IEnumerable<Guid> ids)
         {
             return await (await Collection.FindAsync(o => ids.Any(s => s == o.Id))).ToListAsync();
         }
@@ -45,12 +62,12 @@ namespace SaltyEmu.Database.MongoDB
             await Collection.InsertManyAsync(objs);
         }
 
-        public async Task DeleteByIdAsync(long id)
+        public async Task DeleteByIdAsync(Guid id)
         {
             await Collection.DeleteOneAsync(obj => obj.Id == id);
         }
 
-        public async Task DeleteByIdsAsync(IEnumerable<long> ids)
+        public async Task DeleteByIdsAsync(IEnumerable<Guid> ids)
         {
             await Collection.DeleteManyAsync(o => ids.Any(id => o.Id == id));
         }
@@ -60,33 +77,44 @@ namespace SaltyEmu.Database.MongoDB
             return Collection.FindSync(FilterDefinition<TObject>.Empty).ToList();
         }
 
-        public TObject GetById(long id)
+        public TObject GetById(Guid id)
         {
             return Collection.FindSync(o => o.Id == id).FirstOrDefault();
         }
 
-        public IEnumerable<TObject> GetByIds(IEnumerable<long> ids)
+        public IEnumerable<TObject> GetByIds(IEnumerable<Guid> ids)
         {
             return Collection.FindSync(o => ids.Any(id => id == o.Id)).ToList();
         }
 
         public TObject Save(TObject obj)
         {
-            return Collection.FindOneAndUpdate(o => o.Id == obj.Id, new ObjectUpdateDefinition<TObject>(obj));
+            TObject tmp = Collection.FindOneAndUpdate(o => o.Id == obj.Id, new ObjectUpdateDefinition<TObject>(obj));
+            if (tmp == null)
+            {
+                Collection.InsertOne(obj);
+            }
+
+            return obj;
         }
 
         public void Save(IEnumerable<TObject> objs)
         {
-            Collection.DeleteMany(s => objs.Any(obj => s.Id == obj.Id));
+            var ids = objs.Select(obj => obj.Id);
+            foreach (var i in ids)
+            {
+                Collection.DeleteOne(s => s.Id == i);
+            }
+
             Collection.InsertMany(objs);
         }
 
-        public void DeleteById(long id)
+        public void DeleteById(Guid id)
         {
             Collection.DeleteOne(o => o.Id == id);
         }
 
-        public void DeleteByIds(IEnumerable<long> ids)
+        public void DeleteByIds(IEnumerable<Guid> ids)
         {
             Collection.DeleteMany(s => ids.Any(id => id == s.Id));
         }

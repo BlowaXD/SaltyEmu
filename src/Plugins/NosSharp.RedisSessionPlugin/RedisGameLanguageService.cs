@@ -8,11 +8,11 @@ using ServiceStack.Redis.Generic;
 
 namespace SaltyEmu.RedisWrappers
 {
-    public class RedisLanguageService : ILanguageService
+    public class RedisGameLanguageService : IGameLanguageService
     {
         private readonly IRedisTypedClient<string> _client;
 
-        public RedisLanguageService(RedisConfiguration configuration)
+        public RedisGameLanguageService(RedisConfiguration configuration)
         {
             _client = new RedisClient(new RedisEndpoint
             {
@@ -22,7 +22,7 @@ namespace SaltyEmu.RedisWrappers
             }).As<string>();
         }
 
-        private static Dictionary<ChickenI18NKey, string> GetSetByLanguageKey(LanguageKey key)
+        private static Dictionary<PlayerMessages, string> GetSetByLanguageKey(LanguageKey key)
         {
             switch (key)
             {
@@ -45,7 +45,7 @@ namespace SaltyEmu.RedisWrappers
             return null;
         }
 
-        public string GetLanguage(ChickenI18NKey key, LanguageKey type)
+        public string GetLanguage(PlayerMessages key, LanguageKey type)
         {
             string value = "";
             if (GetSetByLanguageKey(type)?.TryGetValue(key, out value) == false)
@@ -61,7 +61,7 @@ namespace SaltyEmu.RedisWrappers
             throw new NotImplementedException();
         }
 
-        public void SetLanguage(ChickenI18NKey key, string value, LanguageKey type)
+        public void SetLanguage(PlayerMessages key, string value, LanguageKey type)
         {
             GetSetByLanguageKey(type)[key] = value;
         }

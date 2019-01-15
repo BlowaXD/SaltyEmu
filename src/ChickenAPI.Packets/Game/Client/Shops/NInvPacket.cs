@@ -19,10 +19,10 @@ namespace ChickenAPI.Packets.Game.Client.Shops
         [PacketIndex(3)]
         public int ShopType { get; set; }
 
-        [PacketIndex(4)]
+        [PacketIndex(4, IsOptional = true)]
         public string ShopList { get; set; }
 
-        [PacketIndex(5, SeparatorNestedElements = " ")]
+        [PacketIndex(5, IsOptional = true, SeparatorNestedElements = " ")]
         public List<long> ShopSkills { get; set; }
     }
 }

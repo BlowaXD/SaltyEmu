@@ -2,11 +2,13 @@
 using System.Threading.Tasks;
 using ChickenAPI.Core.Events;
 using ChickenAPI.Data.Character;
+using ChickenAPI.Enums.Game.Character;
 using ChickenAPI.Game.Effects;
 using ChickenAPI.Game.Entities.Extensions;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Entities.Player.Events;
 using ChickenAPI.Game.Entities.Player.Extensions;
+using ChickenAPI.Game.Skills.Extensions;
 
 namespace SaltyEmu.BasicPlugin.EventHandlers
 {
@@ -41,11 +43,15 @@ namespace SaltyEmu.BasicPlugin.EventHandlers
                     break;
                 case LevelUpType.HeroLevel:
                 case LevelUpType.JobLevel:
-                    player.Broadcast(player.GenerateEffectPacket(8));
+                    if (e.LevelUpType == LevelUpType.JobLevel && e.Player.Character.Class == CharacterClassType.Adventurer)
+                    {
+                        await player.LearnAdventurerSkillsAsync();
+                    }
+                    await player.BroadcastAsync(player.GenerateEffectPacket(8));
                     break;
             }
 
-            player.Broadcast(player.GenerateEffectPacket(198));
+            await player.BroadcastAsync(player.GenerateEffectPacket(198));
         }
     }
 }

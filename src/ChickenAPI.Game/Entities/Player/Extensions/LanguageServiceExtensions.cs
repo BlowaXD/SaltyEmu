@@ -7,10 +7,10 @@ namespace ChickenAPI.Game.Entities.Player.Extensions
 {
     public static class LanguageServiceExtensions
     {
-        private static readonly ILanguageService LanguageService = new Lazy<ILanguageService>(() => ChickenContainer.Instance.Resolve<ILanguageService>()).Value;
+        private static readonly IGameLanguageService GameLanguageService = new Lazy<IGameLanguageService>(() => ChickenContainer.Instance.Resolve<IGameLanguageService>()).Value;
 
-        public static string GetLanguageFormat(this IPlayerEntity player, ChickenI18NKey key, params object[] objs) => string.Format(LanguageService.GetLanguage(key, player.Session.Language), objs);
+        public static string GetLanguageFormat(this IPlayerEntity player, PlayerMessages key, params object[] objs) => string.Format(GameLanguageService.GetLanguage(key, player.Session.Language), objs);
 
-        public static string GetLanguage(this IPlayerEntity player, ChickenI18NKey key) => LanguageService.GetLanguage(key, player.Session.Language);
+        public static string GetLanguage(this IPlayerEntity player, PlayerMessages key) => GameLanguageService.GetLanguage(key, player.Session.Language);
     }
 }

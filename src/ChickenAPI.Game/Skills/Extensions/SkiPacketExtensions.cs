@@ -25,33 +25,26 @@ namespace ChickenAPI.Game.Skills.Extensions
 
         public static SkiPacket GenerateSkiPacket(this IPlayerEntity player)
         {
-            var tmp = new StringBuilder();
-
-            // check sp
-
-
             IEnumerable<SkillDto> skills = player.HasSpWeared ? GetSpSkillsByCastIdAscending(player) : GetSkillsByCastIdAscending(player);
 
-            // ski base
-            // if no sp
-            if (player.HasSpWeared)
+            List<long> ids = new List<long>();
+
+            if (!player.HasSpWeared)
             {
-                tmp.Append(skills.ElementAt(0).Id + ' ' + skills.ElementAt(0).Id);
+                ids.Add(200 + 20 * (byte)player.Character.Class);
+                ids.Add(201 + 20 * (byte)player.Character.Class);
             }
             else
             {
-                tmp.Append(200 + 20 * (byte)player.Character.Class + ' ' + 201 + 20 * (byte)player.Character.Class);
+                ids.Add(skills.ElementAt(0).Id);
+                ids.Add(skills.ElementAt(0).Id);
             }
 
-            foreach (SkillDto i in skills)
-            {
-                tmp.Append(' ');
-                tmp.Append(i.Id);
-            }
+            ids.AddRange(skills.Select(s => s.Id));
 
             return new SkiPacket
             {
-                SkiPacketContent = tmp.ToString().Trim()
+                SkillIds = ids
             };
         }
     }

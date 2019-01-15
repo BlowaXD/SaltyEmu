@@ -1,8 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using Autofac;
+using ChickenAPI.Core.IoC;
 using ChickenAPI.Data.Skills;
 using ChickenAPI.Enums.Game.Character;
 using ChickenAPI.Game.Entities.Player;
+using ChickenAPI.Game.Entities.Player.Extensions;
 
 namespace ChickenAPI.Game.Skills.Extensions
 {
@@ -18,6 +22,22 @@ namespace ChickenAPI.Game.Skills.Extensions
 
             int cpUsed = 0 + (int)player.SkillComponent?.Skills?.Values.Where(s => s != null).Sum(dto => dto.CpCost);
             return cpMax - cpUsed;
+        }
+
+        public static async Task LearnAdventurerSkillsAsync(this IPlayerEntity player)
+        {
+            if (player.Character.Class != CharacterClassType.Adventurer)
+            {
+                return;
+            }
+
+            IEnumerable<SkillDto> skills = await ChickenContainer.Instance.Resolve<ISkillService>().GetByClassIdAsync((byte)player.Character.Class);
+            foreach (SkillDto skillDto in skills.Where(s => s.LevelMinimum < player.JobLevel && s.Id >= 200 && s.Id != 209 && s.Id <= 210))
+            {
+                player.AddSkill(skillDto);
+            }
+
+            await player.ActualizeUiSkillList();
         }
 
         public static void AddSkill(this SkillComponent component, SkillDto skill)

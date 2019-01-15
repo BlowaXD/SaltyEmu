@@ -13,13 +13,13 @@ namespace NW.Plugins.PacketHandling.CharacterScreen
     public class CreateCharacterHandler : GenericSessionPacketHandlerAsync<CharNewPacketBase>
     {
         private readonly ICharacterService _characterService;
-        private readonly ILanguageService _languageService;
+        private readonly IGameLanguageService _gameLanguageService;
         private readonly CharacterScreenLoadHandler _screenLoader;
 
-        public CreateCharacterHandler(ICharacterService characterService, ILanguageService languageService, CharacterScreenLoadHandler screenLoader)
+        public CreateCharacterHandler(ICharacterService characterService, IGameLanguageService gameLanguageService, CharacterScreenLoadHandler screenLoader)
         {
             _characterService = characterService;
-            _languageService = languageService;
+            _gameLanguageService = gameLanguageService;
             _screenLoader = screenLoader;
         }
 
@@ -45,7 +45,7 @@ namespace NW.Plugins.PacketHandling.CharacterScreen
             {
                 await session.SendPacketAsync(new InfoPacket
                 {
-                    Message = _languageService.GetLanguage(ChickenI18NKey.CHARACTER_NAME_INVALID, session.Language)
+                    Message = _gameLanguageService.GetLanguage(PlayerMessages.CHARACTER_NAME_INVALID, session.Language)
                 });
                 Log.Warn($"[CREATE_CHARACTER] INVALID_NAME {characterName}");
                 return;
@@ -56,7 +56,7 @@ namespace NW.Plugins.PacketHandling.CharacterScreen
             {
                 await session.SendPacketAsync(new InfoPacket
                 {
-                    Message = _languageService.GetLanguage(ChickenI18NKey.CHARACTER_NAME_ALREADY_TAKEN, session.Language)
+                    Message = _gameLanguageService.GetLanguage(PlayerMessages.CHARACTER_NAME_ALREADY_TAKEN, session.Language)
                 });
                 Log.Warn($"[CREATE_CHARACTER] INVALID_NAME {characterName}");
                 return;

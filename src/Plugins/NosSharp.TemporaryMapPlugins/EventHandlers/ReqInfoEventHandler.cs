@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using ChickenAPI.Core.Events;
 using ChickenAPI.Core.Logging;
 using ChickenAPI.Enums.Game.Entity;
-using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Entities;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Entities.ReqInfo.Events;
-using ChickenAPI.Game.Events;
 using ChickenAPI.Game.Managers;
 using ChickenAPI.Game.Player.Extension;
 

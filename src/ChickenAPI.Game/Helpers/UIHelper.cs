@@ -65,13 +65,13 @@ namespace ChickenAPI.Game.Helpers
             }
         }
 
-        public static Task SendChatMessageFormat(this IPlayerEntity player, ChickenI18NKey key, SayColorType color, params object[] objs)
+        public static Task SendChatMessageFormat(this IPlayerEntity player, PlayerMessages key, SayColorType color, params object[] objs)
         {
             string msg = player.GetLanguageFormat(key, objs);
             return player.SendPacketAsync(player.GenerateSayPacket(msg, color));
         }
 
-        public static Task SendChatMessage(this IPlayerEntity player, ChickenI18NKey key, SayColorType color)
+        public static Task SendChatMessage(this IPlayerEntity player, PlayerMessages key, SayColorType color)
         {
             string msg = player.GetLanguage(key);
             return player.SendPacketAsync(player.GenerateSayPacket(msg, color));

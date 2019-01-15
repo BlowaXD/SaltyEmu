@@ -50,7 +50,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Relations
 
             PacketBase acceptPacket = new FInsPacket { CharacterId = e.Invitation.OwnerId, Type = FInsPacketType.Accept };
             PacketBase refusePacket = new FInsPacket { CharacterId = e.Invitation.OwnerId, Type = FInsPacketType.Refuse };
-            string question = player.GetLanguageFormat(ChickenI18NKey.FRIEND_X_INVITED_YOU_TO_JOIN_HIS_FRIENDLIST, senderInfo.Name);
+            string question = player.GetLanguageFormat(PlayerMessages.FRIEND_X_INVITED_YOU_TO_JOIN_HIS_FRIENDLIST, senderInfo.Name);
             await player.SendDialog(acceptPacket, refusePacket, question);
         }
     }

@@ -6,9 +6,9 @@ namespace SaltyEmu.RedisWrappers.Languages
 {
     public class EnglishI18n
     {
-        public static Dictionary<ChickenI18NKey, string> Languages = new Dictionary<ChickenI18NKey, string>
+        public static Dictionary<PlayerMessages, string> Languages = new Dictionary<PlayerMessages, string>
         {
-            { ChickenI18NKey.CHARACTER_NAME_ALREADY_TAKEN, "Character name is already taken" }
+            { PlayerMessages.CHARACTER_NAME_ALREADY_TAKEN, "Character name is already taken" }
         };
     }
 }

@@ -87,10 +87,30 @@ namespace ChickenAPI.Game.Shops.Extensions
                     break;
             }
 
-            if (typeshop == 0)
+
+            if (typeshop == 0 && !shop.Skills.Any())
             {
                 typeshop = 100;
             }
+
+            List<long> skillIds = new List<long>();
+
+            foreach (ShopSkillDto skill in shop.Skills.Where(s => s.Type == type))
+            {
+                if (skill.Type != 0)
+                {
+                    typeshop = 1;
+                    if (skill.Skill.Class == (byte)player.Character.Class)
+                    {
+                        skillIds.Add(skill.SkillId);
+                    }
+                }
+                else
+                {
+                    skillIds.Add(skill.SkillId);
+                }
+            }
+
 
             return new NInvPacket
             {
@@ -99,7 +119,7 @@ namespace ChickenAPI.Game.Shops.Extensions
                 ShopType = typeshop,
                 Unknown = 0,
                 ShopList = GetShopList(shop.Items.Where(s => s.Type == type), percent),
-                ShopSkills = shop.Skills.Where(s => s.Type.Equals(type)).Select(s => s.SkillId).ToList()
+                ShopSkills = skillIds
             };
         }
     }

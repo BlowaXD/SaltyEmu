@@ -28,7 +28,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\ChickenAPI.Game\ChickenAPI.Game.csproj" />
-    <ProjectReference Include="..\..\libs\SaltyEmu.Database\SaltyEmu.Database.csproj" />
+    <ProjectReference Include="..\..\libs\SaltyEmu.Database\SaltyEmu.Database.MSSQL.csproj" />
   </ItemGroup>
 
   <ItemGroup>
