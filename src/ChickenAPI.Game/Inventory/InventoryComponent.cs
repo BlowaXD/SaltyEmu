@@ -2,8 +2,9 @@
 using Autofac;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Data.Item;
-using ChickenAPI.Game.ECS.Components;
-using ChickenAPI.Game.ECS.Entities;
+using ChickenAPI.Game.Configuration;
+using ChickenAPI.Game._ECS.Components;
+using ChickenAPI.Game._ECS.Entities;
 
 namespace ChickenAPI.Game.Inventory
 {

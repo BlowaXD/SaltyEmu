@@ -1,4 +1,4 @@
-﻿using ChickenAPI.Game.ECS.Entities;
+﻿using ChickenAPI.Game._ECS.Entities;
 
 namespace ChickenAPI.Game.Specialists
 {

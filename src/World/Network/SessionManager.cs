@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
-using ChickenAPI.Game.Network;
+using ChickenAPI.Game._Network;
 
 namespace World.Network
 {

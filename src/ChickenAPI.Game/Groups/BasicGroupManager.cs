@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Game.Player.Extension;
+using ChickenAPI.Game.Entities.Player.Extensions;
 
 namespace ChickenAPI.Game.Groups
 {

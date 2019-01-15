@@ -8,14 +8,12 @@ using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Maths;
 using ChickenAPI.Core.Utils;
 using ChickenAPI.Data.NpcMonster;
-using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Entities.Drop;
 using ChickenAPI.Game.Entities.Drop.Extensions;
 using ChickenAPI.Game.Entities.Monster;
 using ChickenAPI.Game.Entities.Monster.Events;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Entities.Player.Events;
-using ChickenAPI.Game.Events;
 using ChickenAPI.Game.Maps;
 
 namespace SaltyEmu.BasicPlugin.EventHandlers

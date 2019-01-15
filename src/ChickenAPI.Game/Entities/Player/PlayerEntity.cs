@@ -17,8 +17,6 @@ using ChickenAPI.Enums.Game.Items;
 using ChickenAPI.Enums.Game.Visibility;
 using ChickenAPI.Game.Battle.Interfaces;
 using ChickenAPI.Game.Buffs;
-using ChickenAPI.Game.ECS.Components;
-using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Entities.Mates;
 using ChickenAPI.Game.Groups;
 using ChickenAPI.Game.Inventory;
@@ -27,14 +25,16 @@ using ChickenAPI.Game.Locomotion.DataObjects;
 using ChickenAPI.Game.Managers;
 using ChickenAPI.Game.Maps.Events;
 using ChickenAPI.Game.Movements.DataObjects;
-using ChickenAPI.Game.Network;
-using ChickenAPI.Game.Network.BroadcastRules;
 using ChickenAPI.Game.Quicklist;
 using ChickenAPI.Game.Relations;
 using ChickenAPI.Game.Shops;
 using ChickenAPI.Game.Skills;
 using ChickenAPI.Game.Visibility;
 using ChickenAPI.Game.Visibility.Events;
+using ChickenAPI.Game._BroadcastRules;
+using ChickenAPI.Game._ECS.Components;
+using ChickenAPI.Game._ECS.Entities;
+using ChickenAPI.Game._Network;
 using ChickenAPI.Packets;
 
 namespace ChickenAPI.Game.Entities.Player

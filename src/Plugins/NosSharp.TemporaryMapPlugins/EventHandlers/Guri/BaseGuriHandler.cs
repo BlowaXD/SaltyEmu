@@ -4,7 +4,7 @@ using System.Linq;
 using System.Reflection;
 using ChickenAPI.Core.Logging;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Game.GuriHandling.Args;
+using ChickenAPI.Game.GuriHandling.Events;
 using ChickenAPI.Game.GuriHandling.Handling;
 
 namespace SaltyEmu.BasicPlugin.EventHandlers.Guri

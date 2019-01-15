@@ -1,5 +1,5 @@
 ﻿using ChickenAPI.Enums.Game.Items;
-using ChickenAPI.Game.Events;
+using ChickenAPI.Game._Events;
 
 namespace ChickenAPI.Game.Inventory.Events
 {

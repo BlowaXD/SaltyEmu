@@ -1,5 +1,6 @@
 ﻿using ChickenAPI.Game;
 using ChickenAPI.Game.Configuration;
+using ChickenAPI.Game.Configuration.Item_Managements;
 
 namespace SaltyEmu.BasicPlugin
 {

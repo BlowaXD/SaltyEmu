@@ -1,7 +1,7 @@
 ﻿using System;
 using ChickenAPI.Core.Utils;
 using ChickenAPI.Data.Item;
-using ChickenAPI.Game.ECS.Entities;
+using ChickenAPI.Game._ECS.Entities;
 
 namespace ChickenAPI.Game.Entities.Drop
 {

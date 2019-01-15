@@ -1,6 +1,6 @@
-﻿using ChickenAPI.Game.Events;
+﻿using ChickenAPI.Game._Events;
 
-namespace ChickenAPI.Game.GuriHandling.Args
+namespace ChickenAPI.Game.GuriHandling.Events
 {
     public class GuriEvent : GameEntityEvent
     {

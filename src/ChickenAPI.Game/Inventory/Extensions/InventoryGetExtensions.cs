@@ -5,6 +5,7 @@ using Autofac;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Data.Item;
 using ChickenAPI.Enums.Game.Items;
+using ChickenAPI.Game.Configuration;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Packets.Game.Server.Inventory;
 

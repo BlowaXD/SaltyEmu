@@ -4,6 +4,7 @@ using ChickenAPI.Core.Events;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Inventory.ItemUpgrade;
 using ChickenAPI.Game.Inventory.ItemUpgrade.Events;
+using ChickenAPI.Game.Inventory.ItemUpgrade.Handlers.Handling;
 
 namespace SaltyEmu.BasicPlugin.EventHandlers
 {

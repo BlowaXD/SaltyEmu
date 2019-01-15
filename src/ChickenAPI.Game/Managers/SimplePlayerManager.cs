@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Game.Network;
+using ChickenAPI.Game._Network;
 using ChickenAPI.Packets;
 
 namespace ChickenAPI.Game.Managers

@@ -9,7 +9,8 @@ using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Enums.Packets;
 using ChickenAPI.Game.Entities.Mates;
 using ChickenAPI.Game.Helpers;
-using ChickenAPI.Game.PacketHandling.Extensions;
+using ChickenAPI.Game.Inventory.Extensions;
+using ChickenAPI.Game._i18n;
 using ChickenAPI.Packets.Game.Server.Mates;
 using ChickenAPI.Packets.Game.Server.UserInterface;
 

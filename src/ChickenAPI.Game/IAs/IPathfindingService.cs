@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using ChickenAPI.Core.Utils;
-using ChickenAPI.Game.ECS.Entities;
+using ChickenAPI.Game._ECS.Entities;
 
-namespace ChickenAPI.Game.Data.AccessLayer.NpcMonster
+namespace ChickenAPI.Game.IAs
 {
     public interface IPathfindingService
     {

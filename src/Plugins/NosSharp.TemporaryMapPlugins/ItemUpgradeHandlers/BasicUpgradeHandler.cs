@@ -8,6 +8,7 @@ using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Inventory.ItemUpgrade;
 using ChickenAPI.Game.Inventory.ItemUpgrade.Events;
 using ChickenAPI.Game.Inventory.ItemUpgrade.Handlers;
+using ChickenAPI.Game.Inventory.ItemUpgrade.Handlers.Handling;
 
 namespace SaltyEmu.BasicPlugin.ItemUpgradeHandlers
 {

@@ -6,6 +6,7 @@ using Autofac;
 using ChickenAPI.Core.i18n;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Logging;
+using ChickenAPI.Game._i18n;
 using CommandLine;
 using SaltyEmu.Core;
 using SaltyEmu.RedisWrappers;

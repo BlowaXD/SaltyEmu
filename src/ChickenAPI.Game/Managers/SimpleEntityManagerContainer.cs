@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using ChickenAPI.Game.ECS;
-using ChickenAPI.Game.ECS.Entities;
+using ChickenAPI.Game._ECS;
+using ChickenAPI.Game._ECS.Entities;
 
 namespace ChickenAPI.Game.Managers
 {

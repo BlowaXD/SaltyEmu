@@ -4,7 +4,7 @@ using ChickenAPI.Core.Utils;
 using ChickenAPI.Data.Account;
 using ChickenAPI.Data.Character;
 using ChickenAPI.Enums.Game.Character;
-using ChickenAPI.Game.Network;
+using ChickenAPI.Game._Network;
 using ChickenAPI.Packets.CharacterSelectionScreen.Client;
 using ChickenAPI.Packets.Game.Server.UserInterface;
 using NW.Plugins.PacketHandling.Utils;

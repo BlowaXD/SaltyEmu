@@ -12,7 +12,6 @@ using ChickenAPI.Data.NpcMonster;
 using ChickenAPI.Data.Shop;
 using ChickenAPI.Data.Skills;
 using ChickenAPI.Enums.Game.Character;
-using ChickenAPI.Game.Data.AccessLayer.NpcMonster;
 using Microsoft.EntityFrameworkCore;
 using SaltyEmu.DatabasePlugin.Context;
 using SaltyEmu.DatabasePlugin.Services.Account;

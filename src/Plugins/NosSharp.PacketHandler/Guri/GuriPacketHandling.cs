@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Game.GuriHandling.Args;
+using ChickenAPI.Game.GuriHandling.Events;
 using ChickenAPI.Packets.Game.Client.Player;
 using NW.Plugins.PacketHandling.Utils;
 

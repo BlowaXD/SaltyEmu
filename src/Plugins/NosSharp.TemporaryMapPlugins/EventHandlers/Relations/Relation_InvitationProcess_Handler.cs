@@ -7,9 +7,6 @@ using Autofac;
 using ChickenAPI.Core.Events;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Data.Relations;
-using ChickenAPI.Game.ECS.Entities;
-using ChickenAPI.Game.Events;
-using ChickenAPI.Game.Player.Extension;
 using ChickenAPI.Game.Relations.Events;
 
 namespace SaltyEmu.BasicPlugin.EventHandlers.Relations

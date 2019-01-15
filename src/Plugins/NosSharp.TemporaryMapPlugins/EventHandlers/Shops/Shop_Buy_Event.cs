@@ -16,11 +16,11 @@ using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Entities.Player.Extensions;
 using ChickenAPI.Game.Inventory.Events;
 using ChickenAPI.Game.Inventory.Extensions;
-using ChickenAPI.Game.Player.Extension;
 using ChickenAPI.Game.Shops;
 using ChickenAPI.Game.Shops.Events;
 using ChickenAPI.Game.Shops.Extensions;
 using ChickenAPI.Game.Skills.Extensions;
+using ChickenAPI.Game._i18n;
 
 namespace SaltyEmu.BasicPlugin.EventHandlers.Shops
 {

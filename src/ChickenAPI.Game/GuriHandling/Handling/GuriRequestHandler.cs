@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reflection;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Game.GuriHandling.Args;
+using ChickenAPI.Game.GuriHandling.Events;
 
 namespace ChickenAPI.Game.GuriHandling.Handling
 {

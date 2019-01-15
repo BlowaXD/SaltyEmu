@@ -1,10 +1,10 @@
 ﻿using Autofac;
 using ChickenAPI.Core.IoC;
-using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Managers;
 using Qmmands;
 using System;
 using System.Threading.Tasks;
+using ChickenAPI.Game._ECS.Entities;
 
 namespace SaltyEmu.Commands.TypeParsers
 {

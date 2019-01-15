@@ -2,7 +2,6 @@
 using System.Reflection;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.NpcDialog.Events;
-using ChickenAPI.Game.NpcDialog.Handlers;
 
 namespace ChickenAPI.Game.NpcDialog.Handling
 {

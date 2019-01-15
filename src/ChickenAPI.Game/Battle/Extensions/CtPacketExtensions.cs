@@ -1,6 +1,6 @@
 ﻿using ChickenAPI.Data.Skills;
 using ChickenAPI.Game.Battle.Interfaces;
-using ChickenAPI.Game.ECS.Entities;
+using ChickenAPI.Game._ECS.Entities;
 using ChickenAPI.Packets.Game.Server.Battle;
 
 namespace ChickenAPI.Game.Battle.Extensions

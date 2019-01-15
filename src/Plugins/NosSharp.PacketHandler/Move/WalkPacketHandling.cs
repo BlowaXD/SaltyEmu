@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
-using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Entities.Player;
+using ChickenAPI.Game.Inventory.Extensions;
 using ChickenAPI.Game.Movements.Extensions;
-using ChickenAPI.Game.PacketHandling.Extensions;
+using ChickenAPI.Game._ECS.Entities;
 using ChickenAPI.Packets.Game.Client.Movement;
 using NW.Plugins.PacketHandling.Utils;
 

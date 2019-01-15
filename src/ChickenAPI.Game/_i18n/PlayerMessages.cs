@@ -1,4 +1,4 @@
-﻿namespace ChickenAPI.Core.i18n
+﻿namespace ChickenAPI.Game._i18n
 {
     public enum PlayerMessages
     {

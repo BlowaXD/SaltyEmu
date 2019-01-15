@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using ChickenAPI.Data.Map;
 using ChickenAPI.Data.Shop;
-using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Managers;
 using ChickenAPI.Game.Maps;
+using ChickenAPI.Game._ECS.Entities;
 
 namespace SaltyEmu.BasicPlugin
 {

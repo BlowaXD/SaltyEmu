@@ -4,8 +4,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using ChickenAPI.Core.Events;
 using ChickenAPI.Game.Battle.Events;
-using ChickenAPI.Game.ECS.Entities;
-using ChickenAPI.Game.Events;
 
 namespace SaltyEmu.BasicPlugin.EventHandlers.Battle
 {

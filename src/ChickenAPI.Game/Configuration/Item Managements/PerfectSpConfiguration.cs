@@ -1,4 +1,4 @@
-﻿namespace ChickenAPI.Game.Configuration
+﻿namespace ChickenAPI.Game.Configuration.Item_Managements
 {
     public struct PerfectSpConfiguration
     {

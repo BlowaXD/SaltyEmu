@@ -1,9 +1,9 @@
 ﻿using ChickenAPI.Enums.Game.Entity;
-using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Entities.Monster;
 using ChickenAPI.Game.Entities.Npc;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Movements;
+using ChickenAPI.Game._ECS.Entities;
 using ChickenAPI.Packets.Game.Server.Entities;
 
 namespace ChickenAPI.Game.Entities.Extensions

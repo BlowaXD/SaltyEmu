@@ -1,7 +1,7 @@
 ﻿using ChickenAPI.Core.Logging;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.NpcDialog.Events;
-using ChickenAPI.Game.NpcDialog.Handlers;
+using ChickenAPI.Game.NpcDialog.Handling;
 using ChickenAPI.Packets.Game.Client.Npcs;
 using ChickenAPI.Packets.Game.Client.Shops;
 

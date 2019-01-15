@@ -2,9 +2,9 @@
 using System.Threading.Tasks;
 using ChickenAPI.Core.Events;
 using ChickenAPI.Game.Entities.Player;
+using ChickenAPI.Game.Inventory.Extensions;
 using ChickenAPI.Game.Movements.Events;
 using ChickenAPI.Game.Movements.Extensions;
-using ChickenAPI.Game.PacketHandling.Extensions;
 
 namespace SaltyEmu.BasicPlugin.EventHandlers.Movements
 {

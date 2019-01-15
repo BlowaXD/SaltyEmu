@@ -1,10 +1,10 @@
 ﻿using System;
 using Autofac;
 using ChickenAPI.Core.IoC;
-using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Entities.Extensions;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Managers;
+using ChickenAPI.Game._ECS.Entities;
 
 namespace ChickenAPI.Game.Helpers
 {

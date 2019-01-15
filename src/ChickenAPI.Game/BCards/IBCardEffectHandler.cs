@@ -2,7 +2,7 @@
 using ChickenAPI.Enums.Game.BCard;
 using ChickenAPI.Game.Battle.Interfaces;
 
-namespace ChickenAPI.Game.BCards.Attributes
+namespace ChickenAPI.Game.BCards
 {
     public interface IBCardEffectHandler
     {

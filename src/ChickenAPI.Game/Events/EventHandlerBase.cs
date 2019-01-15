@@ -1,3 +1,0 @@
-﻿namespace ChickenAPI.Game.Events
-{
-}

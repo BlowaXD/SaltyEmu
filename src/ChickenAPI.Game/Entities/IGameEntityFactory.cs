@@ -5,7 +5,7 @@ using ChickenAPI.Game.Entities.Mates;
 using ChickenAPI.Game.Entities.Monster;
 using ChickenAPI.Game.Entities.Npc;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Game.Network;
+using ChickenAPI.Game._Network;
 
 namespace ChickenAPI.Game.Entities
 {

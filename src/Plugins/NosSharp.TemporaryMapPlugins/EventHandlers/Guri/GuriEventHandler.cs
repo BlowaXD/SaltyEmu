@@ -6,10 +6,8 @@ using Autofac;
 using ChickenAPI.Core.Events;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Logging;
-using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Game.Events;
-using ChickenAPI.Game.GuriHandling.Args;
+using ChickenAPI.Game.GuriHandling.Events;
 using ChickenAPI.Game.GuriHandling.Handling;
 
 namespace SaltyEmu.BasicPlugin.EventHandlers.Guri

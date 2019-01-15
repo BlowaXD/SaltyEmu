@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
+using ChickenAPI.Game.Entities.Events;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Game.Entities.ReqInfo.Events;
 using ChickenAPI.Packets.Game.Server.Entities;
 using NW.Plugins.PacketHandling.Utils;
 

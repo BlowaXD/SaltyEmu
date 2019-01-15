@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using ChickenAPI.Core.i18n;
+using ChickenAPI.Game._i18n;
 using SaltyEmu.Redis;
 using SaltyEmu.RedisWrappers.Languages;
 using ServiceStack.Redis;

@@ -1,5 +1,4 @@
 ﻿using ChickenAPI.Enums.Packets;
-using ChickenAPI.Game.Player.Extension;
 using Qmmands;
 using SaltyEmu.Commands.Entities;
 using System.Collections.Generic;

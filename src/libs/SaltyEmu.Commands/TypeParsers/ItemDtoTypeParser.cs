@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using Autofac;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Data.Item;
-using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Managers;
 using Qmmands;
 

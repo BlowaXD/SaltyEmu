@@ -4,7 +4,7 @@ using ChickenAPI.Enums.Packets;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Inventory.ItemUpgrade.Events;
 
-namespace ChickenAPI.Game.Inventory.ItemUpgrade.Handlers
+namespace ChickenAPI.Game.Inventory.ItemUpgrade.Handlers.Handling
 {
     public class ItemUpgradeHandler
     {

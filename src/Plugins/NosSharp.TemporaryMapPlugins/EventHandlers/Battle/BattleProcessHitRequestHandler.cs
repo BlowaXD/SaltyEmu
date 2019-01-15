@@ -12,7 +12,6 @@ using ChickenAPI.Game.Entities.Npc;
 using ChickenAPI.Game.Entities.Npc.Events;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Entities.Player.Events;
-using ChickenAPI.Game.Events;
 using ChickenAPI.Packets.Game.Server.Battle;
 
 namespace SaltyEmu.BasicPlugin.EventHandlers.Battle

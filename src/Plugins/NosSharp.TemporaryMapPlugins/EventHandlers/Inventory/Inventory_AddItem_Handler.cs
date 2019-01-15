@@ -5,16 +5,12 @@ using ChickenAPI.Core.Events;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Logging;
 using ChickenAPI.Data.Item;
-using ChickenAPI.Game.Data.AccessLayer.NpcMonster;
-using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Entities;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Entities.Player.Extensions;
-using ChickenAPI.Game.Events;
 using ChickenAPI.Game.Inventory;
 using ChickenAPI.Game.Inventory.Events;
 using ChickenAPI.Game.Inventory.Extensions;
-using ChickenAPI.Game.Player.Extension;
 using ChickenAPI.Packets.Game.Server.Inventory;
 
 namespace SaltyEmu.BasicPlugin.EventHandlers.Inventory

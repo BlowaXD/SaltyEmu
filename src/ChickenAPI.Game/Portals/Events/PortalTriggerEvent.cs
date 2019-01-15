@@ -1,7 +1,7 @@
 ﻿using ChickenAPI.Data.Map;
-using ChickenAPI.Game.Events;
+using ChickenAPI.Game._Events;
 
-namespace ChickenAPI.Game.Portals.Args
+namespace ChickenAPI.Game.Portals.Events
 {
     public class PortalTriggerEvent : GameEntityEvent
     {

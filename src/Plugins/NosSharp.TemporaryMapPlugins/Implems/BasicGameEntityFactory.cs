@@ -3,12 +3,11 @@ using System.Threading.Tasks;
 using ChickenAPI.Data.Character;
 using ChickenAPI.Data.Map;
 using ChickenAPI.Data.NpcMonster;
-using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Entities.Mates;
 using ChickenAPI.Game.Entities.Monster;
 using ChickenAPI.Game.Entities.Npc;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Game.Network;
+using ChickenAPI.Game._Network;
 
 namespace ChickenAPI.Game.Entities
 {

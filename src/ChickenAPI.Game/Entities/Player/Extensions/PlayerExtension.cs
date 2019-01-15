@@ -1,6 +1,6 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Autofac;
-using ChickenAPI.Core.i18n;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Maths;
 using ChickenAPI.Data.Character;
@@ -11,19 +11,17 @@ using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Enums.Game.Items;
 using ChickenAPI.Enums.Packets;
 using ChickenAPI.Game.Effects;
-using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Game.Entities.Player.Extensions;
 using ChickenAPI.Game.Families.Extensions;
 using ChickenAPI.Game.Helpers;
 using ChickenAPI.Game.Inventory.Extensions;
-using ChickenAPI.Game.PacketHandling.Extensions;
 using ChickenAPI.Game.Shops.Extensions;
 using ChickenAPI.Game.Skills;
+using ChickenAPI.Game._i18n;
 using ChickenAPI.Packets.Game.Client.Player;
 using ChickenAPI.Packets.Game.Server.Player;
 using ChickenAPI.Packets.Game.Server.UserInterface;
 
-namespace ChickenAPI.Game.Player.Extension
+namespace ChickenAPI.Game.Entities.Player.Extensions
 {
     public static class PlayerExtension
     {
@@ -101,51 +99,59 @@ namespace ChickenAPI.Game.Player.Extension
             };
         }
 
-        public static void ChangeClass(this IPlayerEntity charac, CharacterClassType type)
+        public static TitPacket GenerateTitPacket(this IPlayerEntity player)
         {
-            charac.JobLevel = 1;
-            charac.JobLevelXp = 0;
-            charac.SendPacket(new NpInfoPacket { UnKnow = 0 });
-            charac.SendPacket(new PClearPacket());
+            return new TitPacket
+            {
+                ClassType = player.Character.Class == CharacterClassType.Adventurer ? "Adventurer" :
+                    player.Character.Class == CharacterClassType.Archer ? "Archer" :
+                    player.Character.Class == CharacterClassType.Magician ? "Mage" :
+                    player.Character.Class == CharacterClassType.Swordman ? "Swordman" : "Martial",
+                Name = player.Character.Name
+            };
+        }
+
+        public static async Task ChangeClass(this IPlayerEntity player, CharacterClassType type)
+        {
+            player.JobLevel = 1;
+            player.JobLevelXp = 0;
+            await player.SendPacketAsync(new NpInfoPacket { UnKnow = 0 });
+            await player.SendPacketAsync(new PClearPacket());
 
             if (type == CharacterClassType.Adventurer)
             {
-                charac.Character.HairStyle = charac.Character.HairStyle > HairStyleType.HairStyleB ? HairStyleType.HairStyleA : charac.Character.HairStyle;
+                player.Character.HairStyle = player.Character.HairStyle > HairStyleType.HairStyleB ? HairStyleType.HairStyleA : player.Character.HairStyle;
             }
 
-            charac.Character.Class = type;
-            charac.HpMax = Algorithm.GetHpMax(type, charac.Level);
-            charac.MpMax = Algorithm.GetMpMax(type, charac.Level);
-            charac.Hp = charac.HpMax;
-            charac.Mp = charac.MpMax;
-            charac.SendPacket(new TitPacket
-            {
-                ClassType = type == CharacterClassType.Adventurer ? "Adventurer" :
-                    type == CharacterClassType.Archer ? "Archer" :
-                    type == CharacterClassType.Magician ? "Mage" :
-                    type == CharacterClassType.Swordman ? "Swordman" : "Martial",
-                Name = charac.Character.Name
-            });
-            charac.ActualizeUiHpBar();
-            charac.SendPacket(charac.GenerateEqPacket());
-            charac.SendPacket(charac.GenerateEffectPacket(8));
-            charac.SendPacket(charac.GenerateEffectPacket(196));
-            charac.SendPacket(new ScrPacket { Unknow1 = 0, Unknow2 = 0, Unknow3 = 0, Unknow4 = 0, Unknow5 = 0, Unknow6 = 0 });
-            charac.SendChatMessageFormat(PlayerMessages.CHARACTER_YOUR_CLASS_CHANGED_TO_X, SayColorType.Blue, type);
-            charac.Character.Faction = charac.Family?.FamilyFaction ?? (FactionType)(1 + _randomGenerator.Next(0, 2));
-            charac.SendChatMessageFormat(PlayerMessages.CHARACTER_YOUR_FACTION_CHANGED_TO_X, SayColorType.Blue, charac.Character.Faction);
-            charac.SendPacket(charac.GenerateFsPacket());
-            charac.SendPacket(charac.GenerateStatCharPacket());
-            charac.SendPacket(charac.GenerateEffectPacket(4799 + (byte)charac.Character.Faction));
-            charac.ActualizePlayerCondition();
-            charac.ActualizeUiExpBar();
-            charac.Broadcast(charac.GenerateCModePacket());
-            charac.Broadcast(charac.GenerateInPacket());
-            charac.Broadcast(charac.GenerateGidxPacket());
-            charac.Broadcast(charac.GenerateEffectPacket(6));
-            charac.Broadcast(charac.GenerateEffectPacket(196));
+            player.Character.Class = type;
+            player.HpMax = Algorithm.GetHpMax(type, player.Level);
+            player.MpMax = Algorithm.GetMpMax(type, player.Level);
+            player.Hp = player.HpMax;
+            player.Mp = player.MpMax;
+            await player.SendPacketAsync(player.GenerateTitPacket());
+            await player.ActualizeUiHpBar();
+            await player.SendPacketAsync(player.GenerateEqPacket());
+            await player.SendPacketAsync(player.GenerateEffectPacket(8));
+            await player.SendPacketAsync(player.GenerateEffectPacket(196));
 
-            SkillComponent component = charac.SkillComponent;
+            await player.SendPacketAsync(player.GenerateScrPacket());
+            await player.SendChatMessageFormat(PlayerMessages.CHARACTER_YOUR_CLASS_CHANGED_TO_X, SayColorType.Blue, type);
+
+            player.Character.Faction = player.Family?.FamilyFaction ?? (FactionType)(1 + _randomGenerator.Next(0, 2));
+            await player.SendChatMessageFormat(PlayerMessages.CHARACTER_YOUR_FACTION_CHANGED_TO_X, SayColorType.Blue, player.Character.Faction);
+
+            await player.ActualizeUiFaction();
+            await player.ActualizeUiStatChar();
+            await player.SendPacketAsync(player.GenerateEffectPacket(4799 + (byte)player.Character.Faction));
+            await player.ActualizePlayerCondition();
+            await player.ActualizeUiExpBar();
+            await player.BroadcastAsync(player.GenerateCModePacket());
+            await player.BroadcastAsync(player.GenerateInPacket());
+            await player.BroadcastAsync(player.GenerateGidxPacket());
+            await player.BroadcastAsync(player.GenerateEffectPacket(6));
+            await player.BroadcastAsync(player.GenerateEffectPacket(196));
+
+            SkillComponent component = player.SkillComponent;
             foreach (SkillDto skill in component.Skills.Values)
             {
                 if (skill.Id >= 200)
@@ -155,7 +161,7 @@ namespace ChickenAPI.Game.Player.Extension
             }
 
             // TODO : LATER ADD SKILL
-            charac.ActualizeUiSkillList();
+            await player.ActualizeUiSkillList();
 
             // Later too
             /* foreach (QuicklistEntryDTO quicklists in DAOFactory.QuicklistEntryDAO.LoadByCharacterId(CharacterId).Where(quicklists => QuicklistEntries.Any(qle => qle.Id == quicklists.Id)))

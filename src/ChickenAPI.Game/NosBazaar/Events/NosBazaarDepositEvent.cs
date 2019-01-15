@@ -1,5 +1,5 @@
 ﻿using ChickenAPI.Data.Item;
-using ChickenAPI.Game.Events;
+using ChickenAPI.Game._Events;
 
 namespace ChickenAPI.Game.NosBazaar.Events
 {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ChickenAPI.Game.NpcDialog.Handlers
+namespace ChickenAPI.Game.NpcDialog.Handling
 {
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
     public class NpcDialogHandlerAttribute : Attribute

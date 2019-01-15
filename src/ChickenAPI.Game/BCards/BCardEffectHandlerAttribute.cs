@@ -1,7 +1,7 @@
 ﻿using System;
 using ChickenAPI.Enums.Game.BCard;
 
-namespace ChickenAPI.Game.BCards.Attributes
+namespace ChickenAPI.Game.BCards
 {
     public class BCardEffectHandlerAttribute : Attribute
     {

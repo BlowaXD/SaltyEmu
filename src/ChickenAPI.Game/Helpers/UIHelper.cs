@@ -3,7 +3,7 @@ using ChickenAPI.Core.i18n;
 using ChickenAPI.Enums.Packets;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Entities.Player.Extensions;
-using ChickenAPI.Game.Player.Extension;
+using ChickenAPI.Game._i18n;
 using ChickenAPI.Packets;
 using ChickenAPI.Packets.Game.Client.Player;
 using ChickenAPI.Packets.Game.Server.UserInterface;

@@ -1,6 +1,4 @@
-﻿using ChickenAPI.Game.Inventory;
-
-namespace ChickenAPI.Game.Entities
+﻿namespace ChickenAPI.Game.Inventory
 {
     public interface IInventoriedEntity
     {

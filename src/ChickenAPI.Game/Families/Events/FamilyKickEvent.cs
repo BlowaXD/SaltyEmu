@@ -1,6 +1,6 @@
 ﻿using ChickenAPI.Data.Families;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Game.Events;
+using ChickenAPI.Game._Events;
 
 namespace ChickenAPI.Game.Families.Events
 {

@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 using System.Threading.Tasks;
-using ChickenAPI.Game.Network;
-using ChickenAPI.Game.PacketHandling;
+using ChickenAPI.Game._Network;
 using ChickenAPI.Packets;
 using ChickenAPI.Packets.Attributes;
 

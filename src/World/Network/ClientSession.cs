@@ -12,12 +12,11 @@ using ChickenAPI.Data.Account;
 using ChickenAPI.Data.Server;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Managers;
-using ChickenAPI.Game.PacketHandling;
 using ChickenAPI.Packets;
 using DotNetty.Transport.Channels;
 using DotNetty.Transport.Channels.Groups;
 using SaltyEmu.Commands.Interfaces;
-using ChickenAPI.Game.Network;
+using ChickenAPI.Game._Network;
 using ChickenAPI.Packets.Attributes;
 
 namespace World.Network

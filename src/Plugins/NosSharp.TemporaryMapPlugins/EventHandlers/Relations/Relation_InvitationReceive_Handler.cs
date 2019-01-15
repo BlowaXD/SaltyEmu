@@ -9,6 +9,7 @@ using ChickenAPI.Game.Entities.Player.Extensions;
 using ChickenAPI.Game.Helpers;
 using ChickenAPI.Game.Managers;
 using ChickenAPI.Game.Relations.Events;
+using ChickenAPI.Game._i18n;
 using ChickenAPI.Packets;
 using ChickenAPI.Packets.Game.Server.Relations;
 

@@ -1,8 +1,6 @@
-﻿using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Game.Entities.Player.Extensions;
-using ChickenAPI.Game.Groups;
+﻿using ChickenAPI.Game.Groups;
 
-namespace ChickenAPI.Game.Player.Extension
+namespace ChickenAPI.Game.Entities.Player.Extensions
 {
     public static class PlayerGroupExtensions
     {

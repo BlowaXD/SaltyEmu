@@ -1,4 +1,4 @@
-﻿namespace ChickenAPI.Game
+﻿namespace ChickenAPI.Game.Configuration
 {
     public struct InventoryConfiguration
     {

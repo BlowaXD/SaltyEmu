@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using ChickenAPI.Data.Map;
 using ChickenAPI.Enums.Game.Entity;
-using ChickenAPI.Game.ECS.Components;
-using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Portals;
 using ChickenAPI.Game.Visibility;
+using ChickenAPI.Game._ECS.Components;
+using ChickenAPI.Game._ECS.Entities;
 
 namespace ChickenAPI.Game.Entities.Portal
 {

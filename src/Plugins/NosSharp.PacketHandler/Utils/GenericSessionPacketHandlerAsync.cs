@@ -1,7 +1,6 @@
 ﻿using System.Threading.Tasks;
 using ChickenAPI.Core.Logging;
-using ChickenAPI.Game.Network;
-using ChickenAPI.Game.PacketHandling;
+using ChickenAPI.Game._Network;
 using ChickenAPI.Packets;
 
 namespace NW.Plugins.PacketHandling.Utils

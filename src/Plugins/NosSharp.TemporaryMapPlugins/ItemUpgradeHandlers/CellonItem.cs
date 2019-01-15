@@ -3,6 +3,7 @@ using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Helpers;
 using ChickenAPI.Game.Inventory.ItemUpgrade.Events;
 using ChickenAPI.Game.Inventory.ItemUpgrade.Handlers;
+using ChickenAPI.Game.Inventory.ItemUpgrade.Handlers.Handling;
 using ChickenAPI.Game.Shops.Extensions;
 
 namespace SaltyEmu.BasicPlugin.ItemUpgradeHandlers

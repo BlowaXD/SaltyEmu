@@ -4,10 +4,10 @@ using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Utils;
 using ChickenAPI.Data.Character;
 using ChickenAPI.Enums.Game.Entity;
-using ChickenAPI.Game.ECS.Components;
-using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Movements.Extensions;
+using ChickenAPI.Game._ECS.Components;
+using ChickenAPI.Game._ECS.Entities;
 
 namespace ChickenAPI.Game.Movements.DataObjects
 {

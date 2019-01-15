@@ -8,8 +8,6 @@ using ChickenAPI.Game.Inventory.Extensions;
 using ChickenAPI.Game.Maps.Events;
 using ChickenAPI.Game.Maps.Extensions;
 using ChickenAPI.Game.Movements.Extensions;
-using ChickenAPI.Game.PacketHandling.Extensions;
-using ChickenAPI.Game.Player.Extension;
 
 namespace SaltyEmu.BasicPlugin.EventHandlers.Maps
 {
@@ -58,7 +56,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Maps
             await player.SendPacketAsync(player.GenerateAtPacket());
             await player.ActualizePlayerCondition();
             await player.SendPacketAsync(player.GenerateCMapPacket());
-            await player.SendPacketAsync(player.GenerateStatCharPacket());
+            await player.ActualizeUiStatChar();
             await player.SendPacketAsync(player.GeneratePairyPacket());
         }
 

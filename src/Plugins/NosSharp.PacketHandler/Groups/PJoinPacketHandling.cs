@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using ChickenAPI.Enums.Packets;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Game.Groups.Args;
+using ChickenAPI.Game.Groups.Events;
 using ChickenAPI.Game.Managers;
 using ChickenAPI.Packets.Game.Server.Group;
 using NW.Plugins.PacketHandling.Utils;

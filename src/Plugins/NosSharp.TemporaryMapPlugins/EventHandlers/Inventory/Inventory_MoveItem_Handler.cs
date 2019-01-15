@@ -4,6 +4,7 @@ using ChickenAPI.Core.Events;
 using ChickenAPI.Data.Item;
 using ChickenAPI.Enums.Game.Items;
 using ChickenAPI.Game;
+using ChickenAPI.Game.Configuration;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Inventory;
 using ChickenAPI.Game.Inventory.Events;

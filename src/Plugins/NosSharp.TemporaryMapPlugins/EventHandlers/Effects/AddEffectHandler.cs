@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using ChickenAPI.Core.Events;
 using ChickenAPI.Game.Effects;
-using ChickenAPI.Game.Effects.Args;
+using ChickenAPI.Game.Effects.Events;
 
 namespace SaltyEmu.BasicPlugin.EventHandlers.Effects
 {

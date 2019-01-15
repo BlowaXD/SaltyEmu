@@ -7,7 +7,7 @@ using ChickenAPI.Data.Account;
 using ChickenAPI.Data.Character;
 using ChickenAPI.Enums;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Game.Network;
+using ChickenAPI.Game._Network;
 using ChickenAPI.Packets;
 using Moq;
 

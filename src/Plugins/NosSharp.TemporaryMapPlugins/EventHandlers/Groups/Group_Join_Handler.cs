@@ -5,9 +5,7 @@ using System.Threading.Tasks;
 using Autofac;
 using ChickenAPI.Core.Events;
 using ChickenAPI.Core.IoC;
-using ChickenAPI.Game.ECS.Entities;
-using ChickenAPI.Game.Events;
-using ChickenAPI.Game.Groups.Args;
+using ChickenAPI.Game.Groups.Events;
 
 namespace SaltyEmu.BasicPlugin.EventHandlers
 {

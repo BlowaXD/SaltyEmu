@@ -11,9 +11,7 @@ using ChickenAPI.Game.Battle.Events;
 using ChickenAPI.Game.Battle.Extensions;
 using ChickenAPI.Game.Battle.Hitting;
 using ChickenAPI.Game.Battle.Interfaces;
-using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Game.Events;
 using ChickenAPI.Game.Movements.Extensions;
 using ChickenAPI.Game.Skills.Args;
 

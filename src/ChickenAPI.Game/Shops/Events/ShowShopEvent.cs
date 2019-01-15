@@ -1,7 +1,7 @@
 ﻿using ChickenAPI.Enums.Game.Entity;
-using ChickenAPI.Game.Events;
+using ChickenAPI.Game._Events;
 
-namespace ChickenAPI.Game.Shops.Args
+namespace ChickenAPI.Game.Shops.Events
 {
     public class ShowShopEvent : GameEntityEvent
     {

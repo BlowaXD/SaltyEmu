@@ -1,6 +1,6 @@
 ﻿using ChickenAPI.Enums.Game.Effects;
-using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Effects;
+using ChickenAPI.Game._ECS.Entities;
 using ChickenAPI.Packets.Game.Client.Player;
 
 namespace ChickenAPI.Game.Helpers

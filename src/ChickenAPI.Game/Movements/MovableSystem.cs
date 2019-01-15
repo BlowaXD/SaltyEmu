@@ -3,12 +3,12 @@ using System.Linq;
 using System.Linq.Expressions;
 using ChickenAPI.Core.Utils;
 using ChickenAPI.Enums.Game.Entity;
-using ChickenAPI.Game.ECS.Entities;
-using ChickenAPI.Game.ECS.Systems;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.IAs;
+using ChickenAPI.Game.Inventory.Extensions;
 using ChickenAPI.Game.Movements.Extensions;
-using ChickenAPI.Game.PacketHandling.Extensions;
+using ChickenAPI.Game._ECS.Entities;
+using ChickenAPI.Game._ECS.Systems;
 using ChickenAPI.Packets.Game.Server.Entities;
 
 namespace ChickenAPI.Game.Movements

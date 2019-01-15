@@ -4,7 +4,7 @@ using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Logging;
 using ChickenAPI.Core.Plugins;
 using ChickenAPI.Core.Utils;
-using ChickenAPI.Game.PacketHandling;
+using ChickenAPI.Game._Network;
 using NW.Plugins.PacketHandling.Utils;
 
 namespace NW.Plugins.PacketHandling

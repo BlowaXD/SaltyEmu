@@ -5,9 +5,7 @@ using System.Threading.Tasks;
 using ChickenAPI.Core.Events;
 using ChickenAPI.Core.Logging;
 using ChickenAPI.Data.Character;
-using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Game.Events;
 using ChickenAPI.Game.Quicklist.Events;
 using ChickenAPI.Game.Quicklist.Extensions;
 

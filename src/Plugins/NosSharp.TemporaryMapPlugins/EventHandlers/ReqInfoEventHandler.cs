@@ -4,10 +4,11 @@ using ChickenAPI.Core.Events;
 using ChickenAPI.Core.Logging;
 using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Game.Entities;
+using ChickenAPI.Game.Entities.Events;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Game.Entities.ReqInfo.Events;
+using ChickenAPI.Game.Entities.Player.Extensions;
+using ChickenAPI.Game.Inventory;
 using ChickenAPI.Game.Managers;
-using ChickenAPI.Game.Player.Extension;
 
 namespace SaltyEmu.BasicPlugin.EventHandlers
 {

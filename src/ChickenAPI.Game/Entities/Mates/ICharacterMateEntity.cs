@@ -1,7 +1,7 @@
 ﻿using ChickenAPI.Data.Character;
 using ChickenAPI.Game.Entities.Player;
 
-namespace ChickenAPI.Game.Entities
+namespace ChickenAPI.Game.Entities.Mates
 {
     public interface ICharacterMateEntity
     {

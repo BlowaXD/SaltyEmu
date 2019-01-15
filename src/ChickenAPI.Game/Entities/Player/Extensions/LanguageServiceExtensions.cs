@@ -2,6 +2,7 @@
 using Autofac;
 using ChickenAPI.Core.i18n;
 using ChickenAPI.Core.IoC;
+using ChickenAPI.Game._i18n;
 
 namespace ChickenAPI.Game.Entities.Player.Extensions
 {

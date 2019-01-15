@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using ChickenAPI.Core.i18n;
-using ChickenAPI.Game.Network;
+using ChickenAPI.Game._Network;
 using DotNetty.Buffers;
 using DotNetty.Codecs;
 using DotNetty.Common.Utilities;

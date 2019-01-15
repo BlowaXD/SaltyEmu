@@ -1,10 +1,9 @@
 ﻿using ChickenAPI.Enums.Packets;
-using ChickenAPI.Game.ECS.Entities;
-using ChickenAPI.Game.Entities.Player;
+using ChickenAPI.Game._ECS.Entities;
 using ChickenAPI.Packets.Game.Server.Player;
 using ChickenAPI.Packets.Game.Server.UserInterface;
 
-namespace ChickenAPI.Game.Player.Extension
+namespace ChickenAPI.Game.Entities.Player.Extensions
 {
     public static class PlayerInteractionExtensions
     {

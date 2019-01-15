@@ -7,7 +7,6 @@ using Autofac;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Plugins;
 using ChickenAPI.Core.Plugins.Exceptions;
-using ChickenAPI.Game.PacketHandling;
 using ChickenAPI.Packets;
 using Essentials;
 using NLog;

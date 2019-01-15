@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using ChickenAPI.Data.Map;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Game.Portals.Args;
+using ChickenAPI.Game.Portals.Events;
 using ChickenAPI.Packets.Game.Client.Movement;
 using NW.Plugins.PacketHandling.Utils;
 

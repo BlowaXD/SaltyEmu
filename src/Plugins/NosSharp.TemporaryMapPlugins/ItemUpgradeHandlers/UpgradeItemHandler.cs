@@ -5,10 +5,12 @@ using ChickenAPI.Data.Item;
 using ChickenAPI.Enums.Game.Items;
 using ChickenAPI.Enums.Packets;
 using ChickenAPI.Game;
+using ChickenAPI.Game.Configuration;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Inventory.Extensions;
 using ChickenAPI.Game.Inventory.ItemUpgrade.Events;
 using ChickenAPI.Game.Inventory.ItemUpgrade.Handlers;
+using ChickenAPI.Game.Inventory.ItemUpgrade.Handlers.Handling;
 
 namespace SaltyEmu.BasicPlugin.ItemUpgradeHandlers
 {

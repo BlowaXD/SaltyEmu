@@ -5,6 +5,7 @@ using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Inventory.Extensions;
 using ChickenAPI.Game.Inventory.ItemUpgrade.Events;
 using ChickenAPI.Game.Inventory.ItemUpgrade.Handlers;
+using ChickenAPI.Game.Inventory.ItemUpgrade.Handlers.Handling;
 using ChickenAPI.Game.Shops.Extensions;
 using ChickenAPI.Packets.Game.Server.Shop;
 

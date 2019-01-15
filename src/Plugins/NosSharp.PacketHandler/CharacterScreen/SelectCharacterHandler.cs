@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using ChickenAPI.Data.Character;
-using ChickenAPI.Game.Network;
+using ChickenAPI.Game._Network;
 using ChickenAPI.Packets.CharacterSelectionScreen.Client;
 using ChickenAPI.Packets.CharacterSelectionScreen.Server;
 using NW.Plugins.PacketHandling.Utils;

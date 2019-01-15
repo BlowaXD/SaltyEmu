@@ -3,7 +3,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using ChickenAPI.Data.NpcMonster;
-using ChickenAPI.Game.Data.AccessLayer.NpcMonster;
 using Microsoft.EntityFrameworkCore;
 using SaltyEmu.Database;
 using SaltyEmu.DatabasePlugin.Models.NpcMonster;

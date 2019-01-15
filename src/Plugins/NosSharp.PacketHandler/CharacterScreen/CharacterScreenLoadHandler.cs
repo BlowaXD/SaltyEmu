@@ -8,7 +8,7 @@ using ChickenAPI.Data.Item;
 using ChickenAPI.Data.Server;
 using ChickenAPI.Enums.Game;
 using ChickenAPI.Enums.Game.Items;
-using ChickenAPI.Game.Network;
+using ChickenAPI.Game._Network;
 using ChickenAPI.Packets.CharacterSelectionScreen.Client;
 using ChickenAPI.Packets.CharacterSelectionScreen.Server;
 using NW.Plugins.PacketHandling.Utils;

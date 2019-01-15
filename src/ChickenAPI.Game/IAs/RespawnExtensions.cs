@@ -1,5 +1,5 @@
 ﻿using ChickenAPI.Game.Battle.Interfaces;
-using ChickenAPI.Game.PacketHandling.Extensions;
+using ChickenAPI.Game.Inventory.Extensions;
 
 namespace ChickenAPI.Game.IAs
 {

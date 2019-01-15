@@ -1,6 +1,6 @@
-﻿using ChickenAPI.Game.Events;
+﻿using ChickenAPI.Game._Events;
 
-namespace ChickenAPI.Game.Effects.Args
+namespace ChickenAPI.Game.Effects.Events
 {
     public class AddEffectEvent : GameEntityEvent
     {

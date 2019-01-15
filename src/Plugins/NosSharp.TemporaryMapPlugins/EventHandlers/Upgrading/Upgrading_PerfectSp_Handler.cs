@@ -4,12 +4,12 @@ using ChickenAPI.Core.Events;
 using ChickenAPI.Core.Maths;
 using ChickenAPI.Enums.Packets;
 using ChickenAPI.Game;
+using ChickenAPI.Game.Configuration;
 using ChickenAPI.Game.Effects;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Entities.Player.Extensions;
 using ChickenAPI.Game.Helpers;
 using ChickenAPI.Game.Inventory.ItemUpgrade.Events;
-using ChickenAPI.Game.Player.Extension;
 using ChickenAPI.Game.Shops.Extensions;
 
 namespace SaltyEmu.BasicPlugin.EventHandlers

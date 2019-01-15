@@ -1,7 +1,7 @@
 ﻿using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Game.Events;
+using ChickenAPI.Game._Events;
 
-namespace ChickenAPI.Game.Groups.Args
+namespace ChickenAPI.Game.Groups.Events
 {
     public class GroupInvitationSendEvent : GameEntityEvent
     {

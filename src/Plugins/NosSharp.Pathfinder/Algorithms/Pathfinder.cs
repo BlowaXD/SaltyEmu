@@ -1,7 +1,7 @@
 ﻿using System;
 using ChickenAPI.Core.Utils;
-using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Maps;
+using ChickenAPI.Game._ECS.Entities;
 using SaltyEmu.PathfinderPlugin.Utils;
 
 namespace SaltyEmu.PathfinderPlugin.Algorithms

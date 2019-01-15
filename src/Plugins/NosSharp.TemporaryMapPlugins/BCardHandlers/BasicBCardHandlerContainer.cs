@@ -6,7 +6,7 @@ using ChickenAPI.Core.Logging;
 using ChickenAPI.Data.BCard;
 using ChickenAPI.Enums.Game.BCard;
 using ChickenAPI.Game.Battle.Interfaces;
-using ChickenAPI.Game.BCards.Attributes;
+using ChickenAPI.Game.BCards;
 
 namespace SaltyEmu.BasicPlugin.BCardHandlers
 {

@@ -7,12 +7,13 @@ using ChickenAPI.Enums.Game.Character;
 using ChickenAPI.Game.Battle.Interfaces;
 using ChickenAPI.Game.Entities.Mates;
 using ChickenAPI.Game.Families;
+using ChickenAPI.Game.Groups;
+using ChickenAPI.Game.Inventory;
 using ChickenAPI.Game.Locomotion;
-using ChickenAPI.Game.Network;
-using ChickenAPI.Game.Player;
 using ChickenAPI.Game.Quicklist;
 using ChickenAPI.Game.Shops;
 using ChickenAPI.Game.Specialists;
+using ChickenAPI.Game._Network;
 using ChickenAPI.Packets;
 
 namespace ChickenAPI.Game.Entities.Player

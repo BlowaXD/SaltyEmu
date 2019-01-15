@@ -1,10 +1,15 @@
-﻿using ChickenAPI.Enums.Game.Character;
+﻿using System.Threading.Tasks;
+using ChickenAPI.Enums.Game.Character;
 using ChickenAPI.Packets.Game.Server.Player;
 
 namespace ChickenAPI.Game.Entities.Player.Extensions
 {
     public static class StatCharExtensions
     {
+        public static Task ActualizeUiStatChar(this IPlayerEntity player)
+        {
+            return player.ActualizeUiStatChar();
+        }
         public static ScPacket GenerateStatCharPacket(this IPlayerEntity player)
         {
             byte type = 0;

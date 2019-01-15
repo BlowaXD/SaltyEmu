@@ -8,7 +8,6 @@ using ChickenAPI.Core.Utils;
 using ChickenAPI.Data.Map;
 using ChickenAPI.Data.Shop;
 using ChickenAPI.Enums.Game.Entity;
-using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Effects;
 using ChickenAPI.Game.Entities;
 using ChickenAPI.Game.Entities.Monster;
@@ -18,8 +17,9 @@ using ChickenAPI.Game.Entities.Portal;
 using ChickenAPI.Game.Groups;
 using ChickenAPI.Game.IAs;
 using ChickenAPI.Game.Movements;
-using ChickenAPI.Game.Network;
 using ChickenAPI.Game.Specialists;
+using ChickenAPI.Game._ECS.Entities;
+using ChickenAPI.Game._Network;
 using ChickenAPI.Packets;
 
 namespace ChickenAPI.Game.Maps

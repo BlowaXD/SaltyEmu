@@ -10,13 +10,13 @@ using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Enums.Game.Visibility;
 using ChickenAPI.Game.Battle.Interfaces;
 using ChickenAPI.Game.Buffs;
-using ChickenAPI.Game.ECS.Components;
-using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Entities.Monster;
 using ChickenAPI.Game.Movements.DataObjects;
 using ChickenAPI.Game.Shops;
 using ChickenAPI.Game.Skills;
 using ChickenAPI.Game.Visibility;
+using ChickenAPI.Game._ECS.Components;
+using ChickenAPI.Game._ECS.Entities;
 
 namespace ChickenAPI.Game.Entities.Npc
 {

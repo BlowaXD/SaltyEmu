@@ -1,6 +1,6 @@
-﻿using ChickenAPI.Game.Configuration;
+﻿using ChickenAPI.Game.Configuration.Item_Managements;
 
-namespace ChickenAPI.Game
+namespace ChickenAPI.Game.Configuration
 {
     public interface IGameConfiguration
     {

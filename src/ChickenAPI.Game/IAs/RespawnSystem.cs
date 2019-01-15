@@ -2,10 +2,10 @@
 using System.Linq.Expressions;
 using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Game.Battle.Interfaces;
-using ChickenAPI.Game.ECS.Entities;
-using ChickenAPI.Game.ECS.Systems;
 using ChickenAPI.Game.Entities.Monster;
 using ChickenAPI.Game.Entities.Npc;
+using ChickenAPI.Game._ECS.Entities;
+using ChickenAPI.Game._ECS.Systems;
 
 namespace ChickenAPI.Game.IAs
 {

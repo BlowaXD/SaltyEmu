@@ -11,15 +11,12 @@ using ChickenAPI.Data.Item;
 using ChickenAPI.Data.Skills;
 using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Enums.Game.Items;
-using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Effects;
 using ChickenAPI.Game.Entities.Extensions;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Entities.Player.Extensions;
-using ChickenAPI.Game.Events;
 using ChickenAPI.Game.Inventory.Extensions;
 using ChickenAPI.Game.Movements.Extensions;
-using ChickenAPI.Game.Player.Extension;
 using ChickenAPI.Game.Skills.Extensions;
 using ChickenAPI.Game.Specialists.Args;
 using ChickenAPI.Game.Specialists.Extensions;
@@ -87,7 +84,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Specialists
             await player.SendPacketAsync(player.GenerateLevPacket());
             await player.SendPacketAsync(player.GenerateCondPacket());
             await player.SendPacketAsync(player.GenerateStatPacket());
-            await player.SendPacketAsync(player.GenerateStatCharPacket());
+            await player.ActualizeUiStatChar();
 
             // LoadSpSkills()
             SkillDto[] skills = await _skillService.GetByClassIdAsync(player.GetSpClassId());

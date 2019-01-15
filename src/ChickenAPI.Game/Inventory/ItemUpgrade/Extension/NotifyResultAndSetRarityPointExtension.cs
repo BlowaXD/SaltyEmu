@@ -3,10 +3,10 @@ using ChickenAPI.Enums.Game.Items;
 using ChickenAPI.Enums.Packets;
 using ChickenAPI.Game.Effects;
 using ChickenAPI.Game.Entities.Player;
+using ChickenAPI.Game.Entities.Player.Extensions;
 using ChickenAPI.Game.Helpers;
 using ChickenAPI.Game.Inventory.Extensions;
 using ChickenAPI.Game.Inventory.ItemUpgrade.Events;
-using ChickenAPI.Game.Player.Extension;
 
 namespace ChickenAPI.Game.Inventory.ItemUpgrade.Extension
 {

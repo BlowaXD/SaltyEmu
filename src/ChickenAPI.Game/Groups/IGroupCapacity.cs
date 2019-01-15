@@ -1,6 +1,4 @@
-﻿using ChickenAPI.Game.Groups;
-
-namespace ChickenAPI.Game.Player
+﻿namespace ChickenAPI.Game.Groups
 {
     public interface IGroupCapacity
     {

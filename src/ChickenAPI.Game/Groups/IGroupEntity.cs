@@ -1,6 +1,6 @@
-﻿using ChickenAPI.Game.ECS.Entities;
+﻿using ChickenAPI.Game._ECS.Entities;
 
-namespace ChickenAPI.Game.Player
+namespace ChickenAPI.Game.Groups
 {
     public interface IGroupEntity : IGroupCapacity, IEntity
     {

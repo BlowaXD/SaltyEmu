@@ -1,7 +1,7 @@
 ﻿using ChickenAPI.Enums.Game.Entity;
-using ChickenAPI.Game.Events;
+using ChickenAPI.Game._Events;
 
-namespace ChickenAPI.Game.Entities.ReqInfo.Events
+namespace ChickenAPI.Game.Entities.Events
 {
     public class ReqInfoEvent : GameEntityEvent
     {

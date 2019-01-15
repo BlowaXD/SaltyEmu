@@ -6,7 +6,6 @@ using ChickenAPI.Game.Families.Extensions;
 using ChickenAPI.Game.Groups.Extensions;
 using ChickenAPI.Game.Inventory.Extensions;
 using ChickenAPI.Game.Movements.Extensions;
-using ChickenAPI.Game.PacketHandling.Extensions;
 using ChickenAPI.Game.Relations.Extensions;
 using ChickenAPI.Game.Skills.Extensions;
 

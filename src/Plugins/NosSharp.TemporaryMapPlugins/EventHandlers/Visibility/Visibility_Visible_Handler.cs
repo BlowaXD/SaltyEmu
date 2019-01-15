@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using ChickenAPI.Core.Events;
 using ChickenAPI.Enums.Game.Visibility;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Game.PacketHandling.Extensions;
+using ChickenAPI.Game.Inventory.Extensions;
 using ChickenAPI.Game.Visibility;
 using ChickenAPI.Game.Visibility.Events;
 

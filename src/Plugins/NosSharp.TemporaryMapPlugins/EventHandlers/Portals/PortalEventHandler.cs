@@ -7,11 +7,10 @@ using ChickenAPI.Core.Events;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Logging;
 using ChickenAPI.Data.Map;
-using ChickenAPI.Game.ECS.Entities;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Game.Events;
 using ChickenAPI.Game.Managers;
-using ChickenAPI.Game.Portals.Args;
+using ChickenAPI.Game.Portals.Events;
+using ChickenAPI.Game._ECS.Entities;
 
 namespace SaltyEmu.BasicPlugin.EventHandlers.Portals
 {

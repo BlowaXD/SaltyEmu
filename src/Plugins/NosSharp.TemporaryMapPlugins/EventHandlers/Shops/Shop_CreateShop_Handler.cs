@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using ChickenAPI.Core.Events;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Entities.Player.Extensions;
-using ChickenAPI.Game.Player.Extension;
 using ChickenAPI.Game.Shops;
 using ChickenAPI.Game.Shops.Events;
 using ChickenAPI.Game.Shops.Extensions;

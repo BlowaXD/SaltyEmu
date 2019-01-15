@@ -1,6 +1,7 @@
 ﻿using System;
 using Autofac;
 using ChickenAPI.Core.IoC;
+using ChickenAPI.Game.Configuration;
 using ChickenAPI.Packets.Game.Client.Specialists;
 
 namespace ChickenAPI.Game.Entities.Player.Extensions

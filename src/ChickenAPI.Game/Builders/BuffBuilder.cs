@@ -1,6 +1,7 @@
 ﻿using ChickenAPI.Data.Skills;
+using ChickenAPI.Game.Buffs;
 
-namespace ChickenAPI.Game.Buffs
+namespace ChickenAPI.Game.Builders
 {
     public class BuffBuilder
     {

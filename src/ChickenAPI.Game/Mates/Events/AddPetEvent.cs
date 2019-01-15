@@ -1,7 +1,7 @@
 ﻿using ChickenAPI.Enums.Game.Entity;
-using ChickenAPI.Game.Events;
+using ChickenAPI.Game._Events;
 
-namespace ChickenAPI.Game.Inventory.Events
+namespace ChickenAPI.Game.Mates.Events
 {
     public class AddPetEvent : GameEntityEvent
     {
