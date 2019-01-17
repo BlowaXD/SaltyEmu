@@ -25,12 +25,12 @@ namespace SaltyEmu.Communication.Communicators
         private readonly IConnection _connection;
         private readonly IPacketContainerFactory _packetContainerFactory;
 
-        private readonly IIpcRequestHandler _requestHandler;
+        private readonly IIpcPacketHandlersContainer _packetHandlersContainer;
 
-        protected RabbitMqServer(RabbitMqConfiguration config, IIpcRequestHandler requestHandler)
+        protected RabbitMqServer(RabbitMqConfiguration config, IIpcPacketHandlersContainer packetHandlersContainer)
         {
             _configuration = config;
-            _requestHandler = requestHandler;
+            _packetHandlersContainer = packetHandlersContainer;
             var factory = new ConnectionFactory { HostName = _configuration.Address, Password = _configuration.Password, Port = _configuration.Port };
 
             _requestQueueName = _configuration.RequestQueueName;
@@ -52,11 +52,7 @@ namespace SaltyEmu.Communication.Communicators
             _channel.BasicConsume(_broadcastQueueName, true, consumer);
             Log.Info("IPC Server launched !");
         }
-
-        public async Task RegisterRequestsAsync<T>(T packet) where T : IIpcRequest => throw new NotImplementedException();
-
-        public async Task RegisterPacketsAsync<T>(T packet) where T : IIpcPacket => throw new NotImplementedException();
-
+        
         public Task ResponseAsync<T>(T response) where T : IIpcResponse
         {
             return Task.Run(() => { Publish(_packetContainerFactory.ToPacket<T>(response), _responseQueueName); });
@@ -85,7 +81,7 @@ namespace SaltyEmu.Communication.Communicators
             Log.Debug($"[RECEIVED] Packet [{request.Id}][{type}]");
 #endif
             request.Server = this;
-            _requestHandler.HandleAsync(request, type).ConfigureAwait(false).GetAwaiter().GetResult();
+            _packetHandlersContainer.HandleAsync(request, type).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
 

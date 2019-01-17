@@ -166,7 +166,7 @@ namespace World.Network
             }
             catch (Exception e)
             {
-                Log.Error("[SendPackets<T>]", e);
+                Log.Error("[SendPackets<ChildType>]", e);
                 Disconnect();
             }
         }
@@ -254,7 +254,7 @@ namespace World.Network
             }
             catch (Exception e)
             {
-                Log.Error("[SendPackets<T>]", e);
+                Log.Error("[SendPackets<ChildType>]", e);
                 Disconnect();
             }
             return Task.CompletedTask;

@@ -2,6 +2,5 @@
 {
     public class MqttIpcClientConfiguration : MqttConfiguration
     {
-        public string RequestTopic { get; set; }
     }
 }

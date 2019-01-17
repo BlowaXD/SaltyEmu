@@ -1,11 +1,12 @@
 ﻿using System.Threading.Tasks;
+using ChickenAPI.Core.IPC.Protocol;
 using ChickenAPI.Data.Relations;
 using SaltyEmu.Communication.Utils;
 using SaltyEmu.FriendsPlugin.Protocol;
 
 namespace SaltyEmu.RelationService.Handling
 {
-    public class GetRelationsByCharacterIdHandler : GenericIpcRequestHandler<GetRelationsByCharacterId>
+    public class GetRelationsByCharacterIdHandler : GenericIpcRequestHandler<GetRelationsByCharacterId, GetRelationsByCharacterId.Response>
     {
         private readonly IRelationDao _repository;
 
@@ -14,12 +15,12 @@ namespace SaltyEmu.RelationService.Handling
             _repository = repository;
         }
 
-        protected override async Task Handle(GetRelationsByCharacterId request)
+        protected override async Task<GetRelationsByCharacterId.Response> Handle(GetRelationsByCharacterId request)
         {
-            await request.ReplyAsync(new GetRelationsByCharacterId.Response
+            return new GetRelationsByCharacterId.Response
             {
                 Relations = (await _repository.GetRelationsByCharacterId(request.CharacterId))
-            });
+            };
         }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ChickenAPI.Core.IPC.Protocol;
 using ChickenAPI.Data;
 using ChickenAPI.Data.Character;
 using ChickenAPI.Data.Relations;
@@ -11,7 +12,7 @@ using SaltyEmu.FriendsPlugin.Protocol;
 
 namespace SaltyEmu.RelationService.Handling
 {
-    public class ProcessInvitationHandler : GenericIpcRequestHandler<ProcessInvitation>
+    public class ProcessInvitationHandler : GenericIpcRequestHandler<ProcessInvitation, ProcessInvitation.Response>
     {
         private readonly ISynchronizedRepository<RelationDto> _relations;
         private readonly ISynchronizedRepository<RelationInvitationDto> _repository;
@@ -24,18 +25,19 @@ namespace SaltyEmu.RelationService.Handling
             _characterService = characterService;
         }
 
-        protected override async Task Handle(ProcessInvitation request)
+        protected override async Task<ProcessInvitation.Response> Handle(ProcessInvitation request)
         {
             RelationInvitationDto tmp = await _repository.GetByIdAsync(request.InvitationId);
 
             if (tmp == null)
             {
-                return;
+                return new ProcessInvitation.Response
+                {
+                    Relation = new List<RelationDto>()
+                };
             }
 
             await _repository.DeleteByIdAsync(request.InvitationId);
-            IEnumerable<CharacterDto> characters = await _characterService.GetByIdsAsync(new[] { tmp.OwnerId, tmp.TargetId });
-
 
             CharacterDto owner = await _characterService.GetByIdAsync(tmp.OwnerId);
             CharacterDto target = await _characterService.GetByIdAsync(tmp.TargetId);
@@ -64,10 +66,10 @@ namespace SaltyEmu.RelationService.Handling
                 await _relations.SaveAsync(relations);
             }
 
-            await request.ReplyAsync(new ProcessInvitation.Response
+            return new ProcessInvitation.Response
             {
                 Relation = request.ProcessType == RelationInvitationProcessType.Accept ? new List<RelationDto>(relations) : new List<RelationDto>()
-            });
+            };
         }
     }
 }

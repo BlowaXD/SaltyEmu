@@ -12,14 +12,9 @@ namespace SaltyEmu.Communication.Protocol.RepositoryPacket
         private readonly Logger _log = Logger.GetLogger<T>();
         private readonly IAsyncRepository<T, TKey> _repository;
 
-        public AsyncRpcRepository(IAsyncRepository<T, TKey> repository, IIpcRequestHandler handler)
+        public AsyncRpcRepository(IAsyncRepository<T, TKey> repository, IIpcPacketHandlersContainer handler)
         {
             _repository = repository;
-            // todo create delegates to remove the first parameter (which is supposed to be this)
-
-            handler.Register<RepositoryGetRequest<TKey>>(OnGet);
-            handler.Register<RepositorySaveRequest<T>>(OnSave);
-            handler.Register<RepositoryDeleteRequest<TKey>>(OnDelete);
         }
 
         public async Task OnGet(IIpcRequest packet)

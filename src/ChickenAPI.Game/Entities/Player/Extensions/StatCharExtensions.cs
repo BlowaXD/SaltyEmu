@@ -8,8 +8,9 @@ namespace ChickenAPI.Game.Entities.Player.Extensions
     {
         public static Task ActualizeUiStatChar(this IPlayerEntity player)
         {
-            return player.ActualizeUiStatChar();
+            return player.SendPacketAsync(player.GenerateStatCharPacket());
         }
+
         public static ScPacket GenerateStatCharPacket(this IPlayerEntity player)
         {
             byte type = 0;

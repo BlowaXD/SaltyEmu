@@ -17,9 +17,6 @@ namespace SaltyEmu.Communication.Protocol
             set => _id = value;
         }
 
-        public string ResponseTopic { get; }
-        public string RequestTopic { get; }
-
         public Task ReplyAsync<T>(T response) where T : IIpcResponse
         {
             response.RequestId = Id;

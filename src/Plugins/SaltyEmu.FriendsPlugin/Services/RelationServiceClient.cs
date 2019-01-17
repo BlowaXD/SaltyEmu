@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using ChickenAPI.Core.IPC;
+using ChickenAPI.Core.IPC.Protocol;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Data.Relations;
 using ChickenAPI.Enums.Game.Relations;
 using SaltyEmu.Communication.Communicators;
@@ -9,10 +12,24 @@ using SaltyEmu.FriendsPlugin.Protocol;
 
 namespace SaltyEmu.FriendsPlugin.Services
 {
-    public class RelationServiceClient : MqttIpcClient<RelationServiceClient>, IRelationService
+    public class RelationServiceClient : IRelationService
     {
-        public RelationServiceClient(MqttClientConfigurationBuilder builder) : base(builder)
+        private readonly IIpcClient _client;
+        private readonly Logger _log = Logger.GetLogger<RelationServiceClient>();
+
+        public RelationServiceClient(IIpcClient client)
         {
+            _client = client;
+        }
+
+        private Task<TResponse> RequestAsync<TResponse>(IIpcRequest request) where TResponse : class, IIpcResponse
+        {
+            return _client.RequestAsync<TResponse>(request);
+        }
+
+        private Task BroadcastAsync<TPacket>(TPacket request) where TPacket : class, IIpcPacket
+        {
+            return _client.BroadcastAsync(request);
         }
 
         public async Task<IEnumerable<RelationDto>> GetRelationListByCharacterIdAsync(long characterId)
@@ -27,7 +44,7 @@ namespace SaltyEmu.FriendsPlugin.Services
 
         public Task<IEnumerable<RelationMessageDto>> GetPendingMessagesByCharacterIdAsync(long characterId)
         {
-            Log.Warn("GetPendingMessagesByCharacterIdAsync not implemented");
+            _log.Warn("GetPendingMessagesByCharacterIdAsync not implemented");
             return null;
         }
 

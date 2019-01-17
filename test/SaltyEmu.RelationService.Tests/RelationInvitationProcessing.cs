@@ -25,14 +25,10 @@ namespace SaltyEmu.RelationService.Tests
         {
             MqttClientConfigurationBuilder builder = new MqttClientConfigurationBuilder()
                 .ConnectTo("localhost")
-                .WithName("relations-client")
-                .WithRequestTopic(Configuration.RequestQueue)
-                .WithBroadcastTopic(Configuration.BroadcastQueue)
-                .WithResponseTopic(Configuration.ResponseQueue)
-                .WithSerializer(new JsonSerializer());
+                .WithName("relations-client");
 
-            _relationService = new RelationServiceClient(builder);
-            ((MqttIpcClient<RelationServiceClient>)_relationService).InitializeAsync().GetAwaiter().GetResult();
+            // _relationService = new RelationServiceClient(builder);
+            // ((MqttIpcClient<RelationServiceClient>)_relationService).InitializeAsync().GetAwaiter().GetResult();
         }
 
         [Test]

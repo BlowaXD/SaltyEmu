@@ -1,44 +1,26 @@
 ﻿using System.Threading.Tasks;
+using ChickenAPI.Core.IPC;
 using ChickenAPI.Core.IPC.Protocol;
 using ChickenAPI.Core.Logging;
 
 namespace SaltyEmu.Communication.Utils
 {
-    public abstract class GenericIpcRequestHandler<T> where T : IIpcRequest
+    public abstract class GenericIpcRequestHandler<TRequest, TResponse> : IIpcPacketHandler where TRequest : IIpcRequest
+                                                                                            where TResponse : IIpcResponse
     {
-        protected readonly Logger Log = Logger.GetLogger<GenericIpcRequestHandler<T>>();
+        protected readonly Logger Log = Logger.GetLogger<GenericIpcRequestHandler<TRequest, TResponse>>();
 
-        public Task Handle(IIpcRequest packet)
+        public async Task Handle(IIpcPacket packet)
         {
-            if (packet is T request)
+            if (packet is TRequest request)
             {
-                return Handle(request);
+                await request.ReplyAsync(await Handle(request));
+                return;
             }
 
-            Log.Warn($"Packet is not of type {typeof(T)}");
-            return Task.CompletedTask;
-
+            Log.Warn($"Packet is not of type {typeof(TRequest)}");
         }
 
-        protected abstract Task Handle(T request);
-    }
-
-    public abstract class GenericIpcPacketHandler<T> where T : IIpcPacket
-    {
-        protected readonly Logger Log = Logger.GetLogger<GenericIpcPacketHandler<T>>();
-
-        public Task Handle(IIpcPacket packet)
-        {
-            if (packet is T request)
-            {
-                return Handle(request);
-            }
-
-            Log.Warn($"Packet is not of type {typeof(T)}");
-            return Task.CompletedTask;
-
-        }
-
-        protected abstract Task Handle(T request);
+        protected abstract Task<TResponse> Handle(TRequest request);
     }
 }

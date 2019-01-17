@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using ChickenAPI.Core.IPC;
 using ChickenAPI.Core.IPC.Protocol;
@@ -16,44 +17,35 @@ using SaltyEmu.Communication.Utils;
 
 namespace SaltyEmu.Communication.Communicators
 {
-    public abstract class MqttIpcClient<TLogger> : IIpcClient where TLogger : class
+    public sealed class MqttIpcClient : IIpcClient
     {
-        protected readonly Logger Log = Logger.GetLogger<TLogger>();
+        private readonly Logger _log = Logger.GetLogger<MqttIpcClient>();
 
-
+        private readonly IIpcPacketRouter _router;
+        private readonly IIpcSerializer _serializer;
         private readonly IPacketContainerFactory _packetFactory;
         private readonly IPendingRequestFactory _requestFactory;
         private readonly ConcurrentDictionary<Guid, PendingRequest> _pendingRequests;
-
-        private readonly IIpcSerializer _serializer;
+        private readonly HashSet<string> _responsesQueues;
         private readonly IManagedMqttClient _client;
-
-        private readonly string _requestTopic;
-        private readonly string _broadcastTopic;
         private readonly string _endPoint;
         private readonly string _name;
 
-        protected MqttIpcClient(MqttClientConfigurationBuilder builder) : this(builder.Build())
+        public MqttIpcClient(MqttClientConfigurationBuilder builder, IIpcPacketRouter router, IIpcSerializer serializer) : this(builder.Build(), router, serializer)
         {
         }
 
-        protected MqttIpcClient(MqttIpcClientConfiguration conf)
+        private MqttIpcClient(MqttIpcClientConfiguration conf, IIpcPacketRouter router, IIpcSerializer serializer)
         {
+            _router = router;
+            _serializer = serializer;
             _endPoint = conf.EndPoint;
             _name = conf.ClientName;
-            _serializer = conf.Serializer;
-            _requestTopic = conf.RequestTopic;
-            _broadcastTopic = conf.BroadcastTopic;
+            _responsesQueues = new HashSet<string>();
             _pendingRequests = new ConcurrentDictionary<Guid, PendingRequest>();
             _packetFactory = new PacketContainerFactory();
             _requestFactory = new PendingRequestFactory();
             _client = new MqttFactory().CreateManagedMqttClient(new MqttNetLogger(conf.ClientName));
-            _client.SubscribeAsync(conf.ResponseTopic);
-            Log.Info($"[RPC] Waiting for responses on : {conf.ResponseTopic}");
-        }
-
-        public async Task InitializeAsync()
-        {
             ManagedMqttClientOptions options = new ManagedMqttClientOptionsBuilder()
                 .WithAutoReconnectDelay(TimeSpan.FromSeconds(5))
                 .WithClientOptions(new MqttClientOptionsBuilder()
@@ -61,10 +53,12 @@ namespace SaltyEmu.Communication.Communicators
                     .WithTcpServer(_endPoint)
                     .Build())
                 .Build();
-            _client.Connected += (sender, args) => Log.Info($"[CONNECTED] {_name} is connected on MQTT Broker {_endPoint}");
+            _client.Connected += (sender, args) =>
+                _log.Info($"[CONNECTED] {_name} is connected on MQTT Broker {_endPoint}");
             _client.ApplicationMessageReceived += (sender, args) => OnMessage(args.ClientId, args.ApplicationMessage);
-            await _client.StartAsync(options);
+            _client.StartAsync(options).ConfigureAwait(false).GetAwaiter().GetResult();
         }
+
 
         private void OnMessage(string clientId, MqttApplicationMessage message)
         {
@@ -84,7 +78,22 @@ namespace SaltyEmu.Communication.Communicators
             request.Response.SetResult(response);
         }
 
-        public async Task<T> RequestAsync<T>(IIpcRequest packet) where T : class, IIpcResponse
+        private async Task<IRoutingInformation> CheckRouting(Type type)
+        {
+            IRoutingInformation routingInfos = await _router.GetRoutingInformationsAsync(type);
+            if (string.IsNullOrEmpty(routingInfos.ResponseTopic) || _responsesQueues.Contains(routingInfos.ResponseTopic))
+            {
+                return routingInfos;
+            }
+
+            await _client.SubscribeAsync(routingInfos.ResponseTopic);
+            _responsesQueues.Add(routingInfos.ResponseTopic);
+
+            _log.Info($"Waiting for responses on : {routingInfos.Topic}");
+            return routingInfos;
+        }
+
+        public async Task<TResponse> RequestAsync<TResponse>(IIpcRequest packet) where TResponse : class, IIpcResponse
         {
             // add packet to requests
             PendingRequest request = _requestFactory.Create(packet);
@@ -95,25 +104,27 @@ namespace SaltyEmu.Communication.Communicators
 
             // create the packet container
             PacketContainer container = _packetFactory.ToPacket(packet.GetType(), packet);
-            await SendAsync(container, _requestTopic);
+            await SendAsync(container);
 
             IIpcResponse tmp = await request.Response.Task;
-            return tmp as T;
+            return tmp as TResponse;
         }
 
-        private async Task SendAsync(PacketContainer container, string topic)
+        private async Task SendAsync(PacketContainer container)
         {
+            IRoutingInformation infos = await CheckRouting(container.Type);
             await _client.PublishAsync(builder =>
                 builder
                     .WithPayload(_serializer.Serialize(container))
-                    .WithTopic(topic)
+                    .WithTopic(infos.Topic)
+                    .WithAtLeastOnceQoS()
             );
         }
 
-        public async Task BroadcastAsync<T>(T packet) where T : IIpcPacket
+        public Task BroadcastAsync<T>(T packet) where T : IIpcPacket
         {
-            PacketContainer container = _packetFactory.ToPacket(packet.GetType(), packet);
-            await SendAsync(container, _broadcastTopic);
+            PacketContainer container = _packetFactory.ToPacket(typeof(T), packet);
+            return SendAsync(container);
         }
     }
 }

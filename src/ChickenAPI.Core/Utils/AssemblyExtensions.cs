@@ -24,6 +24,17 @@ namespace ChickenAPI.Core.Utils
             return false;
         }
 
+        public static List<Type> GetTypesImplementingGenericClass(this Assembly assembly, params Type[] types)
+        {
+            List<Type> list = new List<Type>();
+            foreach (Type type in types)
+            {
+                list.AddRange(assembly.GetTypesImplementingGenericClass(type));
+            }
+
+            return list;
+        }
+
         public static List<Type> GetTypesImplementingGenericClass(this Assembly assembly, Type type)
         {
             return assembly.GetTypes().Where(s => IsSubclassOfRawGeneric(type, s)).ToList();

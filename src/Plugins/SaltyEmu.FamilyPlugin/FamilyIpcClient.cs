@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using ChickenAPI.Core.IPC;
 using ChickenAPI.Data.Families;
 using SaltyEmu.Communication.Communicators;
 using SaltyEmu.Communication.Configs;
@@ -6,15 +7,15 @@ using SaltyEmu.FamilyPlugin.Communication;
 
 namespace SaltyEmu.FamilyPlugin
 {
-    public class FamilyIpcClient : MappedRepositoryMqtt<FamilyDto>, IFamilyService
+    public class FamilyIpcClient : MappedIpcRepository<FamilyDto>, IFamilyService
     {
-        public FamilyIpcClient(MqttClientConfigurationBuilder builder) : base(builder)
+        public FamilyIpcClient(IIpcClient builder) : base(builder)
         {
         }
 
         public FamilyDto GetByName(string name)
         {
-            return RequestAsync<GetFamilyInformationResponse>(new GetFamilyInformationRequest
+            return Client.RequestAsync<GetFamilyInformationResponse>(new GetFamilyInformationRequest
             {
                 FamilyName = name
             }).ConfigureAwait(false).GetAwaiter().GetResult().Family;
@@ -22,7 +23,7 @@ namespace SaltyEmu.FamilyPlugin
 
         public async Task<FamilyDto> GetByNameAsync(string name)
         {
-            GetFamilyInformationResponse tmp = await RequestAsync<GetFamilyInformationResponse>(new GetFamilyInformationRequest
+            GetFamilyInformationResponse tmp = await Client.RequestAsync<GetFamilyInformationResponse>(new GetFamilyInformationRequest
             {
                 FamilyName = name
             });

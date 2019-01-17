@@ -2,22 +2,21 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 using Autofac;
 using ChickenAPI.Core.IoC;
+using ChickenAPI.Core.IPC;
 using ChickenAPI.Core.Logging;
 using ChickenAPI.Core.Plugins;
 using ChickenAPI.Core.Plugins.Exceptions;
+using ChickenAPI.Core.Utils;
 using SaltyEmu.Communication.Configs;
-using SaltyEmu.Communication.Serializers;
 using SaltyEmu.Communication.Utils;
 using SaltyEmu.Core.Plugins;
-using SaltyEmu.FriendsPlugin;
 using SaltyEmu.Redis;
 
 namespace SaltyEmu.RelationService
 {
-    internal class Program
+    internal class RelationService
     {
         private static readonly IPluginManager PluginManager = new SimplePluginManager();
         private static readonly Logger Log = Logger.GetLogger("RelationService");
@@ -92,6 +91,16 @@ namespace SaltyEmu.RelationService
             }
         }
 
+        private static void RegisterDependencies()
+        {
+            ChickenContainer.Builder.Register(s => new RedisConfiguration { Host = "localhost", Port = 6379 }).As<RedisConfiguration>();
+            ChickenContainer.Builder.Register(s => new MqttClientConfigurationBuilder().ConnectTo("localhost").WithName("relation-service-client"));
+            ChickenContainer.Builder.Register(s => new MqttServerConfigurationBuilder().ConnectTo("localhost").WithName("relation-service-server"));
+            ChickenContainer.Builder.RegisterAssemblyTypes(typeof(RelationService).Assembly).AsClosedTypesOf(typeof(GenericIpcRequestHandler<,>)).PropertiesAutowired();
+            ChickenContainer.Builder.RegisterAssemblyTypes(typeof(RelationService).Assembly).AsClosedTypesOf(typeof(GenericIpcPacketHandler<>)).PropertiesAutowired();
+            ChickenContainer.Builder.RegisterAssemblyTypes(typeof(RelationService).Assembly).AsImplementedInterfaces().PropertiesAutowired();
+        }
+
         private static void Main()
         {
             PrintHeader();
@@ -100,29 +109,35 @@ namespace SaltyEmu.RelationService
             {
                 return;
             }
-
             EnablePlugins(PluginEnableTime.PreContainerBuild);
+            RegisterDependencies();
+            CommunicationIocInjector.Inject();
             ChickenContainer.Initialize();
             EnablePlugins(PluginEnableTime.PostContainerBuild);
-            InitializeAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+            var server = ChickenContainer.Instance.Resolve<IIpcServer>();
+            var container = ChickenContainer.Instance.Resolve<IIpcPacketHandlersContainer>();
+            foreach (Type handlerType in typeof(RelationService).Assembly.GetTypesImplementingGenericClass(typeof(GenericIpcRequestHandler<,>), typeof(GenericIpcPacketHandler<>)))
+            {
+                try
+                {
+                    object handler = ChickenContainer.Instance.Resolve(handlerType);
+                    if (!(handler is IIpcPacketHandler postProcessor))
+                    {
+                        Log.Warn($"{handler}");
+                        continue;
+                    }
+
+                    Type type = handlerType.BaseType.GenericTypeArguments[0];
+
+                    container.RegisterAsync(postProcessor, type);
+                }
+                catch (Exception)
+                {
+                    // ignored
+                }
+            }
+
             Console.ReadLine();
-        }
-
-
-        private static async Task InitializeAsync()
-        {
-            var conf = new RedisConfiguration();
-
-            MqttServerConfigurationBuilder builder = new MqttServerConfigurationBuilder()
-                .ConnectTo("localhost")
-                .WithName("relations-server")
-                .AddTopic(Configuration.RequestQueue)
-                .WithBroadcastTopic(Configuration.BroadcastQueue)
-                .WithResponseTopic(Configuration.ResponseQueue)
-                .WithSerializer(new JsonSerializer())
-                .WithRequestHandler(new RequestHandler());
-
-            RelationServer tmp = await new RelationServer(builder, conf).InitializeAsync();
         }
     }
 }

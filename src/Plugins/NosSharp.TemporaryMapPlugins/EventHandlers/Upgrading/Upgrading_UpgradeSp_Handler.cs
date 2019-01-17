@@ -22,6 +22,12 @@ namespace SaltyEmu.BasicPlugin.EventHandlers
         private readonly IGameConfiguration _configuration;
         private readonly IRandomGenerator _random;
 
+        public Upgrading_UpgradeSp_Handler(IGameConfiguration configuration, IRandomGenerator random)
+        {
+            _configuration = configuration;
+            _random = random;
+        }
+
         protected override async Task Handle(UpgradeSpecialistEvent e, CancellationToken cancellation)
         {
             if (!(e.Sender is IPlayerEntity player))

@@ -13,6 +13,7 @@ namespace SaltyEmu.Communication.Protocol
             set => _id = value;
         }
 
+        public string Topic { get; set; }
         public Guid RequestId { get; set; }
     }
 }

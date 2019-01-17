@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Reflection;
+using SaltyEmu.Communication.Protocol.Attributes;
 
 namespace SaltyEmu.Communication.Protocol.RepositoryPacket
 {
@@ -6,6 +9,7 @@ namespace SaltyEmu.Communication.Protocol.RepositoryPacket
     /// 
     /// </summary>
     /// <typeparam name="TObject"></typeparam>
+    [PacketRequest(typeof(RepositorySaveRequest<>))]
     public sealed class RepositorySaveRequest<TObject> : BaseRequest
     {
         public sealed class Response : BaseResponse
