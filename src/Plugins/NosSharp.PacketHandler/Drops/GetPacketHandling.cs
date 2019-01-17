@@ -23,7 +23,7 @@ namespace NW.Plugins.PacketHandling.Drops
 
             if (mapItem.ItemVnum == 1046) // Gold
             {
-                player.GoldUp(mapItem.Quantity);
+                await player.GoldUp(mapItem.Quantity);
                 await player.BroadcastAsync(player.GenerateGetPacket(mapItem.Id));
                 mapItem.CurrentMap.UnregisterEntity(mapItem);
                 mapItem.Dispose();

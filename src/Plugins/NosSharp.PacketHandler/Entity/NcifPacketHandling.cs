@@ -17,7 +17,7 @@ namespace NW.Plugins.PacketHandling.Entity
             {
                 var entity = player.CurrentMap.GetEntity<IBattleEntity>(packet.TargetId, packet.Type);
                 player.SetTarget(entity);
-                player.ActualizeUiTargetHpBar();
+                await player.ActualizeUiTargetHpBar();
             }
             catch (Exception e)
             {

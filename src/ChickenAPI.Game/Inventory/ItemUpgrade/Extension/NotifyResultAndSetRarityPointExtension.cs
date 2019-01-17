@@ -1,4 +1,5 @@
-﻿using ChickenAPI.Data.Item;
+﻿using System.Threading.Tasks;
+using ChickenAPI.Data.Item;
 using ChickenAPI.Enums.Game.Items;
 using ChickenAPI.Enums.Packets;
 using ChickenAPI.Game.Effects;
@@ -12,11 +13,11 @@ namespace ChickenAPI.Game.Inventory.ItemUpgrade.Extension
 {
     public static class NotifyResultAndSetRarityPointExtension
     {
-        public static void Rarify(this RarifyEvent e, IPlayerEntity player, sbyte rarity)
+        public static async Task Rarify(this RarifyEvent e, IPlayerEntity player, sbyte rarity)
         {
             if (e.Mode != RarifyMode.Drop)
             {
-                player.NotifyRarifyResult(rarity);
+                await player.NotifyRarifyResult(rarity);
             }
 
             e.Item.Rarity = rarity;
@@ -24,7 +25,7 @@ namespace ChickenAPI.Game.Inventory.ItemUpgrade.Extension
             e.Item.SetRarityPoint();
         }
 
-        public static void Fails(this RarifyEvent e, IPlayerEntity player)
+        public static async Task Fails(this RarifyEvent e, IPlayerEntity player)
         {
             if (e.Mode != RarifyMode.Drop)
             {
@@ -47,22 +48,22 @@ namespace ChickenAPI.Game.Inventory.ItemUpgrade.Extension
                              await session.SendPacketAsync($"info {Language.Instance.GetMessageFromKey("AMULET_DESTROYED")}");
                              await session.SendPacketAsync(session.Character.GenerateEquipment());
                          }*/
-                        player.SendTopscreenMessage("AMULET_FAIL_SAVED", MsgPacketType.Whisper);
-                        player.SendChatMessage("AMULET_FAIL_SAVED", SayColorType.Purple);
+                        await player.SendTopscreenMessage("AMULET_FAIL_SAVED", MsgPacketType.Whisper);
+                        await player.SendChatMessage("AMULET_FAIL_SAVED", SayColorType.Purple);
                         return;
 
                     case RarifyProtection.None:
                         /* session.Character.DeleteItemByItemInstanceId(Id);*/
                         //player.EmitEvent(new InventoryDestroyItemEvent { ItemInstance = e.Item });
-                        player.SendTopscreenMessage("RARIFY_FAILED", MsgPacketType.Whisper);
-                        player.SendChatMessage("RARIFY_FAILED", SayColorType.Purple);
+                        await player.SendTopscreenMessage("RARIFY_FAILED", MsgPacketType.Whisper);
+                        await player.SendChatMessage("RARIFY_FAILED", SayColorType.Purple);
 
                         return;
                 }
 
-                player.SendTopscreenMessage("RARIFY_FAILED_ITEM_SAVED", MsgPacketType.Whisper);
-                player.SendChatMessage("RARIFY_FAILED_ITEM_SAVED", SayColorType.Purple);
-                player.Broadcast(player.GenerateEffectPacket(3004));
+                await player.SendTopscreenMessage("RARIFY_FAILED_ITEM_SAVED", MsgPacketType.Whisper);
+                await player.SendChatMessage("RARIFY_FAILED_ITEM_SAVED", SayColorType.Purple);
+                await player.BroadcastAsync(player.GenerateEffectPacket(3004));
             }
         }
     }

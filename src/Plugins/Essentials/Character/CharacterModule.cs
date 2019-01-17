@@ -7,8 +7,10 @@ using ChickenAPI.Data.Item;
 using ChickenAPI.Enums;
 using ChickenAPI.Enums.Game.Character;
 using ChickenAPI.Enums.Game.Items;
+using ChickenAPI.Enums.Packets;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Entities.Player.Extensions;
+using ChickenAPI.Game.Helpers;
 using ChickenAPI.Game.Inventory.Extensions;
 using Qmmands;
 using SaltyEmu.Commands.Checks;
@@ -23,7 +25,7 @@ namespace Essentials.Character
     {
         [Command("Level", "lev", "lvl")]
         [Description("Change the character level.")]
-        public Task<SaltyCommandResult> ChangeLevelAsync(
+        public async Task<SaltyCommandResult> ChangeLevelAsync(
             [Description("Desired level.")] byte level,
             [Description("Character you want to change the level")] IPlayerEntity player = null)
         {
@@ -32,15 +34,15 @@ namespace Essentials.Character
                 player = Context.Player;
             }
 
-            player.ChangeLevel(level);
-            player.Broadcast(player.GenerateLevelUpPacket());
+            await player.ChangeLevel(level);
+            await player.BroadcastAsync(player.GenerateLevelUpPacket());
 
-            return Task.FromResult(new SaltyCommandResult(true, $"{player.Character.Name}'s level has been changed to {level}."));
+            return new SaltyCommandResult(true, $"{player.Character.Name}'s level has been changed to {level}.");
         }
 
         [Command("JobLevel", "JLevel", "jlev", "jlvl")]
         [Description("Change the character level.")]
-        public Task<SaltyCommandResult> ChangeJobLevelAsync(
+        public async Task<SaltyCommandResult> ChangeJobLevelAsync(
             [Description("Desired level.")] byte level,
             [Description("Character you want to change the level")] IPlayerEntity player = null)
         {
@@ -49,15 +51,15 @@ namespace Essentials.Character
                 player = Context.Player;
             }
 
-            player.ChangeJobLevel(level);
-            player.Broadcast(player.GenerateLevelUpPacket());
+            await player.ChangeJobLevel(level);
+            await player.BroadcastAsync(player.GenerateLevelUpPacket());
 
-            return Task.FromResult(new SaltyCommandResult(true, $"{player.Character.Name}'s JobLevel has been changed to {level}."));
+            return new SaltyCommandResult(true, $"{player.Character.Name}'s Joblevel has been changed to {level}.");
         }
 
         [Command("HeroLevel", "HLevel", "hlev", "hlvl")]
         [Description("Change the character's herolevel.")]
-        public Task<SaltyCommandResult> ChangeHeroLevelAsync(
+        public async Task<SaltyCommandResult> ChangeHeroLevelAsync(
             [Description("Desired level.")] byte level,
             [Description("Character you want to change the level")] IPlayerEntity player = null)
         {
@@ -66,15 +68,15 @@ namespace Essentials.Character
                 player = Context.Player;
             }
 
-            player.ChangeHeroLevel(level);
-            player.Broadcast(player.GenerateLevelUpPacket());
+            await player.ChangeHeroLevel(level);
+            await player.BroadcastAsync(player.GenerateLevelUpPacket());
 
-            return Task.FromResult(new SaltyCommandResult(true, $"{player.Character.Name}'s HeroLevel has been changed to {level}."));
+            return new SaltyCommandResult(true, $"{player.Character.Name}'s HeroLevel has been changed to {level}.");
         }
 
         [Command("FairyLevel", "FLevel", "flev", "flvl")]
         [Description("Change the character's fairy's level.")]
-        public Task<SaltyCommandResult> ChangeFairyLevelAsync(
+        public async Task<SaltyCommandResult> ChangeFairyLevelAsync(
             [Description("Desired level.")] short level,
             [Description("Character you want to change the level")] IPlayerEntity player = null)
         {
@@ -86,18 +88,19 @@ namespace Essentials.Character
             ItemInstanceDto fairy = player.Inventory.GetWeared(EquipmentType.Fairy);
             if (fairy == null)
             {
-                return Task.FromResult(new SaltyCommandResult(false, $"{player.Character.Name} has no Fairy actually weared"));
+                return new SaltyCommandResult(true, $"{player.Character.Name} has no Fairy actually weared");
             }
 
-            fairy.ElementRate = level;
-            // stats infos
 
-            return Task.FromResult(new SaltyCommandResult(true, $"{player.Character.Name}'s FairyLevel has been changed to {level}."));
+            fairy.ElementRate = level;
+
+            // stats infos
+            return new SaltyCommandResult(true, $"{player.Character.Name}'s FairyLevel has been changed to {level}.");
         }
 
         [Command("Reputation", "Reput", "rep")]
         [Description("Change the character's reputation.")]
-        public Task<SaltyCommandResult> ChangeReputationAsync(
+        public async Task<SaltyCommandResult> ChangeReputationAsync(
             [Description("Desired reputation.")] long reputation,
             [Description("Character you want to change the reputation")] IPlayerEntity player = null)
         {
@@ -106,15 +109,15 @@ namespace Essentials.Character
                 player = Context.Player;
             }
 
-            player.ChangeReputation(reputation);
+            await player.ChangeReputation(reputation);
 
-            return Task.FromResult(new SaltyCommandResult(true, $"{player.Character.Name}'s Reputation has been changed to {reputation}."));
+            return new SaltyCommandResult(true, $"{player.Character.Name}'s Reputation has been changed to {reputation}.");
         }
 
 
         [Command("ChangeClass", "Class")]
         [Description("Change the character's class.")]
-        public Task<SaltyCommandResult> ChangeClassAsync(
+        public async Task<SaltyCommandResult> ChangeClassAsync(
             [Description("Class you want to change to")] CharacterClassType newClass,
             [Description("Character you want to change the class")] IPlayerEntity player = null)
         {
@@ -123,14 +126,14 @@ namespace Essentials.Character
                 player = Context.Player;
             }
 
-            player.ChangeClass(newClass);
+            await player.ChangeClass(newClass);
 
-            return Task.FromResult(new SaltyCommandResult(true, $"{player.Character.Name}'s class has been changed to {newClass.ToString()}."));
+            return new SaltyCommandResult(true, $"{player.Character.Name}'s class has been changed to {newClass.ToString()}.");
         }
 
         [Command("AddGold")]
         [Description("Add the given amount of gold to an inventory.")]
-        public Task<SaltyCommandResult> AddGoldAsync(
+        public async Task<SaltyCommandResult> AddGoldAsync(
             [Description("Desired amount to add.")] long count,
             [Description("Player you want to add gold.")] IPlayerEntity player = null)
         {
@@ -139,14 +142,14 @@ namespace Essentials.Character
                 player = Context.Player;
             }
 
-            player.GoldUp(count);
+            await player.GoldUp(count);
 
-            return Task.FromResult(new SaltyCommandResult(true, $"{player.Character.Name}'s gold has been increased by {count}"));
+            return new SaltyCommandResult(true, $"{player.Character.Name}'s gold has been increased by {count}");
         }
 
         [Command("SetGold", "Gold")]
         [Description("Set the given amount of gold to an inventory.")]
-        public Task<SaltyCommandResult> SetGoldAsync(
+        public async Task<SaltyCommandResult> SetGoldAsync(
             [Description("Desired amount to set.")] long count,
             [Description("Player you want to set gold.")] IPlayerEntity player = null)
         {
@@ -156,14 +159,14 @@ namespace Essentials.Character
             }
 
             player.Character.Gold = count;
-            player.ActualizeUiGold();
+            await player.ActualizeUiGold();
 
-            return Task.FromResult(new SaltyCommandResult(true, $"{player.Character.Name}'s gold has been set to {count}"));
+            return new SaltyCommandResult(true, $"{player.Character.Name}'s gold has been set to {count}");
         }
 
         [Command("Where")]
         [Description("Provide the player's coordinates [x] [y] and name of the map in the chat.")]
-        public Task<SaltyCommandResult> WhereAsync(
+        public async Task<SaltyCommandResult> WhereAsync(
             [Description("Player you want to locate")] IPlayerEntity player = null)
         {
             if (player == null)
@@ -171,12 +174,18 @@ namespace Essentials.Character
                 player = Context.Player;
             }
 
-            return Task.FromResult(new SaltyCommandResult(true, $"{player.Character.Name}'s position: map {player.CurrentMap.Map.Id} [{player.Position.X}, {player.Position.Y}]"));
+            await Context.Player.SendChatMessage("+---------------[Position]---------------+", SayColorType.Yellow);
+            await Context.Player.SendChatMessage($"Nickname: {player.Character.Name}", SayColorType.Yellow);
+            await Context.Player.SendChatMessage($"MapID: {player.CurrentMap.Map.Id}", SayColorType.Yellow);
+            await Context.Player.SendChatMessage($"Coordinate - X: {player.Position.X} Y: {player.Position.Y}", SayColorType.Yellow);
+            await Context.Player.SendChatMessage("+-------------------------------------------+", SayColorType.Yellow);
+
+            return new SaltyCommandResult(true, $"Position of {player.Character.Name} command has been sent.");
         }
 
         [Command("Speed")]
         [Description("Change the speed of the character.")]
-        public Task<SaltyCommandResult> SpeedAsync(
+        public async Task<SaltyCommandResult> SpeedAsync(
             [Description("Desired speed.")] byte speed,
             [Description("Player you want to change the speed")] IPlayerEntity player = null)
         {
@@ -186,14 +195,15 @@ namespace Essentials.Character
             }
 
             player.Speed = speed > 59 ? (byte)59 : speed;
-            player.ActualizePlayerCondition();
+            await player.ActualizePlayerCondition();
 
-            return Task.FromResult(new SaltyCommandResult(true, $"{player.Character.Name}'s speed is now {player.Speed}"));
+            return new SaltyCommandResult(true, $"{player.Character.Name}'s speed is now {player.Speed}");
         }
 
         [Command("SpeedReset", "rspeed", "resetspeed")]
         [Description("Reset the speed of the character.")]
-        public Task<SaltyCommandResult> SpeedAsync([Description("Player you want to reset the speed")] IPlayerEntity player = null)
+        public async Task<SaltyCommandResult> SpeedAsync(
+            [Description("Player you want to reset the speed")] IPlayerEntity player = null)
         {
             if (player == null)
             {
@@ -201,9 +211,88 @@ namespace Essentials.Character
             }
 
             player.Speed = (byte)ChickenContainer.Instance.Resolve<IAlgorithmService>().GetSpeed(player.Character.Class, player.Level);
-            player.ActualizePlayerCondition();
+            await player.ActualizePlayerCondition();
 
-            return Task.FromResult(new SaltyCommandResult(true, $"{player.Character.Name}'s speed is now {player.Speed}"));
+            return new SaltyCommandResult(true, $"{player.Character.Name}'s speed is now {player.Speed}");
+        }
+
+        [Command("Info", "charInfo", "Information")]
+        [Description("Display information about the player.")]
+        public async Task<SaltyCommandResult> InfoAsync(
+           [Description("Player you want to see information about him.")] IPlayerEntity player = null)
+        {
+            if (player == null)
+            {
+                player = Context.Player;
+            }
+
+            await Context.Player.SendChatMessage("+---------------[Information]---------------+", SayColorType.Green);
+            await Context.Player.SendChatMessage($"AccountID: {player.Character.AccountId}", SayColorType.Yellow);
+            await Context.Player.SendChatMessage($"CharacterID: {player.Character.Id}", SayColorType.Yellow);
+            await Context.Player.SendChatMessage($"Nickname: {player.Character.Name}", SayColorType.Yellow);
+            await Context.Player.SendChatMessage($"Class: {player.Character.Class}", SayColorType.Yellow);
+            await Context.Player.SendChatMessage($"Level: {player.Character.Level} | {player.Character.LevelXp} XP", SayColorType.Yellow);
+            await Context.Player.SendChatMessage($"Job: {player.Character.JobLevel} | {player.Character.JobLevelXp} XP", SayColorType.Yellow);
+            await Context.Player.SendChatMessage($"HeroLevel: {player.Character.HeroLevel} | {player.Character.HeroXp} XP", SayColorType.Yellow);
+            await Context.Player.SendChatMessage($"R Mode: {player.Character.RagePoint}", SayColorType.Yellow);
+            await Context.Player.SendChatMessage($"HP: {player.Hp}/{player.HpMax}", SayColorType.Yellow);
+            await Context.Player.SendChatMessage($"MP: {player.Mp}/{player.MpMax}", SayColorType.Yellow);
+            await Context.Player.SendChatMessage($"Speed: {player.Speed}", SayColorType.Yellow);
+            await Context.Player.SendChatMessage($"Gold: {player.Character.Gold}", SayColorType.Yellow);
+            await Context.Player.SendChatMessage($"Faction: {player.Character.Faction}", SayColorType.Yellow);
+            await Context.Player.SendChatMessage($"Family: {player.Family}", SayColorType.Yellow);
+            await Context.Player.SendChatMessage($"Coordinate - MapID: {player.CurrentMap.Map.Id} X: {player.Position.X} Y: {player.Position.Y}", SayColorType.Yellow);
+            await Context.Player.SendChatMessage("+-----------------------------------------------+", SayColorType.Green);
+
+            return new SaltyCommandResult(true, $"Information of {player.Character.Name} command has been sent.");
+        }
+
+        [Command("ChangeGender", "Gender")]
+        [Description("Change the character's gender.")]
+        public async Task<SaltyCommandResult> ChangeGenderAsync(
+            [Description("Gender you want to change to")] GenderType newGender,
+            [Description("Character you want to change the gender")] IPlayerEntity player = null)
+        {
+            if (player == null)
+            {
+                player = Context.Player;
+            }
+
+            await player.ChangeGender(newGender);
+
+            return new SaltyCommandResult(true, $"{player.Character.Name}'s gender has been changed to {newGender.ToString()}.");
+        } 
+
+        [Command("Heal")] 
+        [Description("Fully restore the character.")]
+        public async Task<SaltyCommandResult> HealAsync(
+            [Description("Player you want to heal")] IPlayerEntity player = null)
+        {
+            if (player == null)
+            {
+                player = Context.Player;
+            }
+
+            player.Hp = player.HpMax;
+            player.Mp = player.MpMax;
+            await player.ActualizeUiHpBar();
+
+            return new SaltyCommandResult(true, $"{player.Character.Name}'s HP & MP has been fully restored.");
+        }
+
+        public async Task<SaltyCommandResult> ChangeSyzeAsync(
+            [Description("Size you want to ")] byte size,
+            [Description("Player you want to change the size")]
+            IPlayerEntity player = null)
+        {
+            if (player == null)
+            {
+                player = Context.Player;
+            }
+
+            player.Size = size;
+            await player.ActualizeUiSize();
+            return new SaltyCommandResult(true, $"{player.Character.Name}'s size has been changed to {size}");
         }
     }
 }

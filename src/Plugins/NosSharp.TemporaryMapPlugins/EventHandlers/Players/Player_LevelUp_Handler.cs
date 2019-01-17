@@ -23,7 +23,6 @@ namespace SaltyEmu.BasicPlugin.EventHandlers
 
         protected override async Task Handle(PlayerLevelUpEvent e, CancellationToken cancellation)
         {
-
             if (!(e.Sender is IPlayerEntity player))
             {
                 return;
@@ -39,7 +38,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers
             switch (e.LevelUpType)
             {
                 case LevelUpType.Level:
-                    player.Broadcast(player.GenerateEffectPacket(6));
+                    await player.BroadcastAsync(player.GenerateEffectPacket(6));
                     break;
                 case LevelUpType.HeroLevel:
                 case LevelUpType.JobLevel:

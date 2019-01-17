@@ -108,18 +108,7 @@ namespace ChickenAPI.Game.Entities.Monster
         #region Visibility
 
         private VisibilityComponent _visibility { get; }
-
-        public event EventHandlerWithoutArgs<IVisibleEntity> Invisible
-        {
-            add => _visibility.Invisible += value;
-            remove => _visibility.Invisible -= value;
-        }
-
-        public event EventHandlerWithoutArgs<IVisibleEntity> Visible
-        {
-            add => _visibility.Visible += value;
-            remove => _visibility.Visible -= value;
-        }
+        
 
         public bool IsVisible => _visibility.IsVisible;
 
@@ -130,6 +119,8 @@ namespace ChickenAPI.Game.Entities.Monster
             get => _visibility.Visibility;
             set => _visibility.Visibility = value;
         }
+
+        public byte Size { get; set; }
 
         #endregion Visibility
 

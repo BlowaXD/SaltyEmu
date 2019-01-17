@@ -46,7 +46,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers
                         break;
                 }
 
-                player.SendPacket(player.GenerateEffectPacket(3005));
+                player.SendPacketAsync(player.GenerateEffectPacket(3005));
 
                 int stoneup = (type < 3 ? e.SpCard.SpDamage :
                     type < 6 ? e.SpCard.SpDefence :

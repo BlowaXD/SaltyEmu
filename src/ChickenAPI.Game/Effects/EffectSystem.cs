@@ -36,11 +36,7 @@ namespace ChickenAPI.Game.Effects
                 packets.Add(entity.GenerateEffectPacket(effect.Id));
             }
 
-
-            if (entity.CurrentMap is IMapLayer mapLayer)
-            {
-                mapLayer.Broadcast(packets);
-            }
+            entity.CurrentMap.BroadcastAsync(packets).ConfigureAwait(false).GetAwaiter().GetResult();
         }
     }
 }

@@ -46,9 +46,9 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Family
             };
             family = await _familyService.SaveAsync(family);
             // todo family object shared across all entities
-            AttachFamily(e.Leader, family, FamilyAuthority.Head);
-            e.Leader.Broadcast(e.Leader.GenerateGidxPacket());
-            e.Leader.SendPacket(e.Leader.GenerateGInfoPacket());
+            await AttachFamily(e.Leader, family, FamilyAuthority.Head);
+            await e.Leader.BroadcastAsync(e.Leader.GenerateGidxPacket());
+            await e.Leader.SendPacketAsync(e.Leader.GenerateGInfoPacket());
 
             if (e.Assistants == null)
             {
@@ -62,13 +62,13 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Family
                     continue;
                 }
 
-                AttachFamily(player, family, FamilyAuthority.Assistant);
-                player.Broadcast(player.GenerateGidxPacket());
-                player.SendPacket(player.GenerateGInfoPacket());
+                await AttachFamily(player, family, FamilyAuthority.Assistant);
+                await player.BroadcastAsync(player.GenerateGidxPacket());
+                await player.SendPacketAsync(player.GenerateGInfoPacket());
             }
         }
 
-        private void AttachFamily(IPlayerEntity player, FamilyDto family, FamilyAuthority authority)
+        private async Task AttachFamily(IPlayerEntity player, FamilyDto family, FamilyAuthority authority)
         {
             if (family == null)
             {
@@ -76,7 +76,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Family
             }
 
             player.Family = family;
-            player.FamilyCharacter = _characterFamilyService.Save(new CharacterFamilyDto
+            player.FamilyCharacter = await _characterFamilyService.SaveAsync(new CharacterFamilyDto
             {
                 Authority = authority,
                 CharacterId = player.Character.Id,

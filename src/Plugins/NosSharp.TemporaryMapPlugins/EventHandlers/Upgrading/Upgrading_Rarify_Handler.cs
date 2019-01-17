@@ -97,9 +97,9 @@ namespace SaltyEmu.BasicPlugin.EventHandlers
 
                     // session.Character.DeleteItemByItemInstanceId(amulet.Id);
                     // await session.SendPacketAsync(session.Character.GenerateEquipment());
-                    player.SendPacket(player.GenerateInfoBubble("AMULET_DESTROYED"));
+                    player.SendPacketAsync(player.GenerateInfoBubble("AMULET_DESTROYED"));
                     player.NotifyRarifyResult(e.Item.Rarity);
-                    player.SendPacket(e.Item?.GenerateIvnPacket());
+                    player.SendPacketAsync(e.Item?.GenerateIvnPacket());
                     return;
 
                 case RarifyMode.Success:
@@ -119,7 +119,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers
                     ItemInstanceDto inventory = e.Item;
                     if (inventory != null)
                     {
-                        player.SendPacket(e.Item?.GenerateIvnPacket());
+                        player.SendPacketAsync(e.Item?.GenerateIvnPacket());
                     }
 
                     return;
@@ -166,7 +166,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers
                     if (e.Protection == RarifyProtection.Scroll && !e.IsCommand)
                     {
                         // remove item ScrollVnum
-                        player.SendPacket(player.GenerateShopEndPacket(player.Inventory.HasItem(_configuration.RarifyChances.ScrollVnum)
+                        player.SendPacketAsync(player.GenerateShopEndPacket(player.Inventory.HasItem(_configuration.RarifyChances.ScrollVnum)
                             ? ShopEndPacketType.CloseSubWindow
                             : ShopEndPacketType.CloseWindow));
                     }
@@ -196,7 +196,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers
                     ItemInstanceDto inventory = e.Item;
                     if (inventory != null)
                     {
-                        player.SendPacket(inventory.GenerateIvnPacket());
+                        player.SendPacketAsync(inventory.GenerateIvnPacket());
                     }
 
                     e.Item.GenerateHeroicShell(e.Protection);
@@ -231,7 +231,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers
             ItemInstanceDto inventoryb = e.Item;
             if (inventoryb != null)
             {
-                player.SendPacket(inventoryb.GenerateIvnPacket());
+                player.SendPacketAsync(inventoryb.GenerateIvnPacket());
             }
         }
     }

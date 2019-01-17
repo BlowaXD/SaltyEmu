@@ -48,14 +48,11 @@ namespace ChickenAPI.Game.Movements
             try
             {
                 MvPacket packet = entity.GenerateMvPacket();
-                if (EntityManager is IMapLayer mapLayer) // wtf ?
-                {
-                    mapLayer.Broadcast(packet);
-                }
+                entity.CurrentMap.BroadcastAsync(packet).ConfigureAwait(false).GetAwaiter().GetResult();
 
                 if (entity is IPlayerEntity playerEntity)
                 {
-                    playerEntity.SendPacket(playerEntity.GenerateCondPacket());
+                    playerEntity.SendPacketAsync(playerEntity.GenerateCondPacket()).ConfigureAwait(false).GetAwaiter().GetResult();
                 }
             }
             catch (Exception e)

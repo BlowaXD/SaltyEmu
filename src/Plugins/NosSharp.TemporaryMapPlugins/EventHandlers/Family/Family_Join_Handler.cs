@@ -34,8 +34,8 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Family
             }
 
             await AttachFamilyAsync(e.Player, e.Family, e.ExpectedAuthority);
-            e.Player.Broadcast(e.Player.GenerateGidxPacket());
-            e.Player.SendPacket(e.Player.GenerateGInfoPacket());
+            await e.Player.BroadcastAsync(e.Player.GenerateGidxPacket());
+            await e.Player.SendPacketAsync(e.Player.GenerateGInfoPacket());
         }
 
         private async Task AttachFamilyAsync(IPlayerEntity player, FamilyDto family, FamilyAuthority authority)

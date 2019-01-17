@@ -72,7 +72,7 @@ namespace SaltyEmu.BasicPlugin.ItemUpgradeHandlers
                 IsCommand = false
             });
 
-            player.SendPacket(player.GenerateShopEndPacket(ShopEndPacketType.CloseWindow));
+            player.SendPacketAsync(player.GenerateShopEndPacket(ShopEndPacketType.CloseWindow));
         }
 
         [ItemUpgradeHandler(UpgradePacketType.RarifyItemProtected)]

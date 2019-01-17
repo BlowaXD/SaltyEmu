@@ -1,12 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using ChickenAPI.Game.Entities.Player;
+﻿using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game._Network;
-using ChickenAPI.Packets;
 
 namespace ChickenAPI.Game.Managers
 {
-    public interface IPlayerManager
+    public interface IPlayerManager : IBroadcastable
     {
         /// <summary>
         ///     Retrieves the PlayerEntity by its character's name
@@ -28,11 +25,5 @@ namespace ChickenAPI.Game.Managers
         /// </summary>
         /// <param name="player"></param>
         void UnregisterPlayer(IPlayerEntity player);
-
-        Task BroadcastAsync<T>(IEnumerable<T> packets) where T : IPacket;
-        Task BroadcastAsync<T>(T packet) where T : IPacket;
-
-        Task BroadcastAsync<T>(IEnumerable<T> packets, IBroadcastRule rule) where T : IPacket;
-        Task BroadcastAsync<T>(T packet, IBroadcastRule rule) where T : IPacket;
     }
 }

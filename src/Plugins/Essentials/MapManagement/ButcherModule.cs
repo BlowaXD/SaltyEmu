@@ -31,10 +31,10 @@ namespace Essentials.MapManagement
             SkillType = 1
         };
 
-        private void KillMonster(IBattleEntity monster)
+        private Task KillMonster(IBattleEntity monster)
         {
             monster.Hp = 0;
-            Context.Player.Broadcast(monster.GenerateSuPacket(new HitRequest
+            return Context.Player.BroadcastAsync(monster.GenerateSuPacket(new HitRequest
             {
                 Sender = Context.Player,
                 Target = monster,
@@ -59,19 +59,18 @@ namespace Essentials.MapManagement
 
         [Command("radius")]
         [Description("Kills every monster in the current map around you in the specified radius.")]
-        public Task<SaltyCommandResult> ButchAllMonstersAsync(
-            [Description("Radius within the monsters should be killed.")] short radius)
+        public async Task<SaltyCommandResult> ButchAllMonstersAsync(
+            [Description("Radius within the monsters should be killed.")]
+            short radius)
         {
             IEnumerable<IMonsterEntity> entities = Context.Player.CurrentMap
                 .GetEntitiesInRange<IMonsterEntity>(Context.Player.Position, radius)
                 .Where(s => s.Type == VisualType.Monster);
 
-            foreach (IMonsterEntity entity in entities)
-            {
-                KillMonster(entity);
-            }
+            List<Task> tasks = entities.Select(KillMonster).ToList();
 
-            return Task.FromResult(new SaltyCommandResult(true, $"All monsters within a radius of {radius} tiles have been killed."));
+            await Task.WhenAll(tasks);
+            return new SaltyCommandResult(true, $"All monsters within a radius of {radius} tiles have been killed.");
         }
     }
 }

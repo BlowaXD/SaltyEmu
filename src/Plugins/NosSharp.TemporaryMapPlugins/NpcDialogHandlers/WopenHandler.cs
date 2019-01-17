@@ -14,7 +14,7 @@ namespace SaltyEmu.BasicPlugin.NpcDialogHandlers
         [NpcDialogHandler(2)]
         public static void UpgradeFromNpc(IPlayerEntity player, NpcDialogEvent args)
         {
-            player.SendPacket(new WopenPacket
+            player.SendPacketAsync(new WopenPacket
             {
                 Type = 1,
                 Unknow = 0
@@ -24,7 +24,7 @@ namespace SaltyEmu.BasicPlugin.NpcDialogHandlers
         [NpcDialogHandler(10)]
         public static void Cellon(IPlayerEntity player, NpcDialogEvent args)
         {
-            player.SendPacket(new WopenPacket
+            player.SendPacketAsync(new WopenPacket
             {
                 Type = 3,
                 Unknow = 0
@@ -34,7 +34,7 @@ namespace SaltyEmu.BasicPlugin.NpcDialogHandlers
         [NpcDialogHandler(12)]
         public static void Idk(IPlayerEntity player, NpcDialogEvent args)
         {
-            player.SendPacket(new WopenPacket
+            player.SendPacketAsync(new WopenPacket
             {
                 Type = args.Type,
                 Unknow = 0
@@ -44,7 +44,7 @@ namespace SaltyEmu.BasicPlugin.NpcDialogHandlers
         [NpcDialogHandler(14)]
         public static void Recipe(IPlayerEntity player, NpcDialogEvent args)
         {
-            player.SendPacket(new WopenPacket
+            player.SendPacketAsync(new WopenPacket
             {
                 Type = 27,
                 Unknow = 0
@@ -69,7 +69,7 @@ namespace SaltyEmu.BasicPlugin.NpcDialogHandlers
         [NpcDialogHandler(18)]
         public static void TimeCircle(IPlayerEntity player, NpcDialogEvent args)
         {
-            player.SendPacket(new SentNpcReqPacket
+            player.SendPacketAsync(new SentNpcReqPacket
             {
                 VisualType = ChickenAPI.Enums.Game.Entity.VisualType.Character,
                 VisualId = player.Id,
@@ -91,7 +91,7 @@ namespace SaltyEmu.BasicPlugin.NpcDialogHandlers
                     }
                     await session.SendPacketAsync($"wopen 32 {Medal} {Time}");
                     */
-            player.SendPacket(new WopenPacket
+            player.SendPacketAsync(new WopenPacket
             {
                 Type = 32,
                 Unknow = 1

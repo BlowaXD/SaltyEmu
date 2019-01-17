@@ -16,7 +16,7 @@ namespace Essentials
 {
     public class EssentialsPlugin : IPlugin
     {
-        private static readonly Logger _logger = Logger.GetLogger<EssentialsPlugin>();
+        private static readonly Logger Log = Logger.GetLogger<EssentialsPlugin>();
         public PluginEnableTime EnableTime => PluginEnableTime.PostContainerBuild;
         public string Name => "Essentials";
 
@@ -33,7 +33,7 @@ namespace Essentials
             {
                 await RegisterCommands(container);
                 //await UnregisterCommands(); <-- this is intended to test command unregistering during runtime.
-            });
+            }).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
         private static void RegisterTypeParsers(ICommandContainer container)
@@ -58,7 +58,7 @@ namespace Essentials
             }
             catch (Exception e)
             {
-                _logger.Debug(e.StackTrace);
+                Log.Debug(e.StackTrace);
             }
 
             return Task.CompletedTask;
@@ -73,7 +73,7 @@ namespace Essentials
             }
             catch (Exception e)
             {
-                _logger.Debug(e.StackTrace);
+                Log.Debug(e.StackTrace);
             }
         }
 

@@ -169,7 +169,7 @@ namespace ChickenAPI.Game.Entities.Player
             });
         }
 
-        public void SendPacket<T>(T packetBase) where T : IPacket => Session.SendPacket(packetBase);
+        public void SendPacket<T>(T packetBase) where T : IPacket => Session.SendPacketAsync(packetBase);
 
         public void SendPackets<T>(IEnumerable<T> packets) where T : IPacket
         {
@@ -263,50 +263,11 @@ namespace ChickenAPI.Game.Entities.Player
         public Task BroadcastAsync(IEnumerable<IPacket> packets) => BroadcastAsync(packets, null);
 
         public Task BroadcastAsync(IEnumerable<IPacket> packets, IBroadcastRule rule) => CurrentMap?.BroadcastAsync(packets, rule);
-
-        public void Broadcast<T>(T packet) where T : IPacket
-        {
-            Broadcast(packet, null);
-        }
-
-        public void Broadcast<T>(IEnumerable<T> packets) where T : IPacket
-        {
-            Broadcast(packets, null);
-        }
-
-        public void BroadcastExceptSender<T>(T packet) where T : IPacket
-        {
-            Broadcast(packet, new AllExpectOne(this));
-        }
-
-        public void BroadcastExceptSender<T>(IEnumerable<T> packets) where T : IPacket
-        {
-            Broadcast(packets, new AllExpectOne(this));
-        }
-
+        
         public Task BroadcastExceptSenderAsync<T>(T packet) where T : IPacket => BroadcastAsync(packet, new AllExpectOne(this));
 
         public Task BroadcastExceptSenderAsync<T>(IEnumerable<T> packets) where T : IPacket => BroadcastAsync(packets, new AllExpectOne(this));
-
-        public void Broadcast<T>(T packet, IBroadcastRule rule) where T : IPacket
-        {
-            CurrentMap?.Broadcast(packet, rule);
-        }
-
-        public void Broadcast<T>(IEnumerable<T> packets, IBroadcastRule rule) where T : IPacket
-        {
-            CurrentMap?.Broadcast(packets, rule);
-        }
-
-        public void Broadcast(IEnumerable<IPacket> packets)
-        {
-            Broadcast(packets, null);
-        }
-
-        public void Broadcast(IEnumerable<IPacket> packets, IBroadcastRule rule)
-        {
-            CurrentMap?.Broadcast(packets, rule);
-        }
+        
 
         #endregion
 
@@ -413,19 +374,7 @@ namespace ChickenAPI.Game.Entities.Player
         #endregion Battle
 
         #region Visibility
-
-        public event EventHandlerWithoutArgs<IVisibleEntity> Invisible
-        {
-            add => _visibility.Invisible += value;
-            remove => _visibility.Invisible -= value;
-        }
-
-        public event EventHandlerWithoutArgs<IVisibleEntity> Visible
-        {
-            add => _visibility.Visible += value;
-            remove => _visibility.Visible -= value;
-        }
-
+        
         public bool IsVisible => _visibility.IsVisible;
 
         public bool IsInvisible => _visibility.IsInvisible;
@@ -435,6 +384,8 @@ namespace ChickenAPI.Game.Entities.Player
             get => _visibility.Visibility;
             set => _visibility.Visibility = value;
         }
+
+        public byte Size { get; set; }
 
         private VisibilityComponent _visibility { get; }
 

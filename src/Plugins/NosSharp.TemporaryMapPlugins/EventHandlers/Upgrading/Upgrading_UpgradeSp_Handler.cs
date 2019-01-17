@@ -79,14 +79,14 @@ namespace SaltyEmu.BasicPlugin.EventHandlers
                 }
 
                 // remove Item Blue/red scroll x 1
-                player.SendPacket(player.GenerateShopEndPacket(player.Inventory.HasItem(e.Item.Upgrade < 15
+                await player.SendPacketAsync(player.GenerateShopEndPacket(player.Inventory.HasItem(e.Item.Upgrade < 15
                     ? _configuration.UpgradeSp.BlueScrollVnum
                     : _configuration.UpgradeSp.RedScrollVnum)
                     ? ShopEndPacketType.CloseSubWindow
                     : ShopEndPacketType.CloseWindow));
             }
 
-            player.GoldLess(_configuration.UpgradeSp.GoldPrice[e.Item.Upgrade]);
+            await player.GoldLess(_configuration.UpgradeSp.GoldPrice[e.Item.Upgrade]);
             //CharacterSession.Character.Inventory.RemoveItemAmount(featherVnum, feather[Upgrade]);
             //CharacterSession.Character.Inventory.RemoveItemAmount(fullmoonVnum, fullmoon[Upgrade]);
             ItemInstanceDto wearable = e.Item;
@@ -122,7 +122,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers
             {
                 if (e.Protection == UpgradeProtection.Protected)
                 {
-                    player.SendPacketAsync(player.GenerateEffectPacket(3004));
+                    await player.SendPacketAsync(player.GenerateEffectPacket(3004));
                 }
 
                 await player.SendPacketAsync(player.GenerateEffectPacket(3005));
@@ -151,10 +151,10 @@ namespace SaltyEmu.BasicPlugin.EventHandlers
                     //     CharacterSession.Character.Name, itemVNum: wearable.ItemVNum, upgrade: wearable.Upgrade);
                 }
 
-                player.SendPacket(wearable.GenerateIvnPacket());
+                await player.SendPacketAsync(wearable.GenerateIvnPacket());
             }
 
-            player.GenerateShopEndPacket(ShopEndPacketType.CloseSubWindow);
+            await player.SendPacketAsync(player.GenerateShopEndPacket(ShopEndPacketType.CloseSubWindow));
         }
     }
 }

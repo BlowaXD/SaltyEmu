@@ -113,7 +113,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Upgrading
                         }*/
                     }
 
-                    player.GoldLess(goldprice[e.Item.Upgrade] * (long)_configuration.UpgradeItem.ReducedPriceFactor);
+                    await player.GoldLess(goldprice[e.Item.Upgrade] * (long)_configuration.UpgradeItem.ReducedPriceFactor);
                     //session.Character.Inventory.RemoveItemAmount(cellaVnum,
                     //    (int)(cella[Upgrade] * reducedpricefactor));
                     break;
@@ -156,7 +156,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Upgrading
                     if (e.Protection == UpgradeProtection.Protected && !e.IsCommand)
                     {
                         // remove Item normal scroll x 1
-                        player.SendPacket(player.GenerateShopEndPacket(player.Inventory.HasItem(_configuration.UpgradeItem.NormalScrollVnum)
+                        await player.SendPacketAsync(player.GenerateShopEndPacket(player.Inventory.HasItem(_configuration.UpgradeItem.NormalScrollVnum)
                             ? ShopEndPacketType.CloseSubWindow
                             : ShopEndPacketType.CloseWindow));
                     }
@@ -174,7 +174,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Upgrading
                     }
 
                     //session.Character.Inventory.RemoveItemAmount(cellaVnum, cella[Upgrade]);
-                    player.GoldLess(goldprice[e.Item.Upgrade]);
+                    await player.GoldLess(goldprice[e.Item.Upgrade]);
                     break;
             }
 
@@ -225,7 +225,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Upgrading
             {
                 if (rnd < upfix[e.Item.Upgrade])
                 {
-                    player.Broadcast(player.GenerateEffectPacket(3004));
+                    await player.BroadcastAsync(player.GenerateEffectPacket(3004));
                     wearable.IsFixed = true;
                     await player.SendChatMessage("UPGRADE_FIXED", SayColorType.Purple);
                     await player.SendTopscreenMessage("UPGRADE_FIXED", MsgPacketType.Whisper);

@@ -26,7 +26,7 @@ namespace SaltyEmu.BasicPlugin.GuriHandlers
             }
 
             // todo receiver type
-            player.Broadcast(player.EmojiToEffectPacket((EmojiType)e.Data));
+            player.BroadcastAsync(player.EmojiToEffectPacket((EmojiType)e.Data)).ConfigureAwait(false).GetAwaiter().GetResult();
 
             Log.Info($"[GURI][EMOTICON] {player.Character.Name} used emoji : ");
         }

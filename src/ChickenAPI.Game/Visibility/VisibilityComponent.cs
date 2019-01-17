@@ -49,6 +49,8 @@ namespace ChickenAPI.Game.Visibility
             }
         }
 
+        public byte Size { get; set; }
+
         #endregion
     }
 }

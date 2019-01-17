@@ -56,6 +56,13 @@ namespace ChickenAPI.Game.Entities.Player.Extensions
         public static Task ActualizeUiExpBar(this IPlayerEntity player) => player.SendPacketAsync(player.GenerateLevPacket());
 
         /// <summary>
+        /// Actualize the size
+        /// </summary>
+        /// <param name="player"></param>
+        /// <returns></returns>
+        public static Task ActualizeUiSize(this IPlayerEntity player) => player.BroadcastAsync(player.GenerateCharScPacket());
+
+        /// <summary>
         ///     Actualizes the HpBar at top left corner
         /// </summary>
         /// <param name="player"></param>

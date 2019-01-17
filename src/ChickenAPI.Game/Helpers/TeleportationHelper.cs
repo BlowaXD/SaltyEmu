@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Autofac;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Game.Entities.Extensions;
@@ -12,31 +13,31 @@ namespace ChickenAPI.Game.Helpers
     {
         private static readonly IMapManager MapManager = new Lazy<IMapManager>(() => ChickenContainer.Instance.Resolve<IMapManager>()).Value;
 
-        public static void TeleportTo(this IPlayerEntity player, IMapLayer layer, short x, short y)
+        public static Task TeleportTo(this IPlayerEntity player, IMapLayer layer, short x, short y)
         {
             if (player.CurrentMap == layer)
             {
-                player.TeleportTo(x, y);
-                return;
+                return player.TeleportTo(x, y);
             }
 
             player.Position.X = x;
             player.Position.Y = y;
             player.TransferEntity(layer);
+            return Task.CompletedTask;
         }
 
 
-        public static void TeleportTo(this IPlayerEntity player, short mapId, short x, short y)
+        public static Task TeleportTo(this IPlayerEntity player, short mapId, short x, short y)
         {
-            player.TeleportTo(MapManager.GetBaseMapLayer(mapId), x, y);
+            return player.TeleportTo(MapManager.GetBaseMapLayer(mapId), x, y);
         }
 
-        public static void TeleportTo(this IPlayerEntity player, short x, short y)
+        public static Task TeleportTo(this IPlayerEntity player, short x, short y)
         {
             // improve that
             player.Position.X = x;
             player.Position.Y = y;
-            player.Broadcast(player.GenerateTpPacket(x, y));
+            return player.BroadcastAsync(player.GenerateTpPacket(x, y));
         }
     }
 }

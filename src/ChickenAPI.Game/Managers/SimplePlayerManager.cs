@@ -57,7 +57,17 @@ namespace ChickenAPI.Game.Managers
         {
             lock(_locker)
             {
-                return Task.WhenAll(_players.Select(s => Task.Run(() => rule.Match(s) ? s.SendPacketsAsync(packets) : Task.CompletedTask)));
+                return Task.WhenAll(_players.Select(s => Task.Run(() => rule != null && rule.Match(s) ? s.SendPacketsAsync(packets) : Task.CompletedTask)));
+            }
+        }
+
+        public Task BroadcastAsync(IEnumerable<IPacket> packets) => BroadcastAsync(packets, null);
+
+        public Task BroadcastAsync(IEnumerable<IPacket> packets, IBroadcastRule rule)
+        {
+            lock(_locker)
+            {
+                return Task.WhenAll(_players.Select(s => Task.Run(() => rule != null && rule.Match(s) ? s.SendPacketsAsync(packets) : Task.CompletedTask)));
             }
         }
 
@@ -65,7 +75,7 @@ namespace ChickenAPI.Game.Managers
         {
             lock(_locker)
             {
-                return Task.WhenAll(_players.Select(s => Task.Run(() => rule.Match(s) ? s.SendPacketAsync(packet) : Task.CompletedTask)));
+                return Task.WhenAll(_players.Select(s => Task.Run(() => rule != null && rule.Match(s) ? s.SendPacketAsync(packet) : Task.CompletedTask)));
             }
         }
 

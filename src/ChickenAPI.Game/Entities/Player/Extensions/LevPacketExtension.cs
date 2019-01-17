@@ -2,6 +2,7 @@
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Data.Character;
 using ChickenAPI.Game.Skills.Extensions;
+using ChickenAPI.Packets.Game.Server.Entities;
 using ChickenAPI.Packets.Game.Server.Player;
 
 namespace ChickenAPI.Game.Entities.Player.Extensions
@@ -32,5 +33,15 @@ namespace ChickenAPI.Game.Entities.Player.Extensions
             {
                 CharacterId = player.Id
             };
+
+        public static CharScPacket GenerateCharScPacket(this IPlayerEntity player)
+        {
+            return new CharScPacket
+            {
+                VisualType = player.Type,
+                VisualId = player.Id,
+                Size = player.Size,
+            };
+        }
     }
 }

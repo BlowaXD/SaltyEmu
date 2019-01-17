@@ -60,7 +60,7 @@ namespace ChickenAPI.Game.Test.Mocks
         public void SendPacket<T>(T packet) where T : IPacket
         {
             _packets.Add(new Tuple<Type, IPacket>(typeof(T), packet));
-            _session.SendPacket(packet);
+            _session.SendPacketAsync(packet);
         }
 
         public IReadOnlyList<Tuple<Type, IPacket>> Packets => _packets;
@@ -78,7 +78,7 @@ namespace ChickenAPI.Game.Test.Mocks
             foreach (IPacket packet in packets)
             {
                 _packets.Add(new Tuple<Type, IPacket>(packet.GetType(), packet));
-                _session.SendPacket(packet);
+                _session.SendPacketAsync(packet);
             }
         }
 

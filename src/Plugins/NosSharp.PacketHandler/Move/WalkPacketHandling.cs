@@ -27,10 +27,7 @@ namespace NW.Plugins.PacketHandling.Move
             player.Speed = packet.Speed;
 
             await player.SendPacketAsync(player.GenerateCondPacket());
-            if (player.CurrentMap is IMapLayer broadcastable)
-            {
-                broadcastable.Broadcast(player.GenerateMvPacket());
-            }
+            await player.BroadcastAsync(player.GenerateMvPacket());
         }
     }
 }

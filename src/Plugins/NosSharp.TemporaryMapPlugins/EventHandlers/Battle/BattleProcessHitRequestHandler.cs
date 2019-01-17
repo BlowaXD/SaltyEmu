@@ -52,7 +52,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Battle
                 packets.Add(hitRequest.Sender.GenerateSuPacket(hitRequest, nextDamages));
             }
 
-            hitRequest.Sender.CurrentMap.Broadcast<SuPacket>(packets);
+            await hitRequest.Sender.CurrentMap.BroadcastAsync<SuPacket>(packets);
             Log.Debug($"[{hitRequest.Sender.Type.ToString()}][{hitRequest.Sender.Id}] ATTACK -> [{hitRequest.Target.Type.ToString()}]({hitRequest.Target.Id}) : {givenDamages} damages");
             // apply buffs
             // apply debuffs

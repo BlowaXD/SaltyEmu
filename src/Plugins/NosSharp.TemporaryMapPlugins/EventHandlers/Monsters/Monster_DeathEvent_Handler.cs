@@ -46,7 +46,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers
                 long xp = (long)(npcMonster.Xp * ExpPenality(player.Level - npcMonster.Level));
                 long jobXp = (long)(npcMonster.JobXp * ExpPenality(player.JobLevel - npcMonster.Level));
                 long heroXp = (long)(npcMonster.HeroXp * ExpPenality(player.Level - npcMonster.Level));
-                player.EmitEvent(new ExperienceGainEvent { Experience = xp, JobExperience = jobXp, HeroExperience = heroXp });
+                await player.EmitEventAsync(new ExperienceGainEvent { Experience = xp, JobExperience = jobXp, HeroExperience = heroXp });
             }
 
             if (Random.Next(100) < 100) // 100 should be modified with GoldDropRate
@@ -61,7 +61,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers
                     Quantity = Random.Next(6 * monster.NpcMonster.Level, 12 * monster.NpcMonster.Level)
                 };
                 drop.TransferEntity(monster.CurrentMap);
-                monster.CurrentMap.Broadcast(drop.GenerateDropPacket());
+                await monster.CurrentMap.BroadcastAsync(drop.GenerateDropPacket());
             }
         }
     }

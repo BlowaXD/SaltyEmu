@@ -9,10 +9,18 @@
 
         #endregion
 
+        #region UPGRADE
+
+        UPGRADE_RARIFY_SUCCESS,
+
+        #endregion
+
         #region CHANGEMENTS
 
         CHARACTER_YOUR_CLASS_CHANGED_TO_X,
         CHARACTER_X_CLASS_CHANGED_TO_Y,
+        CHARACTER_YOUR_GENDER_CHANGED_TO_X,
+        CHARACTER_X_GENDER_CHANGED_TO_Y,
         CHARACTER_YOUR_FACTION_CHANGED_TO_X,
         CHARACTER_X_FACTION_CHANGED_TO_Y,
 

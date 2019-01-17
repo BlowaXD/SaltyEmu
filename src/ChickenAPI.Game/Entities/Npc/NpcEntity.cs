@@ -111,19 +111,7 @@ namespace ChickenAPI.Game.Entities.Npc
         #endregion stat
 
         #region Visibility
-
-        public event EventHandlerWithoutArgs<IVisibleEntity> Invisible
-        {
-            add => _visibility.Invisible += value;
-            remove => _visibility.Invisible -= value;
-        }
-
-        public event EventHandlerWithoutArgs<IVisibleEntity> Visible
-        {
-            add => _visibility.Visible += value;
-            remove => _visibility.Visible -= value;
-        }
-
+        
         public bool IsVisible => _visibility.IsVisible;
 
         public bool IsInvisible => _visibility.IsInvisible;
@@ -133,6 +121,8 @@ namespace ChickenAPI.Game.Entities.Npc
             get => _visibility.Visibility;
             set => _visibility.Visibility = value;
         }
+
+        public byte Size { get; set; }
 
         public VisibilityComponent _visibility { get; }
 

@@ -74,11 +74,11 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Inventory
 
             if (itemInstance.Item.ItemType == ItemType.Specialist)
             {
-                playerEntity.SendPacket(itemInstance.GenerateSlInfoPacket());
+                playerEntity.SendPacketAsync(itemInstance.GenerateSlInfoPacket());
                 return;
             }
 
-            playerEntity.SendPacket(itemInstance.GenerateEInfoPacket());
+            playerEntity.SendPacketAsync(itemInstance.GenerateEInfoPacket());
         }
     }
 }

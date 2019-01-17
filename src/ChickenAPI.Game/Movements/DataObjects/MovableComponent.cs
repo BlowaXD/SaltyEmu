@@ -50,7 +50,7 @@ namespace ChickenAPI.Game.Movements.DataObjects
             set
             {
                 _isSitting = value;
-                Entity.CurrentMap.Broadcast(Entity.GenerateRestPacket());
+                Entity.CurrentMap.BroadcastAsync(Entity.GenerateRestPacket()).ConfigureAwait(false).GetAwaiter().GetResult();
             }
         }
 

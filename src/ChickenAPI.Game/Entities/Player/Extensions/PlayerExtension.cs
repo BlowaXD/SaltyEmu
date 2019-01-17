@@ -187,27 +187,39 @@ namespace ChickenAPI.Game.Entities.Player.Extensions
              }*/
         }
 
-        public static void NotifyRarifyResult(this IPlayerEntity player, sbyte rare)
+        public static async Task ChangeGender(this IPlayerEntity player, GenderType type)
         {
-            player.SendPacket(player.GenerateMsgPacket("RARIFY_SUCCESS", MsgPacketType.Whisper));
-            player.SendPacket(player.GenerateSayPacket("RARIFY_SUCCESS", SayColorType.Green));
-            player.SendPacket(player.GenerateSayPacket($"{rare}", SayColorType.Green));
-            player.Broadcast(player.GenerateEffectPacket(3005));
-            player.SendPacket(player.GenerateShopEndPacket(ShopEndPacketType.CloseSubWindow));
+            await player.SendChatMessageFormat(PlayerMessages.CHARACTER_X_GENDER_CHANGED_TO_Y, SayColorType.Blue, type);
+            player.Character.Gender = type;
+            await player.ActualizePlayerCondition();
+            await player.SendPacketAsync(player.GenerateEqPacket());
+            await player.BroadcastAsync(player.GenerateCModePacket());
+            await player.BroadcastAsync(player.GenerateInPacket());
+            await player.BroadcastAsync(player.GenerateGidxPacket());
+            await player.BroadcastAsync(player.GenerateEffectPacket(196));
+        }
+
+
+        public static async Task NotifyRarifyResult(this IPlayerEntity player, sbyte rare)
+        {
+            await player.SendMessageAsync(PlayerMessages.UPGRADE_RARIFY_SUCCESS, MsgPacketType.Whisper);
+            await player.SendPacketAsync(player.GenerateSayPacket("RARIFY_SUCCESS " + rare, SayColorType.Green));
+            await player.BroadcastAsync(player.GenerateEffectPacket(3005));
+            await player.SendPacketAsync(player.GenerateShopEndPacket(ShopEndPacketType.CloseSubWindow));
         }
 
         #region Gold
 
-        public static void GoldLess(this IPlayerEntity player, long amount)
+        public static Task GoldLess(this IPlayerEntity player, long amount)
         {
             player.Character.Gold -= amount;
-            player.ActualizeUiGold();
+            return player.ActualizeUiGold();
         }
 
-        public static void GoldUp(this IPlayerEntity player, long amount)
+        public static Task GoldUp(this IPlayerEntity player, long amount)
         {
             player.Character.Gold += amount;
-            player.ActualizeUiGold();
+            return player.ActualizeUiGold();
         }
 
         #endregion Gold

@@ -95,46 +95,6 @@ namespace ChickenAPI.Game.Maps
             }
         }
 
-        public void Broadcast<T>(T packet) where T : IPacket => Broadcast(packet, null);
-
-
-        public void Broadcast<T>(IEnumerable<T> packets) where T : IPacket => Broadcast(packets, null);
-
-        public void Broadcast(IEnumerable<IPacket> packets) => Broadcast(packets, null);
-
-        public void Broadcast<T>(T packet, IBroadcastRule rule) where T : IPacket
-        {
-            foreach (IPlayerEntity i in Players)
-            {
-                if (rule == null || rule.Match(i))
-                {
-                    i.SendPacket(packet);
-                }
-            }
-        }
-
-        public void Broadcast<T>(IEnumerable<T> packets, IBroadcastRule rule) where T : IPacket
-        {
-            foreach (IPlayerEntity i in Players)
-            {
-                if (rule == null || rule.Match(i))
-                {
-                    i.SendPackets(packets);
-                }
-            }
-        }
-
-        public void Broadcast(IEnumerable<IPacket> packets, IBroadcastRule rule)
-        {
-            foreach (IPlayerEntity i in Players)
-            {
-                if (rule == null || rule.Match(i))
-                {
-                    i.SendPackets(packets);
-                }
-            }
-        }
-
         public long GetNextId() => _transportId++;
 
         private void InitializePortals(IEnumerable<PortalDto> portals)

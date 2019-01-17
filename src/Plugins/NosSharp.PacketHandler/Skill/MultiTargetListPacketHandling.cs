@@ -7,6 +7,9 @@ namespace NW.Plugins.PacketHandling.Skill
 {
     public class MultiTargetListPacketHandling : GenericGamePacketHandlerAsync<MultiTargetListPacket>
     {
-        protected override async Task Handle(MultiTargetListPacket packet, IPlayerEntity player) => Log.Debug(packet.OriginalContent);
+        protected override async Task Handle(MultiTargetListPacket packet, IPlayerEntity player)
+        {
+            Log.Debug(packet.OriginalContent);
+        }
     }
 }

@@ -21,5 +21,10 @@ namespace ChickenAPI.Game.Visibility
         ///     Actual Visibility State
         /// </summary>
         VisibilityType Visibility { get; set; }
+
+        /// <summary>
+        /// Size of the entity
+        /// </summary>
+        byte Size { get; set; }
     }
 }

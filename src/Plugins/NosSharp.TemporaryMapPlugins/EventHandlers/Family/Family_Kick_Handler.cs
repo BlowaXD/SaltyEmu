@@ -15,10 +15,11 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Family
         private readonly ICharacterService _characterService;
         private readonly ICharacterFamilyService _characterFamilyService;
 
-        public Family_Kick_Handler(IPlayerManager playerManager, ICharacterFamilyService characterFamilyService)
+        public Family_Kick_Handler(IPlayerManager playerManager, ICharacterFamilyService characterFamilyService, ICharacterService characterService)
         {
             _playerManager = playerManager;
             _characterFamilyService = characterFamilyService;
+            _characterService = characterService;
         }
 
         protected override async Task Handle(FamilyKickEvent e, CancellationToken cancellation)
@@ -31,12 +32,12 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Family
             }
 
             await DetachFamily(player);
-            player.Broadcast(player.GenerateGidxPacket());
+            await player.BroadcastAsync(player.GenerateGidxPacket());
         }
 
         public async Task FamilyKickOffline(FamilyKickEvent e)
         {
-            var tmp = await _characterService.GetActiveByNameAsync(e.CharacterName);
+            CharacterDto tmp = await _characterService.GetActiveByNameAsync(e.CharacterName);
             await _characterFamilyService.DeleteByIdAsync(tmp.Id);
         }
 

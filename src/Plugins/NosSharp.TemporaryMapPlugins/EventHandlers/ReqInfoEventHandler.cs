@@ -36,7 +36,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers
                 return;
             }
 
-            player?.SendPacket(target.GenerateReqInfo());
+            player?.SendPacketAsync(target.GenerateReqInfo());
         }
 
         public void SenfInfoFromItem(IInventoriedEntity item, ReqInfoEvent e)

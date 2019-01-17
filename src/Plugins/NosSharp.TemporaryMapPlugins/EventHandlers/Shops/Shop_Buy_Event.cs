@@ -158,7 +158,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Shops
             await player.ActualizeUiGold();
             await player.ActualizeUiSkillList();
             await player.ActualizeUiQuicklist();
-            // player.SendPacket(UserInterfaceHelper.Instance.GenerateMsg(Language.Instance.GetMessageFromKey("SKILL_LEARNED"), 0));
+            // player.SendPacketAsync(UserInterfaceHelper.Instance.GenerateMsg(Language.Instance.GetMessageFromKey("SKILL_LEARNED"), 0));
             await player.ActualizeUiExpBar();
         }
 
@@ -201,7 +201,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Shops
 
             if (!isReputBuy && price < 0 && price * percent > player.Character.Gold)
             {
-                player.SendPacket(player.GenerateShopMemoPacket(SMemoPacketType.FailNpc, player.GetLanguage(PlayerMessages.YOU_DONT_HAVE_ENOUGH_GOLD)));
+                player.SendPacketAsync(player.GenerateShopMemoPacket(SMemoPacketType.FailNpc, player.GetLanguage(PlayerMessages.YOU_DONT_HAVE_ENOUGH_GOLD)));
                 return;
             }
 
@@ -209,7 +209,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Shops
             {
                 if (price > player.Character.Reput)
                 {
-                    player.SendPacket(player.GenerateShopMemoPacket(SMemoPacketType.FailNpc, player.GetLanguage(PlayerMessages.YOU_DONT_HAVE_ENOUGH_REPUTATION)));
+                    player.SendPacketAsync(player.GenerateShopMemoPacket(SMemoPacketType.FailNpc, player.GetLanguage(PlayerMessages.YOU_DONT_HAVE_ENOUGH_REPUTATION)));
                     return;
                 }
 
@@ -234,7 +234,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Shops
             bool canAddItem = player.Inventory.CanAddItem(item.Item, amount);
             if (!canAddItem)
             {
-                player.SendPacket(player.GenerateShopMemoPacket(SMemoPacketType.FailNpc, player.GetLanguage(PlayerMessages.YOU_DONT_HAVE_ENOUGH_SPACE_IN_INVENTORY)));
+                player.SendPacketAsync(player.GenerateShopMemoPacket(SMemoPacketType.FailNpc, player.GetLanguage(PlayerMessages.YOU_DONT_HAVE_ENOUGH_SPACE_IN_INVENTORY)));
                 return;
             }
 

@@ -82,7 +82,7 @@ namespace NW.Plugins.PacketHandling.CharacterScreen
             // scr 0
             for (byte i = 0; i < 10; i++)
             {
-                session.Player.SendPacket(new BnPacket { BnNumber = i, Message = $"SaltyEmu^{i}" });
+                await session.Player.SendPacketAsync(new BnPacket { BnNumber = i, Message = $"SaltyEmu^{i}" });
             }
 
             // exts
@@ -112,7 +112,7 @@ namespace NW.Plugins.PacketHandling.CharacterScreen
             await session.SendPacketAsync(session.Player.GeneratePairyPacket());
 
             await session.SendPacketAsync(session.Player.GenerateGInfoPacket());
-            session.Player.Broadcast(session.Player.GenerateGidxPacket());
+            await session.Player.BroadcastAsync(session.Player.GenerateGidxPacket());
             // Session.SendPackets(Session.Character.GetFamilyHistory());
             // await session.SendPacketAsync(Session.Character.GenerateFamilyMember());
             // await session.SendPacketAsync(Session.Character.GenerateFamilyMemberMessage());

@@ -1,4 +1,5 @@
-﻿using ChickenAPI.Game.Entities.Extensions;
+﻿using System.Threading.Tasks;
+using ChickenAPI.Game.Entities.Extensions;
 using ChickenAPI.Game.Entities.Player;
 
 namespace ChickenAPI.Game.Extensions.UserInterface
@@ -9,14 +10,14 @@ namespace ChickenAPI.Game.Extensions.UserInterface
         ///     The Hpbar at the left of the screen with player & mates icons
         /// </summary>
         /// <param name="player"></param>
-        public static void ActualizeUiTargetHpBar(this IPlayerEntity player)
+        public static Task ActualizeUiTargetHpBar(this IPlayerEntity player)
         {
             if (!player.HasTarget)
             {
-                return;
+                return Task.CompletedTask;
             }
 
-            player.SendPacket(player.Target.GenerateStPacket());
+            return player.SendPacketAsync(player.Target.GenerateStPacket());
         }
     }
 }

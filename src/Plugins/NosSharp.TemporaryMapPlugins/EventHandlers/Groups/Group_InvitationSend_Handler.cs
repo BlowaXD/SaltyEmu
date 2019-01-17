@@ -50,7 +50,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers
             }
 
             string playerMessage = target.GetLanguageFormat(PlayerMessages.PLAYER_X_INVITED_TO_YOUR_GROUP, senderInfo.Name);
-            player.SendPacket(new InfoPacket
+            player.SendPacketAsync(new InfoPacket
             {
                 Message = playerMessage
             });

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Autofac;
 using ChickenAPI.Core.i18n;
 using ChickenAPI.Core.IoC;
@@ -20,7 +21,7 @@ namespace ChickenAPI.Game.Entities.Player.Extensions
     {
         private static readonly ICharacterMateService CharacterMateService = new Lazy<ICharacterMateService>(() => ChickenContainer.Instance.Resolve<ICharacterMateService>()).Value;
 
-        public static bool AddPet(this IPlayerEntity player, IMateEntity mate)
+        public static async Task<bool> AddPet(this IPlayerEntity player, IMateEntity mate)
         {
             if (mate.Mate.MateType == MateType.Pet
                 ? player.Character.MaxMateCount <= player.Mates.Count
@@ -30,12 +31,12 @@ namespace ChickenAPI.Game.Entities.Player.Extensions
             }
 
             CharacterMateService.Save(mate.Mate);
-            player.Broadcast(mate.GenerateInPacket());
-            player.SendPacket(new PClearPacket());
+            await player.BroadcastAsync(mate.GenerateInPacket());
+            await player.SendPacketAsync(new PClearPacket());
             player.Mates.Add(mate);
-            player.SendPackets(player.GenerateScP());
-            player.SendPackets(player.GenerateScN());
-            player.SendChatMessage(mate.Mate.MateType == MateType.Pet ? PlayerMessages.PETS_YOU_GET_X_AS_A_NEW_PET : PlayerMessages.PETS_YOU_GET_X_AS_A_NEW_PARTNER, SayColorType.Green);
+            await player.SendPacketsAsync(player.GenerateScP());
+            await player.SendPacketsAsync(player.GenerateScN());
+            await player.SendChatMessage(mate.Mate.MateType == MateType.Pet ? PlayerMessages.PETS_YOU_GET_X_AS_A_NEW_PET : PlayerMessages.PETS_YOU_GET_X_AS_A_NEW_PARTNER, SayColorType.Green);
             /*mate.RefreshStats();*/
             return true;
         }

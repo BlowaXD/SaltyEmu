@@ -14,7 +14,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Inventory
 {
     public class Inventory_MoveItem_Handler : GenericEventPostProcessorBase<InventoryMoveEvent>
     {
-        private IGameConfiguration _gameConfiguration;
+        private readonly IGameConfiguration _gameConfiguration;
 
         public Inventory_MoveItem_Handler(IGameConfiguration gameConfiguration)
         {
@@ -47,11 +47,11 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Inventory
 
             if (dest == null)
             {
-                inv.MoveItem(source, args);
+                await inv.MoveItem(source, args);
             }
             else
             {
-                inv.MoveItems(source, dest);
+                await inv.MoveItems(source, dest);
             }
         }
     }

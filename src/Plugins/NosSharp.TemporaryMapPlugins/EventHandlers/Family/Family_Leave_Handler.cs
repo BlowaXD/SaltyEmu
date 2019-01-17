@@ -27,7 +27,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Family
             }
 
             await DetachFamily(player);
-            player.Broadcast(player.GenerateGidxPacket());
+            await player.BroadcastAsync(player.GenerateGidxPacket());
         }
 
         public async Task DetachFamily(IPlayerEntity player)

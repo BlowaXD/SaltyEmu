@@ -135,6 +135,8 @@ namespace ChickenAPI.Game.Entities.Mates
             set => _visibility.Visibility = value;
         }
 
+        public byte Size { get; set; }
+
         public bool IsAlive => Hp > 0;
         public bool CanAttack => true;
         public byte HpPercentage => Convert.ToByte((int)(Hp / (float)HpMax * 100));
