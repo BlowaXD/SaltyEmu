@@ -28,7 +28,7 @@ namespace ChickenAPI.Game.Entities.Player.Extensions
         private static readonly IRandomGenerator _randomGenerator = new Lazy<IRandomGenerator>(() => ChickenContainer.Instance.Resolve<IRandomGenerator>()).Value;
         private static readonly IAlgorithmService Algorithm = new Lazy<IAlgorithmService>(() => ChickenContainer.Instance.Resolve<IAlgorithmService>()).Value;
 
-        public static TcInfoPacket GenerateReqInfo(this IPlayerEntity charac)
+        public static TcInfoPacket GenerateTcInfo(this IPlayerEntity charac)
         {
             ItemInstanceDto fairy = null;
             ItemInstanceDto armor = null;

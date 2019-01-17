@@ -2,9 +2,11 @@
 using System.Threading.Tasks;
 using ChickenAPI.Core.Events;
 using ChickenAPI.Core.Logging;
+using ChickenAPI.Data.NpcMonster;
 using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Game.Entities;
 using ChickenAPI.Game.Entities.Events;
+using ChickenAPI.Game.Entities.Npc.Extensions;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Entities.Player.Extensions;
 using ChickenAPI.Game.Inventory;
@@ -15,53 +17,55 @@ namespace SaltyEmu.BasicPlugin.EventHandlers
     public class ReqInfoEventHandler : GenericEventPostProcessorBase<ReqInfoEvent>
     {
         private readonly IPlayerManager _playerManager;
-
-        private static readonly Logger Log = Logger.GetLogger<ReqInfoEventHandler>();
-
-        public ReqInfoEventHandler(IPlayerManager playerManager)
+        private readonly INpcMonsterService _npcMonsterService;
+        
+        public ReqInfoEventHandler(IPlayerManager playerManager, INpcMonsterService npcMonsterService)
         {
             _playerManager = playerManager;
+            _npcMonsterService = npcMonsterService;
         }
 
-        public static void SendInfoFromMonster(INpcMonsterEntity npc, ReqInfoEvent e)
+        public Task SendInfoFromMonster(IPlayerEntity player, ReqInfoEvent e)
         {
-            Log.Info($"cc je verif le Npc");
-        }
-
-        public void SendInfoFromPlayer(IPlayerEntity player, ReqInfoEvent e)
-        {
-            IPlayerEntity target = _playerManager.GetPlayerByCharacterId(e.TargetVNum);
+            NpcMonsterDto target = _npcMonsterService.GetById(e.TargetId);
             if (target == null)
             {
-                return;
+                return Task.CompletedTask;
             }
 
-            player?.SendPacketAsync(target.GenerateReqInfo());
+            //todo: use i18n to send the right npc name!
+            return player?.SendPacketAsync(target.GenerateEInfoPacket());
         }
 
-        public void SenfInfoFromItem(IInventoriedEntity item, ReqInfoEvent e)
+        public Task SendInfoFromPlayer(IPlayerEntity player, ReqInfoEvent e)
         {
-            Log.Info($"cc je verif l'item");
+            IPlayerEntity target = _playerManager.GetPlayerByCharacterId(e.TargetId);
+            if (target == null)
+            {
+                return Task.CompletedTask;
+            }
+
+            return player?.SendPacketAsync(target.GenerateTcInfo());
         }
 
-        protected override async Task Handle(ReqInfoEvent e, CancellationToken cancellation)
+        public Task SendInfoFromItem(IPlayerEntity player, ReqInfoEvent e)
         {
+            Log.Warn("SendInfoFromItem is unhandled yet. (SaltyEmu.BasicPlugin.EventHandlers/ReqInfoEventHandler L58)");
+            return Task.CompletedTask;
+        }
+
+        protected override Task Handle(ReqInfoEvent e, CancellationToken cancellation)
+        {
+            Log.Debug($"Type of sender : {e.Sender.GetType()}");
+
             switch (e.ReqType)
             {
                 case ReqInfoType.ItemInfo:
-                    SenfInfoFromItem(e.Sender as IInventoriedEntity, e);
-                    break;
-
-                case ReqInfoType.MateInfo:
-                    break;
-
+                    return SendInfoFromItem(e.Sender as IPlayerEntity, e);
                 case ReqInfoType.NpcInfo:
-                    SendInfoFromMonster(e.Sender as INpcMonsterEntity, e);
-                    break;
-
+                    return SendInfoFromMonster(e.Sender as IPlayerEntity, e);
                 default:
-                    SendInfoFromPlayer(e.Sender as IPlayerEntity, e);
-                    break;
+                    return SendInfoFromPlayer(e.Sender as IPlayerEntity, e);
             }
         }
     }

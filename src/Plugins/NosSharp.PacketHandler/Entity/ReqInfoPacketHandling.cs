@@ -14,8 +14,8 @@ namespace NW.Plugins.PacketHandling.Entity
             {
                 await player.EmitEventAsync(new ReqInfoEvent
                 {
-                    MateVNum = packet.MateVNum,
-                    TargetVNum = packet.TargetVNum,
+                    MateTransportId = packet.MateVNum,
+                    TargetId = packet.TargetVNum,
                     ReqType = packet.ReqType
                 });
                 return;
@@ -23,7 +23,7 @@ namespace NW.Plugins.PacketHandling.Entity
 
             await player.EmitEventAsync(new ReqInfoEvent
             {
-                TargetVNum = packet.TargetVNum,
+                TargetId = packet.TargetVNum,
                 ReqType = packet.ReqType
             });
         }
