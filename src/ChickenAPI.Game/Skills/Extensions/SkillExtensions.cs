@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Autofac;
 using ChickenAPI.Core.IoC;
+using ChickenAPI.Data.Character;
 using ChickenAPI.Data.Skills;
 using ChickenAPI.Enums.Game.Character;
 using ChickenAPI.Game.Entities.Player;
@@ -12,6 +14,7 @@ namespace ChickenAPI.Game.Skills.Extensions
 {
     public static class SkillExtensions
     {
+        private static readonly ISkillService SkillService = new Lazy<ISkillService>(ChickenContainer.Instance.Resolve<ISkillService>).Value;
         public static int GetCp(this IPlayerEntity player)
         {
             int cpMax = (player.Character.Class > CharacterClassType.Adventurer ? 40 : 0) + player.JobLevel * 2;
@@ -31,7 +34,7 @@ namespace ChickenAPI.Game.Skills.Extensions
                 return;
             }
 
-            IEnumerable<SkillDto> skills = await ChickenContainer.Instance.Resolve<ISkillService>().GetByClassIdAsync((byte)player.Character.Class);
+            IEnumerable<SkillDto> skills = await SkillService.GetByClassIdAsync((byte)player.Character.Class);
             foreach (SkillDto skillDto in skills.Where(s => s.LevelMinimum < player.JobLevel && s.Id >= 200 && s.Id != 209 && s.Id <= 210))
             {
                 player.AddSkill(skillDto);
@@ -56,6 +59,18 @@ namespace ChickenAPI.Game.Skills.Extensions
             {
                 component.SkillsByCastId.Add(skill.CastId, skill);
             }
+        }
+
+        public static async Task AddCharacterSkillAsync(this IPlayerEntity player, CharacterSkillDto skill)
+        {
+            if (player.SkillComponent.CharacterSkills.ContainsKey(skill.Id))
+            {
+                return;
+            }
+
+            player.SkillComponent.CharacterSkills.Add(skill.Id, skill);
+            SkillDto skillDto = await SkillService.GetByIdAsync(skill.SkillId);
+            player.SkillComponent.AddSkill(skillDto);
         }
 
         public static void AddSkills(this IPlayerEntity player, IEnumerable<SkillDto> skills)

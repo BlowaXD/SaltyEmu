@@ -7,14 +7,14 @@ namespace ChickenAPI.Game.Groups
 {
     public class BasicGroupManager : IGroupManager
     {
-        private readonly Dictionary<long, GroupDto> _groups = new Dictionary<long, GroupDto>();
+        private readonly Dictionary<long, Group> _groups = new Dictionary<long, Group>();
         private readonly Dictionary<Guid, GroupInvitDto> _pendingInvitations = new Dictionary<Guid, GroupInvitDto>();
         private long _lastGroupId;
 
         protected long NextGroupId => ++_lastGroupId;
 
 
-        public IReadOnlyCollection<GroupDto> Groups => _groups.Values;
+        public IReadOnlyCollection<Group> Groups => _groups.Values;
 
         public GroupInvitDto CreateInvitation(IPlayerEntity sender, IPlayerEntity target)
         {
@@ -52,15 +52,15 @@ namespace ChickenAPI.Game.Groups
             dto.Target.JoinGroup(dto.Sender.Group);
         }
 
-        public void AddGroup(GroupDto group)
+        public void AddGroup(Group group)
         {
-            if (!_groups.TryGetValue(group.Id, out GroupDto tmp))
+            if (!_groups.TryGetValue(group.Id, out Group tmp))
             {
                 _groups.Add(group.Id, group);
             }
         }
 
-        public void RemoveGRoup(GroupDto group)
+        public void RemoveGRoup(Group group)
         {
             if (_groups.ContainsKey(group.Id))
             {
@@ -70,7 +70,7 @@ namespace ChickenAPI.Game.Groups
 
         private void CreateGroup(IPlayerEntity leader)
         {
-            leader.Group = new GroupDto
+            leader.Group = new Group
             {
                 Id = NextGroupId,
                 Leader = leader,

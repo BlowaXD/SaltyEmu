@@ -6,10 +6,12 @@ using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Logging;
 using ChickenAPI.Core.Maths;
 using ChickenAPI.Core.Utils;
+using ChickenAPI.Data.BCard;
 using ChickenAPI.Data.Item;
 using ChickenAPI.Game;
 using ChickenAPI.Game.Battle.Hitting;
 using ChickenAPI.Game.Battle.Interfaces;
+using ChickenAPI.Game.BCards;
 using ChickenAPI.Game.Configuration;
 using ChickenAPI.Game.Entities;
 using ChickenAPI.Game.GuriHandling.Handling;
@@ -20,6 +22,8 @@ using ChickenAPI.Game.Managers;
 using ChickenAPI.Game.NpcDialog;
 using ChickenAPI.Game._ECS;
 using ChickenAPI.Game._Network;
+using SaltyEmu.BasicPlugin.BCardHandlers;
+using SaltyEmu.BasicPlugin.EventHandlers.Battle;
 using SaltyEmu.BasicPlugin.EventHandlers.Guri;
 using SaltyEmu.BasicPlugin.Implems;
 using SaltyEmu.BasicPlugin.ItemUpgradeHandlers;
@@ -33,7 +37,7 @@ namespace SaltyEmu.BasicPlugin
     public class BasicPluginIoCInjector
     {
         private static readonly Logger Log = Logger.GetLogger<BasicPluginIoCInjector>();
-        
+
         public static void InitializeEventHandlers()
         {
             // first version hardcoded, next one through Plugin + Assembly Reflection
@@ -43,6 +47,11 @@ namespace SaltyEmu.BasicPlugin
             {
                 try
                 {
+                    if (handlerType == typeof(Battle_ProcessHitRequest_Handler))
+                    {
+                        Log.Info("NANI ?!");
+                    }
+
                     object handler = ChickenContainer.Instance.Resolve(handlerType);
                     if (!(handler is IEventPostProcessor postProcessor))
                     {
@@ -53,8 +62,9 @@ namespace SaltyEmu.BasicPlugin
 
                     eventPipeline.RegisterPostProcessorAsync(postProcessor, type);
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
+                    Log.Error("WTF????????", e);
                     // ignored
                 }
             }
@@ -68,17 +78,21 @@ namespace SaltyEmu.BasicPlugin
 
             // event handlers
             ChickenContainer.Builder.RegisterAssemblyTypes(typeof(BasicPlugin).Assembly).AsClosedTypesOf(typeof(GenericEventPostProcessorBase<>)).PropertiesAutowired();
-            
-            ChickenContainer.Builder.Register(_ => new BasicEventPipelineAsync()).As<IEventPipeline>().SingleInstance();
-            ChickenContainer.Builder.Register(_ => new BasicPacketPipelineAsync()).As<IPacketPipelineAsync>().SingleInstance();
+
+            ChickenContainer.Builder.Register(_ => new BasicHitRequestFactory(_.Resolve<IBCardService>())).As<IHitRequestFactory>().InstancePerDependency();
+
+
             ChickenContainer.Builder.RegisterType<BasicGameEntityFactory>().AsImplementedInterfaces().PropertiesAutowired();
             ChickenContainer.Builder.RegisterType<LazyMapManager>().AsImplementedInterfaces().PropertiesAutowired().SingleInstance();
-            ChickenContainer.Builder.Register(c => new SimpleItemInstanceDtoFactory(c.Resolve<IItemService>())).As<IItemInstanceDtoFactory>();
+
+            ChickenContainer.Builder.Register(_ => new BasicBCardHandlerContainer()).As<IBCardHandlerContainer>().SingleInstance();
+            ChickenContainer.Builder.Register(_ => new BasicEventPipelineAsync()).As<IEventPipeline>().SingleInstance();
+            ChickenContainer.Builder.Register(_ => new BasicPacketPipelineAsync()).As<IPacketPipelineAsync>().SingleInstance();
+            ChickenContainer.Builder.Register(c => new SimpleItemInstanceDtoFactory(c.Resolve<IItemService>())).As<IItemInstanceDtoFactory>().InstancePerDependency();
             ChickenContainer.Builder.Register(_ => new RandomGenerator()).As<IRandomGenerator>().SingleInstance();
             ChickenContainer.Builder.Register(_ => new BasicNpcDialogHandler()).As<INpcDialogHandler>().SingleInstance();
             ChickenContainer.Builder.Register(_ => new BaseGuriHandler()).As<IGuriHandler>().SingleInstance();
             ChickenContainer.Builder.Register(_ => new BaseUseItemHandler()).As<IItemUsageContainer>().SingleInstance();
-            ChickenContainer.Builder.Register(_ => new BasicHitRequestFactory()).As<IHitRequestFactory>().SingleInstance();
             ChickenContainer.Builder.Register(_ => new SimpleEntityManagerContainer()).As<IEntityManagerContainer>().SingleInstance();
             ChickenContainer.Builder.Register(_ => new SimplePlayerManager()).As<IPlayerManager>().SingleInstance();
             ChickenContainer.Builder.Register(_ => new CommandHandler()).As<ICommandContainer>().SingleInstance();

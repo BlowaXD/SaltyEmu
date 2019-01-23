@@ -65,7 +65,9 @@ namespace ChickenAPI.Game.Entities
 
         public Task<IMonsterEntity> CreateMonsterEntityAsync(MapMonsterDto mapMonster)
         {
-            return Task.FromResult(new MonsterEntity(mapMonster) as IMonsterEntity);
+            // todo implement that
+            var skills = new List<NpcMonsterSkillDto>();
+            return Task.FromResult(new MonsterEntity(mapMonster, skills) as IMonsterEntity);
         }
     }
 }

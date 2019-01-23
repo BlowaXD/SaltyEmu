@@ -7,6 +7,7 @@ using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Maths;
 using ChickenAPI.Core.Utils;
 using ChickenAPI.Data.Map;
+using ChickenAPI.Data.NpcMonster;
 using ChickenAPI.Data.Shop;
 using ChickenAPI.Game._ECS.Entities;
 
@@ -17,22 +18,25 @@ namespace ChickenAPI.Game.Maps
         private readonly bool _initSystems;
         private readonly MapDto _map;
         private readonly IEnumerable<MapMonsterDto> _monsters;
+        private readonly IEnumerable<ShopDto> _shops;
         private readonly IEnumerable<MapNpcDto> _npcs;
         private readonly IEnumerable<PortalDto> _portals;
+        private readonly IEnumerable<NpcMonsterSkillDto> _skills;
 
         private readonly IRandomGenerator _random;
-        private readonly IEnumerable<ShopDto> _shops;
 
         private readonly Position<short>[] _walkableGrid;
         private IMapLayer _baseMapLayer;
 
-        public SimpleMap(MapDto map, IEnumerable<MapMonsterDto> monsters, IEnumerable<MapNpcDto> npcs, IEnumerable<PortalDto> portals, IEnumerable<ShopDto> shops, bool initSystems = true)
+        public SimpleMap(MapDto map, IEnumerable<MapMonsterDto> monsters, IEnumerable<MapNpcDto> npcs, IEnumerable<PortalDto> portals, IEnumerable<ShopDto> shops,
+            IEnumerable<NpcMonsterSkillDto> skills, bool initSystems = true)
         {
             _map = map;
             _monsters = monsters;
             _npcs = npcs;
             _portals = portals;
             _shops = shops;
+            _skills = skills;
             _initSystems = initSystems;
             Layers = new HashSet<IMapLayer>();
 
@@ -56,7 +60,7 @@ namespace ChickenAPI.Game.Maps
 
         public long Id => _map.Id;
         public int MusicId => _map.Music;
-        public IMapLayer BaseLayer => _baseMapLayer ?? (_baseMapLayer = new SimpleMapLayer(this, _monsters, _npcs, _portals, _shops, _initSystems));
+        public IMapLayer BaseLayer => _baseMapLayer ?? (_baseMapLayer = new SimpleMapLayer(this, _monsters, _npcs, _portals, _shops, _skills, _initSystems));
         public HashSet<IMapLayer> Layers { get; }
 
         public short Width => _map.Width;

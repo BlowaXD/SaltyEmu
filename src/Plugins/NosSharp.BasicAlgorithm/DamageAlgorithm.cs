@@ -7,7 +7,7 @@ namespace SaltyEmu.BasicAlgorithmPlugin
     {
         public uint GenerateDamage(HitRequest hit)
         {
-            return 100;
+            return 1;
         }
     }
 }

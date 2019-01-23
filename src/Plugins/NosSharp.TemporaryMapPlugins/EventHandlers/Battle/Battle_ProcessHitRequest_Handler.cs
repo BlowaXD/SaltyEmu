@@ -1,11 +1,16 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using ChickenAPI.Core.Events;
+using ChickenAPI.Data.BCard;
+using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Game.Battle.Events;
 using ChickenAPI.Game.Battle.Extensions;
 using ChickenAPI.Game.Battle.Hitting;
 using ChickenAPI.Game.Battle.Interfaces;
+using ChickenAPI.Game.BCards;
+using ChickenAPI.Game.Effects;
 using ChickenAPI.Game.Entities.Monster;
 using ChickenAPI.Game.Entities.Monster.Events;
 using ChickenAPI.Game.Entities.Npc;
@@ -16,13 +21,21 @@ using ChickenAPI.Packets.Game.Server.Battle;
 
 namespace SaltyEmu.BasicPlugin.EventHandlers.Battle
 {
-    public class BattleProcessHitRequestHandler : GenericEventPostProcessorBase<ProcessHitRequestEvent>
+    public class Battle_ProcessHitRequest_Handler : GenericEventPostProcessorBase<ProcessHitRequestEvent>
     {
+        private readonly IBCardHandlerContainer _bCardHandlerContainer;
+
+        public Battle_ProcessHitRequest_Handler(IBCardHandlerContainer bCardHandlerContainer)
+        {
+            _bCardHandlerContainer = bCardHandlerContainer;
+        }
+
         protected override async Task Handle(ProcessHitRequestEvent e, CancellationToken cancellation)
         {
             HitRequest hitRequest = e.HitRequest;
             IBattleEntity target = hitRequest.Target;
             uint givenDamages = 0;
+            await Task.Delay(hitRequest.UsedSkill.CastTime * 100, cancellation);
             List<SuPacket> packets = new List<SuPacket>();
             while (givenDamages != hitRequest.Damages && target.IsAlive)
             {
@@ -52,10 +65,26 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Battle
                 packets.Add(hitRequest.Sender.GenerateSuPacket(hitRequest, nextDamages));
             }
 
+            if (!packets.Any())
+            {
+                packets.Add(hitRequest.Sender.GenerateSuPacket(hitRequest, 0));
+            }
+
+            await hitRequest.Sender.CurrentMap.BroadcastAsync(hitRequest.Sender.GenerateEffectPacket(hitRequest.UsedSkill.CastEffect));
             await hitRequest.Sender.CurrentMap.BroadcastAsync<SuPacket>(packets);
+
             Log.Debug($"[{hitRequest.Sender.Type.ToString()}][{hitRequest.Sender.Id}] ATTACK -> [{hitRequest.Target.Type.ToString()}]({hitRequest.Target.Id}) : {givenDamages} damages");
-            // apply buffs
-            // apply debuffs
+
+            // sets the new target (for AI)
+            if (hitRequest.Target.Type != VisualType.Character && !hitRequest.Target.HasTarget)
+            {
+                hitRequest.Target.Target = hitRequest.Sender;
+            }
+
+            foreach (BCardDto bCardDto in e.HitRequest.Bcards)
+            {
+                await _bCardHandlerContainer.Handle(e.HitRequest.Sender, e.HitRequest.Target, bCardDto);
+            }
         }
     }
 }

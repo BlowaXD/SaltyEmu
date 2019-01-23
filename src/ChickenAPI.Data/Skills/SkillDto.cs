@@ -14,7 +14,7 @@
 
         public byte Class { get; set; }
 
-        public short Cooldown { get; set; }
+        public int Cooldown { get; set; }
 
         public byte CpCost { get; set; }
 

@@ -27,7 +27,7 @@ namespace SaltyEmu.PathfinderPlugin.Test
                     0, 0, 0, 0, 0,
                     0, 0, 0, 0, 0
                 }
-            }, null, null, null, null);
+            }, null, null, null, null, null);
 
             Position<short>[] path = new Position<short>[0];
 

@@ -109,7 +109,8 @@ namespace Essentials.Character
                 player = Context.Player;
             }
 
-            await player.ChangeReputation(reputation);
+            player.Character.Reput = reputation;
+            await player.ActualizeUiReputation();
 
             return new SaltyCommandResult(true, $"{player.Character.Name}'s Reputation has been changed to {reputation}.");
         }

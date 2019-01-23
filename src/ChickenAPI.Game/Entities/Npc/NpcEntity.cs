@@ -30,6 +30,7 @@ namespace ChickenAPI.Game.Entities.Npc
                 Destination = new Position<short>(npc.MapX, npc.MapY),
                 DirectionType = npc.Position
             };
+            Speed = (byte)(npc.IsMoving ? npc.NpcMonster.Speed : 0);
             MapNpc = npc;
             Level = npc.NpcMonster.Level;
             Hp = npc.NpcMonster.MaxHp;
@@ -136,7 +137,7 @@ namespace ChickenAPI.Game.Entities.Npc
 
         public bool CanCastSkill(long skillId) => SkillComponent.CooldownsBySkillId.Any(s => s.Item2 == skillId);
 
-        public IDictionary<long, SkillDto> Skills { get; }
+        public IDictionary<long, SkillDto> Skills => SkillComponent.Skills;
 
         public SkillComponent SkillComponent { get; }
 
@@ -205,5 +206,11 @@ namespace ChickenAPI.Game.Entities.Npc
         #endregion Movements
 
         #endregion Battle
+
+        public Position<short>[] Waypoints
+        {
+            get => Movable.Waypoints;
+            set => Movable.Waypoints = value;
+        }
     }
 }

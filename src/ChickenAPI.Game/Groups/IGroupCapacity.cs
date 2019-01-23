@@ -5,7 +5,7 @@
         /// <summary>
         ///     Group shared object
         /// </summary>
-        GroupDto Group { get; set; }
+        Group Group { get; set; }
 
         /// <summary>
         ///     Is in group or not

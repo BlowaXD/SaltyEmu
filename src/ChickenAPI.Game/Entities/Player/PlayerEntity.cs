@@ -458,7 +458,7 @@ namespace ChickenAPI.Game.Entities.Player
 
         #region Group
 
-        public GroupDto Group { get; set; }
+        public Group Group { get; set; }
         public bool HasGroup => Group != null;
         public bool IsGroupLeader => HasGroup && Group.Leader == this;
         public int GroupMembersCount => HasGroup ? Group.Players.Count : 0;

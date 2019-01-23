@@ -2,7 +2,6 @@
 using System.Threading;
 using System.Threading.Tasks;
 using ChickenAPI.Core.Events;
-using ChickenAPI.Data.Character;
 using ChickenAPI.Data.Skills;
 using ChickenAPI.Enums.Game.Character;
 using ChickenAPI.Game.Entities.Player;
@@ -29,9 +28,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Skills
 
             if (e.ForceChecks)
             {
-                CharacterDto character = player.Character;
-
-                if (character is null)
+                if (player.Character is null)
                 {
                     return; //we need it.
                 }
@@ -51,13 +48,13 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Skills
                     return; //the joblevel of the entity isn't high enough.
                 }
 
-                if (e.Skill.Class != (byte)character.Class)
+                if (e.Skill.Class != (byte)player.Character.Class)
                 {
                     return; //the class of the entity doesn't correspond of the skill requirements.
                 }
 
                 int classLevel = 0;
-                switch (character.Class)
+                switch (player.Character.Class)
                 {
                     case CharacterClassType.Adventurer:
                         classLevel = e.Skill.MinimumAdventurerLevel;

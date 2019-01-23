@@ -1,0 +1,120 @@
+version: '3.7'
+
+
+services:
+  ## Login Server
+  saltyemu-login:
+    container_name: saltyemu-login
+    image: saltyemu-login:latest
+    build:
+      context: ../../
+      dockerfile: scripts/docker/login.Dockerfile
+    restart: always
+    deploy:
+      mode: global
+      restart_policy:
+        condition: on-failure
+        delay: 30s
+        max_attempts: 3
+        window: 120s
+    ports:
+      - 4000:4000
+    volumes:
+      - login-plugins:/server/plugins
+    environment:
+      SERVER_PORT: 4000
+      BROKER_ENDPOINT: broker.saltyemu
+    expose:
+      - 4000
+    networks:
+      - saltyemu-back
+    depends_on:
+      - saltyemu-session-service-storage
+      - saltyemu-database-storage
+
+  ## World Server
+  saltyemu-world-channel-1:
+    container_name: saltyemu-world-channel-1
+    image: saltyemu-world:latest
+    build:
+      context: ../../
+      dockerfile: scripts/docker/world.Dockerfile
+    restart: always
+    deploy:
+      mode: global
+      restart_policy:
+        condition: on-failure
+        delay: 15s
+        max_attempts: 3
+        window: 120s
+    ports:
+      - 7000:7000
+    volumes:
+      - world-plugins:/server/plugins
+    environment:
+      SERVER_IP: 127.0.0.1
+      SERVER_PORT: 7000
+      SERVER_WORLDGROUP: SaltyEmu
+      BROKER_ENDPOINT: broker.saltyemu
+    expose:
+      - 7000
+    networks:
+      - saltyemu-back
+    depends_on:
+      - saltyemu-session-service-storage
+      - saltyemu-database-storage
+
+  ## MQTT BROKER
+  saltyemu-mqtt-broker:
+    container_name: saltyemu-broker
+    image: emqx/emqx:latest
+    restart: always
+    deploy:
+      mode: global
+    ports:
+      - '1883:1883'
+      - '18083:18083'
+    expose:
+      - 18083
+    networks:
+      - saltyemu-back
+
+  ## MSSQL DATABASE
+  saltyemu-database-storage:
+    image: microsoft/mssql-server-linux:latest
+    container_name: saltyemu-database-storage
+    restart: always
+    environment:
+      ACCEPT_EULA: Y
+      SA_PASSWORD: strong_pass2018
+    deploy:
+      mode: global
+    ports:
+      - 1433:1433
+    volumes:
+      - mssql-database:/var/opt/mssql
+    networks:
+      - saltyemu-back
+
+  ## REDIS DB SESSION SERVICE
+  saltyemu-session-service-storage:
+    image: redis:alpine
+    container_name: saltyemu-session-service-storage
+    restart: always
+    deploy:
+      mode: global
+    ports:
+      - 6379:6379
+    volumes:
+      - redis-data:/data
+    networks:
+      - saltyemu-back
+
+volumes:
+  redis-data:
+  login-plugins:
+  world-plugins:
+  mssql-database:
+
+networks:
+  saltyemu-back:

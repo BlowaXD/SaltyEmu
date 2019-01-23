@@ -15,6 +15,12 @@
 
         #endregion
 
+        #region Skills
+
+        SKILL_YOU_LEARNED_SKILL_X,
+
+        #endregion
+
         #region CHANGEMENTS
 
         CHARACTER_YOUR_CLASS_CHANGED_TO_X,

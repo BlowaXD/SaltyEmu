@@ -124,7 +124,7 @@ namespace ChickenAPI.Game.Groups.Extensions
             int i = 0;
             tmp.AddRange(player.ActualMates.Select(pet => pet.GeneratePstPacket(ref i)));
 
-            GroupDto group = player.Group;
+            Group group = player.Group;
             if (group == null)
             {
                 return null;

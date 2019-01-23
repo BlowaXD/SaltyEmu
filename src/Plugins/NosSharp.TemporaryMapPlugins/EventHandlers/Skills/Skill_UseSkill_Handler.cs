@@ -19,6 +19,13 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Skills
 {
     public class Skill_UseSkill_Handler : GenericEventPostProcessorBase<UseSkillEvent>
     {
+        private readonly IHitRequestFactory _hitRequestFactory;
+
+        public Skill_UseSkill_Handler(IHitRequestFactory hitRequestFactory)
+        {
+            _hitRequestFactory = hitRequestFactory;
+        }
+
         protected override async Task Handle(UseSkillEvent e, CancellationToken cancellation)
         {
             if (!(e.Sender is IBattleEntity entity))
@@ -76,9 +83,11 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Skills
                 case SkillTargetType.AOE when skill.HitType == 1: // Target Hit
                     if (skill.TargetRange == 0)
                     {
+                        targets.Add(target);
                         goto default;
                     }
 
+                    targets.Add(target);
                     break;
 
                 case SkillTargetType.AOE when skill.HitType != 1: // Buff
@@ -86,6 +95,9 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Skills
                     {
                         case 0:
                         case 4: // Apply Buff on himself
+                            targets.Add(target);
+
+
                             break;
 
                         case 2: // Apply Buff in range
@@ -98,7 +110,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Skills
 
                                 return;
                             }
-
+                            
                             // apply buff on each entities of type
                             break;
                     }
@@ -110,17 +122,18 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Skills
                     {
                         await player.SendPacketAsync(target.GenerateTargetCancelPacket(CancelPacketType.InCombatMode));
                     }
+                    targets.Add(target);
 
                     return;
             }
 
             await entity.CurrentMap.BroadcastAsync(entity.GenerateCtPacket(e.Target, e.Skill));
-            entity.DecreaseMp(e.Skill.MpCost);
+            await entity.DecreaseMp(e.Skill.MpCost);
             //TODO: Skill Cooldown
 
             foreach (IBattleEntity t in targets)
             {
-                HitRequest hitRequest = entity.CreateHitRequest(t, e.Skill);
+                HitRequest hitRequest = await _hitRequestFactory.CreateHitRequest(entity, t, e.Skill);
 
                 await entity.EmitEventAsync(new FillHitRequestEvent
                 {

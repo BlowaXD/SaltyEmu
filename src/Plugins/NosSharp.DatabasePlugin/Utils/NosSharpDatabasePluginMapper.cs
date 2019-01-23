@@ -98,7 +98,8 @@ namespace SaltyEmu.DatabasePlugin.Utils
             cfg.CreateMap<NpcMonsterSkillDto, NpcMonsterSkillModel>();
             cfg.CreateMap<NpcMonsterSkillModel, NpcMonsterSkillDto>()
                 .ForSourceMember(s => s.NpcMonster, expression => expression.DoNotValidate())
-                .ForSourceMember(s => s.Skill, expr => expr.DoNotValidate());
+                .ForSourceMember(s => s.Skill, expr => expr.DoNotValidate())
+                .ForMember(s => s.Skill, expr => expr.MapFrom(origin => ChickenContainer.Instance.Resolve<ISkillService>().GetById(origin.SkillId)));
         }
 
         private static void MapBCards(IMapperConfigurationExpression cfg)
@@ -150,18 +151,27 @@ namespace SaltyEmu.DatabasePlugin.Utils
                 });
 
             cfg.CreateMap<BCardModel, BCardDto>()
-                .ForMember(s => s.RelationType, expr => expr.MapFrom(s => BCardRelationType.Global));
+                .ForMember(s => s.RelationType, expr => expr.MapFrom(s => BCardRelationType.Global))
+                .ForMember(s => s.Type, expression => expression.MapFrom(s => (BCardType)s.Type));
 
             cfg.CreateMap<CardBCardModel, BCardDto>()
                 .ForMember(s => s.RelationType, expression => expression.MapFrom(s => BCardRelationType.Card))
+                .ForMember(s => s.Type, expression => expression.MapFrom(s => (BCardType)s.Type))
                 .IncludeBase<BCardModel, BCardDto>();
 
             cfg.CreateMap<ItemBCardModel, BCardDto>()
                 .ForMember(s => s.RelationType, expression => expression.MapFrom(s => BCardRelationType.Item))
+                .ForMember(s => s.Type, expression => expression.MapFrom(s => (BCardType)s.Type))
+                .IncludeBase<BCardModel, BCardDto>();
+
+            cfg.CreateMap<NpcMonsterBCardModel, BCardDto>()
+                .ForMember(s => s.RelationType, expression => expression.MapFrom(s => BCardRelationType.NpcMonster))
+                .ForMember(s => s.Type, expression => expression.MapFrom(s => (BCardType)s.Type))
                 .IncludeBase<BCardModel, BCardDto>();
 
             cfg.CreateMap<SkillBCardModel, BCardDto>()
                 .ForMember(s => s.RelationType, expression => expression.MapFrom(s => BCardRelationType.Skill))
+                .ForMember(s => s.Type, expression => expression.MapFrom(s => (BCardType)s.Type))
                 .IncludeBase<BCardModel, BCardDto>();
         }
 

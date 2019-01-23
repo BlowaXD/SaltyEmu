@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using ChickenAPI.Core.Logging;
 using ChickenAPI.Data.BCard;
 using ChickenAPI.Enums.Game.BCard;
@@ -41,19 +42,20 @@ namespace SaltyEmu.BasicPlugin.BCardHandlers
             Log.Info($"[REGISTER_HANDLER] BCARD_TYPE : {handler.HandledType} REGISTERED !");
         }
 
-        public void Handle(IBattleEntity target, IBattleEntity sender, BCardDto bcard)
+        public Task Handle(IBattleEntity target, IBattleEntity sender, BCardDto bcard)
         {
             if (target == null)
             {
-                return;
+                return Task.CompletedTask;
             }
+            Log.Info($"Trying to cast Bcard id : {bcard.Id} : {bcard.Type}");
 
             if (!Useitem.TryGetValue(bcard.Type, out IBCardEffectHandler handler))
             {
-                return;
+                return Task.CompletedTask;
             }
 
-            handler.Handle(target, sender, bcard);
+            return handler.Handle(target, sender, bcard);
         }
     }
 }

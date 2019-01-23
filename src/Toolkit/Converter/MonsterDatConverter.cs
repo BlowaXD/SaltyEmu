@@ -443,7 +443,7 @@ namespace Toolkit.Converter
 
             _monsterDb.Save(_monsters);
             _bcardDb.Save(_monsterBcards);
-            //_dropsDb.Save(_monsterDrops);
+            _dropsDb.Save(_monsterDrops);
             _skillsDb.Save(_monsterSkills);
         }
 

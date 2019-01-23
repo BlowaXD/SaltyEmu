@@ -13,6 +13,7 @@ using NLog;
 using NW.Plugins.PacketHandling;
 using SaltyEmu.BasicAlgorithmPlugin;
 using SaltyEmu.BasicPlugin;
+using SaltyEmu.Communication.Utils;
 using SaltyEmu.Core.Plugins;
 using SaltyEmu.DatabasePlugin;
 using SaltyEmu.FriendsPlugin;
@@ -142,6 +143,7 @@ namespace World
             }
 
             EnablePlugins(PluginEnableTime.PreContainerBuild);
+            CommunicationIocInjector.Inject();
             ChickenContainer.Initialize();
             if (Server.RegisterServer())
             {

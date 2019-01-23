@@ -4,6 +4,7 @@ using System.Linq;
 using Autofac;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Data.Character;
+using ChickenAPI.Data.NpcMonster;
 using ChickenAPI.Data.Skills;
 using ChickenAPI.Enums.Game.Character;
 using ChickenAPI.Game.Entities.Player;
@@ -41,6 +42,20 @@ namespace ChickenAPI.Game.Skills
             foreach (SkillDto skillDto in skills.Where(s => s.LevelMinimum < player.JobLevel && s.Id >= 200 && s.Id != 209 && s.Id <= 210))
             {
                 this.AddSkill(skillDto);
+            }
+        }
+
+        public SkillComponent(IEntity entity, IEnumerable<NpcMonsterSkillDto> skills) : this(entity)
+        {
+            if (skills == null)
+            {
+                return;
+            }
+
+            // add skills to component
+            foreach (NpcMonsterSkillDto skill in skills)
+            {
+                this.AddSkill(skill.Skill);
             }
         }
 

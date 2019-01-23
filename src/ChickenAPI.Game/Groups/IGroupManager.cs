@@ -5,14 +5,14 @@ namespace ChickenAPI.Game.Groups
 {
     public interface IGroupManager
     {
-        IReadOnlyCollection<GroupDto> Groups { get; }
+        IReadOnlyCollection<Group> Groups { get; }
 
         GroupInvitDto CreateInvitation(IPlayerEntity sender, IPlayerEntity target);
 
         void RemoveInvitation(GroupInvitDto dto);
         void AcceptInvitation(GroupInvitDto dto);
 
-        void AddGroup(GroupDto group);
-        void RemoveGRoup(GroupDto group);
+        void AddGroup(Group group);
+        void RemoveGRoup(Group group);
     }
 }

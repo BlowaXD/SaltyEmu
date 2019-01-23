@@ -12,8 +12,8 @@ namespace SaltyEmu.Communication
             Log.Info($"[PACKET] Routing to : {topic}");
             return Task.FromResult((IRoutingInformation)new RoutingInformation
             {
-                Topic = topic,
-                ResponseTopic = responseTopic
+                IncomingTopic = topic,
+                OutgoingTopic = responseTopic
             });
         }
     }

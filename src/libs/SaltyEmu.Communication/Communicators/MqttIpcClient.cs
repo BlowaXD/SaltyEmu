@@ -81,15 +81,15 @@ namespace SaltyEmu.Communication.Communicators
         private async Task<IRoutingInformation> CheckRouting(Type type)
         {
             IRoutingInformation routingInfos = await _router.GetRoutingInformationsAsync(type);
-            if (string.IsNullOrEmpty(routingInfos.ResponseTopic) || _responsesQueues.Contains(routingInfos.ResponseTopic))
+            if (string.IsNullOrEmpty(routingInfos.OutgoingTopic) || _responsesQueues.Contains(routingInfos.OutgoingTopic))
             {
                 return routingInfos;
             }
 
-            await _client.SubscribeAsync(routingInfos.ResponseTopic);
-            _responsesQueues.Add(routingInfos.ResponseTopic);
+            await _client.SubscribeAsync(routingInfos.OutgoingTopic);
+            _responsesQueues.Add(routingInfos.OutgoingTopic);
 
-            _log.Info($"Waiting for responses on : {routingInfos.Topic}");
+            _log.Info($"Waiting for responses on : {routingInfos.IncomingTopic}");
             return routingInfos;
         }
 
@@ -116,7 +116,7 @@ namespace SaltyEmu.Communication.Communicators
             await _client.PublishAsync(builder =>
                 builder
                     .WithPayload(_serializer.Serialize(container))
-                    .WithTopic(infos.Topic)
+                    .WithTopic(infos.IncomingTopic)
                     .WithAtLeastOnceQoS()
             );
         }

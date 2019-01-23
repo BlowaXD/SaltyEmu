@@ -18,7 +18,7 @@ variables:
   CONTAINER_LOGIN_BUILD_IMAGE: $CONTAINER_REGISTRY/saltyemu-login:$CI_BUILD_REF_NAME
   CONTAINER_LOGIN_RELEASE_IMAGE: $CONTAINER_REGISTRY/saltyemu-login:latest
 
- 
+
 build_project:
   image: microsoft/dotnet:2.2-sdk-alpine
   stage: build

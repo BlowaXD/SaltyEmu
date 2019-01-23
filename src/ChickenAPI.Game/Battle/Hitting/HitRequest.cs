@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using ChickenAPI.Data.BCard;
 using ChickenAPI.Data.Skills;
 using ChickenAPI.Enums.Packets;
 using ChickenAPI.Game.Battle.Interfaces;
@@ -15,11 +16,6 @@ namespace ChickenAPI.Game.Battle.Hitting
         public uint Damages { get; set; }
 
         public SuPacketHitMode HitMode { get; set; }
-
-        // todo to bcard
-        public IEnumerable<long> BuffsToApply { get; set; }
-
-        // todo to bcard
-        public IEnumerable<long> DebuffsToApply { get; set; }
+        public List<BCardDto> Bcards { get; set; }
     }
 }

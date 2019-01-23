@@ -28,14 +28,17 @@ SaltyEmu is an opensource project, made for fun and skill improvements, it will 
 ## Credits
 ### Authors : 
 - Blowa
-- Kraken
-- SylEze
 
 ### Contributors :
+- Kraken
 - GodnessCookie
+- Quarry
+- Clavs
+- Zanou
+- Elendan
 
 ### Special Thanks :
-- 0Lucifer0
-- Ciapa
-- Z0ltar
-- Cryless
+- 0Lucifer0 (SaltyEmu wouldn't be that powerful if I didn't see how shitty is NosCore)
+- Ciapa (I spent mhhhhhhhhhhhh 3 days reading your shitty BattlePacketHandler that killed my mind)
+- Z0ltar (Thanks for the algorithms you shared)
+- Cryless (File.AppendAllText("Thanks for disrespecting people's work and being a trash");)

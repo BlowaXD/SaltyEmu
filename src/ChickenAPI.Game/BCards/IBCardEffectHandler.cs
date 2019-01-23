@@ -1,4 +1,5 @@
-﻿using ChickenAPI.Data.BCard;
+﻿using System.Threading.Tasks;
+using ChickenAPI.Data.BCard;
 using ChickenAPI.Enums.Game.BCard;
 using ChickenAPI.Game.Battle.Interfaces;
 
@@ -8,6 +9,6 @@ namespace ChickenAPI.Game.BCards
     {
         BCardType HandledType { get; }
 
-        void Handle(IBattleEntity target, IBattleEntity sender, BCardDto bcard);
+        Task Handle(IBattleEntity target, IBattleEntity sender, BCardDto bcard);
     }
 }

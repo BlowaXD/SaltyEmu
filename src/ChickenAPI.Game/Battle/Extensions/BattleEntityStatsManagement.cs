@@ -1,4 +1,5 @@
-﻿using ChickenAPI.Game.Battle.Interfaces;
+﻿using System.Threading.Tasks;
+using ChickenAPI.Game.Battle.Interfaces;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Entities.Player.Extensions;
 
@@ -6,36 +7,37 @@ namespace ChickenAPI.Game.Battle.Extensions
 {
     public static class BattleEntityStatsManagement
     {
-        private static void CheckEntity(IBattleEntity entity)
+        private static Task CheckEntity(IBattleEntity entity)
         {
             if (entity is IPlayerEntity session)
             {
-                session.ActualizeUiHpBar();
+                return session.ActualizeUiHpBar();
             }
+            return Task.CompletedTask;
         }
 
-        public static void DecreaseMp(this IBattleEntity entity, int mp)
+        public static Task DecreaseMp(this IBattleEntity entity, int mp)
         {
             entity.Mp -= mp;
-            CheckEntity(entity);
+            return CheckEntity(entity);
         }
 
-        public static void DecreaseHp(this IBattleEntity entity, int hp)
+        public static Task DecreaseHp(this IBattleEntity entity, int hp)
         {
             entity.Hp -= hp;
-            CheckEntity(entity);
+            return CheckEntity(entity);
         }
 
-        public static void IncreaseMp(this IBattleEntity entity, int mp)
+        public static Task IncreaseMp(this IBattleEntity entity, int mp)
         {
             entity.Mp += mp;
-            CheckEntity(entity);
+            return CheckEntity(entity);
         }
 
-        public static void IncreaseHp(this IBattleEntity entity, int hp)
+        public static Task IncreaseHp(this IBattleEntity entity, int hp)
         {
             entity.Hp += hp;
-            CheckEntity(entity);
+            return CheckEntity(entity);
         }
     }
 }

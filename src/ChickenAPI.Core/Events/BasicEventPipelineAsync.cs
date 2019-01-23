@@ -14,23 +14,25 @@ namespace ChickenAPI.Core.Events
 
         public async Task Notify<TNotification>(TNotification notification, CancellationToken cancellationToken = default) where TNotification : IEventNotification
         {
-            foreach (KeyValuePair<Type, List<IEventPostProcessor>> events in _postprocessorsDictionary)
+            if (!_postprocessorsDictionary.TryGetValue(typeof(TNotification), out List<IEventPostProcessor> processors))
             {
-                if (!await CanSendEvent(notification, events.Key, cancellationToken))
-                {
-                    continue;
-                }
+                return;
+            }
 
-                foreach (IEventPostProcessor handler in events.Value)
+            if (!await CanSendEvent(notification, typeof(TNotification), cancellationToken))
+            {
+                return;
+            }
+
+            foreach (IEventPostProcessor postProcessor in processors)
+            {
+                try
                 {
-                    try
-                    {
-                        await handler.Handle(notification, cancellationToken);
-                    }
-                    catch (Exception e)
-                    {
-                        Log.Error("Notify()", e);
-                    }
+                    await postProcessor.Handle(notification, cancellationToken);
+                }
+                catch (Exception e)
+                {
+                    Log.Error("Notify()", e);
                 }
             }
         }

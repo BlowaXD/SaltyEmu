@@ -20,7 +20,8 @@ namespace SaltyEmu.Communication.Routing
 
         private const string RequestTopicSuffix = "/requests";
         private const string ResponseTopicSuffix = "/responses";
-
+        private const string PacketTopicSuffix = "/broadcasts";
+        
         private async Task<IRoutingInformation> RegisterGenericRequestAsync(Type type)
         {
             // in case they want to register "runtime" generics objects
@@ -34,12 +35,17 @@ namespace SaltyEmu.Communication.Routing
                 newTopic.AppendFormat("/{0}", i.Name.ToLower());
             }
 
-            string requestTopic = newTopic + RequestTopicSuffix;
+            string requestTopic = newTopic.ToString();
             string responseTopic = "";
 
             if (type.GetInterfaces().Any(s => s == typeof(IIpcRequest)))
             {
+                requestTopic += RequestTopicSuffix;
                 responseTopic = newTopic + ResponseTopicSuffix;
+            }
+            else if (type.GetInterfaces().Any(s => s == typeof(IIpcPacket)))
+            {
+                requestTopic += PacketTopicSuffix;
             }
 
             IRoutingInformation routingInfos = await _routingInformationFactory.Create(requestTopic, responseTopic);
@@ -54,8 +60,18 @@ namespace SaltyEmu.Communication.Routing
                 return await RegisterGenericRequestAsync(type);
             }
 
-            string requestTopic = type.Name.ToLower() + RequestTopicSuffix;
-            string responseTopic = type.Name.ToLower() + ResponseTopicSuffix;
+            string requestTopic = "";
+            string responseTopic = "";
+            if (type.GetInterfaces().Any(s => s == typeof(IIpcRequest)))
+            {
+                requestTopic = type.Name.ToLower() + RequestTopicSuffix;
+                responseTopic = type.Name.ToLower() + ResponseTopicSuffix;
+            }
+            else if (type.GetInterfaces().Any(s => s == typeof(IIpcPacket)))
+            {
+                requestTopic = type.Name.ToLower() + PacketTopicSuffix;
+            }
+
             IRoutingInformation routingInfos = await _routingInformationFactory.Create(requestTopic, responseTopic);
             await RegisterAsync(type, routingInfos);
             return routingInfos;

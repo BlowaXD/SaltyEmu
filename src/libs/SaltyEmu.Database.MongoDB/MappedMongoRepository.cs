@@ -1,5 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Threading;
 using System.Threading.Tasks;
 using ChickenAPI.Data;
 using MongoDB.Driver;
@@ -39,14 +42,24 @@ namespace SaltyEmu.Database.MongoDB
 
         public async Task<TObject> SaveAsync(TObject obj)
         {
-            return await Collection.FindOneAndUpdateAsync(o => o.Id == obj.Id, new ObjectUpdateDefinition<TObject>(obj));
+            await Collection.FindOneAndReplaceAsync(o => o.Id == obj.Id, obj, new FindOneAndReplaceOptions<TObject, IMappedDto>
+            {
+                IsUpsert = true
+            });
+
+            return obj;
         }
 
         public async Task SaveAsync(IEnumerable<TObject> objs)
         {
-            // probably faster than FindOneAndUpdateOne for each object
-            await Collection.DeleteManyAsync(o => objs.Any(s => s.Id == o.Id));
-            await Collection.InsertManyAsync(objs);
+            List<ReplaceOneModel<TObject>> bulks = objs.Select(obj =>
+                new ReplaceOneModel<TObject>(Builders<TObject>.Filter.Where(s => s.Id == obj.Id), obj)
+                    { IsUpsert = true }).ToList();
+
+            await Collection.BulkWriteAsync(bulks, new BulkWriteOptions
+            {
+                IsOrdered = true
+            });
         }
 
         public async Task DeleteByIdAsync(long id)
@@ -76,13 +89,24 @@ namespace SaltyEmu.Database.MongoDB
 
         public TObject Save(TObject obj)
         {
-            return Collection.FindOneAndUpdate(o => o.Id == obj.Id, new ObjectUpdateDefinition<TObject>(obj));
+            Collection.FindOneAndReplace(o => o.Id == obj.Id, obj, new FindOneAndReplaceOptions<TObject, IMappedDto>
+            {
+                IsUpsert = true
+            });
+
+            return obj;
         }
 
         public void Save(IEnumerable<TObject> objs)
         {
-            Collection.DeleteMany(s => objs.Any(obj => s.Id == obj.Id));
-            Collection.InsertMany(objs);
+            List<ReplaceOneModel<TObject>> bulks = objs.Select(obj =>
+                new ReplaceOneModel<TObject>(Builders<TObject>.Filter.Where(s => s.Id == obj.Id), obj)
+                    { IsUpsert = true }).ToList();
+
+            Collection.BulkWrite(bulks, new BulkWriteOptions
+            {
+                IsOrdered = true
+            });
         }
 
         public void DeleteById(long id)

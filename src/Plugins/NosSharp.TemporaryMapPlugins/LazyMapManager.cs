@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using ChickenAPI.Data.Map;
+using ChickenAPI.Data.NpcMonster;
 using ChickenAPI.Data.Shop;
 using ChickenAPI.Game.Managers;
 using ChickenAPI.Game.Maps;
@@ -15,17 +17,19 @@ namespace SaltyEmu.BasicPlugin
         private readonly Dictionary<long, IMap> _maps = new Dictionary<long, IMap>();
         private readonly IMapNpcService _npcService;
         private readonly IMapMonsterService _monsterService;
+        private readonly INpcMonsterSkillService _npcMonsterSkillService;
         private readonly IPortalService _portalService;
         private readonly IShopService _shopService;
         private readonly IMapService _mapService;
 
-        public LazyMapManager(IMapNpcService npcService, IMapMonsterService monsterService, IPortalService portalService, IShopService shopService, IMapService mapService)
+        public LazyMapManager(IMapNpcService npcService, IMapMonsterService monsterService, IPortalService portalService, IShopService shopService, IMapService mapService, INpcMonsterSkillService npcMonsterSkillService)
         {
             _npcService = npcService;
             _monsterService = monsterService;
             _portalService = portalService;
             _shopService = shopService;
             _mapService = mapService;
+            _npcMonsterSkillService = npcMonsterSkillService;
         }
 
         public IReadOnlyDictionary<long, IMap> Maps => _maps;
@@ -38,7 +42,7 @@ namespace SaltyEmu.BasicPlugin
                 return map.BaseLayer;
             }
 
-            map = LoadMap(mapId);
+            map = LoadMap(mapId).ConfigureAwait(false).GetAwaiter().GetResult();
 
             if (map is null)
             {
@@ -53,7 +57,7 @@ namespace SaltyEmu.BasicPlugin
 
         public IMapLayer GetBaseMapLayer(IMap map) => map.BaseLayer;
 
-        private IMap LoadMap(long mapId)
+        private async Task<IMap> LoadMap(long mapId)
         {
             MapDto map = _mapService.GetById(mapId);
 
@@ -62,12 +66,14 @@ namespace SaltyEmu.BasicPlugin
                 return null;
             }
 
-            IEnumerable<MapNpcDto> npcs = _npcService.GetByMapId(mapId);
-            IEnumerable<MapMonsterDto> monsters = _monsterService.GetByMapId(mapId);
-            IEnumerable<PortalDto> portals = _portalService.GetByMapId(mapId);
-            IEnumerable<ShopDto> shops = _shopService.GetByMapNpcIds(npcs.Select(s => s.Id));
-
-            return new SimpleMap(map, monsters, npcs, portals, shops);
+            IEnumerable<MapNpcDto> npcs = await _npcService.GetByMapIdAsync(mapId);
+            IEnumerable<MapMonsterDto> monsters = await _monsterService.GetByMapIdAsync(mapId);
+            IEnumerable<PortalDto> portals = await _portalService.GetByMapIdAsync(mapId);
+            IEnumerable<ShopDto> shops = await _shopService.GetByMapNpcIdsAsync(npcs.Select(s => s.Id));
+            List<long> npcMonsterIds = npcs.Select(s => s.NpcMonsterId).Intersect(monsters.Select(s => s.NpcMonsterId)).ToList();
+            IEnumerable<NpcMonsterSkillDto> skills = await _npcMonsterSkillService.GetByNpcMonsterIdsAsync(npcMonsterIds);
+ 
+            return new SimpleMap(map, monsters, npcs, portals, shops, skills);
         }
     }
 }

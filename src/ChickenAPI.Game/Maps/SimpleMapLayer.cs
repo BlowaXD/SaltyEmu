@@ -6,6 +6,7 @@ using Autofac;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Utils;
 using ChickenAPI.Data.Map;
+using ChickenAPI.Data.NpcMonster;
 using ChickenAPI.Data.Shop;
 using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Game.Effects;
@@ -34,13 +35,15 @@ namespace ChickenAPI.Game.Maps
             IEnumerable<MapNpcDto> npcs = null,
             IEnumerable<PortalDto> portals = null,
             IEnumerable<ShopDto> shops = null,
+            IEnumerable<NpcMonsterSkillDto> npcMonsterSkills = null,
             bool initSystems = true)
         {
             Id = Guid.NewGuid();
             Map = map;
             ParentEntityManager = map;
-            InitializeMonsters(monsters);
-            InitializeNpcs(npcs, shops);
+            Dictionary<long, List<NpcMonsterSkillDto>> tmpSkills = npcMonsterSkills.GroupBy(s => s.NpcMonsterId).ToDictionary(s => s.Key, s => s.ToList());
+            InitializeMonsters(monsters, tmpSkills);
+            InitializeNpcs(npcs, shops, tmpSkills);
             InitializePortals(portals);
 
             if (initSystems)
@@ -120,7 +123,7 @@ namespace ChickenAPI.Game.Maps
             AddSystem(new RespawnSystem(this));
         }
 
-        private void InitializeNpcs(IEnumerable<MapNpcDto> npcs, IEnumerable<ShopDto> shops)
+        private void InitializeNpcs(IEnumerable<MapNpcDto> npcs, IEnumerable<ShopDto> shops, IReadOnlyDictionary<long, List<NpcMonsterSkillDto>> skills)
         {
             if (npcs == null)
             {
@@ -130,11 +133,16 @@ namespace ChickenAPI.Game.Maps
             foreach (MapNpcDto npc in npcs)
             {
                 ShopDto shop = shops?.FirstOrDefault(s => s.MapNpcId == npc.Id);
+
+                if (!skills.TryGetValue(npc.NpcMonsterId, out List<NpcMonsterSkillDto> npcSkills))
+                {
+                    npcSkills = new List<NpcMonsterSkillDto>();
+                }
                 new NpcEntity(npc, shop).TransferEntity(this);
             }
         }
 
-        private void InitializeMonsters(IEnumerable<MapMonsterDto> monsters)
+        private void InitializeMonsters(IEnumerable<MapMonsterDto> monsters, IReadOnlyDictionary<long, List<NpcMonsterSkillDto>> skills)
         {
             if (monsters == null)
             {
@@ -143,8 +151,12 @@ namespace ChickenAPI.Game.Maps
 
             foreach (MapMonsterDto monster in monsters)
             {
-                // todo factorise with game entity factory
-                new MonsterEntity(monster).TransferEntity(this);
+                if (!skills.TryGetValue(monster.NpcMonsterId, out List<NpcMonsterSkillDto> npcSkills))
+                {
+                    npcSkills = new List<NpcMonsterSkillDto>();
+                }
+
+                new MonsterEntity(monster, npcSkills).TransferEntity(this);
             }
         }
     }

@@ -1,15 +1,12 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using ChickenAPI.Core.Events;
-using ChickenAPI.Core.Logging;
 using ChickenAPI.Data.NpcMonster;
 using ChickenAPI.Enums.Game.Entity;
-using ChickenAPI.Game.Entities;
 using ChickenAPI.Game.Entities.Events;
 using ChickenAPI.Game.Entities.Npc.Extensions;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Entities.Player.Extensions;
-using ChickenAPI.Game.Inventory;
 using ChickenAPI.Game.Managers;
 
 namespace SaltyEmu.BasicPlugin.EventHandlers

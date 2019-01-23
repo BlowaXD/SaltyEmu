@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using ChickenAPI.Data.Drop;
@@ -47,11 +48,11 @@ namespace SaltyEmu.DatabasePlugin.Services.Drop
             return value;
         }
 
-        public Task<IEnumerable<DropDto>> GetByMapNpcMonsterIdAsync(long mapNpcMonsterId)
+        public async Task<IEnumerable<DropDto>> GetByMapNpcMonsterIdAsync(long mapNpcMonsterId)
         {
             try
             {
-                return null;
+                return (await Context.Set<NpcMonsterDropModel>().Where(s => s.TypedId == mapNpcMonsterId).ToListAsync()).Select(Mapper.Map<DropDto>).ToArray();
             }
             catch (Exception e)
             {

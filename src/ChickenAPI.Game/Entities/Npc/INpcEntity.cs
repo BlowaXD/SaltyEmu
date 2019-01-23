@@ -1,9 +1,9 @@
-﻿using ChickenAPI.Game.Battle.Interfaces;
+﻿using ChickenAPI.Game.IAs;
 using ChickenAPI.Game.Shops;
 
 namespace ChickenAPI.Game.Entities.Npc
 {
-    public interface INpcEntity : IBattleEntity, IMapNpcEntity, IShopEntity, INpcMonsterEntity
+    public interface INpcEntity : IAiEntity, IMapNpcEntity, IShopEntity, INpcMonsterEntity
     {
         /// <summary>
         ///     Shop access

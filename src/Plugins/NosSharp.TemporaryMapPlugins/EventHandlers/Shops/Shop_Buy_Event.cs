@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Autofac;
@@ -6,6 +7,7 @@ using ChickenAPI.Core.Events;
 using ChickenAPI.Core.i18n;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Maths;
+using ChickenAPI.Data.Character;
 using ChickenAPI.Data.Item;
 using ChickenAPI.Data.Shop;
 using ChickenAPI.Enums.Game.Character;
@@ -14,6 +16,7 @@ using ChickenAPI.Enums.Packets;
 using ChickenAPI.Game.Entities.Npc;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Entities.Player.Extensions;
+using ChickenAPI.Game.Helpers;
 using ChickenAPI.Game.Inventory.Events;
 using ChickenAPI.Game.Inventory.Extensions;
 using ChickenAPI.Game.Shops;
@@ -88,6 +91,10 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Shops
             }
 
             // check use sp
+            if (player.HasSpWeared)
+            {
+                return;
+            }
 
             // check skill cooldown
             if (player.SkillComponent.CooldownsBySkillId.Any(s => s.Item2 == shopBuy.Slot))
@@ -147,18 +154,65 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Shops
                     break;
             }
 
-            if (player.Character.JobLevel < minimumLevel)
+            if (skillShop.Skill.MinimumSwordmanLevel == 0 && skillShop.Skill.MinimumArcherLevel == 0 && skillShop.Skill.MinimumMagicianLevel == 0)
+            {
+                minimumLevel = skillShop.Skill.MinimumAdventurerLevel;
+            }
+
+            if (minimumLevel == 0)
+            {
+                // can't learn the skill
+                return;
+            }
+
+            // level is required for passive skills
+            if (player.Character.Level < minimumLevel && skillShop.Skill.Id <= 200)
             {
                 return;
             }
 
+            // job level requirement
+            if (player.Character.JobLevel < minimumLevel && skillShop.SkillId >= 200)
+            {
+                return;
+            }
+
+            if (skillShop.SkillId < 200)
+            {
+                foreach (CharacterSkillDto skill in player.SkillComponent.CharacterSkills.Select(s => s.Value))
+                {
+                    if (skillShop.Skill.CastId == skill.Skill.CastId && skill.Skill.Id < 200)
+                    {
+                        player.SkillComponent.CharacterSkills.Remove(skill.Id);
+                    }
+                }
+            }
+
             // check skill upgrades
+            // remove old upgrade
+            if (skillShop.SkillId >= 200 && skillShop.Skill.UpgradeSkill != 0)
+            {
+                CharacterSkillDto oldupgrade = player.SkillComponent.CharacterSkills.FirstOrDefault(s =>
+                    s.Value.Skill.UpgradeSkill == skillShop.Skill.UpgradeSkill && s.Value.Skill.UpgradeType == skillShop.Skill.UpgradeType && s.Value.Skill.UpgradeSkill != 0).Value;
+                if (oldupgrade != null)
+                {
+                    player.SkillComponent.CharacterSkills.Remove(oldupgrade.Id);
+                }
+            }
+
+            await player.AddCharacterSkillAsync(new CharacterSkillDto
+            {
+                Id = Guid.NewGuid(),
+                SkillId = skillShop.SkillId,
+                Skill = skillShop.Skill,
+                CharacterId = player.Id
+            });
 
             player.Character.Gold -= skillShop.Skill.Price;
             await player.ActualizeUiGold();
             await player.ActualizeUiSkillList();
             await player.ActualizeUiQuicklist();
-            // player.SendPacketAsync(UserInterfaceHelper.Instance.GenerateMsg(Language.Instance.GetMessageFromKey("SKILL_LEARNED"), 0));
+            await player.SendChatMessage(PlayerMessages.SKILL_YOU_LEARNED_SKILL_X, SayColorType.LightGreen);
             await player.ActualizeUiExpBar();
         }
 

@@ -4,6 +4,6 @@ namespace ChickenAPI.Game.Groups.Events
 {
     public class GroupJoinEvent : GameEntityEvent
     {
-        public GroupDto Group { get; set; }
+        public Group Group { get; set; }
     }
 }

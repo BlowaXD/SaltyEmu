@@ -49,7 +49,7 @@ namespace SaltyEmu.Communication.Communicators
             _packetHandlersContainer.Unregistered += (sender, type) =>
             {
                 IRoutingInformation infos = _router.GetRoutingInformationsAsync(type).ConfigureAwait(false).GetAwaiter().GetResult();
-                _client.UnsubscribeAsync(infos.Topic).ConfigureAwait(false).GetAwaiter().GetResult();
+                _client.UnsubscribeAsync(infos.IncomingTopic).ConfigureAwait(false).GetAwaiter().GetResult();
             };
             ManagedMqttClientOptions options = new ManagedMqttClientOptionsBuilder()
                 .WithAutoReconnectDelay(TimeSpan.FromSeconds(5))
@@ -106,14 +106,14 @@ namespace SaltyEmu.Communication.Communicators
         private async Task<IRoutingInformation> CheckRouting(Type type)
         {
             IRoutingInformation routingInfos = await _router.GetRoutingInformationsAsync(type);
-            if (string.IsNullOrEmpty(routingInfos.Topic) || _queues.Contains(routingInfos.Topic))
+            if (string.IsNullOrEmpty(routingInfos.IncomingTopic) || _queues.Contains(routingInfos.IncomingTopic))
             {
                 return routingInfos;
             }
 
-            await _client.SubscribeAsync(routingInfos.Topic);
-            _queues.Add(routingInfos.Topic);
-            _log.Info($"Subscribed to topic : {routingInfos.Topic}");
+            await _client.SubscribeAsync(routingInfos.IncomingTopic);
+            _queues.Add(routingInfos.IncomingTopic);
+            _log.Info($"Subscribed to topic : {routingInfos.IncomingTopic}");
             return routingInfos;
         }
 
@@ -126,7 +126,7 @@ namespace SaltyEmu.Communication.Communicators
 
             await _client.PublishAsync(builder => builder
                 .WithPayload(_serializer.Serialize(container))
-                .WithTopic(routingInfos.ResponseTopic)
+                .WithTopic(routingInfos.OutgoingTopic)
                 .WithAtLeastOnceQoS());
         }
     }

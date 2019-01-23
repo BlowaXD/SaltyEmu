@@ -1,4 +1,5 @@
-﻿using ChickenAPI.Data.BCard;
+﻿using System.Threading.Tasks;
+using ChickenAPI.Data.BCard;
 using ChickenAPI.Game.Battle.Interfaces;
 
 namespace ChickenAPI.Game.BCards
@@ -14,6 +15,6 @@ namespace ChickenAPI.Game.BCards
         /// <param name="target"></param>
         /// <param name="sender">Can be null</param>
         /// <param name="bcard"></param>
-        void Handle(IBattleEntity target, IBattleEntity sender, BCardDto bcard);
+        Task Handle(IBattleEntity target, IBattleEntity sender, BCardDto bcard);
     }
 }

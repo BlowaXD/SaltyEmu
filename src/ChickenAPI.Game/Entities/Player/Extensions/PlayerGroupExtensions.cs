@@ -4,7 +4,7 @@ namespace ChickenAPI.Game.Entities.Player.Extensions
 {
     public static class PlayerGroupExtensions
     {
-        public static void JoinGroup(this IPlayerEntity player, GroupDto group)
+        public static void JoinGroup(this IPlayerEntity player, Group group)
         {
             if (player.HasGroup || group == null)
             {

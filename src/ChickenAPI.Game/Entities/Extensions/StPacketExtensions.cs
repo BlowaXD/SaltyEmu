@@ -1,4 +1,6 @@
-﻿using ChickenAPI.Game.Battle.Interfaces;
+﻿using System.Collections.Generic;
+using System.Linq;
+using ChickenAPI.Game.Battle.Interfaces;
 using ChickenAPI.Packets.Game.Server.Entities;
 
 namespace ChickenAPI.Game.Entities.Extensions
@@ -16,7 +18,7 @@ namespace ChickenAPI.Game.Entities.Extensions
                 MpPercentage = battle.MpPercentage,
                 Hp = battle.Hp,
                 Mp = battle.Mp,
-                CardIds = null
+                CardIds = new List<long>(battle.Buffs.Select(s => s.Id))
             };
     }
 }

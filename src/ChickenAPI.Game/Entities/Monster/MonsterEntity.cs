@@ -19,20 +19,21 @@ namespace ChickenAPI.Game.Entities.Monster
 {
     public class MonsterEntity : EntityBase, IMonsterEntity
     {
-        public MonsterEntity(MapMonsterDto dto) : base(VisualType.Monster, dto.Id)
+        public MonsterEntity(MapMonsterDto dto, IEnumerable<NpcMonsterSkillDto> skills) : base(VisualType.Monster, dto.Id)
         {
             Movable = new MovableComponent(this, dto.IsMoving ? dto.NpcMonster.Speed : (byte)0)
             {
                 Actual = new Position<short> { X = dto.MapX, Y = dto.MapY },
                 Destination = new Position<short> { X = dto.MapX, Y = dto.MapY }
             };
+            Speed = (byte)(dto.IsMoving ? dto.NpcMonster.Speed : 0);
             Level = dto.NpcMonster.Level;
             Hp = dto.NpcMonster.MaxHp;
             HpMax = dto.NpcMonster.MaxHp;
             Mp = dto.NpcMonster.MaxMp;
             MpMax = dto.NpcMonster.MaxMp;
             BasicArea = dto.NpcMonster.BasicArea;
-            SkillComponent = new SkillComponent(this);
+            SkillComponent = new SkillComponent(this, skills);
             NpcMonster = dto.NpcMonster;
             MapMonster = dto;
             _visibility = new VisibilityComponent(this);
@@ -201,5 +202,11 @@ namespace ChickenAPI.Game.Entities.Monster
         #endregion Movements
 
         #endregion Battle
+
+        public Position<short>[] Waypoints
+        {
+            get => Movable.Waypoints;
+            set => Movable.Waypoints = value;
+        }
     }
 }
