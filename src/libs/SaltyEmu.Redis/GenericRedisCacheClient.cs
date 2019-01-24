@@ -24,7 +24,7 @@ namespace SaltyEmu.Redis
 
         protected string ToKey(TObject obj) => ToKey(obj.Id);
 
-        protected GenericRedisCacheClient(RedisConfiguration conf) : this(typeof(TObject).Name, conf)
+        protected GenericRedisCacheClient(RedisConfiguration conf) : this(typeof(TObject).Name.ToLower(), conf)
         {
         }
 

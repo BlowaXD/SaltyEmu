@@ -21,7 +21,7 @@ namespace SaltyEmu.Redis
 
         protected string ToKey(TObject obj) => ToKey(obj.Id);
 
-        protected MappedCacheClientBase(RedisConfiguration conf) : this(typeof(TObject).Name, conf)
+        protected MappedCacheClientBase(RedisConfiguration conf) : this(typeof(TObject).Name.ToLower(), conf)
         {
         }
 

@@ -130,18 +130,33 @@ namespace SaltyEmu.BasicAlgorithmPlugin
 
         public int GetMinHit(CharacterClassType type, byte level) => _minHit.GetStat(type, level);
 
-        public long GetLevelXp(CharacterClassType type, byte level) => _levelBasedAlgorithm.Data[level - 1 > 0 ? level - 1 : 0];
+        public long GetLevelXp(CharacterClassType type, byte level) =>
+            _levelBasedAlgorithm.Data[level - 1 > 0 ? level - 1 : 0];
 
         public int GetJobLevelXp(CharacterClassType type, byte level) =>
-            (int)(type == CharacterClassType.Adventurer ? _jobLevelBasedAlgorithm.FirstJobXpData[level - 1 > 0 ? level - 1 : 0] : _jobLevelBasedAlgorithm.Data[level - 1 > 0 ? level - 1 : 0]);
+            (int) (type == CharacterClassType.Adventurer
+                ? _jobLevelBasedAlgorithm.FirstJobXpData[
+                    level - 1 > 0
+                        ? level - 1 >= _jobLevelBasedAlgorithm.FirstJobXpData.Length
+                            ? _jobLevelBasedAlgorithm.FirstJobXpData.Length - 1
+                            : level - 1
+                        : 0]
+                : _jobLevelBasedAlgorithm.Data[
+                    level - 1 > 0
+                        ? level - 1 >= _jobLevelBasedAlgorithm.Data.Length
+                            ? _jobLevelBasedAlgorithm.Data.Length - 1
+                            : level - 1
+                        : 0]);
 
-        public int GetHeroLevelXp(CharacterClassType type, byte level) => (int)_heroLevelBasedAlgorithm.Data[level - 1 > 0 ? level - 1 : 0];
+        public int GetHeroLevelXp(CharacterClassType type, byte level) =>
+            (int) _heroLevelBasedAlgorithm.Data[level - 1 > 0 ? level - 1 : 0];
 
-        public int GetSpLevelXp(byte level) => (int)_spLevelBasedAlgorithm.Data[level - 1];
+        public int GetSpLevelXp(byte level) => (int) _spLevelBasedAlgorithm.Data[level - 1];
 
-        public int GetFairyLevelXp(byte level) => (int)_fairyLevelBasedAlgorithm.Data[level - 1];
+        public int GetFairyLevelXp(byte level) => (int) _fairyLevelBasedAlgorithm.Data[level - 1];
 
-        public int GetFamilyLevelXp(byte level) => (int)_familyLevelBasedAlgorithm.Data[level > _familyLevelBasedAlgorithm.Data.Length ? _familyLevelBasedAlgorithm.Data.Length - 1 : level - 1];
+        public int GetFamilyLevelXp(byte level) => (int) _familyLevelBasedAlgorithm.Data[
+            level > _familyLevelBasedAlgorithm.Data.Length ? _familyLevelBasedAlgorithm.Data.Length - 1 : level - 1];
 
         public int GetSpeed(CharacterClassType type, byte level) => _speedAlgorithm.GetStat(type, level);
 
