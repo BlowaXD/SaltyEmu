@@ -64,5 +64,16 @@ namespace ChickenAPI.Game.Shops.Extensions
                 Name = npc.Shop.Name
             };
         }
+        public static ShopPacket GenerateEndShopPacket(this IPlayerEntity player)
+        {
+            return new ShopPacket
+            {
+                VisualType = player.Type,
+                EntityId = player.Id,
+                ShopId = 0,
+                MenuType = 0,
+                ShopType = 0,
+            };
+        }
     }
 }

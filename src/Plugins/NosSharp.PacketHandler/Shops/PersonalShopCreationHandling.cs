@@ -7,6 +7,7 @@ using ChickenAPI.Data.Item;
 using ChickenAPI.Enums.Game.Items;
 using ChickenAPI.Enums.Packets;
 using ChickenAPI.Game.Entities.Player;
+using ChickenAPI.Game.Entities.Player.Extensions;
 using ChickenAPI.Game.Inventory.Extensions;
 using ChickenAPI.Game.Shops;
 using ChickenAPI.Game.Shops.Events;
@@ -121,7 +122,10 @@ namespace NW.Plugins.PacketHandling.Shops
 
                     break;
                 case MShopPacketType.CloseShop:
+                    await player.SendPacketAsync(player.GenerateEndShopPacket());
                     await player.SendPacketAsync(player.GenerateShopEndPacket(ShopEndPacketType.PersonalShop));
+                    player.IsSitting = false;
+                    await player.ActualizePlayerCondition();
                     return;
                 case MShopPacketType.OpenDialog:
                     await player.SendPacketAsync(new IShopPacket());
