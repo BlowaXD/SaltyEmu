@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
+using ChickenAPI.Enums;
 using ChickenAPI.Enums.Packets;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Specialists.Args;
@@ -11,10 +13,16 @@ namespace NW.Plugins.PacketHandling.Specialists
     {
         protected override Task Handle(SlPacket packet, IPlayerEntity player)
         {
+            string[] packetsplit = packet.OriginalContent.Split(' ', '^');
+
             switch (packet.Type)
             {
                 case SlPacketType.WearSp:
-                    return player.EmitEventAsync(new SpTransformEvent());
+                    return player.EmitEventAsync(new SpTransformEvent
+                    {
+                        Wait = packetsplit[1].ElementAt(0) == '#' ? false : player.Session.Account.Authority >= AuthorityType.GameMaster ? false : true
+                    });
+
                 case SlPacketType.ChangePoints:
                     return player.EmitEventAsync(new SpChangePointsEvent
                     {

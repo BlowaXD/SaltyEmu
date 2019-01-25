@@ -58,6 +58,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Specialists
             {
                 await Task.Delay(TimeSpan.FromSeconds(player.SpCoolDown));
                 await player.SendSdAsync(0);
+                player.SpCoolDown = 0;
                 await player.SendPacketAsync(player.GenerateSayPacket("TRANSFORM_DISAPPEAR", SayColorType.Purple));
             });
         }
