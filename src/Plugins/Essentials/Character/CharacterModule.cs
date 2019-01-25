@@ -23,6 +23,21 @@ namespace Essentials.Character
     [RequireAuthority(AuthorityType.GameMaster)]
     internal sealed class CharacterModule : SaltyModuleBase
     {
+        [Command("Kick")]
+        [Description("Kick X user.")]
+        public async Task<SaltyCommandResult> KickPlayerAsync(IPlayerEntity player = null, byte timer = 0, string reasons = null)
+        {
+            if (player == null) return new SaltyCommandResult(false, "Please specify the charname to kick.");
+
+            if (reasons != null) await player.GenerateModalAsync($"You will be kicked in {timer} seconds , for the following reasons: {reasons}", 1);
+
+            if (timer != 0) await Task.Delay(timer * 1000);
+
+            player.Session.Disconnect();
+
+            return new SaltyCommandResult(true, $"{player.Character.Name}'s has been Kicked.");
+        }
+
         [Command("Level", "lev", "lvl")]
         [Description("Change the character level.")]
         public async Task<SaltyCommandResult> ChangeLevelAsync(
@@ -91,7 +106,6 @@ namespace Essentials.Character
                 return new SaltyCommandResult(true, $"{player.Character.Name} has no Fairy actually weared");
             }
 
-
             fairy.ElementRate = level;
 
             // stats infos
@@ -114,7 +128,6 @@ namespace Essentials.Character
 
             return new SaltyCommandResult(true, $"{player.Character.Name}'s Reputation has been changed to {reputation}.");
         }
-
 
         [Command("ChangeClass", "Class")]
         [Description("Change the character's class.")]
@@ -175,11 +188,11 @@ namespace Essentials.Character
                 player = Context.Player;
             }
 
-            await Context.Player.SendChatMessage("+---------------[Position]---------------+", SayColorType.Yellow);
-            await Context.Player.SendChatMessage($"Nickname: {player.Character.Name}", SayColorType.Yellow);
-            await Context.Player.SendChatMessage($"MapID: {player.CurrentMap.Map.Id}", SayColorType.Yellow);
-            await Context.Player.SendChatMessage($"Coordinate - X: {player.Position.X} Y: {player.Position.Y}", SayColorType.Yellow);
-            await Context.Player.SendChatMessage("+-------------------------------------------+", SayColorType.Yellow);
+            await Context.Player.SendChatMessage("+---------------[Position]---------------+\n" +
+                                                $"Nickname: { player.Character.Name}\n" +
+                                                $"MapID: {player.CurrentMap.Map.Id}\n" +
+                                                $"Coordinate - X: {player.Position.X} Y: {player.Position.Y}\n" +
+                                                $"+-------------------------------------------+", SayColorType.Yellow);
 
             return new SaltyCommandResult(true, $"Position of {player.Character.Name} command has been sent.");
         }
@@ -262,9 +275,9 @@ namespace Essentials.Character
             await player.ChangeGender(newGender);
 
             return new SaltyCommandResult(true, $"{player.Character.Name}'s gender has been changed to {newGender.ToString()}.");
-        } 
+        }
 
-        [Command("Heal")] 
+        [Command("Heal")]
         [Description("Fully restore the character.")]
         public async Task<SaltyCommandResult> HealAsync(
             [Description("Player you want to heal")] IPlayerEntity player = null)

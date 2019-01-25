@@ -14,6 +14,20 @@ namespace ChickenAPI.Game.Entities.Player.Extensions
             return player.SendPacketAsync(player.GenerateMsgPacket(message, type));
         }
 
+        public static Task GenerateModalAsync(this IPlayerEntity player, string message, byte type)
+        {
+            return player.SendPacketAsync(player.GenerateModalPacket(message, type));
+        }
+
+        public static ModalPacket GenerateModalPacket(this IPlayerEntity player, string message, byte type)
+        {
+            return new ModalPacket
+            {
+                Type = type,
+                message = message,
+            };
+        }
+
         public static MsgPacket GenerateMsgPacket(this IPlayerEntity player, PlayerMessages message, MsgPacketType type)
         {
             return new MsgPacket
@@ -22,6 +36,7 @@ namespace ChickenAPI.Game.Entities.Player.Extensions
                 Message = player.GetLanguage(message)
             };
         }
+
         public static MsgPacket GenerateMsgPacket(this IPlayerEntity player, string msg, MsgPacketType type) =>
             new MsgPacket
             {
