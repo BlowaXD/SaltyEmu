@@ -14,7 +14,7 @@ namespace ChickenAPI.Game.Entities.Player.Extensions
             return player.SendPacketAsync(player.GenerateMsgPacket(message, type));
         }
 
-        public static Task GenerateModalAsync(this IPlayerEntity player, string message, byte type)
+        public static Task SendModalAsync(this IPlayerEntity player, string message, byte type)
         {
             return player.SendPacketAsync(player.GenerateModalPacket(message, type));
         }

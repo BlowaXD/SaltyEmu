@@ -263,13 +263,12 @@ namespace ChickenAPI.Game.Entities.Player
         public Task BroadcastAsync(IEnumerable<IPacket> packets) => BroadcastAsync(packets, null);
 
         public Task BroadcastAsync(IEnumerable<IPacket> packets, IBroadcastRule rule) => CurrentMap?.BroadcastAsync(packets, rule);
-        
+
         public Task BroadcastExceptSenderAsync<T>(T packet) where T : IPacket => BroadcastAsync(packet, new AllExpectOne(this));
 
         public Task BroadcastExceptSenderAsync<T>(IEnumerable<T> packets) where T : IPacket => BroadcastAsync(packets, new AllExpectOne(this));
-        
 
-        #endregion
+        #endregion Broadcast
 
         #region Battle
 
@@ -374,7 +373,7 @@ namespace ChickenAPI.Game.Entities.Player
         #endregion Battle
 
         #region Visibility
-        
+
         public bool IsVisible => _visibility.IsVisible;
 
         public bool IsInvisible => _visibility.IsInvisible;
@@ -453,6 +452,8 @@ namespace ChickenAPI.Game.Entities.Player
         public bool IsTransformedSp => HasSpWeared && MorphId == Sp.Item.Morph;
 
         public ItemInstanceDto Sp => Inventory.Wear[(int)EquipmentType.Sp];
+
+        public int SpCoolDown { get; set; }
 
         #endregion Specialist
 

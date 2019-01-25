@@ -52,15 +52,17 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Specialists
                 return;
             }
 
-            // check vehicle
-
-            if (player.IsTransformedSp)
+            if (player.IsTransformedLocomotion)
             {
-                Log.Info("[SP_TRANSFORM] You are already transformed but it's not yet implemented");
-                // remove sp
+                Log.Info("[SP_TRANSFORM] Remove your locomotion");
                 return;
             }
 
+            if (player.IsTransformedSp)
+            {
+                await player.EmitEventAsync(new SpRemoveEvent());
+                return;
+            }
 
             // check last sp usage + sp cooldown
 
@@ -70,7 +72,6 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Specialists
             {
                 return;
             }
-
 
             player.SetMorph(player.Sp.Item.Morph);
             await player.SendPacketAsync(player.GenerateLevPacket());

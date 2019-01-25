@@ -59,6 +59,7 @@ namespace ChickenAPI.Game.Entities.Mates
         }
 
         public short MorphId { get; set; }
+        public int SpCoolDown { get; set; }
         public DateTime LastMorphUtc { get; set; }
         public byte PetId { get; set; }
 

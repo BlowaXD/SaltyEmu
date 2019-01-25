@@ -29,7 +29,7 @@ namespace Essentials.Character
         {
             if (player == null) return new SaltyCommandResult(false, "Please specify the charname to kick.");
 
-            if (reasons != null) await player.GenerateModalAsync($"You will be kicked in {timer} seconds , for the following reasons: {reasons}", 1);
+            if (reasons != null) await player.SendModalAsync($"You will be kicked in {timer} seconds , for the following reasons: {reasons}", 1);
 
             if (timer != 0) await Task.Delay(timer * 1000);
 

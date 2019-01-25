@@ -13,5 +13,7 @@ namespace ChickenAPI.Game.Specialists
         ///     Date when the last morph has occured
         /// </summary>
         DateTime LastMorphUtc { get; set; }
+
+        int SpCoolDown { get; set; }
     }
 }
