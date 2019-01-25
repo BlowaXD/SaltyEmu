@@ -3,6 +3,7 @@ using ChickenAPI.Game.Entities.Npc;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Packets.Game.Client.Shops;
 using ChickenAPI.Packets.Game.Server.Shop;
+using System.Threading.Tasks;
 
 namespace ChickenAPI.Game.Shops.Extensions
 {
@@ -64,7 +65,7 @@ namespace ChickenAPI.Game.Shops.Extensions
                 Name = npc.Shop.Name
             };
         }
-        public static ShopPacket GenerateEndShopPacket(this IPlayerEntity player)
+        public static ShopPacket GenerateEmptyShopPacket(this IPlayerEntity player)
         {
             return new ShopPacket
             {
@@ -74,6 +75,15 @@ namespace ChickenAPI.Game.Shops.Extensions
                 MenuType = 0,
                 ShopType = 0,
             };
+        }
+
+        public static async Task ClosePersonalShopAsync(this IPlayerEntity player, bool closeShopWindow = false)
+        {
+            await player.BroadcastAsync(player.GenerateEmptyShopPacket());
+            if (closeShopWindow)
+            {
+                await player.SendPacketAsync(player.GenerateShopEndPacket(ShopEndPacketType.PersonalShop));
+            }
         }
     }
 }

@@ -122,8 +122,7 @@ namespace NW.Plugins.PacketHandling.Shops
 
                     break;
                 case MShopPacketType.CloseShop:
-                    await player.SendPacketAsync(player.GenerateEndShopPacket());
-                    await player.SendPacketAsync(player.GenerateShopEndPacket(ShopEndPacketType.PersonalShop));
+                    await player.ClosePersonalShopAsync();
                     player.IsSitting = false;
                     await player.ActualizePlayerCondition();
                     return;
