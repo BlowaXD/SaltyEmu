@@ -12,15 +12,8 @@ namespace SaltyEmu.BasicPlugin.ItemUsageHandlers.Handler.BoxItem
 {
     public class PearlPetsReleaseHandler
     {
-        private static readonly Logger Log = Logger.GetLogger<LocomotionHandler>();
+        private static readonly Logger Log = Logger.GetLogger<PearlPetsReleaseHandler>();
 
-        /// <summary>
-        ///
-        ///
-        /// </summary>
-        /// <param name="player"></param>
-        /// <param name="e"></param>
-        //[PermissionsRequirements(PermissionType.INVENTORY_USE_ITEM)]
         [UseItemEffect(1, ItemType.Box)]
         public static void ReleasePets(IPlayerEntity player, InventoryUseItemEvent e)
         {
