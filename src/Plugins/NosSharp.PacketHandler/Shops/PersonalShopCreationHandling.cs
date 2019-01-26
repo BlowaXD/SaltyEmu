@@ -115,6 +115,11 @@ namespace NW.Plugins.PacketHandling.Shops
                         {
                             await player.EmitEventAsync(e);
                         }
+                        else
+                        {
+                            await player.SendPacketAsync(player.GenerateShopEndPacket(ShopEndPacketType.PersonalShop));
+                            return;
+                        }
                     }
                     catch (Exception)
                     {
