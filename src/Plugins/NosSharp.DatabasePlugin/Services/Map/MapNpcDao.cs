@@ -42,7 +42,13 @@ namespace SaltyEmu.DatabasePlugin.Services.Map
         {
             try
             {
-                return (await DbSet.Where(s => s.MapId == mapId).ToArrayAsync()).Select(Mapper.Map<MapNpcDto>);
+                if (!_npcs.TryGetValue(mapId, out MapNpcDto[] dtos))
+                {
+                    dtos = (await DbSet.Where(s => s.MapId == mapId).ToArrayAsync()).Select(Mapper.Map<MapNpcDto>).ToArray();
+                    _npcs[mapId] = dtos;
+                }
+
+                return dtos;
             }
             catch (Exception e)
             {

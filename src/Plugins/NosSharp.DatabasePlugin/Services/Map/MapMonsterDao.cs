@@ -26,7 +26,7 @@ namespace SaltyEmu.DatabasePlugin.Services.Map
             {
                 if (!_monsters.TryGetValue((short)mapId, out MapMonsterDto[] items))
                 {
-                    items = DbSet.Where(s => s.MapId == mapId).ToList().Select(Mapper.Map<MapMonsterDto>).ToArray();
+                    items = DbSet.Where(s => s.MapId == mapId).ToArray().Select(Mapper.Map<MapMonsterDto>).ToArray();
                     _monsters[(short)mapId] = items;
                 }
 
@@ -43,7 +43,13 @@ namespace SaltyEmu.DatabasePlugin.Services.Map
         {
             try
             {
-                return (await DbSet.Where(s => s.MapId == mapId).ToArrayAsync()).Select(Mapper.Map<MapMonsterDto>);
+                if (!_monsters.TryGetValue((short)mapId, out MapMonsterDto[] items))
+                {
+                    items = (await DbSet.Where(s => s.MapId == mapId).ToArrayAsync()).Select(Mapper.Map<MapMonsterDto>).ToArray();
+                    _monsters[(short)mapId] = items;
+                }
+
+                return items;
             }
             catch (Exception e)
             {

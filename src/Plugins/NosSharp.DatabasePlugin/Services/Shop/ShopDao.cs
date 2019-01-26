@@ -88,7 +88,19 @@ namespace SaltyEmu.DatabasePlugin.Services.Shop
         {
             try
             {
-                return (await DbSet.Where(s => npcIds.Contains(s.MapNpcId)).ToArrayAsync()).Select(Mapper.Map<ShopDto>);
+                List<ShopDto> tmp = new List<ShopDto>();
+                foreach (long mapNpcId in npcIds)
+                {
+                    if (!_shops.TryGetValue(mapNpcId, out ShopDto[] shops))
+                    {
+                        shops = (await DbSet.Where(s => s.MapNpcId == mapNpcId).ToArrayAsync()).Select(Mapper.Map<ShopDto>).ToArray();
+                        _shops[mapNpcId] = shops;
+                    }
+
+                    tmp.AddRange(shops);
+                }
+
+                return tmp;
             }
             catch (Exception e)
             {

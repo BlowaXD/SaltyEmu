@@ -43,7 +43,13 @@ namespace SaltyEmu.DatabasePlugin.Services.Shop
         {
             try
             {
-                return (await DbSet.Where(s => s.ShopId == shopId).ToListAsync()).Select(Mapper.Map<ShopSkillDto>);
+                if (!_shop.TryGetValue(shopId, out ShopSkillDto[] skills))
+                {
+                    skills = (await DbSet.Where(s => s.ShopId == shopId).ToListAsync()).Select(Mapper.Map<ShopSkillDto>).ToArray();
+                    _shop[shopId] = skills;
+                }
+
+                return skills;
             }
             catch (Exception e)
             {
