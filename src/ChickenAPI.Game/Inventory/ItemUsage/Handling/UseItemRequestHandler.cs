@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reflection;
+using System.Threading.Tasks;
 using ChickenAPI.Enums.Game.Items;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Inventory.Events;
@@ -31,9 +32,10 @@ namespace ChickenAPI.Game.Inventory.ItemUsage.Handling
 
         public ItemType IType { get; }
 
-        public void Handle(IPlayerEntity player, InventoryUseItemEvent e)
+        public Task Handle(IPlayerEntity player, InventoryUseItemEvent e)
         {
             _func(player, e);
+            return Task.CompletedTask;
         }
     }
 }

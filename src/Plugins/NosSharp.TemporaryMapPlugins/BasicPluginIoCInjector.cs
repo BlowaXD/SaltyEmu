@@ -81,7 +81,6 @@ namespace SaltyEmu.BasicPlugin
 
             ChickenContainer.Builder.Register(_ => new BasicHitRequestFactory(_.Resolve<IBCardService>())).As<IHitRequestFactory>().InstancePerDependency();
 
-
             ChickenContainer.Builder.RegisterType<BasicGameEntityFactory>().AsImplementedInterfaces().PropertiesAutowired();
             ChickenContainer.Builder.RegisterType<LazyMapManager>().AsImplementedInterfaces().PropertiesAutowired().SingleInstance();
 
@@ -92,7 +91,8 @@ namespace SaltyEmu.BasicPlugin
             ChickenContainer.Builder.Register(_ => new RandomGenerator()).As<IRandomGenerator>().SingleInstance();
             ChickenContainer.Builder.Register(_ => new BasicNpcDialogHandler()).As<INpcDialogHandler>().SingleInstance();
             ChickenContainer.Builder.Register(_ => new BaseGuriHandler()).As<IGuriHandler>().SingleInstance();
-            ChickenContainer.Builder.Register(_ => new BaseUseItemHandler()).As<IItemUsageContainer>().SingleInstance();
+            // ChickenContainer.Builder.Register(_ => new BaseUseItemHandler()).As<IItemUsageContainer>().SingleInstance();
+            ChickenContainer.Builder.Register(_ => new UseItemHandlerContainer()).As<IItemUsageContainerAsync>().SingleInstance();
             ChickenContainer.Builder.Register(_ => new SimpleEntityManagerContainer()).As<IEntityManagerContainer>().SingleInstance();
             ChickenContainer.Builder.Register(_ => new SimplePlayerManager()).As<IPlayerManager>().SingleInstance();
             ChickenContainer.Builder.Register(_ => new CommandHandler()).As<ICommandContainer>().SingleInstance();
