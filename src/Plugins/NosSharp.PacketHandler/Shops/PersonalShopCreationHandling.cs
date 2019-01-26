@@ -20,6 +20,43 @@ namespace NW.Plugins.PacketHandling.Shops
 {
     public class PersonalShopCreationHandling : GenericGamePacketHandlerAsync<MShopPacket>
     {
+        protected override async Task Handle(MShopPacket packet, IPlayerEntity player)
+        {
+            switch (packet.Type)
+            {
+                case MShopPacketType.OpenShop:
+                    try
+                    {
+                        ShopPlayerShopCreateEvent e = ParseMShopPacket(packet.PacketData, player);
+                        if (e?.ShopItems.Any() == true)
+                        {
+                            await player.EmitEventAsync(e);
+                        }
+                        else
+                        {
+                            await player.SendPacketAsync(player.GenerateShopEndPacket(ShopEndPacketType.PersonalShop));
+                            return;
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Log.Error("[M_SHOP]", e);
+                    }
+
+                    break;
+                case MShopPacketType.CloseShop:
+                    await player.ClosePersonalShopAsync();
+                    player.IsSitting = false;
+                    await player.ActualizePlayerCondition();
+                    return;
+                case MShopPacketType.OpenDialog:
+                    await player.SendPacketAsync(new IShopPacket());
+                    return;
+                default:
+                    return;
+            }
+        }
+
         private static ShopPlayerShopCreateEvent ParseMShopPacket(string data, IPlayerEntity player)
         {
             var tmp = new ShopPlayerShopCreateEvent
@@ -101,42 +138,6 @@ namespace NW.Plugins.PacketHandling.Shops
             tmp.Name = shopname;
 
             return tmp;
-        }
-
-        protected override async Task Handle(MShopPacket packet, IPlayerEntity player)
-        {
-            switch (packet.Type)
-            {
-                case MShopPacketType.OpenShop:
-                    try
-                    {
-                        ShopPlayerShopCreateEvent e = ParseMShopPacket(packet.PacketData, player);
-                        if (e.ShopItems.Any())
-                        {
-                            await player.EmitEventAsync(e);
-                        }
-                        else
-                        {
-                            await player.SendPacketAsync(player.GenerateShopEndPacket(ShopEndPacketType.PersonalShop));
-                            return;
-                        }
-                    }
-                    catch (Exception)
-                    {
-                    }
-
-                    break;
-                case MShopPacketType.CloseShop:
-                    await player.ClosePersonalShopAsync();
-                    player.IsSitting = false;
-                    await player.ActualizePlayerCondition();
-                    return;
-                case MShopPacketType.OpenDialog:
-                    await player.SendPacketAsync(new IShopPacket());
-                    return;
-                default:
-                    return;
-            }
         }
     }
 }

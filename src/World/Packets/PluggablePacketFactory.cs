@@ -40,7 +40,7 @@ namespace World.Packets
                 builder.Append(serializationInformation.Header);
 
                 int lastIndex = 0;
-                
+
                 foreach (PacketPropertyContainer property in serializationInformation.PacketProps)
                 {
                     PacketIndexAttribute packetIndex = property.PacketIndex;
@@ -75,7 +75,7 @@ namespace World.Packets
             }
             catch (Exception e)
             {
-                Log.Error("Wrong Packet format", e);
+                Log.Error($"Wrong Packet format {type}\n", e);
                 return string.Empty;
             }
         }
