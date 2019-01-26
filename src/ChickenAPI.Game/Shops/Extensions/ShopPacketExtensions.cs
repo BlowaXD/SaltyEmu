@@ -42,8 +42,8 @@ namespace ChickenAPI.Game.Shops.Extensions
                 VisualType = player.Type,
                 EntityId = player.Id,
                 ShopId = 1,
-                MenuType = 0,
-                ShopType = 3,
+                MenuType = 3,
+                ShopType = 0,
                 Name = player.Shop.ShopName
             };
         }

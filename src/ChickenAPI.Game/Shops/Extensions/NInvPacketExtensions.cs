@@ -62,7 +62,7 @@ namespace ChickenAPI.Game.Shops.Extensions
                 ShopType = 0,
                 Unknown = 0,
                 ShopList = GetShopList(shop.ShopItems),
-                ShopSkills = null
+                ShopSkills = new List<long>()
             };
 
         public static NInvPacket GenerateNInvPacket(this IPlayerEntity player, Shop shop, byte type)
