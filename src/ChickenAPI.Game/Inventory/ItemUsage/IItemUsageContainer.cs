@@ -1,4 +1,5 @@
-﻿using ChickenAPI.Game.Entities.Player;
+﻿using System.Threading.Tasks;
+using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Inventory.Events;
 using ChickenAPI.Game.Inventory.ItemUsage.Handling;
 

@@ -71,13 +71,13 @@ namespace ChickenAPI.Game.Helpers
             return player.SendPacketAsync(player.GenerateSayPacket(msg, color));
         }
 
-        public static Task SendChatMessage(this IPlayerEntity player, PlayerMessages key, SayColorType color)
+        public static Task SendChatMessageAsync(this IPlayerEntity player, PlayerMessages key, SayColorType color)
         {
             string msg = player.GetLanguage(key);
             return player.SendPacketAsync(player.GenerateSayPacket(msg, color));
         }
 
-        public static Task SendChatMessage(this IPlayerEntity player, string msg, SayColorType color) => player.SendPacketAsync(player.GenerateSayPacket(msg, color));
+        public static Task SendChatMessageAsync(this IPlayerEntity player, string msg, SayColorType color) => player.SendPacketAsync(player.GenerateSayPacket(msg, color));
 
         public static Task SendTopscreenMessage(this IPlayerEntity player, string msg, MsgPacketType type) => player.SendPacketAsync(player.GenerateMsgPacket(msg, type));
 

@@ -197,7 +197,7 @@ namespace SaltyEmu.Commands
 
             if (result is SaltyCommandResult res && !string.IsNullOrWhiteSpace(res.Message))
             {
-                ctx.Player.SendChatMessage(res.Message, SayColorType.Yellow);
+                ctx.Player.SendChatMessageAsync(res.Message, SayColorType.Yellow);
             }
 
             return Task.CompletedTask;
@@ -280,7 +280,7 @@ namespace SaltyEmu.Commands
                 return Task.CompletedTask;
             }
 
-            ctx.Player.SendChatMessage(errorBuilder.ToString(), SayColorType.Green);
+            ctx.Player.SendChatMessageAsync(errorBuilder.ToString(), SayColorType.Green);
 
             return help
                 ? _commands.ExecuteAsync($"help {ctx.Command.FullAliases[0]}", ctx)

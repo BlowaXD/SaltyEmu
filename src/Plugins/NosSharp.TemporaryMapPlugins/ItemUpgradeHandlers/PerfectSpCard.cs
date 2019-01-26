@@ -23,7 +23,7 @@ namespace SaltyEmu.BasicPlugin.ItemUpgradeHandlers
         {
             if (e.Item.Rarity == -2)
             {
-                player.SendChatMessage("CANT_UPGRADE_DESTROYED_SP", SayColorType.Yellow);
+                player.SendChatMessageAsync("CANT_UPGRADE_DESTROYED_SP", SayColorType.Yellow);
                 return;
             }
 

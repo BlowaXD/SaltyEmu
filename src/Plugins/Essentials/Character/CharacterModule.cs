@@ -188,7 +188,7 @@ namespace Essentials.Character
                 player = Context.Player;
             }
 
-            await Context.Player.SendChatMessage("+---------------[Position]---------------+\n" +
+            await Context.Player.SendChatMessageAsync("+---------------[Position]---------------+\n" +
                                                 $"Nickname: { player.Character.Name}\n" +
                                                 $"MapID: {player.CurrentMap.Map.Id}\n" +
                                                 $"Coordinate - X: {player.Position.X} Y: {player.Position.Y}\n" +
@@ -240,23 +240,23 @@ namespace Essentials.Character
                 player = Context.Player;
             }
 
-            await Context.Player.SendChatMessage("+---------------[Information]---------------+", SayColorType.Green);
-            await Context.Player.SendChatMessage($"AccountID: {player.Character.AccountId}", SayColorType.Yellow);
-            await Context.Player.SendChatMessage($"CharacterID: {player.Character.Id}", SayColorType.Yellow);
-            await Context.Player.SendChatMessage($"Nickname: {player.Character.Name}", SayColorType.Yellow);
-            await Context.Player.SendChatMessage($"Class: {player.Character.Class}", SayColorType.Yellow);
-            await Context.Player.SendChatMessage($"Level: {player.Character.Level} | {player.Character.LevelXp} XP", SayColorType.Yellow);
-            await Context.Player.SendChatMessage($"Job: {player.Character.JobLevel} | {player.Character.JobLevelXp} XP", SayColorType.Yellow);
-            await Context.Player.SendChatMessage($"HeroLevel: {player.Character.HeroLevel} | {player.Character.HeroXp} XP", SayColorType.Yellow);
-            await Context.Player.SendChatMessage($"R Mode: {player.Character.RagePoint}", SayColorType.Yellow);
-            await Context.Player.SendChatMessage($"HP: {player.Hp}/{player.HpMax}", SayColorType.Yellow);
-            await Context.Player.SendChatMessage($"MP: {player.Mp}/{player.MpMax}", SayColorType.Yellow);
-            await Context.Player.SendChatMessage($"Speed: {player.Speed}", SayColorType.Yellow);
-            await Context.Player.SendChatMessage($"Gold: {player.Character.Gold}", SayColorType.Yellow);
-            await Context.Player.SendChatMessage($"Faction: {player.Character.Faction}", SayColorType.Yellow);
-            await Context.Player.SendChatMessage($"Family: {player.Family}", SayColorType.Yellow);
-            await Context.Player.SendChatMessage($"Coordinate - MapID: {player.CurrentMap.Map.Id} X: {player.Position.X} Y: {player.Position.Y}", SayColorType.Yellow);
-            await Context.Player.SendChatMessage("+-----------------------------------------------+", SayColorType.Green);
+            await Context.Player.SendChatMessageAsync("+---------------[Information]---------------+", SayColorType.Green);
+            await Context.Player.SendChatMessageAsync($"AccountID: {player.Character.AccountId}", SayColorType.Yellow);
+            await Context.Player.SendChatMessageAsync($"CharacterID: {player.Character.Id}", SayColorType.Yellow);
+            await Context.Player.SendChatMessageAsync($"Nickname: {player.Character.Name}", SayColorType.Yellow);
+            await Context.Player.SendChatMessageAsync($"Class: {player.Character.Class}", SayColorType.Yellow);
+            await Context.Player.SendChatMessageAsync($"Level: {player.Character.Level} | {player.Character.LevelXp} XP", SayColorType.Yellow);
+            await Context.Player.SendChatMessageAsync($"Job: {player.Character.JobLevel} | {player.Character.JobLevelXp} XP", SayColorType.Yellow);
+            await Context.Player.SendChatMessageAsync($"HeroLevel: {player.Character.HeroLevel} | {player.Character.HeroXp} XP", SayColorType.Yellow);
+            await Context.Player.SendChatMessageAsync($"R Mode: {player.Character.RagePoint}", SayColorType.Yellow);
+            await Context.Player.SendChatMessageAsync($"HP: {player.Hp}/{player.HpMax}", SayColorType.Yellow);
+            await Context.Player.SendChatMessageAsync($"MP: {player.Mp}/{player.MpMax}", SayColorType.Yellow);
+            await Context.Player.SendChatMessageAsync($"Speed: {player.Speed}", SayColorType.Yellow);
+            await Context.Player.SendChatMessageAsync($"Gold: {player.Character.Gold}", SayColorType.Yellow);
+            await Context.Player.SendChatMessageAsync($"Faction: {player.Character.Faction}", SayColorType.Yellow);
+            await Context.Player.SendChatMessageAsync($"Family: {player.Family}", SayColorType.Yellow);
+            await Context.Player.SendChatMessageAsync($"Coordinate - MapID: {player.CurrentMap.Map.Id} X: {player.Position.X} Y: {player.Position.Y}", SayColorType.Yellow);
+            await Context.Player.SendChatMessageAsync("+-----------------------------------------------+", SayColorType.Green);
 
             return new SaltyCommandResult(true, $"Information of {player.Character.Name} command has been sent.");
         }

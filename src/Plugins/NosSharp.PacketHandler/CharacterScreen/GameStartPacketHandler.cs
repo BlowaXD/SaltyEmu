@@ -62,11 +62,11 @@ namespace NW.Plugins.PacketHandling.CharacterScreen
             // Register Player
             _playerManager.RegisterPlayer(session.Player);
 
-            await session.Player.SendChatMessage("┌------------------[NosWings]------------------┐", SayColorType.Yellow);
-            await session.Player.SendChatMessage($"XP     : {dto.LevelXp}/{_algorithmService.GetLevelXp(dto.Class, dto.Level)}", SayColorType.Yellow);
-            await session.Player.SendChatMessage($"JOBXP  : {dto.JobLevelXp}/{_algorithmService.GetJobLevelXp(dto.Class, dto.Level)}", SayColorType.Yellow);
-            await session.Player.SendChatMessage($"HEROXP : {dto.HeroXp}/{_algorithmService.GetHeroLevelXp(dto.Class, dto.Level)}", SayColorType.Yellow);
-            await session.Player.SendChatMessage("└----------------------------------------------┘", SayColorType.Yellow);
+            await session.Player.SendChatMessageAsync("┌------------------[NosWings]------------------┐", SayColorType.Yellow);
+            await session.Player.SendChatMessageAsync($"XP     : {dto.LevelXp}/{_algorithmService.GetLevelXp(dto.Class, dto.Level)}", SayColorType.Yellow);
+            await session.Player.SendChatMessageAsync($"JOBXP  : {dto.JobLevelXp}/{_algorithmService.GetJobLevelXp(dto.Class, dto.Level)}", SayColorType.Yellow);
+            await session.Player.SendChatMessageAsync($"HEROXP : {dto.HeroXp}/{_algorithmService.GetHeroLevelXp(dto.Class, dto.Level)}", SayColorType.Yellow);
+            await session.Player.SendChatMessageAsync("└----------------------------------------------┘", SayColorType.Yellow);
             await session.SendPacketAsync(new TitPacket { ClassType = "Adventurer", Name = dto.Name });
             await session.SendPacketAsync(new MapoutPacket());
             session.Player.Character.SpPoint = 10000;

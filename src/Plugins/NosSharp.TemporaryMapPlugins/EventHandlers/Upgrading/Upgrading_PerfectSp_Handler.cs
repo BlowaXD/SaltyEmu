@@ -58,14 +58,14 @@ namespace SaltyEmu.BasicPlugin.EventHandlers
 
                 stoneup += count;
                 await player.SendTopscreenMessage("PERFECTSP_SUCCESS", MsgPacketType.White);
-                await player.SendChatMessage("PERFECTSP_SUCCESS", SayColorType.Green);
+                await player.SendChatMessageAsync("PERFECTSP_SUCCESS", SayColorType.Green);
 
                 e.SpCard.SpStoneUpgrade++;
             }
             else
             {
                 await player.SendTopscreenMessage("PERFECTSP_FAILURE", MsgPacketType.White);
-                await player.SendChatMessage("PERFECTSP_FAILURE", SayColorType.Purple);
+                await player.SendChatMessageAsync("PERFECTSP_FAILURE", SayColorType.Purple);
             }
 
             await player.ActualizeUiInventorySlot(e.SpCard.Type, e.SpCard.Slot);

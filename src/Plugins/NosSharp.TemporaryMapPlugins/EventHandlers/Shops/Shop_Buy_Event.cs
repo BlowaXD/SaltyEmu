@@ -212,7 +212,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Shops
             await player.ActualizeUiGold();
             await player.ActualizeUiSkillList();
             await player.ActualizeUiQuicklist();
-            await player.SendChatMessage(PlayerMessages.SKILL_YOU_LEARNED_SKILL_X, SayColorType.LightGreen);
+            await player.SendChatMessageAsync(PlayerMessages.SKILL_YOU_LEARNED_SKILL_X, SayColorType.LightGreen);
             await player.ActualizeUiExpBar();
         }
 

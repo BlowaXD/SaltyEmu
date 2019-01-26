@@ -47,7 +47,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Upgrading
 
             if (e.Item.IsFixed && e.HasAmulet == FixedUpMode.None)
             {
-                await player.SendChatMessage("ITEM_IS_FIXED", SayColorType.Yellow);
+                await player.SendChatMessageAsync("ITEM_IS_FIXED", SayColorType.Yellow);
                 await player.SendPacketAsync(player.GenerateShopEndPacket(ShopEndPacketType.CloseWindow));
                 return;
             }
@@ -67,26 +67,26 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Upgrading
                     // TODO: Reduced Item Amount
                     if (player.Character.Gold < (long)(goldprice[e.Item.Upgrade] * _configuration.UpgradeItem.ReducedPriceFactor))
                     {
-                        await player.SendChatMessage("NOT_ENOUGH_MONEY", SayColorType.Yellow);
+                        await player.SendChatMessageAsync("NOT_ENOUGH_MONEY", SayColorType.Yellow);
                         return;
                     }
 
                     if (player.Inventory.GetItemQuantityById(_configuration.UpgradeItem.CellaVnum) < cella[e.Item.Upgrade] * _configuration.UpgradeItem.ReducedPriceFactor)
                     {
-                        await player.SendChatMessage("NOT_ENOUGH_ITEMS", SayColorType.Yellow);
+                        await player.SendChatMessageAsync("NOT_ENOUGH_ITEMS", SayColorType.Yellow);
                         return;
                     }
 
                     if (e.Protection == UpgradeProtection.Protected && !e.IsCommand &&
                         player.Inventory.GetItemQuantityById(_configuration.UpgradeItem.GoldScrollVnum) < 1)
                     {
-                        await player.SendChatMessage("NOT_ENOUGH_ITEMS", SayColorType.Yellow);
+                        await player.SendChatMessageAsync("NOT_ENOUGH_ITEMS", SayColorType.Yellow);
                         return;
                     }
 
                     if (player.Inventory.GetItemQuantityById(e.Item.Upgrade < 5 ? _configuration.UpgradeItem.GemVnum : _configuration.UpgradeItem.GemFullVnum) < gem[e.Item.Upgrade])
                     {
-                        await player.SendChatMessage("NOT_ENOUGH_ITEMS", SayColorType.Yellow);
+                        await player.SendChatMessageAsync("NOT_ENOUGH_ITEMS", SayColorType.Yellow);
                         return;
                     }
 
@@ -128,26 +128,26 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Upgrading
                     // Not work Idk why
                     /* if (player.Inventory.GetItemQuantityById(Configuration.UpgradeItem.CellaVnum) < cella[e.Item.Upgrade])
                      {
-                         player.SendChatMessage("NOT_ENOUGH_ITEMS", SayColorType.Yellow);
+                         player.SendChatMessageAsync("NOT_ENOUGH_ITEMS", SayColorType.Yellow);
                          return;
                      }*/
 
                     if (player.Character.Gold < goldprice[e.Item.Upgrade])
                     {
-                        await player.SendChatMessage("NOT_ENOUGH_MONEY", SayColorType.Yellow);
+                        await player.SendChatMessageAsync("NOT_ENOUGH_MONEY", SayColorType.Yellow);
                         return;
                     }
 
                     if (e.Protection == UpgradeProtection.Protected && !e.IsCommand &&
                         player.Inventory.GetItemQuantityById(_configuration.UpgradeItem.NormalScrollVnum) < 1)
                     {
-                        await player.SendChatMessage("NOT_ENOUGH_ITEMS", SayColorType.Yellow);
+                        await player.SendChatMessageAsync("NOT_ENOUGH_ITEMS", SayColorType.Yellow);
                         return;
                     }
 
                     if (player.Inventory.GetItemQuantityById(e.Item.Upgrade < 5 ? _configuration.UpgradeItem.GemVnum : _configuration.UpgradeItem.GemFullVnum) < gem[e.Item.Upgrade])
                     {
-                        await player.SendChatMessage("NOT_ENOUGH_ITEMS", SayColorType.Yellow);
+                        await player.SendChatMessageAsync("NOT_ENOUGH_ITEMS", SayColorType.Yellow);
                         return;
                     }
 
@@ -188,14 +188,14 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Upgrading
                 {
                     if (e.Protection == UpgradeProtection.None)
                     {
-                        await player.SendChatMessage("UPGRADE_FAILED", SayColorType.Purple);
+                        await player.SendChatMessageAsync("UPGRADE_FAILED", SayColorType.Purple);
                         await player.SendTopscreenMessage("UPGRADE_FAILED", MsgPacketType.Whisper);
                         //session.Character.DeleteItemByItemInstanceId(Id);
                     }
                     else
                     {
                         await player.BroadcastAsync(player.GenerateEffectPacket(3004));
-                        await player.SendChatMessage("SCROLL_PROTECT_USED", SayColorType.Purple);
+                        await player.SendChatMessageAsync("SCROLL_PROTECT_USED", SayColorType.Purple);
                         await player.SendTopscreenMessage("UPGRADE_FAILED_ITEM_SAVED", MsgPacketType.Whisper);
                     }
                 }
@@ -203,13 +203,13 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Upgrading
                 {
                     await player.BroadcastAsync(player.GenerateEffectPacket(3004));
                     wearable.IsFixed = true;
-                    await player.SendChatMessage("UPGRADE_FIXED", SayColorType.Purple);
+                    await player.SendChatMessageAsync("UPGRADE_FIXED", SayColorType.Purple);
                     await player.SendTopscreenMessage("UPGRADE_FIXED", MsgPacketType.Whisper);
                 }
                 else
                 {
                     await player.BroadcastAsync(player.GenerateEffectPacket(3005));
-                    await player.SendChatMessage("UPGRADE_SUCCESS", SayColorType.Green);
+                    await player.SendChatMessageAsync("UPGRADE_SUCCESS", SayColorType.Green);
                     await player.SendTopscreenMessage("UPGRADE_SUCCESS", MsgPacketType.Whisper);
                     wearable.Upgrade++;
                     if (wearable.Upgrade > 4)
@@ -227,28 +227,28 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Upgrading
                 {
                     await player.BroadcastAsync(player.GenerateEffectPacket(3004));
                     wearable.IsFixed = true;
-                    await player.SendChatMessage("UPGRADE_FIXED", SayColorType.Purple);
+                    await player.SendChatMessageAsync("UPGRADE_FIXED", SayColorType.Purple);
                     await player.SendTopscreenMessage("UPGRADE_FIXED", MsgPacketType.Whisper);
                 }
                 else if (rnd < upfail[e.Item.Upgrade] + upfix[e.Item.Upgrade])
                 {
                     if (e.Protection == UpgradeProtection.None)
                     {
-                        await player.SendChatMessage("UPGRADE_FAILED", SayColorType.Purple);
+                        await player.SendChatMessageAsync("UPGRADE_FAILED", SayColorType.Purple);
                         await player.SendTopscreenMessage("UPGRADE_FAILED", MsgPacketType.Whisper);
                         //session.Character.DeleteItemByItemInstanceId(Id);
                     }
                     else
                     {
                         await player.BroadcastAsync(player.GenerateEffectPacket(3004));
-                        await player.SendChatMessage("SCROLL_PROTECT_USED", SayColorType.Purple);
+                        await player.SendChatMessageAsync("SCROLL_PROTECT_USED", SayColorType.Purple);
                         await player.SendTopscreenMessage("UPGRADE_FAILED_ITEM_SAVED", MsgPacketType.Whisper);
                     }
                 }
                 else
                 {
                     await player.BroadcastAsync(player.GenerateEffectPacket(3005));
-                    await player.SendChatMessage("UPGRADE_SUCCESS", SayColorType.Green);
+                    await player.SendChatMessageAsync("UPGRADE_SUCCESS", SayColorType.Green);
                     await player.SendTopscreenMessage("UPGRADE_SUCCESS", MsgPacketType.Whisper);
                     wearable.Upgrade++;
                     if (wearable.Upgrade > 4)

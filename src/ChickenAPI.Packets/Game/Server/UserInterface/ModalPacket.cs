@@ -1,4 +1,5 @@
-﻿using ChickenAPI.Packets.Attributes;
+﻿using ChickenAPI.Enums.Packets;
+using ChickenAPI.Packets.Attributes;
 
 namespace ChickenAPI.Packets.Game.Server.UserInterface
 {
@@ -6,9 +7,9 @@ namespace ChickenAPI.Packets.Game.Server.UserInterface
     public class ModalPacket : PacketBase
     {
         [PacketIndex(0)]
-        public byte Type { get; set; } //  TODO : Create An enum
+        public ModalPacketType Type { get; set; } //  TODO : Create An enum
 
         [PacketIndex(1)]
-        public string message { get; set; }
+        public string Message { get; set; }
     }
 }

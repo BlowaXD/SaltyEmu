@@ -42,28 +42,6 @@ namespace SaltyEmu.BasicPlugin.NpcDialogHandlers
         [NpcDialogHandler(1604)]
         public static void UpgradeFamilySize(IPlayerEntity player, NpcDialogEvent args)
         {
-            if (player.Family.MaxSize > 70 && player.Family.FamilyLevel <= 5)
-            {
-                return;
-            }
-            if (player.FamilyCharacter.Authority != ChickenAPI.Enums.Game.Families.FamilyAuthority.Head)
-            {
-                /* await session.SendPacketAsync(Session.Character.GenerateSay(Language.Instance.GetMessageFromKey("ONLY_HEAD_CAN_BUY"), 10));
-                    await session.SendPacketAsync(UserInterfaceHelper.GenerateModal(Language.Instance.GetMessageFromKey("ONLY_HEAD_CAN_BUY"), 1));
-                    */
-                return;
-            }
-
-            if (5000000 >= player.Character.Gold)
-            {
-                //await session.SendPacketAsync(Session.Character.GenerateSay(Language.Instance.GetMessageFromKey("NOT_ENOUGH_MONEY"), 10));
-                return;
-            }
-            player.GoldLess(5000000);
-            player.Family.MaxSize = 70;
-            /*FamilyDTO fam = Session.Character.Family;
-            DAOFactory.FamilyDAO.InsertOrUpdate(ref fam);
-            ServerManager.Instance.FamilyRefresh(Session.Character.Family.FamilyId);*/
         }
 
         [NpcDialogHandler(1605)]

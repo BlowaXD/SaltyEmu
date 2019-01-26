@@ -1,5 +1,10 @@
 ﻿namespace ChickenAPI.Enums.Packets
 {
+    public enum ModalPacketType
+    {
+        Default = 1,
+    }
+
     public enum MsgPacketType
     {
         Whisper = 0,

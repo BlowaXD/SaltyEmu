@@ -87,7 +87,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers
 
                     if (e.Item.Rarity < 8 || !e.Item.Item.IsHeroic)
                     {
-                        await player.SendChatMessage("NOT_MAX_RARITY", SayColorType.Yellow);
+                        await player.SendChatMessageAsync("NOT_MAX_RARITY", SayColorType.Yellow);
                         return;
                     }
 
@@ -105,7 +105,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers
                 case RarifyMode.Success:
                     if (e.Item.Item.IsHeroic && e.Item.Rarity >= 8 || !e.Item.Item.IsHeroic && e.Item.Rarity <= 7)
                     {
-                        await player.SendChatMessage("ALREADY_MAX_RARE", SayColorType.Yellow);
+                        await player.SendChatMessageAsync("ALREADY_MAX_RARE", SayColorType.Yellow);
                         return;
                     }
 

@@ -49,20 +49,20 @@ namespace ChickenAPI.Game.Inventory.ItemUpgrade.Extension
                              await session.SendPacketAsync(session.Character.GenerateEquipment());
                          }*/
                         await player.SendTopscreenMessage("AMULET_FAIL_SAVED", MsgPacketType.Whisper);
-                        await player.SendChatMessage("AMULET_FAIL_SAVED", SayColorType.Purple);
+                        await player.SendChatMessageAsync("AMULET_FAIL_SAVED", SayColorType.Purple);
                         return;
 
                     case RarifyProtection.None:
                         /* session.Character.DeleteItemByItemInstanceId(Id);*/
                         //player.EmitEvent(new InventoryDestroyItemEvent { ItemInstance = e.Item });
                         await player.SendTopscreenMessage("RARIFY_FAILED", MsgPacketType.Whisper);
-                        await player.SendChatMessage("RARIFY_FAILED", SayColorType.Purple);
+                        await player.SendChatMessageAsync("RARIFY_FAILED", SayColorType.Purple);
 
                         return;
                 }
 
                 await player.SendTopscreenMessage("RARIFY_FAILED_ITEM_SAVED", MsgPacketType.Whisper);
-                await player.SendChatMessage("RARIFY_FAILED_ITEM_SAVED", SayColorType.Purple);
+                await player.SendChatMessageAsync("RARIFY_FAILED_ITEM_SAVED", SayColorType.Purple);
                 await player.BroadcastAsync(player.GenerateEffectPacket(3004));
             }
         }

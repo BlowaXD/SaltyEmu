@@ -36,7 +36,7 @@ namespace ChickenAPI.Game.Entities.Player.Extensions
             player.Mates.Add(mate);
             await player.SendPacketsAsync(player.GenerateScP());
             await player.SendPacketsAsync(player.GenerateScN());
-            await player.SendChatMessage(mate.Mate.MateType == MateType.Pet ? PlayerMessages.PETS_YOU_GET_X_AS_A_NEW_PET : PlayerMessages.PETS_YOU_GET_X_AS_A_NEW_PARTNER, SayColorType.Green);
+            await player.SendChatMessageAsync(mate.Mate.MateType == MateType.Pet ? PlayerMessages.PETS_YOU_GET_X_AS_A_NEW_PET : PlayerMessages.PETS_YOU_GET_X_AS_A_NEW_PARTNER, SayColorType.Green);
             /*mate.RefreshStats();*/
             return true;
         }
