@@ -27,11 +27,20 @@ namespace Essentials.Character
         [Description("Kick X user.")]
         public async Task<SaltyCommandResult> KickPlayerAsync(IPlayerEntity player = null, byte timer = 0, string reasons = null)
         {
-            if (player == null) return new SaltyCommandResult(false, "Please specify the charname to kick.");
+            if (player == null)
+            {
+                return new SaltyCommandResult(false, "Please specify the charname to kick.");
+            }
 
-            if (reasons != null) await player.SendModalAsync($"You will be kicked in {timer} seconds , for the following reasons: {reasons}", 1);
+            if (reasons != null)
+            {
+                await player.SendModalAsync($"You will be kicked in {timer} seconds , for the following reasons: {reasons}", ModalPacketType.Default);
+            }
 
-            if (timer != 0) await Task.Delay(timer * 1000);
+            if (timer != 0)
+            {
+                await Task.Delay(timer * 1000);
+            }
 
             player.Session.Disconnect();
 
@@ -42,7 +51,8 @@ namespace Essentials.Character
         [Description("Change the character level.")]
         public async Task<SaltyCommandResult> ChangeLevelAsync(
             [Description("Desired level.")] byte level,
-            [Description("Character you want to change the level")] IPlayerEntity player = null)
+            [Description("Character you want to change the level")]
+            IPlayerEntity player = null)
         {
             if (player == null)
             {
@@ -59,7 +69,8 @@ namespace Essentials.Character
         [Description("Change the character level.")]
         public async Task<SaltyCommandResult> ChangeJobLevelAsync(
             [Description("Desired level.")] byte level,
-            [Description("Character you want to change the level")] IPlayerEntity player = null)
+            [Description("Character you want to change the level")]
+            IPlayerEntity player = null)
         {
             if (player == null)
             {
@@ -76,7 +87,8 @@ namespace Essentials.Character
         [Description("Change the character's herolevel.")]
         public async Task<SaltyCommandResult> ChangeHeroLevelAsync(
             [Description("Desired level.")] byte level,
-            [Description("Character you want to change the level")] IPlayerEntity player = null)
+            [Description("Character you want to change the level")]
+            IPlayerEntity player = null)
         {
             if (player == null)
             {
@@ -93,7 +105,8 @@ namespace Essentials.Character
         [Description("Change the character's fairy's level.")]
         public async Task<SaltyCommandResult> ChangeFairyLevelAsync(
             [Description("Desired level.")] short level,
-            [Description("Character you want to change the level")] IPlayerEntity player = null)
+            [Description("Character you want to change the level")]
+            IPlayerEntity player = null)
         {
             if (player == null)
             {
@@ -116,7 +129,8 @@ namespace Essentials.Character
         [Description("Change the character's reputation.")]
         public async Task<SaltyCommandResult> ChangeReputationAsync(
             [Description("Desired reputation.")] long reputation,
-            [Description("Character you want to change the reputation")] IPlayerEntity player = null)
+            [Description("Character you want to change the reputation")]
+            IPlayerEntity player = null)
         {
             if (player == null)
             {
@@ -132,8 +146,10 @@ namespace Essentials.Character
         [Command("ChangeClass", "Class")]
         [Description("Change the character's class.")]
         public async Task<SaltyCommandResult> ChangeClassAsync(
-            [Description("Class you want to change to")] CharacterClassType newClass,
-            [Description("Character you want to change the class")] IPlayerEntity player = null)
+            [Description("Class you want to change to")]
+            CharacterClassType newClass,
+            [Description("Character you want to change the class")]
+            IPlayerEntity player = null)
         {
             if (player == null)
             {
@@ -148,8 +164,10 @@ namespace Essentials.Character
         [Command("AddGold")]
         [Description("Add the given amount of gold to an inventory.")]
         public async Task<SaltyCommandResult> AddGoldAsync(
-            [Description("Desired amount to add.")] long count,
-            [Description("Player you want to add gold.")] IPlayerEntity player = null)
+            [Description("Desired amount to add.")]
+            long count,
+            [Description("Player you want to add gold.")]
+            IPlayerEntity player = null)
         {
             if (player == null)
             {
@@ -164,8 +182,10 @@ namespace Essentials.Character
         [Command("SetGold", "Gold")]
         [Description("Set the given amount of gold to an inventory.")]
         public async Task<SaltyCommandResult> SetGoldAsync(
-            [Description("Desired amount to set.")] long count,
-            [Description("Player you want to set gold.")] IPlayerEntity player = null)
+            [Description("Desired amount to set.")]
+            long count,
+            [Description("Player you want to set gold.")]
+            IPlayerEntity player = null)
         {
             if (player == null)
             {
@@ -181,7 +201,8 @@ namespace Essentials.Character
         [Command("Where")]
         [Description("Provide the player's coordinates [x] [y] and name of the map in the chat.")]
         public async Task<SaltyCommandResult> WhereAsync(
-            [Description("Player you want to locate")] IPlayerEntity player = null)
+            [Description("Player you want to locate")]
+            IPlayerEntity player = null)
         {
             if (player == null)
             {
@@ -189,10 +210,10 @@ namespace Essentials.Character
             }
 
             await Context.Player.SendChatMessageAsync("+---------------[Position]---------------+\n" +
-                                                $"Nickname: { player.Character.Name}\n" +
-                                                $"MapID: {player.CurrentMap.Map.Id}\n" +
-                                                $"Coordinate - X: {player.Position.X} Y: {player.Position.Y}\n" +
-                                                $"+-------------------------------------------+", SayColorType.Yellow);
+                $"Nickname: {player.Character.Name}\n" +
+                $"MapID: {player.CurrentMap.Map.Id}\n" +
+                $"Coordinate - X: {player.Position.X} Y: {player.Position.Y}\n" +
+                $"+-------------------------------------------+", SayColorType.Yellow);
 
             return new SaltyCommandResult(true, $"Position of {player.Character.Name} command has been sent.");
         }
@@ -201,7 +222,8 @@ namespace Essentials.Character
         [Description("Change the speed of the character.")]
         public async Task<SaltyCommandResult> SpeedAsync(
             [Description("Desired speed.")] byte speed,
-            [Description("Player you want to change the speed")] IPlayerEntity player = null)
+            [Description("Player you want to change the speed")]
+            IPlayerEntity player = null)
         {
             if (player == null)
             {
@@ -217,7 +239,8 @@ namespace Essentials.Character
         [Command("SpeedReset", "rspeed", "resetspeed")]
         [Description("Reset the speed of the character.")]
         public async Task<SaltyCommandResult> SpeedAsync(
-            [Description("Player you want to reset the speed")] IPlayerEntity player = null)
+            [Description("Player you want to reset the speed")]
+            IPlayerEntity player = null)
         {
             if (player == null)
             {
@@ -233,7 +256,8 @@ namespace Essentials.Character
         [Command("Info", "charInfo", "Information")]
         [Description("Display information about the player.")]
         public async Task<SaltyCommandResult> InfoAsync(
-           [Description("Player you want to see information about him.")] IPlayerEntity player = null)
+            [Description("Player you want to see information about him.")]
+            IPlayerEntity player = null)
         {
             if (player == null)
             {
@@ -264,8 +288,10 @@ namespace Essentials.Character
         [Command("ChangeGender", "Gender")]
         [Description("Change the character's gender.")]
         public async Task<SaltyCommandResult> ChangeGenderAsync(
-            [Description("Gender you want to change to")] GenderType newGender,
-            [Description("Character you want to change the gender")] IPlayerEntity player = null)
+            [Description("Gender you want to change to")]
+            GenderType newGender,
+            [Description("Character you want to change the gender")]
+            IPlayerEntity player = null)
         {
             if (player == null)
             {
@@ -280,7 +306,8 @@ namespace Essentials.Character
         [Command("Heal")]
         [Description("Fully restore the character.")]
         public async Task<SaltyCommandResult> HealAsync(
-            [Description("Player you want to heal")] IPlayerEntity player = null)
+            [Description("Player you want to heal")]
+            IPlayerEntity player = null)
         {
             if (player == null)
             {

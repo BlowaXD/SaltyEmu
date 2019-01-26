@@ -1,4 +1,5 @@
 ﻿using ChickenAPI.Core.Logging;
+using ChickenAPI.Enums.Game.Families;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Entities.Player.Extensions;
 using ChickenAPI.Game.NpcDialog.Events;
@@ -51,7 +52,7 @@ namespace SaltyEmu.BasicPlugin.NpcDialogHandlers
             {
                 return;
             }
-            if (player.FamilyCharacter.Authority != ChickenAPI.Enums.Game.Families.FamilyAuthority.Head)
+            if (player.FamilyCharacter.Authority != FamilyAuthority.Head)
             {
                 /* await session.SendPacketAsync(Session.Character.GenerateSay(Language.Instance.GetMessageFromKey("ONLY_HEAD_CAN_BUY"), 10));
                     await session.SendPacketAsync(UserInterfaceHelper.GenerateModal(Language.Instance.GetMessageFromKey("ONLY_HEAD_CAN_BUY"), 1));

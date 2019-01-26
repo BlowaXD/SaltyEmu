@@ -9,34 +9,33 @@ namespace SaltyEmu.BasicPlugin.ItemUsageHandlers
 {
     public class NpcDialogHandlerContainer : INpcDialogHandlerContainer
     {
-        private readonly HashSet<INpcDialogAsyncHandler> _handlers;
+        private readonly Dictionary<long, INpcDialogAsyncHandler> _handlers;
 
         public NpcDialogHandlerContainer()
         {
-            _handlers = new HashSet<INpcDialogAsyncHandler>();
+            _handlers = new Dictionary<long, INpcDialogAsyncHandler>();
         }
 
         public Task RegisterAsync(INpcDialogAsyncHandler handler)
         {
-            _handlers.Add(handler);
+            _handlers.Add(handler.HandledId, handler);
             return Task.CompletedTask;
         }
 
         public Task UnregisterAsync(INpcDialogAsyncHandler handler)
         {
-            _handlers.Remove(handler);
+            _handlers.Remove(handler.HandledId);
             return Task.CompletedTask;
         }
 
-        public async Task Execute(IPlayerEntity player, NpcDialogEvent e)
+        public Task Execute(IPlayerEntity player, NpcDialogEvent e)
         {
-            foreach (INpcDialogAsyncHandler npcDialogAsyncHandler in _handlers)
+            if (!_handlers.TryGetValue(e.DialogId, out INpcDialogAsyncHandler handler))
             {
-                if (await npcDialogAsyncHandler.Match(player, e))
-                {
-                    await npcDialogAsyncHandler.Execute(player, e);
-                }
+                return Task.CompletedTask;
             }
+
+            return handler.Execute(player, e);
         }
     }
 }

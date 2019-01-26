@@ -14,11 +14,7 @@ namespace SaltyEmu.BasicPlugin.NpcDialogHandlers.Handlers.Families
 {
     public class NpcDialog_UpgradeFamily_Handler : INpcDialogAsyncHandler
     {
-        public Task<bool> Match(IPlayerEntity player, NpcDialogEvent e)
-        {
-            // add range checking
-            return Task.FromResult(e.Type >= 1604 && e.Type <= 1605);
-        }
+        public long HandledId => 1604;
 
         public async Task Execute(IPlayerEntity player, NpcDialogEvent e)
         {

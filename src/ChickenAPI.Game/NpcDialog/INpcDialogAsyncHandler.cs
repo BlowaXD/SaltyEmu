@@ -6,7 +6,7 @@ namespace ChickenAPI.Game.NpcDialog
 {
     public interface INpcDialogAsyncHandler
     {
-        Task<bool> Match(IPlayerEntity player, NpcDialogEvent e);
+        long HandledId { get; }
         Task Execute(IPlayerEntity player, NpcDialogEvent e);
     }
 }
