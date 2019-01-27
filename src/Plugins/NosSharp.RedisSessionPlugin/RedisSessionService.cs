@@ -53,7 +53,7 @@ namespace SaltyEmu.RedisWrappers
 
         public PlayerSessionDto GetByAccountName(string accountName)
         {
-            return _client.GetAll().FirstOrDefault(s => s.Username == accountName);
+            return _client.GetAll().FirstOrDefault(s => string.Equals(s.Username, accountName, StringComparison.CurrentCultureIgnoreCase));
         }
 
         public PlayerSessionDto GetBySessionId(int id) => _client.GetById(id);
