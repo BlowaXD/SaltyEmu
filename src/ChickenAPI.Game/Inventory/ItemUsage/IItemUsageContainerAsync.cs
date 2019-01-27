@@ -7,7 +7,9 @@ namespace ChickenAPI.Game.Inventory.ItemUsage
 {
     public interface IItemUsageContainerAsync
     {
-        Task RegisterItemUsageCallback(UseItemRequestHandler handler);
+        Task RegisterItemUsageCallback(IUseItemRequestHandlerAsync handler);
+
+        Task UnregisterAsync(IUseItemRequestHandlerAsync handler);
 
         Task UseItem(IPlayerEntity player, InventoryUseItemEvent itemInstance);
     }

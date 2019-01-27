@@ -55,7 +55,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Inventory
             }
 
             e.ItemInstance.CharacterId = player.Character.Id;
-            player.ActualizeUiInventorySlot(e.ItemInstance.Type, e.ItemInstance.Slot);
+            await player.ActualizeUiInventorySlot(e.ItemInstance.Type, e.ItemInstance.Slot);
         }
     }
 }

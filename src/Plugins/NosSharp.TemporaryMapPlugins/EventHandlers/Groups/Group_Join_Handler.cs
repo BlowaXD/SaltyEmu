@@ -11,8 +11,9 @@ namespace SaltyEmu.BasicPlugin.EventHandlers
 {
     public class Group_Join_Handler : GenericEventPostProcessorBase<GroupJoinEvent>
     {
-        protected override async Task Handle(GroupJoinEvent e, CancellationToken cancellation)
+        protected override Task Handle(GroupJoinEvent e, CancellationToken cancellation)
         {
+            return Task.CompletedTask;
         }
     }
 }

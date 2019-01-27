@@ -12,40 +12,31 @@ namespace SaltyEmu.DatabasePlugin.Services.NpcMonster
 {
     public class NpcMonsterSkillDao : MappedRepositoryBase<NpcMonsterSkillDto, NpcMonsterSkillModel>, INpcMonsterSkillService
     {
-        private readonly Dictionary<long, List<NpcMonsterSkillDto>> _cacheByNpcMonsterId;
+        private readonly Dictionary<long, NpcMonsterSkillDto[]> _cacheByNpcMonsterId;
 
         public NpcMonsterSkillDao(DbContext context, IMapper mapper) : base(context, mapper)
         {
             IEnumerable<NpcMonsterSkillDto> tmp = Get();
-            _cacheByNpcMonsterId = tmp.GroupBy(s => s.NpcMonsterId).ToDictionary(s => s.Key, s => s.ToList());
+            _cacheByNpcMonsterId = tmp.GroupBy(s => s.NpcMonsterId).ToDictionary(s => s.Key, s => s.ToArray());
         }
 
 
         public async Task<IEnumerable<NpcMonsterSkillDto>> GetByNpcMonsterIdsAsync(IEnumerable<long> ids)
         {
             // faster temporary implementation
-            var list = new List<NpcMonsterSkillDto>();
+            List<NpcMonsterSkillDto> list = new List<NpcMonsterSkillDto>();
             foreach (long id in ids)
             {
-                if (!_cacheByNpcMonsterId.TryGetValue(id, out List<NpcMonsterSkillDto> dto))
+                if (!_cacheByNpcMonsterId.TryGetValue(id, out NpcMonsterSkillDto[] dto))
                 {
-                    continue;
+                    dto = (await DbSet.Where(s => ids.Any(idp => idp == s.NpcMonsterId)).ToArrayAsync()).Select(Mapper.Map<NpcMonsterSkillDto>).ToArray();
+                    _cacheByNpcMonsterId[id] = dto;
                 }
 
                 list.AddRange(dto);
             }
 
             return list;
-
-            try
-            {
-                return (await DbSet.Where(s => ids.Any(id => id == s.NpcMonsterId)).ToArrayAsync()).Select(Mapper.Map<NpcMonsterSkillDto>).ToArray();
-            }
-            catch (Exception e)
-            {
-                Log.Error("[GET_BY_NPC_MONSTER_IDS_ASYNC]", e);
-                return new List<NpcMonsterSkillDto>();
-            }
         }
     }
 }

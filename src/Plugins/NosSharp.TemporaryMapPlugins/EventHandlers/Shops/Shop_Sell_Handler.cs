@@ -7,8 +7,9 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Shops
 {
     public class Shop_Sell_Handler : GenericEventPostProcessorBase<ShopSellEvent>
     {
-        protected override async Task Handle(ShopSellEvent e, CancellationToken cancellation)
+        protected override Task Handle(ShopSellEvent e, CancellationToken cancellation)
         {
+            return Task.CompletedTask;
         }
     }
 }

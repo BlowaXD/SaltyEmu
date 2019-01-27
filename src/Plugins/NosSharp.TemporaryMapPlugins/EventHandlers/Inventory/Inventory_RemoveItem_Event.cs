@@ -46,13 +46,13 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Inventory
                 ItemInstanceDto tmp = _itemFactory.Duplicate(e.ItemInstance);
                 e.ItemInstance.Amount -= e.Amount;
                 tmp.Amount = e.Amount;
-                player.ActualizeUiInventorySlot(e.ItemInstance.Type, e.ItemInstance.Slot);
+                await player.ActualizeUiInventorySlot(e.ItemInstance.Type, e.ItemInstance.Slot);
                 e.ItemInstance = tmp;
             }
             else
             {
                 subinv[e.ItemInstance.Slot] = null;
-                player.ActualizeUiInventorySlot(e.ItemInstance.Type, e.ItemInstance.Slot);
+                await player.ActualizeUiInventorySlot(e.ItemInstance.Type, e.ItemInstance.Slot);
             }
 
             IDropEntity drop = new ItemDropEntity(player.CurrentMap.GetNextId())

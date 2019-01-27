@@ -40,7 +40,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Quicklist
             };
             player.Quicklist.Quicklist.Add(tmp);
 
-            player.SendPacketAsync(player.Quicklist.GenerateQSetPacket(tmp));
+            await player.SendPacketAsync(player.Quicklist.GenerateQSetPacket(tmp));
         }
     }
 }

@@ -47,11 +47,6 @@ namespace SaltyEmu.BasicPlugin
             {
                 try
                 {
-                    if (handlerType == typeof(Battle_ProcessHitRequest_Handler))
-                    {
-                        Log.Info("NANI ?!");
-                    }
-
                     object handler = ChickenContainer.Instance.Resolve(handlerType);
                     if (!(handler is IEventPostProcessor postProcessor))
                     {
@@ -66,6 +61,53 @@ namespace SaltyEmu.BasicPlugin
                 {
                     Log.Error("WTF????????", e);
                     // ignored
+                }
+            }
+        }
+
+        public static void InitializeNpcDialogHandlers()
+        {
+
+            var handlerContainer = ChickenContainer.Instance.Resolve<INpcDialogHandlerContainer>();
+
+            foreach (Type handlerType in typeof(BasicPlugin).Assembly.GetTypesImplementingInterface<INpcDialogAsyncHandler>())
+            {
+                try
+                {
+                    object handler = ChickenContainer.Instance.Resolve(handlerType);
+                    if (!(handler is INpcDialogAsyncHandler real))
+                    {
+                        continue;
+                    }
+
+                    handlerContainer.RegisterAsync(real);
+                }
+                catch (Exception e)
+                {
+                    Log.Error("[ITEM_USAGE_HANDLER_REGISTRATION]", e);
+                }
+            }
+        }
+
+        public static void InitializeItemUsageHandlers()
+        {
+            var handlerContainer = ChickenContainer.Instance.Resolve<IItemUsageContainerAsync>();
+
+            foreach (Type handlerType in typeof(BasicPlugin).Assembly.GetTypesImplementingInterface<IUseItemRequestHandlerAsync>())
+            {
+                try
+                {
+                    object handler = ChickenContainer.Instance.Resolve(handlerType);
+                    if (!(handler is IUseItemRequestHandlerAsync real))
+                    {
+                        continue;
+                    }
+
+                    handlerContainer.RegisterItemUsageCallback(real);
+                }
+                catch (Exception e)
+                {
+                    Log.Error("[ITEM_USAGE_HANDLER_REGISTRATION]", e);
                 }
             }
         }

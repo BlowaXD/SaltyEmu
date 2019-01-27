@@ -13,7 +13,7 @@ namespace ChickenAPI.Game.Inventory.ItemUpgrade.Extension
 {
     public static class NotifyResultAndSetRarityPointExtension
     {
-        public static async Task Rarify(this RarifyEvent e, IPlayerEntity player, sbyte rarity)
+        public static async Task RarifyAsync(this RarifyEvent e, IPlayerEntity player, sbyte rarity)
         {
             if (e.Mode != RarifyMode.Drop)
             {
@@ -25,7 +25,7 @@ namespace ChickenAPI.Game.Inventory.ItemUpgrade.Extension
             e.Item.SetRarityPoint();
         }
 
-        public static async Task Fails(this RarifyEvent e, IPlayerEntity player)
+        public static async Task FailAsync(this RarifyEvent e, IPlayerEntity player)
         {
             if (e.Mode != RarifyMode.Drop)
             {

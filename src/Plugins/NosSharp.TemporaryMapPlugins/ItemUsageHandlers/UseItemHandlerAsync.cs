@@ -16,30 +16,25 @@ namespace SaltyEmu.BasicPlugin.ItemUsageHandlers
 {
     public class UseItemHandlerContainer : IItemUsageContainerAsync
     {
-        private static readonly Logger Log = Logger.GetLogger<UseItemHandlerContainer>();
+        private readonly Logger _log = Logger.GetLogger<UseItemHandlerContainer>();
 
-        private readonly Dictionary<(long, ItemType), UseItemRequestHandler> _handlers;
+        private readonly Dictionary<(long, ItemType), IUseItemRequestHandlerAsync> _handlers = new Dictionary<(long, ItemType), IUseItemRequestHandlerAsync>();
 
-        public UseItemHandlerContainer()
+        public Task RegisterItemUsageCallback(IUseItemRequestHandlerAsync handler)
         {
-            _handlers = new Dictionary<(long, ItemType), UseItemRequestHandler>();
-
-            Assembly currentAsm = Assembly.GetAssembly(typeof(BasicPlugin));
-            // get types
-            foreach (Type type in currentAsm.GetTypes().Where(s => s.GetMethods().Any(m => m.GetCustomAttribute<UseItemEffectAttribute>() != null)))
-            {
-                // each method for a type
-                foreach (MethodInfo method in type.GetMethods().Where(s => s.GetCustomAttribute<UseItemEffectAttribute>() != null))
-                {
-                    RegisterItemUsageCallback(new UseItemRequestHandler(method));
-                }
-            }
+            _handlers.Add((handler.EffectId, handler.Type), handler);
+            _log.Info($"[REGISTER_HANDLER] UI_EFFECT : {handler.EffectId} && ITYPE : {handler.Type} REGISTERED !");
+            return Task.CompletedTask;
         }
 
-        public Task RegisterItemUsageCallback(UseItemRequestHandler handler)
+        public Task UnregisterAsync(IUseItemRequestHandlerAsync handler)
         {
-            _handlers.Add((handler.Effect, handler.IType), handler);
-            Log.Info($"[REGISTER_HANDLER] UI_EFFECT : {handler.Effect} && ITYPE : {handler.IType} REGISTERED !");
+            if (!_handlers.ContainsKey((handler.EffectId, handler.Type)))
+            {
+                return Task.CompletedTask;
+            }
+
+            _handlers.Remove((handler.EffectId, handler.Type));
             return Task.CompletedTask;
         }
 
@@ -50,7 +45,7 @@ namespace SaltyEmu.BasicPlugin.ItemUsageHandlers
                 return Task.CompletedTask;
             }
 
-            if (!_handlers.TryGetValue((e.Item.Item.Effect, e.Item.Item.ItemType), out UseItemRequestHandler handler))
+            if (!_handlers.TryGetValue((e.Item.Item.Effect, e.Item.Item.ItemType), out IUseItemRequestHandlerAsync handler))
             {
                 return Task.CompletedTask;
             }

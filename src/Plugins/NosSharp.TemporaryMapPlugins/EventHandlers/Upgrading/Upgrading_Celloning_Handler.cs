@@ -21,7 +21,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers
             }
 
 
-            player.GoldLess(e.GoldAmount);
+            await player.GoldLess(e.GoldAmount);
             //Session.Character.Inventory.RemoveItemAmount(cellon.ItemVNum);
 
             // GENERATE OPTION

@@ -17,6 +17,8 @@ namespace SaltyEmu.BasicPlugin
         public void OnEnable()
         {
             BasicPluginIoCInjector.InitializeEventHandlers();
+            BasicPluginIoCInjector.InitializeItemUsageHandlers();
+            BasicPluginIoCInjector.InitializeNpcDialogHandlers();
         }
 
         public void OnLoad()

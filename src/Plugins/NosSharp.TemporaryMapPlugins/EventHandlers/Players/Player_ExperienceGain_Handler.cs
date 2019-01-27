@@ -16,9 +16,9 @@ namespace SaltyEmu.BasicPlugin.EventHandlers
                 return;
             }
 
-            player.AddExperience(e.Experience);
-            player.AddJobExperience(e.JobExperience);
-            player.AddHeroExperience(e.HeroExperience);
+            await player.AddExperience(e.Experience);
+            await player.AddJobExperience(e.JobExperience);
+            await player.AddHeroExperience(e.HeroExperience);
         }
     }
 }

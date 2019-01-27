@@ -8,14 +8,15 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Movements
 {
     public class Movement_Sit_Handler : GenericEventPostProcessorBase<TriggerSitEvent>
     {
-        protected override async Task Handle(TriggerSitEvent e, CancellationToken cancellation)
+        protected override Task Handle(TriggerSitEvent e, CancellationToken cancellation)
         {
             if (!(e.Sender is IMovableEntity movable))
             {
-                return;
+                return Task.CompletedTask;
             }
 
             movable.IsSitting = !movable.IsSitting;
+            return Task.CompletedTask;
         }
     }
 }

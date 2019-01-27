@@ -49,11 +49,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers
                 senderInfo = target.Character;
             }
 
-            string playerMessage = target.GetLanguageFormat(PlayerMessages.PLAYER_X_INVITED_TO_YOUR_GROUP, senderInfo.Name);
-            player.SendPacketAsync(new InfoPacket
-            {
-                Message = playerMessage
-            });
+            await player.SendChatMessageAsync(PlayerMessages.PLAYER_X_INVITED_TO_YOUR_GROUP, SayColorType.Yellow);
             PacketBase acceptPacket = new PJoinPacket { CharacterId = e.Target.Character.Id, RequestType = PJoinPacketType.Accepted };
             PacketBase refusePacket = new PJoinPacket { CharacterId = e.Target.Character.Id, RequestType = PJoinPacketType.Declined };
             string question = target.GetLanguageFormat(PlayerMessages.PLAYER_X_INVITED_YOU_TO_JOIN_HIS_GROUP, senderInfo.Name);

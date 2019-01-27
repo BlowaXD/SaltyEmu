@@ -97,9 +97,9 @@ namespace SaltyEmu.BasicPlugin.EventHandlers
 
                     // session.Character.DeleteItemByItemInstanceId(amulet.Id);
                     // await session.SendPacketAsync(session.Character.GenerateEquipment());
-                    player.SendPacketAsync(player.GenerateInfoBubble("AMULET_DESTROYED"));
-                    player.NotifyRarifyResult(e.Item.Rarity);
-                    player.SendPacketAsync(e.Item?.GenerateIvnPacket());
+                    await player.SendPacketAsync(player.GenerateInfoBubble("AMULET_DESTROYED"));
+                    await player.NotifyRarifyResult(e.Item.Rarity);
+                    await player.SendPacketAsync(e.Item?.GenerateIvnPacket());
                     return;
 
                 case RarifyMode.Success:
@@ -119,7 +119,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers
                     ItemInstanceDto inventory = e.Item;
                     if (inventory != null)
                     {
-                        player.SendPacketAsync(e.Item?.GenerateIvnPacket());
+                        await player.SendPacketAsync(e.Item?.GenerateIvnPacket());
                     }
 
                     return;
@@ -166,12 +166,12 @@ namespace SaltyEmu.BasicPlugin.EventHandlers
                     if (e.Protection == RarifyProtection.Scroll && !e.IsCommand)
                     {
                         // remove item ScrollVnum
-                        player.SendPacketAsync(player.GenerateShopEndPacket(player.Inventory.HasItem(_configuration.RarifyChances.ScrollVnum)
+                        await player.SendPacketAsync(player.GenerateShopEndPacket(player.Inventory.HasItem(_configuration.RarifyChances.ScrollVnum)
                             ? ShopEndPacketType.CloseSubWindow
                             : ShopEndPacketType.CloseWindow));
                     }
 
-                    player.GoldLess(_configuration.RarifyChances.GoldPrice);
+                    await player.GoldLess(_configuration.RarifyChances.GoldPrice);
                     /*session.Character.Inventory.RemoveItemAmount(cellaVnum, cella);*/
                     break;
 
@@ -188,7 +188,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers
                 {
                     if (e.Mode != RarifyMode.Drop)
                     {
-                        player.NotifyRarifyResult(8);
+                        await player.NotifyRarifyResult(8);
                     }
 
                     e.Item.Rarity = 8;
@@ -196,7 +196,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers
                     ItemInstanceDto inventory = e.Item;
                     if (inventory != null)
                     {
-                        player.SendPacketAsync(inventory.GenerateIvnPacket());
+                        await player.SendPacketAsync(inventory.GenerateIvnPacket());
                     }
 
                     e.Item.GenerateHeroicShell(e.Protection);
@@ -213,14 +213,14 @@ namespace SaltyEmu.BasicPlugin.EventHandlers
                     continue;
                 }
 
-                e.Rarify(player, rareitem[y]);
+                await e.RarifyAsync(player, rareitem[y]);
                 sayfail = true;
                 break;
             }
 
             if (!sayfail)
             {
-                e.Fails(player);
+                await e.FailAsync(player);
             }
 
             if (e.Mode == RarifyMode.Drop)
@@ -231,7 +231,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers
             ItemInstanceDto inventoryb = e.Item;
             if (inventoryb != null)
             {
-                player.SendPacketAsync(inventoryb.GenerateIvnPacket());
+                await player.SendPacketAsync(inventoryb.GenerateIvnPacket());
             }
         }
     }

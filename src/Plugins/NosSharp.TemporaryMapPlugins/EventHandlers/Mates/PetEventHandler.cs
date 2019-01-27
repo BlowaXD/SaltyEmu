@@ -70,7 +70,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers
             };
 
             IMateEntity mateEn = await _entityFactory.CreateNewMateEntityAsync(player, mate);
-            player.AddPet(mateEn);
+            await player.AddPet(mateEn);
             await player.SendPacketAsync(player.GenerateInfoBubble("PET_LEAVE_BEAD"));
         }
     }

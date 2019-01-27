@@ -46,7 +46,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers
                         break;
                 }
 
-                player.SendPacketAsync(player.GenerateEffectPacket(3005));
+                await player.SendPacketAsync(player.GenerateEffectPacket(3005));
 
                 int stoneup = (type < 3 ? e.SpCard.SpDamage :
                     type < 6 ? e.SpCard.SpDefence :
@@ -69,7 +69,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers
             }
 
             await player.ActualizeUiInventorySlot(e.SpCard.Type, e.SpCard.Slot);
-            player.GoldLess(_configuration.PerfectSp.GoldPrice[e.UpMode - 1]);
+            await player.GoldLess(_configuration.PerfectSp.GoldPrice[e.UpMode - 1]);
             //CharacterSession.Character.Inventory.RemoveItemAmount(stonevnum, stoneprice[upmode - 1]);
             await player.SendPacketAsync(player.GenerateShopEndPacket(ShopEndPacketType.CloseSubWindow));
         }

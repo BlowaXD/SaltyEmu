@@ -120,6 +120,7 @@ namespace Essentials.Character
             }
 
             fairy.ElementRate = level;
+            await player.ActualizeUiStatChar();
 
             // stats infos
             return new SaltyCommandResult(true, $"{player.Character.Name}'s FairyLevel has been changed to {level}.");

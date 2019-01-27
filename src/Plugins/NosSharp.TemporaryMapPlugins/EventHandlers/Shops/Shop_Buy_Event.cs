@@ -255,7 +255,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Shops
 
             if (!isReputBuy && price < 0 && price * percent > player.Character.Gold)
             {
-                player.SendPacketAsync(player.GenerateShopMemoPacket(SMemoPacketType.FailNpc, player.GetLanguage(PlayerMessages.YOU_DONT_HAVE_ENOUGH_GOLD)));
+                await player.SendPacketAsync(player.GenerateShopMemoPacket(SMemoPacketType.FailNpc, player.GetLanguage(PlayerMessages.YOU_DONT_HAVE_ENOUGH_GOLD)));
                 return;
             }
 
@@ -263,7 +263,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Shops
             {
                 if (price > player.Character.Reput)
                 {
-                    player.SendPacketAsync(player.GenerateShopMemoPacket(SMemoPacketType.FailNpc, player.GetLanguage(PlayerMessages.YOU_DONT_HAVE_ENOUGH_REPUTATION)));
+                    await player.SendPacketAsync(player.GenerateShopMemoPacket(SMemoPacketType.FailNpc, player.GetLanguage(PlayerMessages.YOU_DONT_HAVE_ENOUGH_REPUTATION)));
                     return;
                 }
 
@@ -288,7 +288,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Shops
             bool canAddItem = player.Inventory.CanAddItem(item.Item, amount);
             if (!canAddItem)
             {
-                player.SendPacketAsync(player.GenerateShopMemoPacket(SMemoPacketType.FailNpc, player.GetLanguage(PlayerMessages.YOU_DONT_HAVE_ENOUGH_SPACE_IN_INVENTORY)));
+                await player.SendPacketAsync(player.GenerateShopMemoPacket(SMemoPacketType.FailNpc, player.GetLanguage(PlayerMessages.YOU_DONT_HAVE_ENOUGH_SPACE_IN_INVENTORY)));
                 return;
             }
 

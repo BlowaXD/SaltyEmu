@@ -34,7 +34,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers
             }
 
             //session.Character.Inventory.RemoveItemAmount(sandVnum, (byte)sand[Upgrade + itemToSum.Upgrade]);
-            player.GoldLess(_configuration.Summing.GoldPrice[e.Item.Sum + e.SecondItem.Sum]);
+            await player.GoldLess(_configuration.Summing.GoldPrice[e.Item.Sum + e.SecondItem.Sum]);
 
             double rnd = _random.Next();
             if (rnd < _configuration.Summing.UpSucess[e.Item.Sum + e.SecondItem.Sum])

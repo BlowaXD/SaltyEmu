@@ -23,13 +23,12 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Portals
             _mapManager = mapManager;
         }
 
-        protected override async Task Handle(PortalTriggerEvent e, CancellationToken cancellation)
+        protected override Task Handle(PortalTriggerEvent e, CancellationToken cancellation)
         {
-
             // todo check portal state
             if (!(e.Sender is IPlayerEntity session))
             {
-                return;
+                return Task.CompletedTask;
             }
 
             PortalDto currentPortal = e.Portal;
@@ -41,10 +40,11 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Portals
             if (destinationMap == null)
             {
                 Log.Warn($"Cannot find map with id: {currentPortal.DestinationMapId}.");
-                return;
+                return Task.CompletedTask;
             }
 
             session.TransferEntity(destinationMap);
+            return Task.CompletedTask;
         }
     }
 }

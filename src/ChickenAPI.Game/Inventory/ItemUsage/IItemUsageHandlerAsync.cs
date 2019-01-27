@@ -2,10 +2,11 @@
 using ChickenAPI.Enums.Game.Items;
 using ChickenAPI.Game.Entities.Player;
 using System.Threading.Tasks;
+using ChickenAPI.Game.Inventory.Events;
 
 namespace ChickenAPI.Game.Inventory.ItemUsage
 {
-    public interface UseItemRequestHandlerAsync
+    public interface IUseItemRequestHandlerAsync
     {
         /// <summary>
         ///     ItemType for the handler
@@ -14,6 +15,6 @@ namespace ChickenAPI.Game.Inventory.ItemUsage
 
         long EffectId { get; }
 
-        Task Handle(IPlayerEntity player, ItemInstanceDto itemInstance);
+        Task Handle(IPlayerEntity player, InventoryUseItemEvent itemInstance);
     }
 }

@@ -13,8 +13,9 @@ namespace SaltyEmu.Communication.Communicators
     public abstract class SynchronizedRepositoryMqtt<T> : ISynchronizedRepository<T> where T : class, ISynchronizedDto
     {
         private readonly IIpcClient _client;
-        protected SynchronizedRepositoryMqtt(MqttClientConfigurationBuilder builder)
+        protected SynchronizedRepositoryMqtt(MqttClientConfigurationBuilder builder, IIpcClient client)
         {
+            _client = client;
         }
 
         public IEnumerable<T> Get()
