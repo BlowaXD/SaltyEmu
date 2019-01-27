@@ -225,6 +225,7 @@ namespace SaltyEmu.DatabasePlugin.Utils
 
                 cfg.CreateMap<DropDto, NpcMonsterDropModel>()
                     .ForSourceMember(src => src.RelationType, expression => expression.DoNotValidate())
+                    .ForMember(s => s.NpcMonster, expr => expr.Ignore())
                     .IncludeBase<DropDto, DropModel>();
             });
 

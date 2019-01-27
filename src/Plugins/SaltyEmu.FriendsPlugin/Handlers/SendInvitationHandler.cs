@@ -23,11 +23,15 @@ namespace SaltyEmu.FriendsPlugin.Handlers
 
             IPlayerEntity player = players.GetPlayerByCharacterId(sendInvitation.Invitation.TargetId);
 
-            player?.EmitEvent(new RelationInvitationReceiveEvent
+            if (player == null)
+            {
+                return Task.CompletedTask;
+            }
+
+            return player.EmitEventAsync(new RelationInvitationReceiveEvent
             {
                 Invitation = sendInvitation.Invitation
             });
-            return Task.CompletedTask;
         }
     }
 }

@@ -11,21 +11,25 @@ namespace SaltyEmu.RedisWrappers
 {
     public class RedisSessionService : ISessionService
     {
-        private static readonly Logger Log = Logger.GetLogger<RedisPlugin>();
+        private readonly Logger _log = Logger.GetLogger<RedisPlugin>();
         private readonly IRedisTypedClient<PlayerSessionDto> _client;
 
-        public RedisSessionService(RedisConfiguration configuration) => _client = new RedisClient(new RedisEndpoint
+        public RedisSessionService(RedisConfiguration configuration)
         {
-            Host = configuration.Host,
-            Port = configuration.Port,
-            Password = configuration.Password
-        }).As<PlayerSessionDto>();
+            _client = new RedisClient(new RedisEndpoint
+            {
+                Host = configuration.Host,
+                Port = configuration.Port,
+                Password = configuration.Password
+            }).As<PlayerSessionDto>();
+            _log.Info($"Redis session connected to {configuration.Host}");
+        }
 
         public void RegisterSession(PlayerSessionDto dto)
         {
             if (GetBySessionId(dto.Id) != null)
             {
-                Log.Info($"Session {dto.Id} already registered");
+                _log.Info($"Session {dto.Id} already registered");
                 return;
             }
 
@@ -38,7 +42,7 @@ namespace SaltyEmu.RedisWrappers
             PlayerSessionDto session = GetBySessionId(dto.Id);
             if (session == null)
             {
-                Log.Info($"Session {dto.Id} not found");
+                _log.Info($"Session {dto.Id} not found");
                 return;
             }
 
