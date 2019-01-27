@@ -43,7 +43,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Inventory
             await player.SendPacketAsync(player.GenerateEffectPacket(123));
 
             await player.BroadcastAsync(player.GenerateEqPacket());
-            await player.SendPacketAsync(player.GenerateEquipmentPacket());
+            await player.ActualizeUiWearPanel();
             await player.ActualizeUiStatChar();
 
             switch (item.Item.EquipmentSlot)

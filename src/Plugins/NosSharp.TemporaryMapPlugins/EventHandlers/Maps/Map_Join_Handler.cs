@@ -45,7 +45,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Maps
             await player.SendPacketAsync(player.GenerateCInfoPacket());
             await player.SendPacketAsync(player.GenerateCModePacket());
             await player.SendPacketAsync(player.GenerateEqPacket());
-            await player.SendPacketAsync(player.GenerateEquipmentPacket());
+            await player.ActualizeUiWearPanel();
 
             await player.ActualizeUiExpBar();
             await player.SendPacketAsync(player.GenerateStatPacket());

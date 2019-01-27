@@ -4,7 +4,7 @@ using ChickenAPI.Packets.Attributes;
 namespace ChickenAPI.Packets.Game.Server.Inventory
 {
     [PacketHeader("equip")]
-    public class EquipmentPacket : PacketBase
+    public class EquipPacket : PacketBase
     {
         [PacketIndex(0)]
         public EqRareInfo EqRare { get; set; }

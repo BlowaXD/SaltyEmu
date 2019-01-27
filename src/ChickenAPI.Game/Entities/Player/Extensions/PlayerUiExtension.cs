@@ -18,7 +18,7 @@ namespace ChickenAPI.Game.Entities.Player.Extensions
         /// </summary>
         /// <param name="player"></param>
         /// <returns></returns>
-        public static Task ActualizeUiWearPanel(this IPlayerEntity player) => player.SendPacketAsync(player.GenerateEquipmentPacket());
+        public static Task ActualizeUiWearPanel(this IPlayerEntity player) => player.SendPacketAsync(player.GenerateEquipPacket());
 
         /// <summary>
         ///     Actualizes the gold in the player's inventory (ClientSide)

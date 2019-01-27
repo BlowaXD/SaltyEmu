@@ -42,9 +42,14 @@ namespace ChickenAPI.Game.Inventory.Extensions
             EqInfo = player.Inventory.GenerateEqRareInfoPacket()
         };
 
-        public static EquipmentPacket GenerateEquipmentPacket(this IPlayerEntity player)
+        /// <summary>
+        /// This packet is used for character items equiped in "P" panel (wear items)
+        /// </summary>
+        /// <param name="player"></param>
+        /// <returns></returns>
+        public static EquipPacket GenerateEquipPacket(this IPlayerEntity player)
         {
-            List<EquipmentPacket.EquipSubPacket> tmp = new List<EquipmentPacket.EquipSubPacket>();
+            List<EquipPacket.EquipSubPacket> tmp = new List<EquipPacket.EquipSubPacket>();
             ItemInstanceDto[] subInventory = player.Inventory.Wear;
 
             for (int i = 0; i < subInventory.Length; i++)
@@ -55,7 +60,7 @@ namespace ChickenAPI.Game.Inventory.Extensions
                     continue;
                 }
 
-                tmp.Add(new EquipmentPacket.EquipSubPacket
+                tmp.Add(new EquipPacket.EquipSubPacket
                 {
                     WearIndex = i,
                     ItemId = item.ItemId,
@@ -65,7 +70,7 @@ namespace ChickenAPI.Game.Inventory.Extensions
                 });
             }
 
-            return new EquipmentPacket
+            return new EquipPacket
             {
                 EqRare = player.Inventory.GenerateEqRareInfoPacket(),
                 EqList = tmp
