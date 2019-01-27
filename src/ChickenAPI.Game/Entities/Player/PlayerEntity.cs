@@ -169,20 +169,6 @@ namespace ChickenAPI.Game.Entities.Player
             });
         }
 
-        public void SendPacket<T>(T packetBase) where T : IPacket => Session.SendPacketAsync(packetBase);
-
-        public void SendPackets<T>(IEnumerable<T> packets) where T : IPacket
-        {
-            if (packets == null)
-            {
-                return;
-            }
-
-            Session.SendPackets(packets);
-        }
-
-        public void SendPackets(IEnumerable<IPacket> packets) => Session.SendPackets(packets);
-
         public Task SendPacketAsync<T>(T packet) where T : IPacket => Session.SendPacketAsync(packet);
 
         public Task SendPacketsAsync<T>(IEnumerable<T> packets) where T : IPacket => Session.SendPacketsAsync(packets);

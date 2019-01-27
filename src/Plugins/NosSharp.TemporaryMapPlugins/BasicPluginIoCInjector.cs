@@ -129,7 +129,7 @@ namespace SaltyEmu.BasicPlugin
             ChickenContainer.Builder.Register(_ => new BasicHitRequestFactory(_.Resolve<IBCardService>())).As<IHitRequestFactory>().InstancePerDependency();
 
             // group
-            ChickenContainer.Builder.RegisterType<IGroupManager>().AsImplementedInterfaces().PropertiesAutowired();
+            ChickenContainer.Builder.RegisterType<BasicGroupManager>().AsImplementedInterfaces().PropertiesAutowired().SingleInstance();
 
             ChickenContainer.Builder.RegisterType<BasicGameEntityFactory>().AsImplementedInterfaces().PropertiesAutowired();
             ChickenContainer.Builder.RegisterType<LazyMapManager>().AsImplementedInterfaces().PropertiesAutowired().SingleInstance();

@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Entities.Player.Extensions;
+using ChickenAPI.Game.Groups;
 
-namespace ChickenAPI.Game.Groups
+namespace SaltyEmu.BasicPlugin.Implems
 {
     public class BasicGroupManager : IGroupManager
     {
@@ -70,12 +71,18 @@ namespace ChickenAPI.Game.Groups
 
             RemoveInvitation(dto);
 
-            if (!dto.Sender.HasGroup && !dto.Target.HasGroup)
+            if (dto.Target.HasGroup)
+            {
+                return;
+            }
+
+            if (!dto.Sender.HasGroup)
             {
                 CreateGroup(dto.Sender);
             }
 
-            dto.Target.JoinGroup(dto.Sender.Group);
+
+            dto.Target.JoinGroup(dto.Sender.Group).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
         public void AddGroup(Group group)

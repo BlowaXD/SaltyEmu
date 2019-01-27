@@ -33,6 +33,8 @@ namespace SaltyEmu.BasicPlugin.EventHandlers
                 return;
             }
 
+            await player.SendChatMessageFormat(PlayerMessages.GROUP_YOU_JOINED_GROUP_OF_PLAYER_X, SayColorType.Yellow, player.Group.Leader.Character.Name);
+
             foreach (IPlayerEntity member in player.Group.Players)
             {
                 await member.ActualizeUiGroupIcons();

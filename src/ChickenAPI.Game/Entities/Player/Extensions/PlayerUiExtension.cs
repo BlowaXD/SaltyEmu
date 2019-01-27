@@ -76,12 +76,6 @@ namespace ChickenAPI.Game.Entities.Player.Extensions
         public static Task ActualizeUiHpBar(this IPlayerEntity player) => player.SendPacketAsync(player.GenerateStatPacket());
 
         /// <summary>
-        ///     Actualizes the Group Icons + their Group Bars
-        /// </summary>
-        /// <param name="player"></param>
-        public static Task ActualiseUiGroupIcons(this IPlayerEntity player) => player.SendPacketsAsync(player.GeneratePstPackets());
-
-        /// <summary>
         ///     Actualizes :
         ///     Speed
         ///     CanMove

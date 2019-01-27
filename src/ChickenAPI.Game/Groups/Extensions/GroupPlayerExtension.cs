@@ -107,7 +107,7 @@ namespace ChickenAPI.Game.Groups.Extensions
 
             if (player.HasGroup)
             {
-                players.AddRange(player.Group.Players.Where(s => s != null && s != player)?.Select(s => s.GeneratePinitSubPacket(ref tmp)).Where(s => s != null));
+                players.AddRange(player.Group.Players.Where(s => s != null).Select(s => s.GeneratePinitSubPacket(ref tmp)).Where(s => s != null));
             }
 
             return new PInitPacket

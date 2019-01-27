@@ -15,6 +15,7 @@ namespace ChickenAPI.Game.Skills.Extensions
     public static class SkillExtensions
     {
         private static readonly ISkillService SkillService = new Lazy<ISkillService>(ChickenContainer.Instance.Resolve<ISkillService>).Value;
+
         public static int GetCp(this IPlayerEntity player)
         {
             int cpMax = (player.Character.Class > CharacterClassType.Adventurer ? 40 : 0) + player.JobLevel * 2;

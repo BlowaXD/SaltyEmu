@@ -25,11 +25,11 @@ namespace ChickenAPI.Game.Skills.Extensions
 
         public static SkiPacket GenerateSkiPacket(this IPlayerEntity player)
         {
-            IEnumerable<SkillDto> skills = player.HasSpWeared ? GetSpSkillsByCastIdAscending(player) : GetSkillsByCastIdAscending(player);
+            IEnumerable<SkillDto> skills = player.IsTransformedSp ? GetSpSkillsByCastIdAscending(player) : GetSkillsByCastIdAscending(player);
 
             List<long> ids = new List<long>();
 
-            if (!player.HasSpWeared)
+            if (!player.IsTransformedSp)
             {
                 ids.Add(200 + 20 * (byte)player.Character.Class);
                 ids.Add(201 + 20 * (byte)player.Character.Class);
