@@ -49,6 +49,8 @@ namespace ChickenAPI.Game.Inventory.Extensions
                     packet.Items.AddRange(items.Where(s => s != null).Select(s =>
                         $"{s.Slot}.{s.ItemId}.{s.Amount}"));
                     break;
+                case InventoryType.Wear:
+                    break;
             }
 
             return packet;

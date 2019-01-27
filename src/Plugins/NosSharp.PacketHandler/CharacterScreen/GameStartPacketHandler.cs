@@ -62,6 +62,10 @@ namespace NW.Plugins.PacketHandling.CharacterScreen
             // Register Player
             _playerManager.RegisterPlayer(session.Player);
 
+            // load inventory
+            await session.Player.EmitEventAsync(new InventoryLoadEvent());
+
+            // motd
             await session.Player.SendChatMessageAsync("┌------------------[NosWings]------------------┐", SayColorType.Yellow);
             await session.Player.SendChatMessageAsync($"XP     : {dto.LevelXp}/{_algorithmService.GetLevelXp(dto.Class, dto.Level)}", SayColorType.Yellow);
             await session.Player.SendChatMessageAsync($"JOBXP  : {dto.JobLevelXp}/{_algorithmService.GetJobLevelXp(dto.Class, dto.Level)}", SayColorType.Yellow);
@@ -71,9 +75,13 @@ namespace NW.Plugins.PacketHandling.CharacterScreen
             await session.SendPacketAsync(new MapoutPacket());
             session.Player.Character.SpPoint = 10000;
             session.Player.Character.SpAdditionPoint = 500000;
+
+            // transfer to map
             session.Player.TransferEntity(mapLayer);
+
             await session.Player.ActualizeUiSkillList();
             await session.Player.ActualizeUiReputation();
+
             await session.SendPacketAsync(new RagePacket { RagePoints = 0, RagePointsMax = 250000 });
             // rank_cool
             // pet basket ? ib 1278 1
@@ -96,19 +104,19 @@ namespace NW.Plugins.PacketHandling.CharacterScreen
             // scP
             // scN
 
-            session.Player.EmitEvent(new InventoryLoadEvent());
-            session.Player.EmitEvent(new InventoryRequestDetailsEvent());
+            await session.Player.EmitEventAsync(new InventoryRequestDetailsEvent());
             await session.Player.ActualizePlayerCondition();
             await session.Player.ActualizeUiGold();
             await session.Player.ActualizeUiQuicklist();
             await session.Player.ActualizeUiFriendList();
             await session.Player.ActualizeUiBlackList();
+            await session.Player.ActualizeUiWearPanel();
             // Blinit
             // clinit
             // flinit
             // kdlinit
 
-            await session.SendPacketAsync(session.Player.GenerateStatCharPacket());
+            await session.Player.ActualizeUiStatChar();
             await session.SendPacketAsync(session.Player.GeneratePairyPacket());
 
             await session.SendPacketAsync(session.Player.GenerateGInfoPacket());
