@@ -89,7 +89,7 @@ namespace ChickenAPI.Game.Helpers
         public static Task SendDialog(this IPlayerEntity player, PacketBase acceptpacket, PacketBase refusepacket, string question) =>
             player.SendPacketAsync(player.GenerateDialogPacket(acceptpacket, refusepacket, question));
 
-        public static Task GenerateQna(this IPlayerEntity player, PacketBase acceptpacket, string question) => player.SendPacketAsync(player.GenerateQnaPacket(acceptpacket, question));
+        public static Task SendQuestionAsync(this IPlayerEntity player, PacketBase acceptpacket, string question) => player.SendPacketAsync(player.GenerateQnaPacket(acceptpacket, question));
 
         public static Task GenerateDelay(this IPlayerEntity player, int delay, DelayPacketType type, string argument) => player.SendPacketAsync(player.GenerateDelayPacket(delay, type, argument));
 

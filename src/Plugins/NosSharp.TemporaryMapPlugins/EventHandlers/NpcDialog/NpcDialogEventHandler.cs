@@ -9,13 +9,13 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.NpcDialog
 {
     public class NpcDialogEventHandler : GenericEventPostProcessorBase<NpcDialogEvent>
     {
-        private readonly INpcDialogHandler _npcDialogHandler;
+        private readonly INpcDialogHandlerContainer _npcDialogHandler;
 
-        public NpcDialogEventHandler(INpcDialogHandler npcDialogHandler)
+        public NpcDialogEventHandler(INpcDialogHandlerContainer npcDialogHandler)
         {
             _npcDialogHandler = npcDialogHandler;
         }
 
-        protected override Task Handle(NpcDialogEvent e, CancellationToken cancellation) => Task.Run(() =>_npcDialogHandler.Execute(e.Sender as IPlayerEntity, e));
+        protected override Task Handle(NpcDialogEvent e, CancellationToken cancellation) => _npcDialogHandler.Execute(e.Sender as IPlayerEntity, e);
     }
 }

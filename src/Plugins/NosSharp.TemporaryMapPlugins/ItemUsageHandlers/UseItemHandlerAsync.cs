@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using ChickenAPI.Core.Logging;
 using ChickenAPI.Enums.Game.Items;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Inventory.Events;
 using ChickenAPI.Game.Inventory.ItemUsage;
-using ChickenAPI.Game.Inventory.ItemUsage.Handling;
-using ChickenAPI.Game.NpcDialog;
-using ChickenAPI.Game.NpcDialog.Events;
 
 namespace SaltyEmu.BasicPlugin.ItemUsageHandlers
 {

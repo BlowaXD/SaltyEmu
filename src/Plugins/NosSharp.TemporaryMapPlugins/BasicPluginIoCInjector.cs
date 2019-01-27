@@ -67,7 +67,6 @@ namespace SaltyEmu.BasicPlugin
 
         public static void InitializeNpcDialogHandlers()
         {
-
             var handlerContainer = ChickenContainer.Instance.Resolve<INpcDialogHandlerContainer>();
 
             foreach (Type handlerType in typeof(BasicPlugin).Assembly.GetTypesImplementingInterface<INpcDialogAsyncHandler>())
@@ -118,24 +117,33 @@ namespace SaltyEmu.BasicPlugin
                     ConfigurationHelper.Load<JsonGameConfiguration>($"plugins/config/{nameof(BasicPlugin)}/rates.json", true))
                 .As<IGameConfiguration>().SingleInstance();
 
+            // packet handlers
+            ChickenContainer.Builder.Register(_ => new BasicPacketPipelineAsync()).As<IPacketPipelineAsync>().SingleInstance();
+
             // event handlers
+            ChickenContainer.Builder.Register(_ => new BasicEventPipelineAsync()).As<IEventPipeline>().SingleInstance();
             ChickenContainer.Builder.RegisterAssemblyTypes(typeof(BasicPlugin).Assembly).AsClosedTypesOf(typeof(GenericEventPostProcessorBase<>)).PropertiesAutowired();
 
+            // Battle
             ChickenContainer.Builder.Register(_ => new BasicHitRequestFactory(_.Resolve<IBCardService>())).As<IHitRequestFactory>().InstancePerDependency();
 
             ChickenContainer.Builder.RegisterType<BasicGameEntityFactory>().AsImplementedInterfaces().PropertiesAutowired();
             ChickenContainer.Builder.RegisterType<LazyMapManager>().AsImplementedInterfaces().PropertiesAutowired().SingleInstance();
 
+            // bcard
             ChickenContainer.Builder.Register(_ => new BasicBCardHandlerContainer()).As<IBCardHandlerContainer>().SingleInstance();
-            ChickenContainer.Builder.Register(_ => new BasicEventPipelineAsync()).As<IEventPipeline>().SingleInstance();
-            ChickenContainer.Builder.Register(_ => new BasicPacketPipelineAsync()).As<IPacketPipelineAsync>().SingleInstance();
+
             ChickenContainer.Builder.Register(c => new SimpleItemInstanceDtoFactory(c.Resolve<IItemService>())).As<IItemInstanceDtoFactory>().InstancePerDependency();
-            ChickenContainer.Builder.Register(_ => new RandomGenerator()).As<IRandomGenerator>().SingleInstance();
-            ChickenContainer.Builder.Register(_ => new BasicNpcDialogHandler()).As<INpcDialogHandler>().SingleInstance();
+            ChickenContainer.Builder.Register(_ => new RandomGenerator()).As<IRandomGenerator>().InstancePerDependency();
+
             ChickenContainer.Builder.Register(_ => new BaseGuriHandler()).As<IGuriHandler>().SingleInstance();
-            // ChickenContainer.Builder.Register(_ => new BaseUseItemHandler()).As<IItemUsageContainer>().SingleInstance();
+            // item usage
             ChickenContainer.Builder.Register(_ => new UseItemHandlerContainer()).As<IItemUsageContainerAsync>().SingleInstance();
+            // npc dialog
+            ChickenContainer.Builder.Register(_ => new NpcDialogHandlerContainer()).As<INpcDialogHandlerContainer>().SingleInstance();
+            // entityManagerContainer
             ChickenContainer.Builder.Register(_ => new SimpleEntityManagerContainer()).As<IEntityManagerContainer>().SingleInstance();
+            // player manager
             ChickenContainer.Builder.Register(_ => new SimplePlayerManager()).As<IPlayerManager>().SingleInstance();
             ChickenContainer.Builder.Register(_ => new CommandHandler()).As<ICommandContainer>().SingleInstance();
             ChickenContainer.Builder.Register(_ => new BasicUpgradeHandler()).As<IItemUpgradeHandler>().SingleInstance();

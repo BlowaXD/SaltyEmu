@@ -9,19 +9,16 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Inventory
 {
     public class Inventory_UseItem_Handler : GenericEventPostProcessorBase<InventoryUseItemEvent>
     {
-        private readonly IItemUsageContainer _itemUsageHandler;
+        private readonly IItemUsageContainerAsync _itemUsageHandler;
 
-        public Inventory_UseItem_Handler(IItemUsageContainer itemUsageHandler)
+        public Inventory_UseItem_Handler(IItemUsageContainerAsync itemUsageHandler)
         {
             _itemUsageHandler = itemUsageHandler;
         }
 
         protected override Task Handle(InventoryUseItemEvent e, CancellationToken cancellation)
         {
-            return Task.Run(() =>
-            {
-                _itemUsageHandler.UseItem(e.Sender as IPlayerEntity, e);
-            }, cancellation);
+            return _itemUsageHandler.UseItem(e.Sender as IPlayerEntity, e);
         }
     }
 }
