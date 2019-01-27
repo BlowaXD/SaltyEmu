@@ -192,6 +192,7 @@ namespace ChickenAPI.Game.Entities.Player
         public override void Dispose()
         {
             EmitEvent(new MapLeaveEvent { Map = CurrentMap });
+            Group?.Players.Remove(this);
             PlayerManager.UnregisterPlayer(this);
             GC.SuppressFinalize(this);
         }

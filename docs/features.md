@@ -1,74 +1,44 @@
 # SaltyEmu - Features
 
-## Core
-- [x] Plugin System
-- [x] Injection of Dependencies
-- [x] Easily add new implementation
-- [x] Permission System
-
-## Database
-
- - [x] MSSQL support
- - [x] Bulk Insert/Save support
- - [x] Fast cache on static data
- - [x] Lazy data Loading
-
-
-## Toolkit
-#### [How to build](build.md#Toolkit)
-- [x] .dat parsing
-- [x] packet text file parsing
-- [ ] Bulk generation `TODO`
-- [ ] GUI (Web Interface or Desktop Client) `TODO`
-	- [ ] Shop Customiser `TODO`
-	- [ ] Item Customiser `TODO`
-	- [ ] Recipe Customiser `TODO`
-	- [ ] Monster Customiser `TODO`
-	- [ ] Skill Customiser `TODO`
-
-
-## Events
-- [x] Map
-	- [x] MapJoinEvent
-	- [x] MapLeaveEvent
-- [x] Entities
-	- [x] ChangeVisibilityEvent `TODO REFACTOR`
-	- [x] EntityDeathEvent
-		- [x] PlayerDeathEvent
-		- [x] MonsterDeathEvent
-		- [x] NpcDeathEvent
-	- [ ] EntityTransformEvent `TODO`
-- [x] Battle
-	- [x] HitRequestEvent
-	- [x] FillHitRequestEvent 
-	- [x] ProcessHitRequestEvent 
-- [x] Family
-	- [x] FamilyJoinEvent
-	- [x] FamilyLeaveEvent
-	- [x] FamilyCreationEvent
-	- [ ] FamilyManagementEvent `TODO`
-- [x] Player
-	- [x] PlayerExperienceGainEvent
-
-## World
+## Game features
+- [x] Maps
+	- [x] Monsters
+	- [x] Npcs
+	- [x] Portals
+	- [x] Shops
 - [x] Players
 	- [ ] Specialists `UNDER DEVELOPMENT`
 	- [x] Walking
-	- [x] Combat
+	- [x] Battle
+	  - [x] Single target hit
+	  - [ ] AOE
 	- [x] Leveling
+	- [x] Skill learning
+	- [x] Change Class
 	- [x] Shop
 	- [x] Inventory
-	- [ ] Fairy
+	- [x] Fairy
 	- [ ] Miniland
-- [x] Families
+- [x] Groups
+	- [x] Invit Player
+	- [x] Accept invitation
+	- [x] Refuse invitation
+	- [x] Leave group
+- [x] Shops
+	- [x] Buy from NPC with Gold
+	- [x] Buy from NPC with Reputation
+	- [ ] Buy from Player
+	- [ ] Sell to NPC shop
+	- [ ] Sell to Player shop
+- [ ] Families
 	- [ ] Logs `TODO`
 	- [ ] Permissions `TODO`
-	- [x] Join
-	- [x] Leave
-	- [x] Creation
-- [ ] Relations `TODO`
-	- [ ] Blocked List `TODO`
-	- [ ] Friend List `TODO`
+	- [ ] Join `ALMOST FINISHED`
+	- [ ] Leave `ALMOST FINISHED`
+	- [ ] Creation `ALMOST FINISHED`
+- [ ] Relations `ALMOST FINISHED`
+	- [ ] Blocked List `ALMOST FINISHED`
+	- [ ] Friend List `ALMOST FINISHED`
 	- [ ] Wedding `TODO`
 - [ ] Groups `TODO`
 	- [ ] Exp Malus `TODO`
