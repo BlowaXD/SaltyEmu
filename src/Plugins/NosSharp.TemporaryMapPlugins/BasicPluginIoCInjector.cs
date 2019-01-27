@@ -14,6 +14,7 @@ using ChickenAPI.Game.Battle.Interfaces;
 using ChickenAPI.Game.BCards;
 using ChickenAPI.Game.Configuration;
 using ChickenAPI.Game.Entities;
+using ChickenAPI.Game.Groups;
 using ChickenAPI.Game.GuriHandling.Handling;
 using ChickenAPI.Game.Inventory.ItemUpgrade;
 using ChickenAPI.Game.Inventory.ItemUpgrade.Handlers.Handling;
@@ -126,6 +127,9 @@ namespace SaltyEmu.BasicPlugin
 
             // Battle
             ChickenContainer.Builder.Register(_ => new BasicHitRequestFactory(_.Resolve<IBCardService>())).As<IHitRequestFactory>().InstancePerDependency();
+
+            // group
+            ChickenContainer.Builder.RegisterType<IGroupManager>().AsImplementedInterfaces().PropertiesAutowired();
 
             ChickenContainer.Builder.RegisterType<BasicGameEntityFactory>().AsImplementedInterfaces().PropertiesAutowired();
             ChickenContainer.Builder.RegisterType<LazyMapManager>().AsImplementedInterfaces().PropertiesAutowired().SingleInstance();

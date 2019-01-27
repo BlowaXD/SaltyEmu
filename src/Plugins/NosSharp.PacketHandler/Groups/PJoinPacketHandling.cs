@@ -1,6 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using ChickenAPI.Enums.Packets;
 using ChickenAPI.Game.Entities.Player;
+using ChickenAPI.Game.Groups;
 using ChickenAPI.Game.Groups.Events;
 using ChickenAPI.Game.Managers;
 using ChickenAPI.Packets.Game.Server.Group;
@@ -11,8 +13,13 @@ namespace NW.Plugins.PacketHandling.Groups
     public class PJoinPacketHandling : GenericGamePacketHandlerAsync<PJoinPacket>
     {
         private readonly IPlayerManager _manager;
+        private readonly IGroupManager _groupManager;
 
-        public PJoinPacketHandling(IPlayerManager manager) => _manager = manager;
+        public PJoinPacketHandling(IPlayerManager manager, IGroupManager groupManager)
+        {
+            _manager = manager;
+            _groupManager = groupManager;
+        }
 
         protected override async Task Handle(PJoinPacket packet, IPlayerEntity player)
         {
@@ -26,8 +33,30 @@ namespace NW.Plugins.PacketHandling.Groups
                     });
                     break;
                 case PJoinPacketType.Accepted:
+                    GroupInvitDto group = _groupManager.GetPendingInvitationsByCharacterId(player.Id)?.FirstOrDefault(s => s.Target == player);
+
+                    if (group == null)
+                    {
+                        return;
+                    }
+
+                    await player.EmitEventAsync(new GroupInvitationAcceptEvent
+                    {
+                        Invitation = group
+                    });
                     break;
                 case PJoinPacketType.Declined:
+                    GroupInvitDto invitation = _groupManager.GetPendingInvitationsByCharacterId(player.Id)?.FirstOrDefault(s => s.Target == player);
+
+                    if (invitation == null)
+                    {
+                        return;
+                    }
+
+                    await player.EmitEventAsync(new GroupInvitationRefuseEvent()
+                    {
+                        Invitation = invitation
+                    });
                     break;
                 case PJoinPacketType.Sharing:
                     break;

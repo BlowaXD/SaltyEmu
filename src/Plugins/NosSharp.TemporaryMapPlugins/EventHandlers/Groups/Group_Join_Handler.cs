@@ -13,6 +13,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers
     {
         protected override Task Handle(GroupJoinEvent e, CancellationToken cancellation)
         {
+            // ?
             return Task.CompletedTask;
         }
     }
