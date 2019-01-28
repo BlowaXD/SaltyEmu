@@ -92,6 +92,8 @@ namespace ChickenAPI.Game.Entities.Player.Extensions
 
         public static Task ActualizeUiQuicklist(this IPlayerEntity player) => player.SendPacketsAsync(player.GenerateQuicklistPacket());
 
+        public static Task ActualizeGroupList(this IPlayerEntity player) => player.SendPacketAsync(player.GeneratePidxPacket());
+
         /// <summary>
         ///     Actualize Group Icons on Entity Group Join / Leave and Mates Join/Leave
         /// </summary>

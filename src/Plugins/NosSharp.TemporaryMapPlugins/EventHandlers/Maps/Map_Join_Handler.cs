@@ -64,6 +64,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Maps
         {
             //player.SendPackets(player.GeneratePstPackets());
             // Act6() : Act()
+            await player.ActualizeGroupList();
             await player.ActualizeUiGroupIcons();
             await player.ActualizeMateListInPlayerPanel();
             // ScpStcPacket

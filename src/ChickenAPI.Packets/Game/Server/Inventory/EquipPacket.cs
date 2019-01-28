@@ -6,7 +6,7 @@ namespace ChickenAPI.Packets.Game.Server.Inventory
     [PacketHeader("equip")]
     public class EquipPacket : PacketBase
     {
-        [PacketIndex(0)]
+        [PacketIndex(0, RemoveSeparator = true)]
         public EqRareInfo EqRare { get; set; }
 
 
@@ -14,7 +14,7 @@ namespace ChickenAPI.Packets.Game.Server.Inventory
         public List<EquipSubPacket> EqList { get; set; }
 
         [PacketHeader("equip_subpacket")]
-        public class EquipSubPacket
+        public class EquipSubPacket : PacketBase
         {
             [PacketIndex(0)]
             public int WearIndex { get; set; }

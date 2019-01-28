@@ -11,10 +11,10 @@ namespace ChickenAPI.Packets.Game.Server.Group
         [PacketIndex(0)]
         public long PartySize { get; set; }
 
-        [PacketIndex(1, SeparatorNestedElements = " ", IsOptional = true)]
+        [PacketIndex(1, SeparatorBeforeProperty = "", SeparatorNestedElements = " ", IsOptional = true)]
         public List<PInitMateSubPacket> MateSubPackets { get; set; }
 
-        [PacketIndex(2, SeparatorNestedElements = " ", IsOptional = true)]
+        [PacketIndex(2, SeparatorBeforeProperty = "", SeparatorNestedElements = " ", IsOptional = true)]
         public List<PInitPlayerSubPacket> PlayerSubPackets { get; set; }
 
         [PacketHeader("pinit_subpacket")]

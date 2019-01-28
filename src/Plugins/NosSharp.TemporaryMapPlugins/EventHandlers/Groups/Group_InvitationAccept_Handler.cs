@@ -38,6 +38,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers
             foreach (IPlayerEntity member in player.Group.Players)
             {
                 await member.ActualizeUiGroupIcons();
+                await member.ActualizeGroupList();
                 await member.ActualizeUiGroupStats();
                 if (member != player)
                 {

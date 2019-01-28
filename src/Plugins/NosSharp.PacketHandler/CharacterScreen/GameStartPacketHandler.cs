@@ -96,6 +96,7 @@ namespace NW.Plugins.PacketHandling.CharacterScreen
             // exts
             // MlInfo
             await session.SendPacketAsync(new PClearPacket());
+            await session.Player.ActualizeGroupList();
             await session.Player.ActualizeUiGroupIcons();
             await session.SendPacketAsync(new ZzimPacket());
             // twk 2

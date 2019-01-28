@@ -67,7 +67,7 @@ namespace ChickenAPI.Game.Groups.Extensions
             {
                 VisualType = mate.Type,
                 VisualId = mate.Id,
-                GroupIndex = groupIndex++,
+                GroupIndex = ++groupIndex,
                 Name = mate.Mate.Name.Replace(' ', '^'),
                 Level = mate.Level,
                 MorphOrNpcMonsterId = mate.MorphId == 0 ? mate.NpcMonster.Id : mate.MorphId,
@@ -90,10 +90,35 @@ namespace ChickenAPI.Game.Groups.Extensions
                 MorphId = player.MorphId,
                 Name = player.Character.Name,
                 Gender = player.Character.Gender,
-                GroupIndex = groupIndex++,
+                GroupIndex = ++groupIndex,
                 Level = player.Level,
                 Class = player.Character.Class,
                 HeroLevel = player.HeroLevel
+            };
+        }
+
+        public static PidxPacket GeneratePidxPacket(this IPlayerEntity player)
+        {
+            List<PidxPacket.PidxSubPacket> packets = new List<PidxPacket.PidxSubPacket> { new PidxPacket.PidxSubPacket { CharacterId = player.Id, IsMemberOfGroup = player.HasGroup } };
+
+            foreach (var member in player.Group.Players)
+            {
+                if (member == player)
+                {
+                    continue;
+                }
+
+                packets.Add(new PidxPacket.PidxSubPacket
+                {
+                    CharacterId = member.Id,
+                    IsMemberOfGroup = member.Group == player.Group // stupid as fuck ??
+                });
+            }
+
+            return new PidxPacket
+            {
+                GroupId = player.HasGroup ? player.Group.Id : -1,
+                SubPackets = packets
             };
         }
 
@@ -112,7 +137,7 @@ namespace ChickenAPI.Game.Groups.Extensions
 
             return new PInitPacket
             {
-                PartySize = player.Mates.Count(s => s.Mate.IsTeamMember) + player.GroupMembersCount - 1,
+                PartySize = player.Mates.Count(s => s.Mate.IsTeamMember) + player.GroupMembersCount,
                 MateSubPackets = mates,
                 PlayerSubPackets = players
             };
