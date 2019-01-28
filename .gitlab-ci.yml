@@ -56,7 +56,7 @@ variables:
 
 .build-conf: &build-conf
   stage: build
-  image: dotnet:2-sdk-alpine
+  image: microsoft/dotnet:2.2-sdk-alpine
   script:
    - dotnet restore --configfile Nuget.config
    - dotnet build
