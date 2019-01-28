@@ -25,6 +25,7 @@ variables:
     - /^feat\/.*$/
     - /^chore\/.*$/
     - /^fix\/.*$/
+    - /^review\/.*$/
 
 .test-configuration-post-build:
   extends: .test-configuration
