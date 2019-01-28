@@ -70,7 +70,7 @@ variables:
   script:
     - echo "TODO"
 
-.release-docker-conf: &release-docker
+.release-docker-conf: &release-docker-conf
   stage: release
   image: docker:latest
   before_script:
@@ -116,19 +116,19 @@ dev-unit-test:
   extends: .dev-configuration-post-build
   <<: *unit-test-conf
 
- dev-release-docker-login:
+dev-release-docker-login:
   extends: .dev-release-docker
   <<: *release-docker-conf
   variables:
-  CONTAINER_IMAGE_NAME: $CONTAINER_REGISTRY/saltyemu-login:develop
-  CONTAINER_IMAGE_DOCKERFILE: scripts/docker/login.Dockerfile
+    CONTAINER_IMAGE_NAME: $CONTAINER_REGISTRY/saltyemu-login:develop
+    CONTAINER_IMAGE_DOCKERFILE: scripts/docker/login.Dockerfile
 
- dev-release-docker-world:
-  extends: .dev-release-docker-conf
-  <<: *release-docker
+dev-release-docker-world:
+  extends: .dev-release-docker
+  <<: *release-docker-conf
   variables:
-  CONTAINER_IMAGE_NAME: $CONTAINER_REGISTRY/saltyemu-world:develop
-  CONTAINER_IMAGE_DOCKERFILE: scripts/docker/world.Dockerfile
+    CONTAINER_IMAGE_NAME: $CONTAINER_REGISTRY/saltyemu-world:develop
+    CONTAINER_IMAGE_DOCKERFILE: scripts/docker/world.Dockerfile
 
 dev-deploy:
   extends: .dev-configuration-post-build
