@@ -2,63 +2,134 @@ services:
   - docker:dind
 
 stages:
-- build
-- test
-- release
-- deploy
+  - build
+  - test
+  - deploy
+  - release
+
+##
+## Environment configuration
+##
 
 variables:
   GIT_SUBMODULE_STRATEGY: recursive
-  DOCKER_VERSION: "18.06"
-  DOCKER_HEALTHCHECK_TIMEOUT: "60"
   REGISTRY_DOMAIN: registry.gitlab.com
   CONTAINER_REGISTRY: $REGISTRY_DOMAIN/saltynos/Server/SaltyEmu
   CONTAINER_WORLD_BUILD_IMAGE: $CONTAINER_REGISTRY/saltyemu-world:$CI_BUILD_REF_NAME
-  CONTAINER_WORLD_RELEASE_IMAGE: $CONTAINER_REGISTRY/saltyemu-world:latest
   CONTAINER_LOGIN_BUILD_IMAGE: $CONTAINER_REGISTRY/saltyemu-login:$CI_BUILD_REF_NAME
-  CONTAINER_LOGIN_RELEASE_IMAGE: $CONTAINER_REGISTRY/saltyemu-login:latest
 
+.test-configuration:
+  environment: test
+  only:
+    - /^feature\/.*$/
+    - /^feat\/.*$/
+    - /^chore\/.*$/
+    - /^fix\/.*$/
 
-build_project:
-  image: microsoft/dotnet:2.2-sdk-alpine
+.test-configuration-post-build:
+  extends: .test-configuration
+  dependencies:
+    - test-build
+
+###
+## SETUP DEV ENV
+### 
+.dev-configuration:
+  environment: dev
+  only:
+    - develop
+
+.dev-configuration-post-build:
+  extends: .dev-configuration
+  dependencies:
+    - dev-build
+
+.dev-release-docker:
+  extends: .dev-configuration
+  dependencies:
+    - dev-build
+
+##
+## Steps definition
+##
+
+.build-conf: &build-conf
   stage: build
+  image: dotnet:2-sdk-alpine
   script:
    - dotnet restore --configfile Nuget.config
    - dotnet build
-   
-# Test ChickenAPI.Game project with unit test
-test_project:
-    image: microsoft/dotnet:2.2-sdk-alpine
-    stage: test
-    script:
-    - dotnet restore --configfile Nuget.config
-    - dotnet test test/ChickenAPI.Game.Test/
 
+.unit-test-conf: &unit-test-conf
+  stage: test
+  script:
+    - echo "TODO"
 
-# Docker Building
-release docker world:
+.lint-test-conf: &lint-test-conf
+  stage: test
+  script:
+    - echo "TODO"
+
+.release-docker-conf: &release-docker
   stage: release
-  image: docker:stable
-  tags:
-    - docker
-  only:
-    - tags
+  image: docker:latest
   before_script:
     - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $REGISTRY_DOMAIN
   script:
-    - docker build -t $CONTAINER_LOGIN_BUILD_IMAGE -f login.Dockerfile .
-    - docker push $CONTAINER_LOGIN_BUILD_IMAGE
-    
-# Docker Building Login
-release docker login:
-  stage: release
-  image: docker:stable
-  tags:
-    - docker
-  only:
-    - tags
-  before_script:
-    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $REGISTRY_DOMAIN
+    - docker build -t $CONTAINER_IMAGE_NAME -f  $CONTAINER_DOCKERFILE
+    - docker push $CONTAINER_IMAGE_NAME
+
+.deploy-conf: &deploy-conf
+  stage: deploy
   script:
-    - docker build -t $CONTAINER_WORLD_BUILD_IMAGE -f world.Dockerfile .
-    - docker push $CONTAINER_WORLD_BUILD_IMAGE
+    - echo "TODO"
+
+##
+## Steps executions - TEST
+##
+
+test-build:
+  extends: .test-configuration
+  <<: *build-conf
+
+test-lint-test:
+  extends: .test-configuration-post-build
+  <<: *lint-test-conf
+
+test-unit-test:
+  extends: .test-configuration-post-build
+  <<: *unit-test-conf
+
+##
+## Steps executions - DEV
+##
+
+dev-build:
+  extends: .dev-configuration
+  <<: *build-conf
+
+dev-lint-test:
+  extends: .dev-configuration-post-build
+  <<: *lint-test-conf
+
+dev-unit-test:
+  extends: .dev-configuration-post-build
+  <<: *unit-test-conf
+
+ dev-release-docker-login:
+  extends: .dev-release-docker
+  <<: *release-docker-conf
+  variables:
+  CONTAINER_IMAGE_NAME: $CONTAINER_REGISTRY/saltyemu-login:develop
+  CONTAINER_IMAGE_DOCKERFILE: scripts/docker/login.Dockerfile
+
+ dev-release-docker-world:
+  extends: .dev-release-docker-conf
+  <<: *release-docker
+  variables:
+  CONTAINER_IMAGE_NAME: $CONTAINER_REGISTRY/saltyemu-world:develop
+  CONTAINER_IMAGE_DOCKERFILE: scripts/docker/world.Dockerfile
+
+dev-deploy:
+  extends: .dev-configuration-post-build
+  <<: *deploy-conf
