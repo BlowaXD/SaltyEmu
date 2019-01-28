@@ -20,7 +20,7 @@ namespace ChickenAPI.Game.Groups.Extensions
             return new PstPacket
             {
                 VisualType = VisualType.Character,
-                GroupIndex = iconIndex++,
+                GroupIndex = ++iconIndex,
                 VisualId = entity.Id,
                 HpPercentage = entity.HpPercentage,
                 HpMax = entity.HpMax,
@@ -29,7 +29,7 @@ namespace ChickenAPI.Game.Groups.Extensions
                 Gender = entity.Character.Gender,
                 Class = entity.Character.Class,
                 Morph = entity.MorphId,
-                Buffs = new List<long>()
+                Buffs = new List<long>(entity.Buffs.Select(s => s.Id))
             };
         }
 
@@ -52,7 +52,7 @@ namespace ChickenAPI.Game.Groups.Extensions
                 Gender = GenderType.Male, // 0
                 Class = CharacterClassType.Adventurer, // 0
                 Morph = entity.MorphId,
-                Buffs = new List<long>()
+                Buffs = new List<long>(entity.Buffs.Select(s => s.Id))
             };
         }
 
@@ -88,9 +88,10 @@ namespace ChickenAPI.Game.Groups.Extensions
                 VisualType = player.Type,
                 VisualId = player.Id,
                 MorphId = player.MorphId,
-                Name = player.Character.Name,
-                Gender = player.Character.Gender,
                 GroupIndex = ++groupIndex,
+                Name = player.Character.Name,
+                Unknown = 0,
+                Gender = player.Character.Gender,
                 Level = player.Level,
                 Class = player.Character.Class,
                 HeroLevel = player.HeroLevel
@@ -101,7 +102,16 @@ namespace ChickenAPI.Game.Groups.Extensions
         {
             List<PidxPacket.PidxSubPacket> packets = new List<PidxPacket.PidxSubPacket> { new PidxPacket.PidxSubPacket { CharacterId = player.Id, IsMemberOfGroup = player.HasGroup } };
 
-            foreach (var member in player.Group.Players)
+            if (!player.HasGroup)
+            {
+                return new PidxPacket
+                {
+                    GroupId = player.HasGroup ? player.Group.Id : -1,
+                    SubPackets = packets
+                };
+            }
+
+            foreach (IPlayerEntity member in player.Group.Players)
             {
                 if (member == player)
                 {
@@ -152,12 +162,12 @@ namespace ChickenAPI.Game.Groups.Extensions
             Group group = player.Group;
             if (group == null)
             {
-                return null;
+                return tmp;
             }
 
             foreach (IPlayerEntity member in group.Players)
             {
-                tmp.Add(player.GeneratePstPacket(ref i));
+                tmp.Add(member.GeneratePstPacket(ref i));
             }
 
             return tmp;

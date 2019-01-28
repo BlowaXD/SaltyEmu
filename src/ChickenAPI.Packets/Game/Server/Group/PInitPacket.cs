@@ -64,15 +64,18 @@ namespace ChickenAPI.Packets.Game.Server.Group
             public string Name { get; set; }
 
             [PacketIndex(5, SeparatorBeforeProperty = "|")]
-            public GenderType Gender { get; set; }
+            public byte Unknown { get; set; }
 
             [PacketIndex(6, SeparatorBeforeProperty = "|")]
-            public CharacterClassType Class { get; set; }
+            public GenderType Gender { get; set; }
 
             [PacketIndex(7, SeparatorBeforeProperty = "|")]
-            public long MorphId { get; set; }
+            public CharacterClassType Class { get; set; }
 
             [PacketIndex(8, SeparatorBeforeProperty = "|")]
+            public long MorphId { get; set; }
+
+            [PacketIndex(9, SeparatorBeforeProperty = "|")]
             public long HeroLevel { get; set; }
         }
     }
