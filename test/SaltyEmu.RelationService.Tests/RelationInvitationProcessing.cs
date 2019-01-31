@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Autofac;
@@ -6,10 +7,8 @@ using ChickenAPI.Core.IoC;
 using ChickenAPI.Data.Relations;
 using ChickenAPI.Enums.Game.Relations;
 using NUnit.Framework;
-using SaltyEmu.Communication.Communicators;
 using SaltyEmu.Communication.Configs;
-using SaltyEmu.Communication.Serializers;
-using SaltyEmu.FriendsPlugin;
+using SaltyEmu.Communication.Utils;
 using SaltyEmu.FriendsPlugin.Services;
 
 namespace SaltyEmu.RelationService.Tests
@@ -23,12 +22,15 @@ namespace SaltyEmu.RelationService.Tests
         [OneTimeSetUp]
         public void Setup()
         {
-            MqttClientConfigurationBuilder builder = new MqttClientConfigurationBuilder()
-                .ConnectTo("localhost")
-                .WithName("relations-client");
+            string mqttEndPoint = Environment.GetEnvironmentVariable("MQTT_BROKER_ENDPOINT") ?? "localhost";
+            ChickenContainer.Builder.Register(s => new MqttClientConfigurationBuilder().ConnectTo(mqttEndPoint).WithName("test-relation-service-client"));
+            ChickenContainer.Builder.Register(s => new MqttServerConfigurationBuilder().ConnectTo(mqttEndPoint).WithName("test-relation-service-server"));
+            CommunicationIocInjector.Inject();
+            ChickenContainer.Builder.RegisterType<RelationServiceClient>().AsImplementedInterfaces();
 
-            // _relationService = new RelationServiceClient(builder);
-            // ((MqttIpcClient<RelationServiceClient>)_relationService).InitializeAsync().GetAwaiter().GetResult();
+            ChickenContainer.Initialize();
+
+            _relationService = ChickenContainer.Instance.Resolve<IRelationService>();
         }
 
         [Test]
@@ -70,6 +72,7 @@ namespace SaltyEmu.RelationService.Tests
             List<RelationDto> relation = await _relationService.RelationInviteProcessAsync(invitation.Id, RelationInvitationProcessType.Refuse);
 
             IEnumerable<RelationDto> relations = await _relationService.GetRelationListByCharacterIdAsync(SenderId);
+            Assert.IsFalse(relations.Any(s => s.OwnerId == SenderId && s.TargetId == TargetId && s.Type == CharacterRelationType.Friend && relation.Any(c => c.Id == s.Id)));
 
             // invitations should be clear
             IEnumerable<RelationInvitationDto> invitationsEmpty = await _relationService.GetPendingInvitationByCharacterIdAsync(TargetId);

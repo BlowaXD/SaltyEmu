@@ -10,9 +10,9 @@ namespace SaltyEmu.RelationService.Handling
 {
     public class RemoveRelationsHandler : GenericIpcPacketHandler<RemoveRelations>
     {
-        private IAsyncRepository<RelationDto, Guid> _relations;
+        private readonly IRelationDao _relations;
 
-        public RemoveRelationsHandler(IAsyncRepository<RelationDto, Guid> relations)
+        public RemoveRelationsHandler(IRelationDao relations)
         {
             _relations = relations;
         }

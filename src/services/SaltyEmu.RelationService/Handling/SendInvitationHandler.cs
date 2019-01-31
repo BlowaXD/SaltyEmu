@@ -10,12 +10,9 @@ namespace SaltyEmu.RelationService.Handling
 {
     public class SendInvitationHandler : GenericIpcPacketHandler<SendInvitation>
     {
-        private readonly ISynchronizedRepository<RelationInvitationDto> _invitations;
+        private readonly IRelationInvitationDao _invitations;
 
-        public SendInvitationHandler(ISynchronizedRepository<RelationInvitationDto> invitation)
-        {
-            _invitations = invitation;
-        }
+        public SendInvitationHandler(IRelationInvitationDao invitation) => _invitations = invitation;
 
         protected override async Task Handle(SendInvitation request)
         {

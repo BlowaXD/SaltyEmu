@@ -117,7 +117,7 @@ namespace SaltyEmu.Communication.Communicators
                 builder
                     .WithPayload(_serializer.Serialize(container))
                     .WithTopic(infos.IncomingTopic)
-                    .WithAtLeastOnceQoS()
+                    .WithExactlyOnceQoS()
             );
         }
 

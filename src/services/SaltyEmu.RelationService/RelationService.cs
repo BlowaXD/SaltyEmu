@@ -109,6 +109,7 @@ namespace SaltyEmu.RelationService
             {
                 return;
             }
+
             EnablePlugins(PluginEnableTime.PreContainerBuild);
             RegisterDependencies();
             CommunicationIocInjector.Inject();
@@ -131,9 +132,9 @@ namespace SaltyEmu.RelationService
 
                     container.RegisterAsync(postProcessor, type);
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-                    // ignored
+                    Log.Error("[FAIL]", e);
                 }
             }
 

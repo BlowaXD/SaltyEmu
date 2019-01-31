@@ -14,11 +14,11 @@ namespace SaltyEmu.RelationService.Handling
 {
     public class ProcessInvitationHandler : GenericIpcRequestHandler<ProcessInvitation, ProcessInvitation.Response>
     {
-        private readonly ISynchronizedRepository<RelationDto> _relations;
-        private readonly ISynchronizedRepository<RelationInvitationDto> _repository;
+        private readonly IRelationDao _relations;
+        private readonly IRelationInvitationDao _repository;
         private readonly ICharacterService _characterService;
 
-        public ProcessInvitationHandler(ISynchronizedRepository<RelationInvitationDto> repository, ISynchronizedRepository<RelationDto> relations, ICharacterService characterService)
+        public ProcessInvitationHandler(IRelationInvitationDao repository, IRelationDao relations, ICharacterService characterService)
         {
             _relations = relations;
             _repository = repository;
@@ -50,7 +50,7 @@ namespace SaltyEmu.RelationService.Handling
                     OwnerId = tmp.OwnerId,
                     TargetId = tmp.TargetId,
                     Type = tmp.RelationType,
-                    Name = target.Name,
+                    Name = target?.Name ?? tmp.TargetId.ToString()
                 },
                 new RelationDto
                 {
@@ -58,7 +58,7 @@ namespace SaltyEmu.RelationService.Handling
                     OwnerId = tmp.TargetId,
                     TargetId = tmp.OwnerId,
                     Type = tmp.RelationType,
-                    Name = owner.Name
+                    Name = owner?.Name ?? tmp.OwnerId.ToString()
                 },
             };
             if (request.ProcessType == RelationInvitationProcessType.Accept)

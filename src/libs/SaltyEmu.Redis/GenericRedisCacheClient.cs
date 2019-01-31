@@ -20,26 +20,14 @@ namespace SaltyEmu.Redis
 
         protected Task<CacheValue<ICollection<string>>> KeySet => CacheClient.GetSetAsync<string>(KeySetKey);
 
-        protected async Task<ICollection<string>> GetAllKeysAsync()
-        {
-            return (await KeySet).Value;
-        }
+        protected async Task<ICollection<string>> GetAllKeysAsync() => (await KeySet).Value;
 
-        protected Task RegisterKeyAsync(IEnumerable<Guid> keys)
-        {
-            return CacheClient.SetAddAsync(KeySetKey, keys.Select(ToKey));
-        }
+        protected Task RegisterKeyAsync(IEnumerable<Guid> keys) => CacheClient.SetAddAsync(KeySetKey, keys.Select(ToKey));
 
-        protected Task RemoveKeyAsync(IEnumerable<Guid> keys)
-        {
-            return CacheClient.SetRemoveAsync(KeySetKey, keys.Select(ToKey));
-        }
+        protected Task RemoveKeyAsync(IEnumerable<Guid> keys) => CacheClient.SetRemoveAsync(KeySetKey, keys.Select(ToKey));
 
 
-        protected string ToKey(Guid id)
-        {
-            return DataPrefix + id;
-        }
+        protected string ToKey(Guid id) => DataPrefix + id;
 
         protected string ToKey(TObject obj) => ToKey(obj.Id);
 
@@ -49,8 +37,8 @@ namespace SaltyEmu.Redis
 
         private GenericRedisCacheClient(string basePrefix, RedisConfiguration conf)
         {
-            DataPrefix = basePrefix + ":data:";
-            KeySetKey = basePrefix + ":keys:set";
+            DataPrefix = "data:" + basePrefix + ':';
+            KeySetKey = "keys:" + basePrefix;
             var tmp = new RedisCacheClientOptions
             {
                 ConnectionMultiplexer = ConnectionMultiplexer.Connect(new ConfigurationOptions
@@ -68,13 +56,11 @@ namespace SaltyEmu.Redis
 
         public IEnumerable<TObject> Get()
         {
-            return CacheClient.GetAllAsync<TObject>(GetAllKeysAsync().ConfigureAwait(false).GetAwaiter().GetResult()).ConfigureAwait(false).GetAwaiter().GetResult().Values.Select(s => s.Value);
+            return CacheClient.GetAllAsync<TObject>(GetAllKeysAsync().ConfigureAwait(false).GetAwaiter().GetResult()).ConfigureAwait(false).GetAwaiter().GetResult().Values
+                .Select(s => s.Value);
         }
 
-        public TObject GetById(Guid id)
-        {
-            return CacheClient.GetAsync<TObject>(ToKey(id)).ConfigureAwait(false).GetAwaiter().GetResult().Value;
-        }
+        public TObject GetById(Guid id) => CacheClient.GetAsync<TObject>(ToKey(id)).ConfigureAwait(false).GetAwaiter().GetResult().Value;
 
         public IEnumerable<TObject> GetByIds(IEnumerable<Guid> ids)
         {
@@ -108,13 +94,10 @@ namespace SaltyEmu.Redis
 
         public async Task<IEnumerable<TObject>> GetAsync()
         {
-            return (await CacheClient.GetAllAsync<TObject>(CacheClient.LocalCache.Keys)).Values.Select(s => s.Value);
+            return (await CacheClient.GetAllAsync<TObject>(await GetAllKeysAsync())).Values.Select(s => s.Value);
         }
 
-        public async Task<TObject> GetByIdAsync(Guid id)
-        {
-            return (await CacheClient.GetAsync<TObject>(ToKey(id))).Value;
-        }
+        public async Task<TObject> GetByIdAsync(Guid id) => (await CacheClient.GetAsync<TObject>(ToKey(id))).Value;
 
         public async Task<IEnumerable<TObject>> GetByIdsAsync(IEnumerable<Guid> ids)
         {

@@ -6,6 +6,7 @@ using ChickenAPI.Data;
 using Foundatio.Caching;
 using Foundatio.Serializer;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using StackExchange.Redis;
 
 namespace SaltyEmu.Redis
@@ -45,8 +46,8 @@ namespace SaltyEmu.Redis
 
         private MappedCacheClientBase(string basePrefix, RedisConfiguration conf)
         {
-            DataPrefix = basePrefix + ":data:";
-            KeySetKey = basePrefix + ":keys:set";
+            DataPrefix = "data:" + basePrefix + ':';
+            KeySetKey = "keys:" + basePrefix;
             CacheClient = new RedisHybridCacheClient(new RedisCacheClientOptions
             {
                 ConnectionMultiplexer = ConnectionMultiplexer.Connect(new ConfigurationOptions
@@ -56,6 +57,7 @@ namespace SaltyEmu.Redis
                 }),
                 Serializer = new JsonNetSerializer(new JsonSerializerSettings
                 {
+                    ContractResolver = new CamelCasePropertyNamesContractResolver()
                 }),
             });
         }

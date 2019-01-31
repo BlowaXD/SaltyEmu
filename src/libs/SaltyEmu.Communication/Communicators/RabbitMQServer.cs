@@ -52,7 +52,7 @@ namespace SaltyEmu.Communication.Communicators
             _channel.BasicConsume(_broadcastQueueName, true, consumer);
             Log.Info("IPC Server launched !");
         }
-        
+
         public Task ResponseAsync<T>(T response) where T : IIpcResponse
         {
             return Task.Run(() => { Publish(_packetContainerFactory.ToPacket<T>(response), _responseQueueName); });
@@ -97,6 +97,11 @@ namespace SaltyEmu.Communication.Communicators
             IBasicProperties props = _channel.CreateBasicProperties();
             props.ReplyTo = queueName;
             _channel.BasicPublish(ExchangeName, queueName, props, messageBytes);
+        }
+
+        public Task ResponseAsync<T>(T response, Type requestType) where T : IIpcResponse
+        {
+            return Task.Run(() => { Publish(_packetContainerFactory.ToPacket<T>(response), _responseQueueName); });
         }
     }
 }

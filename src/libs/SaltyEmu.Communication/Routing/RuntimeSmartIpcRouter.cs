@@ -21,14 +21,14 @@ namespace SaltyEmu.Communication.Routing
         private const string RequestTopicSuffix = "/requests";
         private const string ResponseTopicSuffix = "/responses";
         private const string PacketTopicSuffix = "/broadcasts";
-        
+
         private async Task<IRoutingInformation> RegisterGenericRequestAsync(Type type)
         {
             // in case they want to register "runtime" generics objects
             Type evaluatedType = type.BaseType ?? type;
 
             var newTopic = new StringBuilder();
-            newTopic.Append(type.Name);
+            newTopic.Append(type.FullName);
 
             foreach (Type i in evaluatedType.GenericTypeArguments)
             {
@@ -64,12 +64,16 @@ namespace SaltyEmu.Communication.Routing
             string responseTopic = "";
             if (type.GetInterfaces().Any(s => s == typeof(IIpcRequest)))
             {
-                requestTopic = type.Name.ToLower() + RequestTopicSuffix;
-                responseTopic = type.Name.ToLower() + ResponseTopicSuffix;
+                requestTopic = type.FullName.ToLower() + RequestTopicSuffix;
+                responseTopic = type.FullName.ToLower() + ResponseTopicSuffix;
             }
             else if (type.GetInterfaces().Any(s => s == typeof(IIpcPacket)))
             {
-                requestTopic = type.Name.ToLower() + PacketTopicSuffix;
+                requestTopic = type.FullName.ToLower() + PacketTopicSuffix;
+            }
+            else if (type.IsNested && type.GetInterfaces().Any(s => s == typeof(IIpcResponse)))
+            {
+                responseTopic = type.FullName.ToLower().Replace('+', '.');
             }
 
             IRoutingInformation routingInfos = await _routingInformationFactory.Create(requestTopic, responseTopic);

@@ -14,7 +14,7 @@ namespace SaltyEmu.Communication.Utils
         {
             if (packet is TRequest request)
             {
-                await request.ReplyAsync(await Handle(request));
+                await request.ReplyAsync<TResponse, TRequest>(await Handle(request));
                 return;
             }
 

@@ -9,6 +9,7 @@ using MQTTnet.Client;
 using MQTTnet.Diagnostics;
 using MQTTnet.Extensions.ManagedClient;
 using MQTTnet.Implementations;
+using MQTTnet.Protocol;
 using Newtonsoft.Json;
 using SaltyEmu.Communication.Configs;
 using SaltyEmu.Communication.Protocol;
@@ -97,9 +98,14 @@ namespace SaltyEmu.Communication.Communicators
             _packetHandlersContainer.HandleAsync(request, type).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
-        public async Task ResponseAsync<T>(T response) where T : IIpcResponse
+        public async Task ResponseAsync<T>(T response, Type packetType) where T : IIpcResponse
         {
-            await SendAsync(_packetFactory.ToPacket<T>(response));
+            PacketContainer container = _packetFactory.ToPacket<T>(response);
+#if DEBUG
+            _log.Debug($"[SENT] Packet [{container.Type}]");
+#endif
+            IRoutingInformation routingInfos = await CheckRouting(packetType);
+            await SendAsync(container, routingInfos);
         }
 
 
@@ -117,17 +123,12 @@ namespace SaltyEmu.Communication.Communicators
             return routingInfos;
         }
 
-        private async Task SendAsync(PacketContainer container)
+        private async Task SendAsync(PacketContainer container, IRoutingInformation routingInfos)
         {
-#if DEBUG
-            _log.Debug($"[SENT] Packet [{container.Type}]");
-#endif
-            IRoutingInformation routingInfos = await CheckRouting(container.Type);
-
             await _client.PublishAsync(builder => builder
                 .WithPayload(_serializer.Serialize(container))
                 .WithTopic(routingInfos.OutgoingTopic)
-                .WithAtLeastOnceQoS());
+                .WithExactlyOnceQoS());
         }
     }
 }

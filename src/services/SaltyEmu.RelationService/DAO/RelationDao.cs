@@ -14,6 +14,7 @@ namespace SaltyEmu.RelationService.DAO
 
         public async Task<IEnumerable<RelationDto>> GetRelationsByCharacterId(long characterId)
         {
+            Log.Info($"GetRelationsByCharacterId({characterId})");
             return (await GetAsync()).Where(s => s.OwnerId == characterId);
         }
     }

@@ -6,6 +6,6 @@ namespace ChickenAPI.Core.IPC
 {
     public interface IIpcServer
     {
-        Task ResponseAsync<T>(T response) where T : IIpcResponse;
+        Task ResponseAsync<T>(T response, Type requestType) where T : IIpcResponse;
     }
 }

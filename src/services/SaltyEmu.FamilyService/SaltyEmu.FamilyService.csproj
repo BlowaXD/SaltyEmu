@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -18,6 +18,10 @@
     <ProjectReference Include="..\..\libs\SaltyEmu.Communication\SaltyEmu.Communication.csproj" />
     <ProjectReference Include="..\..\libs\SaltyEmu.Redis\SaltyEmu.Redis.csproj" />
     <ProjectReference Include="..\..\Plugins\SaltyEmu.FamilyPlugin\SaltyEmu.FamilyPlugin.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Handlers\" />
   </ItemGroup>
 
 </Project>

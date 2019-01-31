@@ -17,10 +17,10 @@ namespace SaltyEmu.Communication.Protocol
             set => _id = value;
         }
 
-        public Task ReplyAsync<T>(T response) where T : IIpcResponse
+        public Task ReplyAsync<T, TRequest>(T response) where T : IIpcResponse
         {
             response.RequestId = Id;
-            return Server.ResponseAsync(response);
+            return Server.ResponseAsync(response, typeof(TRequest));
         }
     }
 }
