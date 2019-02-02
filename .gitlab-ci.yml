@@ -4,8 +4,8 @@ services:
 stages:
   - build
   - test
-  - deploy
   - release
+  - deploy
 
 ##
 ## Environment configuration
@@ -15,8 +15,6 @@ variables:
   GIT_SUBMODULE_STRATEGY: recursive
   REGISTRY_DOMAIN: registry.gitlab.com
   CONTAINER_REGISTRY: $REGISTRY_DOMAIN/saltynos/Server/SaltyEmu
-  CONTAINER_WORLD_BUILD_IMAGE: $CONTAINER_REGISTRY/saltyemu-world:$CI_BUILD_REF_NAME
-  CONTAINER_LOGIN_BUILD_IMAGE: $CONTAINER_REGISTRY/saltyemu-login:$CI_BUILD_REF_NAME
 
 .test-configuration:
   environment: test
@@ -121,6 +119,7 @@ dev-release-docker-login:
   extends: .dev-release-docker
   <<: *release-docker-conf
   variables:
+    REGISTRY_DOMAIN: registry.gitlab.com
     CONTAINER_IMAGE_NAME: $CONTAINER_REGISTRY/saltyemu-login:develop
     CONTAINER_IMAGE_DOCKERFILE: scripts/docker/login.Dockerfile
 
@@ -128,6 +127,7 @@ dev-release-docker-world:
   extends: .dev-release-docker
   <<: *release-docker-conf
   variables:
+    REGISTRY_DOMAIN: registry.gitlab.com
     CONTAINER_IMAGE_NAME: $CONTAINER_REGISTRY/saltyemu-world:develop
     CONTAINER_IMAGE_DOCKERFILE: scripts/docker/world.Dockerfile
 
