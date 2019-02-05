@@ -49,17 +49,10 @@ variables:
 
 .build-conf: &build-conf
   stage: build
-  image: docker:latest
-  services:
-    - docker:dind
-  before_script:
-    - docker login -u "$CI_REGISTRY_USER" -p "$CI_BUILD_TOKEN" $CI_REGISTRY
+  image: microsoft/dotnet:2.2-sdk-alpine
   script:
-    - echo "$CI_REGISTRY_IMAGE"
-    - echo "$DOCKER_TAG"
-    - echo "$CONTAINER_DOCKERFILE"
-    - docker build -t "$CI_REGISTRY_IMAGE:$DOCKER_TAG" -f "$CONTAINER_DOCKERFILE" .
-    - docker push $CI_REGISTRY_IMAGE
+    - dotnet restore --configfile Nuget.config
+    - dotnet build
 
 .unit-test-conf: &unit-test-conf
   stage: test
@@ -81,9 +74,6 @@ variables:
   before_script:
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_BUILD_TOKEN" $CI_REGISTRY
   script:
-    - echo "$CI_REGISTRY_IMAGE"
-    - echo "$DOCKER_TAG"
-    - echo "$CONTAINER_DOCKERFILE"
     - docker build -t "$CI_REGISTRY_IMAGE:$DOCKER_TAG" -f "$CONTAINER_DOCKERFILE" .
     - docker push $CI_REGISTRY_IMAGE
 
@@ -116,9 +106,6 @@ test-unit-test:
 dev-build:
   extends: .dev-configuration
   <<: *build-conf
-  variables:
-    DOCKER_TAG: saltyemu-world
-    CONTAINER_IMAGE_DOCKERFILE: "./scripts/docker/world.Dockerfile"
 
 dev-lint-test:
   extends: .dev-configuration-post-build
@@ -133,14 +120,14 @@ dev-release-docker-login:
   <<: *release-docker-conf
   variables:
     DOCKER_TAG: saltyemu-login
-    CONTAINER_IMAGE_DOCKERFILE: "./scripts/docker/login.Dockerfile"
+    CONTAINER_DOCKERFILE: "./scripts/docker/login.Dockerfile"
 
 dev-release-docker-world:
   extends: .dev-release-docker
   <<: *release-docker-conf
   variables:
     DOCKER_TAG: saltyemu-world
-    CONTAINER_IMAGE_DOCKERFILE: "./scripts/docker/world.Dockerfile"
+    CONTAINER_DOCKERFILE: scripts/docker/world.Dockerfile
 
 dev-deploy:
   extends: .dev-configuration-post-build
