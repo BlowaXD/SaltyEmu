@@ -74,7 +74,7 @@ variables:
   before_script:
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_BUILD_TOKEN" $CI_REGISTRY
   script:
-    - docker build --pull -t "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME" -f "$CONTAINER_DOCKERFILE" .
+    - docker build -t "$CI_REGISTRY_IMAGE:$DOCKER_TAG" -f "$CONTAINER_DOCKERFILE" .
     - docker push $CI_REGISTRY_IMAGE
 
 .deploy-conf: &deploy-conf
@@ -119,13 +119,15 @@ dev-release-docker-login:
   extends: .dev-release-docker
   <<: *release-docker-conf
   variables:
-    CONTAINER_IMAGE_DOCKERFILE: scripts/docker/login.Dockerfile
+    DOCKER_TAG: saltyemu-login
+    CONTAINER_IMAGE_DOCKERFILE: ./scripts/docker/login.Dockerfile
 
 dev-release-docker-world:
   extends: .dev-release-docker
   <<: *release-docker-conf
   variables:
-    CONTAINER_IMAGE_DOCKERFILE: scripts/docker/world.Dockerfile
+    DOCKER_TAG: saltyemu-world
+    CONTAINER_IMAGE_DOCKERFILE: ./scripts/docker/world.Dockerfile
 
 dev-deploy:
   extends: .dev-configuration-post-build
