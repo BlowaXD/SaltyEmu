@@ -49,9 +49,17 @@ variables:
 
 .build-conf: &build-conf
   stage: build
-  image: microsoft/dotnet:2.2-sdk-alpine
+  image: docker:latest
+  services:
+    - docker:dind
+  before_script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_BUILD_TOKEN" $CI_REGISTRY
   script:
-   - echo "TODO"
+    - echo "$CI_REGISTRY_IMAGE"
+    - echo "$DOCKER_TAG"
+    - echo "$CONTAINER_DOCKERFILE"
+    - docker build -t "$CI_REGISTRY_IMAGE:$DOCKER_TAG" -f "$CONTAINER_DOCKERFILE" .
+    - docker push $CI_REGISTRY_IMAGE
 
 .unit-test-conf: &unit-test-conf
   stage: test
