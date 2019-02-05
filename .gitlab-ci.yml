@@ -1,6 +1,3 @@
-services:
-  - docker:dind
-
 stages:
   - build
   - test
@@ -13,8 +10,6 @@ stages:
 
 variables:
   GIT_SUBMODULE_STRATEGY: recursive
-  REGISTRY_DOMAIN: registry.gitlab.com
-  CONTAINER_REGISTRY: $REGISTRY_DOMAIN/saltynos/Server/SaltyEmu
 
 .test-configuration:
   environment: test
@@ -61,25 +56,30 @@ variables:
 
 .unit-test-conf: &unit-test-conf
   stage: test
+  image: alpine:3.9
   script:
     - echo "TODO"
 
 .lint-test-conf: &lint-test-conf
   stage: test
+  image: alpine:3.9
   script:
     - echo "TODO"
 
 .release-docker-conf: &release-docker-conf
   stage: release
   image: docker:latest
+  services:
+    - docker:dind
   before_script:
-    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $REGISTRY_DOMAIN
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_BUILD_TOKEN" $CI_REGISTRY
   script:
-    - docker build -t $CONTAINER_IMAGE_NAME -f  $CONTAINER_DOCKERFILE
-    - docker push $CONTAINER_IMAGE_NAME
+    - docker build -pull -t "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME" -f  $CONTAINER_DOCKERFILE
+    - docker push $CI_REGISTRY_IMAGE
 
 .deploy-conf: &deploy-conf
   stage: deploy
+  image: alpine:3.9
   script:
     - echo "TODO"
 
@@ -119,16 +119,12 @@ dev-release-docker-login:
   extends: .dev-release-docker
   <<: *release-docker-conf
   variables:
-    REGISTRY_DOMAIN: registry.gitlab.com/saltynos/Server/SaltyEmu
-    CONTAINER_IMAGE_NAME: $CONTAINER_REGISTRY/saltyemu-login:develop
     CONTAINER_IMAGE_DOCKERFILE: scripts/docker/login.Dockerfile
 
 dev-release-docker-world:
   extends: .dev-release-docker
   <<: *release-docker-conf
   variables:
-    CONTAINER_REGISTRY: registry.gitlab.com/saltynos/Server/SaltyEmu
-    CONTAINER_IMAGE_NAME: $CONTAINER_REGISTRY/saltyemu-world:develop
     CONTAINER_IMAGE_DOCKERFILE: scripts/docker/world.Dockerfile
 
 dev-deploy:
