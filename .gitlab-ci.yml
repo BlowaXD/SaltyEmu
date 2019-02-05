@@ -118,7 +118,7 @@ dev-build:
   <<: *build-conf
   variables:
     DOCKER_TAG: saltyemu-world
-    CONTAINER_IMAGE_DOCKERFILE: ./scripts/docker/world.Dockerfile
+    CONTAINER_IMAGE_DOCKERFILE: "./scripts/docker/world.Dockerfile"
 
 dev-lint-test:
   extends: .dev-configuration-post-build
@@ -133,14 +133,14 @@ dev-release-docker-login:
   <<: *release-docker-conf
   variables:
     DOCKER_TAG: saltyemu-login
-    CONTAINER_IMAGE_DOCKERFILE: ./scripts/docker/login.Dockerfile
+    CONTAINER_IMAGE_DOCKERFILE: "./scripts/docker/login.Dockerfile"
 
 dev-release-docker-world:
   extends: .dev-release-docker
   <<: *release-docker-conf
   variables:
     DOCKER_TAG: saltyemu-world
-    CONTAINER_IMAGE_DOCKERFILE: ./scripts/docker/world.Dockerfile
+    CONTAINER_IMAGE_DOCKERFILE: "./scripts/docker/world.Dockerfile"
 
 dev-deploy:
   extends: .dev-configuration-post-build
