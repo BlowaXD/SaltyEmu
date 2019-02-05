@@ -119,7 +119,7 @@ dev-release-docker-login:
   extends: .dev-release-docker
   <<: *release-docker-conf
   variables:
-    REGISTRY_DOMAIN: registry.gitlab.com
+    REGISTRY_DOMAIN: registry.gitlab.com/saltynos/Server/SaltyEmu
     CONTAINER_IMAGE_NAME: $CONTAINER_REGISTRY/saltyemu-login:develop
     CONTAINER_IMAGE_DOCKERFILE: scripts/docker/login.Dockerfile
 
@@ -127,7 +127,7 @@ dev-release-docker-world:
   extends: .dev-release-docker
   <<: *release-docker-conf
   variables:
-    REGISTRY_DOMAIN: registry.gitlab.com
+    CONTAINER_REGISTRY: registry.gitlab.com/saltynos/Server/SaltyEmu
     CONTAINER_IMAGE_NAME: $CONTAINER_REGISTRY/saltyemu-world:develop
     CONTAINER_IMAGE_DOCKERFILE: scripts/docker/world.Dockerfile
 
