@@ -116,6 +116,9 @@ test-unit-test:
 dev-build:
   extends: .dev-configuration
   <<: *build-conf
+  variables:
+    DOCKER_TAG: saltyemu-world
+    CONTAINER_IMAGE_DOCKERFILE: ./scripts/docker/world.Dockerfile
 
 dev-lint-test:
   extends: .dev-configuration-post-build
