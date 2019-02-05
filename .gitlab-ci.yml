@@ -74,7 +74,7 @@ variables:
   before_script:
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_BUILD_TOKEN" $CI_REGISTRY
   script:
-    - docker build -pull -t "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME" -f  $CONTAINER_DOCKERFILE
+    - docker build --pull -t "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME" -f  $CONTAINER_DOCKERFILE
     - docker push $CI_REGISTRY_IMAGE
 
 .deploy-conf: &deploy-conf
