@@ -40,7 +40,6 @@ namespace Toolkit.Converter
                 {
                     itemAreaBegin = true;
                     item.Id = short.Parse(currentLine[2]);
-                    item.Vnum = item.Id;
                     item.Price = long.Parse(currentLine[3]);
                 }
                 else if (currentLine.Length > 1 && currentLine[1] == "END")
@@ -87,7 +86,8 @@ namespace Toolkit.Converter
                     item.ItemSubType = Convert.ToByte(currentLine[4]);
                     item.EquipmentSlot = (EquipmentType)Enum.Parse(typeof(EquipmentType), currentLine[5] != "-1" ? currentLine[5] : "0");
 
-                    // item.DesignId = Convert.ToInt16(currentLine[6]);
+
+                    item.Vnum = Convert.ToInt64(currentLine[6]);
                     switch (item.Id)
                     {
                         case 4101:

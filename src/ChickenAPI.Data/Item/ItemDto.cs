@@ -8,6 +8,11 @@ namespace ChickenAPI.Data.Item
     public class ItemDto : IMappedDto
     {
         /// <summary>
+        ///     Unique Item Id (can have 3 items for 1 VNum)
+        /// </summary>
+        public long Id { get; set; }
+
+        /// <summary>
         ///     Used for client Display
         /// </summary>
         public long Vnum { get; set; }
@@ -165,10 +170,5 @@ namespace ChickenAPI.Data.Item
         public short WaterResistance { get; set; }
 
         public byte Width { get; set; }
-
-        /// <summary>
-        ///     Unique Item Id (can have 3 items for 1 VNum)
-        /// </summary>
-        public long Id { get; set; }
     }
 }

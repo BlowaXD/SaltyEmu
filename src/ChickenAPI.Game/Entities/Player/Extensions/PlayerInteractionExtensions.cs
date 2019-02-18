@@ -49,6 +49,11 @@ namespace ChickenAPI.Game.Entities.Player.Extensions
                 Type = type
             };
 
+        public static SayPacket GenerateGlobalSayPacket(this IPlayerEntity player, string prefix, string message)
+        {
+            return player.GenerateSayPacket($"{prefix}:[{player.Character.Name}]: {message}", SayColorType.Purple);
+        }
+
         public static SayPacket GenerateSayPacket(this IEntity entity, string msg, SayColorType color) =>
             new SayPacket
             {

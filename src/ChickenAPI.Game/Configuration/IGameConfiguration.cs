@@ -36,6 +36,9 @@ namespace ChickenAPI.Game.Configuration
 
         uint MaxGold { get; set; }
 
+        // <Total>:
+        string GlobalChatPrefix { get; set; }
+
         #endregion Gold
     }
 }

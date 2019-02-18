@@ -249,7 +249,7 @@ namespace World.Cryptography.Decoder
             // _sessionId will only change
             if (_sessionId == -1)
             {
-                if (!SessionManager.Instance.GetSession(context.Channel.Id.AsLongText(), out ISession psession))
+                if (!SocketSessionManager.Instance.GetSession(context.Channel.Id.AsLongText(), out ISession psession))
                 {
                     output.Add(DecryptCustomParameter(str));
                     return;

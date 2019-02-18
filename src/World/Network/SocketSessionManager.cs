@@ -4,7 +4,7 @@ using ChickenAPI.Game._Network;
 
 namespace World.Network
 {
-    public class SessionManager
+    public class SocketSessionManager
     {
         private readonly ConcurrentDictionary<string, ISession> _sessions = new ConcurrentDictionary<string, ISession>();
 
@@ -22,9 +22,9 @@ namespace World.Network
 
         #region Singleton
 
-        private static readonly Lazy<SessionManager> LazyInstance = new Lazy<SessionManager>(() => new SessionManager());
+        private static readonly Lazy<SocketSessionManager> LazyInstance = new Lazy<SocketSessionManager>(() => new SocketSessionManager());
 
-        public static SessionManager Instance => LazyInstance.Value;
+        public static SocketSessionManager Instance => LazyInstance.Value;
 
         #endregion
     }

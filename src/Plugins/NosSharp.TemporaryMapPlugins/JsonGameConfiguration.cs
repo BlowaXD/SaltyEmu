@@ -114,5 +114,6 @@ namespace SaltyEmu.BasicPlugin
         public float ItemPriceOnSellMultiplier { get; set; } = 1.0f;
         public float ItemPriceOnBuyMultiplier { get; set; } = 1.0f;
         public uint MaxGold { get; set; } = 1000000000;
+        public string GlobalChatPrefix { get; set; } = "<Total>";
     }
 }

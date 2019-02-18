@@ -26,7 +26,7 @@ namespace ChickenAPI.Game.Inventory.Extensions
                     return new IvnPacket
                     {
                         InventoryType = itemInstance.Type,
-                        ItemId = itemInstance.Item.Vnum,
+                        ItemId = itemInstance.Item.Id,
                         Slot = itemInstance.Slot,
                         Upgrade = itemInstance.Upgrade,
                         Rare = itemInstance.Rarity,

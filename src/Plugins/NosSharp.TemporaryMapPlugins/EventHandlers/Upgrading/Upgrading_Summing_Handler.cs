@@ -45,7 +45,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers
                 e.Item.WaterResistance += (short)(e.SecondItem.WaterResistance + e.SecondItem.Item.WaterResistance);
                 e.Item.FireResistance += (short)(e.SecondItem.FireResistance + e.SecondItem.Item.FireResistance);
                 //session.Character.DeleteItemByItemInstanceId(itemToSum.Id);
-                await player.SendPacketAsync(new PdtiPacket { Unknow = 10, Unknow2 = 1, Unknow3 = 27, Unknow4 = 0, ItemVnum = e.Item.Item.Vnum, ItemUpgrade = e.Item.Sum });
+                await player.SendPacketAsync(new PdtiPacket { Unknow = 10, Unknow2 = 1, Unknow3 = 27, Unknow4 = 0, ItemVnum = e.Item.Item.Id, ItemUpgrade = e.Item.Sum });
                 await player.SendChatMessageAsync("SUM_SUCCESS", SayColorType.Green);
                 await player.SendTopscreenMessage("SUM_SUCCESS", MsgPacketType.Whisper);
                 await player.SendGuri(GuriPacketType.AfterSumming, 1, 1324);

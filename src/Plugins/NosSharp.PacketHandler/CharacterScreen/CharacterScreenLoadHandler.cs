@@ -139,14 +139,14 @@ namespace NW.Plugins.PacketHandling.CharacterScreen
                     HeroLevel = character.HeroLevel,
                     Equipments = new List<short?>
                     {
-                        (short?)(equipment[(byte)EquipmentType.Hat]?.Item.Vnum ?? -1),
-                        (short?)(equipment[(byte)EquipmentType.Armor]?.Item.Vnum ?? -1),
-                        (short?)(equipment[(byte)EquipmentType.WeaponSkin]?.ItemId ?? (equipment[(byte)EquipmentType.MainWeapon]?.Item.Vnum ?? -1)),
-                        (short?)(equipment[(byte)EquipmentType.SecondaryWeapon]?.Item.Vnum ?? -1),
-                        (short?)(equipment[(byte)EquipmentType.Mask]?.Item.Vnum ?? -1),
-                        (short?)(equipment[(byte)EquipmentType.Fairy]?.Item.Vnum ?? -1),
-                        (short?)(equipment[(byte)EquipmentType.CostumeSuit]?.Item.Vnum ?? -1),
-                        (short?)(equipment[(byte)EquipmentType.CostumeHat]?.Item.Vnum ?? -1)
+                        (short?)(equipment[(byte)EquipmentType.Hat]?.ItemId ?? -1),
+                        (short?)(equipment[(byte)EquipmentType.Armor]?.ItemId ?? -1),
+                        (short?)(equipment[(byte)EquipmentType.WeaponSkin]?.ItemId ?? (equipment[(byte)EquipmentType.MainWeapon]?.ItemId ?? -1)),
+                        (short?)(equipment[(byte)EquipmentType.SecondaryWeapon]?.ItemId ?? -1),
+                        (short?)(equipment[(byte)EquipmentType.Mask]?.ItemId ?? -1),
+                        (short?)(equipment[(byte)EquipmentType.Fairy]?.ItemId ?? -1),
+                        (short?)(equipment[(byte)EquipmentType.CostumeSuit]?.ItemId ?? -1),
+                        (short?)(equipment[(byte)EquipmentType.CostumeHat]?.ItemId ?? -1)
                     },
                     JobLevel = character.JobLevel,
                     QuestCompletion = 1,

@@ -25,6 +25,7 @@ namespace World.Network
     {
         private const byte PACKET_SPLIT_CHARACTER = 0xFF;
 
+
         private static readonly IPlayerManager PlayerManager = new Lazy<IPlayerManager>(ChickenContainer.Instance.Resolve<IPlayerManager>).Value;
         private static readonly ISessionService SessionService = new Lazy<ISessionService>(ChickenContainer.Instance.Resolve<ISessionService>).Value;
         private static readonly ICommandContainer Commands = new Lazy<ICommandContainer>(ChickenContainer.Instance.Resolve<ICommandContainer>).Value;
@@ -314,7 +315,7 @@ namespace World.Network
         public override void ChannelUnregistered(IChannelHandlerContext context)
         {
             Disconnect();
-            SessionManager.Instance.UnregisterSession(context.Channel.Id.AsLongText());
+            SocketSessionManager.Instance.UnregisterSession(context.Channel.Id.AsLongText());
             context.CloseAsync();
         }
 
@@ -375,7 +376,7 @@ namespace World.Network
             }
 
             SessionId = sessid;
-            SessionManager.Instance.RegisterSession(context.Channel.Id.AsLongText(), this);
+            SocketSessionManager.Instance.RegisterSession(context.Channel.Id.AsLongText(), this);
             // CLIENT ARRIVED
             if (!_waitForPacketsAmount.HasValue)
             {

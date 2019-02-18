@@ -43,9 +43,19 @@ namespace ChickenAPI.Core.Utils
         public static List<Type> GetTypesImplementingInterface(this Assembly assembly, Type type)
         {
             List<Type> list = new List<Type>();
-            list.AddRange(assembly.GetTypes().Where(s => s.GetInterfaces().Any(i => i == type)));
+            list.AddRange(assembly.GetTypes().Where(s => s.ImplementsInterface(type)));
 
             return list;
+        }
+
+        public static bool ImplementsInterface<T>(this Type type)
+        {
+            return type.GetInterfaces().Any(s => s == typeof(T));
+        }
+
+        public static bool ImplementsInterface(this Type type, Type interfaceType)
+        {
+            return type.GetInterfaces().Any(s => s == interfaceType);
         }
 
         public static List<Type> GetTypesImplementingGenericClass(this Assembly assembly, params Type[] types)

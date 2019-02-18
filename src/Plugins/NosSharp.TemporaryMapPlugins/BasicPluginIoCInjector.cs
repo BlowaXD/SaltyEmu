@@ -60,7 +60,7 @@ namespace SaltyEmu.BasicPlugin
                 }
                 catch (Exception e)
                 {
-                    Log.Error("WTF????????", e);
+                    Log.Error("[EVENT_HANDLER]", e);
                     // ignored
                 }
             }
@@ -80,7 +80,7 @@ namespace SaltyEmu.BasicPlugin
                         continue;
                     }
 
-                    handlerContainer.RegisterAsync(real);
+                    handlerContainer.RegisterAsync(real).ConfigureAwait(false).GetAwaiter().GetResult();
                 }
                 catch (Exception e)
                 {
@@ -103,7 +103,7 @@ namespace SaltyEmu.BasicPlugin
                         continue;
                     }
 
-                    handlerContainer.RegisterItemUsageCallback(real);
+                    handlerContainer.RegisterItemUsageCallback(real).ConfigureAwait(false).GetAwaiter().GetResult();
                 }
                 catch (Exception e)
                 {
@@ -124,6 +124,8 @@ namespace SaltyEmu.BasicPlugin
             // event handlers
             ChickenContainer.Builder.Register(_ => new BasicEventPipelineAsync()).As<IEventPipeline>().SingleInstance();
             ChickenContainer.Builder.RegisterAssemblyTypes(typeof(BasicPlugin).Assembly).AsClosedTypesOf(typeof(GenericEventPostProcessorBase<>)).PropertiesAutowired();
+            ChickenContainer.Builder.RegisterAssemblyTypes(typeof(BasicPlugin).Assembly).Where(s => s.ImplementsInterface<IUseItemRequestHandlerAsync>()).PropertiesAutowired().AsSelf();
+            ChickenContainer.Builder.RegisterAssemblyTypes(typeof(BasicPlugin).Assembly).Where(s => s.ImplementsInterface<INpcDialogAsyncHandler>()).PropertiesAutowired().AsSelf();
 
             // Battle
             ChickenContainer.Builder.Register(_ => new BasicHitRequestFactory(_.Resolve<IBCardService>())).As<IHitRequestFactory>().InstancePerDependency();

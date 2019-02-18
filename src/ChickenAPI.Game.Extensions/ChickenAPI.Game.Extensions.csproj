@@ -9,8 +9,4 @@
     <ProjectReference Include="..\ChickenAPI.Packets\ChickenAPI.Packets.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="PacketGeneration\" />
-  </ItemGroup>
-
 </Project>
