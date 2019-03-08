@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Reflection;
+using System.Text;
 using ChickenAPI.Core.Logging;
 using CommandLine;
 using Toolkit.Commands;
@@ -19,6 +20,7 @@ namespace Toolkit
                     (ParseCommand opts) => ParseCommand.Handle(opts),
                     (CleanCommand opts) => CleanCommand.Handle(opts),
                     (LanguageCommand opts) => LanguageCommand.Handle(opts),
+                    (DocumentationCommand opts) => DocumentationCommand.Handle(opts),
                     errs => 1);
         }
     }
