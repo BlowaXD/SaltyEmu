@@ -1,1 +1,2 @@
-docker run -e MSSQL_IP=database -e MSSQL_USER_ID=sa -e MSSQL_USER_PW=strong_pass2018 -e DATABASE_NAME=saltyemu DATABASE_OWNER_ID=saltyemu_owner DATABASE_OWNER_PW=strong_pass2018 --link database:saltyemu-database --name test-db -d blowaxd693/mssql-createdb-tool
+::
+docker run -e MSSQL_IP=database -e MSSQL_USER_ID=sa -e MSSQL_USER_PW=strong_pass2018 -e DATABASE_NAME=saltyemu -e DATABASE_OWNER_ID=saltyemu_owner -e DATABASE_OWNER_PW=strong_pass2018 --link saltyemu-database:database --name test-db -it --rm blowaxd693/mssql-createdb-tool
