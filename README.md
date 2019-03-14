@@ -60,7 +60,7 @@ What have failed so far :
 ### Contributors :
 - Kraken (Big thanks for all the time you took to implement Nostale boring features...)
 - Zanou (Big thanks for all the time you took to implement Nostale boring features...)
-- Kiritsu
+- Kiritsu 
 - GodnessCookie
 - Quarry
 - Clavs
@@ -68,8 +68,9 @@ What have failed so far :
 
 ### Special Thanks :
 - Z0ltar (Thanks for the algorithms you shared)
-- Eastrall (Thanks for your hints, discussions and feedbacks)
-- DarkyZ (Thanks for your feedbacks since the beginning of the project, you helped me a lot)
+- [Quahu](https://github.com/Quahu/) for your amazing work on [Qmmands] that we are using !
+- [Eastrall](https://github.com/Eastrall) (Thanks for your hints, discussions and feedbacks)
+- [DarkyZ](https://github.com/ImNotAVirus) (Thanks for your feedbacks since the beginning of the project, you helped me a lot)
 - All people who supported my work, I never asked for donations or anything for SaltyEmu, just fun and some data & knowledge related help 
 
 ### Another type of thanks :
