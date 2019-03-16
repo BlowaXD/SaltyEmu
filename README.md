@@ -2,7 +2,7 @@
 # SaltyEmu
 
 [![forthebadge](https://forthebadge.com/images/badges/made-with-c-sharp.svg)](http://forthebadge.com)[![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)](http://forthebadge.com)
-[![Discord](https://discordapp.com/api/guilds/512650034257592336/widget.png?style=banner2)](https://discord.gg/8qAd9px)
+[![Discord](https://discordapp.com/api/guilds/556349908890812418/widget.png?style=banner2)](https://discord.gg/7sTFU8d)
 
 ## Description :
 
