@@ -1,8 +1,11 @@
 ﻿using ChickenAPI.Data.Item;
 using ChickenAPI.Enums.Game.Items;
+using ChickenAPI.Enums.Packets;
 using ChickenAPI.Game.Entities.Player;
+using ChickenAPI.Game.Entities.Player.Extensions;
 using ChickenAPI.Game.Inventory.Extensions;
 using ChickenAPI.Packets.Game.Server.Chat;
+using ChickenAPI.Packets.Game.Server.UserInterface;
 
 namespace ChickenAPI.Game.Extensions.PacketGeneration
 {
@@ -25,6 +28,11 @@ namespace ChickenAPI.Game.Extensions.PacketGeneration
                     EquipmentInfo = item.Item.Type == InventoryType.Equipment ? item.GenerateEInfoPacket() : null
                 },
             };
+        }
+
+        public static MsgPacket GenerateHeroPacket(this IPlayerEntity player, string message)
+        {
+            return player.GenerateMsgPacket($"[{player.Character.Name}]: {message}", MsgPacketType.HeroChat);
         }
     }
 }

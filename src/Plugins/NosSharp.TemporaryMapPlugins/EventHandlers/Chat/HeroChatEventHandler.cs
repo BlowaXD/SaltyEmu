@@ -1,13 +1,10 @@
 ﻿using ChickenAPI.Core.Events;
 using ChickenAPI.Game.Chat.Events;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Game.Entities.Player.Extensions;
-using ChickenAPI.Packets.Game.Server.Player;
 using System.Threading;
 using System.Threading.Tasks;
-using ChickenAPI.Enums.Packets;
 using ChickenAPI.Game.Configuration;
-using ChickenAPI.Game.Managers;
+using ChickenAPI.Game.Extensions.PacketGeneration;
 
 namespace SaltyEmu.BasicPlugin.EventHandlers.Chat
 {
@@ -27,11 +24,8 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Chat
                 return;
             }
             // todo only top 3 of hero reputation
-            var heroPacket = new HeroPacket
-            {
-                Message = e.Message
-            };
-            await player.BroadcastAsync(player.GenerateHeroPacket(heroPacket.Message));
+            
+            await player.BroadcastAsync(player.GenerateHeroPacket(e.Message));
         }
     }
 }

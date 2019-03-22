@@ -63,11 +63,6 @@ namespace ChickenAPI.Game.Entities.Player.Extensions
                 Type = color
             };
 
-        public static MsgPacket GenerateHeroPacket(this IPlayerEntity player, string message)
-        {
-            return player.GenerateMsgPacket($"[{player.Character.Name}]: {message}", MsgPacketType.HeroChat);
-        }
-
         public static InfoPacket GenerateInfoBubble(this IPlayerEntity player, string text) =>
             new InfoPacket
             {
