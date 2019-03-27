@@ -8,7 +8,7 @@
     <PackageReference Include="Foundatio" Version="7.1.1845" />
     <PackageReference Include="Foundatio.JsonNet" Version="7.1.1845" />
     <PackageReference Include="Foundatio.Redis" Version="7.1.1608" />
-    <PackageReference Include="ServiceStack.Redis.Core" Version="5.4.0" />
+    <PackageReference Include="ServiceStack.Redis.Core" Version="5.5.0" />
   </ItemGroup>
 
   <ItemGroup>
