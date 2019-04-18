@@ -121,6 +121,7 @@ namespace ChickenAPI.Game.Entities.Player
         public LocomotionComponent Locomotion { get; }
         public IRelationList Relations { get; }
         public CharacterDto Character { get; }
+        public Dictionary<Guid, CharacterSkillDto> CharacterSkills { get; }
         public List<IMateEntity> Mates { get; set; }
         public IEnumerable<IMateEntity> ActualMates => Mates.Where(s => s.Mate.IsTeamMember).OrderByDescending(s => s.Mate.MateType);
 
@@ -262,11 +263,13 @@ namespace ChickenAPI.Game.Entities.Player
 
         #region Skills
 
+        public List<(DateTime, long)> CooldownsBySkillId => SkillComponent.CooldownsBySkillId;
         public bool HasSkill(long skillId) => SkillComponent.Skills.ContainsKey(skillId);
 
         public bool CanCastSkill(long skillId) => SkillComponent.CooldownsBySkillId.Any(s => s.Item2 == skillId);
 
-        public IDictionary<long, SkillDto> Skills { get; }
+        public IDictionary<long, SkillDto> Skills => SkillComponent.Skills;
+        public IDictionary<long, SkillDto> SkillsByCastId => SkillComponent.SkillsByCastId;
 
         public SkillComponent SkillComponent { get; }
 

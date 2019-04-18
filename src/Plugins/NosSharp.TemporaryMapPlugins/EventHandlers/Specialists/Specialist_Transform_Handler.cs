@@ -31,7 +31,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Specialists
     {
         private readonly ISkillService _skillService;
 
-        public Specialist_Transform_Handler(ISkillService skillService)
+        public Specialist_Transform_Handler(ILogger log, ISkillService skillService) : base(log)
         {
             _skillService = skillService;
         }
@@ -69,7 +69,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Specialists
                 return;
             }
 
-            if (player.SkillComponent.CooldownsBySkillId.Any())
+            if (player.CooldownsBySkillId.Any())
             {
                 Log.Info("[SP_TRANSFORM] Cooldown needs to be clean");
                 // should have no cooldowns

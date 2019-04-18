@@ -1,18 +1,18 @@
-﻿using ChickenAPI.Enums.Game.Entity;
-using ChickenAPI.Packets.Game.Server.Player;
+﻿using ChickenAPI.Packets.Enumerations;
+using ChickenAPI.Packets.ServerPackets.Player;
 
 namespace ChickenAPI.Game.Entities.Player.Extensions
 {
     public static class CModePacketExtension
     {
-        public static CModePacketBase GenerateCModePacket(this IPlayerEntity player) => new CModePacketBase
+        public static CModePacket GenerateCModePacket(this IPlayerEntity player) => new CModePacket
         {
             VisualType = VisualType.Player,
-            CharacterId = player.Id,
+            VisualId = player.Id,
             Morph = player.MorphId,
-            SpUpgrade = player.Sp?.Upgrade ?? 0,
-            SpDesign = player.Sp?.Design ?? 0,
-            ArenaWinner = player.Character.ArenaWinner
+            MorphUpgrade = player.Sp?.Upgrade ?? 0,
+            MorphDesign = player.Sp?.Design ?? 0,
+            MorphBonus = (byte)(player.Character.ArenaWinner ? 1 : 0)
         };
     }
 }

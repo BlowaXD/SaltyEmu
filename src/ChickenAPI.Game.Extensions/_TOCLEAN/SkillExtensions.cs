@@ -19,12 +19,12 @@ namespace ChickenAPI.Game.Skills.Extensions
         public static int GetCp(this IPlayerEntity player)
         {
             int cpMax = (player.Character.Class > CharacterClassType.Adventurer ? 40 : 0) + player.JobLevel * 2;
-            if (player.SkillComponent?.Skills?.Count == null)
+            if (player.Skills?.Count == null)
             {
                 return cpMax;
             }
 
-            int cpUsed = 0 + (int)player.SkillComponent?.Skills?.Values.Where(s => s != null).Sum(dto => dto.CpCost);
+            int cpUsed = 0 + (int)player.Skills?.Values.Where(s => s != null).Sum(dto => dto.CpCost);
             return cpMax - cpUsed;
         }
 
@@ -44,7 +44,7 @@ namespace ChickenAPI.Game.Skills.Extensions
             await player.ActualizeUiSkillList();
         }
 
-        public static void AddSkill(this SkillComponent component, SkillDto skill)
+        public static void AddSkill(this ISkillEntity component, SkillDto skill)
         {
             if (skill == null)
             {
@@ -64,14 +64,14 @@ namespace ChickenAPI.Game.Skills.Extensions
 
         public static async Task AddCharacterSkillAsync(this IPlayerEntity player, CharacterSkillDto skill)
         {
-            if (player.SkillComponent.CharacterSkills.ContainsKey(skill.Id))
+            if (player.CharacterSkills.ContainsKey(skill.Id))
             {
                 return;
             }
 
-            player.SkillComponent.CharacterSkills.Add(skill.Id, skill);
+            player.CharacterSkills.Add(skill.Id, skill);
             SkillDto skillDto = await SkillService.GetByIdAsync(skill.SkillId);
-            player.SkillComponent.AddSkill(skillDto);
+            player.AddSkill(skillDto);
         }
 
         public static void AddSkills(this IPlayerEntity player, IEnumerable<SkillDto> skills)
@@ -84,17 +84,17 @@ namespace ChickenAPI.Game.Skills.Extensions
 
         public static void AddSkill(this IPlayerEntity player, SkillDto skill)
         {
-            player.SkillComponent.AddSkill(skill);
+            player.AddSkill(skill);
         }
 
         public static void RemoveSkillsByClassId(this IPlayerEntity player, byte classId)
         {
-            IEnumerable<KeyValuePair<long, SkillDto>> skills = player.SkillComponent.Skills.Where(s => s.Value.Class == classId);
+            IEnumerable<KeyValuePair<long, SkillDto>> skills = player.Skills.Where(s => s.Value.Class == classId);
 
             foreach (KeyValuePair<long, SkillDto> pair in skills)
             {
-                player.SkillComponent.Skills.Remove(pair.Value.Id);
-                player.SkillComponent.SkillsByCastId.Remove(pair.Value.CastId);
+                player.Skills.Remove(pair.Value.Id);
+                player.SkillsByCastId.Remove(pair.Value.CastId);
             }
         }
     }

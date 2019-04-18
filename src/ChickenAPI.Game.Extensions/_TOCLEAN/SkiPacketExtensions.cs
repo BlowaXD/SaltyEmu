@@ -11,7 +11,7 @@ namespace ChickenAPI.Game.Skills.Extensions
     {
         public static IOrderedEnumerable<SkillDto> GetSpSkillsByCastIdAscending(this IPlayerEntity player)
         {
-            return player.SkillComponent.Skills.Values.Where(s => s.Class == player.GetSpClassId()).OrderBy(s => s.CastId);
+            return player.Skills.Values.Where(s => s.Class == player.GetSpClassId()).OrderBy(s => s.CastId);
         }
 
         public static byte GetSpClassId(this IPlayerEntity player) => player.Sp.GetClassId();
@@ -20,7 +20,7 @@ namespace ChickenAPI.Game.Skills.Extensions
 
         public static IOrderedEnumerable<SkillDto> GetSkillsByCastIdAscending(this IPlayerEntity player)
         {
-            return player.SkillComponent.Skills.Values.OrderBy(s => s.CastId);
+            return player.Skills.Values.OrderBy(s => s.CastId);
         }
 
         public static SkiPacket GenerateSkiPacket(this IPlayerEntity player)

@@ -25,6 +25,7 @@ namespace ChickenAPI.Game.Entities.Player
 
 
         CharacterDto Character { get; }
+        Dictionary<Guid, CharacterSkillDto> CharacterSkills { get; }
 
         CharacterNameAppearance NameAppearance { get; }
 

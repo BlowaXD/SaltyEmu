@@ -2,8 +2,8 @@
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Data.Character;
 using ChickenAPI.Game.Skills.Extensions;
-using ChickenAPI.Packets.Game.Server.Entities;
-using ChickenAPI.Packets.Game.Server.Player;
+using ChickenAPI.Packets.ServerPackets.Entities;
+using ChickenAPI.Packets.ServerPackets.Player;
 
 namespace ChickenAPI.Game.Entities.Player.Extensions
 {
@@ -19,13 +19,13 @@ namespace ChickenAPI.Game.Entities.Player.Extensions
                 LevelXp = (int)player.LevelXp,
                 JobLevel = player.JobLevel,
                 JobLevelXp = (int)player.JobLevelXp,
-                LevelXpMax = Algorithm.GetLevelXp(player.Character.Class, player.Level),
-                JobLevelXpMax = Algorithm.GetLevelXp(player.Character.Class, player.JobLevel),
+                XpLoad = Algorithm.GetLevelXp(player.Character.Class, player.Level),
+                JobXpLoad = Algorithm.GetLevelXp(player.Character.Class, player.JobLevel),
                 HeroLevel = player.HeroLevel,
                 Reputation = player.Character.Reput,
-                Cp = player.GetCp(),
-                HeroLevelXp = (int)player.HeroLevelXp,
-                HeroLevelXpMax = Algorithm.GetHeroLevelXp(player.Character.Class, player.HeroLevel)
+                SkillCp = player.GetCp(),
+                HeroXp = (int)player.HeroLevelXp,
+                HeroXpLoad = Algorithm.GetHeroLevelXp(player.Character.Class, player.HeroLevel)
             };
 
         public static LevelUpPacket GenerateLevelUpPacket(this IPlayerEntity player) =>
