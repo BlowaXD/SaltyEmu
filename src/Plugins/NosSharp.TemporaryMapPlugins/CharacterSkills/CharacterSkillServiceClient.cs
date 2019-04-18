@@ -3,13 +3,12 @@ using System.Threading.Tasks;
 using ChickenAPI.Core.IPC;
 using ChickenAPI.Data.Character;
 using SaltyEmu.Communication.Communicators;
-using SaltyEmu.Communication.Configs;
 
 namespace SaltyEmu.BasicPlugin.CharacterSkills
 {
-    public class CharacterSkillServiceClient : SynchronizedRepositoryMqtt<CharacterSkillDto>, ICharacterSkillService
+    public class CharacterSkillServiceClient : SynchronizedRpcRepository<CharacterSkillDto>, ICharacterSkillService
     {
-        public CharacterSkillServiceClient(MqttClientConfigurationBuilder builder, IIpcClient client) : base(builder, client)
+        public CharacterSkillServiceClient(IRpcClient client) : base(client)
         {
         }
 

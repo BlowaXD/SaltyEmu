@@ -4,16 +4,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using ChickenAPI.Core.IPC;
 using ChickenAPI.Data;
-using SaltyEmu.Communication.Configs;
 using SaltyEmu.Communication.Protocol.RepositoryPacket;
-using SaltyEmu.Communication.Serializers;
 
 namespace SaltyEmu.Communication.Communicators
 {
-    public abstract class SynchronizedRepositoryMqtt<T> : ISynchronizedRepository<T> where T : class, ISynchronizedDto
+    public abstract class SynchronizedRpcRepository<T> : ISynchronizedRepository<T> where T : class, ISynchronizedDto
     {
-        private readonly IIpcClient _client;
-        protected SynchronizedRepositoryMqtt(MqttClientConfigurationBuilder builder, IIpcClient client)
+        private readonly IRpcClient _client;
+        protected SynchronizedRpcRepository(IRpcClient client)
         {
             _client = client;
         }

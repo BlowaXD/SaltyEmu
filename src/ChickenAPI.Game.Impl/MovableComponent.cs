@@ -1,5 +1,6 @@
 ﻿using System;
 using Autofac;
+using ChickenAPI.Core.Events;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Utils;
 using ChickenAPI.Data.Character;
@@ -16,6 +17,7 @@ namespace ChickenAPI.Game.Movements.DataObjects
     /// </summary>
     public class MovableComponent : IComponent
     {
+        private static IAlgorithmService Algorithm => new Lazy<IAlgorithmService>(() => ChickenContainer.Instance.Resolve<IAlgorithmService>()).Value;
         private Position<short> _actual;
         private bool _isSitting;
 
@@ -37,7 +39,6 @@ namespace ChickenAPI.Game.Movements.DataObjects
             Speed = (byte)Algorithm.GetSpeed(entity.Character.Class, entity.Level);
         }
 
-        private static IAlgorithmService Algorithm => new Lazy<IAlgorithmService>(() => ChickenContainer.Instance.Resolve<IAlgorithmService>()).Value;
 
         /// <summary>
         ///     Entity Walking Speed
@@ -66,7 +67,7 @@ namespace ChickenAPI.Game.Movements.DataObjects
             set
             {
                 LastMove = DateTime.UtcNow;
-                OnMove(Entity, new MoveEventArgs { Component = this, New = value, Old = _actual });
+                OnMove(Entity, new MoveEventArgs { Component = Entity as IMovableEntity, New = value, Old = _actual });
                 _actual = value;
             }
         }
@@ -75,12 +76,9 @@ namespace ChickenAPI.Game.Movements.DataObjects
 
         public IEntity Entity { get; set; }
 
-        public static event TypedSenderEventHandler<IEntity, MoveEventArgs> Move;
-
         private static void OnMove(IEntity sender, MoveEventArgs e)
         {
             e.Component.LastMove = DateTime.UtcNow;
-            Move?.Invoke(sender, e);
         }
     }
 }

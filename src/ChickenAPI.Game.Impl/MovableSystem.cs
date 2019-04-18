@@ -1,22 +1,25 @@
 ﻿using System;
 using System.Linq;
 using System.Linq.Expressions;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Core.Utils;
 using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.IAs;
-using ChickenAPI.Game.Inventory.Extensions;
-using ChickenAPI.Game.Movements.Extensions;
 using ChickenAPI.Game._ECS.Entities;
 using ChickenAPI.Game._ECS.Systems;
-using ChickenAPI.Packets.Game.Server.Entities;
+using ChickenAPI.Packets.Enumerations;
+using ChickenAPI.Packets.ServerPackets.Entities;
 
 namespace ChickenAPI.Game.Movements
 {
     public class MovableSystem : SystemBase
     {
-        public MovableSystem(IEntityManager entityManager) : base(entityManager)
+        private readonly ILogger _log;
+
+        public MovableSystem(IEntityManager entityManager, ILogger log) : base(entityManager)
         {
+            _log = log;
         }
 
         protected override double RefreshRate => 3;
@@ -47,7 +50,7 @@ namespace ChickenAPI.Game.Movements
         {
             try
             {
-                MvPacket packet = entity.GenerateMvPacket();
+                MovePacket packet = entity.GenerateMvPacket();
                 entity.CurrentMap.BroadcastAsync(packet).ConfigureAwait(false).GetAwaiter().GetResult();
 
                 if (entity is IPlayerEntity playerEntity)
@@ -57,7 +60,7 @@ namespace ChickenAPI.Game.Movements
             }
             catch (Exception e)
             {
-                Log.Error("Move()", e);
+                _log.Error("Move()", e);
             }
         }
 

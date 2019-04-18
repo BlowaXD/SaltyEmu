@@ -22,6 +22,9 @@ using ChickenAPI.Game.Specialists;
 using ChickenAPI.Game._ECS.Entities;
 using ChickenAPI.Game._Network;
 using ChickenAPI.Packets;
+using ChickenAPI.Packets.Enumerations;
+using ChickenAPI.Packets.Interfaces;
+using ChickenAPI.Core.Logging;
 
 namespace ChickenAPI.Game.Maps
 {
@@ -115,7 +118,7 @@ namespace ChickenAPI.Game.Maps
 
         private void InitializeSystems()
         {
-            AddSystem(new MovableSystem(this));
+            AddSystem(new MovableSystem(this, ChickenContainer.Instance.Resolve<ILogger>()));
             AddSystem(new IASystem(this, Map));
             AddSystem(new EffectSystem(this));
             AddSystem(new GroupSystem(this));
@@ -138,6 +141,7 @@ namespace ChickenAPI.Game.Maps
                 {
                     npcSkills = new List<NpcMonsterSkillDto>();
                 }
+
                 new NpcEntity(npc, shop).TransferEntity(this);
             }
         }

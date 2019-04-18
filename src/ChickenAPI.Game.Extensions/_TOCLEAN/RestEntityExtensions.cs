@@ -3,7 +3,8 @@ using ChickenAPI.Game.Entities.Monster;
 using ChickenAPI.Game.Entities.Npc;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game._ECS.Entities;
-using ChickenAPI.Packets.Game.Server.Entities;
+using ChickenAPI.Packets.Enumerations;
+using ChickenAPI.Packets.ServerPackets.Entities;
 
 namespace ChickenAPI.Game.Movements.Extensions
 {
@@ -32,7 +33,7 @@ namespace ChickenAPI.Game.Movements.Extensions
                     return new RestPacket
                     {
                         VisualType = VisualType.Player,
-                        VisualId = player.Character.Id,
+                        VisualId = player.Id,
                         IsSitting = player.IsSitting
                     };
                 default:

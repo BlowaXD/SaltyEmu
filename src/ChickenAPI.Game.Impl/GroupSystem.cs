@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Linq.Expressions;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Game.Entities.Player.Extensions;
 using ChickenAPI.Game._ECS.Entities;
 using ChickenAPI.Game._ECS.Systems;
 

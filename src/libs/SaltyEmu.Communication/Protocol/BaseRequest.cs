@@ -5,11 +5,11 @@ using ChickenAPI.Core.IPC.Protocol;
 
 namespace SaltyEmu.Communication.Protocol
 {
-    public class BaseRequest : IIpcRequest
+    public class BaseRequest : ISyncRpcRequest
     {
         private Guid _id;
 
-        public IIpcServer Server { get; set; }
+        public IRpcServer Server { get; set; }
 
         public Guid Id
         {
@@ -17,7 +17,7 @@ namespace SaltyEmu.Communication.Protocol
             set => _id = value;
         }
 
-        public Task ReplyAsync<T, TRequest>(T response) where T : IIpcResponse
+        public Task ReplyAsync<T, TRequest>(T response) where T : ISyncRpcResponse
         {
             response.RequestId = Id;
             return Server.ResponseAsync(response, typeof(TRequest));

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Game._ECS.Systems;
+using ChickenAPI.Packets.Enumerations;
 
 namespace ChickenAPI.Game._ECS.Entities
 {

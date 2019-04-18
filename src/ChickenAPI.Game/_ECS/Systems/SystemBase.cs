@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Linq;
 using System.Linq.Expressions;
-using ChickenAPI.Core.Logging;
 using ChickenAPI.Game._ECS.Entities;
 
 namespace ChickenAPI.Game._ECS.Systems
 {
     public abstract class SystemBase : ISystem
     {
-        protected static readonly Logger Log = Logger.GetLogger<SystemBase>();
         private Func<IEntity, bool> _filter;
 
         private DateTime _lastUpdate;

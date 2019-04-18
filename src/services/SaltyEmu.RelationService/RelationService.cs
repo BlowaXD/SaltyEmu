@@ -97,7 +97,7 @@ namespace SaltyEmu.RelationService
             ChickenContainer.Builder.Register(s => new MqttClientConfigurationBuilder().ConnectTo("localhost").WithName("relation-service-client"));
             ChickenContainer.Builder.Register(s => new MqttServerConfigurationBuilder().ConnectTo("localhost").WithName("relation-service-server"));
             ChickenContainer.Builder.RegisterAssemblyTypes(typeof(RelationService).Assembly).AsClosedTypesOf(typeof(GenericIpcRequestHandler<,>)).PropertiesAutowired();
-            ChickenContainer.Builder.RegisterAssemblyTypes(typeof(RelationService).Assembly).AsClosedTypesOf(typeof(GenericIpcPacketHandler<>)).PropertiesAutowired();
+            ChickenContainer.Builder.RegisterAssemblyTypes(typeof(RelationService).Assembly).AsClosedTypesOf(typeof(GenericAsyncRpcRequestHandler<>)).PropertiesAutowired();
             ChickenContainer.Builder.RegisterAssemblyTypes(typeof(RelationService).Assembly).AsImplementedInterfaces().PropertiesAutowired();
         }
 
@@ -117,7 +117,7 @@ namespace SaltyEmu.RelationService
             EnablePlugins(PluginEnableTime.PostContainerBuild);
             var server = ChickenContainer.Instance.Resolve<IIpcServer>();
             var container = ChickenContainer.Instance.Resolve<IIpcPacketHandlersContainer>();
-            foreach (Type handlerType in typeof(RelationService).Assembly.GetTypesImplementingGenericClass(typeof(GenericIpcRequestHandler<,>), typeof(GenericIpcPacketHandler<>)))
+            foreach (Type handlerType in typeof(RelationService).Assembly.GetTypesImplementingGenericClass(typeof(GenericIpcRequestHandler<,>), typeof(GenericAsyncRpcRequestHandler<>)))
             {
                 try
                 {

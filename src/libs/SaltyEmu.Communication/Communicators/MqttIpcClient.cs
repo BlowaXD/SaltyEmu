@@ -17,9 +17,9 @@ using SaltyEmu.Communication.Utils;
 
 namespace SaltyEmu.Communication.Communicators
 {
-    public sealed class MqttIpcClient : IIpcClient
+    public sealed class MqttIpcClient : IRpcClient
     {
-        private readonly Logger _log = Logger.GetLogger<MqttIpcClient>();
+        private readonly ILogger _log;
 
         private readonly IIpcPacketRouter _router;
         private readonly IIpcSerializer _serializer;
@@ -93,7 +93,7 @@ namespace SaltyEmu.Communication.Communicators
             return routingInfos;
         }
 
-        public async Task<TResponse> RequestAsync<TResponse>(IIpcRequest packet) where TResponse : class, IIpcResponse
+        public async Task<TResponse> RequestAsync<TResponse>(ISyncRpcRequest packet) where TResponse : class, ISyncRpcResponse
         {
             // add packet to requests
             PendingRequest request = _requestFactory.Create(packet);
@@ -106,7 +106,7 @@ namespace SaltyEmu.Communication.Communicators
             PacketContainer container = _packetFactory.ToPacket(packet.GetType(), packet);
             await SendAsync(container);
 
-            IIpcResponse tmp = await request.Response.Task;
+            ISyncRpcResponse tmp = await request.Response.Task;
             return tmp as TResponse;
         }
 
@@ -121,7 +121,7 @@ namespace SaltyEmu.Communication.Communicators
             );
         }
 
-        public Task BroadcastAsync<T>(T packet) where T : IIpcPacket
+        public Task BroadcastAsync<T>(T packet) where T : IAsyncRpcRequest
         {
             PacketContainer container = _packetFactory.ToPacket(typeof(T), packet);
             return SendAsync(container);

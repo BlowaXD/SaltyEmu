@@ -7,10 +7,10 @@ using SaltyEmu.Communication.Protocol.RepositoryPacket;
 
 namespace SaltyEmu.Communication.Communicators
 {
-    public abstract class MappedIpcRepository<T> : IMappedRepository<T> where T : class, IMappedDto
+    public abstract class MappedRpcRepository<T> : IMappedRepository<T> where T : class, IMappedDto
     {
-        protected readonly IIpcClient Client;
-        protected MappedIpcRepository(IIpcClient client)
+        protected readonly IRpcClient Client;
+        protected MappedRpcRepository(IRpcClient client)
         {
             Client = client;
         }

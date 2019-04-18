@@ -15,8 +15,8 @@ namespace SaltyEmu.Communication.Protocol
                 Content = content
             };
 
-        public PacketContainer ToPacket<T>(IIpcPacket packet) => ToPacket(typeof(T), packet);
+        public PacketContainer ToPacket<T>(T packet) where T : IAsyncRpcRequest => ToPacket(typeof(T), packet);
 
-        public PacketContainer ToPacket(Type type, IIpcPacket packet) => Create(type, JsonConvert.SerializeObject(packet));
+        public PacketContainer ToPacket(Type type, IAsyncRpcRequest packet) => Create(type, JsonConvert.SerializeObject(packet));
     }
 }

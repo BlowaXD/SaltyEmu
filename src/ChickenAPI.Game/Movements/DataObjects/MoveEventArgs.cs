@@ -5,7 +5,7 @@ namespace ChickenAPI.Game.Movements.DataObjects
 {
     public class MoveEventArgs : EventArgs
     {
-        public MovableComponent Component { get; set; }
+        public IMovableEntity Component { get; set; }
         public Position<short> Old { get; set; }
         public Position<short> New { get; set; }
     }

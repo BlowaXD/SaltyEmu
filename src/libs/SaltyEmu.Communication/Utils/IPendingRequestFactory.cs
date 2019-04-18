@@ -4,6 +4,6 @@ namespace SaltyEmu.Communication.Utils
 {
     public interface IPendingRequestFactory
     {
-        PendingRequest Create(IIpcRequest request);
+        PendingRequest Create(ISyncRpcRequest request);
     }
 }

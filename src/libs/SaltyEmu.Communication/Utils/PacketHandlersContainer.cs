@@ -9,8 +9,13 @@ namespace SaltyEmu.Communication.Utils
 {
     public sealed class PacketHandlersContainer : IIpcPacketHandlersContainer
     {
-        private static readonly Logger Log = Logger.GetLogger<PacketHandlersContainer>();
+        private readonly ILogger _log;
         private readonly Dictionary<Type, IIpcPacketHandler> _packetHandlers = new Dictionary<Type, IIpcPacketHandler>();
+
+        public PacketHandlersContainer(ILogger log)
+        {
+            _log = log;
+        }
 
         public event EventHandler<Type> Registered;
         public event EventHandler<Type> Unregistered;
@@ -19,25 +24,25 @@ namespace SaltyEmu.Communication.Utils
         {
             if (_packetHandlers.ContainsKey(type))
             {
-                Log.Info($"{type} is already handled");
+                _log.Info($"{type} is already handled");
                 return Task.CompletedTask;
             }
 
-            Log.Warn($"HANDLING -> {type}");
+            _log.Warn($"HANDLING -> {type}");
             _packetHandlers.Add(type, handler);
             OnRegistered(type);
             return Task.CompletedTask;
         }
 
-        public Task HandleAsync(IIpcPacket request, Type type)
+        public Task HandleAsync(IAsyncRpcRequest request, Type type)
         {
             if (!_packetHandlers.TryGetValue(type, out IIpcPacketHandler handler))
             {
-                Log.Warn($"{type} could not be found !");
+                _log.Warn($"{type} could not be found !");
                 return Task.CompletedTask;
             }
 
-            Log.Info($"Handling {type.Name} request");
+            _log.Info($"Handling {type.Name} request");
             return handler.Handle(request);
         }
 

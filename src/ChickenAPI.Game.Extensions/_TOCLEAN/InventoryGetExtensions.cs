@@ -7,7 +7,7 @@ using ChickenAPI.Data.Item;
 using ChickenAPI.Enums.Game.Items;
 using ChickenAPI.Game.Configuration;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Packets.Game.Server.Inventory;
+using ChickenAPI.Packets.ServerPackets.Inventory;
 
 namespace ChickenAPI.Game.Inventory.Extensions
 {
@@ -16,6 +16,16 @@ namespace ChickenAPI.Game.Inventory.Extensions
         private static readonly IGameConfiguration GameConf = new Lazy<IGameConfiguration>(ChickenContainer.Instance.Resolve<IGameConfiguration>).Value;
         public static ItemInstanceDto GetWeared(this InventoryComponent inv, EquipmentType equipmentType) => inv.Wear[(int)equipmentType];
 
+        public static IvnSubPacket GenerateIvnSubPacket(this ItemInstanceDto item)
+        {
+            return new IvnSubPacket
+            {
+                VNum = (short)item.ItemId,
+                RareAmount = item.Rarity,
+                UpgradeDesign = item.Item.IsColored && item.Item.EquipmentSlot == EquipmentType.Sp ? item.Design : item.Upgrade,
+                SecondUpgrade = item.SpStoneUpgrade,
+            };
+        }
 
         public static InvPacket GenerateInventoryPacket(this IPlayerEntity player, InventoryType type)
         {
@@ -23,8 +33,7 @@ namespace ChickenAPI.Game.Inventory.Extensions
 
             var packet = new InvPacket
             {
-                InventoryType = type,
-                Items = new List<string>()
+                IvnSubPackets = new List<IvnSubPacket>()
             };
 
             if (items.All(s => s == null))
@@ -35,19 +44,19 @@ namespace ChickenAPI.Game.Inventory.Extensions
             switch (type)
             {
                 case InventoryType.Equipment:
-                    packet.Items.AddRange(items.Where(s => s != null).Select(s =>
-                        $"{s.Slot}.{s.ItemId}.{s.Rarity}.{(s.Item.IsColored && s.Item.EquipmentSlot == EquipmentType.Sp ? s.Design : s.Upgrade)}.{s.SpStoneUpgrade}"));
+                    packet.IvnSubPackets.AddRange(items.Where(s => s != null).Select(s => s.GenerateIvnSubPacket()));
                     break;
 
                 case InventoryType.Etc:
                 case InventoryType.Main:
-                    packet.Items.AddRange(items.Where(s => s != null).Select(s =>
-                        $"{s.Slot}.{s.ItemId}.{s.Amount}.0"));
+
+                    packet.IvnSubPackets.AddRange(items.Where(s => s != null).Select(s => s.GenerateIvnSubPacket()));
+                    // $"{s.Slot}.{s.ItemId}.{s.Amount}.0"));
                     break;
 
                 case InventoryType.Miniland:
-                    packet.Items.AddRange(items.Where(s => s != null).Select(s =>
-                        $"{s.Slot}.{s.ItemId}.{s.Amount}"));
+                    packet.IvnSubPackets.AddRange(items.Where(s => s != null).Select(s => s.GenerateIvnSubPacket()));
+                    // $"{s.Slot}.{s.ItemId}.{s.Amount}"));
                     break;
                 case InventoryType.Wear:
                     break;

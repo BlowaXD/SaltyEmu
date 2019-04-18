@@ -7,18 +7,14 @@ using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Maths;
 using ChickenAPI.Core.Utils;
 using ChickenAPI.Data.Skills;
-using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Enums.Game.Skill;
 using ChickenAPI.Game.Battle.Interfaces;
-using ChickenAPI.Game.Entities;
-using ChickenAPI.Game.Entities.Monster;
-using ChickenAPI.Game.Entities.Npc;
 using ChickenAPI.Game.Maps;
-using ChickenAPI.Game.Movements;
-using ChickenAPI.Game.Movements.Extensions;
 using ChickenAPI.Game.Skills.Args;
 using ChickenAPI.Game._ECS.Entities;
 using ChickenAPI.Game._ECS.Systems;
+using ChickenAPI.Game.Movements.Extensions;
+using ChickenAPI.Packets.Enumerations;
 
 namespace ChickenAPI.Game.IAs
 {

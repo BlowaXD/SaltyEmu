@@ -1,5 +1,6 @@
 ﻿using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Game._Events;
+using ChickenAPI.Packets.Enumerations;
 
 namespace ChickenAPI.Game.Shops.Events
 {

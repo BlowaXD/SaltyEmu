@@ -22,7 +22,7 @@ namespace SaltyEmu.FriendsPlugin.Services
             _client = client;
         }
 
-        private Task<TResponse> RequestAsync<TResponse>(IIpcRequest request) where TResponse : class, IIpcResponse
+        private Task<TResponse> RequestAsync<TResponse>(IRpcSyncRequest request) where TResponse : class, ISyncRpcResponse
         {
             return _client.RequestAsync<TResponse>(request);
         }

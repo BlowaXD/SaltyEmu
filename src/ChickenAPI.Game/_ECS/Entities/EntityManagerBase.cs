@@ -7,13 +7,13 @@ using ChickenAPI.Core.Logging;
 using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game._ECS.Systems;
+using ChickenAPI.Packets.Enumerations;
 
 namespace ChickenAPI.Game._ECS.Entities
 {
     public abstract class EntityManagerBase : IEntityManager
     {
         protected static IEntityManagerContainer EmContainer = new Lazy<IEntityManagerContainer>(() => ChickenContainer.Instance.Resolve<IEntityManagerContainer>()).Value;
-        protected static readonly Logger Log = Logger.GetLogger<EntityManagerBase>();
 
         // entities
         protected readonly HashSet<IPlayerEntity> _players = new HashSet<IPlayerEntity>();

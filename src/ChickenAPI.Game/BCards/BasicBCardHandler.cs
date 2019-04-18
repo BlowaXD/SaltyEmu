@@ -31,7 +31,6 @@ namespace ChickenAPI.Game.BCards
 
         public Task Handle(IBattleEntity target, IBattleEntity sender, BCardDto bcard)
         {
-            Log.Info($"Handling : {HandledType}");
             _func(target, sender, bcard);
             return Task.CompletedTask;
         }

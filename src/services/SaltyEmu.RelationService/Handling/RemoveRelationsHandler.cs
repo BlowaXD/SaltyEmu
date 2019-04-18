@@ -8,7 +8,7 @@ using SaltyEmu.FriendsPlugin.Protocol;
 
 namespace SaltyEmu.RelationService.Handling
 {
-    public class RemoveRelationsHandler : GenericIpcPacketHandler<RemoveRelations>
+    public class RemoveRelationsHandler : GenericAsyncRpcRequestHandler<RemoveRelations>
     {
         private readonly IRelationDao _relations;
 

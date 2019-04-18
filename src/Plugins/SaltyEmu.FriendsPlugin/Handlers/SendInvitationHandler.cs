@@ -9,7 +9,7 @@ using SaltyEmu.FriendsPlugin.Protocol;
 
 namespace SaltyEmu.FriendsPlugin.Handlers
 {
-    internal class SendInvitationHandler : GenericIpcPacketHandler<SendInvitation>
+    internal class SendInvitationHandler : GenericAsyncRpcRequestHandler<SendInvitation>
     {
         protected override Task Handle(SendInvitation request)
         {

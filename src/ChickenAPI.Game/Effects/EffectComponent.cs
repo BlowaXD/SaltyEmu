@@ -19,14 +19,14 @@ namespace ChickenAPI.Game.Effects
 
         public class Effect
         {
-            public Effect(long id, long cooldown)
+            public Effect(int id, long cooldown)
             {
                 Id = id;
                 Cooldown = cooldown;
                 LastCast = DateTime.MinValue;
             }
 
-            public long Id { get; }
+            public int Id { get; }
 
             /// <summary>
             ///     In milliseconds

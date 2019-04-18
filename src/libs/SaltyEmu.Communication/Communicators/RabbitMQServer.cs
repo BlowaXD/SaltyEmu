@@ -12,14 +12,14 @@ using SaltyEmu.Communication.Protocol;
 
 namespace SaltyEmu.Communication.Communicators
 {
-    public abstract class RabbitMqServer : IIpcServer
+    public abstract class RabbitMqServer : IRpcServer
     {
         private readonly RabbitMqConfiguration _configuration;
         private readonly string _requestQueueName;
         private readonly string _responseQueueName;
         private readonly string _broadcastQueueName;
         private const string ExchangeName = ""; // default exchange
-        private static readonly Logger Log = Logger.GetLogger<RabbitMqServer>();
+        protected readonly ILogger Log;
         private readonly IModel _channel;
 
         private readonly IConnection _connection;
@@ -27,10 +27,11 @@ namespace SaltyEmu.Communication.Communicators
 
         private readonly IIpcPacketHandlersContainer _packetHandlersContainer;
 
-        protected RabbitMqServer(RabbitMqConfiguration config, IIpcPacketHandlersContainer packetHandlersContainer)
+        protected RabbitMqServer(RabbitMqConfiguration config, IIpcPacketHandlersContainer packetHandlersContainer, ILogger log)
         {
             _configuration = config;
             _packetHandlersContainer = packetHandlersContainer;
+            Log = log;
             var factory = new ConnectionFactory { HostName = _configuration.Address, Password = _configuration.Password, Port = _configuration.Port };
 
             _requestQueueName = _configuration.RequestQueueName;
@@ -53,7 +54,7 @@ namespace SaltyEmu.Communication.Communicators
             Log.Info("IPC Server launched !");
         }
 
-        public Task ResponseAsync<T>(T response) where T : IIpcResponse
+        public Task ResponseAsync<T>(T response) where T : ISyncRpcResponse
         {
             return Task.Run(() => { Publish(_packetContainerFactory.ToPacket<T>(response), _responseQueueName); });
         }
@@ -99,7 +100,7 @@ namespace SaltyEmu.Communication.Communicators
             _channel.BasicPublish(ExchangeName, queueName, props, messageBytes);
         }
 
-        public Task ResponseAsync<T>(T response, Type requestType) where T : IIpcResponse
+        public Task ResponseAsync<T>(T response, Type requestType) where T : ISyncRpcResponse
         {
             return Task.Run(() => { Publish(_packetContainerFactory.ToPacket<T>(response), _responseQueueName); });
         }

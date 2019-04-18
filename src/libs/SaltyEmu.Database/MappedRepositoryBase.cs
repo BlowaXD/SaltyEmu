@@ -10,22 +10,22 @@ using EFCore.BulkExtensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Storage;
-using Newtonsoft.Json;
 using Z.EntityFramework.Plus;
 
 namespace SaltyEmu.Database
 {
     public class MappedRepositoryBase<TObject, TModel> : IMappedRepository<TObject> where TObject : class, IMappedDto where TModel : class, IMappedModel, new()
     {
-        protected static readonly Logger Log = Logger.GetLogger<TObject>();
+        protected readonly ILogger Log;
         protected readonly DbContext Context;
         protected readonly DbSet<TModel> DbSet;
         protected readonly IMapper Mapper;
 
-        public MappedRepositoryBase(DbContext context, IMapper mapper)
+        public MappedRepositoryBase(DbContext context, IMapper mapper, ILogger log)
         {
             Context = context;
             Mapper = mapper;
+            Log = log;
             DbSet = context.Set<TModel>();
         }
 
@@ -78,7 +78,6 @@ namespace SaltyEmu.Database
             }
             catch (Exception e)
             {
-                Log.Warn($"{JsonConvert.SerializeObject(obj)}");
                 Log.Error("[SAVE]", e);
                 return null;
             }
@@ -245,7 +244,6 @@ namespace SaltyEmu.Database
             }
             catch (Exception e)
             {
-                Log.Warn($"{JsonConvert.SerializeObject(obj)}");
                 Log.Error("[SAVE]", e);
                 return null;
             }

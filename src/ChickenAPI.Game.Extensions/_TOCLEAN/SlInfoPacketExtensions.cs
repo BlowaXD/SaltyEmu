@@ -3,8 +3,7 @@ using Autofac;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Data.Item;
 using ChickenAPI.Data.Skills;
-using ChickenAPI.Game.Skills.Extensions;
-using ChickenAPI.Packets.Game.Server.Inventory;
+using ChickenAPI.Packets.ServerPackets.Specialists;
 
 namespace ChickenAPI.Game.Inventory.Extensions
 {

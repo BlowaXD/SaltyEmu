@@ -7,9 +7,9 @@ using SaltyEmu.FamilyPlugin.Communication;
 
 namespace SaltyEmu.FamilyPlugin
 {
-    public class FamilyIpcClient : MappedIpcRepository<FamilyDto>, IFamilyService
+    public class FamilyRpcClient : MappedRpcRepository<FamilyDto>, IFamilyService
     {
-        public FamilyIpcClient(IIpcClient builder) : base(builder)
+        public FamilyRpcClient(IRpcClient builder) : base(builder)
         {
         }
 

@@ -8,7 +8,7 @@ using SaltyEmu.FriendsPlugin.Protocol;
 
 namespace SaltyEmu.RelationService.Handling
 {
-    public class SendInvitationHandler : GenericIpcPacketHandler<SendInvitation>
+    public class SendInvitationHandler : GenericAsyncRpcRequestHandler<SendInvitation>
     {
         private readonly IRelationInvitationDao _invitations;
 

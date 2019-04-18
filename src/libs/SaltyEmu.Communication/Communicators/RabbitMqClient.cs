@@ -14,9 +14,9 @@ using SaltyEmu.Communication.Utils;
 
 namespace SaltyEmu.Communication.Communicators
 {
-    public abstract class RabbitMqClient : IDisposable, IIpcClient
+    public abstract class RabbitMqClient : IDisposable, IRpcClient
     {
-        private static readonly Logger Log = Logger.GetLogger<RabbitMqClient>();
+        private static readonly ILogger Log;
         private readonly RabbitMqConfiguration _configuration;
         private readonly string _requestQueueName;
         private readonly string _responseQueueName;
@@ -63,7 +63,7 @@ namespace SaltyEmu.Communication.Communicators
             _channel?.Dispose();
         }
 
-        public async Task<T> RequestAsync<T>(IIpcRequest packet) where T : class, IIpcResponse
+        public async Task<T> RequestAsync<T>(ISyncRpcRequest packet) where T : class, ISyncRpcResponse
         {
             // add packet to requests
             PendingRequest request = _requestFactory.Create(packet);
@@ -77,15 +77,15 @@ namespace SaltyEmu.Communication.Communicators
 
             Publish(container, _requestQueueName);
 
-            IIpcResponse tmp = await request.Response.Task;
+            ISyncRpcResponse tmp = await request.Response.Task;
             return tmp as T;
         }
 
-        public Task BroadcastAsync<T>(T packet) where T : IIpcPacket
+        public Task BroadcastAsync<T>(T packet) where T : IAsyncRpcRequest
         {
             return Task.Run(() =>
             {
-                PacketContainer tmp = _packetFactory.ToPacket<T>(packet);
+                PacketContainer tmp = _packetFactory.ToPacket(packet);
                 Publish(tmp, _broadcastQueueName);
             });
         }

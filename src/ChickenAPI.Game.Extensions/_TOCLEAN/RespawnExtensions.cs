@@ -1,6 +1,5 @@
 ﻿using System.Threading.Tasks;
 using ChickenAPI.Game.Battle.Interfaces;
-using ChickenAPI.Game.Inventory.Extensions;
 
 namespace ChickenAPI.Game.IAs
 {
