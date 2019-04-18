@@ -8,12 +8,12 @@ using ChickenAPI.Core.Logging;
 using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Game._ECS.Components;
 using ChickenAPI.Game._Events;
+using ChickenAPI.Packets.Enumerations;
 
 namespace ChickenAPI.Game._ECS.Entities
 {
     public abstract class EntityBase : IEntity
     {
-        protected static readonly Logger Log = Logger.GetLogger<EntityBase>();
         protected static readonly IEventPipeline EventPipelineAsync = new Lazy<IEventPipeline>(() => ChickenContainer.Instance.Resolve<IEventPipeline>()).Value;
         protected Dictionary<Type, IComponent> Components = new Dictionary<Type, IComponent>();
 

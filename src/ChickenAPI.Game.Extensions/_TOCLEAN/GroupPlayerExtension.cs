@@ -19,7 +19,7 @@ namespace ChickenAPI.Game.Groups.Extensions
 
             return new PstPacket
             {
-                VisualType = VisualType.Character,
+                VisualType = VisualType.Player,
                 GroupIndex = ++iconIndex,
                 VisualId = entity.Id,
                 HpPercentage = entity.HpPercentage,
@@ -42,7 +42,7 @@ namespace ChickenAPI.Game.Groups.Extensions
 
             return new PstPacket
             {
-                VisualType = VisualType.Character,
+                VisualType = VisualType.Player,
                 GroupIndex = iconIndex++,
                 VisualId = entity.Id,
                 HpPercentage = entity.HpPercentage,

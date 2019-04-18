@@ -15,6 +15,7 @@ using ChickenAPI.Game.Shops;
 using ChickenAPI.Game.Specialists;
 using ChickenAPI.Game._Network;
 using ChickenAPI.Packets;
+using ChickenAPI.Packets.Interfaces;
 
 namespace ChickenAPI.Game.Entities.Player
 {

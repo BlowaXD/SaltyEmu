@@ -57,7 +57,7 @@ namespace ChickenAPI.Game.Maps
         public bool IsPvpEnabled => false;
         public IEnumerable<IPlayerEntity> Players => _players;
 
-        public IPlayerEntity GetPlayerById(long id) => GetEntity<IPlayerEntity>(id, VisualType.Character);
+        public IPlayerEntity GetPlayerById(long id) => GetEntity<IPlayerEntity>(id, VisualType.Player);
 
         public IEnumerable<IPlayerEntity> GetPlayersInRange(Position<short> pos, int range) =>
             _players.Where(e => PositionHelper.GetDistance(pos, e.Position) < range);

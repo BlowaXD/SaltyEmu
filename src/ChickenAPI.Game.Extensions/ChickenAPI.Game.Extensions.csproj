@@ -5,8 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="ChickenAPI.Core" Version="1.0.0" />
+    <PackageReference Include="ChickenAPI.Packets" Version="0.4.10" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\ChickenAPI.Game\ChickenAPI.Game.csproj" />
-    <ProjectReference Include="..\ChickenAPI.Packets\ChickenAPI.Packets.csproj" />
   </ItemGroup>
 
 </Project>

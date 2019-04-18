@@ -31,7 +31,7 @@ namespace ChickenAPI.Game.Movements.Extensions
                 case IPlayerEntity player:
                     return new RestPacket
                     {
-                        VisualType = VisualType.Character,
+                        VisualType = VisualType.Player,
                         VisualId = player.Character.Id,
                         IsSitting = player.IsSitting
                     };

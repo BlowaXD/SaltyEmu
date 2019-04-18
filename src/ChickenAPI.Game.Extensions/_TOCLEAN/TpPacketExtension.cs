@@ -4,7 +4,6 @@ using ChickenAPI.Game.Entities.Npc;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Movements;
 using ChickenAPI.Game._ECS.Entities;
-using ChickenAPI.Packets.Game.Server.Entities;
 
 namespace ChickenAPI.Game.Entities.Extensions
 {
@@ -27,7 +26,7 @@ namespace ChickenAPI.Game.Entities.Extensions
             {
                 case IPlayerEntity player:
                     packet.VisualId = player.Character.Id;
-                    packet.VisualType = VisualType.Character;
+                    packet.VisualType = VisualType.Player;
                     return packet;
                 case IMonsterEntity monster:
                     packet.VisualType = VisualType.Monster;

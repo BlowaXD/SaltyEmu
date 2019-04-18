@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using ChickenAPI.Core.Logging;
 using ChickenAPI.Core.Plugins;
+using Logger = SaltyEmu.Core.Logging.Logger;
 
 namespace SaltyEmu.Core.Plugins
 {

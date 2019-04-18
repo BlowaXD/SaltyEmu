@@ -39,8 +39,8 @@ namespace NW.Plugins.PacketHandling.Skill
             IBattleEntity target = null;
             switch (packet.TargetVisualType)
             {
-                case VisualType.Character:
-                    target = player.CurrentMap.GetEntity<IPlayerEntity>(packet.TargetId, VisualType.Character);
+                case VisualType.Player:
+                    target = player.CurrentMap.GetEntity<IPlayerEntity>(packet.TargetId, VisualType.Player);
                     break;
                 case VisualType.Monster:
                     target = player.CurrentMap.GetEntity<IMonsterEntity>(packet.TargetId, VisualType.Monster);

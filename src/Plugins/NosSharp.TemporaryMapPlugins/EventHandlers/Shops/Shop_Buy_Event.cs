@@ -45,8 +45,8 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Shops
 
             switch (e.Type)
             {
-                case VisualType.Character:
-                    IPlayerEntity shop = player.CurrentMap.GetEntitiesByType<IPlayerEntity>(VisualType.Character).FirstOrDefault(s => s.Character.Id == e.OwnerId);
+                case VisualType.Player:
+                    IPlayerEntity shop = player.CurrentMap.GetEntitiesByType<IPlayerEntity>(VisualType.Player).FirstOrDefault(s => s.Character.Id == e.OwnerId);
                     if (shop == null)
                     {
                         return;

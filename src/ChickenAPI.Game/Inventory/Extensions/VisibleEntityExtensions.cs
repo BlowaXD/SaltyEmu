@@ -171,7 +171,7 @@ namespace ChickenAPI.Game.Inventory.Extensions
         private static InPacket GenerateInPlayer(IPlayerEntity player) =>
             new InPacket
             {
-                VisualType = VisualType.Character,
+                VisualType = VisualType.Player,
                 Name = player.Character.Name,
                 TransportId = "-",
                 VNum = player.Character.Id,

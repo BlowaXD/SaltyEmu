@@ -7,7 +7,7 @@ namespace ChickenAPI.Game.Entities.Player.Extensions
     {
         public static CModePacketBase GenerateCModePacket(this IPlayerEntity player) => new CModePacketBase
         {
-            VisualType = VisualType.Character,
+            VisualType = VisualType.Player,
             CharacterId = player.Id,
             Morph = player.MorphId,
             SpUpgrade = player.Sp?.Upgrade ?? 0,

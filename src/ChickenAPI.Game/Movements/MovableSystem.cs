@@ -25,7 +25,7 @@ namespace ChickenAPI.Game.Movements
 
         private static bool MovableFilter(IEntity entity)
         {
-            if (entity.Type == VisualType.Character)
+            if (entity.Type == VisualType.Player)
             {
                 return false;
             }

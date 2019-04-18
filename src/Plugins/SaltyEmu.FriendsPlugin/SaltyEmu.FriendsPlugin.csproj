@@ -11,5 +11,8 @@
   <ItemGroup>
     <Protobuf Include="**/*.proto" />
   </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="ChickenAPI.Core" Version="1.0.0" />
+  </ItemGroup>
 
 </Project>

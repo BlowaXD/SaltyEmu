@@ -15,7 +15,7 @@ namespace ChickenAPI.Game.Entities.Player.Extensions
             {
                 return new PairyPacket
                 {
-                    VisualType = VisualType.Character,
+                    VisualType = VisualType.Player,
                     CharacterId = player.Character.Id,
                     FairyMoveType = 0,
                     ElementType = 0,
@@ -27,7 +27,7 @@ namespace ChickenAPI.Game.Entities.Player.Extensions
 
             return new PairyPacket
             {
-                VisualType = VisualType.Character,
+                VisualType = VisualType.Player,
                 CharacterId = player.Character.Id,
                 ElementType = fairy.ElementType,
                 FairyLevel = fairy.Upgrade,

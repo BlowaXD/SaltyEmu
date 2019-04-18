@@ -25,15 +25,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Autofac" Version="4.8.1" />
-    <PackageReference Include="NLog" Version="4.5.11" />
-    <PackageReference Include="NLog.Config" Version="4.5.11" />
+    <PackageReference Include="ChickenAPI.Core" Version="1.0.0" />
+    <PackageReference Include="ChickenAPI.Packets" Version="0.4.10" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ChickenAPI.Core\ChickenAPI.Core.csproj" />
     <ProjectReference Include="..\ChickenAPI.Data\ChickenAPI.Data.csproj" />
     <ProjectReference Include="..\ChickenAPI.Enums\ChickenAPI.Enums.csproj" />
-    <ProjectReference Include="..\ChickenAPI.Packets\ChickenAPI.Packets.csproj" />
   </ItemGroup>
 </Project>

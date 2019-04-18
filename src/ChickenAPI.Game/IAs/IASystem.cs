@@ -41,7 +41,7 @@ namespace ChickenAPI.Game.IAs
 
         private static bool MovableFilter(IEntity entity)
         {
-            if (entity.Type == VisualType.Character)
+            if (entity.Type == VisualType.Player)
             {
                 return false;
             }
@@ -122,7 +122,7 @@ namespace ChickenAPI.Game.IAs
                 return;
             }
             // supposedly should never enter here
-            if (mov.Type == VisualType.Character || mov.Speed == 0)
+            if (mov.Type == VisualType.Player || mov.Speed == 0)
             {
                 return;
             }

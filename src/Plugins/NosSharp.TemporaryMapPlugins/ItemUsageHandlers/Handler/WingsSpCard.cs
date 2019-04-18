@@ -31,7 +31,7 @@ namespace SaltyEmu.BasicPlugin.ItemUsageHandlers.Handler
 
             await player.SendQuestionAsync(new UiPacket
             {
-                VisualType = VisualType.Character,
+                VisualType = VisualType.Player,
                 CharacterId = player.Id,
                 InventoryType = e.Item.Type,
                 InventorySlot = (byte)e.Item.Slot,

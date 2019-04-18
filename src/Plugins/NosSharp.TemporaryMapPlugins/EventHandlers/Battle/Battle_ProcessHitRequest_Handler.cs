@@ -76,7 +76,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Battle
             Log.Debug($"[{hitRequest.Sender.Type.ToString()}][{hitRequest.Sender.Id}] ATTACK -> [{hitRequest.Target.Type.ToString()}]({hitRequest.Target.Id}) : {givenDamages} damages");
 
             // sets the new target (for AI)
-            if (hitRequest.Target.Type != VisualType.Character && !hitRequest.Target.HasTarget)
+            if (hitRequest.Target.Type != VisualType.Player && !hitRequest.Target.HasTarget)
             {
                 hitRequest.Target.Target = hitRequest.Sender;
             }

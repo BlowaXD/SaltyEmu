@@ -35,7 +35,7 @@ namespace ChickenAPI.Game.Inventory.Extensions
                 case IPlayerEntity player:
                     return new MvPacket
                     {
-                        VisualType = VisualType.Character,
+                        VisualType = VisualType.Player,
                         VisualId = player.Character.Id,
                         Speed = player.Speed,
                         MapX = player.Position.X,

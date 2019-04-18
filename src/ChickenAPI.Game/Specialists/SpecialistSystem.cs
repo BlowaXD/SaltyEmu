@@ -16,7 +16,7 @@ namespace ChickenAPI.Game.Specialists
 
         // all 10 seconds
         protected override double RefreshRate => 0.1;
-        protected override Expression<Func<IEntity, bool>> Filter => entity => entity.Type == VisualType.Character;
+        protected override Expression<Func<IEntity, bool>> Filter => entity => entity.Type == VisualType.Player;
 
         protected override void Execute(IEntity entity)
         {

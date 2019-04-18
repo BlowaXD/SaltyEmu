@@ -67,7 +67,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Skills
                         return;
                     }
 
-                    if (entity.Type == VisualType.Character && target.Type == VisualType.Character && !entity.CurrentMap.IsPvpEnabled && skill.HitType != 1)
+                    if (entity.Type == VisualType.Player && target.Type == VisualType.Player && !entity.CurrentMap.IsPvpEnabled && skill.HitType != 1)
                     {
                         if (!(player is null))
                         {

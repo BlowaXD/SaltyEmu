@@ -12,8 +12,6 @@ using ChickenAPI.Data.Skills;
 using ChickenAPI.Enums;
 using ChickenAPI.Enums.Game.Character;
 using ChickenAPI.Enums.Game.Entity;
-using ChickenAPI.Enums.Game.Families;
-using ChickenAPI.Enums.Game.Items;
 using ChickenAPI.Enums.Game.Visibility;
 using ChickenAPI.Game.Battle.Interfaces;
 using ChickenAPI.Game.Buffs;
@@ -35,7 +33,10 @@ using ChickenAPI.Game._BroadcastRules;
 using ChickenAPI.Game._ECS.Components;
 using ChickenAPI.Game._ECS.Entities;
 using ChickenAPI.Game._Network;
-using ChickenAPI.Packets;
+using ChickenAPI.Packets.Enumerations;
+using ChickenAPI.Packets.Interfaces;
+using EquipmentType = ChickenAPI.Enums.Game.Items.EquipmentType;
+using FamilyAuthority = ChickenAPI.Enums.Game.Families.FamilyAuthority;
 
 namespace ChickenAPI.Game.Entities.Player
 {
@@ -52,7 +53,7 @@ namespace ChickenAPI.Game.Entities.Player
 
         private static readonly IPlayerManager PlayerManager = new Lazy<IPlayerManager>(() => ChickenContainer.Instance.Resolve<IPlayerManager>()).Value;
 
-        public PlayerEntity(ISession session, CharacterDto dto, IEnumerable<CharacterSkillDto> skills, IEnumerable<CharacterQuicklistDto> quicklist) : base(VisualType.Character, dto.Id)
+        public PlayerEntity(ISession session, CharacterDto dto, IEnumerable<CharacterSkillDto> skills, IEnumerable<CharacterQuicklistDto> quicklist) : base(VisualType.Player, dto.Id)
         {
             Session = session;
             Character = dto;
@@ -193,7 +194,7 @@ namespace ChickenAPI.Game.Entities.Player
             CharacterSkillService.Save(SkillComponent.CharacterSkills.Values);
             CharacterQuicklistService.Save(Quicklist.Quicklist);
             ItemInstance.Save(Inventory.GetItems());
-            Log.Info($"[SAVE] {Character.Name} saved in {(DateTime.UtcNow - before).TotalMilliseconds} ms");
+            // Log.Info($"[SAVE] {Character.Name} saved in {(DateTime.UtcNow - before).TotalMilliseconds} ms");
         }
 
         public double LastPortal { get; set; }

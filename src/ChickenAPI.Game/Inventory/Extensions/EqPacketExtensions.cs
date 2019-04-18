@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
-using System.Text;
 using ChickenAPI.Data.Item;
-using ChickenAPI.Enums.Game.Items;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Packets.Game.Server.Inventory;
+using ChickenAPI.Packets.Enumerations;
+using ChickenAPI.Packets.ServerPackets.Inventory;
 
 namespace ChickenAPI.Game.Inventory.Extensions
 {
@@ -32,11 +31,11 @@ namespace ChickenAPI.Game.Inventory.Extensions
 
         public static EqPacket GenerateEqPacket(this IPlayerEntity player) => new EqPacket
         {
-            CharacterId = player.Id,
+            VisualId = player.Id,
             NameAppearance = player.NameAppearance,
-            GenderType = player.Character.Gender,
-            HairStyleType = player.Character.HairStyle,
-            HairColorType = player.Character.HairColor,
+            Gender = player.Character.Gender,
+            HairStyle = player.Character.HairStyle,
+            Haircolor = player.Character.HairColor,
             CharacterClassType = player.Character.Class,
             EqList = player.Inventory.GenerateEqListInfoPacket(),
             EqInfo = player.Inventory.GenerateEqRareInfoPacket()
@@ -49,7 +48,25 @@ namespace ChickenAPI.Game.Inventory.Extensions
         /// <returns></returns>
         public static EquipPacket GenerateEquipPacket(this IPlayerEntity player)
         {
-            List<EquipPacket.EquipSubPacket> tmp = new List<EquipPacket.EquipSubPacket>();
+            EquipmentSubPacket generateEquipmentSubPacket(EquipmentType eqType)
+            {
+                ItemInstanceDto eq = player.Inventory.Equipment[((short)eqType)];
+                if (eq == null)
+                {
+                    return null;
+                }
+
+                return new EquipmentSubPacket
+                {
+                    EquipmentType = eqType,
+                    VNum = (short)eq.ItemId,
+                    Rare = eq.Rarity,
+                    Upgrade = (eq?.Item.IsColored == true ? eq?.Design : eq?.Upgrade) ?? 0,
+                    Unknown = 0,
+                };
+            }
+
+            List<EquipmentSubPacket> tmp = new List<EquipmentSubPacket>();
             ItemInstanceDto[] subInventory = player.Inventory.Wear;
 
             for (int i = 0; i < subInventory.Length; i++)
@@ -60,20 +77,47 @@ namespace ChickenAPI.Game.Inventory.Extensions
                     continue;
                 }
 
-                tmp.Add(new EquipPacket.EquipSubPacket
+                tmp.Add(new EquipmentSubPacket()
                 {
-                    WearIndex = i,
-                    ItemId = item.ItemId,
-                    ItemRarity = (byte)item.Rarity,
-                    UpgradeOrDesign = item.Item.IsColored ? item.Design : item.Upgrade,
+                    EquipmentType = (EquipmentType)i,
+                    VNum = (short)item.ItemId,
+                    Rare = (byte)item.Rarity,
+                    Upgrade = item.Item.IsColored ? item.Design : item.Upgrade,
                     Unknown = 0
                 });
             }
 
+            var weapon = new UpgradeRareSubPacket
+            {
+                Upgrade = player.Weapon?.Upgrade ?? 0,
+                Rare = (byte)(player.Weapon?.Rarity ?? 0)
+            };
+            var armor = new UpgradeRareSubPacket
+            {
+                Upgrade = player.Armor?.Upgrade ?? 0,
+                Rare = (byte)(player.Armor?.Rarity ?? 0)
+            };
+
             return new EquipPacket
             {
-                EqRare = player.Inventory.GenerateEqRareInfoPacket(),
-                EqList = tmp
+                WeaponUpgradeRareSubPacket = weapon,
+                ArmorUpgradeRareSubPacket = armor,
+                Armor = generateEquipmentSubPacket(EquipmentType.Armor),
+                WeaponSkin = generateEquipmentSubPacket(EquipmentType.WeaponSkin),
+                SecondaryWeapon = generateEquipmentSubPacket(EquipmentType.SecondaryWeapon),
+                Sp = generateEquipmentSubPacket(EquipmentType.Sp),
+                Amulet = generateEquipmentSubPacket(EquipmentType.Amulet),
+                Boots = generateEquipmentSubPacket(EquipmentType.Boots),
+                CostumeHat = generateEquipmentSubPacket(EquipmentType.CostumeHat),
+                CostumeSuit = generateEquipmentSubPacket(EquipmentType.CostumeSuit),
+                Fairy = generateEquipmentSubPacket(EquipmentType.Fairy),
+                Gloves = generateEquipmentSubPacket(EquipmentType.Gloves),
+                Hat = generateEquipmentSubPacket(EquipmentType.Hat),
+                MainWeapon = generateEquipmentSubPacket(EquipmentType.MainWeapon),
+                Mask = generateEquipmentSubPacket(EquipmentType.Mask),
+                Necklace = generateEquipmentSubPacket(EquipmentType.Necklace),
+                Ring = generateEquipmentSubPacket(EquipmentType.Ring),
+                Bracelet = generateEquipmentSubPacket(EquipmentType.Bracelet),
             };
         }
     }

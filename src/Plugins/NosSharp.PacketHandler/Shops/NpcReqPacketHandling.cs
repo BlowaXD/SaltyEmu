@@ -12,7 +12,7 @@ namespace NW.Plugins.PacketHandling.Shops
     {
         protected override async Task Handle(ReceivedNpcReqPacket packet, IPlayerEntity player)
         {
-            if (packet.VisualType == VisualType.Character)
+            if (packet.VisualType == VisualType.Player)
             {
                 IPlayerEntity shop = player.CurrentMap.GetPlayerById(packet.VisualId);
                 if (shop == null)

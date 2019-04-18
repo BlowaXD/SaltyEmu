@@ -71,7 +71,7 @@ namespace SaltyEmu.BasicPlugin.NpcDialogHandlers
         {
             player.SendPacketAsync(new SentNpcReqPacket
             {
-                VisualType = ChickenAPI.Enums.Game.Entity.VisualType.Character,
+                VisualType = ChickenAPI.Enums.Game.Entity.VisualType.Player,
                 VisualId = player.Id,
                 Dialog = 17
             });

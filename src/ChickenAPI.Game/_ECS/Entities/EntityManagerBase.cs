@@ -51,7 +51,7 @@ namespace ChickenAPI.Game._ECS.Entities
         {
             lock(LockObj)
             {
-                if (entity.Type == VisualType.Character)
+                if (entity.Type == VisualType.Player)
                 {
                     _players.Add(entity as IPlayerEntity);
                 }
@@ -66,7 +66,7 @@ namespace ChickenAPI.Game._ECS.Entities
                 entities.Add(entity.Id, entity);
                 UpdateCache();
                 // player cache
-                if (!ShouldUpdate && entity.Type == VisualType.Character)
+                if (!ShouldUpdate && entity.Type == VisualType.Player)
                 {
                     StartSystemUpdate();
                 }
@@ -77,7 +77,7 @@ namespace ChickenAPI.Game._ECS.Entities
         {
             lock(LockObj)
             {
-                if (entity.Type == VisualType.Character)
+                if (entity.Type == VisualType.Player)
                 {
                     _players.Remove(entity as IPlayerEntity);
                 }
