@@ -1,5 +1,5 @@
 ﻿using System;
-using ChickenAPI.Enums.Game.Character;
+using ChickenAPI.Packets.Enumerations;
 
 namespace SaltyEmu.BasicAlgorithmPlugin.CharacterAlgorithms.HpMp
 {
@@ -21,9 +21,7 @@ namespace SaltyEmu.BasicAlgorithmPlugin.CharacterAlgorithms.HpMp
                     return 28;
                 case CharacterClassType.Magician:
                     return 40;
-                case CharacterClassType.Wrestler:
-                    return 50;
-                case CharacterClassType.Unknown:
+                case CharacterClassType.MartialArtist:
                     return 50;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);

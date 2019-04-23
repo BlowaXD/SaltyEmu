@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using AutoMapper;
 using ChickenAPI.Core.IoC;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Data.Account;
 using ChickenAPI.Data.BCard;
 using ChickenAPI.Data.Character;
@@ -12,6 +13,7 @@ using ChickenAPI.Data.NpcMonster;
 using ChickenAPI.Data.Shop;
 using ChickenAPI.Data.Skills;
 using ChickenAPI.Enums.Game.Character;
+using ChickenAPI.Packets.Enumerations;
 using Microsoft.EntityFrameworkCore;
 using SaltyEmu.DatabasePlugin.Context;
 using SaltyEmu.DatabasePlugin.Services.Account;
@@ -82,7 +84,7 @@ namespace SaltyEmu.DatabasePlugin.Utils
 
             // character
             ChickenContainer.Builder.Register(s => new AccountDao(s.Resolve<SaltyDbContext>(), s.Resolve<IMapper>())).As<IAccountService>().InstancePerLifetimeScope();
-            ChickenContainer.Builder.Register(s => new CharacterDao(s.Resolve<SaltyDbContext>(), s.Resolve<IMapper>(), characterConf)).As<ICharacterService>().InstancePerLifetimeScope();
+            ChickenContainer.Builder.Register(s => new CharacterDao(s.Resolve<SaltyDbContext>(), s.Resolve<IMapper>(), characterConf, s.Resolve<ILogger>())).As<ICharacterService>().InstancePerLifetimeScope();
             ChickenContainer.Builder.Register(s => new CharacterMateDao(s.Resolve<SaltyDbContext>(), s.Resolve<IMapper>())).As<ICharacterMateService>().InstancePerLifetimeScope();
             ChickenContainer.Builder.Register(s => new CharacterItemDao(s.Resolve<SaltyDbContext>(), s.Resolve<IMapper>())).As<IItemInstanceService>().InstancePerLifetimeScope();
             ChickenContainer.Builder.Register(s => new CharacterSkillDao(s.Resolve<SaltyDbContext>(), s.Resolve<IMapper>())).As<ICharacterSkillService>().InstancePerLifetimeScope();

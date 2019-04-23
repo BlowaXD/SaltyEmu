@@ -2,8 +2,8 @@
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Data.Account;
-using ChickenAPI.Data.Character;
 using Microsoft.EntityFrameworkCore;
 using SaltyEmu.Database;
 using SaltyEmu.DatabasePlugin.Context;
@@ -13,7 +13,7 @@ namespace SaltyEmu.DatabasePlugin.Services.Account
 {
     public class AccountDao : MappedRepositoryBase<AccountDto, AccountModel>, IAccountService
     {
-        public AccountDao(DbContext dbFactory, IMapper mapper) : base(dbFactory, mapper)
+        public AccountDao(SaltyDbContext dbFactory, IMapper mapper, ILogger log) : base(dbFactory, mapper, log)
         {
         }
 
