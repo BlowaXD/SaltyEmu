@@ -4,10 +4,11 @@ using System.Linq;
 using Autofac;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Data.Item;
-using ChickenAPI.Enums.Game.Items;
 using ChickenAPI.Game.Configuration;
 using ChickenAPI.Game.Entities.Player;
+using ChickenAPI.Packets.Enumerations;
 using ChickenAPI.Packets.ServerPackets.Inventory;
+using EquipmentType = ChickenAPI.Enums.Game.Items.EquipmentType;
 
 namespace ChickenAPI.Game.Inventory.Extensions
 {
@@ -27,7 +28,7 @@ namespace ChickenAPI.Game.Inventory.Extensions
             };
         }
 
-        public static InvPacket GenerateInventoryPacket(this IPlayerEntity player, InventoryType type)
+        public static InvPacket GenerateInventoryPacket(this IPlayerEntity player, PocketType type)
         {
             ItemInstanceDto[] items = player.Inventory.GetSubInvFromInventoryType(type);
 
@@ -43,22 +44,22 @@ namespace ChickenAPI.Game.Inventory.Extensions
 
             switch (type)
             {
-                case InventoryType.Equipment:
+                case PocketType.Equipment:
                     packet.IvnSubPackets.AddRange(items.Where(s => s != null).Select(s => s.GenerateIvnSubPacket()));
                     break;
 
-                case InventoryType.Etc:
-                case InventoryType.Main:
+                case PocketType.Etc:
+                case PocketType.Main:
 
                     packet.IvnSubPackets.AddRange(items.Where(s => s != null).Select(s => s.GenerateIvnSubPacket()));
                     // $"{s.Slot}.{s.ItemId}.{s.Amount}.0"));
                     break;
 
-                case InventoryType.Miniland:
+                case PocketType.Miniland:
                     packet.IvnSubPackets.AddRange(items.Where(s => s != null).Select(s => s.GenerateIvnSubPacket()));
                     // $"{s.Slot}.{s.ItemId}.{s.Amount}"));
                     break;
-                case InventoryType.Wear:
+                case PocketType.Wear:
                     break;
             }
 
@@ -68,7 +69,7 @@ namespace ChickenAPI.Game.Inventory.Extensions
         public static short GetFirstFreeSlot(this InventoryComponent inv, IReadOnlyCollection<ItemInstanceDto> subInventory, ItemDto source, short amount)
         {
             ItemInstanceDto item = subInventory.FirstOrDefault(x => x != null &&
-                x.Amount + amount < GameConf.Inventory.MaxItemPerSlot && x.ItemId == source.Id && x.Item.Type != InventoryType.Equipment);
+                x.Amount + amount < GameConf.Inventory.MaxItemPerSlot && x.ItemId == source.Id && x.Item.Type != PocketType.Equipment);
 
             return item?.Slot ?? GetFirstFreeSlot(inv, subInventory);
         }
@@ -124,21 +125,21 @@ namespace ChickenAPI.Game.Inventory.Extensions
         ///     Gets the first available slot by it's inventory type
         /// </summary>
         /// <param name="inv"></param>
-        /// <param name="inventoryType"></param>
+        /// <param name="pocketType"></param>
         /// <returns>Returns -1 in case it could not find any available slot</returns>
-        public static short GetFirstFreeSlot(this InventoryComponent inv, InventoryType inventoryType) => GetFirstFreeSlot(inv, GetSubInvFromInventoryType(inv, inventoryType));
+        public static short GetFirstFreeSlot(this InventoryComponent inv, PocketType pocketType) => GetFirstFreeSlot(inv, GetSubInvFromInventoryType(inv, pocketType));
 
-        public static ItemInstanceDto[] GetSubInvFromInventoryType(this InventoryComponent inv, InventoryType type)
+        public static ItemInstanceDto[] GetSubInvFromInventoryType(this InventoryComponent inv, PocketType type)
         {
             switch (type)
             {
-                case InventoryType.Wear:
+                case PocketType.Wear:
                     return inv.Wear;
-                case InventoryType.Equipment:
+                case PocketType.Equipment:
                     return inv.Equipment;
-                case InventoryType.Main:
+                case PocketType.Main:
                     return inv.Main;
-                case InventoryType.Etc:
+                case PocketType.Etc:
                     return inv.Etc;
                 default:
                     return null;
@@ -150,7 +151,7 @@ namespace ChickenAPI.Game.Inventory.Extensions
         public static ItemInstanceDto[] GetSubInvFromItemInstance(this InventoryComponent inv, ItemInstanceDto item) => GetSubInvFromInventoryType(inv, item.Type);
 
 
-        public static ItemInstanceDto GetItemFromSlotAndType(this InventoryComponent inventory, short itemSlot, InventoryType equipment)
+        public static ItemInstanceDto GetItemFromSlotAndType(this InventoryComponent inventory, short itemSlot, PocketType equipment)
         {
             ItemInstanceDto[] subInv = inventory.GetSubInvFromInventoryType(equipment);
             return itemSlot >= subInv.Length ? null : subInv[itemSlot];

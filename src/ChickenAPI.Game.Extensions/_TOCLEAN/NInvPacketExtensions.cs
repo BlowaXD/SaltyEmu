@@ -6,6 +6,7 @@ using ChickenAPI.Enums.Game.Character;
 using ChickenAPI.Enums.Game.Items;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Entities.Player.Extensions;
+using ChickenAPI.Packets.Enumerations;
 using ChickenAPI.Packets.ServerPackets.Shop;
 
 namespace ChickenAPI.Game.Shops.Extensions
@@ -19,9 +20,9 @@ namespace ChickenAPI.Game.Shops.Extensions
             foreach (PersonalShopItem itemInfo in items)
             {
                 // tmp.Append(' ');
-                long upgradeOrPrice = itemInfo.ItemInstance.Item.Type == InventoryType.Equipment ? itemInfo.ItemInstance.Upgrade : itemInfo.Price;
-                int rareOrQuantity = itemInfo.ItemInstance.Item.Type == InventoryType.Equipment ? itemInfo.ItemInstance.Rarity : itemInfo.Quantity;
-                double priceOrMinus = itemInfo.ItemInstance.Item.Type == InventoryType.Equipment ? itemInfo.Price : -1;
+                long upgradeOrPrice = itemInfo.ItemInstance.Item.Type == PocketType.Equipment ? itemInfo.ItemInstance.Upgrade : itemInfo.Price;
+                int rareOrQuantity = itemInfo.ItemInstance.Item.Type == PocketType.Equipment ? itemInfo.ItemInstance.Rarity : itemInfo.Quantity;
+                double priceOrMinus = itemInfo.ItemInstance.Item.Type == PocketType.Equipment ? itemInfo.Price : -1;
 
                 tmp.Add(new NInvItemSubPacket
                 {
@@ -45,7 +46,7 @@ namespace ChickenAPI.Game.Shops.Extensions
             {
                 double price = itemInfo.Item.ReputPrice > 0 ? itemInfo.Item.ReputPrice : itemInfo.Item.Price * percent;
                 byte color = itemInfo.Color != 0 ? itemInfo.Item.Color : itemInfo.Item.BasicUpgrade;
-                int rareOrQuantity = itemInfo.Item.Type != InventoryType.Equipment ? -1 : itemInfo.Rare;
+                int rareOrQuantity = itemInfo.Item.Type != PocketType.Equipment ? -1 : itemInfo.Rare;
 
 
             }

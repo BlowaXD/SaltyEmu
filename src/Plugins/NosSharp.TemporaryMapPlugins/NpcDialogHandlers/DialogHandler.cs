@@ -38,28 +38,28 @@ namespace SaltyEmu.BasicPlugin.NpcDialogHandlers
 
             player.ChangeClass((CharacterClassType)args.Type);
             // TODO : LATER
-            /* if (Session.Character.Inventory.All(i => i.Type == InventoryType.Wear))
+            /* if (Session.Character.Inventory.All(i => i.Type == PocketType.Wear))
              {
                  await session.SendPacketAsync(UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("EQ_NOT_EMPTY"), 0));
                  return;
              }
 
-                 Session.Character.Inventory.AddNewToInventory((short)(4 + (packet.Type * 14)), type: InventoryType.Wear);
-                 Session.Character.Inventory.AddNewToInventory((short)(81 + (packet.Type * 13)), type: InventoryType.Wear);
+                 Session.Character.Inventory.AddNewToInventory((short)(4 + (packet.Type * 14)), type: PocketType.Wear);
+                 Session.Character.Inventory.AddNewToInventory((short)(81 + (packet.Type * 13)), type: PocketType.Wear);
                  switch (packet.Type)
                  {
                      case 1:
-                         Session.Character.Inventory.AddNewToInventory(68, type: InventoryType.Wear);
+                         Session.Character.Inventory.AddNewToInventory(68, type: PocketType.Wear);
                          Session.Character.Inventory.AddNewToInventory(2082, 10);
                          break;
 
                      case 2:
-                         Session.Character.Inventory.AddNewToInventory(78, type: InventoryType.Wear);
+                         Session.Character.Inventory.AddNewToInventory(78, type: PocketType.Wear);
                          Session.Character.Inventory.AddNewToInventory(2083, 10);
                          break;
 
                      case 3:
-                         Session.Character.Inventory.AddNewToInventory(86, type: InventoryType.Wear);
+                         Session.Character.Inventory.AddNewToInventory(86, type: PocketType.Wear);
                          break;
 
                      default:

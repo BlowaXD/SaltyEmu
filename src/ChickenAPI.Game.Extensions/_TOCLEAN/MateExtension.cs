@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Autofac;
-using ChickenAPI.Core.i18n;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Data.Character;
 using ChickenAPI.Enums.Game.Entity;
@@ -12,8 +11,9 @@ using ChickenAPI.Game.Entities.Mates;
 using ChickenAPI.Game.Helpers;
 using ChickenAPI.Game.Inventory.Extensions;
 using ChickenAPI.Game._i18n;
-using ChickenAPI.Packets.Old.Game.Server.Mates;
-using ChickenAPI.Packets.Old.Game.Server.UserInterface;
+using ChickenAPI.Packets.Enumerations;
+using ChickenAPI.Packets.ServerPackets.Mates;
+using ChickenAPI.Packets.ServerPackets.UI;
 
 namespace ChickenAPI.Game.Entities.Player.Extensions
 {
@@ -32,7 +32,7 @@ namespace ChickenAPI.Game.Entities.Player.Extensions
 
             CharacterMateService.Save(mate.Mate);
             await player.BroadcastAsync(mate.GenerateInPacket());
-            await player.SendPacketAsync(new PClearPacket());
+            await player.SendPacketAsync(new PclearPacket());
             player.Mates.Add(mate);
             await player.SendPacketsAsync(player.GenerateScP());
             await player.SendPacketsAsync(player.GenerateScN());

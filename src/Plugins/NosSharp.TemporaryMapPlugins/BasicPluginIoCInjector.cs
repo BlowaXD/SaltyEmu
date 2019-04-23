@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Autofac;
+using ChickenAPI.Core.Configurations;
 using ChickenAPI.Core.Events;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Logging;
@@ -23,6 +24,7 @@ using ChickenAPI.Game.Managers;
 using ChickenAPI.Game.NpcDialog;
 using ChickenAPI.Game._ECS;
 using ChickenAPI.Game._Network;
+using Newtonsoft.Json;
 using SaltyEmu.BasicPlugin.BCardHandlers;
 using SaltyEmu.BasicPlugin.EventHandlers.Battle;
 using SaltyEmu.BasicPlugin.EventHandlers.Guri;
@@ -37,8 +39,6 @@ namespace SaltyEmu.BasicPlugin
 {
     public class BasicPluginIoCInjector
     {
-        private static readonly Logger Log = Logger.GetLogger<BasicPluginIoCInjector>();
-
         public static void InitializeEventHandlers()
         {
             // first version hardcoded, next one through Plugin + Assembly Reflection
@@ -60,7 +60,7 @@ namespace SaltyEmu.BasicPlugin
                 }
                 catch (Exception e)
                 {
-                    Log.Error("[EVENT_HANDLER]", e);
+                    // Log.Error("[EVENT_HANDLER]", e);
                     // ignored
                 }
             }
@@ -84,7 +84,7 @@ namespace SaltyEmu.BasicPlugin
                 }
                 catch (Exception e)
                 {
-                    Log.Error("[ITEM_USAGE_HANDLER_REGISTRATION]", e);
+                    // Log.Error("[ITEM_USAGE_HANDLER_REGISTRATION]", e);
                 }
             }
         }
@@ -107,22 +107,30 @@ namespace SaltyEmu.BasicPlugin
                 }
                 catch (Exception e)
                 {
-                    Log.Error("[ITEM_USAGE_HANDLER_REGISTRATION]", e);
+                    // Log.Error("[ITEM_USAGE_HANDLER_REGISTRATION]", e);
                 }
             }
         }
 
+        public class ConfigurationSerializer : IConfigurationSerializer
+        {
+            public string Serialize<T>(T conf) where T : IConfiguration => JsonConvert.SerializeObject(conf);
+
+            public T Deserialize<T>(string buffer) where T : IConfiguration => JsonConvert.DeserializeObject<T>(buffer);
+        }
+
         public static void InjectDependencies()
         {
+            var config = new ConfigurationHelper(new ConfigurationSerializer());
             ChickenContainer.Builder.Register(_ =>
-                    ConfigurationHelper.Load<JsonGameConfiguration>($"plugins/config/{nameof(BasicPlugin)}/rates.json", true))
+                    config.Load<JsonGameConfiguration>($"plugins/config/{nameof(BasicPlugin)}/rates.json", true))
                 .As<IGameConfiguration>().SingleInstance();
 
             // packet handlers
             ChickenContainer.Builder.Register(_ => new BasicPacketPipelineAsync()).As<IPacketPipelineAsync>().SingleInstance();
 
             // event handlers
-            ChickenContainer.Builder.Register(_ => new BasicEventPipelineAsync()).As<IEventPipeline>().SingleInstance();
+            ChickenContainer.Builder.Register(_ => new BasicEventPipelineAsync(_.Resolve<ILogger>())).As<IEventPipeline>().SingleInstance();
             ChickenContainer.Builder.RegisterAssemblyTypes(typeof(BasicPlugin).Assembly).AsClosedTypesOf(typeof(GenericEventPostProcessorBase<>)).PropertiesAutowired();
             ChickenContainer.Builder.RegisterAssemblyTypes(typeof(BasicPlugin).Assembly).Where(s => s.ImplementsInterface<IUseItemRequestHandlerAsync>()).PropertiesAutowired().AsSelf();
             ChickenContainer.Builder.RegisterAssemblyTypes(typeof(BasicPlugin).Assembly).Where(s => s.ImplementsInterface<INpcDialogAsyncHandler>()).PropertiesAutowired().AsSelf();
@@ -151,7 +159,7 @@ namespace SaltyEmu.BasicPlugin
             ChickenContainer.Builder.Register(_ => new SimpleEntityManagerContainer()).As<IEntityManagerContainer>().SingleInstance();
             // player manager
             ChickenContainer.Builder.Register(_ => new SimplePlayerManager()).As<IPlayerManager>().SingleInstance();
-            ChickenContainer.Builder.Register(_ => new CommandHandler()).As<ICommandContainer>().SingleInstance();
+            ChickenContainer.Builder.Register(context => new CommandHandler(context.Resolve<ILogger>())).As<ICommandContainer>().SingleInstance();
             ChickenContainer.Builder.Register(_ => new BasicUpgradeHandler()).As<IItemUpgradeHandler>().SingleInstance();
         }
     }

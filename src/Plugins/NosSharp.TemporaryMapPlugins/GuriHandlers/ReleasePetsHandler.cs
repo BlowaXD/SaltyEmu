@@ -27,7 +27,7 @@ namespace SaltyEmu.BasicPlugin.GuriHandlers
                 return;
             }
 
-            ItemInstanceDto item = player.Inventory.GetItemFromSlotAndType(e.InvSlot, InventoryType.Equipment);
+            ItemInstanceDto item = player.Inventory.GetItemFromSlotAndType(e.InvSlot, PocketType.Equipment);
 
             if (item == null)
             {

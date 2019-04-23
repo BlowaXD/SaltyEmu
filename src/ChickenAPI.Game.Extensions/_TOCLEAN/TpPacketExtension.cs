@@ -5,6 +5,7 @@ using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Movements;
 using ChickenAPI.Game._ECS.Entities;
 using ChickenAPI.Packets.Enumerations;
+using ChickenAPI.Packets.ServerPackets.Entities;
 
 namespace ChickenAPI.Game.Entities.Extensions
 {

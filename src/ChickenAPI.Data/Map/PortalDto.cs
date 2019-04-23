@@ -1,4 +1,4 @@
-﻿using ChickenAPI.Enums.Game.Portals;
+﻿using ChickenAPI.Packets.Enumerations;
 
 namespace ChickenAPI.Data.Map
 {

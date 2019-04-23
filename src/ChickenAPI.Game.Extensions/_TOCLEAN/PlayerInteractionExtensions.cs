@@ -5,13 +5,12 @@ using ChickenAPI.Game._i18n;
 using ChickenAPI.Packets.Enumerations;
 using ChickenAPI.Packets.ServerPackets.Chats;
 using ChickenAPI.Packets.ServerPackets.UI;
-using SayColorType = ChickenAPI.Enums.Packets.SayColorType;
 
 namespace ChickenAPI.Game.Entities.Player.Extensions
 {
     public static class PlayerInteractionExtensions
     {
-        public static Task SendMessageAsync(this IPlayerEntity player, PlayerMessages message, MsgPacketType type)
+        public static Task SendMessageAsync(this IPlayerEntity player, PlayerMessages message, MessageType type)
         {
             return player.SendPacketAsync(player.GenerateMsgPacket(message, type));
         }

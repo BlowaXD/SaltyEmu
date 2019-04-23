@@ -19,7 +19,7 @@ namespace ChickenAPI.Game.Inventory.Extensions
                 return;
             }
 
-            await player.SendPacketAsync(player.GenerateEmptyIvnPacket(args.InventoryType, args.SourceSlot));
+            await player.SendPacketAsync(player.GenerateEmptyIvnPacket(args.PocketType, args.SourceSlot));
             await player.SendPacketAsync(source.GenerateIvnPacket());
         }
 

@@ -38,7 +38,7 @@ namespace ChickenAPI.Game.Maps.Extensions
 
         public static IEnumerable<GpPacket> GetPortalsPackets(this IMapLayer map)
         {
-            return map.GetEntitiesByType<IPortalEntity>(VisualType.Portal)?.Select(s => s.Portal.GenerateGpPacket());
+            return map.GetEntitiesByType<IPortalEntity>(VisualType.Object)?.Where(s => s != null).Select(s => s.Portal.GenerateGpPacket());
         }
     }
 }

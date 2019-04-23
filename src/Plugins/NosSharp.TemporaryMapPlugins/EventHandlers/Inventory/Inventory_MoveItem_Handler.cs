@@ -29,15 +29,15 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Inventory
             }
             InventoryComponent inv = player.Inventory;
 
-            ItemInstanceDto source = inv.GetSubInvFromInventoryType(args.InventoryType)[args.SourceSlot];
-            ItemInstanceDto dest = inv.GetSubInvFromInventoryType(args.InventoryType)[args.DestinationSlot];
+            ItemInstanceDto source = inv.GetSubInvFromInventoryType(args.PocketType)[args.SourceSlot];
+            ItemInstanceDto dest = inv.GetSubInvFromInventoryType(args.PocketType)[args.DestinationSlot];
 
             if (source == null)
             {
                 return;
             }
 
-            if (dest != null && (args.InventoryType == InventoryType.Main || args.InventoryType == InventoryType.Etc) && dest.ItemId == source.ItemId &&
+            if (dest != null && (args.PocketType == PocketType.Main || args.PocketType == PocketType.Etc) && dest.ItemId == source.ItemId &&
                 dest.Amount + source.Amount > _gameConfiguration.Inventory.MaxItemPerSlot)
             {
                 // if both source & dest are stackable && slots combined are > max slots

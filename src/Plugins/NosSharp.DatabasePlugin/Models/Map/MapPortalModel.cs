@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
-using ChickenAPI.Data;
-using ChickenAPI.Enums.Game.Portals;
+using ChickenAPI.Packets.Enumerations;
 using SaltyEmu.Database;
 
 namespace SaltyEmu.DatabasePlugin.Models.Map

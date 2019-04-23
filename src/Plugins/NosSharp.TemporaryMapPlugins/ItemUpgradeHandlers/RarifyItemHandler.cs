@@ -25,7 +25,7 @@ namespace SaltyEmu.BasicPlugin.ItemUpgradeHandlers
 
             var mode = RarifyMode.Normal;
             var protection = RarifyProtection.None;
-            var amulet = player.Inventory.GetItemFromSlotAndType((short)EquipmentType.Amulet, InventoryType.Wear);
+            var amulet = player.Inventory.GetItemFromSlotAndType((short)EquipmentType.Amulet, PocketType.Wear);
             if (amulet != null)
             {
                 switch (amulet.Item.Effect)

@@ -39,19 +39,19 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Inventory
             {
                 switch (item.Type)
                 {
-                    case InventoryType.Equipment:
+                    case PocketType.Equipment:
                         inventory.Equipment[item.Slot] = item;
                         break;
 
-                    case InventoryType.Etc:
+                    case PocketType.Etc:
                         inventory.Etc[item.Slot] = item;
                         break;
 
-                    case InventoryType.Wear:
+                    case PocketType.Wear:
                         inventory.Wear[item.Slot] = item;
                         break;
 
-                    case InventoryType.Main:
+                    case PocketType.Main:
                         inventory.Main[item.Slot] = item;
                         break;
                 }

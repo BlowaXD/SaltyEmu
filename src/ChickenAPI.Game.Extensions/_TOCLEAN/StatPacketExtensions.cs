@@ -1,5 +1,5 @@
 ﻿using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Packets.Old.Game.Server.Player;
+using ChickenAPI.Packets.ServerPackets.Player;
 
 namespace ChickenAPI.Game.Entities.Extensions
 {
@@ -9,11 +9,11 @@ namespace ChickenAPI.Game.Entities.Extensions
             new StatPacket
             {
                 Hp = player.Hp,
-                HpMax = player.HpMax,
+                HpMaximum = player.HpMax,
                 Mp = player.Mp,
-                MpMax = player.MpMax,
+                MpMaximum = player.MpMax,
                 Unknown = 0,
-                CharacterOption = 0
+                Option = 0,
             };
     }
 }

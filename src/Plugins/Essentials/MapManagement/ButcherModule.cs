@@ -4,8 +4,6 @@ using System.Threading.Tasks;
 using ChickenAPI.Data.Skills;
 using ChickenAPI.Enums;
 using ChickenAPI.Enums.Game.Entity;
-using ChickenAPI.Enums.Packets;
-using ChickenAPI.Game.Battle.Extensions;
 using ChickenAPI.Game.Battle.Hitting;
 using ChickenAPI.Game.Battle.Interfaces;
 using ChickenAPI.Game.Entities.Monster;

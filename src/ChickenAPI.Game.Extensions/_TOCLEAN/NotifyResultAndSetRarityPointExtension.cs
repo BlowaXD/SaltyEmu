@@ -35,7 +35,7 @@ namespace ChickenAPI.Game.Inventory.ItemUpgrade.Extension
                     case RarifyProtection.RedAmulet:
                     case RarifyProtection.HeroicAmulet:
                     case RarifyProtection.RandomHeroicAmulet:
-                        ItemInstanceDto amulets = player.Inventory.GetItemFromSlotAndType((short)EquipmentType.Amulet, InventoryType.Wear);
+                        ItemInstanceDto amulets = player.Inventory.GetItemFromSlotAndType((short)EquipmentType.Amulet, PocketType.Wear);
                         if (amulets == null)
                         {
                             return;

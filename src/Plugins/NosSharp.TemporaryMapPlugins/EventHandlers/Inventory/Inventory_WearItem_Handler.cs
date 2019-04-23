@@ -24,7 +24,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Inventory
 
             var inventory = player.Inventory;
 
-            ItemInstanceDto item = inventory.GetItemFromSlotAndType(e.InventorySlot, InventoryType.Equipment);
+            ItemInstanceDto item = inventory.GetItemFromSlotAndType(e.InventorySlot, PocketType.Equipment);
             if (item == null)
             {
                 return;
@@ -69,7 +69,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Inventory
                 // todo refacto to "MoveSlot" method
                 inventory.Equipment[itemToEquip.Slot] = alreadyEquipped;
                 alreadyEquipped.Slot = itemToEquip.Slot;
-                alreadyEquipped.Type = InventoryType.Equipment;
+                alreadyEquipped.Type = PocketType.Equipment;
             }
             else
             {
@@ -83,7 +83,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Inventory
 
             inventory.Wear[(int)itemToEquip.Item.EquipmentSlot] = itemToEquip;
             itemToEquip.Slot = (short)itemToEquip.Item.EquipmentSlot;
-            itemToEquip.Type = InventoryType.Wear;
+            itemToEquip.Type = PocketType.Wear;
 
             if (alreadyEquipped == null)
             {

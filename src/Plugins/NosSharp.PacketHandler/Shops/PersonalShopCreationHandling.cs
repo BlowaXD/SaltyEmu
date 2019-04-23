@@ -65,7 +65,7 @@ namespace NW.Plugins.PacketHandling.Shops
             };
 
             string[] packetsplit = data.Split(' ');
-            InventoryType[] type = new InventoryType[20];
+            PocketType[] type = new PocketType[20];
             long[] gold = new long[20];
             short[] slot = new short[20];
             byte[] qty = new byte[20];

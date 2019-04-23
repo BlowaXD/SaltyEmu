@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using ChickenAPI.Data;
 using ChickenAPI.Enums.Game.Character;
+using ChickenAPI.Packets.Enumerations;
 using SaltyEmu.Database;
 
 namespace SaltyEmu.DatabasePlugin.Models.Character

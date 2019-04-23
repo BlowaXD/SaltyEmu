@@ -1,19 +1,22 @@
 ﻿using System;
 using System.Data.SqlClient;
+using ChickenAPI.Core.Configurations;
 using ChickenAPI.Core.Logging;
 using ChickenAPI.Core.Plugins;
 using ChickenAPI.Core.Plugins.Exceptions;
 using ChickenAPI.Core.Utils;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using SaltyEmu.DatabasePlugin.Configuration;
 using SaltyEmu.DatabasePlugin.Context;
 using SaltyEmu.DatabasePlugin.Utils;
+using ILogger = ChickenAPI.Core.Logging.ILogger;
 
 namespace SaltyEmu.DatabasePlugin
 {
     public class DatabasePlugin : IPlugin
     {
-        private static readonly Logger Log = Logger.GetLogger<DatabasePlugin>();
+        private readonly ILogger Log;
         private readonly string _configurationFilePath = $"plugins/config/{nameof(DatabasePlugin)}/conf.json";
         private DatabaseConfiguration _configuration;
         public PluginEnableTime EnableTime => PluginEnableTime.PreContainerBuild;

@@ -21,7 +21,7 @@ using ChickenAPI.Game.Extensions.PacketGeneration;
 using ChickenAPI.Packets.Enumerations;
 using ChickenAPI.Packets.Old.Game.Server.UserInterface;
 using ChickenAPI.Packets.ServerPackets.Player;
-using SayColorType = ChickenAPI.Enums.Packets.SayColorType;
+using ChickenAPI.Packets.ServerPackets.UI;
 
 namespace ChickenAPI.Game.Entities.Player.Extensions
 {
@@ -35,8 +35,8 @@ namespace ChickenAPI.Game.Entities.Player.Extensions
         {
             player.JobLevel = 1;
             player.JobLevelXp = 0;
-            await player.SendPacketAsync(new NpInfoPacket { UnKnow = 0 });
-            await player.SendPacketAsync(new PClearPacket());
+            await player.SendPacketAsync(new NpInfoPacket { Page = 0 });
+            await player.SendPacketAsync(new PclearPacket());
 
             if (type == CharacterClassType.Adventurer)
             {
@@ -71,12 +71,11 @@ namespace ChickenAPI.Game.Entities.Player.Extensions
             await player.BroadcastAsync(player.GenerateEffectPacket(6));
             await player.BroadcastAsync(player.GenerateEffectPacket(196));
 
-            SkillComponent component = player.SkillComponent;
-            foreach (SkillDto skill in component.Skills.Values)
+            foreach (SkillDto skill in player.Skills.Values)
             {
                 if (skill.Id >= 200)
                 {
-                    component.Skills.Remove(skill.Id);
+                    player.Skills.Remove(skill.Id);
                 }
             }
 
@@ -122,7 +121,7 @@ namespace ChickenAPI.Game.Entities.Player.Extensions
 
         public static async Task NotifyRarifyResult(this IPlayerEntity player, sbyte rare)
         {
-            await player.SendMessageAsync(PlayerMessages.UPGRADE_RARIFY_SUCCESS, MsgPacketType.Whisper);
+            await player.SendMessageAsync(PlayerMessages.UPGRADE_RARIFY_SUCCESS, MessageType.White);
             await player.SendPacketAsync(player.GenerateSayPacket("RARIFY_SUCCESS " + rare, SayColorType.Green));
             await player.BroadcastAsync(player.GenerateEffectPacket(3005));
             await player.SendPacketAsync(player.GenerateShopEndPacket(ShopEndPacketType.CloseSubWindow));

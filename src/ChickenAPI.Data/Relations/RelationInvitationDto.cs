@@ -1,5 +1,6 @@
 ﻿using System;
 using ChickenAPI.Enums.Game.Relations;
+using ChickenAPI.Packets.Enumerations;
 
 namespace ChickenAPI.Data.Relations
 {

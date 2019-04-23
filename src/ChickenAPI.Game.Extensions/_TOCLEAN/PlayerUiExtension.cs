@@ -8,6 +8,7 @@ using ChickenAPI.Game.Inventory.Extensions;
 using ChickenAPI.Game.Movements.Extensions;
 using ChickenAPI.Game.Relations.Extensions;
 using ChickenAPI.Game.Skills.Extensions;
+using ChickenAPI.Packets.Enumerations;
 
 namespace ChickenAPI.Game.Entities.Player.Extensions
 {
@@ -49,7 +50,7 @@ namespace ChickenAPI.Game.Entities.Player.Extensions
         /// <param name="player"></param>
         /// <param name="type"></param>
         /// <param name="slot"></param>
-        public static Task ActualizeUiInventorySlot(this IPlayerEntity player, InventoryType type, short slot)
+        public static Task ActualizeUiInventorySlot(this IPlayerEntity player, PocketType type, short slot)
         {
             ItemInstanceDto tmp = player.Inventory.GetItemFromSlotAndType(slot, type);
 

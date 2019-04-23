@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using ChickenAPI.Game.Battle.Interfaces;
-using ChickenAPI.Packets.Old.Game.Server.Entities;
+using ChickenAPI.Packets.ServerPackets.Entities;
 
 namespace ChickenAPI.Game.Entities.Extensions
 {
@@ -10,15 +10,15 @@ namespace ChickenAPI.Game.Entities.Extensions
         public static StPacket GenerateStPacket(this IBattleEntity battle) =>
             new StPacket
             {
-                VisualType = battle.Type,
+                Type = battle.Type,
                 VisualId = battle.Id,
                 Level = battle.Level,
-                HeroLevel = battle.HeroLevel,
+                HeroLvl = battle.HeroLevel,
                 HpPercentage = battle.HpPercentage,
                 MpPercentage = battle.MpPercentage,
-                Hp = battle.Hp,
-                Mp = battle.Mp,
-                CardIds = new List<long>(battle.Buffs.Select(s => s.Id))
+                CurrentHp = battle.Hp,
+                CurrentMp = battle.Mp,
+                BuffIds = new List<short>(battle.Buffs.Select(s => (short)s.Id))
             };
     }
 }

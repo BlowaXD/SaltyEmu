@@ -1,4 +1,5 @@
 ﻿using ChickenAPI.Enums.Game.Character;
+using ChickenAPI.Packets.Enumerations;
 
 namespace SaltyEmu.BasicAlgorithmPlugin.CharacterAlgorithms.Distance
 {
@@ -9,7 +10,7 @@ namespace SaltyEmu.BasicAlgorithmPlugin.CharacterAlgorithms.Distance
 
         public void Initialize()
         {
-            _stats = new int[(int)CharacterClassType.Unknown, MAX_LEVEL];
+            _stats = new int[(int)CharacterClassType.MartialArtist + 1, MAX_LEVEL];
 
 
             for (int i = 0; i < MAX_LEVEL; i++)
@@ -18,7 +19,7 @@ namespace SaltyEmu.BasicAlgorithmPlugin.CharacterAlgorithms.Distance
                 _stats[(int)CharacterClassType.Swordman, i] = i; // approx
                 _stats[(int)CharacterClassType.Magician, i] = i + 20; // approx
                 _stats[(int)CharacterClassType.Archer, i] = i; // approx
-                _stats[(int)CharacterClassType.Wrestler, i] = i; // approx
+                _stats[(int)CharacterClassType.MartialArtist, i] = i; // approx
             }
         }
 

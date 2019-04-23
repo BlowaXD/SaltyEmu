@@ -1,4 +1,6 @@
 ﻿using ChickenAPI.Enums.Game.Items;
+using ChickenAPI.Packets.Enumerations;
+using EquipmentType = ChickenAPI.Enums.Game.Items.EquipmentType;
 
 namespace ChickenAPI.Data.Item
 {
@@ -161,7 +163,7 @@ namespace ChickenAPI.Data.Item
 
         public byte SpType { get; set; }
 
-        public InventoryType Type { get; set; }
+        public PocketType Type { get; set; }
 
         public short WaitDelay { get; set; }
 

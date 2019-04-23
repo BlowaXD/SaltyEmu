@@ -1,6 +1,8 @@
 ﻿using ChickenAPI.Data.Item;
 using ChickenAPI.Enums.Game.Items;
+using ChickenAPI.Packets.Enumerations;
 using ChickenAPI.Packets.ServerPackets.Inventory;
+using EquipmentType = ChickenAPI.Enums.Game.Items.EquipmentType;
 
 namespace ChickenAPI.Game.Inventory.Extensions
 {

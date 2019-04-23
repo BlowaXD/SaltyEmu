@@ -1,50 +1,69 @@
-﻿using ChickenAPI.Data.Item;
+﻿using System.Collections.Generic;
+using ChickenAPI.Data.Item;
 using ChickenAPI.Enums.Game.Items;
 using ChickenAPI.Game.Entities.Player;
+using ChickenAPI.Packets.Enumerations;
 using ChickenAPI.Packets.ServerPackets.Inventory;
 
 namespace ChickenAPI.Game.Inventory.Extensions
 {
     public static class IvnPacketExtension
     {
-        public static IvnPacket GenerateEmptyIvnPacket(this IPlayerEntity player, InventoryType type, short slot) =>
+        public static IvnPacket GenerateEmptyIvnPacket(this IPlayerEntity player, PocketType type, short slot) =>
             new IvnPacket
             {
-                InventoryType = type,
-                Slot = slot,
-                ItemId = -1,
-                Upgrade = 0,
-                Rare = 0,
-                SpStoneUpgrade = 0
+                Type = type,
+                IvnSubPackets = new List<IvnSubPacket>
+                {
+                    new IvnSubPacket()
+                    {
+                        VNum = -1,
+                        Slot = slot,
+                        UpgradeDesign = 0,
+                        RareAmount = 0,
+                        SecondUpgrade = 0,
+                    }
+                }
             };
 
         public static IvnPacket GenerateIvnPacket(this ItemInstanceDto itemInstance)
         {
             switch (itemInstance.Type)
             {
-                case InventoryType.Specialist:
+                case PocketType.Specialist:
                     return new IvnPacket
                     {
-                        InventoryType = itemInstance.Type,
-                        ItemId = itemInstance.Item.Id,
-                        Slot = itemInstance.Slot,
-                        Upgrade = itemInstance.Upgrade,
-                        Rare = itemInstance.Rarity,
-                        SpStoneUpgrade = itemInstance.SpecialistUpgrade
+                        Type = itemInstance.Type,
+                        IvnSubPackets = new List<IvnSubPacket>
+                        {
+                            new IvnSubPacket
+                            {
+                                VNum = (short)itemInstance.ItemId,
+                                UpgradeDesign = itemInstance.Upgrade,
+                                Slot = itemInstance.Slot,
+                                RareAmount = itemInstance.Rarity,
+                                SecondUpgrade = itemInstance.SpecialistUpgrade,
+                            }
+                        }
                     };
 
-                case InventoryType.Equipment:
+                case PocketType.Equipment:
                     return new IvnPacket
                     {
-                        InventoryType = itemInstance.Type,
-                        ItemId = itemInstance.ItemId,
-                        Slot = itemInstance.Slot,
-                        Rare = itemInstance.Rarity,
-                        Upgrade = itemInstance.Upgrade
+                        Type = itemInstance.Type,
+                        IvnSubPackets = new List<IvnSubPacket>
+                        {
+                            new IvnSubPacket
+                            {
+                                VNum = (short)itemInstance.ItemId,
+                                UpgradeDesign = itemInstance.Upgrade,
+                                Slot = itemInstance.Slot,
+                                RareAmount = itemInstance.Rarity,
+                            }
+                        }
                     };
-
-                case InventoryType.Main:
-                case InventoryType.Etc:
+                case PocketType.Main:
+                case PocketType.Etc:
                     return itemInstance.GenerateMainIvnPacket();
 
                 default:
@@ -53,13 +72,22 @@ namespace ChickenAPI.Game.Inventory.Extensions
             }
         }
 
-        private static IvnPacket GenerateMainIvnPacket(this ItemInstanceDto itemInstance) => new IvnPacket
+        private static IvnPacket GenerateMainIvnPacket(this ItemInstanceDto itemInstance)
         {
-            InventoryType = itemInstance.Type,
-            Slot = itemInstance.Slot,
-            ItemId = itemInstance.ItemId,
-            Rare = itemInstance.Amount,
-            Upgrade = 0
-        };
+            return new IvnPacket
+            {
+                Type = itemInstance.Type,
+                IvnSubPackets = new List<IvnSubPacket>
+                {
+                    new IvnSubPacket
+                    {
+                        VNum = (short)itemInstance.ItemId,
+                        UpgradeDesign = 0,
+                        Slot = itemInstance.Slot,
+                        RareAmount = itemInstance.Amount,
+                    }
+                }
+            };
+        }
     }
 }

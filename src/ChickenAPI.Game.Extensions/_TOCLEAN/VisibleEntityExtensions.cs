@@ -1,7 +1,5 @@
 ﻿using System;
 using ChickenAPI.Data.NpcMonster;
-using ChickenAPI.Enums.Game.Character;
-using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Game.Entities.Drop;
 using ChickenAPI.Game.Entities.Mates;
 using ChickenAPI.Game.Entities.Monster;
@@ -9,9 +7,10 @@ using ChickenAPI.Game.Entities.Npc;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Entities.Player.Extensions;
 using ChickenAPI.Game._ECS.Entities;
-using ChickenAPI.Packets.Old.Game.Server.Entities;
-using ChickenAPI.Packets.Old.Game.Server.MiniMap;
-using ChickenAPI.Packets.Old.Game.Server.Visibility;
+using ChickenAPI.Packets.Enumerations;
+using ChickenAPI.Packets.ServerPackets.Entities;
+using ChickenAPI.Packets.ServerPackets.Minimap;
+using ChickenAPI.Packets.ServerPackets.Visibility;
 
 namespace ChickenAPI.Game.Inventory.Extensions
 {
@@ -24,10 +23,10 @@ namespace ChickenAPI.Game.Inventory.Extensions
             {
                 VisualType = VisualType.Monster,
                 Name = npcMonster.Id.ToString(),
-                TransportId = monster.MapMonster.Id.ToString(),
+                VisualId = monster.MapMonster.Id,
                 PositionX = monster.Position.X,
                 PositionY = monster.Position.Y,
-                DirectionType = monster.DirectionType,
+                Direction = (byte?)monster.DirectionType,
                 InMonsterSubPacket = new InMonsterSubPacket
                 {
                     HpPercentage = monster.HpPercentage,
@@ -70,7 +69,7 @@ namespace ChickenAPI.Game.Inventory.Extensions
                 case IMateEntity mate:
                     return GenerateInMate(mate);
 
-                case ItemDropEntity drop:
+                case IDropEntity drop:
                     return GenerateInDrop(drop);
 
                 default:
@@ -80,8 +79,8 @@ namespace ChickenAPI.Game.Inventory.Extensions
 
         public static OutPacket GenerateOutPacket(this IEntity entity) => new OutPacket
         {
-            Type = entity.Type,
-            EntityId = entity.Id
+            VisualType = entity.Type,
+            VisualId = entity.Id
         };
 
         private static InPacket GenerateInMate(IMateEntity mate) =>
@@ -89,10 +88,10 @@ namespace ChickenAPI.Game.Inventory.Extensions
             {
                 VisualType = VisualType.Npc,
                 Name = mate.Mate.NpcMonsterId.ToString(),
-                TransportId = mate.Id.ToString(),
+                VisualId = mate.Id,
                 PositionX = mate.Position.X,
                 PositionY = mate.Position.Y,
-                DirectionType = mate.DirectionType,
+                Direction = (byte?)mate.DirectionType,
                 InMateSubPacket = new InMateSubPacket
                 {
                     HpPercentage = mate.HpPercentage,
@@ -156,7 +155,7 @@ namespace ChickenAPI.Game.Inventory.Extensions
             {
                 VisualType = drop.Type,
                 Name = drop.ItemVnum.ToString(),
-                TransportId = drop.Id.ToString(),
+                VisualId = drop.Id,
                 PositionX = drop.Position.X,
                 PositionY = drop.Position.Y,
                 Amount = drop.Quantity,
@@ -173,11 +172,11 @@ namespace ChickenAPI.Game.Inventory.Extensions
             {
                 VisualType = VisualType.Player,
                 Name = player.Character.Name,
-                TransportId = "-",
-                VNum = player.Character.Id,
+                VNum = "-",
+                VisualId = player.Id,
                 PositionX = player.Position.X,
                 PositionY = player.Position.Y,
-                DirectionType = player.DirectionType,
+                Direction = (byte?)player.DirectionType,
                 InCharacterSubPacket = new InCharacterSubPacketBase
                 {
                     NameAppearance = player.NameAppearance,
@@ -214,8 +213,8 @@ namespace ChickenAPI.Game.Inventory.Extensions
                 }
             };
 
-        public static AtPacketBase GenerateAtPacket(this IPlayerEntity player) =>
-            new AtPacketBase
+        public static AtPacket GenerateAtPacket(this IPlayerEntity player) =>
+            new AtPacket
             {
                 CharacterId = player.Character.Id,
                 MapId = Convert.ToInt16(player.CurrentMap.Map.Id),

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Data.Character;
 using ChickenAPI.Data.NpcMonster;
 using ChickenAPI.Enums.Packets;
@@ -10,8 +11,10 @@ using ChickenAPI.Game.Inventory.Events;
 using ChickenAPI.Game.Managers;
 using ChickenAPI.Game._ECS.Entities;
 using ChickenAPI.Game._Network;
+using ChickenAPI.Game.Entities.Mates;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Packets.ClientPackets.CharacterSelectionScreen;
+using ChickenAPI.Packets.Enumerations;
 using ChickenAPI.Packets.Old.Game.Server.UserInterface;
 using ChickenAPI.Packets.ServerPackets.Map;
 using ChickenAPI.Packets.ServerPackets.Player;
@@ -32,7 +35,8 @@ namespace NW.Plugins.PacketHandling.CharacterScreen
         private readonly IPlayerManager _playerManager;
 
         public GameStartPacketHandler(IPlayerManager playerManager, IMapManager mapManager, IAlgorithmService algorithmService, ICharacterService characterService,
-            ICharacterSkillService characterSkillService, ICharacterQuickListService characterQuicklistService, ICharacterMateService characterMateService, INpcMonsterService npcMonsterService)
+            ICharacterSkillService characterSkillService, ICharacterQuickListService characterQuicklistService, ICharacterMateService characterMateService, INpcMonsterService npcMonsterService,
+            ILogger log) : base(log)
         {
             _playerManager = playerManager;
             _mapManager = mapManager;

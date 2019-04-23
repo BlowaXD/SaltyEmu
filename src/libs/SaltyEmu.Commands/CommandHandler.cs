@@ -1,9 +1,7 @@
 ﻿using Autofac.Extensions.DependencyInjection;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Logging;
-using ChickenAPI.Enums.Packets;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Game.Helpers;
 using Qmmands;
 using SaltyEmu.Commands.Entities;
 using SaltyEmu.Commands.Interfaces;
@@ -12,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ChickenAPI.Packets.Enumerations;
 
 namespace SaltyEmu.Commands
 {
@@ -21,17 +20,16 @@ namespace SaltyEmu.Commands
     public class CommandHandler : ICommandContainer
     {
         private readonly CommandService _commands;
-        private readonly Logger _logger;
+        private readonly ILogger _logger;
 
         public IServiceProvider Services { get; }
 
         /// <summary>
         ///     This class should be instanciated with our Container.
         /// </summary>
-        public CommandHandler()
+        public CommandHandler(ILogger logger)
         {
-            _logger = Logger.GetLogger<CommandHandler>();
-
+            _logger = logger;
             _commands = new CommandService(new CommandServiceConfiguration
             {
                 CaseSensitive = false,

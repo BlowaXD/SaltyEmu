@@ -1,11 +1,11 @@
 ﻿using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Packets.Old.Game.Server.Player;
+using ChickenAPI.Packets.ServerPackets.Player;
 
 namespace ChickenAPI.Game.Movements.Extensions
 {
     public static class MovablePlayerExtensions
     {
-        public static CondPacketBase GenerateCondPacket(this IPlayerEntity entity) => new CondPacketBase
+        public static CondPacket GenerateCondPacket(this IPlayerEntity entity) => new CondPacket
         {
             NoAttack = !entity.CanAttack,
             NoMove = !entity.CanMove,

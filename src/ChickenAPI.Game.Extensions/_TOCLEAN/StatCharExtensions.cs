@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using ChickenAPI.Enums.Game.Character;
+using ChickenAPI.Packets.Enumerations;
 using ChickenAPI.Packets.Old.Game.Server.Player;
 
 namespace ChickenAPI.Game.Entities.Player.Extensions

@@ -1,5 +1,6 @@
 ﻿using ChickenAPI.Enums.Game.Relations;
 using ChickenAPI.Game._Events;
+using ChickenAPI.Packets.Enumerations;
 
 namespace ChickenAPI.Game.Relations.Events
 {

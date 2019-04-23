@@ -10,7 +10,7 @@ namespace ChickenAPI.Game.Inventory.Extensions
         {
             switch (itemInstance.Item.Type)
             {
-                case InventoryType.Wear:
+                case PocketType.Wear:
                     inventory.UseWear(itemInstance);
                     break;
             }

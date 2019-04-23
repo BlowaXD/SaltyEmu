@@ -1,7 +1,7 @@
 ﻿using ChickenAPI.Game._ECS.Entities;
 using ChickenAPI.Game.Entities.Player;
 using System.Threading.Tasks;
-using ChickenAPI.Packets.Old.Game.Server.Specialist;
+using ChickenAPI.Packets.ServerPackets.Specialists;
 
 namespace ChickenAPI.Game.Specialists.Extensions
 {
@@ -16,16 +16,16 @@ namespace ChickenAPI.Game.Specialists.Extensions
             entity.MorphId = id;
         }
 
-        public static Task SendSdAsync(this IPlayerEntity player, int cooldown)
+        public static Task SendSdAsync(this IPlayerEntity player, short cooldown)
         {
             return player.SendPacketAsync(player.GenerateSdPacket(cooldown));
         }
 
-        public static SdPacket GenerateSdPacket(this IPlayerEntity player, int cooldown)
+        public static SdPacket GenerateSdPacket(this IPlayerEntity player, short cooldown)
         {
             return new SdPacket
             {
-                CoolDown = cooldown
+                Cooldown = cooldown
             };
         }
     }

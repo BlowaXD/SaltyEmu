@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using ChickenAPI.Core.Events;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Data.Character;
 using ChickenAPI.Data.Item;
 using ChickenAPI.Enums.Packets;
@@ -14,6 +15,7 @@ using ChickenAPI.Game.Locomotion.Events;
 using ChickenAPI.Game.Movements.Extensions;
 using ChickenAPI.Game.Specialists.Args;
 using ChickenAPI.Game.Specialists.Extensions;
+using ChickenAPI.Packets.Enumerations;
 
 namespace SaltyEmu.BasicPlugin.EventHandlers.Specialists
 {
@@ -21,7 +23,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Specialists
     {
         private readonly IAlgorithmService _algorithm;
 
-        public Specialist_Remove_Handler(IAlgorithmService algorithm)
+        public Specialist_Remove_Handler(IAlgorithmService algorithm, ILogger log) : base(log)
         {
             _algorithm = algorithm;
         }
@@ -43,7 +45,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Specialists
 
             // Tcheck Skill used
             player.SetMorph(0);
-            await player.SendSdAsync(player.SpCoolDown);
+            await player.SendSdAsync((short)player.SpCoolDown);
             await player.BroadcastAsync(player.GenerateCModePacket());
             await player.SendGuri(GuriPacketType.Unknow2, 1, (int)player.Id);
 

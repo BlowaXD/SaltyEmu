@@ -1,4 +1,5 @@
 ﻿using ChickenAPI.Enums.Game.Character;
+using ChickenAPI.Packets.Enumerations;
 
 namespace SaltyEmu.BasicAlgorithmPlugin.CharacterAlgorithms.Damage
 {
@@ -9,7 +10,7 @@ namespace SaltyEmu.BasicAlgorithmPlugin.CharacterAlgorithms.Damage
 
         public void Initialize()
         {
-            _criticalHitRate = new int[(int)CharacterClassType.Unknown, MAX_LEVEL];
+            _criticalHitRate = new int[(int)CharacterClassType.MartialArtist + 1, MAX_LEVEL];
 
             for (int i = 0; i < MAX_LEVEL; i++)
             {
@@ -17,7 +18,7 @@ namespace SaltyEmu.BasicAlgorithmPlugin.CharacterAlgorithms.Damage
                 _criticalHitRate[(int)CharacterClassType.Swordman, i] = 0; // approx
                 _criticalHitRate[(int)CharacterClassType.Magician, i] = 0; // sure
                 _criticalHitRate[(int)CharacterClassType.Archer, i] = 0; // sure
-                _criticalHitRate[(int)CharacterClassType.Wrestler, i] = 0; // sure
+                _criticalHitRate[(int)CharacterClassType.MartialArtist, i] = 0; // sure
             }
         }
 

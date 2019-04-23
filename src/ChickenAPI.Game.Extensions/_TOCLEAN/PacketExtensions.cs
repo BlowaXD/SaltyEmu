@@ -1,43 +1,43 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using ChickenAPI.Enums.Game.Relations;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Packets.Old.Game.Server.Relations;
+using ChickenAPI.Packets.Enumerations;
+using ChickenAPI.Packets.ServerPackets.Relations;
 
 namespace ChickenAPI.Game.Relations.Extensions
 {
     public static class PacketExtensions
     {
-        public static FInitPacket GenerateFInitPacket(this IPlayerEntity player)
+        public static FinitPacket GenerateFInitPacket(this IPlayerEntity player)
         {
-            List<FInitPacket.FInitSubPacket> subpackets = new List<FInitPacket.FInitSubPacket>();
+            List<FinitSubPacket> subpackets = new List<FinitSubPacket>();
 
             subpackets.AddRange(
                 player.Relations.Relation.Where(s => s != null && (s.Type == CharacterRelationType.Friend || s.Type == CharacterRelationType.Spouse))?.Select(relation =>
-                    new FInitPacket.FInitSubPacket
+                    new FinitSubPacket
                     {
-                        RelationId = relation.TargetId,
-                        RelationType = relation.Type,
+                        CharacterId = relation.TargetId,
                         CharacterName = relation.Name,
+                        RelationType = relation.Type,
                         IsOnline = true
                     }));
-            return new FInitPacket
+            return new FinitPacket()
             {
-                Packets = subpackets
+                SubPackets = subpackets
             };
         }
 
-        public static BlInitPacket GenerateBlIinitPacket(this IPlayerEntity player)
+        public static BlinitPacket GenerateBlIinitPacket(this IPlayerEntity player)
         {
-            List<BlInitPacket.BlInitSubPacket> subPackets = new List<BlInitPacket.BlInitSubPacket>();
+            List<BlinitSubPacket> subPackets = new List<BlinitSubPacket>();
 
 
-            subPackets.AddRange(player.Relations.Relation.Where(s => s?.Type == CharacterRelationType.Blocked).Select(relation => new BlInitPacket.BlInitSubPacket
+            subPackets.AddRange(player.Relations.Relation.Where(s => s?.Type == CharacterRelationType.Blocked).Select(relation => new BlinitSubPacket
             {
-                CharacterId = relation.TargetId,
+                RelatedCharacterId = relation.TargetId,
                 CharacterName = relation.Name
             }));
-            return new BlInitPacket
+            return new BlinitPacket()
             {
                 SubPackets = subPackets
             };

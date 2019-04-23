@@ -11,7 +11,7 @@ namespace NW.Plugins.PacketHandling.Inventory
         protected override Task Handle(MviPacket packet, IPlayerEntity player) =>
             player.EmitEventAsync(new InventoryMoveEvent
             {
-                InventoryType = packet.InventoryType,
+                PocketType = packet.InventoryType,
                 Amount = packet.Amount,
                 SourceSlot = packet.InventorySlot,
                 DestinationSlot = packet.DestinationSlot

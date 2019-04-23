@@ -38,7 +38,7 @@ namespace SaltyEmu.DatabasePlugin.Services.Character
         {
             try
             {
-                return (await DbSet.Where(s => s.CharacterId == characterId && s.Item.Type == InventoryType.Wear).ToArrayAsync()).Select(Mapper.Map<ItemInstanceDto>).ToArray();
+                return (await DbSet.Where(s => s.CharacterId == characterId && s.Item.Type == PocketType.Wear).ToArrayAsync()).Select(Mapper.Map<ItemInstanceDto>).ToArray();
             }
             catch (Exception e)
             {

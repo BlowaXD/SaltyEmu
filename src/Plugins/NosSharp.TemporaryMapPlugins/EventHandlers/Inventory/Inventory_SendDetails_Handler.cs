@@ -18,9 +18,9 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Inventory
             }
 
 
-            await player.SendPacketAsync(player.GenerateInventoryPacket(InventoryType.Equipment));
-            await player.SendPacketAsync(player.GenerateInventoryPacket(InventoryType.Main));
-            await player.SendPacketAsync(player.GenerateInventoryPacket(InventoryType.Etc));
+            await player.SendPacketAsync(player.GenerateInventoryPacket(PocketType.Equipment));
+            await player.SendPacketAsync(player.GenerateInventoryPacket(PocketType.Main));
+            await player.SendPacketAsync(player.GenerateInventoryPacket(PocketType.Etc));
         }
     }
 }

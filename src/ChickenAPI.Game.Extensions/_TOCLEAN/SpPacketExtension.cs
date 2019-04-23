@@ -2,7 +2,7 @@
 using Autofac;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Game.Configuration;
-using ChickenAPI.Packets.Old.Game.Client.Specialists;
+using ChickenAPI.Packets.ServerPackets.Specialists;
 
 namespace ChickenAPI.Game.Entities.Player.Extensions
 {
@@ -16,12 +16,13 @@ namespace ChickenAPI.Game.Entities.Player.Extensions
             {
                 return null;
             }
+
             return new SpPacket
             {
-                AdditionalPoints = player.Character.SpAdditionPoint,
-                MaxAdditionalPoints = Configuration.SpMaxAdditionalPoints,
-                Points = player.Character.SpPoint,
-                MaxDailyPoints = Configuration.SpMaxDailyPoints
+                AdditionalPoint = player.Character.SpAdditionPoint,
+                MaxAdditionalPoint = (int)Configuration.SpMaxAdditionalPoints,
+                SpPoint = player.Character.SpPoint,
+                MaxSpPoint = (int)Configuration.SpMaxDailyPoints
             };
         }
     }
