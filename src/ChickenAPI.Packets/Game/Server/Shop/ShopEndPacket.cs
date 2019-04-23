@@ -1,7 +1,7 @@
 ﻿using ChickenAPI.Enums.Packets;
-using ChickenAPI.Packets.Attributes;
+using ChickenAPI.Packets.Old.Attributes;
 
-namespace ChickenAPI.Packets.Game.Server.Shop
+namespace ChickenAPI.Packets.Old.Game.Server.Shop
 {
     [PacketHeader("shop_end")]
     public class ShopEndPacket : PacketBase

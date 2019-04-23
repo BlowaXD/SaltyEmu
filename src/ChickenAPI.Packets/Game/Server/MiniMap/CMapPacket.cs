@@ -1,6 +1,6 @@
-﻿using ChickenAPI.Packets.Attributes;
+﻿using ChickenAPI.Packets.Old.Attributes;
 
-namespace ChickenAPI.Packets.Game.Server.MiniMap
+namespace ChickenAPI.Packets.Old.Game.Server.MiniMap
 {
     [PacketHeader("c_map")]
     public class CMapPacket : PacketBase

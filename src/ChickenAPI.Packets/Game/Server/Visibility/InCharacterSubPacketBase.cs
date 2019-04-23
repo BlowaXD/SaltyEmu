@@ -1,8 +1,8 @@
 ﻿using ChickenAPI.Enums.Game.Character;
-using ChickenAPI.Packets.Attributes;
-using ChickenAPI.Packets.Game.Server.Inventory;
+using ChickenAPI.Packets.Old.Attributes;
+using ChickenAPI.Packets.Old.Game.Server.Inventory;
 
-namespace ChickenAPI.Packets.Game.Server.Visibility
+namespace ChickenAPI.Packets.Old.Game.Server.Visibility
 {
     [PacketHeader("in_character_subpacket")]
     public class InCharacterSubPacketBase : PacketBase

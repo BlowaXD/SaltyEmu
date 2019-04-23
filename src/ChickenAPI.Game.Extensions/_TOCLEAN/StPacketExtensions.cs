@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using ChickenAPI.Game.Battle.Interfaces;
-using ChickenAPI.Packets.Game.Server.Entities;
+using ChickenAPI.Packets.Old.Game.Server.Entities;
 
 namespace ChickenAPI.Game.Entities.Extensions
 {

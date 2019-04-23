@@ -1,6 +1,6 @@
-﻿using ChickenAPI.Packets.Attributes;
+﻿using ChickenAPI.Packets.Old.Attributes;
 
-namespace ChickenAPI.Packets.Game.Client.Chat
+namespace ChickenAPI.Packets.Old.Game.Client.Chat
 {
     [PacketHeader("say")]
     public class ClientSayPacket : PacketBase

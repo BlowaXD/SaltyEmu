@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Packets.Game.Client.Battle;
+using ChickenAPI.Packets.Old.Game.Client.Battle;
 using NW.Plugins.PacketHandling.Utils;
 
 namespace NW.Plugins.PacketHandling.Skill

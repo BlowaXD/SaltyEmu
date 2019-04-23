@@ -1,6 +1,6 @@
-﻿using ChickenAPI.Packets.Attributes;
+﻿using ChickenAPI.Packets.Old.Attributes;
 
-namespace ChickenAPI.Packets.Game.Server.Mates
+namespace ChickenAPI.Packets.Old.Game.Server.Mates
 {
     [PacketHeader("pski")]
     public class PSkiPacket

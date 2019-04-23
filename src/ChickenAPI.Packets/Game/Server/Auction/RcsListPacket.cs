@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using ChickenAPI.Packets.Attributes;
-using ChickenAPI.Packets.Game.Server.Inventory;
+using ChickenAPI.Packets.Old.Attributes;
+using ChickenAPI.Packets.Old.Game.Server.Inventory;
 
-namespace ChickenAPI.Packets.Game.Server.Auction
+namespace ChickenAPI.Packets.Old.Game.Server.Auction
 {
     [PacketHeader("rc_slist")]
     public class RcsListPacket : PacketBase

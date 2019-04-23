@@ -1,4 +1,9 @@
 ﻿using ChickenAPI.Enums.Game.Character;
+using ChickenAPI.Packets.Enumerations;
+using CharacterClassType = ChickenAPI.Enums.Game.Character.CharacterClassType;
+using GenderType = ChickenAPI.Enums.Game.Character.GenderType;
+using HairColorType = ChickenAPI.Enums.Game.Character.HairColorType;
+using HairStyleType = ChickenAPI.Enums.Game.Character.HairStyleType;
 
 namespace ChickenAPI.Data.Character
 {

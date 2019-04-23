@@ -4,7 +4,7 @@ using ChickenAPI.Data.Item;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Inventory.Events;
 using ChickenAPI.Game.Inventory.Extensions;
-using ChickenAPI.Packets.Game.Client.Inventory;
+using ChickenAPI.Packets.Old.Game.Client.Inventory;
 using NW.Plugins.PacketHandling.Utils;
 
 namespace NW.Plugins.PacketHandling.Inventory

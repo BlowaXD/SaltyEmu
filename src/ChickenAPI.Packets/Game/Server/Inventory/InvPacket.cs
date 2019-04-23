@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using ChickenAPI.Enums.Game.Items;
-using ChickenAPI.Packets.Attributes;
+using ChickenAPI.Packets.Old.Attributes;
 
-namespace ChickenAPI.Packets.Game.Server.Inventory
+namespace ChickenAPI.Packets.Old.Game.Server.Inventory
 {
     [PacketHeader("inv")]
     public class InvPacket : PacketBase

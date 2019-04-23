@@ -3,7 +3,7 @@ using ChickenAPI.Data.Item;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Inventory.Extensions;
 using ChickenAPI.Game.Inventory.ItemUpgrade.Events;
-using ChickenAPI.Packets.Game.Client;
+using ChickenAPI.Packets.Old.Game.Client;
 using NW.Plugins.PacketHandling.Utils;
 
 namespace NW.Plugins.PacketHandling.Inventory

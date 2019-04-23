@@ -3,7 +3,7 @@ using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Game.Entities.Npc;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Shops.Events;
-using ChickenAPI.Packets.Game.Client.Shops;
+using ChickenAPI.Packets.Old.Game.Client.Shops;
 using NW.Plugins.PacketHandling.Utils;
 
 namespace NW.Plugins.PacketHandling.Shops

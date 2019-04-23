@@ -1,7 +1,7 @@
 ﻿using ChickenAPI.Enums.Game.Character;
-using ChickenAPI.Packets.Attributes;
+using ChickenAPI.Packets.Old.Attributes;
 
-namespace ChickenAPI.Packets.CharacterSelectionScreen.Client
+namespace ChickenAPI.Packets.Old.CharacterSelectionScreen.Client
 {
     [PacketHeader("Char_NEW_Job", false)]
     public class CharNewWrestlerPacketBase : PacketBase

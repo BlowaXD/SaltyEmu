@@ -1,49 +1,20 @@
-﻿using ChickenAPI.Enums.Game.Entity;
-using ChickenAPI.Game.Entities.Monster;
-using ChickenAPI.Game.Entities.Npc;
-using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Game._ECS.Entities;
-using ChickenAPI.Packets.Game.Server.Entities;
+﻿using ChickenAPI.Game.Movements;
+using ChickenAPI.Packets.ServerPackets.Entities;
 
 namespace ChickenAPI.Game.Inventory.Extensions
 {
     public static class MovableEntityExtensions
     {
-        public static MvPacket GenerateMvPacket(this IEntity entity)
+        public static MovePacket GenerateMvPacket(this IMovableEntity entity)
         {
-            switch (entity)
+            return new MovePacket
             {
-                case IMonsterEntity monster:
-                    return new MvPacket
-                    {
-                        VisualType = VisualType.Monster,
-                        VisualId = monster.MapMonster.Id,
-                        Speed = monster.Speed,
-                        MapX = monster.Position.X,
-                        MapY = monster.Position.Y
-                    };
-
-                case INpcEntity npc:
-                    return new MvPacket
-                    {
-                        VisualType = VisualType.Npc,
-                        VisualId = npc.MapNpc.Id,
-                        Speed = npc.Speed,
-                        MapX = npc.Position.X,
-                        MapY = npc.Position.Y
-                    };
-                case IPlayerEntity player:
-                    return new MvPacket
-                    {
-                        VisualType = VisualType.Player,
-                        VisualId = player.Character.Id,
-                        Speed = player.Speed,
-                        MapX = player.Position.X,
-                        MapY = player.Position.Y
-                    };
-                default:
-                    return null;
-            }
+                VisualType = entity.Type,
+                VisualEntityId = entity.Id,
+                Speed = entity.Speed,
+                MapX = entity.Position.X,
+                MapY = entity.Position.Y
+            };
         }
     }
 }

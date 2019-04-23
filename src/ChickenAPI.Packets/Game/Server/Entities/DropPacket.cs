@@ -1,6 +1,6 @@
-﻿using ChickenAPI.Packets.Attributes;
+﻿using ChickenAPI.Packets.Old.Attributes;
 
-namespace ChickenAPI.Packets.Game.Server.Entities
+namespace ChickenAPI.Packets.Old.Game.Server.Entities
 {
     [PacketHeader("drop")]
     public class DropPacket : PacketBase

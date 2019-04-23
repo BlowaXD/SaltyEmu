@@ -2,8 +2,8 @@
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.NpcDialog.Events;
 using ChickenAPI.Game.NpcDialog.Handling;
-using ChickenAPI.Packets.Game.Client.Npcs;
-using ChickenAPI.Packets.Game.Client.Shops;
+using ChickenAPI.Packets.Old.Game.Client.Npcs;
+using ChickenAPI.Packets.Old.Game.Client.Shops;
 
 namespace SaltyEmu.BasicPlugin.NpcDialogHandlers
 {

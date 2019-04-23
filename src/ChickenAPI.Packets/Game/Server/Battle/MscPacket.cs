@@ -1,6 +1,6 @@
-﻿using ChickenAPI.Packets.Attributes;
+﻿using ChickenAPI.Packets.Old.Attributes;
 
-namespace ChickenAPI.Packets.Game.Server.Battle
+namespace ChickenAPI.Packets.Old.Game.Server.Battle
 {
     [PacketHeader("ms_c")]
     public class MscPacket : PacketBase

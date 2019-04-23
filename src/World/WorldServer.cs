@@ -10,7 +10,7 @@ using ChickenAPI.Core.Plugins;
 using ChickenAPI.Core.Plugins.Exceptions;
 using ChickenAPI.Packets;
 using ChickenAPI.Packets.Attributes;
-using ChickenAPI.Packets.Game.Server.Player;
+using ChickenAPI.Packets.Old;
 using Essentials;
 using NLog;
 using NW.Plugins.PacketHandling;

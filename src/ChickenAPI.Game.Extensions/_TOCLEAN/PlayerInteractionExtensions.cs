@@ -2,8 +2,10 @@
 using ChickenAPI.Enums.Packets;
 using ChickenAPI.Game._ECS.Entities;
 using ChickenAPI.Game._i18n;
-using ChickenAPI.Packets.Game.Server.Player;
-using ChickenAPI.Packets.Game.Server.UserInterface;
+using ChickenAPI.Packets.Enumerations;
+using ChickenAPI.Packets.ServerPackets.Chats;
+using ChickenAPI.Packets.ServerPackets.UI;
+using SayColorType = ChickenAPI.Enums.Packets.SayColorType;
 
 namespace ChickenAPI.Game.Entities.Player.Extensions
 {
@@ -28,12 +30,12 @@ namespace ChickenAPI.Game.Entities.Player.Extensions
         {
             return new ModalPacket
             {
-                Type = type,
+                Type = (byte)type,
                 Message = message,
             };
         }
 
-        public static MsgPacket GenerateMsgPacket(this IPlayerEntity player, PlayerMessages message, MsgPacketType type)
+        public static MsgPacket GenerateMsgPacket(this IPlayerEntity player, PlayerMessages message, MessageType type)
         {
             return new MsgPacket
             {
@@ -42,7 +44,7 @@ namespace ChickenAPI.Game.Entities.Player.Extensions
             };
         }
 
-        public static MsgPacket GenerateMsgPacket(this IPlayerEntity player, string msg, MsgPacketType type) =>
+        public static MsgPacket GenerateMsgPacket(this IPlayerEntity player, string msg, MessageType type) =>
             new MsgPacket
             {
                 Message = msg,

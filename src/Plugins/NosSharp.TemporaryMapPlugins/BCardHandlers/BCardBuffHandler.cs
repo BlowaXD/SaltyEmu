@@ -10,7 +10,7 @@ using ChickenAPI.Game.Battle.Interfaces;
 using ChickenAPI.Game.BCards;
 using ChickenAPI.Game.Buffs;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Packets.Game.Server.Battle;
+using ChickenAPI.Packets.Old.Game.Server.Battle;
 
 namespace SaltyEmu.BasicPlugin.BCardHandlers
 {

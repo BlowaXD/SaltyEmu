@@ -9,10 +9,11 @@ using ChickenAPI.Game.Inventory.Extensions;
 using ChickenAPI.Game.Shops.Extensions;
 using ChickenAPI.Game.Visibility;
 using ChickenAPI.Game._ECS.Entities;
-using ChickenAPI.Packets.Game.Client.Shops;
-using ChickenAPI.Packets.Game.Server.Inventory;
-using ChickenAPI.Packets.Game.Server.Portals;
-using ChickenAPI.Packets.Game.Server.Visibility;
+using ChickenAPI.Packets.Enumerations;
+using ChickenAPI.Packets.ServerPackets.Inventory;
+using ChickenAPI.Packets.ServerPackets.Portals;
+using ChickenAPI.Packets.ServerPackets.Shop;
+using ChickenAPI.Packets.ServerPackets.Visibility;
 
 namespace ChickenAPI.Game.Maps.Extensions
 {

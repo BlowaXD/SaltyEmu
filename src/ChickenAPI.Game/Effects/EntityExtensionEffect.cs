@@ -1,9 +1,4 @@
-﻿using ChickenAPI.Enums.Game.Entity;
-using ChickenAPI.Game.Entities.Monster;
-using ChickenAPI.Game.Entities.Npc;
-using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Game._ECS.Entities;
-using ChickenAPI.Packets.Enumerations;
+﻿using ChickenAPI.Game._ECS.Entities;
 using ChickenAPI.Packets.ServerPackets.Player;
 
 namespace ChickenAPI.Game.Effects

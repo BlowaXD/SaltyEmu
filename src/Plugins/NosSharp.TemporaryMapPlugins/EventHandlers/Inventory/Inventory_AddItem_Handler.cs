@@ -11,7 +11,6 @@ using ChickenAPI.Game.Entities.Player.Extensions;
 using ChickenAPI.Game.Inventory;
 using ChickenAPI.Game.Inventory.Events;
 using ChickenAPI.Game.Inventory.Extensions;
-using ChickenAPI.Packets.Game.Server.Inventory;
 
 namespace SaltyEmu.BasicPlugin.EventHandlers.Inventory
 {

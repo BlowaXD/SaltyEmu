@@ -1,7 +1,7 @@
 ﻿using System;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game._ECS.Entities;
-using ChickenAPI.Packets.Game.Server.MiniMap;
+using ChickenAPI.Packets.Old.Game.Server.MiniMap;
 
 namespace ChickenAPI.Game.Inventory.Extensions
 {

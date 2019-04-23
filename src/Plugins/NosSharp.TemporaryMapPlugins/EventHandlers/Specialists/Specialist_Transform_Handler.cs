@@ -78,7 +78,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Specialists
 
             if (e.Wait)
             {
-                await player.GenerateDelay(5000, DelayPacketType.Locomotion, $"#sl^0");
+                await player.SendDelayAsync(5000, DelayPacketType.Locomotion, $"#sl^0");
                 return;
             }
 

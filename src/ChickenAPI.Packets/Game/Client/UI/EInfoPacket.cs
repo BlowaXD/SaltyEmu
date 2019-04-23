@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using ChickenAPI.Enums.Game.Entity;
-using ChickenAPI.Packets.Attributes;
+﻿using ChickenAPI.Enums.Game.Entity;
+using ChickenAPI.Packets.Old.Attributes;
 
-namespace ChickenAPI.Packets.Game.Client.UI
+namespace ChickenAPI.Packets.Old.Game.Client.UI
 {
     [PacketHeader("e_info")]
     public class EInfoPacket : PacketBase

@@ -1,6 +1,6 @@
-﻿using ChickenAPI.Packets.Attributes;
+﻿using ChickenAPI.Packets.Old.Attributes;
 
-namespace ChickenAPI.Packets.Game.Client.Specialists
+namespace ChickenAPI.Packets.Old.Game.Client.Specialists
 {
     [PacketHeader("sp")]
     public class SpPacket : PacketBase

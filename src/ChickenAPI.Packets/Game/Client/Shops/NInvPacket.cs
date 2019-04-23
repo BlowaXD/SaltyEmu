@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
-using ChickenAPI.Enums.Game.Entity;
-using ChickenAPI.Packets.Attributes;
+using ChickenAPI.Packets.Old.Attributes;
 
-namespace ChickenAPI.Packets.Game.Client.Shops
+namespace ChickenAPI.Packets.Old.Game.Client.Shops
 {
     [PacketHeader("n_inv")]
     public class NInvPacket : PacketBase

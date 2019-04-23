@@ -1,7 +1,7 @@
 ﻿using ChickenAPI.Enums.Packets;
-using ChickenAPI.Packets.Attributes;
+using ChickenAPI.Packets.Old.Attributes;
 
-namespace ChickenAPI.Packets.Game.Server.Relations
+namespace ChickenAPI.Packets.Old.Game.Server.Relations
 {
     [PacketHeader("fins")]
     public class FInsPacket : PacketBase

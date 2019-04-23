@@ -1,5 +1,5 @@
 ﻿using ChickenAPI.Game.Portals;
-using ChickenAPI.Packets.Game.Server.Portals;
+using ChickenAPI.Packets.Old.Game.Server.Portals;
 
 namespace ChickenAPI.Game.Inventory.Extensions
 {

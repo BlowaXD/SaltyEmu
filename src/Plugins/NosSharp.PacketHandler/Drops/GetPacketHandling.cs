@@ -5,7 +5,7 @@ using ChickenAPI.Game.Entities.Drop;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Entities.Player.Extensions;
 using ChickenAPI.Game.Inventory.Events;
-using ChickenAPI.Packets.Game.Client.Drops;
+using ChickenAPI.Packets.Old.Game.Client.Drops;
 using NW.Plugins.PacketHandling.Utils;
 
 namespace NW.Plugins.PacketHandling.Drops

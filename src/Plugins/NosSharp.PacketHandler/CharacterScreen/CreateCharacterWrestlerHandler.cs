@@ -4,8 +4,8 @@ using System.Threading.Tasks;
 using ChickenAPI.Data.Character;
 using ChickenAPI.Enums.Game.Character;
 using ChickenAPI.Game._Network;
-using ChickenAPI.Packets.CharacterSelectionScreen.Client;
-using ChickenAPI.Packets.Game.Server.UserInterface;
+using ChickenAPI.Packets.Old.CharacterSelectionScreen.Client;
+using ChickenAPI.Packets.Old.Game.Server.UserInterface;
 using NW.Plugins.PacketHandling.Utils;
 
 namespace NW.Plugins.PacketHandling.CharacterScreen

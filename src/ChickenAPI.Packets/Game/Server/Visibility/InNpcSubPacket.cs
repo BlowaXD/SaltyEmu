@@ -1,6 +1,6 @@
-﻿using ChickenAPI.Packets.Attributes;
+﻿using ChickenAPI.Packets.Old.Attributes;
 
-namespace ChickenAPI.Packets.Game.Server.Visibility
+namespace ChickenAPI.Packets.Old.Game.Server.Visibility
 {
     [PacketHeader("in_npc_subpacket")]
     public class InNpcSubPacket : PacketBase

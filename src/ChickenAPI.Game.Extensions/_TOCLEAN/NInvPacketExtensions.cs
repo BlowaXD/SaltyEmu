@@ -6,51 +6,51 @@ using ChickenAPI.Enums.Game.Character;
 using ChickenAPI.Enums.Game.Items;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Entities.Player.Extensions;
-using ChickenAPI.Packets.Game.Client.Shops;
+using ChickenAPI.Packets.ServerPackets.Shop;
 
 namespace ChickenAPI.Game.Shops.Extensions
 {
     public static class NInvPacketExtensions
     {
-        private static string GetShopList(IEnumerable<PersonalShopItem> items)
+        private static List<NInvItemSubPacket> GetShopList(IEnumerable<PersonalShopItem> items)
         {
-            var tmp = new StringBuilder();
+            var tmp = new List<NInvItemSubPacket>();
 
             foreach (PersonalShopItem itemInfo in items)
             {
-                tmp.Append(' ');
+                // tmp.Append(' ');
                 long upgradeOrPrice = itemInfo.ItemInstance.Item.Type == InventoryType.Equipment ? itemInfo.ItemInstance.Upgrade : itemInfo.Price;
                 int rareOrQuantity = itemInfo.ItemInstance.Item.Type == InventoryType.Equipment ? itemInfo.ItemInstance.Rarity : itemInfo.Quantity;
                 double priceOrMinus = itemInfo.ItemInstance.Item.Type == InventoryType.Equipment ? itemInfo.Price : -1;
 
-                tmp.Append($"{(byte)itemInfo.ItemInstance.Item.Type}.{itemInfo.Slot}.{itemInfo.ItemInstance.ItemId}.{rareOrQuantity}.{upgradeOrPrice}.{priceOrMinus}");
+                tmp.Add(new NInvItemSubPacket
+                {
+                    Price = upgradeOrPrice,
+                    UpgradeDesign = rareOrQuantity,
+                    Slot = (byte)itemInfo.Slot,
+                    VNum = (short)itemInfo.ItemInstance.ItemId,
+                });
+
+                // tmp.Append($"{(byte)itemInfo.ItemInstance.Item.Type}.{itemInfo.Slot}.{itemInfo.ItemInstance.ItemId}.{rareOrQuantity}.{upgradeOrPrice}.{priceOrMinus}");
             }
 
-            return tmp.ToString();
+            return tmp;
         }
 
-        private static string GetShopList(IEnumerable<ShopItemDto> items, double percent)
+        private static List<NInvItemSubPacket> GetShopList(IEnumerable<ShopItemDto> items, double percent)
         {
-            var tmp = new StringBuilder();
+            var tmp = new List<NInvItemSubPacket>();
 
             foreach (ShopItemDto itemInfo in items)
             {
-                tmp.Append(' ');
                 double price = itemInfo.Item.ReputPrice > 0 ? itemInfo.Item.ReputPrice : itemInfo.Item.Price * percent;
                 byte color = itemInfo.Color != 0 ? itemInfo.Item.Color : itemInfo.Item.BasicUpgrade;
                 int rareOrQuantity = itemInfo.Item.Type != InventoryType.Equipment ? -1 : itemInfo.Rare;
 
-                tmp.Append($"{(byte)itemInfo.Item.Type}.{itemInfo.Slot}.{itemInfo.ItemId}.{rareOrQuantity}.");
-                if (itemInfo.Item.Type == InventoryType.Equipment)
-                {
-                    tmp.Append(color);
-                    tmp.Append('.');
-                }
 
-                tmp.Append(price);
             }
 
-            return tmp.ToString();
+            return tmp;
         }
 
 
@@ -59,15 +59,15 @@ namespace ChickenAPI.Game.Shops.Extensions
             {
                 VisualType = shop.Owner.Type,
                 VisualId = shop.Owner.Id,
-                ShopType = 0,
+                ShopKind = 0,
                 Unknown = 0,
-                ShopList = GetShopList(shop.ShopItems),
-                ShopSkills = new List<long>()
+                Items = GetShopList(shop.ShopItems),
+                Skills = null,
             };
 
         public static NInvPacket GenerateNInvPacket(this IPlayerEntity player, Shop shop, byte type)
         {
-            int typeshop = 0;
+            byte typeshop = 0;
             double percent = 1.0;
 
             switch (player.GetDignityIcon())
@@ -93,7 +93,7 @@ namespace ChickenAPI.Game.Shops.Extensions
                 typeshop = 100;
             }
 
-            List<long> skillIds = new List<long>();
+            List<short> skillIds = new List<short>();
 
             foreach (ShopSkillDto skill in shop.Skills.Where(s => s.Type == type))
             {
@@ -102,12 +102,12 @@ namespace ChickenAPI.Game.Shops.Extensions
                     typeshop = 1;
                     if (skill.Skill.Class == (byte)player.Character.Class)
                     {
-                        skillIds.Add(skill.SkillId);
+                        skillIds.Add((short)skill.SkillId);
                     }
                 }
                 else
                 {
-                    skillIds.Add(skill.SkillId);
+                    skillIds.Add((short)skill.SkillId);
                 }
             }
 
@@ -116,10 +116,10 @@ namespace ChickenAPI.Game.Shops.Extensions
             {
                 VisualType = shop.Owner.Type,
                 VisualId = shop.Owner.Id,
-                ShopType = typeshop,
+                ShopKind = typeshop,
                 Unknown = 0,
-                ShopList = GetShopList(shop.Items.Where(s => s.Type == type), percent),
-                ShopSkills = skillIds
+                Items = GetShopList(shop.Items.Where(s => s.Type == type), percent),
+                Skills = skillIds
             };
         }
     }

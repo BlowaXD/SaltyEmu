@@ -9,6 +9,7 @@ using ChickenAPI.Enums;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game._Network;
 using ChickenAPI.Packets;
+using ChickenAPI.Packets.Old;
 using Moq;
 
 namespace ChickenAPI.Game.Test.Mocks

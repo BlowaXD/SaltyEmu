@@ -1,8 +1,8 @@
 ﻿using ChickenAPI.Enums.Game.Character;
 using ChickenAPI.Enums.Game.Entity;
-using ChickenAPI.Packets.Attributes;
+using ChickenAPI.Packets.Old.Attributes;
 
-namespace ChickenAPI.Packets.Game.Client.Player
+namespace ChickenAPI.Packets.Old.Game.Client.Player
 {
     [PacketHeader("tc_info")]
     public class TcInfoPacket : PacketBase

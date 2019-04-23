@@ -2,7 +2,7 @@
 using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Enums.Game.Items;
 using ChickenAPI.Game.Inventory.Extensions;
-using ChickenAPI.Packets.Game.Server.Inventory;
+using ChickenAPI.Packets.Old.Game.Server.Inventory;
 
 namespace ChickenAPI.Game.Entities.Player.Extensions
 {

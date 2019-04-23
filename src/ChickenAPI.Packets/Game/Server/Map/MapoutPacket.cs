@@ -1,6 +1,6 @@
-﻿using ChickenAPI.Packets.Attributes;
+﻿using ChickenAPI.Packets.Old.Attributes;
 
-namespace ChickenAPI.Packets.Game.Server.Map
+namespace ChickenAPI.Packets.Old.Game.Server.Map
 {
     [PacketHeader("mapout")]
     public class MapoutPacket : PacketBase

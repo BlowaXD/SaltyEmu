@@ -2,7 +2,7 @@
 using System.Linq;
 using ChickenAPI.Enums.Game.Relations;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Packets.Game.Server.Relations;
+using ChickenAPI.Packets.Old.Game.Server.Relations;
 
 namespace ChickenAPI.Game.Relations.Extensions
 {

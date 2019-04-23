@@ -3,7 +3,7 @@ using System.Linq;
 using System.Text;
 using ChickenAPI.Data.Character;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Packets.Game.Server.Player;
+using ChickenAPI.Packets.Old.Game.Server.Player;
 
 namespace ChickenAPI.Game.Skills.Extensions
 {

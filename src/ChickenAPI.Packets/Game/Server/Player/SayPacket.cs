@@ -1,8 +1,7 @@
-﻿using ChickenAPI.Enums.Game.Entity;
-using ChickenAPI.Enums.Packets;
-using ChickenAPI.Packets.Attributes;
+﻿using ChickenAPI.Enums.Packets;
+using ChickenAPI.Packets.Old.Attributes;
 
-namespace ChickenAPI.Packets.Game.Server.Player
+namespace ChickenAPI.Packets.Old.Game.Server.Player
 {
     [PacketHeader("say")]
     public class SayPacket : PacketBase

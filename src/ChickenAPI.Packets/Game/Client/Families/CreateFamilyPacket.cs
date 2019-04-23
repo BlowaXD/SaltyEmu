@@ -1,6 +1,6 @@
-﻿using ChickenAPI.Packets.Attributes;
+﻿using ChickenAPI.Packets.Old.Attributes;
 
-namespace ChickenAPI.Packets.Game.Client.Families
+namespace ChickenAPI.Packets.Old.Game.Client.Families
 {
     [PacketHeader("glmk")]
     public class CreateFamilyPacket : PacketBase

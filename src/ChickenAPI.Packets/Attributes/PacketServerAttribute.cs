@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ChickenAPI.Packets.Attributes
+namespace ChickenAPI.Packets.Old.Attributes
 {
     [AttributeUsage(AttributeTargets.Class)]
     public class PacketServerAttribute : Attribute

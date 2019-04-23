@@ -1,4 +1,4 @@
-﻿using ChickenAPI.Packets.Game.Server.Entities;
+﻿using ChickenAPI.Packets.ServerPackets.Entities;
 
 namespace ChickenAPI.Game.Entities.Drop.Extensions
 {
@@ -7,14 +7,13 @@ namespace ChickenAPI.Game.Entities.Drop.Extensions
         public static DropPacket GenerateDropPacket(this IDropEntity drop) =>
             new DropPacket
             {
-                ItemVnum = drop.ItemVnum,
-                Quantity = drop.Quantity,
+                VisualId = drop.Id,
+                Amount = (short)drop.Quantity,
+                VNum = (short)drop.ItemVnum,
                 PositionX = drop.Position.X,
                 PositionY = drop.Position.Y,
-                TransportId = drop.Id,
-                IsQuestDrop = drop.IsQuestDrop,
-                Unknown = 0,
-                Unknown2 = -1
+                Unknown = (byte)(drop.IsQuestDrop ? 1 : 0),
+                OwnerId = drop.Id,
             };
     }
 }

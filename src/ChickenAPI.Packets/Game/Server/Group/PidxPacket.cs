@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using ChickenAPI.Packets.Attributes;
+using ChickenAPI.Packets.Old.Attributes;
 
-namespace ChickenAPI.Packets.Game.Server.Group
+namespace ChickenAPI.Packets.Old.Game.Server.Group
 {
     [PacketHeader("pidx")]
     public class PidxPacket : PacketBase

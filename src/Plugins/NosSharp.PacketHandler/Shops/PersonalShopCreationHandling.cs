@@ -12,8 +12,8 @@ using ChickenAPI.Game.Inventory.Extensions;
 using ChickenAPI.Game.Shops;
 using ChickenAPI.Game.Shops.Events;
 using ChickenAPI.Game.Shops.Extensions;
-using ChickenAPI.Packets.Game.Client.Shops;
-using ChickenAPI.Packets.Game.Server.Shop;
+using ChickenAPI.Packets.Old.Game.Client.Shops;
+using ChickenAPI.Packets.Old.Game.Server.Shop;
 using NW.Plugins.PacketHandling.Utils;
 
 namespace NW.Plugins.PacketHandling.Shops

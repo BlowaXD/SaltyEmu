@@ -5,7 +5,7 @@ using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Inventory.Extensions;
 using ChickenAPI.Game.Maps.Events;
 using ChickenAPI.Game._BroadcastRules;
-using ChickenAPI.Packets.Game.Server.Map;
+using ChickenAPI.Packets.Old.Game.Server.Map;
 
 namespace SaltyEmu.BasicPlugin.EventHandlers.Maps
 {

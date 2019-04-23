@@ -3,7 +3,7 @@ using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Inventory.Extensions;
 using ChickenAPI.Game.Movements.Extensions;
 using ChickenAPI.Game._ECS.Entities;
-using ChickenAPI.Packets.Game.Client.Movement;
+using ChickenAPI.Packets.Old.Game.Client.Movement;
 using NW.Plugins.PacketHandling.Utils;
 
 namespace NW.Plugins.PacketHandling.Move

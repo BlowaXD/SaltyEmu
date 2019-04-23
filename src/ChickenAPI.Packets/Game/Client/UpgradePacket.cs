@@ -1,8 +1,8 @@
 ﻿using ChickenAPI.Enums.Game.Items;
 using ChickenAPI.Enums.Packets;
-using ChickenAPI.Packets.Attributes;
+using ChickenAPI.Packets.Old.Attributes;
 
-namespace ChickenAPI.Packets.Game.Client
+namespace ChickenAPI.Packets.Old.Game.Client
 {
     [PacketHeader("up_gr")]
     public class UpgradePacket : PacketBase

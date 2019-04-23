@@ -1,6 +1,6 @@
-﻿using ChickenAPI.Packets.Attributes;
+﻿using ChickenAPI.Packets.Old.Attributes;
 
-namespace ChickenAPI.Packets.Game.Client.Miniland
+namespace ChickenAPI.Packets.Old.Game.Client.Miniland
 {
     [PacketHeader("addobj")]
     public class AddobjPacket : PacketBase

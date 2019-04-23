@@ -11,7 +11,7 @@ using ChickenAPI.Game.Managers;
 using ChickenAPI.Game.Relations.Events;
 using ChickenAPI.Game._i18n;
 using ChickenAPI.Packets;
-using ChickenAPI.Packets.Game.Server.Relations;
+using ChickenAPI.Packets.Old.Game.Server.Relations;
 
 namespace SaltyEmu.BasicPlugin.EventHandlers.Relations
 {

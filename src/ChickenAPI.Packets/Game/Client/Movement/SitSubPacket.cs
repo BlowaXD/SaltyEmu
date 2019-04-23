@@ -1,6 +1,6 @@
-﻿using ChickenAPI.Packets.Attributes;
+﻿using ChickenAPI.Packets.Old.Attributes;
 
-namespace ChickenAPI.Packets.Game.Client.Movement
+namespace ChickenAPI.Packets.Old.Game.Client.Movement
 {
     [PacketHeader("sit_sub_packet")] // header will be ignored for serializing just sub list packets
     public class SitSubPacket : PacketBase

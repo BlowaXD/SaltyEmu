@@ -11,8 +11,7 @@ using ChickenAPI.Game.Helpers;
 using ChickenAPI.Game.Managers;
 using ChickenAPI.Game._i18n;
 using ChickenAPI.Packets;
-using ChickenAPI.Packets.Game.Server.Group;
-using ChickenAPI.Packets.Game.Server.UserInterface;
+using ChickenAPI.Packets.Old.Game.Server.Group;
 
 namespace SaltyEmu.BasicPlugin.EventHandlers
 {

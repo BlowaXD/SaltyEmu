@@ -1,6 +1,6 @@
-﻿using ChickenAPI.Packets.Attributes;
+﻿using ChickenAPI.Packets.Old.Attributes;
 
-namespace ChickenAPI.Packets.Game.Server.Inventory
+namespace ChickenAPI.Packets.Old.Game.Server.Inventory
 {
     [PacketHeader("subpacket_eq_rare_info")]
     public class EqRareInfo : PacketBase

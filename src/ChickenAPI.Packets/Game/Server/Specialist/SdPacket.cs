@@ -1,6 +1,6 @@
-﻿using ChickenAPI.Packets.Attributes;
+﻿using ChickenAPI.Packets.Old.Attributes;
 
-namespace ChickenAPI.Packets.Game.Server.Specialist
+namespace ChickenAPI.Packets.Old.Game.Server.Specialist
 {
     [PacketHeader("sd")]
     public class SdPacket : PacketBase

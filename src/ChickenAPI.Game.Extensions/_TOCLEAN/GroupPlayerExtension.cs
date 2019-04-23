@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using ChickenAPI.Enums.Game.Character;
-using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Game.Entities.Mates;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Packets.Game.Server.Group;
+using ChickenAPI.Packets.Enumerations;
+using ChickenAPI.Packets.ServerPackets.Groups;
+using ChickenAPI.Packets.ServerPackets.Shop;
 
 namespace ChickenAPI.Game.Groups.Extensions
 {

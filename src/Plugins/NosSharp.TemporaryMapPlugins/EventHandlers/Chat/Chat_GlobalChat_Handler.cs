@@ -1,6 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using ChickenAPI.Core.Events;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Game.Chat.Events;
 using ChickenAPI.Game.Configuration;
 using ChickenAPI.Game.Entities.Player;
@@ -15,7 +16,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Chat
         private readonly IPlayerManager _playerManager;
         private readonly IGameConfiguration _configuration;
 
-        public Chat_GlobalChat_Handler(IPlayerManager playerManager, IGameConfiguration configuration)
+        public Chat_GlobalChat_Handler(IPlayerManager playerManager, IGameConfiguration configuration, ILogger log) : base(log)
         {
             _playerManager = playerManager;
             _configuration = configuration;

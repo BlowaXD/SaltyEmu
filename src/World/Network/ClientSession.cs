@@ -18,6 +18,7 @@ using DotNetty.Transport.Channels.Groups;
 using SaltyEmu.Commands.Interfaces;
 using ChickenAPI.Game._Network;
 using ChickenAPI.Packets.Attributes;
+using ChickenAPI.Packets.Old;
 
 namespace World.Network
 {

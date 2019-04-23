@@ -19,11 +19,13 @@ namespace ChickenAPI.Game.Extensions.PacketGeneration
                 VisualId = player.Id,
                 VisualType = player.Type,
                 Message = message.Replace(' ', '^'),
-                ItemData = new SayItemPacket.SayItemSubPacket
-                {
-                    IconId = item.Item.Type == InventoryType.Equipment ? (long?)null : item.ItemId,
-                    EquipmentInfo = item.Item.Type == InventoryType.Equipment ? item.GenerateEInfoPacket() : null
-                },
+                ItemData = item.Item.Type == InventoryType.Equipment
+                    ? null
+                    : new SayItemPacket.SayItemSubPacket
+                    {
+                        IconId = item.Item.Type == InventoryType.Equipment ? (long?)null : item.ItemId,
+                    },
+                EquipmentInfo = item.Item.Type == InventoryType.Equipment ? item.GenerateEInfoPacket() : null
             };
         }
     }

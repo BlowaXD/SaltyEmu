@@ -7,14 +7,11 @@ using ChickenAPI.Game.Helpers;
 using ChickenAPI.Game.Inventory.Events;
 using ChickenAPI.Game.Inventory.ItemUsage;
 using ChickenAPI.Game.Mates.Events;
-using ChickenAPI.Packets.Game.Client.Player;
 
 namespace SaltyEmu.BasicPlugin.ItemUsageHandlers.Handler.BoxItem
 {
     public class PearlPetsReleaseHandler : IUseItemRequestHandlerAsync
     {
-        private readonly Logger _log = Logger.GetLogger<PearlPetsReleaseHandler>();
-
         public ItemType Type => ItemType.Box;
         public long EffectId => 1;
 

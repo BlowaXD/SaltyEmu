@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using ChickenAPI.Game._Network;
 using ChickenAPI.Packets;
 using ChickenAPI.Packets.Attributes;
+using ChickenAPI.Packets.Old;
 
 namespace SaltyEmu.BasicPlugin.Implems
 {

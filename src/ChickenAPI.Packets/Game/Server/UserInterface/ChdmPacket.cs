@@ -1,6 +1,6 @@
-﻿using ChickenAPI.Packets.Attributes;
+﻿using ChickenAPI.Packets.Old.Attributes;
 
-namespace ChickenAPI.Packets.Game.Server.UserInterface
+namespace ChickenAPI.Packets.Old.Game.Server.UserInterface
 {
     [PacketHeader("ch_dm")]
     public class ChDMPacket : PacketBase

@@ -1,6 +1,6 @@
-﻿using ChickenAPI.Packets.Attributes;
+﻿using ChickenAPI.Packets.Old.Attributes;
 
-namespace ChickenAPI.Packets.CharacterSelectionScreen.Server
+namespace ChickenAPI.Packets.Old.CharacterSelectionScreen.Server
 {
     [PacketHeader("clist_start")]
     public class CListStartPacket : PacketBase

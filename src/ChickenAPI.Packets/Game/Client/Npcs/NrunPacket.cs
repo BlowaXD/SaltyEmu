@@ -1,6 +1,6 @@
-﻿using ChickenAPI.Packets.Attributes;
+﻿using ChickenAPI.Packets.Old.Attributes;
 
-namespace ChickenAPI.Packets.Game.Client.Npcs
+namespace ChickenAPI.Packets.Old.Game.Client.Npcs
 {
     [PacketHeader("n_run")]
     public class NrunPacket : PacketBase

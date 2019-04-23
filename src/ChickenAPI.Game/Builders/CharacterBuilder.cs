@@ -1,6 +1,6 @@
 ﻿using ChickenAPI.Data.Account;
 using ChickenAPI.Data.Character;
-using ChickenAPI.Enums.Game.Character;
+using ChickenAPI.Packets.Enumerations;
 
 namespace ChickenAPI.Game.Builders
 {

@@ -1,6 +1,6 @@
-﻿using ChickenAPI.Packets.Attributes;
+﻿using ChickenAPI.Packets.Old.Attributes;
 
-namespace ChickenAPI.Packets.Game.Client.Movement
+namespace ChickenAPI.Packets.Old.Game.Client.Movement
 {
     [PacketHeader("walk")]
     public class WalkPacket : PacketBase

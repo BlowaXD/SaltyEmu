@@ -1,6 +1,6 @@
 ﻿using System;
 using ChickenAPI.Enums.Game.Character;
-using ChickenAPI.Packets.Game.Server.Player;
+using ChickenAPI.Packets.ServerPackets.Player;
 
 namespace ChickenAPI.Game.Entities.Player.Extensions
 {

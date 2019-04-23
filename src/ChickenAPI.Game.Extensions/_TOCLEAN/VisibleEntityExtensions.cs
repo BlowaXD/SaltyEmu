@@ -9,9 +9,9 @@ using ChickenAPI.Game.Entities.Npc;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Entities.Player.Extensions;
 using ChickenAPI.Game._ECS.Entities;
-using ChickenAPI.Packets.Game.Server.Entities;
-using ChickenAPI.Packets.Game.Server.MiniMap;
-using ChickenAPI.Packets.Game.Server.Visibility;
+using ChickenAPI.Packets.Old.Game.Server.Entities;
+using ChickenAPI.Packets.Old.Game.Server.MiniMap;
+using ChickenAPI.Packets.Old.Game.Server.Visibility;
 
 namespace ChickenAPI.Game.Inventory.Extensions
 {

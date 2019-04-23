@@ -11,7 +11,7 @@ using ChickenAPI.Game.Helpers;
 using ChickenAPI.Game.Inventory.Extensions;
 using ChickenAPI.Game.Inventory.ItemUpgrade.Events;
 using ChickenAPI.Game.Shops.Extensions;
-using ChickenAPI.Packets.Game.Client.Inventory;
+using ChickenAPI.Packets.Old.Game.Client.Inventory;
 
 namespace SaltyEmu.BasicPlugin.EventHandlers
 {

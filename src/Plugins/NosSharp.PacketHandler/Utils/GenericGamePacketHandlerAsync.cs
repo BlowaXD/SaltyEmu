@@ -3,6 +3,7 @@ using ChickenAPI.Core.Logging;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game._Network;
 using ChickenAPI.Packets;
+using ChickenAPI.Packets.Old;
 
 namespace NW.Plugins.PacketHandling.Utils
 {

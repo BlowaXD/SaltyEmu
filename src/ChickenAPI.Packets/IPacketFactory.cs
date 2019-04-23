@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ChickenAPI.Packets
+namespace ChickenAPI.Packets.Old
 {
     public interface IPacketFactory
     {

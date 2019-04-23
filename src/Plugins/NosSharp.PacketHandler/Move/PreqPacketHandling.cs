@@ -2,7 +2,7 @@
 using ChickenAPI.Data.Map;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Portals.Events;
-using ChickenAPI.Packets.Game.Client.Movement;
+using ChickenAPI.Packets.Old.Game.Client.Movement;
 using NW.Plugins.PacketHandling.Utils;
 
 namespace NW.Plugins.PacketHandling.Move

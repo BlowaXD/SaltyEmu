@@ -7,10 +7,10 @@ using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using ChickenAPI.Core.Logging;
-using ChickenAPI.Packets;
 using ChickenAPI.Packets.Attributes;
-using ChickenAPI.Packets.Game.Server.Entities;
+using ChickenAPI.Packets.Old;
 using World.Extensions;
+using PacketBase = ChickenAPI.Packets.PacketBase;
 
 namespace World.Packets
 {

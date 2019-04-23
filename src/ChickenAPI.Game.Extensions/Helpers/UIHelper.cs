@@ -5,8 +5,10 @@ using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Entities.Player.Extensions;
 using ChickenAPI.Game._i18n;
 using ChickenAPI.Packets;
-using ChickenAPI.Packets.Game.Client.Player;
-using ChickenAPI.Packets.Game.Server.UserInterface;
+using ChickenAPI.Packets.ClientPackets.UI;
+using ChickenAPI.Packets.Interfaces;
+using ChickenAPI.Packets.Old.Game.Server.UserInterface;
+using ChickenAPI.Packets.ServerPackets.UI;
 
 namespace ChickenAPI.Game.Helpers
 {
@@ -14,53 +16,53 @@ namespace ChickenAPI.Game.Helpers
     {
         public static Task SendGuri(this IPlayerEntity player, GuriPacketType type, byte argument, int value = 0) => player.SendPacketAsync(player.GenerateGuriPacket(type, argument, value));
 
-        public static ClientGuriPacket GenerateGuriPacket(this IPlayerEntity player, GuriPacketType type, byte argument, int value = 0)
+        public static GuriPacket GenerateGuriPacket(this IPlayerEntity player, GuriPacketType type, byte argument, int value = 0)
         {
             switch (type)
             {
                 case GuriPacketType.Unknow:
-                    return new ClientGuriPacket
+                    return new GuriPacket
                     {
                         Type = 2,
                         Argument = argument,
-                        VisualId = player.Id
+                        VisualEntityId = player.Id
                     };
 
                 case GuriPacketType.Unknow2:
-                    return new ClientGuriPacket
+                    return new GuriPacket
                     {
                         Type = 6,
                         Argument = 1,
-                        VisualId = player.Id,
-                        Value = 0,
+                        VisualEntityId = player.Id,
+                        Value = "0",
                         Data = 0
                     };
 
                 case GuriPacketType.Unknow3:
-                    return new ClientGuriPacket
+                    return new GuriPacket
                     {
                         Type = 10,
                         Argument = argument,
-                        VisualId = value,
-                        Value = player.Id
+                        VisualEntityId = value,
+                        Value = player.Id.ToString()
                     };
 
                 case GuriPacketType.Unknow4:
-                    return new ClientGuriPacket
+                    return new GuriPacket
                     {
                         Type = 15,
                         Argument = argument,
-                        VisualId = 0,
+                        VisualEntityId = 0,
                         Data = 0
                     };
 
                 default:
-                    return new ClientGuriPacket
+                    return new GuriPacket
                     {
                         Type = (int)type,
                         Argument = argument,
-                        VisualId = player.Id,
-                        Value = value
+                        VisualEntityId = player.Id,
+                        Value = value.ToString()
                     };
             }
         }
@@ -86,17 +88,17 @@ namespace ChickenAPI.Game.Helpers
         public static Task GenerateCHDM(this IPlayerEntity player, int maxhp, int angeldmg, int demondmg, int time) =>
             player.SendPacketAsync(player.GenerateCHDMPacket(maxhp, angeldmg, demondmg, time));
 
-        public static Task SendDialog(this IPlayerEntity player, PacketBase acceptpacket, PacketBase refusepacket, string question) =>
-            player.SendPacketAsync(player.GenerateDialogPacket(acceptpacket, refusepacket, question));
+        public static Task SendDialog(this IPlayerEntity player, IPacket yesPacket, IPacket noPacket, string question) =>
+            player.SendPacketAsync(player.GenerateDialogPacket(yesPacket, noPacket, question));
 
-        public static Task SendQuestionAsync(this IPlayerEntity player, PacketBase acceptpacket, string question) => player.SendPacketAsync(player.GenerateQnaPacket(acceptpacket, question));
+        public static Task SendQuestionAsync(this IPlayerEntity player, IPacket yesPacket, string question) => player.SendPacketAsync(player.GenerateQnaPacket(yesPacket, question));
 
-        public static Task GenerateDelay(this IPlayerEntity player, int delay, DelayPacketType type, string argument) => player.SendPacketAsync(player.GenerateDelayPacket(delay, type, argument));
+        public static Task SendDelayAsync(this IPlayerEntity player, short delay, DelayPacketType type, IPacket argument) => player.SendPacketAsync(player.GenerateDelayPacket(delay, type, argument));
 
-        public static QnaPacket GenerateQnaPacket(this IPlayerEntity player, PacketBase acceptpacket, string question) =>
+        public static QnaPacket GenerateQnaPacket(this IPlayerEntity player, IPacket yesPacket, string question) =>
             new QnaPacket
             {
-                AcceptPacket = acceptpacket,
+                YesPacket = yesPacket,
                 Question = question
             };
 
@@ -109,29 +111,29 @@ namespace ChickenAPI.Game.Helpers
                 Text = text
             };
 
-        public static ChDMPacket GenerateCHDMPacket(this IPlayerEntity player, int maxhp, int angeldmg, int demondmg, int time) =>
+        public static ChDMPacket GenerateCHDMPacket(this IPlayerEntity player, int maxHp, int angelDamage, int demonDamage, int time) =>
             new ChDMPacket
             {
-                Maxhp = maxhp,
-                AngelDMG = angeldmg,
-                DemonDMG = demondmg,
+                Maxhp = maxHp,
+                AngelDMG = angelDamage,
+                DemonDMG = demonDamage,
                 Time = time
             };
 
-        public static DialogPacket GenerateDialogPacket(this IPlayerEntity player, PacketBase acceptpacket, PacketBase refusepacket, string question) =>
-            new DialogPacket
+        public static DlgPacket GenerateDialogPacket(this IPlayerEntity player, IPacket yesPacket, IPacket noPacket, string question) =>
+            new DlgPacket
             {
-                AcceptPacket = acceptpacket,
-                RefusePacket = refusepacket,
+                YesPacket = yesPacket,
+                NoPacket = noPacket,
                 Question = question
             };
 
-        public static DelayPacket GenerateDelayPacket(this IPlayerEntity player, int delay, DelayPacketType type, string argument) =>
+        public static DelayPacket GenerateDelayPacket(this IPlayerEntity player, short delay, DelayPacketType type, IPacket packet) =>
             new DelayPacket
             {
                 Delay = delay,
-                Type = type,
-                Argument = argument
+                Type = (byte)type,
+                Packet = packet,
             };
     }
 }

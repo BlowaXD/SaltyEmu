@@ -17,9 +17,11 @@ using ChickenAPI.Game.Inventory.Extensions;
 using ChickenAPI.Game.Shops.Extensions;
 using ChickenAPI.Game.Skills;
 using ChickenAPI.Game._i18n;
-using ChickenAPI.Packets.Game.Client.Player;
-using ChickenAPI.Packets.Game.Server.Player;
-using ChickenAPI.Packets.Game.Server.UserInterface;
+using ChickenAPI.Game.Extensions.PacketGeneration;
+using ChickenAPI.Packets.Enumerations;
+using ChickenAPI.Packets.Old.Game.Server.UserInterface;
+using ChickenAPI.Packets.ServerPackets.Player;
+using SayColorType = ChickenAPI.Enums.Packets.SayColorType;
 
 namespace ChickenAPI.Game.Entities.Player.Extensions
 {

@@ -1,6 +1,6 @@
-﻿using ChickenAPI.Packets.Attributes;
+﻿using ChickenAPI.Packets.Old.Attributes;
 
-namespace ChickenAPI.Packets.CharacterSelectionScreen.Client
+namespace ChickenAPI.Packets.Old.CharacterSelectionScreen.Client
 {
     [PacketHeader("Char_DEL", false)]
     public class CharacterDeletePacketBase : PacketBase

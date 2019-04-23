@@ -4,7 +4,7 @@ using ChickenAPI.Core.Events;
 using ChickenAPI.Enums.Packets;
 using ChickenAPI.Game.Chat.Events;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Packets.Game.Server.Player;
+using ChickenAPI.Packets.Old.Game.Server.Player;
 
 namespace SaltyEmu.BasicPlugin.EventHandlers.Chat
 {

@@ -1,7 +1,7 @@
 ﻿using ChickenAPI.Enums.Game.Mates;
-using ChickenAPI.Packets.Attributes;
+using ChickenAPI.Packets.Old.Attributes;
 
-namespace ChickenAPI.Packets.Game.Server.Mates
+namespace ChickenAPI.Packets.Old.Game.Server.Mates
 {
     /// <summary>
     ///     Packets for partners

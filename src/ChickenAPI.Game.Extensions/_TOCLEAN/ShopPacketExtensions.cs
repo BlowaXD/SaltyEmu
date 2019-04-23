@@ -1,9 +1,9 @@
 ﻿using ChickenAPI.Enums.Packets;
 using ChickenAPI.Game.Entities.Npc;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Packets.Game.Client.Shops;
-using ChickenAPI.Packets.Game.Server.Shop;
 using System.Threading.Tasks;
+using ChickenAPI.Packets.Enumerations;
+using ChickenAPI.Packets.ServerPackets.Shop;
 
 namespace ChickenAPI.Game.Shops.Extensions
 {
@@ -15,10 +15,10 @@ namespace ChickenAPI.Game.Shops.Extensions
                 Type = type
             };
 
-        public static SMemoPacket GenerateShopMemoPacket(this IPlayerEntity player, SMemoPacketType type, string message) =>
+        public static SMemoPacket GenerateShopMemoPacket(this IPlayerEntity player, SMemoType type, string message) =>
             new SMemoPacket
             {
-                SMemoPacketType = type,
+                Type = type,
                 Message = message
             };
 
@@ -40,7 +40,7 @@ namespace ChickenAPI.Game.Shops.Extensions
             return new ShopPacket
             {
                 VisualType = player.Type,
-                EntityId = player.Id,
+                VisualId = player.Id,
                 ShopId = 1,
                 MenuType = 3,
                 ShopType = 0,
@@ -58,7 +58,7 @@ namespace ChickenAPI.Game.Shops.Extensions
             return new ShopPacket
             {
                 VisualType = npc.Type,
-                EntityId = npc.Id,
+                VisualId = npc.Id,
                 ShopId = npc.Shop.Id,
                 MenuType = npc.Shop.MenuType,
                 ShopType = npc.Shop.ShopType,

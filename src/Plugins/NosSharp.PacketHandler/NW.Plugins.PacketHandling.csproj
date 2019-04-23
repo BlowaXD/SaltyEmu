@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\ChickenAPI.Game.Extensions\ChickenAPI.Game.Extensions.csproj" />
+    <ProjectReference Include="..\..\ChickenAPI.Game.Impl\ChickenAPI.Game.Impl.csproj" />
     <ProjectReference Include="..\..\ChickenAPI.Game\ChickenAPI.Game.csproj" />
   </ItemGroup>
 

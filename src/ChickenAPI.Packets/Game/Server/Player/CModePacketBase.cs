@@ -1,7 +1,6 @@
-﻿using ChickenAPI.Enums.Game.Entity;
-using ChickenAPI.Packets.Attributes;
+﻿using ChickenAPI.Packets.Old.Attributes;
 
-namespace ChickenAPI.Packets.Game.Server.Player
+namespace ChickenAPI.Packets.Old.Game.Server.Player
 {
     [PacketHeader("c_mode")]
     public class CModePacketBase : PacketBase

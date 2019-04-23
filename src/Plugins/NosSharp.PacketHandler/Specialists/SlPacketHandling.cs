@@ -4,7 +4,7 @@ using ChickenAPI.Enums;
 using ChickenAPI.Enums.Packets;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Specialists.Args;
-using ChickenAPI.Packets.Game.Client.Specialists;
+using ChickenAPI.Packets.Old.Game.Client.Specialists;
 using NW.Plugins.PacketHandling.Utils;
 
 namespace NW.Plugins.PacketHandling.Specialists

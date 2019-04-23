@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using ChickenAPI.Enums.Game.Character;
 using ChickenAPI.Enums.Packets;
-using ChickenAPI.Packets.Attributes;
+using ChickenAPI.Packets.Old.Attributes;
 
-namespace ChickenAPI.Packets.Game.Server.Raids
+namespace ChickenAPI.Packets.Old.Game.Server.Raids
 {
     [PacketHeader("rl")]
     public class RlPacket

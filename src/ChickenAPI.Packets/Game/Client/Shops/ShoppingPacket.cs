@@ -1,6 +1,6 @@
-﻿using ChickenAPI.Packets.Attributes;
+﻿using ChickenAPI.Packets.Old.Attributes;
 
-namespace ChickenAPI.Packets.Game.Client.Shops
+namespace ChickenAPI.Packets.Old.Game.Client.Shops
 {
     [PacketHeader("shopping")]
     public class ShoppingPacket : PacketBase

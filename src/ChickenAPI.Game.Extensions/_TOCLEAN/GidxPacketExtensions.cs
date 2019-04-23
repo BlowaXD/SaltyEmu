@@ -1,5 +1,5 @@
 ﻿using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Packets.Game.Client.Families;
+using ChickenAPI.Packets.ClientPackets.Families;
 
 namespace ChickenAPI.Game.Families.Extensions
 {

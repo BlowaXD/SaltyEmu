@@ -8,8 +8,8 @@ using ChickenAPI.Game.Entities.Monster;
 using ChickenAPI.Game.Entities.Npc;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Skills.Args;
-using ChickenAPI.Packets.Game.Client.Battle;
-using ChickenAPI.Packets.Game.Server.Battle;
+using ChickenAPI.Packets.Old.Game.Client.Battle;
+using ChickenAPI.Packets.Old.Game.Server.Battle;
 using NW.Plugins.PacketHandling.Utils;
 
 namespace NW.Plugins.PacketHandling.Skill

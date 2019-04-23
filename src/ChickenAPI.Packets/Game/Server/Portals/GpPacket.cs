@@ -1,7 +1,7 @@
 ﻿using ChickenAPI.Enums.Game.Portals;
-using ChickenAPI.Packets.Attributes;
+using ChickenAPI.Packets.Old.Attributes;
 
-namespace ChickenAPI.Packets.Game.Server.Portals
+namespace ChickenAPI.Packets.Old.Game.Server.Portals
 {
     /// <summary>
     ///     gp {SourceX} {SourceY} {MapId} {Type} {PortalId} {IsDisabled}

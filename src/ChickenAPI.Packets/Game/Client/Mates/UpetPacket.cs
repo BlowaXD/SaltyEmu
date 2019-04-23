@@ -1,7 +1,6 @@
-﻿using ChickenAPI.Enums.Game.Entity;
-using ChickenAPI.Packets.Attributes;
+﻿using ChickenAPI.Packets.Old.Attributes;
 
-namespace ChickenAPI.Packets.Game.Client.Mates
+namespace ChickenAPI.Packets.Old.Game.Client.Mates
 {
     [PacketHeader("u_pet")]
     public class UpetPacket : PacketBase

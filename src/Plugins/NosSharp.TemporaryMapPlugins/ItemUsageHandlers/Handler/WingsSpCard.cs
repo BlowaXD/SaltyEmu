@@ -6,7 +6,7 @@ using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Helpers;
 using ChickenAPI.Game.Inventory.Events;
 using ChickenAPI.Game.Inventory.ItemUsage;
-using ChickenAPI.Packets.Game.Client.Inventory;
+using ChickenAPI.Packets.Old.Game.Client.Inventory;
 
 namespace SaltyEmu.BasicPlugin.ItemUsageHandlers.Handler
 {

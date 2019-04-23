@@ -1,6 +1,6 @@
 ﻿using ChickenAPI.Game.Battle.Hitting;
 using ChickenAPI.Game.Battle.Interfaces;
-using ChickenAPI.Packets.Game.Server.Battle;
+using ChickenAPI.Packets.Old.Game.Server.Battle;
 
 namespace ChickenAPI.Game.Battle.Extensions
 {

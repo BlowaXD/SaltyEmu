@@ -1,7 +1,7 @@
 ﻿using ChickenAPI.Enums.Game.Items;
-using ChickenAPI.Packets.Attributes;
+using ChickenAPI.Packets.Old.Attributes;
 
-namespace ChickenAPI.Packets.Game.Client.Inventory
+namespace ChickenAPI.Packets.Old.Game.Client.Inventory
 {
     [PacketHeader("mvi")]
     public class MviPacket : PacketBase

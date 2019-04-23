@@ -5,7 +5,7 @@ using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Groups;
 using ChickenAPI.Game.Groups.Events;
 using ChickenAPI.Game.Managers;
-using ChickenAPI.Packets.Game.Server.Group;
+using ChickenAPI.Packets.Old.Game.Server.Group;
 using NW.Plugins.PacketHandling.Utils;
 
 namespace NW.Plugins.PacketHandling.Groups

@@ -1,7 +1,7 @@
 ﻿using ChickenAPI.Game._ECS.Entities;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Packets.Game.Server.Specialist;
 using System.Threading.Tasks;
+using ChickenAPI.Packets.Old.Game.Server.Specialist;
 
 namespace ChickenAPI.Game.Specialists.Extensions
 {

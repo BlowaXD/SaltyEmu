@@ -1,5 +1,5 @@
 ﻿using ChickenAPI.Data.NpcMonster;
-using ChickenAPI.Packets.Game.Client.UI;
+using ChickenAPI.Packets.Old.Game.Client.UI;
 
 namespace ChickenAPI.Game.Entities.Npc.Extensions
 {

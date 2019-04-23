@@ -1,6 +1,6 @@
-using ChickenAPI.Packets.Attributes;
+using ChickenAPI.Packets.Old.Attributes;
 
-namespace ChickenAPI.Packets.Game.Client.Battle
+namespace ChickenAPI.Packets.Old.Game.Client.Battle
 {
     [PacketHeader("u_as")]
     public class UseAoeSkillPacket : PacketBase

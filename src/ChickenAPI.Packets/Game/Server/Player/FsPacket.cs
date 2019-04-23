@@ -1,7 +1,7 @@
 ﻿using ChickenAPI.Enums.Game.Character;
-using ChickenAPI.Packets.Attributes;
+using ChickenAPI.Packets.Old.Attributes;
 
-namespace ChickenAPI.Packets.Game.Server.Player
+namespace ChickenAPI.Packets.Old.Game.Server.Player
 {
     [PacketHeader("fs")]
     public class FsPacket : PacketBase

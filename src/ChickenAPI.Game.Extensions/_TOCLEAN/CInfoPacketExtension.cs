@@ -1,4 +1,4 @@
-﻿using ChickenAPI.Packets.Game.Server.Player;
+﻿using ChickenAPI.Packets.ServerPackets.Player;
 
 namespace ChickenAPI.Game.Entities.Player.Extensions
 {
@@ -23,6 +23,7 @@ namespace ChickenAPI.Game.Entities.Player.Extensions
                 Morph = player.MorphId,
                 Invisible = player.IsInvisible,
                 FamilyLevel = 0,
+
                 SpUpgrade = player.Sp?.Upgrade ?? 0,
                 ArenaWinner = player.Character.ArenaWinner
             };

@@ -1,7 +1,7 @@
 ﻿using ChickenAPI.Enums.Game.Entity;
-using ChickenAPI.Packets.Attributes;
+using ChickenAPI.Packets.Old.Attributes;
 
-namespace ChickenAPI.Packets.Game.Server.Visibility
+namespace ChickenAPI.Packets.Old.Game.Server.Visibility
 {
     [PacketHeader("in")]
     public class InPacket : PacketBase
