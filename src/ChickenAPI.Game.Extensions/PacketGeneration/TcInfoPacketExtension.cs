@@ -1,11 +1,12 @@
 ﻿using ChickenAPI.Data.Item;
 using ChickenAPI.Enums.Game.Character;
 using ChickenAPI.Enums.Game.Entity;
-using ChickenAPI.Enums.Game.Items;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Entities.Player.Extensions;
 using ChickenAPI.Game.Inventory.Extensions;
+using ChickenAPI.Packets.Enumerations;
 using ChickenAPI.Packets.ServerPackets.Player;
+using EquipmentType = ChickenAPI.Enums.Game.Items.EquipmentType;
 
 namespace ChickenAPI.Game.Extensions.PacketGeneration
 {

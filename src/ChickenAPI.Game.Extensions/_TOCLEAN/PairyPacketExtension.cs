@@ -1,8 +1,9 @@
 ﻿using ChickenAPI.Data.Item;
 using ChickenAPI.Enums.Game.Entity;
-using ChickenAPI.Enums.Game.Items;
 using ChickenAPI.Game.Inventory.Extensions;
-using ChickenAPI.Packets.Old.Game.Server.Inventory;
+using ChickenAPI.Packets.Enumerations;
+using ChickenAPI.Packets.ServerPackets.Inventory;
+using EquipmentType = ChickenAPI.Enums.Game.Items.EquipmentType;
 
 namespace ChickenAPI.Game.Entities.Player.Extensions
 {
@@ -16,10 +17,11 @@ namespace ChickenAPI.Game.Entities.Player.Extensions
                 return new PairyPacket
                 {
                     VisualType = VisualType.Player,
-                    CharacterId = player.Character.Id,
+                    VisualId = player.Character.Id,
                     FairyMoveType = 0,
-                    ElementType = 0,
-                    FairyLevel = 0
+                    Element = ElementType.Neutral,
+                    ElementRate = 0,
+                    Morph = -1,
                 };
             }
 
@@ -28,9 +30,10 @@ namespace ChickenAPI.Game.Entities.Player.Extensions
             return new PairyPacket
             {
                 VisualType = VisualType.Player,
-                CharacterId = player.Character.Id,
-                ElementType = fairy.ElementType,
-                FairyLevel = fairy.Upgrade,
+                VisualId = player.Character.Id,
+                Morph = (int)fairy.ItemId,
+                Element = fairy.ElementType,
+                ElementRate = fairy.Upgrade,
                 FairyMoveType = 4 // todo enum 
             };
         }

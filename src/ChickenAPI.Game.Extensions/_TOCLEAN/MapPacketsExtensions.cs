@@ -1,7 +1,7 @@
 ﻿using System;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game._ECS.Entities;
-using ChickenAPI.Packets.Old.Game.Server.MiniMap;
+using ChickenAPI.Packets.ServerPackets.Minimap;
 
 namespace ChickenAPI.Game.Inventory.Extensions
 {
@@ -13,7 +13,7 @@ namespace ChickenAPI.Game.Inventory.Extensions
         {
             Type = 0,
             Id = Convert.ToInt16(map.Id),
-            MapType = 1
+            MapType = true
         };
     }
 }

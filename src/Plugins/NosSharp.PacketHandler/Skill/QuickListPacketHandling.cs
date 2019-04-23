@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Quicklist.Events;
+using ChickenAPI.Packets.ClientPackets.Quicklist;
 using NW.Plugins.PacketHandling.Utils;
 
 namespace NW.Plugins.PacketHandling.Skill

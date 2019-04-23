@@ -1,5 +1,5 @@
 ﻿using ChickenAPI.Game.Portals;
-using ChickenAPI.Packets.Old.Game.Server.Portals;
+using ChickenAPI.Packets.ServerPackets.Portals;
 
 namespace ChickenAPI.Game.Inventory.Extensions
 {
@@ -7,12 +7,12 @@ namespace ChickenAPI.Game.Inventory.Extensions
     {
         public static GpPacket GenerateGpPacket(this PortalComponent portal) => new GpPacket
         {
-            PositionX = portal.SourceX,
-            PositionY = portal.SourceY,
-            DestinationMapId = portal.DestinationMapId,
+            PortalId = (int)portal.PortalId,
+            IsDisabled = portal.IsDisabled,
+            SourceX = portal.SourceX,
+            SourceY = portal.SourceY,
+            MapId = portal.DestinationMapId,
             PortalType = portal.Type,
-            PortalId = portal.PortalId,
-            IsDisabled = portal.IsDisabled
         };
     }
 }

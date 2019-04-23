@@ -1026,7 +1026,7 @@ namespace Toolkit.Converter
 
                         case ItemType.Specialist:
 
-                            // item.isSpecialist = Convert.ToByte(currentLine[2]); item.Unknown = Convert.ToInt16(currentLine[3]);
+                            // item.isSpecialist = Convert.ToByte(currentLine[2]); item.FairyMoveType = Convert.ToInt16(currentLine[3]);
                             item.ElementRate = Convert.ToInt16(currentLine[4]);
                             item.Speed = Convert.ToByte(currentLine[5]);
                             item.SpType = Convert.ToByte(currentLine[13]);

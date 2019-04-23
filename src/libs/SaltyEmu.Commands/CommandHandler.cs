@@ -190,7 +190,7 @@ namespace SaltyEmu.Commands
             var ctx = context as SaltyCommandContext;
             if (ctx is null)
             {
-                _logger.Debug($"Unknown context: {context.GetType()}. This is bad. Please report this.");
+                _logger.Debug($"FairyMoveType context: {context.GetType()}. This is bad. Please report this.");
             }
 
             _logger.Debug($"The command {command.Name} (from player {ctx.Player.Character.Name} [{ctx.Player.Character.Id}]) has successfully been executed.");
