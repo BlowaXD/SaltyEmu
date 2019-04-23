@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ChickenAPI.Game.Helpers;
 using ChickenAPI.Packets.Enumerations;
 
 namespace SaltyEmu.Commands
@@ -43,7 +44,7 @@ namespace SaltyEmu.Commands
 
         public async Task AddModuleAsync<T>() where T : SaltyModuleBase
         {
-            await _commands.AddModuleAsync<T>();
+            _commands.AddModule<T>();
 
             IReadOnlyList<Command> readOnlyList = _commands.GetAllModules().FirstOrDefault(s => s.Type == typeof(T))?.Commands;
             if (readOnlyList != null)
@@ -64,7 +65,7 @@ namespace SaltyEmu.Commands
                 throw new ArgumentException("The given module is not registered in the command container.");
             }
 
-            await _commands.RemoveModuleAsync(module);
+            _commands.RemoveModule(module);
         }
 
         public Module[] GetModulesByName(string name, bool caseSensitive = true)
@@ -146,8 +147,8 @@ namespace SaltyEmu.Commands
                 builder.AddCommand(cmdBuilder);
             }
 
-            await _commands.RemoveModuleAsync(oldModule);
-            await _commands.AddModuleAsync(builder);
+            _commands.RemoveModule(oldModule);
+            _commands.AddModule(builder);
         }
 
         public void AddTypeParser<T>(TypeParser<T> typeParser)
