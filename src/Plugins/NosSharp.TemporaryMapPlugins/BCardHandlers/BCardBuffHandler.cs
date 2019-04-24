@@ -47,7 +47,7 @@ namespace SaltyEmu.BasicPlugin.BCardHandlers
 
             if (card == null)
             {
-                Log.Debug($"Couldn't find any buff with card Id : {bcard.SecondData}");
+                //Log.Debug($"Couldn't find any buff with card Id : {bcard.SecondData}");
                 return;
             }
 

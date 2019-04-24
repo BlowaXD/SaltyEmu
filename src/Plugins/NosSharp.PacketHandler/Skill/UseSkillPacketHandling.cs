@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Data.Skills;
 using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Game.Battle.Extensions;
@@ -9,8 +10,6 @@ using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Skills.Args;
 using ChickenAPI.Packets.ClientPackets.Battle;
 using ChickenAPI.Packets.Enumerations;
-using ChickenAPI.Packets.Old.Game.Client.Battle;
-using ChickenAPI.Packets.Old.Game.Server.Battle;
 using ChickenAPI.Packets.ServerPackets.Battle;
 using NW.Plugins.PacketHandling.Utils;
 
@@ -18,6 +17,10 @@ namespace NW.Plugins.PacketHandling.Skill
 {
     public class UseSkillPacketHandling : GenericGamePacketHandlerAsync<UseSkillPacket>
     {
+        public UseSkillPacketHandling(ILogger log) : base(log)
+        {
+        }
+
         protected override async Task Handle(UseSkillPacket packet, IPlayerEntity player)
         {
             if (packet.CastId != 0)
