@@ -3,14 +3,12 @@ using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.NpcDialog.Events;
 using ChickenAPI.Game.NpcDialog.Handling;
 using ChickenAPI.Packets.Old.Game.Client.Npcs;
-using ChickenAPI.Packets.Old.Game.Client.Shops;
+using ChickenAPI.Packets.ServerPackets.Shop;
 
 namespace SaltyEmu.BasicPlugin.NpcDialogHandlers
 {
     public class WopenHandler
     {
-        private static readonly Logger Log = Logger.GetLogger<WopenHandler>();
-
         [NpcDialogHandler(2)]
         public static void UpgradeFromNpc(IPlayerEntity player, NpcDialogEvent args)
         {
@@ -69,9 +67,9 @@ namespace SaltyEmu.BasicPlugin.NpcDialogHandlers
         [NpcDialogHandler(18)]
         public static void TimeCircle(IPlayerEntity player, NpcDialogEvent args)
         {
-            player.SendPacketAsync(new SentNpcReqPacket
+            player.SendPacketAsync(new NpcReqPacket
             {
-                VisualType = ChickenAPI.Enums.Game.Entity.VisualType.Player,
+                VisualType = player.Type,
                 VisualId = player.Id,
                 Dialog = 17
             });

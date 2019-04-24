@@ -10,10 +10,16 @@ namespace SaltyEmu.PathfinderPlugin.Test
 {
     public class PathfinderTest
     {
-        private static readonly Logger Log = Logger.GetLogger<PathfinderTest>();
+        private readonly ILogger Log;
+
+        public PathfinderTest(ILogger log)
+        {
+            Log = log;
+        }
 
         public void RunTest(int repetition)
         {
+            /*
             var pathfinder = ChickenContainer.Instance.Resolve<IPathfinder>();
             var map = new SimpleMap(new MapDto
             {
@@ -43,6 +49,7 @@ namespace SaltyEmu.PathfinderPlugin.Test
             {
                 Log.Info($"x : {pos.X}, y : {pos.Y}");
             }
+            */
         }
     }
 }

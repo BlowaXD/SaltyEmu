@@ -1,16 +1,21 @@
 ﻿using System.Threading.Tasks;
-using ChickenAPI.Enums.Game.Entity;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Game.Entities.Npc;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Shops.Events;
-using ChickenAPI.Packets.Old.Game.Client.Shops;
+using ChickenAPI.Packets.Enumerations;
+using ChickenAPI.Packets.ServerPackets.Shop;
 using NW.Plugins.PacketHandling.Utils;
 
 namespace NW.Plugins.PacketHandling.Shops
 {
-    public class NpcReqPacketHandling : GenericGamePacketHandlerAsync<ReceivedNpcReqPacket>
+    public class NpcReqPacketHandling : GenericGamePacketHandlerAsync<NpcReqPacket>
     {
-        protected override async Task Handle(ReceivedNpcReqPacket packet, IPlayerEntity player)
+        public NpcReqPacketHandling(ILogger log) : base(log)
+        {
+        }
+
+        protected override async Task Handle(NpcReqPacket packet, IPlayerEntity player)
         {
             if (packet.VisualType == VisualType.Player)
             {
@@ -26,7 +31,12 @@ namespace NW.Plugins.PacketHandling.Shops
 
             var npc = player.CurrentMap.GetEntity<INpcEntity>(packet.VisualId, VisualType.Npc);
 
-            await player.SendPacketAsync(new SentNpcReqPacket
+            if (npc == null)
+            {
+                return;
+            }
+
+            await player.SendPacketAsync(new NpcReqPacket()
             {
                 VisualType = VisualType.Npc,
                 VisualId = npc.MapNpc.Id,

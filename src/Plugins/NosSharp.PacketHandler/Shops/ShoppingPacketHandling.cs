@@ -1,18 +1,24 @@
 ﻿using System.Threading.Tasks;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Game.Entities.Npc;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Shops.Events;
-using ChickenAPI.Packets.Old.Game.Client.Shops;
+using ChickenAPI.Packets.ClientPackets.Shops;
+using ChickenAPI.Packets.Enumerations;
 using NW.Plugins.PacketHandling.Utils;
 
 namespace NW.Plugins.PacketHandling.Shops
 {
     public class ShoppingPacketHandling : GenericGamePacketHandlerAsync<ShoppingPacket>
     {
+        public ShoppingPacketHandling(ILogger log) : base(log)
+        {
+        }
+
         protected override Task Handle(ShoppingPacket packet, IPlayerEntity player)
         {
-            var npc = player.CurrentMap.GetEntity<INpcEntity>(packet.NpcId, VisualType.Npc);
+            var npc = player.CurrentMap.GetEntity<INpcEntity>(packet.VisualId, VisualType.Npc);
             if (npc == null)
             {
                 Log.Info("npc null");
@@ -22,7 +28,7 @@ namespace NW.Plugins.PacketHandling.Shops
             return player.EmitEventAsync(new ShopGetInformationEvent
             {
                 Shop = npc,
-                Type = packet.Type
+                Type = (byte)packet.VisualType
             });
         }
     }

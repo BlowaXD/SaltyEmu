@@ -7,8 +7,11 @@ using ChickenAPI.Game.Entities.Monster;
 using ChickenAPI.Game.Entities.Npc;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Skills.Args;
+using ChickenAPI.Packets.ClientPackets.Battle;
+using ChickenAPI.Packets.Enumerations;
 using ChickenAPI.Packets.Old.Game.Client.Battle;
 using ChickenAPI.Packets.Old.Game.Server.Battle;
+using ChickenAPI.Packets.ServerPackets.Battle;
 using NW.Plugins.PacketHandling.Utils;
 
 namespace NW.Plugins.PacketHandling.Skill
@@ -27,7 +30,7 @@ namespace NW.Plugins.PacketHandling.Skill
                 player.IsSitting = false;
             }
 
-            if (!player.SkillComponent.SkillsByCastId.TryGetValue(packet.CastId, out SkillDto skill))
+            if (!player.SkillsByCastId.TryGetValue(packet.CastId, out SkillDto skill))
             {
                 // skill does not exist
                 await player.SendPacketAsync(player.GenerateEmptyCancelPacket(CancelPacketType.NotInCombatMode));

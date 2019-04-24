@@ -114,7 +114,7 @@ namespace SaltyEmu.BasicPlugin
 
         public static void InjectDependencies()
         {
-            var config = new ConfigurationHelper(new ConfigurationSerializer());
+            var config = new ConfigurationHelper(new JsonConfigurationSerializer());
             ChickenContainer.Builder.Register(_ =>
                     config.Load<JsonGameConfiguration>($"plugins/config/{nameof(BasicPlugin)}/rates.json", true))
                 .As<IGameConfiguration>().SingleInstance();

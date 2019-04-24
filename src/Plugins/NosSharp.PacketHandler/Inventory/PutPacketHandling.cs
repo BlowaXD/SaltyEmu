@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Inventory.Events;
 using ChickenAPI.Game.Inventory.Extensions;
@@ -9,6 +10,10 @@ namespace NW.Plugins.PacketHandling.Inventory
 {
     public class PutPacketHandling : GenericGamePacketHandlerAsync<PutPacket>
     {
+        public PutPacketHandling(ILogger log) : base(log)
+        {
+        }
+
         protected override async Task Handle(PutPacket packet, IPlayerEntity player)
         {
             await player.EmitEventAsync(new InventoryRemoveItemEvent

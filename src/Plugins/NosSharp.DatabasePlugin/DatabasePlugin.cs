@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Data.SqlClient;
 using ChickenAPI.Core.Configurations;
-using ChickenAPI.Core.Logging;
 using ChickenAPI.Core.Plugins;
 using ChickenAPI.Core.Plugins.Exceptions;
-using ChickenAPI.Core.Utils;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 using SaltyEmu.DatabasePlugin.Configuration;
 using SaltyEmu.DatabasePlugin.Context;
 using SaltyEmu.DatabasePlugin.Utils;
@@ -14,6 +11,12 @@ using ILogger = ChickenAPI.Core.Logging.ILogger;
 
 namespace SaltyEmu.DatabasePlugin
 {
+    internal class JsonConfigurationSerializer : IConfigurationSerializer
+    {
+        public string Serialize<T>(T conf) where T : IConfiguration => JsonConvert.SerializeObject(conf);
+
+        public T Deserialize<T>(string buffer) where T : IConfiguration => throw new NotImplementedException();
+    }
     public class DatabasePlugin : IPlugin
     {
         private readonly ILogger Log;
@@ -25,7 +28,8 @@ namespace SaltyEmu.DatabasePlugin
         public void OnLoad()
         {
             Log.Info("Loading...");
-            _configuration = ConfigurationHelper.Load<DatabaseConfiguration>(_configurationFilePath, true); // database configuration
+            var loader = new ConfigurationHelper(new JsonConfigurationSerializer());
+            _configuration = loader.Load<DatabaseConfiguration>(_configurationFilePath, true); // database configuration
             if (!Initialize())
             {
                 throw new CriticalPluginException(this, "Verify your configuration in : " + _configurationFilePath);
