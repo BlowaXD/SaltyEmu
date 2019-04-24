@@ -47,14 +47,14 @@ namespace SaltyEmu.BasicPlugin.EventHandlers
                 //session.Character.DeleteItemByItemInstanceId(itemToSum.Id);
                 await player.SendPacketAsync(new PdtiPacket { Unknow = 10, Unknow2 = 1, Unknow3 = 27, Unknow4 = 0, ItemVnum = e.Item.Item.Id, ItemUpgrade = e.Item.Sum });
                 await player.SendChatMessageAsync("SUM_SUCCESS", SayColorType.Green);
-                await player.SendTopscreenMessage("SUM_SUCCESS", MsgPacketType.Whisper);
+                await player.SendTopscreenMessage("SUM_SUCCESS", MessageType.Whisper);
                 await player.SendGuri(GuriPacketType.AfterSumming, 1, 1324);
                 await player.SendPacketAsync(e.Item?.GenerateIvnPacket());
             }
             else
             {
                 await player.SendChatMessageAsync("SUM_FAILED", SayColorType.Purple);
-                await player.SendTopscreenMessage("SUM_FAILED", MsgPacketType.Whisper);
+                await player.SendTopscreenMessage("SUM_FAILED", MessageType.Whisper);
                 await player.SendGuri(GuriPacketType.AfterSumming, 1, 1332);
                 //session.Character.DeleteItemByItemInstanceId(itemToSum.Id);
                 //session.Character.DeleteItemByItemInstanceId(Id);

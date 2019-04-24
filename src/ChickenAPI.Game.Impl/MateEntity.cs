@@ -15,6 +15,7 @@ using ChickenAPI.Game.Skills;
 using ChickenAPI.Game.Visibility;
 using ChickenAPI.Game._ECS.Components;
 using ChickenAPI.Game._ECS.Entities;
+using ChickenAPI.Packets.Enumerations;
 
 namespace ChickenAPI.Game.Entities.Mates
 {
@@ -206,11 +207,13 @@ namespace ChickenAPI.Game.Entities.Mates
 
         #region Skills
 
+        public List<(DateTime, long)> CooldownsBySkillId => SkillComponent.CooldownsBySkillId;
         public bool HasSkill(long skillId) => SkillComponent.Skills.ContainsKey(skillId);
 
         public bool CanCastSkill(long skillId) => SkillComponent.CooldownsBySkillId.Any(s => s.Item2 == skillId);
 
         public IDictionary<long, SkillDto> Skills => SkillComponent.Skills;
+        public IDictionary<long, SkillDto> SkillsByCastId => SkillComponent.SkillsByCastId;
 
         public SkillComponent SkillComponent { get; }
 

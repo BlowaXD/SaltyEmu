@@ -8,6 +8,8 @@ using ChickenAPI.Game.Entities.Player.Extensions;
 using ChickenAPI.Game.Helpers;
 using ChickenAPI.Game.Inventory.Extensions;
 using ChickenAPI.Game.Inventory.ItemUpgrade.Events;
+using ChickenAPI.Packets.Enumerations;
+using EquipmentType = ChickenAPI.Enums.Game.Items.EquipmentType;
 
 namespace ChickenAPI.Game.Inventory.ItemUpgrade.Extension
 {
@@ -48,20 +50,20 @@ namespace ChickenAPI.Game.Inventory.ItemUpgrade.Extension
                              await session.SendPacketAsync($"info {Language.Instance.GetMessageFromKey("AMULET_DESTROYED")}");
                              await session.SendPacketAsync(session.Character.GenerateEquipment());
                          }*/
-                        await player.SendTopscreenMessage("AMULET_FAIL_SAVED", MsgPacketType.Whisper);
+                        await player.SendTopscreenMessage("AMULET_FAIL_SAVED", MessageType.Whisper);
                         await player.SendChatMessageAsync("AMULET_FAIL_SAVED", SayColorType.Purple);
                         return;
 
                     case RarifyProtection.None:
                         /* session.Character.DeleteItemByItemInstanceId(Id);*/
                         //player.EmitEvent(new InventoryDestroyItemEvent { ItemInstance = e.Item });
-                        await player.SendTopscreenMessage("RARIFY_FAILED", MsgPacketType.Whisper);
+                        await player.SendTopscreenMessage("RARIFY_FAILED", MessageType.Whisper);
                         await player.SendChatMessageAsync("RARIFY_FAILED", SayColorType.Purple);
 
                         return;
                 }
 
-                await player.SendTopscreenMessage("RARIFY_FAILED_ITEM_SAVED", MsgPacketType.Whisper);
+                await player.SendTopscreenMessage("RARIFY_FAILED_ITEM_SAVED", MessageType.Whisper);
                 await player.SendChatMessageAsync("RARIFY_FAILED_ITEM_SAVED", SayColorType.Purple);
                 await player.BroadcastAsync(player.GenerateEffectPacket(3004));
             }

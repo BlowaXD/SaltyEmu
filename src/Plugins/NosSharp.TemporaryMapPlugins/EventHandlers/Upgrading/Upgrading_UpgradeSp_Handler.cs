@@ -98,13 +98,13 @@ namespace SaltyEmu.BasicPlugin.EventHandlers
                 {
                     await player.SendPacketAsync(player.GenerateEffectPacket(3004));
                     await player.SendChatMessageAsync("UPGRADESP_FAILED_SAVED", SayColorType.Purple);
-                    await player.SendTopscreenMessage("UPGRADESP_FAILED_SAVED", MsgPacketType.Whisper);
+                    await player.SendTopscreenMessage("UPGRADESP_FAILED_SAVED", MessageType.Whisper);
                 }
                 else
                 {
                     wearable.Rarity = -2;
                     await player.SendChatMessageAsync("UPGRADESP_DESTROYED", SayColorType.Purple);
-                    await player.SendTopscreenMessage("UPGRADESP_DESTROYED", MsgPacketType.Whisper);
+                    await player.SendTopscreenMessage("UPGRADESP_DESTROYED", MessageType.Whisper);
                     await player.SendPacketAsync(wearable.GenerateIvnPacket());
                 }
             }
@@ -116,7 +116,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers
                 }
 
                 await player.SendChatMessageAsync("UPGRADESP_FAILED", SayColorType.Purple);
-                await player.SendTopscreenMessage("UPGRADESP_FAILED", MsgPacketType.Whisper);
+                await player.SendTopscreenMessage("UPGRADESP_FAILED", MessageType.Whisper);
             }
             else
             {
@@ -127,7 +127,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers
 
                 await player.SendPacketAsync(player.GenerateEffectPacket(3005));
                 await player.SendChatMessageAsync("UPGRADESP_SUCCESS", SayColorType.Purple);
-                await player.SendTopscreenMessage("UPGRADESP_SUCCESS", MsgPacketType.Whisper);
+                await player.SendTopscreenMessage("UPGRADESP_SUCCESS", MessageType.Whisper);
                 /* if (Upgrade < 5)
                  {
                      CharacterSession.Character.Inventory.RemoveItemAmount(

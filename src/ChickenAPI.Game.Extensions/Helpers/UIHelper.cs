@@ -3,8 +3,6 @@ using ChickenAPI.Enums.Packets;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Entities.Player.Extensions;
 using ChickenAPI.Game._i18n;
-using ChickenAPI.Packets;
-using ChickenAPI.Packets.ClientPackets.UI;
 using ChickenAPI.Packets.Enumerations;
 using ChickenAPI.Packets.Interfaces;
 using ChickenAPI.Packets.Old.Game.Server.UserInterface;
@@ -18,14 +16,17 @@ namespace ChickenAPI.Game.Helpers
 
         public static GuriPacket GenerateGuriPacket(this IPlayerEntity player, GuriPacketType type, byte argument, int value = 0)
         {
+            return null;
+            /*
             switch (type)
             {
                 case GuriPacketType.Unknow:
                     return new GuriPacket
                     {
-                        Type = 2,
-                        Argument = argument,
-                        VisualEntityId = player.Id
+                        Type = (GuriPacketType)2,
+                        EntityId = player.Id,
+                        Unknown = argument,
+                        Value = (uint)value,
                     };
 
                 case GuriPacketType.Unknow2:
@@ -65,6 +66,7 @@ namespace ChickenAPI.Game.Helpers
                         Value = value.ToString()
                     };
             }
+            */
         }
 
         public static Task SendChatMessageFormat(this IPlayerEntity player, PlayerMessages key, SayColorType color, params object[] objs)
@@ -81,7 +83,7 @@ namespace ChickenAPI.Game.Helpers
 
         public static Task SendChatMessageAsync(this IPlayerEntity player, string msg, SayColorType color) => player.SendPacketAsync(player.GenerateSayPacket(msg, color));
 
-        public static Task SendTopscreenMessage(this IPlayerEntity player, string msg, MsgPacketType type) => player.SendPacketAsync(player.GenerateMsgPacket(msg, type));
+        public static Task SendTopscreenMessage(this IPlayerEntity player, string msg, MessageType type) => player.SendPacketAsync(player.GenerateMsgPacket(msg, type));
 
         public static Task GenerateBSInfo(this IPlayerEntity player, byte mode, short title, short time, short text) => player.SendPacketAsync(player.GenerateBSInfoPacket(mode, title, time, text));
 

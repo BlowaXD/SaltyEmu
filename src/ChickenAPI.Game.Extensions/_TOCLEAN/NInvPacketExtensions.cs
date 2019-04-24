@@ -26,8 +26,8 @@ namespace ChickenAPI.Game.Shops.Extensions
 
                 tmp.Add(new NInvItemSubPacket
                 {
-                    Price = upgradeOrPrice,
-                    UpgradeDesign = rareOrQuantity,
+                    Price = (int)upgradeOrPrice,
+                    UpgradeDesign = (short)rareOrQuantity,
                     Slot = (byte)itemInfo.Slot,
                     VNum = (short)itemInfo.ItemInstance.ItemId,
                 });

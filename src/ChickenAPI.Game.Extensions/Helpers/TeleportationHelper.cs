@@ -5,6 +5,7 @@ using ChickenAPI.Core.IoC;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Managers;
 using ChickenAPI.Game._ECS.Entities;
+using ChickenAPI.Game.Entities.Extensions;
 
 namespace ChickenAPI.Game.Helpers
 {

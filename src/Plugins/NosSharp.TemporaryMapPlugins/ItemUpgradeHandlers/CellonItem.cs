@@ -24,7 +24,7 @@ namespace SaltyEmu.BasicPlugin.ItemUpgradeHandlers
 
             if (e.CellonItem.Item.EffectValue > e.SecondItem.Item.MaxCellonLvl)
             {
-                player.SendTopscreenMessage("CELLON_LEVEL_TOO_HIGH", MsgPacketType.White);
+                player.SendTopscreenMessage("CELLON_LEVEL_TOO_HIGH", MessageType.White);
                 player.GenerateShopEndPacket(ShopEndPacketType.CloseSubWindow);
                 return;
             }
@@ -34,7 +34,7 @@ namespace SaltyEmu.BasicPlugin.ItemUpgradeHandlers
 
             if (e.SecondItem.Item.MaxCellon <= equipmentOptionsCount)
             {
-                player.SendTopscreenMessage("CELLON_FULL", MsgPacketType.White);
+                player.SendTopscreenMessage("CELLON_FULL", MessageType.White);
                 player.GenerateShopEndPacket(ShopEndPacketType.CloseSubWindow);
                 return;
             }
@@ -75,7 +75,7 @@ namespace SaltyEmu.BasicPlugin.ItemUpgradeHandlers
 
             if (player.Character.Gold < gold)
             {
-                player.SendTopscreenMessage("NOT_ENOUGH_GOLD", MsgPacketType.White);
+                player.SendTopscreenMessage("NOT_ENOUGH_GOLD", MessageType.White);
                 player.GenerateShopEndPacket(ShopEndPacketType.CloseSubWindow);
                 return;
             }

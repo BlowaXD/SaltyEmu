@@ -31,7 +31,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers
             /*
             if (option == null || e.Jewelry.EquipmentOptions.Any(s => s.Type == option.Type))
             {
-                player.SendTopscreenMessage("CELLONING_FAILED", MsgPacketType.White);
+                player.SendTopscreenMessage("CELLONING_FAILED", MessageType.White);
                 player.GenerateShopEndPacket(ShopEndPacketType.CloseSubWindow);
                 return;
             }
@@ -39,7 +39,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers
             // SUCCESS
             e.Jewelry.EquipmentOptions.Add(option);
             */
-            await player.SendTopscreenMessage("CELLONING_SUCCESS", MsgPacketType.White);
+            await player.SendTopscreenMessage("CELLONING_SUCCESS", MessageType.White);
             await player.SendPacketAsync(player.GenerateShopEndPacket(ShopEndPacketType.CloseSubWindow));
         }
     }

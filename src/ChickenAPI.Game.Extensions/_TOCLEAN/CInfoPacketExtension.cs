@@ -10,10 +10,10 @@ namespace ChickenAPI.Game.Entities.Player.Extensions
                 Name = player.Character.Name,
                 Unknown1 = "-", //TODO: Find signification
                 GroupId = -1,
-                FamilyId = player.Family?.Id ?? -1, // todo : family system
+                FamilyId = (int)(player.Family?.Id ?? -1),
                 FamilyName = player.Family?.Name ?? "-",
                 CharacterId = player.Character.Id,
-                NameAppearance = player.NameAppearance,
+                Authority = (byte)player.NameAppearance,
                 Gender = player.Character.Gender,
                 HairStyle = player.Character.HairStyle,
                 HairColor = player.Character.HairColor,
@@ -23,8 +23,7 @@ namespace ChickenAPI.Game.Entities.Player.Extensions
                 Morph = player.MorphId,
                 Invisible = player.IsInvisible,
                 FamilyLevel = 0,
-
-                SpUpgrade = player.Sp?.Upgrade ?? 0,
+                MorphUpgrade = player.Sp?.Upgrade ?? 0,
                 ArenaWinner = player.Character.ArenaWinner
             };
     }

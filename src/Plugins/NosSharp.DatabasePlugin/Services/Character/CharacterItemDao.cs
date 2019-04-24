@@ -7,6 +7,7 @@ using ChickenAPI.Core.Logging;
 using ChickenAPI.Data.Item;
 using ChickenAPI.Enums;
 using ChickenAPI.Enums.Game.Items;
+using ChickenAPI.Packets.Enumerations;
 using Microsoft.EntityFrameworkCore;
 using SaltyEmu.Database;
 using SaltyEmu.DatabasePlugin.Models.Character;

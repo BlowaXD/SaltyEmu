@@ -10,7 +10,7 @@ namespace SaltyEmu.Commands.TypeParsers
 {
     public sealed class MapLayerTypeParser : TypeParser<IMapLayer>
     {
-        public override Task<TypeParserResult<IMapLayer>> ParseAsync(string value, ICommandContext context, IServiceProvider provider)
+        public override Task<TypeParserResult<IMapLayer>> ParseAsync(Parameter param, string value, ICommandContext context, IServiceProvider provider)
         {
             if (!long.TryParse(value, out var result))
             {

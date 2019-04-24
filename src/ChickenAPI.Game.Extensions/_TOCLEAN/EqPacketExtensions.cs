@@ -3,42 +3,42 @@ using ChickenAPI.Data.Item;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Packets.Enumerations;
 using ChickenAPI.Packets.ServerPackets.Inventory;
+using ChickenAPI.Packets.ServerPackets.Visibility;
 
 namespace ChickenAPI.Game.Inventory.Extensions
 {
     public static class EqPacketExtensions
     {
-        public static EqListInfo GenerateEqListInfoPacket(this InventoryComponent inventory) => new EqListInfo
+        public static InEquipmentSubPacket GenerateEqListInfoPacket(this InventoryComponent inventory) => new InEquipmentSubPacket
         {
-            Hat = inventory.Wear[(int)EquipmentType.Hat]?.ItemId ?? -1,
-            Armor = inventory.Wear[(int)EquipmentType.Armor]?.ItemId ?? -1,
-            MainWeapon = inventory.Wear[(int)EquipmentType.MainWeapon]?.ItemId ?? -1,
-            SecondaryWeapon = inventory.Wear[(int)EquipmentType.SecondaryWeapon]?.ItemId ?? -1,
-            Mask = inventory.Wear[(int)EquipmentType.Mask]?.ItemId ?? -1,
-            Fairy = inventory.Wear[(int)EquipmentType.Fairy]?.ItemId ?? -1,
-            CostumeSuit = inventory.Wear[(int)EquipmentType.CostumeSuit]?.ItemId ?? -1,
-            CostumeHat = inventory.Wear[(int)EquipmentType.CostumeHat]?.ItemId ?? -1,
-            WeaponSkin = inventory.Wear[(int)EquipmentType.WeaponSkin]?.ItemId ?? -1
+            Hat = (short?)inventory.Wear[(int)EquipmentType.Hat]?.ItemId ?? -1,
+            Armor = (short?)inventory.Wear[(int)EquipmentType.Armor]?.ItemId ?? -1,
+            MainWeapon = (short?)inventory.Wear[(int)EquipmentType.MainWeapon]?.ItemId ?? -1,
+            SecondaryWeapon = (short?)inventory.Wear[(int)EquipmentType.SecondaryWeapon]?.ItemId ?? -1,
+            Mask = (short?)inventory.Wear[(int)EquipmentType.Mask]?.ItemId ?? -1,
+            Fairy = (short?)inventory.Wear[(int)EquipmentType.Fairy]?.ItemId ?? -1,
+            CostumeSuit = (short?)inventory.Wear[(int)EquipmentType.CostumeSuit]?.ItemId ?? -1,
+            CostumeHat = (short?)inventory.Wear[(int)EquipmentType.CostumeHat]?.ItemId ?? -1,
+            WeaponSkin = (short?)inventory.Wear[(int)EquipmentType.WeaponSkin]?.ItemId ?? -1
         };
 
-        public static EqRareInfo GenerateEqRareInfoPacket(this InventoryComponent inventory) => new EqRareInfo
+        public static UpgradeRareSubPacket GenerateEqRareInfoPacket(this InventoryComponent inventory, EquipmentType type) => new UpgradeRareSubPacket
         {
-            WeaponUpgrade = inventory.Wear[(int)EquipmentType.MainWeapon]?.Upgrade ?? 0,
-            WeaponRarity = inventory.Wear[(int)EquipmentType.MainWeapon]?.Rarity ?? 0,
-            ArmorUpgrade = inventory.Wear[(int)EquipmentType.Armor]?.Upgrade ?? 0,
-            ArmorRarity = inventory.Wear[(int)EquipmentType.MainWeapon]?.Rarity ?? 0
+            Upgrade = inventory.Wear[(int)type]?.Upgrade ?? 0,
+            Rare = (byte)(inventory.Wear[(int)type]?.Rarity ?? 0)
         };
 
         public static EqPacket GenerateEqPacket(this IPlayerEntity player) => new EqPacket
         {
             VisualId = player.Id,
-            NameAppearance = player.NameAppearance,
+            Visibility = (byte)player.NameAppearance,
             Gender = player.Character.Gender,
             HairStyle = player.Character.HairStyle,
             Haircolor = player.Character.HairColor,
-            CharacterClassType = player.Character.Class,
-            EqList = player.Inventory.GenerateEqListInfoPacket(),
-            EqInfo = player.Inventory.GenerateEqRareInfoPacket()
+            ClassType = player.Character.Class,
+            ArmorUpgradeRarePacket = player.Inventory.GenerateEqRareInfoPacket(EquipmentType.Armor),
+            WeaponUpgradeRarePacket = player.Inventory.GenerateEqRareInfoPacket(EquipmentType.MainWeapon),
+            EqSubPacket = player.Inventory.GenerateEqListInfoPacket(),
         };
 
         /// <summary>

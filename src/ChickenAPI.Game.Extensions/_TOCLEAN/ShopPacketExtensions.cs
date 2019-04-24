@@ -3,6 +3,7 @@ using ChickenAPI.Game.Entities.Npc;
 using ChickenAPI.Game.Entities.Player;
 using System.Threading.Tasks;
 using ChickenAPI.Packets.Enumerations;
+using ChickenAPI.Packets.Old.Game.Server.Shop;
 using ChickenAPI.Packets.ServerPackets.Shop;
 
 namespace ChickenAPI.Game.Shops.Extensions
@@ -70,7 +71,7 @@ namespace ChickenAPI.Game.Shops.Extensions
             return new ShopPacket
             {
                 VisualType = player.Type,
-                EntityId = player.Id,
+                VisualId = player.Id,
                 ShopId = 0,
                 MenuType = 0,
                 ShopType = 0,

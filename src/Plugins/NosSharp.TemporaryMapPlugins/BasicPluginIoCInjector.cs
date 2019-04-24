@@ -112,13 +112,6 @@ namespace SaltyEmu.BasicPlugin
             }
         }
 
-        public class ConfigurationSerializer : IConfigurationSerializer
-        {
-            public string Serialize<T>(T conf) where T : IConfiguration => JsonConvert.SerializeObject(conf);
-
-            public T Deserialize<T>(string buffer) where T : IConfiguration => JsonConvert.DeserializeObject<T>(buffer);
-        }
-
         public static void InjectDependencies()
         {
             var config = new ConfigurationHelper(new ConfigurationSerializer());

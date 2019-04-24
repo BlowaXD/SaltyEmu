@@ -1,5 +1,4 @@
 ﻿using ChickenAPI.Data.NpcMonster;
-using ChickenAPI.Packets.Old.Game.Client.UI;
 using ChickenAPI.Packets.ServerPackets.Inventory;
 
 namespace ChickenAPI.Game.Entities.Npc.Extensions
@@ -36,7 +35,7 @@ namespace ChickenAPI.Game.Entities.Npc.Extensions
                 DarkResistance = monster.DarkResistance,
                 MaxHp = monster.MaxHp,
                 MaxMp = monster.MaxMp,
-                Unknown2 = -1,
+                GroupId = -1,
                 Name = monster.Name.Replace(" ", "^")
                 */
             };

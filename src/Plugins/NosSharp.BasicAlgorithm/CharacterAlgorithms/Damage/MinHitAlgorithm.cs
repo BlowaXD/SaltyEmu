@@ -1,4 +1,5 @@
 ﻿using ChickenAPI.Enums.Game.Character;
+using ChickenAPI.Packets.Enumerations;
 
 namespace SaltyEmu.BasicAlgorithmPlugin.CharacterAlgorithms.Damage
 {
@@ -9,7 +10,7 @@ namespace SaltyEmu.BasicAlgorithmPlugin.CharacterAlgorithms.Damage
 
         public void Initialize()
         {
-            _stats = new int[(int)CharacterClassType.Unknown, MAX_LEVEL];
+            _stats = new int[(int)CharacterClassType.MartialArtist + 1, MAX_LEVEL];
 
             for (int i = 0; i < MAX_LEVEL; i++)
             {
@@ -17,7 +18,7 @@ namespace SaltyEmu.BasicAlgorithmPlugin.CharacterAlgorithms.Damage
                 _stats[(int)CharacterClassType.Swordman, i] = (2 * i) + 5; // approx Numbers n such that 10n+9 is prime.
                 _stats[(int)CharacterClassType.Magician, i] = (2 * i) + 9; // approx Numbers n such that n^2 is of form x^ 2 + 40y ^ 2 with positive x,y.
                 _stats[(int)CharacterClassType.Archer, i] = 9 + (i * 3); // approx
-                _stats[(int)CharacterClassType.Wrestler, i] = 9 + (i * 3); // approx
+                _stats[(int)CharacterClassType.MartialArtist, i] = 9 + (i * 3); // approx
             }
         }
 

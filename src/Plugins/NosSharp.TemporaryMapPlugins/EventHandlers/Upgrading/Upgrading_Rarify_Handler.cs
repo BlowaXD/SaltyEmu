@@ -146,20 +146,20 @@ namespace SaltyEmu.BasicPlugin.EventHandlers
                     if ((e.Protection == RarifyProtection.Scroll || e.Protection == RarifyProtection.BlueAmulet ||
                         e.Protection == RarifyProtection.RedAmulet) && !e.IsCommand && e.Item.Item.IsHeroic)
                     {
-                        await player.SendTopscreenMessage("ITEM_IS_HEROIC", MsgPacketType.Whisper);
+                        await player.SendTopscreenMessage("ITEM_IS_HEROIC", MessageType.Whisper);
                         return;
                     }
 
                     if ((e.Protection == RarifyProtection.HeroicAmulet ||
                         e.Protection == RarifyProtection.RandomHeroicAmulet) && !e.Item.Item.IsHeroic)
                     {
-                        await player.SendTopscreenMessage("ITEM_NOT_HEROIC", MsgPacketType.Whisper);
+                        await player.SendTopscreenMessage("ITEM_NOT_HEROIC", MessageType.Whisper);
                         return;
                     }
 
                     if (e.Item.Item.IsHeroic && e.Item.Rarity == 8)
                     {
-                        await player.SendTopscreenMessage("ALREADY_MAX_RARE", MsgPacketType.Whisper);
+                        await player.SendTopscreenMessage("ALREADY_MAX_RARE", MessageType.Whisper);
                         return;
                     }
 
