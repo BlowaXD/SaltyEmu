@@ -6,6 +6,7 @@ using Autofac;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Data.Relations;
 using ChickenAPI.Enums.Game.Relations;
+using ChickenAPI.Packets.Enumerations;
 using NUnit.Framework;
 using SaltyEmu.Communication.Configs;
 using SaltyEmu.Communication.Utils;

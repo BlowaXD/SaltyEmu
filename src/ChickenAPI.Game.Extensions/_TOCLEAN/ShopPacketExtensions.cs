@@ -1,9 +1,8 @@
-﻿using ChickenAPI.Enums.Packets;
-using ChickenAPI.Game.Entities.Npc;
+﻿using ChickenAPI.Game.Entities.Npc;
 using ChickenAPI.Game.Entities.Player;
 using System.Threading.Tasks;
 using ChickenAPI.Packets.Enumerations;
-using ChickenAPI.Packets.Old.Game.Server.Shop;
+using ChickenAPI.Packets.ServerPackets.Player;
 using ChickenAPI.Packets.ServerPackets.Shop;
 
 namespace ChickenAPI.Game.Shops.Extensions

@@ -1,4 +1,5 @@
 ﻿using ChickenAPI.Enums.Game.Entity;
+using ChickenAPI.Packets.Enumerations;
 
 namespace ChickenAPI.Data.NpcMonster
 {

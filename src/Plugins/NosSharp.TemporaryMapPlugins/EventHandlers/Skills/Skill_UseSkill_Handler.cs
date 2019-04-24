@@ -6,7 +6,6 @@ using ChickenAPI.Core.Events;
 using ChickenAPI.Data.Skills;
 using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Enums.Game.Skill;
-using ChickenAPI.Enums.Packets;
 using ChickenAPI.Game.Battle.Events;
 using ChickenAPI.Game.Battle.Extensions;
 using ChickenAPI.Game.Battle.Hitting;

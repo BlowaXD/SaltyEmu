@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using ChickenAPI.Enums.Packets;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Entities.Player.Extensions;
 using ChickenAPI.Game.Helpers;
 using ChickenAPI.Game.NpcDialog;
 using ChickenAPI.Game.NpcDialog.Events;
 using ChickenAPI.Game._i18n;
+using ChickenAPI.Packets.Enumerations;
 
 namespace SaltyEmu.BasicPlugin.NpcDialogHandlers.Handlers.Families
 {

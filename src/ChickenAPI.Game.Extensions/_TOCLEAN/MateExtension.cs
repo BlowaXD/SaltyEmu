@@ -6,7 +6,6 @@ using Autofac;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Data.Character;
 using ChickenAPI.Enums.Game.Entity;
-using ChickenAPI.Enums.Packets;
 using ChickenAPI.Game.Entities.Mates;
 using ChickenAPI.Game.Helpers;
 using ChickenAPI.Game.Inventory.Extensions;

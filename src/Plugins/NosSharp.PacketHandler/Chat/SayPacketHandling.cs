@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using ChickenAPI.Game.Chat.Events;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Packets.Old.Game.Client.Chat;
+using ChickenAPI.Packets.ClientPackets.Chat;
 using NW.Plugins.PacketHandling.Utils;
 
 namespace NW.Plugins.PacketHandling.Chat

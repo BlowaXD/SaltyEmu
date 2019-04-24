@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Data.Character;
 using Microsoft.EntityFrameworkCore;
 using SaltyEmu.Database;
@@ -12,7 +13,7 @@ namespace SaltyEmu.DatabasePlugin.Services.Character
 {
     public class CharacterFamilyDao : MappedRepositoryBase<CharacterFamilyDto, CharacterFamilyModel>, ICharacterFamilyService
     {
-        public CharacterFamilyDao(DbContext context, IMapper mapper) : base(context, mapper)
+        public CharacterFamilyDao(SaltyDbContext context, IMapper mapper, ILogger log) : base(context, mapper, log)
         {
         }
 
@@ -35,5 +36,6 @@ namespace SaltyEmu.DatabasePlugin.Services.Character
         {
             return (await DbSet.Where(s => s.FamilyId == familyId).ToArrayAsync()).Select(Mapper.Map<CharacterFamilyDto>);
         }
+
     }
 }

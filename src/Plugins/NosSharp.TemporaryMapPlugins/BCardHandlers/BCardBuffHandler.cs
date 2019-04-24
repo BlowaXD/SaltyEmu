@@ -10,24 +10,27 @@ using ChickenAPI.Game.Battle.Interfaces;
 using ChickenAPI.Game.BCards;
 using ChickenAPI.Game.Buffs;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Packets.Old.Game.Server.Battle;
+using ChickenAPI.Packets.ServerPackets.Battle;
 
 namespace SaltyEmu.BasicPlugin.BCardHandlers
 {
     public static class BCardBuffHandler
     {
-        static readonly Logger Log = Logger.GetLogger<BfPacket>();
-
         public static BfPacket GenerateBfPacket(this IPlayerEntity player, BuffContainer buff)
         {
             return new BfPacket
             {
                 VisualType = player.Type,
                 VisualId = player.Id,
-                BuffId = buff.Id,
+                Buff = new BfPacket.BuffElementSubPacket
+                {
+                    BuffId = buff.Id,
+                    ChargeValue = 0,
+                    Duration = buff.Duration,
+                    
+                },
                 BuffLevel = buff.Level,
-                ChargeValue = 0,
-                Duration = buff.Duration,
+                
             };
         }
 

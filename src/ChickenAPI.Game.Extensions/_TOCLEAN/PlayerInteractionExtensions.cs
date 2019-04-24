@@ -1,5 +1,4 @@
 ﻿using System.Threading.Tasks;
-using ChickenAPI.Enums.Packets;
 using ChickenAPI.Game._ECS.Entities;
 using ChickenAPI.Game._i18n;
 using ChickenAPI.Packets.Enumerations;

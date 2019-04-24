@@ -10,7 +10,7 @@ using ChickenAPI.Game.Entities.Player.Extensions;
 using ChickenAPI.Game._ECS.Entities;
 using ChickenAPI.Packets.Enumerations;
 using ChickenAPI.Packets.ServerPackets.Entities;
-using ChickenAPI.Packets.ServerPackets.Minimap;
+using ChickenAPI.Packets.ServerPackets.MiniMap;
 using ChickenAPI.Packets.ServerPackets.Visibility;
 
 namespace ChickenAPI.Game.Inventory.Extensions

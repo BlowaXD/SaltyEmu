@@ -4,7 +4,6 @@ using System.Linq;
 using System.Reflection;
 using ChickenAPI.Packets.Attributes;
 using ChickenAPI.Packets.Old.Attributes;
-using ChickenAPI.Packets.Old.Game.Server.Player;
 
 namespace Toolkit.Commands
 {

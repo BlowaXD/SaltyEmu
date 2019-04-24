@@ -5,7 +5,6 @@ using ChickenAPI.Data.Character;
 using ChickenAPI.Enums.Game.Character;
 using ChickenAPI.Game._Network;
 using ChickenAPI.Packets.Old.CharacterSelectionScreen.Client;
-using ChickenAPI.Packets.Old.Game.Server.UserInterface;
 using NW.Plugins.PacketHandling.Utils;
 
 namespace NW.Plugins.PacketHandling.CharacterScreen
@@ -82,7 +81,7 @@ namespace NW.Plugins.PacketHandling.CharacterScreen
 
             CharacterDto newCharacter = _characterService.GetCreationCharacter();
 
-            newCharacter.Class = CharacterClassType.Wrestler;
+            newCharacter.Class = CharacterClassType.MartialArtist;
             newCharacter.Gender = packet.Gender;
             newCharacter.HairColor = packet.HairColor;
             newCharacter.HairStyle = packet.HairStyle;

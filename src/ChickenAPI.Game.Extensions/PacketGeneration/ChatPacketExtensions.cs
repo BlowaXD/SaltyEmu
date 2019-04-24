@@ -3,7 +3,7 @@ using ChickenAPI.Enums.Game.Items;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Inventory.Extensions;
 using ChickenAPI.Packets.Enumerations;
-using ChickenAPI.Packets.Game.Server.Chat;
+using ChickenAPI.Packets.ServerPackets.Chats;
 
 namespace ChickenAPI.Game.Extensions.PacketGeneration
 {

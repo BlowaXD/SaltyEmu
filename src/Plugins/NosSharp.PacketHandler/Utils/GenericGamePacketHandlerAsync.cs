@@ -2,14 +2,18 @@
 using ChickenAPI.Core.Logging;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game._Network;
-using ChickenAPI.Packets;
-using ChickenAPI.Packets.Old;
+using ChickenAPI.Packets.Interfaces;
 
 namespace NW.Plugins.PacketHandling.Utils
 {
     public abstract class GenericGamePacketHandlerAsync<T> : IPacketProcessor where T : class, IPacket
     {
-        protected readonly Logger Log = Logger.GetLogger<T>();
+        protected readonly ILogger Log;
+
+        protected GenericGamePacketHandlerAsync(ILogger log)
+        {
+            Log = log;
+        }
 
         public Task Handle(IPacket packet, ISession session)
         {

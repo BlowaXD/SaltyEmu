@@ -72,7 +72,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Skills
                         classLevel = e.Skill.MinimumMagicianLevel;
                         break;
 
-                    case CharacterClassType.Wrestler:
+                    case CharacterClassType.MartialArtist:
                         classLevel = e.Skill.MinimumWrestlerLevel;
                         break;
 

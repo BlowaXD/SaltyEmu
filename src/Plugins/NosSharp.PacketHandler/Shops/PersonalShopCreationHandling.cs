@@ -5,15 +5,14 @@ using System.Threading.Tasks;
 using ChickenAPI.Core.Utils;
 using ChickenAPI.Data.Item;
 using ChickenAPI.Enums.Game.Items;
-using ChickenAPI.Enums.Packets;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Entities.Player.Extensions;
 using ChickenAPI.Game.Inventory.Extensions;
 using ChickenAPI.Game.Shops;
 using ChickenAPI.Game.Shops.Events;
 using ChickenAPI.Game.Shops.Extensions;
+using ChickenAPI.Packets.Enumerations;
 using ChickenAPI.Packets.Old.Game.Client.Shops;
-using ChickenAPI.Packets.Old.Game.Server.Shop;
 using NW.Plugins.PacketHandling.Utils;
 
 namespace NW.Plugins.PacketHandling.Shops

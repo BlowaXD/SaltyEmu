@@ -8,6 +8,8 @@ using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.IAs;
 using ChickenAPI.Game._ECS.Entities;
 using ChickenAPI.Game._ECS.Systems;
+using ChickenAPI.Game.Inventory.Extensions;
+using ChickenAPI.Game.Movements.Extensions;
 using ChickenAPI.Packets.Enumerations;
 using ChickenAPI.Packets.ServerPackets.Entities;
 
@@ -46,7 +48,7 @@ namespace ChickenAPI.Game.Movements
             ProcessMovement((IMovableEntity)entity);
         }
 
-        private void Move(IEntity entity)
+        private void Move(IMovableEntity entity)
         {
             try
             {

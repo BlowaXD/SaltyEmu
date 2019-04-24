@@ -5,7 +5,6 @@ using ChickenAPI.Core.Events;
 using ChickenAPI.Core.Logging;
 using ChickenAPI.Data.Character;
 using ChickenAPI.Data.Item;
-using ChickenAPI.Enums.Packets;
 using ChickenAPI.Game.Effects;
 using ChickenAPI.Game.Entities.Extensions;
 using ChickenAPI.Game.Entities.Player;

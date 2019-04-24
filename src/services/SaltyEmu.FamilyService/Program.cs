@@ -28,7 +28,6 @@ namespace SaltyEmu.FamilyService
 
         private static void InitializeLogger()
         {
-            Logger.Initialize();
         }
 
         private static void Main()

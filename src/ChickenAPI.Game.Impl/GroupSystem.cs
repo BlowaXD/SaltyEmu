@@ -4,6 +4,7 @@ using System.Linq.Expressions;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game._ECS.Entities;
 using ChickenAPI.Game._ECS.Systems;
+using ChickenAPI.Game.Entities.Player.Extensions;
 
 namespace ChickenAPI.Game.Groups
 {

@@ -14,6 +14,7 @@ using ChickenAPI.Data.Skills;
 using ChickenAPI.Enums.Game.BCard;
 using ChickenAPI.Enums.Game.Drop;
 using ChickenAPI.Enums.Game.Entity;
+using ChickenAPI.Packets.Enumerations;
 
 namespace Toolkit.Converter
 {

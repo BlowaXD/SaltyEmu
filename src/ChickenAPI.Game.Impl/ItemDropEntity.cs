@@ -5,12 +5,13 @@ using ChickenAPI.Data.Item;
 using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Game._ECS.Components;
 using ChickenAPI.Game._ECS.Entities;
+using ChickenAPI.Packets.Enumerations;
 
 namespace ChickenAPI.Game.Entities.Drop
 {
     public class ItemDropEntity : EntityBase, IDropEntity
     {
-        public ItemDropEntity(long id) : base(VisualType.MapObject, id) => Components = new Dictionary<Type, IComponent>();
+        public ItemDropEntity(long id) : base(VisualType.Object, id) => Components = new Dictionary<Type, IComponent>();
 
         public ItemDto Item { get; set; }
         public ItemInstanceDto ItemInstance { get; set; }

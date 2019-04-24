@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using ChickenAPI.Core.Events;
 using ChickenAPI.Core.Maths;
-using ChickenAPI.Enums.Packets;
 using ChickenAPI.Game;
 using ChickenAPI.Game.Configuration;
 using ChickenAPI.Game.Effects;
@@ -11,6 +10,7 @@ using ChickenAPI.Game.Entities.Player.Extensions;
 using ChickenAPI.Game.Helpers;
 using ChickenAPI.Game.Inventory.ItemUpgrade.Events;
 using ChickenAPI.Game.Shops.Extensions;
+using ChickenAPI.Packets.Enumerations;
 
 namespace SaltyEmu.BasicPlugin.EventHandlers
 {

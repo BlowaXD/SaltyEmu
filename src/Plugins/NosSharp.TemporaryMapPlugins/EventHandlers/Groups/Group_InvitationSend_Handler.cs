@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using ChickenAPI.Core.Events;
 using ChickenAPI.Core.i18n;
-using ChickenAPI.Enums.Packets;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Entities.Player.Extensions;
 using ChickenAPI.Game.Groups;
@@ -11,6 +10,7 @@ using ChickenAPI.Game.Helpers;
 using ChickenAPI.Game.Managers;
 using ChickenAPI.Game._i18n;
 using ChickenAPI.Packets;
+using ChickenAPI.Packets.Enumerations;
 using ChickenAPI.Packets.Old.Game.Server.Group;
 
 namespace SaltyEmu.BasicPlugin.EventHandlers

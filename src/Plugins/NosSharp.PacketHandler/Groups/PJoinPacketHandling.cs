@@ -1,10 +1,10 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
-using ChickenAPI.Enums.Packets;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Groups;
 using ChickenAPI.Game.Groups.Events;
 using ChickenAPI.Game.Managers;
+using ChickenAPI.Packets.Enumerations;
 using ChickenAPI.Packets.Old.Game.Server.Group;
 using NW.Plugins.PacketHandling.Utils;
 

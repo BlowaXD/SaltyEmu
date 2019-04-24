@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using ChickenAPI.Core.Events;
 using ChickenAPI.Core.i18n;
 using ChickenAPI.Data.Character;
-using ChickenAPI.Enums.Packets;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Entities.Player.Extensions;
 using ChickenAPI.Game.Helpers;

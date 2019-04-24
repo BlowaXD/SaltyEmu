@@ -12,7 +12,6 @@ using ChickenAPI.Data.Item;
 using ChickenAPI.Data.Shop;
 using ChickenAPI.Enums.Game.Character;
 using ChickenAPI.Enums.Game.Entity;
-using ChickenAPI.Enums.Packets;
 using ChickenAPI.Game.Entities.Npc;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Entities.Player.Extensions;
@@ -24,6 +23,7 @@ using ChickenAPI.Game.Shops.Events;
 using ChickenAPI.Game.Shops.Extensions;
 using ChickenAPI.Game.Skills.Extensions;
 using ChickenAPI.Game._i18n;
+using ChickenAPI.Packets.Enumerations;
 
 namespace SaltyEmu.BasicPlugin.EventHandlers.Shops
 {
@@ -146,7 +146,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Shops
                     minimumLevel = skillShop.Skill.MinimumMagicianLevel;
                     break;
 
-                case CharacterClassType.Wrestler:
+                case CharacterClassType.MartialArtist:
                     minimumLevel = skillShop.Skill.MinimumWrestlerLevel;
                     break;
 

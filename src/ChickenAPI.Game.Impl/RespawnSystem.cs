@@ -6,6 +6,7 @@ using ChickenAPI.Game.Entities.Monster;
 using ChickenAPI.Game.Entities.Npc;
 using ChickenAPI.Game._ECS.Entities;
 using ChickenAPI.Game._ECS.Systems;
+using ChickenAPI.Packets.Enumerations;
 
 namespace ChickenAPI.Game.IAs
 {

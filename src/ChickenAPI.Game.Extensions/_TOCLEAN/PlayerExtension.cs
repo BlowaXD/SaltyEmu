@@ -9,7 +9,6 @@ using ChickenAPI.Data.Skills;
 using ChickenAPI.Enums.Game.Character;
 using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Enums.Game.Items;
-using ChickenAPI.Enums.Packets;
 using ChickenAPI.Game.Effects;
 using ChickenAPI.Game.Families.Extensions;
 using ChickenAPI.Game.Helpers;
@@ -19,7 +18,6 @@ using ChickenAPI.Game.Skills;
 using ChickenAPI.Game._i18n;
 using ChickenAPI.Game.Extensions.PacketGeneration;
 using ChickenAPI.Packets.Enumerations;
-using ChickenAPI.Packets.Old.Game.Server.UserInterface;
 using ChickenAPI.Packets.ServerPackets.Player;
 using ChickenAPI.Packets.ServerPackets.UI;
 

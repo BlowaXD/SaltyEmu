@@ -12,8 +12,6 @@ using ChickenAPI.Data.Item;
 using ChickenAPI.Data.Skills;
 using ChickenAPI.Enums;
 using ChickenAPI.Enums.Game.Entity;
-using ChickenAPI.Enums.Game.Items;
-using ChickenAPI.Enums.Packets;
 using ChickenAPI.Game.Effects;
 using ChickenAPI.Game.Entities.Extensions;
 using ChickenAPI.Game.Entities.Player;
@@ -24,6 +22,8 @@ using ChickenAPI.Game.Movements.Extensions;
 using ChickenAPI.Game.Skills.Extensions;
 using ChickenAPI.Game.Specialists.Args;
 using ChickenAPI.Game.Specialists.Extensions;
+using ChickenAPI.Packets.Enumerations;
+using EquipmentType = ChickenAPI.Enums.Game.Items.EquipmentType;
 
 namespace SaltyEmu.BasicPlugin.EventHandlers.Specialists
 {

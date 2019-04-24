@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Autofac;
 using ChickenAPI.Core.IoC;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Managers;
 using ChickenAPI.Game.Relations.Events;
@@ -11,6 +12,10 @@ namespace SaltyEmu.FriendsPlugin.Handlers
 {
     internal class SendInvitationHandler : GenericAsyncRpcRequestHandler<SendInvitation>
     {
+        public SendInvitationHandler(ILogger log) : base(log)
+        {
+        }
+
         protected override Task Handle(SendInvitation request)
         {
             if (!(request is SendInvitation sendInvitation))

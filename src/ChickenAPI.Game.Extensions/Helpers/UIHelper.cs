@@ -1,11 +1,9 @@
 ﻿using System.Threading.Tasks;
-using ChickenAPI.Enums.Packets;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Entities.Player.Extensions;
 using ChickenAPI.Game._i18n;
 using ChickenAPI.Packets.Enumerations;
 using ChickenAPI.Packets.Interfaces;
-using ChickenAPI.Packets.Old.Game.Server.UserInterface;
 using ChickenAPI.Packets.ServerPackets.UI;
 
 namespace ChickenAPI.Game.Helpers

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading;
 using Autofac;
 using ChickenAPI.Core.IoC;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Core.Maths;
 using ChickenAPI.Core.Utils;
 using ChickenAPI.Data.Map;
@@ -16,6 +17,7 @@ namespace ChickenAPI.Game.Maps
     public class SimpleMap : EntityManagerBase, IMap
     {
         private readonly bool _initSystems;
+        private readonly ILogger _log;
         private readonly MapDto _map;
         private readonly IEnumerable<MapMonsterDto> _monsters;
         private readonly IEnumerable<ShopDto> _shops;
@@ -41,6 +43,7 @@ namespace ChickenAPI.Game.Maps
             Layers = new HashSet<IMapLayer>();
 
             _random = ChickenContainer.Instance.Resolve<IRandomGenerator>();
+            _log = ChickenContainer.Instance.Resolve<ILogger>();
 
 
             _walkableGrid = new Lazy<Position<short>[]>(() =>
@@ -76,7 +79,7 @@ namespace ChickenAPI.Game.Maps
             }
             catch (Exception)
             {
-                Log.Warn($"[IS_WALKABLE] {Id}: ({x},{y})");
+                _log.Warn($"[IS_WALKABLE] {Id}: ({x},{y})");
                 return false;
             }
         }

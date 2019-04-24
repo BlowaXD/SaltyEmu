@@ -1,6 +1,6 @@
 ﻿using ChickenAPI.Data.Item;
-using ChickenAPI.Enums.Packets;
 using ChickenAPI.Game._Events;
+using ChickenAPI.Packets.Enumerations;
 
 namespace ChickenAPI.Game.Inventory.ItemUpgrade.Events
 {

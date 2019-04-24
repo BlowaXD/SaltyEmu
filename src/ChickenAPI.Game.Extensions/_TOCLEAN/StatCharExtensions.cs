@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using ChickenAPI.Packets.Enumerations;
-using ChickenAPI.Packets.Old.Game.Server.Player;
+using ChickenAPI.Packets.ServerPackets.Player;
 
 namespace ChickenAPI.Game.Entities.Player.Extensions
 {

@@ -1,5 +1,5 @@
 ﻿using ChickenAPI.Data.Character;
-using ChickenAPI.Packets.Old.Game.Server.Player;
+using ChickenAPI.Packets.ServerPackets.Player;
 
 namespace ChickenAPI.Game.Quicklist.Extensions
 {

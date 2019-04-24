@@ -1,7 +1,6 @@
 using System.Threading.Tasks;
 using ChickenAPI.Core.Logging;
 using ChickenAPI.Enums.Game.Items;
-using ChickenAPI.Enums.Packets;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Helpers;
 using ChickenAPI.Game.Inventory.Events;

@@ -1,7 +1,6 @@
 ﻿using System.Threading.Tasks;
 using ChickenAPI.Data.Item;
 using ChickenAPI.Enums.Game.Items;
-using ChickenAPI.Enums.Packets;
 using ChickenAPI.Game.Effects;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Entities.Player.Extensions;
