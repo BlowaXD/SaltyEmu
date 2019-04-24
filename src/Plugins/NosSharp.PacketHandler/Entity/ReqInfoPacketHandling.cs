@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using ChickenAPI.Game.Entities.Events;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Packets.Old.Game.Server.Entities;
+using ChickenAPI.Packets.ServerPackets.Entities;
 using NW.Plugins.PacketHandling.Utils;
 
 namespace NW.Plugins.PacketHandling.Entity

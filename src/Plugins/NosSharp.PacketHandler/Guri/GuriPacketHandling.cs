@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.GuriHandling.Events;
 using ChickenAPI.Packets.ClientPackets.Player;
@@ -9,6 +10,10 @@ namespace NW.Plugins.PacketHandling.Guri
 {
     public class GuriPacketHandling : GenericGamePacketHandlerAsync<ClientGuriPacket>
     {
+        public GuriPacketHandling(ILogger log) : base(log)
+        {
+        }
+
         protected override async Task Handle(ClientGuriPacket packet, IPlayerEntity player)
         {
             string[] packetsplit = new[] { "", "" }; // todo;

@@ -2,31 +2,46 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Core.Utils;
 using ChickenAPI.Data.Item;
-using ChickenAPI.Enums.Game.Items;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Entities.Player.Extensions;
 using ChickenAPI.Game.Inventory.Extensions;
 using ChickenAPI.Game.Shops;
 using ChickenAPI.Game.Shops.Events;
 using ChickenAPI.Game.Shops.Extensions;
+using ChickenAPI.Packets.ClientPackets.Shops;
 using ChickenAPI.Packets.Enumerations;
-using ChickenAPI.Packets.Old.Game.Client.Shops;
+using ChickenAPI.Packets.ServerPackets.Shop;
 using NW.Plugins.PacketHandling.Utils;
 
 namespace NW.Plugins.PacketHandling.Shops
 {
     public class PersonalShopCreationHandling : GenericGamePacketHandlerAsync<MShopPacket>
     {
+        public PersonalShopCreationHandling(ILogger log) : base(log)
+        {
+        }
+
         protected override async Task Handle(MShopPacket packet, IPlayerEntity player)
         {
             switch (packet.Type)
             {
-                case MShopPacketType.OpenShop:
+                case CreateShopPacketType.Create:
                     try
                     {
-                        ShopPlayerShopCreateEvent e = ParseMShopPacket(packet.PacketData, player);
+                        //ShopPlayerShopCreateEvent e = ParseMShopPacket(packet.ItemList, player);
+                        var e = new ShopPlayerShopCreateEvent
+                        {
+                            ShopItems = packet.ItemList.Select(s => new PersonalShopItem
+                            {
+                                Slot = s.Slot,
+                                Price = s.Price,
+                                ItemInstance = player.Inventory.GetItemFromSlotAndType(s.Slot, s.Type),
+                                Quantity = s.Amount
+                            }).ToList()
+                        };
                         if (e?.ShopItems.Any() == true)
                         {
                             await player.EmitEventAsync(e);
@@ -43,13 +58,13 @@ namespace NW.Plugins.PacketHandling.Shops
                     }
 
                     break;
-                case MShopPacketType.CloseShop:
+                case CreateShopPacketType.Close:
                     await player.ClosePersonalShopAsync();
                     player.IsSitting = false;
                     await player.ActualizePlayerCondition();
                     return;
-                case MShopPacketType.OpenDialog:
-                    await player.SendPacketAsync(new IShopPacket());
+                case CreateShopPacketType.Open:
+                    await player.SendPacketAsync(new IshopPacket());
                     return;
                 default:
                     return;

@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using ChickenAPI.Core.Events;
 using ChickenAPI.Data.NpcMonster;
-using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Game.Entities.Events;
 using ChickenAPI.Game.Entities.Npc.Extensions;
 using ChickenAPI.Game.Entities.Player;

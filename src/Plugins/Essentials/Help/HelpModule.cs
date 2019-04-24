@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ChickenAPI.Game.Helpers;
+using ChickenAPI.Packets.Enumerations;
 
 namespace Essentials.Help
 {

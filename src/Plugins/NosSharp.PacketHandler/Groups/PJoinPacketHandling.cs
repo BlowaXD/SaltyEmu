@@ -1,38 +1,40 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Groups;
 using ChickenAPI.Game.Groups.Events;
 using ChickenAPI.Game.Managers;
 using ChickenAPI.Packets.Enumerations;
-using ChickenAPI.Packets.Old.Game.Server.Group;
+using ChickenAPI.Packets.ServerPackets.Groups;
 using NW.Plugins.PacketHandling.Utils;
 
 namespace NW.Plugins.PacketHandling.Groups
 {
-    public class PJoinPacketHandling : GenericGamePacketHandlerAsync<PJoinPacket>
+    public class PJoinPacketHandling : GenericGamePacketHandlerAsync<PjoinPacket>
     {
         private readonly IPlayerManager _manager;
         private readonly IGroupManager _groupManager;
 
-        public PJoinPacketHandling(IPlayerManager manager, IGroupManager groupManager)
+
+        public PJoinPacketHandling(ILogger log, IPlayerManager manager, IGroupManager groupManager) : base(log)
         {
             _manager = manager;
             _groupManager = groupManager;
         }
 
-        protected override async Task Handle(PJoinPacket packet, IPlayerEntity player)
+        protected override async Task Handle(PjoinPacket packet, IPlayerEntity player)
         {
             switch (packet.RequestType)
             {
-                case PJoinPacketType.Requested:
-                case PJoinPacketType.Invited:
+                case GroupRequestType.Requested:
+                case GroupRequestType.Invited:
                     await player.EmitEventAsync(new GroupInvitationSendEvent
                     {
                         Target = _manager.GetPlayerByCharacterId(packet.CharacterId)
                     });
                     break;
-                case PJoinPacketType.Accepted:
+                case GroupRequestType.Accepted:
                     GroupInvitDto group = _groupManager.GetPendingInvitationsByCharacterId(player.Id)?.FirstOrDefault(s => s.Target == player);
 
                     if (group == null)
@@ -45,7 +47,7 @@ namespace NW.Plugins.PacketHandling.Groups
                         Invitation = group
                     });
                     break;
-                case PJoinPacketType.Declined:
+                case GroupRequestType.Declined:
                     GroupInvitDto invitation = _groupManager.GetPendingInvitationsByCharacterId(player.Id)?.FirstOrDefault(s => s.Target == player);
 
                     if (invitation == null)
@@ -58,11 +60,11 @@ namespace NW.Plugins.PacketHandling.Groups
                         Invitation = invitation
                     });
                     break;
-                case PJoinPacketType.Sharing:
+                case GroupRequestType.Sharing:
                     break;
-                case PJoinPacketType.AcceptedShare:
+                case GroupRequestType.AcceptedShare:
                     break;
-                case PJoinPacketType.DeclinedShare:
+                case GroupRequestType.DeclinedShare:
                     break;
             }
         }
