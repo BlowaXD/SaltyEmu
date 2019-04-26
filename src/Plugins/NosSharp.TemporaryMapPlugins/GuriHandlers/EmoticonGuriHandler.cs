@@ -9,7 +9,7 @@ namespace SaltyEmu.BasicPlugin.GuriHandlers
 {
     public class EmoticonGuriHandler
     {
-        private static readonly Logger Log = Logger.GetLogger<EmoticonGuriHandler>();
+        // private static readonly Logger Log = Logger.GetLogger<EmoticonGuriHandler>();
 
         /// <summary>
         /// This method will teleport the requester to Act 6
@@ -28,7 +28,7 @@ namespace SaltyEmu.BasicPlugin.GuriHandlers
             // todo receiver type
             player.BroadcastAsync(player.EmojiToEffectPacket((EmojiType)e.Data)).ConfigureAwait(false).GetAwaiter().GetResult();
 
-            Log.Info($"[GURI][EMOTICON] {player.Character.Name} used emoji : ");
+            // Log.Info($"[GURI][EMOTICON] {player.Character.Name} used emoji : ");
         }
     }
 }

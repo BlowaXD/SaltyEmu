@@ -3,6 +3,7 @@ using System.Data.SqlClient;
 using ChickenAPI.Core.Configurations;
 using ChickenAPI.Core.Plugins;
 using ChickenAPI.Core.Plugins.Exceptions;
+using ChickenAPI.Game.Impl;
 using Microsoft.EntityFrameworkCore;
 using SaltyEmu.DatabasePlugin.Configuration;
 using SaltyEmu.DatabasePlugin.Context;
@@ -11,12 +12,6 @@ using ILogger = ChickenAPI.Core.Logging.ILogger;
 
 namespace SaltyEmu.DatabasePlugin
 {
-    internal class JsonConfigurationSerializer : IConfigurationSerializer
-    {
-        public string Serialize<T>(T conf) where T : IConfiguration => JsonConvert.SerializeObject(conf);
-
-        public T Deserialize<T>(string buffer) where T : IConfiguration => throw new NotImplementedException();
-    }
     public class DatabasePlugin : IPlugin
     {
         private readonly ILogger Log;

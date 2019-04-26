@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using ChickenAPI.Core.Events;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Data.Skills;
 using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Enums.Game.Skill;
@@ -13,6 +14,7 @@ using ChickenAPI.Game.Battle.Interfaces;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Movements.Extensions;
 using ChickenAPI.Game.Skills.Args;
+using ChickenAPI.Packets.Enumerations;
 
 namespace SaltyEmu.BasicPlugin.EventHandlers.Skills
 {
@@ -20,10 +22,8 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Skills
     {
         private readonly IHitRequestFactory _hitRequestFactory;
 
-        public Skill_UseSkill_Handler(IHitRequestFactory hitRequestFactory)
-        {
-            _hitRequestFactory = hitRequestFactory;
-        }
+
+        public Skill_UseSkill_Handler(ILogger log, IHitRequestFactory hitRequestFactory) : base(log) => _hitRequestFactory = hitRequestFactory;
 
         protected override async Task Handle(UseSkillEvent e, CancellationToken cancellation)
         {

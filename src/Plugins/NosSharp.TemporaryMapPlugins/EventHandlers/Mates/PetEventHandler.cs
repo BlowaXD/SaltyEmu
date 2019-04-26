@@ -22,10 +22,10 @@ namespace SaltyEmu.BasicPlugin.EventHandlers
         private readonly IGameEntityFactory _entityFactory;
         private readonly INpcMonsterService _npcMonsterService;
 
-        public PetEventHandler(INpcMonsterService npcMonsterService, IGameEntityFactory entityFactory)
+        public PetEventHandler(ILogger log, IGameEntityFactory entityFactory, INpcMonsterService npcMonsterService) : base(log)
         {
-            _npcMonsterService = npcMonsterService;
             _entityFactory = entityFactory;
+            _npcMonsterService = npcMonsterService;
         }
 
         public static void AddPet(IPlayerEntity player, AddPetEvent e)

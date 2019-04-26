@@ -22,6 +22,7 @@ using ChickenAPI.Game.Movements.Extensions;
 using ChickenAPI.Game.Skills.Extensions;
 using ChickenAPI.Game.Specialists.Args;
 using ChickenAPI.Game.Specialists.Extensions;
+using ChickenAPI.Packets.ClientPackets.Specialists;
 using ChickenAPI.Packets.Enumerations;
 using EquipmentType = ChickenAPI.Enums.Game.Items.EquipmentType;
 
@@ -78,7 +79,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Specialists
 
             if (e.Wait)
             {
-                await player.SendDelayAsync(5000, DelayPacketType.Locomotion, $"#sl^0");
+                await player.SendDelayAsync(5000, DelayPacketType.Locomotion, new SpTransformPacket());
                 return;
             }
 

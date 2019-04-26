@@ -1,16 +1,14 @@
 ﻿using ChickenAPI.Core.Logging;
-using ChickenAPI.Enums.Game.Families;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Entities.Player.Extensions;
 using ChickenAPI.Game.NpcDialog.Events;
 using ChickenAPI.Game.NpcDialog.Handling;
+using ChickenAPI.Packets.Enumerations;
 
 namespace SaltyEmu.BasicPlugin.NpcDialogHandlers
 {
     public class FamilyHandler
     {
-        private static readonly Logger Log = Logger.GetLogger<FamilyHandler>();
-
         [NpcDialogHandler(23)]
         public static void CreateFamily(IPlayerEntity player, NpcDialogEvent args)
         {
@@ -52,6 +50,7 @@ namespace SaltyEmu.BasicPlugin.NpcDialogHandlers
             {
                 return;
             }
+
             if (player.FamilyCharacter.Authority != FamilyAuthority.Head)
             {
                 /* await session.SendPacketAsync(Session.Character.GenerateSay(Language.Instance.GetMessageFromKey("ONLY_HEAD_CAN_BUY"), 10));
@@ -65,6 +64,7 @@ namespace SaltyEmu.BasicPlugin.NpcDialogHandlers
                 //await session.SendPacketAsync(Session.Character.GenerateSay(Language.Instance.GetMessageFromKey("NOT_ENOUGH_MONEY"), 10));
                 return;
             }
+
             player.GoldLess(10000000);
             player.Family.MaxSize = 100;
             /*FamilyDTO fam = Session.Character.Family;

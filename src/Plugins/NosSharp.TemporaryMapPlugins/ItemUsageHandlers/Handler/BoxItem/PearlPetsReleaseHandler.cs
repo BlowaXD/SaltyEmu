@@ -7,6 +7,7 @@ using ChickenAPI.Game.Helpers;
 using ChickenAPI.Game.Inventory.Events;
 using ChickenAPI.Game.Inventory.ItemUsage;
 using ChickenAPI.Game.Mates.Events;
+using ChickenAPI.Packets.ClientPackets.Player;
 
 namespace SaltyEmu.BasicPlugin.ItemUsageHandlers.Handler.BoxItem
 {

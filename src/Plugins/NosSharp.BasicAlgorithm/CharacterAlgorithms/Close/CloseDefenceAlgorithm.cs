@@ -10,7 +10,7 @@ namespace SaltyEmu.BasicAlgorithmPlugin.CharacterAlgorithms.Close
 
         public void Initialize()
         {
-            _stats = new int[(int)CharacterClassType.Unknown, MAX_LEVEL];
+            _stats = new int[(int)CharacterClassType.MartialArtist + 1, MAX_LEVEL];
 
 
             for (int i = 0; i < MAX_LEVEL; i++)

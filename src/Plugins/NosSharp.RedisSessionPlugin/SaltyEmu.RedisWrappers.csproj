@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\ChickenAPI.Game.Impl\ChickenAPI.Game.Impl.csproj" />
     <ProjectReference Include="..\..\ChickenAPI.Game\ChickenAPI.Game.csproj" />
     <ProjectReference Include="..\..\libs\SaltyEmu.Redis\SaltyEmu.Redis.csproj" />
   </ItemGroup>

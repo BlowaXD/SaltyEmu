@@ -10,6 +10,8 @@ using ChickenAPI.Game.Entities.Player.Extensions;
 using ChickenAPI.Game.Inventory;
 using ChickenAPI.Game.Inventory.Events;
 using ChickenAPI.Game.Inventory.Extensions;
+using ChickenAPI.Packets.Enumerations;
+using EquipmentType = ChickenAPI.Enums.Game.Items.EquipmentType;
 
 namespace SaltyEmu.BasicPlugin.EventHandlers.Inventory
 {

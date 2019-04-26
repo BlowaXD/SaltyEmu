@@ -36,7 +36,6 @@ using ChickenAPI.Game._Network;
 using ChickenAPI.Packets.Enumerations;
 using ChickenAPI.Packets.Interfaces;
 using EquipmentType = ChickenAPI.Enums.Game.Items.EquipmentType;
-using FamilyAuthority = ChickenAPI.Enums.Game.Families.FamilyAuthority;
 
 namespace ChickenAPI.Game.Entities.Player
 {

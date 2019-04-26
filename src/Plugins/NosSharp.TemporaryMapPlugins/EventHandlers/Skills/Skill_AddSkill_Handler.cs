@@ -8,6 +8,7 @@ using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Entities.Player.Extensions;
 using ChickenAPI.Game.Skills;
 using ChickenAPI.Game.Skills.Args;
+using ChickenAPI.Packets.Enumerations;
 
 namespace SaltyEmu.BasicPlugin.EventHandlers.Skills
 {
@@ -20,11 +21,11 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Skills
                 return;
             }
             
-            SkillComponent component = player.SkillComponent;
             if (e.Skill is null)
             {
                 return; //the skill doesn't exist?
             }
+
 
             if (e.ForceChecks)
             {
@@ -75,10 +76,6 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Skills
                     case CharacterClassType.MartialArtist:
                         classLevel = e.Skill.MinimumWrestlerLevel;
                         break;
-
-                    case CharacterClassType.Unknown:
-                        classLevel = e.Skill.LevelMinimum;
-                        break;
                 }
 
                 if (classLevel > player.Level)
@@ -89,38 +86,38 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Skills
 
             if (e.Skill.Id < 200)
             {
-                foreach (SkillDto skill in component.Skills.Values)
+                foreach (SkillDto skill in player.Skills.Values)
                 {
                     if (e.Skill.CastId == skill.CastId && skill.Id < 200)
                     {
-                        component.Skills.Remove(skill.Id);
+                        player.Skills.Remove(skill.Id);
                     }
                 }
             }
             else
             {
-                if (component.Skills.ContainsKey(e.Skill.Id))
+                if (player.Skills.ContainsKey(e.Skill.Id))
                 {
                     return; //we already have that skill!
                 }
 
                 if (e.Skill.UpgradeSkill != 0) //means it's not a skill but an upgrade
                 {
-                    SkillDto oldUpgrade = component.Skills.Values.FirstOrDefault(
+                    SkillDto oldUpgrade = player.Skills.Values.FirstOrDefault(
                         s => s.UpgradeSkill == e.Skill.UpgradeSkill &&
                             s.UpgradeType == e.Skill.UpgradeType &&
                             s.UpgradeSkill != 0);
 
                     if (!(oldUpgrade is null))
                     {
-                        component.Skills.Remove(oldUpgrade.Id);
+                        player.Skills.Remove(oldUpgrade.Id);
                     }
                 }
             }
 
-            if (!component.Skills.ContainsKey(e.Skill.Id))
+            if (!player.Skills.ContainsKey(e.Skill.Id))
             {
-                component.Skills.Add(e.Skill.Id, e.Skill);
+                player.Skills.Add(e.Skill.Id, e.Skill);
             }
 
             //todo: send different packets to add the skill.

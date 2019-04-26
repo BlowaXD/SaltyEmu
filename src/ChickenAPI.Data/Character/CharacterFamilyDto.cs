@@ -1,5 +1,6 @@
 ﻿using System;
 using ChickenAPI.Enums.Game.Families;
+using FamilyAuthority = ChickenAPI.Packets.Enumerations.FamilyAuthority;
 
 namespace ChickenAPI.Data.Character
 {

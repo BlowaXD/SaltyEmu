@@ -6,6 +6,7 @@ using Autofac;
 using ChickenAPI.Core.Events;
 using ChickenAPI.Core.i18n;
 using ChickenAPI.Core.IoC;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Core.Maths;
 using ChickenAPI.Data.Character;
 using ChickenAPI.Data.Item;
@@ -31,10 +32,8 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Shops
     {
         private readonly IRandomGenerator _randomGenerator;
 
-        public Shop_Buy_Event(IRandomGenerator randomGenerator)
-        {
-            _randomGenerator = randomGenerator;
-        }
+
+        public Shop_Buy_Event(ILogger log, IRandomGenerator randomGenerator) : base(log) => _randomGenerator = randomGenerator;
 
         protected override async Task Handle(ShopBuyEvent e, CancellationToken cancellation)
         {
@@ -97,13 +96,13 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Shops
             }
 
             // check skill cooldown
-            if (player.SkillComponent.CooldownsBySkillId.Any(s => s.Item2 == shopBuy.Slot))
+            if (player.CooldownsBySkillId.Any(s => s.Item2 == shopBuy.Slot))
             {
                 return;
             }
 
             // check skill already exists in player skills
-            if (player.SkillComponent.Skills.ContainsKey(shopBuy.Slot))
+            if (player.Skills.ContainsKey(shopBuy.Slot))
             {
                 return;
             }
@@ -149,9 +148,6 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Shops
                 case CharacterClassType.MartialArtist:
                     minimumLevel = skillShop.Skill.MinimumWrestlerLevel;
                     break;
-
-                case CharacterClassType.Unknown:
-                    break;
             }
 
             if (skillShop.Skill.MinimumSwordmanLevel == 0 && skillShop.Skill.MinimumArcherLevel == 0 && skillShop.Skill.MinimumMagicianLevel == 0)
@@ -179,11 +175,11 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Shops
 
             if (skillShop.SkillId < 200)
             {
-                foreach (CharacterSkillDto skill in player.SkillComponent.CharacterSkills.Select(s => s.Value))
+                foreach (CharacterSkillDto skill in player.CharacterSkills.Select(s => s.Value))
                 {
                     if (skillShop.Skill.CastId == skill.Skill.CastId && skill.Skill.Id < 200)
                     {
-                        player.SkillComponent.CharacterSkills.Remove(skill.Id);
+                        player.CharacterSkills.Remove(skill.Id);
                     }
                 }
             }
@@ -192,11 +188,11 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Shops
             // remove old upgrade
             if (skillShop.SkillId >= 200 && skillShop.Skill.UpgradeSkill != 0)
             {
-                CharacterSkillDto oldupgrade = player.SkillComponent.CharacterSkills.FirstOrDefault(s =>
+                CharacterSkillDto oldupgrade = player.CharacterSkills.FirstOrDefault(s =>
                     s.Value.Skill.UpgradeSkill == skillShop.Skill.UpgradeSkill && s.Value.Skill.UpgradeType == skillShop.Skill.UpgradeType && s.Value.Skill.UpgradeSkill != 0).Value;
                 if (oldupgrade != null)
                 {
-                    player.SkillComponent.CharacterSkills.Remove(oldupgrade.Id);
+                    player.CharacterSkills.Remove(oldupgrade.Id);
                 }
             }
 
@@ -255,7 +251,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Shops
 
             if (!isReputBuy && price < 0 && price * percent > player.Character.Gold)
             {
-                await player.SendPacketAsync(player.GenerateShopMemoPacket(SMemoPacketType.FailNpc, player.GetLanguage(PlayerMessages.YOU_DONT_HAVE_ENOUGH_GOLD)));
+                await player.SendPacketAsync(player.GenerateShopMemoPacket(SMemoType.Error, player.GetLanguage(PlayerMessages.YOU_DONT_HAVE_ENOUGH_GOLD)));
                 return;
             }
 
@@ -263,7 +259,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Shops
             {
                 if (price > player.Character.Reput)
                 {
-                    await player.SendPacketAsync(player.GenerateShopMemoPacket(SMemoPacketType.FailNpc, player.GetLanguage(PlayerMessages.YOU_DONT_HAVE_ENOUGH_REPUTATION)));
+                    await player.SendPacketAsync(player.GenerateShopMemoPacket(SMemoType.Error, player.GetLanguage(PlayerMessages.YOU_DONT_HAVE_ENOUGH_REPUTATION)));
                     return;
                 }
 
@@ -288,7 +284,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Shops
             bool canAddItem = player.Inventory.CanAddItem(item.Item, amount);
             if (!canAddItem)
             {
-                await player.SendPacketAsync(player.GenerateShopMemoPacket(SMemoPacketType.FailNpc, player.GetLanguage(PlayerMessages.YOU_DONT_HAVE_ENOUGH_SPACE_IN_INVENTORY)));
+                await player.SendPacketAsync(player.GenerateShopMemoPacket(SMemoType.Error, player.GetLanguage(PlayerMessages.YOU_DONT_HAVE_ENOUGH_SPACE_IN_INVENTORY)));
                 return;
             }
 

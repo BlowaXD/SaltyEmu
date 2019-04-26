@@ -6,12 +6,13 @@ using ChickenAPI.Game.GuriHandling.Events;
 using ChickenAPI.Game.GuriHandling.Handling;
 using ChickenAPI.Game.Inventory.Events;
 using ChickenAPI.Game.Inventory.Extensions;
+using ChickenAPI.Packets.Enumerations;
 
 namespace SaltyEmu.BasicPlugin.GuriHandlers
 {
     public class ReleasePetsHandler
     {
-        private static readonly Logger Log = Logger.GetLogger<EmoticonGuriHandler>();
+        // private static readonly Logger Log = Logger.GetLogger<EmoticonGuriHandler>();
 
         /// <summary>
         /// This method will teleport the requester to Act 6
@@ -40,7 +41,7 @@ namespace SaltyEmu.BasicPlugin.GuriHandlers
                 Option = 50
             });
 
-            Log.Info($"[GURI][RELEASE_PETS] {player.Character.Name} used Pearl : ");
+            // Log.Info($"[GURI][RELEASE_PETS] {player.Character.Name} used Pearl : ");
         }
     }
 }

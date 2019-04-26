@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using Autofac;
 using ChickenAPI.Core.Configurations;
 using ChickenAPI.Core.Events;
@@ -9,29 +8,24 @@ using ChickenAPI.Core.Maths;
 using ChickenAPI.Core.Utils;
 using ChickenAPI.Data.BCard;
 using ChickenAPI.Data.Item;
-using ChickenAPI.Game;
 using ChickenAPI.Game.Battle.Hitting;
 using ChickenAPI.Game.Battle.Interfaces;
 using ChickenAPI.Game.BCards;
 using ChickenAPI.Game.Configuration;
 using ChickenAPI.Game.Entities;
-using ChickenAPI.Game.Groups;
 using ChickenAPI.Game.GuriHandling.Handling;
-using ChickenAPI.Game.Inventory.ItemUpgrade;
 using ChickenAPI.Game.Inventory.ItemUpgrade.Handlers.Handling;
 using ChickenAPI.Game.Inventory.ItemUsage;
 using ChickenAPI.Game.Managers;
 using ChickenAPI.Game.NpcDialog;
 using ChickenAPI.Game._ECS;
 using ChickenAPI.Game._Network;
-using Newtonsoft.Json;
+using ChickenAPI.Game.Impl;
 using SaltyEmu.BasicPlugin.BCardHandlers;
-using SaltyEmu.BasicPlugin.EventHandlers.Battle;
 using SaltyEmu.BasicPlugin.EventHandlers.Guri;
 using SaltyEmu.BasicPlugin.Implems;
 using SaltyEmu.BasicPlugin.ItemUpgradeHandlers;
 using SaltyEmu.BasicPlugin.ItemUsageHandlers;
-using SaltyEmu.BasicPlugin.NpcDialogHandlers;
 using SaltyEmu.Commands;
 using SaltyEmu.Commands.Interfaces;
 
@@ -138,14 +132,14 @@ namespace SaltyEmu.BasicPlugin
             ChickenContainer.Builder.RegisterType<LazyMapManager>().AsImplementedInterfaces().PropertiesAutowired().SingleInstance();
 
             // bcard
-            ChickenContainer.Builder.Register(_ => new BasicBCardHandlerContainer()).As<IBCardHandlerContainer>().SingleInstance();
+            ChickenContainer.Builder.Register(_ => new BasicBCardHandlerContainer(_.Resolve<ILogger>())).As<IBCardHandlerContainer>().SingleInstance();
 
             ChickenContainer.Builder.Register(c => new SimpleItemInstanceDtoFactory(c.Resolve<IItemService>())).As<IItemInstanceDtoFactory>().InstancePerDependency();
             ChickenContainer.Builder.Register(_ => new RandomGenerator()).As<IRandomGenerator>().InstancePerDependency();
 
-            ChickenContainer.Builder.Register(_ => new BaseGuriHandler()).As<IGuriHandler>().SingleInstance();
+            ChickenContainer.Builder.Register(_ => new BaseGuriHandler(_.Resolve<ILogger>())).As<IGuriHandler>().SingleInstance();
             // item usage
-            ChickenContainer.Builder.Register(_ => new UseItemHandlerContainer()).As<IItemUsageContainerAsync>().SingleInstance();
+            ChickenContainer.Builder.Register(s => new UseItemHandlerContainer(s.Resolve<ILogger>())).As<IItemUsageContainerAsync>().SingleInstance();
             // npc dialog
             ChickenContainer.Builder.Register(_ => new NpcDialogHandlerContainer()).As<INpcDialogHandlerContainer>().SingleInstance();
             // entityManagerContainer
@@ -153,7 +147,7 @@ namespace SaltyEmu.BasicPlugin
             // player manager
             ChickenContainer.Builder.Register(_ => new SimplePlayerManager()).As<IPlayerManager>().SingleInstance();
             ChickenContainer.Builder.Register(context => new CommandHandler(context.Resolve<ILogger>())).As<ICommandContainer>().SingleInstance();
-            ChickenContainer.Builder.Register(_ => new BasicUpgradeHandler()).As<IItemUpgradeHandler>().SingleInstance();
+            ChickenContainer.Builder.Register(s => new BasicUpgradeHandler(s.Resolve<ILogger>())).As<IItemUpgradeHandler>().SingleInstance();
         }
     }
 }

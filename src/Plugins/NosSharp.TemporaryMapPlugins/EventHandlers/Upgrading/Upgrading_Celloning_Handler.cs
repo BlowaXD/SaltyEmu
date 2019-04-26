@@ -1,6 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using ChickenAPI.Core.Events;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Data.Item;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Entities.Player.Extensions;
@@ -13,6 +14,10 @@ namespace SaltyEmu.BasicPlugin.EventHandlers
 {
     public class Upgrading_Celloning_Handler : GenericEventPostProcessorBase<CellonItemEvent>
     {
+        public Upgrading_Celloning_Handler(ILogger log) : base(log)
+        {
+        }
+
         protected override async Task Handle(CellonItemEvent e, CancellationToken cancellation)
         {
             if (!(e.Sender is IPlayerEntity player))

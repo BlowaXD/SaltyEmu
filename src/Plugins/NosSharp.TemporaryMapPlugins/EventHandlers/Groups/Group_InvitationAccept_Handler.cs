@@ -7,6 +7,7 @@ using ChickenAPI.Game.Groups;
 using ChickenAPI.Game.Groups.Events;
 using ChickenAPI.Game.Helpers;
 using ChickenAPI.Game._i18n;
+using ChickenAPI.Packets.Enumerations;
 
 namespace SaltyEmu.BasicPlugin.EventHandlers
 {

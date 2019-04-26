@@ -13,12 +13,12 @@ namespace SaltyEmu.BasicPlugin.BCardHandlers
 {
     public class BasicBCardHandlerContainer : IBCardHandlerContainer
     {
-        private static readonly Logger Log = Logger.GetLogger<BasicBCardHandlerContainer>();
-
+        private readonly ILogger _log;
         protected readonly Dictionary<BCardType, IBCardEffectHandler> Useitem = new Dictionary<BCardType, IBCardEffectHandler>();
 
-        public BasicBCardHandlerContainer()
+        public BasicBCardHandlerContainer(ILogger log)
         {
+            _log = log;
             Assembly currentAsm = Assembly.GetAssembly(typeof(BasicPlugin));
             // get types
             foreach (Type type in currentAsm.GetTypes().Where(s => s.GetMethods().Any(m => m.GetCustomAttribute<BCardEffectHandlerAttribute>() != null)))
@@ -39,23 +39,24 @@ namespace SaltyEmu.BasicPlugin.BCardHandlers
             }
 
             Useitem.Add(handler.HandledType, handler);
-            Log.Info($"[REGISTER_HANDLER] BCARD_TYPE : {handler.HandledType} REGISTERED !");
+            _log.Info($"[REGISTER_HANDLER] BCARD_TYPE : {handler.HandledType} REGISTERED !");
         }
 
-        public Task Handle(IBattleEntity target, IBattleEntity sender, BCardDto bcard)
+        public async Task Handle(IBattleEntity target, IBattleEntity sender, BCardDto bcard)
         {
             if (target == null)
             {
-                return Task.CompletedTask;
+                return;
             }
-            Log.Info($"Trying to cast Bcard id : {bcard.Id} : {bcard.Type}");
+
+            _log.Info($"Trying to cast Bcard id : {bcard.Id} : {bcard.Type}");
 
             if (!Useitem.TryGetValue(bcard.Type, out IBCardEffectHandler handler))
             {
-                return Task.CompletedTask;
+                return;
             }
 
-            return handler.Handle(target, sender, bcard);
+            await handler.Handle(target, sender, bcard);
         }
     }
 }

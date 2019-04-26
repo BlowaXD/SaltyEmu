@@ -11,11 +11,12 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Guri
 {
     public class BaseGuriHandler : IGuriHandler
     {
-        private static readonly Logger Log = Logger.GetLogger<BaseGuriHandler>();
+        private readonly ILogger _log;
         protected readonly Dictionary<long, GuriRequestHandler> HandlersByDialogId;
 
-        public BaseGuriHandler()
+        public BaseGuriHandler(ILogger log)
         {
+            _log = log;
             HandlersByDialogId = new Dictionary<long, GuriRequestHandler>();
             Assembly currentAsm = Assembly.GetAssembly(typeof(BasicPlugin));
             // get types
@@ -36,7 +37,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Guri
                 return;
             }
 
-            Log.Info($"[REGISTER_HANDLER] GURI_EFFECT : {handler.GuriEffectId} REGISTERED !");
+            _log.Info($"[REGISTER_HANDLER] GURI_EFFECT : {handler.GuriEffectId} REGISTERED !");
             HandlersByDialogId.Add(handler.GuriEffectId, handler);
         }
 

@@ -4,12 +4,13 @@ using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Entities.Player.Extensions;
 using ChickenAPI.Game.NpcDialog.Events;
 using ChickenAPI.Game.NpcDialog.Handling;
+using ChickenAPI.Packets.Enumerations;
 
 namespace SaltyEmu.BasicPlugin.NpcDialogHandlers
 {
     public class DialogHandler
     {
-        private static readonly Logger Log = Logger.GetLogger<DialogHandler>();
+        // private static readonly Logger Log = Logger.GetLogger<DialogHandler>();
 
         [NpcDialogHandler(1)]
         public static void ChangeJobMiMi(IPlayerEntity player, NpcDialogEvent args)
@@ -36,7 +37,7 @@ namespace SaltyEmu.BasicPlugin.NpcDialogHandlers
                 return;
             }
 
-            player.ChangeClass((CharacterClassType)args.Type);
+            player.ChangeClass((CharacterClassType)args.Type).ConfigureAwait(false).GetAwaiter().GetResult();
             // TODO : LATER
             /* if (Session.Character.Inventory.All(i => i.Type == PocketType.Wear))
              {

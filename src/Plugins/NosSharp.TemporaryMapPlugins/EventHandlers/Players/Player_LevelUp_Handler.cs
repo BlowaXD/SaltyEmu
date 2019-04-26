@@ -9,6 +9,7 @@ using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Entities.Player.Events;
 using ChickenAPI.Game.Entities.Player.Extensions;
 using ChickenAPI.Game.Skills.Extensions;
+using ChickenAPI.Packets.Enumerations;
 
 namespace SaltyEmu.BasicPlugin.EventHandlers
 {

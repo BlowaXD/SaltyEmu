@@ -5,7 +5,6 @@ namespace SaltyEmu.BasicPlugin
 {
     public class BasicPlugin : IPlugin
     {
-        private static readonly Logger Log = Logger.GetLogger<BasicPlugin>();
         public PluginEnableTime EnableTime => PluginEnableTime.PostContainerBuild;
         public string Name => nameof(BasicPlugin);
 
@@ -23,9 +22,9 @@ namespace SaltyEmu.BasicPlugin
 
         public void OnLoad()
         {
-            Log.Info("Loading...");
+            // Log.Info("Loading...");
             BasicPluginIoCInjector.InjectDependencies();
-            Log.Info("Loaded !");
+            // Log.Info("Loaded !");
         }
 
         public void ReloadConfig()

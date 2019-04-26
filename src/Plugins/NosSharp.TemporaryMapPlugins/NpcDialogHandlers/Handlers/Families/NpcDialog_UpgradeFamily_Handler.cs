@@ -23,7 +23,7 @@ namespace SaltyEmu.BasicPlugin.NpcDialogHandlers.Handlers.Families
                 return;
             }
 
-            if (player.FamilyCharacter.Authority != ChickenAPI.Enums.Game.Families.FamilyAuthority.Head)
+            if (player.FamilyCharacter.Authority != FamilyAuthority.Head)
             {
                 await player.SendChatMessageAsync(PlayerMessages.FAMILY_YOU_NEED_TO_BE_LEADER, SayColorType.Yellow);
                 await player.SendModalAsync(PlayerMessages.FAMILY_YOU_NEED_TO_BE_LEADER, ModalPacketType.Default);

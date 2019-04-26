@@ -13,7 +13,7 @@ namespace SaltyEmu.BasicPlugin.ItemUpgradeHandlers
 {
     public class RarifyItemHandler
     {
-        private static readonly Logger Log = Logger.GetLogger<RarifyItemHandler>();
+        // private static readonly Logger Log = Logger.GetLogger<RarifyItemHandler>();
 
         [ItemUpgradeHandler(UpgradePacketType.RarifyItem)]
         public static void RarifyNpc(IPlayerEntity player, ItemUpgradeEvent e)
