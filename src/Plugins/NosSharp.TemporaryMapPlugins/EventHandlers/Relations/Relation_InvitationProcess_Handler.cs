@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Autofac;
 using ChickenAPI.Core.Events;
 using ChickenAPI.Core.IoC;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Data.Relations;
 using ChickenAPI.Game.Relations.Events;
 
@@ -15,10 +16,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Relations
     {
         private readonly IRelationService _relationService;
 
-        public Relation_InvitationProcess_Handler(IRelationService relationService)
-        {
-            _relationService = relationService;
-        }
+        public Relation_InvitationProcess_Handler(ILogger log, IRelationService relationService) : base(log) => _relationService = relationService;
 
         protected override async Task Handle(RelationInvitationProcessEvent e, CancellationToken cancellation)
         {

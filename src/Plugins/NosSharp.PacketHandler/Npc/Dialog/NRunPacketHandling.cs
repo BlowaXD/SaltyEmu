@@ -13,13 +13,15 @@ namespace NW.Plugins.PacketHandling.Npc.Dialog
         {
         }
 
-        protected override Task Handle(NrunPacket packet, IPlayerEntity player) =>
-            player.EmitEventAsync(new NpcDialogEvent
+        protected override async Task Handle(NrunPacket packet, IPlayerEntity player)
+        {
+            await player.EmitEventAsync(new NpcDialogEvent
             {
                 DialogId = (long)packet.Runner,
-                Type = packet.Type,
+                Type = packet.Type.GetValueOrDefault(),
                 Value = (int)packet.VisualType,
-                NpcId = packet.VisualId
+                NpcId = packet.VisualId.GetValueOrDefault()
             });
+        }
     }
 }

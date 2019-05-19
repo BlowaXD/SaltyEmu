@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using ChickenAPI.Core.Events;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Core.Maths;
 using ChickenAPI.Core.Utils;
 using ChickenAPI.Data.Item;
@@ -21,11 +22,12 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Inventory
         private readonly IItemInstanceDtoFactory _itemFactory;
         private readonly IRandomGenerator _random;
 
-        public Inventory_RemoveItem_Event(IPathfinder pathfindingService, IItemInstanceDtoFactory itemFactory, IRandomGenerator randomGenerator)
+
+        public Inventory_RemoveItem_Event(ILogger log, IPathfinder pathFinder, IItemInstanceDtoFactory itemFactory, IRandomGenerator random) : base(log)
         {
-            _pathFinder = pathfindingService;
+            _pathFinder = pathFinder;
             _itemFactory = itemFactory;
-            _random = randomGenerator;
+            _random = random;
         }
 
         protected override async Task Handle(InventoryRemoveItemEvent e, CancellationToken cancellation)

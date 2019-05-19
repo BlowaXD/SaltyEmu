@@ -12,7 +12,8 @@ namespace SaltyEmu.RelationService.Handling
     {
         private readonly IRelationInvitationDao _invitations;
 
-        public SendInvitationHandler(IRelationInvitationDao invitation) => _invitations = invitation;
+
+        public SendInvitationHandler(ILogger log, IRelationInvitationDao invitations) : base(log) => _invitations = invitations;
 
         protected override async Task Handle(SendInvitation request)
         {

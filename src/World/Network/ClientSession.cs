@@ -18,7 +18,8 @@ using DotNetty.Transport.Channels.Groups;
 using SaltyEmu.Commands.Interfaces;
 using ChickenAPI.Game._Network;
 using ChickenAPI.Packets.Attributes;
-using ChickenAPI.Packets.Old;
+using ChickenAPI.Packets.Interfaces;
+using SaltyEmu.Core.Logging;
 
 namespace World.Network
 {
@@ -32,7 +33,8 @@ namespace World.Network
         private static readonly ICommandContainer Commands = new Lazy<ICommandContainer>(ChickenContainer.Instance.Resolve<ICommandContainer>).Value;
 
         private static readonly IPacketPipelineAsync PacketPipeline = new Lazy<IPacketPipelineAsync>(ChickenContainer.Instance.Resolve<IPacketPipelineAsync>).Value;
-        private static readonly IPacketFactory PacketFactory = new Lazy<IPacketFactory>(ChickenContainer.Instance.Resolve<IPacketFactory>).Value;
+        private static readonly IDeserializer packetDeserializer = new Lazy<IDeserializer>(ChickenContainer.Instance.Resolve<IDeserializer>).Value;
+        private static readonly ISerializer packetSerializer = new Lazy<ISerializer>(ChickenContainer.Instance.Resolve<ISerializer>).Value;
 
         private static readonly Logger Log = Logger.GetLogger<ClientSession>();
         private static Guid _worldServerId;
@@ -124,7 +126,7 @@ namespace World.Network
                 return;
             }
 
-            string tmp = PacketFactory.Serialize(packet);
+            string tmp = packetSerializer.Serialize(packet);
 
 #if DEBUG
             if (BlacklistedDebug.All(s => !tmp.StartsWith(s)))
@@ -153,7 +155,7 @@ namespace World.Network
                         continue;
                     }
 
-                    string tmp = PacketFactory.Serialize(packet);
+                    string tmp = packetSerializer.Serialize(packet);
 #if DEBUG
                     if (BlacklistedDebug.All(s => !tmp.StartsWith(s)))
                     {
@@ -184,7 +186,7 @@ namespace World.Network
                         continue;
                     }
 
-                    string tmp = PacketFactory.Serialize(packet);
+                    string tmp = packetSerializer.Serialize(packet);
 #if DEBUG
                     if (BlacklistedDebug.All(s => !tmp.StartsWith(s)))
                     {
@@ -211,7 +213,7 @@ namespace World.Network
                 return Task.CompletedTask;
             }
 
-            string tmp = PacketFactory.Serialize(packet);
+            string tmp = packetSerializer.Serialize(packet);
 
 #if DEBUG
             if (BlacklistedDebug.All(s => !tmp.StartsWith(s)))
@@ -219,8 +221,8 @@ namespace World.Network
                 Log.Debug($"[{Ip}][SOCKET_WRITE] {tmp}");
             }
 #endif
-            
-            var task = _channel.WriteAsync(tmp);
+
+            Task task = _channel.WriteAsync(tmp);
             _channel.Flush();
             return Task.CompletedTask;
         }
@@ -241,7 +243,7 @@ namespace World.Network
                         continue;
                     }
 
-                    string tmp = PacketFactory.Serialize(packet);
+                    string tmp = packetSerializer.Serialize(packet);
 #if DEBUG
                     if (BlacklistedDebug.All(s => !tmp.StartsWith(s)))
                     {
@@ -259,6 +261,7 @@ namespace World.Network
                 Log.Error("[SendPackets<ChildType>]", e);
                 Disconnect();
             }
+
             return Task.CompletedTask;
         }
 
@@ -273,7 +276,7 @@ namespace World.Network
                         continue;
                     }
 
-                    string tmp = PacketFactory.Serialize(packet);
+                    string tmp = packetSerializer.Serialize(packet);
 #if DEBUG
                     if (BlacklistedDebug.All(s => !tmp.StartsWith(s)))
                     {
@@ -291,6 +294,7 @@ namespace World.Network
                 Log.Error("[SendPackets(IPacket)]", e);
                 Disconnect();
             }
+
             return Task.CompletedTask;
         }
 
@@ -328,7 +332,7 @@ namespace World.Network
 #endif
             context.CloseAsync();
         }
-        
+
         public override void ChannelRead(IChannelHandlerContext context, object message)
         {
             try
@@ -343,8 +347,6 @@ namespace World.Network
                     BufferToUnauthedPackets(buff, context);
                     return;
                 }
-
-                BufferToPackets(buff);
             }
             catch (Exception e)
             {
@@ -379,33 +381,8 @@ namespace World.Network
             SessionId = sessid;
             SocketSessionManager.Instance.RegisterSession(context.Channel.Id.AsLongText(), this);
             // CLIENT ARRIVED
-            if (!_waitForPacketsAmount.HasValue)
-            {
-                TriggerHandler("EntryPoint", string.Empty, false);
-            }
         }
 
-        private bool WaitForPackets(string packetstring, IReadOnlyList<string> packetsplit)
-        {
-            _waitForPacketList.Add(packetstring);
-            string[] packetssplit = packetstring.Split(' ');
-            if (packetssplit.Length > 3 && packetsplit[1] == "DAC")
-            {
-                _waitForPacketList.Add("0 CrossServerAuthenticate");
-            }
-
-            if (_waitForPacketList.Count != _waitForPacketsAmount)
-            {
-                return true;
-            }
-
-            _waitForPacketsAmount = null;
-            string queuedPackets = string.Join(" ", _waitForPacketList.ToArray());
-            string header = queuedPackets.Split(' ', '^')[1];
-            TriggerHandler(header, queuedPackets, true);
-            _waitForPacketList.Clear();
-            return false;
-        }
 
         private void KeepAliveCheck(int nextKeepAlive)
         {
@@ -423,140 +400,6 @@ namespace World.Network
         }
 
         private const string CommandPrefix = "$";
-
-        private void BufferToPackets(string packets)
-        {
-            foreach (string packet in packets.Split((char)PACKET_SPLIT_CHARACTER, StringSplitOptions.RemoveEmptyEntries))
-            {
-                string packetstring = packet.Replace('^', ' ');
-                string[] packetsplit = packetstring.Split(' ');
-
-                // keep alive
-                string nextKeepAliveRaw = packetsplit[0];
-                if (!int.TryParse(nextKeepAliveRaw, out int nextKeepAlive) && nextKeepAlive != (LastKeepAliveIdentity + 1))
-                {
-                    Disconnect();
-                    return;
-                }
-
-                KeepAliveCheck(nextKeepAlive);
-
-                if (_waitForPacketsAmount.HasValue)
-                {
-                    if (WaitForPackets(packetstring, packetsplit))
-                    {
-                        continue;
-                    }
-
-                    return;
-                }
-
-                if (packetsplit.Length <= 1)
-                {
-                    continue;
-                }
-
-                if (packetsplit[1].Length >= 1 && ChatDelimiter.Any(s => s == packetsplit[1][0]))
-                {
-                    packetsplit[1] = packetsplit[1][0].ToString();
-                    packetstring = packet.Insert(packet.IndexOf(' ') + 2, " ");
-
-                    //^ wtf is this
-
-                    if (packetsplit[1] == CommandPrefix) //it's a command
-                    {
-                        // temporary fix on the deadlock
-                        // todo fix where the deadlock appear
-                        _ = Task.Run(() => Commands.HandleMessageAsync(packetstring, Player));
-                    }
-                }
-
-                if (packetsplit[1] != "0")
-                {
-                    TriggerHandler(packetsplit[1].Replace("#", ""), packetstring, false);
-                }
-            }
-        }
-
-        private static readonly char[] ChatDelimiter = { '/', ':', ';', '$' };
-
-        private void GameHandler(string packetHeader, string packet)
-        {
-            Type type = PacketPipeline.PacketTypeByHeader(packetHeader);
-
-            if (type == null)
-            {
-                Log.Debug($"[{Ip}][GAME_HANDLER_NOT_FOUND] {packetHeader}");
-                return;
-            }
-
-#if DEBUG
-            Log.Debug($"[{Ip}][HANDLING] {packet}");
-#endif
-
-            IPacket deserializedPacketBase;
-            try
-            {
-                deserializedPacketBase = PacketFactory.Deserialize(packet, type, IsAuthenticated);
-                Task.Run(() => PacketPipeline.Handle(deserializedPacketBase, this)).ConfigureAwait(false).GetAwaiter().GetResult();
-            }
-            catch (Exception e)
-            {
-                Log.Warn($"[GAME_HANDLER] {e.Message}");
-                return;
-            }
-        }
-
-        private void CharacterHandler(string packet, Type packetType)
-        {
-            IPacket deserializedPacketBase;
-            try
-            {
-                deserializedPacketBase = PacketFactory.Deserialize(packet, packetType, IsAuthenticated);
-            }
-            catch (Exception e)
-            {
-                Log.Warn($"[CHARACTER_HANDLER] {e.Message}");
-                return;
-            }
-
-            Task.Run(() => PacketPipeline.Handle(deserializedPacketBase, this)).ConfigureAwait(false).GetAwaiter().GetResult();
-        }
-
-        private void TriggerHandler(string packetHeader, string packet, bool force)
-        {
-            if (Player != null)
-            {
-                GameHandler(packetHeader, packet);
-                return;
-            }
-
-            Type packetType = PacketPipeline.PacketTypeByHeader(packetHeader);
-            if (packetType == null)
-            {
-#if DEBUG
-                Log.Warn($"[{Ip}][HANDLER_NOT_FOUND] {packetHeader}");
-#endif
-                return;
-            }
-
-            if (force)
-            {
-                CharacterHandler(packet, packetType);
-                return;
-            }
-
-            // hardcoded for entrypoint since entwell sucks
-            var headerAttribute = packetType.GetCustomAttribute<PacketHeaderAttribute>();
-            if (headerAttribute != null && headerAttribute.Amount > 1 && !_waitForPacketsAmount.HasValue)
-            {
-                _waitForPacketsAmount = headerAttribute.Amount;
-                _waitForPacketList.Add(packet != string.Empty ? packet : $"1 {packetHeader} ");
-                return;
-            }
-
-            CharacterHandler(packet, packetType);
-        }
     }
 
     #endregion

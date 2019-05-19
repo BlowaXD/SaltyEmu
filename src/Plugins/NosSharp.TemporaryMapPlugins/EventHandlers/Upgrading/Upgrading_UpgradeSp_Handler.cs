@@ -1,6 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using ChickenAPI.Core.Events;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Core.Maths;
 using ChickenAPI.Data.Item;
 using ChickenAPI.Enums.Game.Items;
@@ -22,7 +23,8 @@ namespace SaltyEmu.BasicPlugin.EventHandlers
         private readonly IGameConfiguration _configuration;
         private readonly IRandomGenerator _random;
 
-        public Upgrading_UpgradeSp_Handler(IGameConfiguration configuration, IRandomGenerator random)
+
+        public Upgrading_UpgradeSp_Handler(ILogger log, IGameConfiguration configuration, IRandomGenerator random) : base(log)
         {
             _configuration = configuration;
             _random = random;

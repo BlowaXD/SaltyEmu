@@ -1,6 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using ChickenAPI.Core.Events;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Core.Maths;
 using ChickenAPI.Data.Item;
 using ChickenAPI.Enums.Game.Items;
@@ -23,7 +24,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Upgrading
         private readonly IGameConfiguration _configuration;
         private readonly IRandomGenerator _randomGenerator;
 
-        public Upgrading_UpgradeEquipment_Handler(IGameConfiguration configuration, IRandomGenerator randomGenerator)
+        public Upgrading_UpgradeEquipment_Handler(IGameConfiguration configuration, IRandomGenerator randomGenerator, ILogger log) : base(log)
         {
             _configuration = configuration;
             _randomGenerator = randomGenerator;
@@ -35,6 +36,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Upgrading
             {
                 return;
             }
+
             short[] upfail = e.Item.Rarity >= 8 ? _configuration.UpgradeItem.UpFailR8 : _configuration.UpgradeItem.UpFail;
             short[] upfix = e.Item.Rarity >= 8 ? _configuration.UpgradeItem.UpFixR8 : _configuration.UpgradeItem.UpFix;
             int[] goldprice = e.Item.Rarity >= 8 ? _configuration.UpgradeItem.GoldPriceR8 : _configuration.UpgradeItem.GoldPrice;
@@ -164,7 +166,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Upgrading
 
                     if (e.HasAmulet == FixedUpMode.HasAmulet && e.Item.IsFixed)
                     {
-                        var amulet = player.Inventory.GetWeared(EquipmentType.Amulet);
+                        ItemInstanceDto amulet = player.Inventory.GetWeared(EquipmentType.Amulet);
                         /*amulet.DurabilityPoint -= 1;
                         if (amulet.DurabilityPoint <= 0)
                         {

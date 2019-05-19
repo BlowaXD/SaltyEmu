@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using ChickenAPI.Core.Events;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Data.Item;
 using ChickenAPI.Enums.Game.Items;
 using ChickenAPI.Game.Entities.Player;
@@ -16,10 +17,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Inventory
     {
         private readonly IItemInstanceService _characterItemService;
 
-        public Inventory_LoadInventory_Handler(IItemInstanceService characterItemService)
-        {
-            _characterItemService = characterItemService;
-        }
+        public Inventory_LoadInventory_Handler(ILogger log, IItemInstanceService characterItemService) : base(log) => _characterItemService = characterItemService;
 
         protected override async Task Handle(InventoryLoadEvent e, CancellationToken cancellation)
         {

@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Data.Families;
 using Microsoft.EntityFrameworkCore;
 using SaltyEmu.Database;
@@ -10,7 +11,7 @@ namespace SaltyEmu.DatabasePlugin.Services.Families
 {
     public class FamilyDao : MappedRepositoryBase<FamilyDto, FamilyModel>, IFamilyService
     {
-        public FamilyDao(DbContext context, IMapper mapper) : base(context, mapper)
+        public FamilyDao(DbContext context, IMapper mapper, ILogger log) : base(context, mapper, log)
         {
         }
 

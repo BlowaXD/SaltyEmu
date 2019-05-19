@@ -13,6 +13,10 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Quicklist
 {
     public class Quicklist_AddElement_Handler : GenericEventPostProcessorBase<QuicklistAddElementEvent>
     {
+        public Quicklist_AddElement_Handler(ILogger log) : base(log)
+        {
+        }
+
         protected override async Task Handle(QuicklistAddElementEvent args, CancellationToken cancellation)
         {
             if (!(args.Sender is IPlayerEntity player))

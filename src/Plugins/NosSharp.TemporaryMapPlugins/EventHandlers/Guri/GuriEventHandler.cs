@@ -16,10 +16,8 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Guri
     {
         private readonly IGuriHandler _guriHandler;
 
-        public GuriEventHandler(IGuriHandler guriHandler)
-        {
-            _guriHandler = guriHandler;
-        }
+
+        public GuriEventHandler(ILogger log, IGuriHandler guriHandler) : base(log) => _guriHandler = guriHandler;
 
         protected override Task Handle(GuriEvent e, CancellationToken cancellation)
         {

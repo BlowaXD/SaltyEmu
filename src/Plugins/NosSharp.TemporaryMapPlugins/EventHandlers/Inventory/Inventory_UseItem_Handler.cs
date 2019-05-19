@@ -1,6 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using ChickenAPI.Core.Events;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Inventory.Events;
 using ChickenAPI.Game.Inventory.ItemUsage;
@@ -11,10 +12,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Inventory
     {
         private readonly IItemUsageContainerAsync _itemUsageHandler;
 
-        public Inventory_UseItem_Handler(IItemUsageContainerAsync itemUsageHandler)
-        {
-            _itemUsageHandler = itemUsageHandler;
-        }
+        public Inventory_UseItem_Handler(ILogger log, IItemUsageContainerAsync itemUsageHandler) : base(log) => _itemUsageHandler = itemUsageHandler;
 
         protected override Task Handle(InventoryUseItemEvent e, CancellationToken cancellation)
         {

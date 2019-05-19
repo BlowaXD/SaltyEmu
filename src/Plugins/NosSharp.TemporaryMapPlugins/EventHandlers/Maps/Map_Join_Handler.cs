@@ -1,6 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using ChickenAPI.Core.Events;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Game.Entities.Extensions;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Entities.Player.Extensions;
@@ -13,6 +14,10 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Maps
 {
     public class Map_Join_Handler : GenericEventPostProcessorBase<MapJoinEvent>
     {
+        public Map_Join_Handler(ILogger log) : base(log)
+        {
+        }
+
         protected override async Task Handle(MapJoinEvent e, CancellationToken cancellation)
         {
 

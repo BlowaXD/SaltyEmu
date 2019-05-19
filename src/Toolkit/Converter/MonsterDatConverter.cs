@@ -15,12 +15,13 @@ using ChickenAPI.Enums.Game.BCard;
 using ChickenAPI.Enums.Game.Drop;
 using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Packets.Enumerations;
+using SaltyEmu.Core.Logging;
 
 namespace Toolkit.Converter
 {
     public class MonsterDatConverter
     {
-        private static readonly Logger Log = Logger.GetLogger<MonsterDatConverter>();
+        private static readonly ILogger Log = Logger.GetLogger<MonsterDatConverter>();
         private static readonly string _file = "Monster.dat";
         private static string _inputDirectory;
         private readonly List<BCardDto> _monsterBcards = new List<BCardDto>();

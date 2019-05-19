@@ -1,6 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using ChickenAPI.Core.Events;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Data.Item;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Entities.Player.Extensions;
@@ -13,10 +14,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Inventory
     {
         private readonly IItemInstanceDtoFactory _itemFactory;
 
-        public Inventory_Pickup_Handler(IItemInstanceDtoFactory itemFactory)
-        {
-            _itemFactory = itemFactory;
-        }
+        public Inventory_Pickup_Handler(ILogger log, IItemInstanceDtoFactory itemFactory) : base(log) => _itemFactory = itemFactory;
 
         protected override async Task Handle(InventoryPickUpEvent e, CancellationToken cancellation)
         {

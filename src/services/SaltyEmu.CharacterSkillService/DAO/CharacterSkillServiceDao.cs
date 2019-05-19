@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using ChickenAPI.Data;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Data.Character;
-using MongoDB.Bson.Serialization.Attributes;
-using MongoDB.Bson.Serialization.IdGenerators;
 using MongoDB.Driver;
 using SaltyEmu.Database.MongoDB;
 
@@ -13,7 +9,7 @@ namespace SaltyEmu.CharacterSkillService.DAO
 {
     public class CharacterSkillServiceDao : SynchronizedMongoRepository<CharacterSkillDto>, ICharacterSkillService
     {
-        public CharacterSkillServiceDao(MongoConfigurationBuilder builder) : base(builder)
+        public CharacterSkillServiceDao(MongoConfigurationBuilder builder, ILogger log) : base(builder, log)
         {
         }
 

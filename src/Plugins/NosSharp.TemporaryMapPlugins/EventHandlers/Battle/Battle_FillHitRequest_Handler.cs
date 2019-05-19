@@ -1,6 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using ChickenAPI.Core.Events;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Game.Battle.Events;
 using ChickenAPI.Game.Battle.Hitting;
 using ChickenAPI.Game.Battle.Interfaces;
@@ -11,10 +12,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Battle
     {
         private readonly IDamageAlgorithm _algorithm;
 
-        public Battle_FillHitRequest_Handler(IDamageAlgorithm algorithm)
-        {
-            _algorithm = algorithm;
-        }
+        public Battle_FillHitRequest_Handler(ILogger log, IDamageAlgorithm algorithm) : base(log) => _algorithm = algorithm;
 
         protected override Task Handle(FillHitRequestEvent e, CancellationToken cancellation)
         {

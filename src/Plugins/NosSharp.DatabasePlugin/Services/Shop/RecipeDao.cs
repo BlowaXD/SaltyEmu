@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Data.Shop;
 using Microsoft.EntityFrameworkCore;
 using SaltyEmu.Database;
@@ -13,7 +14,7 @@ namespace SaltyEmu.DatabasePlugin.Services.Shop
 {
     public class RecipeDao : MappedRepositoryBase<RecipeDto, RecipeModel>, IRecipeService
     {
-        public RecipeDao(DbContext context, IMapper mapper) : base(context, mapper)
+        public RecipeDao(DbContext context, IMapper mapper, ILogger log) : base(context, mapper, log)
         {
         }
 

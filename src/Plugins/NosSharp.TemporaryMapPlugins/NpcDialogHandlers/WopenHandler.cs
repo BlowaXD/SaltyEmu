@@ -2,6 +2,7 @@
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.NpcDialog.Events;
 using ChickenAPI.Game.NpcDialog.Handling;
+using ChickenAPI.Packets.ClientPackets.Npcs;
 using ChickenAPI.Packets.ServerPackets.Player;
 using ChickenAPI.Packets.ServerPackets.Shop;
 
@@ -67,11 +68,11 @@ namespace SaltyEmu.BasicPlugin.NpcDialogHandlers
         [NpcDialogHandler(18)]
         public static void TimeCircle(IPlayerEntity player, NpcDialogEvent args)
         {
-            player.SendPacketAsync(new NpcReqPacket
+            player.SendPacketAsync(new RequestNpcPacket
             {
-                VisualType = player.Type,
-                VisualId = player.Id,
-                Dialog = 17
+                Type = player.Type,
+                TargetId = player.Id,
+                Data = 17
             });
         }
 

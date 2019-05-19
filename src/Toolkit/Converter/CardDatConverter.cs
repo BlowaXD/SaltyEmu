@@ -9,13 +9,14 @@ using ChickenAPI.Data.BCard;
 using ChickenAPI.Data.Skills;
 using ChickenAPI.Enums.Game.BCard;
 using ChickenAPI.Enums.Game.Buffs;
+using SaltyEmu.Core.Logging;
 
 namespace Toolkit.Converter
 {
     public class CardDatConverter
     {
         private const string FILE = "Card.dat";
-        private static readonly Logger Log = Logger.GetLogger<CardDatConverter>();
+        private static readonly ILogger Log = Logger.GetLogger<CardDatConverter>();
         private static string _inputDirectory;
         private readonly Queue<BCardDto> _cardBcards = new Queue<BCardDto>();
 

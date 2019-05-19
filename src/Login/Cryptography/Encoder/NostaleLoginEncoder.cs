@@ -10,7 +10,7 @@ namespace Login.Cryptography.Encoder
 {
     public class NostaleLoginEncoder : MessageToMessageEncoder<string>, IEncoder
     {
-        private static readonly Logger Log = Logger.GetLogger<NostaleLoginEncoder>();
+        // private static readonly Logger Log = Logger.GetLogger<NostaleLoginEncoder>();
 
         protected override void Encode(IChannelHandlerContext context, string message, List<object> output)
         {
@@ -33,7 +33,7 @@ namespace Login.Cryptography.Encoder
             }
             catch (Exception e)
             {
-                Log.Error("[ENCODE]", e);
+                // Log.Error("[ENCODE]", e);
             }
         }
     }

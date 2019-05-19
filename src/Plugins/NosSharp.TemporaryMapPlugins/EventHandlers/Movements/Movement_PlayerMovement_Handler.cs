@@ -1,6 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using ChickenAPI.Core.Events;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Inventory.Extensions;
 using ChickenAPI.Game.Movements.Events;
@@ -10,6 +11,9 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Movements
 {
     public class Movement_PlayerMovement_Handler : GenericEventPostProcessorBase<PlayerMovementRequestEvent>
     {
+        public Movement_PlayerMovement_Handler(ILogger log) : base(log)
+        {
+        }
 
         private static bool PreMovementChecks(IPlayerEntity player, PlayerMovementRequestEvent e)
         {

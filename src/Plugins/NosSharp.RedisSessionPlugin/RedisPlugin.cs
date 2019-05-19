@@ -1,16 +1,12 @@
 ﻿using System;
 using Autofac;
 using ChickenAPI.Core.Configurations;
-using ChickenAPI.Core.i18n;
 using ChickenAPI.Core.IoC;
-using ChickenAPI.Core.Logging;
 using ChickenAPI.Core.Plugins;
-using ChickenAPI.Core.Utils;
 using ChickenAPI.Data.Server;
 using ChickenAPI.Game._i18n;
 using ChickenAPI.Game.Impl;
 using SaltyEmu.Redis;
-using SaltyEmu.RedisWrappers.Redis;
 
 namespace SaltyEmu.RedisWrappers
 {
@@ -23,7 +19,6 @@ namespace SaltyEmu.RedisWrappers
 
         public void OnDisable()
         {
-            throw new NotImplementedException();
         }
 
         public void OnEnable()
@@ -35,9 +30,10 @@ namespace SaltyEmu.RedisWrappers
         {
             IConfigurationManager conf = new ConfigurationHelper(new JsonConfigurationSerializer());
             _configuration = conf.Load<RedisConfiguration>(_configurationPath, true);
-            ChickenContainer.Builder.Register(s => new RedisSessionService(_configuration)).As<ISessionService>();
-            ChickenContainer.Builder.Register(s => new RedisServerApi(_configuration)).As<IServerApiService>();
-            ChickenContainer.Builder.Register(s => new RedisGameLanguageService(_configuration)).As<IGameLanguageService>();
+            ChickenContainer.Builder.Register(s => _configuration).As<RedisConfiguration>();
+            ChickenContainer.Builder.RegisterType<RedisSessionService>().As<ISessionService>();
+            ChickenContainer.Builder.RegisterType<RedisServerApi>().As<IServerApiService>();
+            ChickenContainer.Builder.RegisterType<RedisGameLanguageService>().As<IGameLanguageService>();
         }
 
         public void ReloadConfig()

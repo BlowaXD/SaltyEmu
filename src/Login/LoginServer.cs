@@ -16,7 +16,7 @@ namespace Login
 {
     internal class LoginServer
     {
-        private static readonly Logger Log = Logger.GetLogger<LoginServer>();
+        // private static readonly Logger Log = Logger.GetLogger<LoginServer>();
         private static readonly IPluginManager PluginManager = new SimplePluginManager();
 
         private static ushort _port;
@@ -42,7 +42,7 @@ namespace Login
 
         private static void InitializeLogger()
         {
-            Logger.Initialize();
+            // Logger.Initialize();
         }
 
         private static void InitializeConfiguration()
@@ -76,7 +76,7 @@ namespace Login
             }
             catch (Exception e)
             {
-                Log.Error("[PLUGINS]", e);
+                // Log.Error("[PLUGINS]", e);
             }
         }
 

@@ -1,6 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using ChickenAPI.Core.Events;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Data.Item;
 using ChickenAPI.Enums.Game.Items;
 using ChickenAPI.Game;
@@ -17,10 +18,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Inventory
     {
         private readonly IGameConfiguration _gameConfiguration;
 
-        public Inventory_MoveItem_Handler(IGameConfiguration gameConfiguration)
-        {
-            _gameConfiguration = gameConfiguration;
-        }
+        public Inventory_MoveItem_Handler(ILogger log, IGameConfiguration gameConfiguration) : base(log) => _gameConfiguration = gameConfiguration;
 
         protected override async Task Handle(InventoryMoveEvent args, CancellationToken cancellation)
         {

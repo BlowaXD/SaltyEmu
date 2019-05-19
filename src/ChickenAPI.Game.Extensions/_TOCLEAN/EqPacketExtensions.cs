@@ -25,7 +25,7 @@ namespace ChickenAPI.Game.Inventory.Extensions
         public static UpgradeRareSubPacket GenerateEqRareInfoPacket(this InventoryComponent inventory, EquipmentType type) => new UpgradeRareSubPacket
         {
             Upgrade = inventory.Wear[(int)type]?.Upgrade ?? 0,
-            Rare = (byte)(inventory.Wear[(int)type]?.Rarity ?? 0)
+            Rare = inventory.Wear[(int)type]?.Rarity ?? 0
         };
 
         public static EqPacket GenerateEqPacket(this IPlayerEntity player) => new EqPacket
@@ -90,12 +90,12 @@ namespace ChickenAPI.Game.Inventory.Extensions
             var weapon = new UpgradeRareSubPacket
             {
                 Upgrade = player.Weapon?.Upgrade ?? 0,
-                Rare = (byte)(player.Weapon?.Rarity ?? 0)
+                Rare = (player.Weapon?.Rarity ?? 0)
             };
             var armor = new UpgradeRareSubPacket
             {
                 Upgrade = player.Armor?.Upgrade ?? 0,
-                Rare = (byte)(player.Armor?.Rarity ?? 0)
+                Rare = (player.Armor?.Rarity ?? 0)
             };
 
             return new EquipPacket

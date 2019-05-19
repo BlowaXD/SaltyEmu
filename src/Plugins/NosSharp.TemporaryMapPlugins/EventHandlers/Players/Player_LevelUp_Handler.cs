@@ -1,8 +1,8 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using ChickenAPI.Core.Events;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Data.Character;
-using ChickenAPI.Enums.Game.Character;
 using ChickenAPI.Game.Effects;
 using ChickenAPI.Game.Entities.Extensions;
 using ChickenAPI.Game.Entities.Player;
@@ -17,7 +17,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers
     {
         private readonly IAlgorithmService _algorithm;
 
-        public Player_LevelUp_Handler(IAlgorithmService algorithm)
+        public Player_LevelUp_Handler(IAlgorithmService algorithm, ILogger log) : base(log)
         {
             _algorithm = algorithm;
         }

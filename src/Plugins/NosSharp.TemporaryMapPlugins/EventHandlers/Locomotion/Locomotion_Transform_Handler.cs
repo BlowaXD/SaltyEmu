@@ -1,6 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using ChickenAPI.Core.Events;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Data.Item;
 using ChickenAPI.Game.Effects;
 using ChickenAPI.Game.Entities.Player;
@@ -12,6 +13,10 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Locomotion
 {
     public class Locomotion_Transform_Handler : GenericEventPostProcessorBase<LocomotionTransformEvent>
     {
+        public Locomotion_Transform_Handler(ILogger log) : base(log)
+        {
+        }
+
         protected override async Task Handle(LocomotionTransformEvent e, CancellationToken cancellation)
         {
             if (!(e.Sender is IPlayerEntity player))

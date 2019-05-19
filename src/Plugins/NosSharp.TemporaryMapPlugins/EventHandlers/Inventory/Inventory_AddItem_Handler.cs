@@ -16,6 +16,10 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Inventory
 {
     public class Inventory_AddItem_Handler : GenericEventPostProcessorBase<InventoryAddItemEvent>
     {
+        public Inventory_AddItem_Handler(ILogger log) : base(log)
+        {
+        }
+
         protected override async Task Handle(InventoryAddItemEvent e, CancellationToken cancellation)
         {
             if (!(e.Sender is IInventoriedEntity inventoried))

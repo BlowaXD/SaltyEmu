@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Data;
 using ChickenAPI.Data.Relations;
 using SaltyEmu.Communication.Utils;
@@ -12,10 +13,7 @@ namespace SaltyEmu.RelationService.Handling
     {
         private readonly IRelationDao _relations;
 
-        public RemoveRelationsHandler(IRelationDao relations)
-        {
-            _relations = relations;
-        }
+        public RemoveRelationsHandler(ILogger log, IRelationDao relations) : base(log) => _relations = relations;
 
         protected override Task Handle(RemoveRelations request)
         {

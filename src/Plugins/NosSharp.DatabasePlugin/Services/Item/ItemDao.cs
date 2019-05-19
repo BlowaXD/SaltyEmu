@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Data.Item;
 using Microsoft.EntityFrameworkCore;
 using SaltyEmu.Database;
@@ -14,7 +15,7 @@ namespace SaltyEmu.DatabasePlugin.Services.Item
     {
         private readonly Dictionary<long, ItemDto> _items;
 
-        public ItemDao(DbContext context, IMapper mapper) : base(context, mapper)
+        public ItemDao(DbContext context, IMapper mapper, ILogger log) : base(context, mapper, log)
         {
             _items = new Dictionary<long, ItemDto>(Get().ToDictionary(s => s.Id, s => s));
         }

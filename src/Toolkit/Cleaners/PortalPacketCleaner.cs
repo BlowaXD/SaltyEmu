@@ -8,7 +8,6 @@ namespace Toolkit.Cleaners
 {
     public class PortalPacketCleaner
     {
-        private static readonly Logger Log = Logger.GetLogger<PortalPacketCleaner>();
         private readonly Queue<string> _packetList = new Queue<string>();
 
         public void Filter(string filePath, string outputPath)
@@ -36,7 +35,6 @@ namespace Toolkit.Cleaners
             builder.Replace('\t', ' ');
 
             File.WriteAllText(outputPath, builder.ToString(), Encoding.UTF8);
-            Log.Info("Portals packet cleaned into " + outputPath);
         }
     }
 }

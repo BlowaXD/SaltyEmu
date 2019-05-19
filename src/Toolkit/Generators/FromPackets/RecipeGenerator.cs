@@ -7,12 +7,13 @@ using Autofac;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Logging;
 using ChickenAPI.Data.Shop;
+using SaltyEmu.Core.Logging;
 
 namespace Toolkit.Generators.FromPackets
 {
     public class RecipeGenerator
     {
-        private static readonly Logger Log = Logger.GetLogger<RecipeGenerator>();
+        private static readonly ILogger Log = Logger.GetLogger<RecipeGenerator>();
         private readonly List<RecipeItemDto> _recipeItems = new List<RecipeItemDto>();
 
         private readonly List<RecipeDto> _recipes = new List<RecipeDto>();

@@ -9,7 +9,6 @@ namespace Toolkit.Cleaners
 {
     public class InPacketCleaner
     {
-        private static readonly Logger Log = Logger.GetLogger<InPacketCleaner>();
         private readonly List<string> _packetList = new List<string>();
 
         public void Filter(string filePath, string outputPath)

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data.SqlClient;
 using ChickenAPI.Core.Configurations;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Core.Plugins;
 using ChickenAPI.Core.Plugins.Exceptions;
 using ChickenAPI.Game.Impl;
@@ -8,7 +9,6 @@ using Microsoft.EntityFrameworkCore;
 using SaltyEmu.DatabasePlugin.Configuration;
 using SaltyEmu.DatabasePlugin.Context;
 using SaltyEmu.DatabasePlugin.Utils;
-using ILogger = ChickenAPI.Core.Logging.ILogger;
 
 namespace SaltyEmu.DatabasePlugin
 {

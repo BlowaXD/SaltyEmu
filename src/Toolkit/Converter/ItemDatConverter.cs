@@ -10,12 +10,15 @@ using ChickenAPI.Data.BCard;
 using ChickenAPI.Data.Item;
 using ChickenAPI.Enums.Game.BCard;
 using ChickenAPI.Enums.Game.Items;
+using ChickenAPI.Packets.Enumerations;
+using SaltyEmu.Core.Logging;
+using EquipmentType = ChickenAPI.Enums.Game.Items.EquipmentType;
 
 namespace Toolkit.Converter
 {
     public class ItemDatConverter
     {
-        private static readonly Logger Log = Logger.GetLogger<ItemDatConverter>();
+        private static readonly ILogger Log = Logger.GetLogger<ItemDatConverter>();
         private static readonly string _file = "Item.dat";
         private readonly List<BCardDto> _itemCards = new List<BCardDto>();
         private readonly List<ItemDto> _items = new List<ItemDto>();

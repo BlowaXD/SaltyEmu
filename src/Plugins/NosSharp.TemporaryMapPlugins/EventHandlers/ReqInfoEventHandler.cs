@@ -1,6 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using ChickenAPI.Core.Events;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Data.NpcMonster;
 using ChickenAPI.Game.Entities.Events;
 using ChickenAPI.Game.Entities.Npc.Extensions;
@@ -16,8 +17,8 @@ namespace SaltyEmu.BasicPlugin.EventHandlers
     {
         private readonly IPlayerManager _playerManager;
         private readonly INpcMonsterService _npcMonsterService;
-        
-        public ReqInfoEventHandler(IPlayerManager playerManager, INpcMonsterService npcMonsterService)
+
+        public ReqInfoEventHandler(IPlayerManager playerManager, INpcMonsterService npcMonsterService, ILogger log) : base(log)
         {
             _playerManager = playerManager;
             _npcMonsterService = npcMonsterService;

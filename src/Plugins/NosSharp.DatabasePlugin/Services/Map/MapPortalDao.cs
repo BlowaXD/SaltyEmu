@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Data.Map;
 using Microsoft.EntityFrameworkCore;
 using SaltyEmu.Database;
@@ -12,7 +13,7 @@ namespace SaltyEmu.DatabasePlugin.Services.Map
 {
     public class MapPortalDao : MappedRepositoryBase<PortalDto, MapPortalModel>, IPortalService
     {
-        public MapPortalDao(DbContext context, IMapper mapper) : base(context, mapper)
+        public MapPortalDao(DbContext context, IMapper mapper, ILogger log) : base(context, mapper, log)
         {
         }
 

@@ -11,7 +11,7 @@ namespace SaltyEmu.Core.Plugins
 {
     public class SimplePluginManager : IPluginManager
     {
-        private static readonly Logger Log = Logger.GetLogger<SimplePluginManager>();
+        // private static readonly Logger Log = Logger.GetLogger<SimplePluginManager>();
 
         public IPlugin[] LoadPlugin(FileInfo file)
         {
@@ -36,7 +36,7 @@ namespace SaltyEmu.Core.Plugins
                 foreach (Type type in pluginTypes)
                 {
                     var plugin = (IPlugin)Activator.CreateInstance(type);
-                    Log.Info($"{plugin.Name} Loaded !");
+                    // Log.Info($"{plugin.Name} Loaded !");
                     plugin.OnLoad();
                     plugins.Add(plugin);
                 }

@@ -13,6 +13,12 @@ namespace SaltyEmu.Core.Logging
         public Logger(Type type) => Log = LogManager.GetLogger(type.ToString());
         public Logger(string prefix) => Log = LogManager.GetLogger(prefix);
 
+        public static Logger GetLogger(string prefix) => new Logger(prefix);
+
+        public static Logger GetLogger(Type type) => GetLogger(type.ToString());
+
+        public static Logger GetLogger<TClass>() where TClass : class => GetLogger(typeof(TClass));
+
         private NLog.ILogger Log { get; }
 
         /// <summary>

@@ -28,7 +28,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers
         private readonly IGameConfiguration _configuration;
         private readonly IRandomGenerator _randomGenerator;
 
-        public Upgrading_Rarify_Handler(IGameConfiguration configuration, IRandomGenerator randomGenerator)
+        public Upgrading_Rarify_Handler(IGameConfiguration configuration, IRandomGenerator randomGenerator, ILogger log) : base(log)
         {
             _configuration = configuration;
             _randomGenerator = randomGenerator;

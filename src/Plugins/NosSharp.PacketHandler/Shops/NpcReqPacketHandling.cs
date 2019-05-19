@@ -3,23 +3,24 @@ using ChickenAPI.Core.Logging;
 using ChickenAPI.Game.Entities.Npc;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Shops.Events;
+using ChickenAPI.Packets.ClientPackets.Npcs;
 using ChickenAPI.Packets.Enumerations;
 using ChickenAPI.Packets.ServerPackets.Shop;
 using NW.Plugins.PacketHandling.Utils;
 
 namespace NW.Plugins.PacketHandling.Shops
 {
-    public class NpcReqPacketHandling : GenericGamePacketHandlerAsync<NpcReqPacket>
+    public class NpcReqPacketHandling : GenericGamePacketHandlerAsync<RequestNpcPacket>
     {
         public NpcReqPacketHandling(ILogger log) : base(log)
         {
         }
 
-        protected override async Task Handle(NpcReqPacket packet, IPlayerEntity player)
+        protected override async Task Handle(RequestNpcPacket packet, IPlayerEntity player)
         {
-            if (packet.VisualType == VisualType.Player)
+            if (packet.Type == VisualType.Player)
             {
-                IPlayerEntity shop = player.CurrentMap.GetPlayerById(packet.VisualId);
+                IPlayerEntity shop = player.CurrentMap.GetPlayerById(packet.TargetId);
                 if (shop == null)
                 {
                     return;
@@ -29,18 +30,18 @@ namespace NW.Plugins.PacketHandling.Shops
                 return;
             }
 
-            var npc = player.CurrentMap.GetEntity<INpcEntity>(packet.VisualId, VisualType.Npc);
+            var npc = player.CurrentMap.GetEntity<INpcEntity>(packet.TargetId, VisualType.Npc);
 
             if (npc == null)
             {
                 return;
             }
 
-            await player.SendPacketAsync(new NpcReqPacket()
+            await player.SendPacketAsync(new RequestNpcPacket()
             {
-                VisualType = VisualType.Npc,
-                VisualId = npc.MapNpc.Id,
-                Dialog = npc.MapNpc.Dialog
+                Type = VisualType.Npc,
+                TargetId = npc.MapNpc.Id,
+                Data = npc.MapNpc.Dialog
             });
         }
     }

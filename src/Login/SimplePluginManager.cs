@@ -10,7 +10,7 @@ namespace Login
 {
     public class SimplePluginManager : IPluginManager
     {
-        private static readonly Logger Log = Logger.GetLogger<SimplePluginManager>();
+        // private static readonly Logger Log = Logger.GetLogger<SimplePluginManager>();
 
         public IPlugin[] LoadPlugin(FileInfo file)
         {
@@ -35,7 +35,7 @@ namespace Login
                 foreach (Type type in pluginTypes)
                 {
                     var plugin = (IPlugin)Activator.CreateInstance(type);
-                    Log.Info($"{plugin.Name} Loaded !");
+                    //Log.Info($"{plugin.Name} Loaded !");
                     plugins.Add(plugin);
                 }
 

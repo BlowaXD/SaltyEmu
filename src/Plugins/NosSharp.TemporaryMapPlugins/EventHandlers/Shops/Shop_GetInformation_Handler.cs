@@ -1,6 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using ChickenAPI.Core.Events;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Game.Entities.Npc;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Shops.Events;
@@ -10,6 +11,10 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Shops
 {
     public class Shop_GetInformation_Handler : GenericEventPostProcessorBase<ShopGetInformationEvent>
     {
+        public Shop_GetInformation_Handler(ILogger log) : base(log)
+        {
+        }
+
         protected override async Task Handle(ShopGetInformationEvent e, CancellationToken cancellation)
         {
             if (!(e.Sender is IPlayerEntity player))

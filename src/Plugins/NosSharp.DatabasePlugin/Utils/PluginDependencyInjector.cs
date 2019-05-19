@@ -1,4 +1,5 @@
-﻿using Autofac;
+﻿using System.Reflection;
+using Autofac;
 using AutoMapper;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Logging;
@@ -73,6 +74,8 @@ namespace SaltyEmu.DatabasePlugin.Utils
                 State = CharacterState.Active
             };
             // data
+            ChickenContainer.Builder.RegisterTypes(typeof(PluginDependencyInjector).Assembly.GetTypes()).AsImplementedInterfaces().InstancePerLifetimeScope();
+            /*
             ChickenContainer.Builder.Register(s => new MapDao(s.Resolve<SaltyDbContext>(), s.Resolve<IMapper>())).As<IMapService>().InstancePerLifetimeScope();
             ChickenContainer.Builder.Register(s => new SkillDao(s.Resolve<SaltyDbContext>(), s.Resolve<IMapper>())).As<ISkillService>().InstancePerLifetimeScope();
             ChickenContainer.Builder.Register(s => new BCardDao(s.Resolve<SaltyDbContext>(), s.Resolve<IMapper>(), s.Resolve<ILogger>())).As<IBCardService>().InstancePerLifetimeScope();
@@ -112,6 +115,7 @@ namespace SaltyEmu.DatabasePlugin.Utils
             // recipes
             ChickenContainer.Builder.Register(s => new RecipeDao(s.Resolve<SaltyDbContext>(), s.Resolve<IMapper>())).As<IRecipeService>().InstancePerLifetimeScope();
             ChickenContainer.Builder.Register(s => new RecipeItemDao(s.Resolve<SaltyDbContext>(), s.Resolve<IMapper>())).As<IRecipeItemService>().InstancePerLifetimeScope();
+            */
         }
 
         public static void RegisterDependencies()

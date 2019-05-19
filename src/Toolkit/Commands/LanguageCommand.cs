@@ -9,6 +9,7 @@ using ChickenAPI.Core.Logging;
 using ChickenAPI.Game._i18n;
 using CommandLine;
 using SaltyEmu.Core;
+using SaltyEmu.Core.Logging;
 using SaltyEmu.RedisWrappers;
 
 namespace Toolkit.Commands
@@ -16,7 +17,7 @@ namespace Toolkit.Commands
     [Verb("langs", HelpText = "Input languages from langs/ to running GameLanguageService")]
     public class LanguageCommand
     {
-        private static readonly Logger Log = Logger.GetLogger<LanguageCommand>();
+        private static readonly ILogger Log = Logger.GetLogger<LanguageCommand>();
         private static readonly IGameLanguageService _langs = new Lazy<IGameLanguageService>(ChickenContainer.Instance.Resolve<IGameLanguageService>).Value;
 
         [Value(0, HelpText = "fr, en, de, all")]

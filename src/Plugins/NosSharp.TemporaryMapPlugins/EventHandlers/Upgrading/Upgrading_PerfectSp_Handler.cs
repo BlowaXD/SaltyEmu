@@ -1,6 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using ChickenAPI.Core.Events;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Core.Maths;
 using ChickenAPI.Game;
 using ChickenAPI.Game.Configuration;
@@ -19,10 +20,11 @@ namespace SaltyEmu.BasicPlugin.EventHandlers
         private readonly IGameConfiguration _configuration;
         private readonly IRandomGenerator _random;
 
-        public Upgrading_PerfectSp_Handler(IRandomGenerator random, IGameConfiguration configuration)
+
+        public Upgrading_PerfectSp_Handler(ILogger log, IGameConfiguration configuration, IRandomGenerator random) : base(log)
         {
-            _random = random;
             _configuration = configuration;
+            _random = random;
         }
 
         protected override async Task Handle(PerfectSPCardEvent e, CancellationToken cancellation)

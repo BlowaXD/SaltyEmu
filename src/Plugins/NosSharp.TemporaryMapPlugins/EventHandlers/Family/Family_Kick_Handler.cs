@@ -1,6 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using ChickenAPI.Core.Events;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Data.Character;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Families.Events;
@@ -15,11 +16,11 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Family
         private readonly ICharacterService _characterService;
         private readonly ICharacterFamilyService _characterFamilyService;
 
-        public Family_Kick_Handler(IPlayerManager playerManager, ICharacterFamilyService characterFamilyService, ICharacterService characterService)
+        public Family_Kick_Handler(ILogger log, IPlayerManager playerManager, ICharacterService characterService, ICharacterFamilyService characterFamilyService) : base(log)
         {
             _playerManager = playerManager;
-            _characterFamilyService = characterFamilyService;
             _characterService = characterService;
+            _characterFamilyService = characterFamilyService;
         }
 
         protected override async Task Handle(FamilyKickEvent e, CancellationToken cancellation)

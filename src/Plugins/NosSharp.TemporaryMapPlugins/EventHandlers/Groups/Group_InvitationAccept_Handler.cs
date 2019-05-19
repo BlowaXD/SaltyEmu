@@ -1,6 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using ChickenAPI.Core.Events;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Entities.Player.Extensions;
 using ChickenAPI.Game.Groups;
@@ -15,10 +16,8 @@ namespace SaltyEmu.BasicPlugin.EventHandlers
     {
         private readonly IGroupManager _groupManager;
 
-        public Group_InvitationAccept_Handler(IGroupManager groupManager)
-        {
-            _groupManager = groupManager;
-        }
+
+        public Group_InvitationAccept_Handler(ILogger log, IGroupManager groupManager) : base(log) => _groupManager = groupManager;
 
         protected override async Task Handle(GroupInvitationAcceptEvent e, CancellationToken cancellation)
         {

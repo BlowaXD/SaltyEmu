@@ -10,8 +10,6 @@ namespace Login.Cryptography.Decoder
 {
     public class NostaleLoginDecoder : MessageToMessageDecoder<IByteBuffer>, IDecoder
     {
-        private static readonly Logger Log = Logger.GetLogger<NostaleLoginDecoder>();
-
         protected override void Decode(IChannelHandlerContext context, IByteBuffer message, List<object> output)
         {
             try
@@ -29,7 +27,7 @@ namespace Login.Cryptography.Decoder
             }
             catch (Exception e)
             {
-                Log.Error("[DECODE]", e);
+                // Log.Error("[DECODE]", e);
             }
         }
     }

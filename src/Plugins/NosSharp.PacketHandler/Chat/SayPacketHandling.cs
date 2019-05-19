@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Game.Chat.Events;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Packets.ClientPackets.Chat;
@@ -9,6 +10,10 @@ namespace NW.Plugins.PacketHandling.Chat
 {
     public class SayPacketHandling : GenericGamePacketHandlerAsync<ClientSayPacket>
     {
+        public SayPacketHandling(ILogger log) : base(log)
+        {
+        }
+
         protected override async Task Handle(ClientSayPacket packet, IPlayerEntity player)
         {
             try

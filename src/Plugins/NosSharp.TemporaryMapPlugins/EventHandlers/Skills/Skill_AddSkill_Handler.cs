@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using ChickenAPI.Core.Events;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Data.Skills;
 using ChickenAPI.Enums.Game.Character;
 using ChickenAPI.Game.Entities.Player;
@@ -14,6 +15,10 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Skills
 {
     public class Skill_AddSkill_Handler : GenericEventPostProcessorBase<PlayerAddSkillEvent>
     {
+        public Skill_AddSkill_Handler(ILogger log) : base(log)
+        {
+        }
+
         protected override async Task Handle(PlayerAddSkillEvent e, CancellationToken cancellation)
         {
             if (!(e.Sender is IPlayerEntity player))

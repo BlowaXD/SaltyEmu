@@ -8,12 +8,13 @@ using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Logging;
 using ChickenAPI.Data.Map;
 using ChickenAPI.Data.Shop;
+using SaltyEmu.Core.Logging;
 
 namespace Toolkit.Generators.FromPackets
 {
     public class ShopParserGenerator
     {
-        private static readonly Logger Log = Logger.GetLogger<ShopParserGenerator>();
+        private static readonly ILogger Log = Logger.GetLogger<ShopParserGenerator>();
 
         private readonly List<ShopDto> _shops = new List<ShopDto>();
 

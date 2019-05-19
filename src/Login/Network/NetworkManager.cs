@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Autofac;
+using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Logging;
 using DotNetty.Buffers;
 using DotNetty.Codecs;
@@ -13,7 +15,7 @@ namespace Login.Network
 {
     public class NetworkManager
     {
-        public static readonly Logger Log = Logger.GetLogger<NetworkManager>();
+        // public static readonly Logger Log = Logger.GetLogger<NetworkManager>();
 
         public static async Task RunServerAsync(int port, IPacketCryptoFactory factory)
         {
@@ -32,13 +34,13 @@ namespace Login.Network
                         IChannelPipeline pipeline = channel.Pipeline;
                         pipeline.AddLast("encoder", (MessageToMessageEncoder<string>)factory.GetEncoder());
                         pipeline.AddLast("decoder", (MessageToMessageDecoder<IByteBuffer>)factory.GetDecoder());
-                        pipeline.AddLast("session", new ClientSession(channel));
+                        pipeline.AddLast("session", new ClientSession(channel, ChickenContainer.Instance.Resolve<ILogger>()));
                     }));
 
                 IChannel bootstrapChannel = await bootstrap.BindAsync(port).ConfigureAwait(false);
 
-                Log.Info($"[LISTENING] Server is listening");
-                Log.Info($"-> PORT : {port}");
+                // Log.Info($"[LISTENING] Server is listening");
+                // Log.Info($"-> PORT : {port}");
 
                 while (Console.ReadLine() != "quit")
                 {
@@ -49,7 +51,7 @@ namespace Login.Network
             }
             catch (Exception ex)
             {
-                Log.Error("[SERVER]", ex);
+                // Log.Error("[SERVER]", ex);
             }
             finally
             {

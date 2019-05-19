@@ -1,6 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using ChickenAPI.Core.Events;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Data.Character;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Families.Events;
@@ -12,10 +13,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Family
     {
         private readonly ICharacterFamilyService _characterFamilyService;
 
-        public Family_Leave_Handler(ICharacterFamilyService characterFamilyService)
-        {
-            _characterFamilyService = characterFamilyService;
-        }
+        public Family_Leave_Handler(ILogger log, ICharacterFamilyService characterFamilyService) : base(log) => _characterFamilyService = characterFamilyService;
 
         protected override async Task Handle(FamilyLeaveEvent e, CancellationToken cancellation)
         {

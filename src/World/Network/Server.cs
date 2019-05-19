@@ -12,13 +12,14 @@ using DotNetty.Common.Concurrency;
 using DotNetty.Transport.Bootstrapping;
 using DotNetty.Transport.Channels;
 using DotNetty.Transport.Channels.Sockets;
+using SaltyEmu.Core.Logging;
 
 namespace World.Network
 {
     public class Server
     {
         // Server Tick config 
-        private static readonly Logger Log = Logger.GetLogger<Server>();
+        private static readonly ILogger Log = Logger.GetLogger<Server>();
         public static WorldServerDto WorldServer;
 
         private static IEntityManagerContainer _container;

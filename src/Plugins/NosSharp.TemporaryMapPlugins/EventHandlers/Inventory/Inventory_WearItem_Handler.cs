@@ -1,6 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using ChickenAPI.Core.Events;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Data.Item;
 using ChickenAPI.Enums.Game.Items;
 using ChickenAPI.Game.Effects;
@@ -17,6 +18,10 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Inventory
 {
     public class Inventory_WearItem_Handler : GenericEventPostProcessorBase<InventoryWearEvent>
     {
+        public Inventory_WearItem_Handler(ILogger log) : base(log)
+        {
+        }
+
         protected override async Task Handle(InventoryWearEvent e, CancellationToken cancellation)
         {
             if (!(e.Sender is IPlayerEntity player))

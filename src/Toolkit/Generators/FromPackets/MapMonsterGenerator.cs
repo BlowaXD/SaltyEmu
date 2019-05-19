@@ -9,12 +9,13 @@ using ChickenAPI.Core.Logging;
 using ChickenAPI.Data.Map;
 using ChickenAPI.Data.NpcMonster;
 using ChickenAPI.Enums.Game.Entity;
+using SaltyEmu.Core.Logging;
 
 namespace Toolkit.Generators.FromPackets
 {
     public class MapMonsterGenerator
     {
-        private static readonly Logger Log = Logger.GetLogger<MapMonsterGenerator>();
+        private static readonly ILogger Log = Logger.GetLogger<MapMonsterGenerator>();
 
         private readonly List<MapMonsterDto> _monsters = new List<MapMonsterDto>();
 

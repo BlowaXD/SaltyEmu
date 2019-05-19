@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Data.Map;
 using Microsoft.EntityFrameworkCore;
 using SaltyEmu.Database;
@@ -8,7 +9,7 @@ namespace SaltyEmu.DatabasePlugin.Services.Map
 {
     public class MapDao : MappedRepositoryBase<MapDto, MapModel>, IMapService
     {
-        public MapDao(DbContext context, IMapper mapper) : base(context, mapper)
+        public MapDao(DbContext context, IMapper mapper, ILogger log) : base(context, mapper, log)
         {
         }
     }
