@@ -18,7 +18,6 @@ namespace Login
     internal class LoginServer
     {
         private static readonly ILogger Log = Logger.GetLogger<LoginServer>();
-        private static readonly IPluginManager PluginManager = new SimplePluginManager();
 
         private static ushort _port;
 
@@ -63,7 +62,7 @@ namespace Login
         {
             try
             {
-                IPlugin[] plugins = PluginManager.LoadPlugins(new DirectoryInfo("plugins"));
+                new IoCPluginManager(Logger.GetLogger<IoCPluginManager>()).RegisterPlugins(new DirectoryInfo("plugins"), ChickenContainer.Builder);
                 var dbPlugin = new DatabasePlugin(Logger.GetLogger<DatabasePlugin>());
                 dbPlugin.OnLoad();
                 var redisPlugin = new RedisPlugin(Logger.GetLogger<RedisPlugin>());
@@ -71,10 +70,6 @@ namespace Login
 
                 dbPlugin.OnEnable();
                 redisPlugin.OnEnable();
-
-                if (plugins == null)
-                {
-                }
             }
             catch (Exception e)
             {
@@ -88,7 +83,6 @@ namespace Login
             InitializeLogger();
             InitializeConfiguration();
             InitializePlugins();
-            ChickenContainer.Builder.Register(s => PluginManager).As<IPluginManager>();
             ChickenContainer.Initialize();
             ClientSession.AccountService = ChickenContainer.Instance.Resolve<IAccountService>();
             ClientSession.ServerApi = ChickenContainer.Instance.Resolve<IServerApiService>();
