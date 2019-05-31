@@ -1,3 +1,0 @@
-[submodule "vendor/ChickenAPI.Packets"]
-	path = vendor/ChickenAPI.Packets
-	url = git@github.com:ChickenAPI/ChickenAPI.Packets.git
