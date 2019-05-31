@@ -53,7 +53,7 @@ Use [SSMS](https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-managem
 
 ## Fill your database data with the toolkit
 
-Pull the following [repository](https://gitlab.com/SaltyNos/Server/parsing)
+Pull the following [Parsing repository](https://github.com/BlowaXD/nostale-parsing)
 
 ### /!\ ACHTUNG ! /!\
 #### RUN THAT COMMAND IN YOUR TERMINAL (CMD / POWERSHELL / SHELL / BASH)
