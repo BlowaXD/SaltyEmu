@@ -73,8 +73,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SaltyEmu.Database.MongoDB",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChickenAPI.Game.Impl", "src\ChickenAPI.Game.Impl\ChickenAPI.Game.Impl.csproj", "{E5F9DC97-664E-42B5-B68F-F93AC4019051}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChickenAPI.Packets", "vendor\ChickenAPI.Packets\src\ChickenAPI.Packets\ChickenAPI.Packets.csproj", "{9B4BEEDC-D2FF-430A-B0CA-602E928BFE7B}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -197,10 +195,6 @@ Global
 		{E5F9DC97-664E-42B5-B68F-F93AC4019051}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E5F9DC97-664E-42B5-B68F-F93AC4019051}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E5F9DC97-664E-42B5-B68F-F93AC4019051}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9B4BEEDC-D2FF-430A-B0CA-602E928BFE7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9B4BEEDC-D2FF-430A-B0CA-602E928BFE7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9B4BEEDC-D2FF-430A-B0CA-602E928BFE7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9B4BEEDC-D2FF-430A-B0CA-602E928BFE7B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -234,7 +228,6 @@ Global
 		{7D0D4B40-86E2-436F-BC57-5CA8A7E16D2F} = {7A642CDF-7BF0-4D43-B5CB-430FC64A32D1}
 		{48886586-562B-4CE6-B105-3F231FE6C97E} = {9FEA092D-17C0-4EAA-8D15-40A0CF3B0699}
 		{E5F9DC97-664E-42B5-B68F-F93AC4019051} = {88C85787-06D8-4E6D-9E87-38FCFD2F6CB0}
-		{9B4BEEDC-D2FF-430A-B0CA-602E928BFE7B} = {88C85787-06D8-4E6D-9E87-38FCFD2F6CB0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {33B1EC1B-965D-4770-B047-390647E82322}

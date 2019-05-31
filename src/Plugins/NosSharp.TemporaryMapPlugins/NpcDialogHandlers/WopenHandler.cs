@@ -3,8 +3,10 @@ using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.NpcDialog.Events;
 using ChickenAPI.Game.NpcDialog.Handling;
 using ChickenAPI.Packets.ClientPackets.Npcs;
+using ChickenAPI.Packets.Enumerations;
 using ChickenAPI.Packets.ServerPackets.Player;
 using ChickenAPI.Packets.ServerPackets.Shop;
+using ChickenAPI.Packets.ServerPackets.UI;
 
 namespace SaltyEmu.BasicPlugin.NpcDialogHandlers
 {
@@ -15,8 +17,8 @@ namespace SaltyEmu.BasicPlugin.NpcDialogHandlers
         {
             player.SendPacketAsync(new WopenPacket
             {
-                Type = 1,
-                Unknow = 0
+                Type = WindowType.UpgradeItem,
+                Unknown = 0,
             });
         }
 
@@ -25,8 +27,8 @@ namespace SaltyEmu.BasicPlugin.NpcDialogHandlers
         {
             player.SendPacketAsync(new WopenPacket
             {
-                Type = 3,
-                Unknow = 0
+                Type = WindowType.CellonItem,
+                Unknown = 0
             });
         }
 
@@ -35,8 +37,8 @@ namespace SaltyEmu.BasicPlugin.NpcDialogHandlers
         {
             player.SendPacketAsync(new WopenPacket
             {
-                Type = args.Type,
-                Unknow = 0
+                Type = (WindowType)args.Type,
+                Unknown = 0
             });
         }
 
@@ -45,8 +47,8 @@ namespace SaltyEmu.BasicPlugin.NpcDialogHandlers
         {
             player.SendPacketAsync(new WopenPacket
             {
-                Type = 27,
-                Unknow = 0
+                Type = WindowType.Production,
+                Unknown = 0
             });
             // Recipe
             /*string recipelist = "m_list 2";
@@ -92,8 +94,8 @@ namespace SaltyEmu.BasicPlugin.NpcDialogHandlers
                     */
             player.SendPacketAsync(new WopenPacket
             {
-                Type = 32,
-                Unknow = 1
+                Type = WindowType.NosBazaar,
+                Unknown = 1
             });
         }
     }
