@@ -2,6 +2,7 @@
 using Autofac;
 using ChickenAPI.Core.Configurations;
 using ChickenAPI.Core.IoC;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Core.Plugins;
 using ChickenAPI.Data.Server;
 using ChickenAPI.Game._i18n;
@@ -12,6 +13,12 @@ namespace SaltyEmu.RedisWrappers
 {
     public class RedisPlugin : IPlugin
     {
+        public RedisPlugin(ILogger log)
+        {
+            _log = log;
+        }
+
+        private readonly ILogger _log;
         private readonly string _configurationPath = $"plugins/config/{nameof(RedisPlugin)}/conf.json";
         private RedisConfiguration _configuration;
         public PluginEnableTime EnableTime => PluginEnableTime.PreContainerBuild;

@@ -14,6 +14,10 @@ namespace SaltyEmu.DatabasePlugin
 {
     public class DatabasePlugin : IPlugin
     {
+        public DatabasePlugin(ILogger log)
+        {
+            Log = log;
+        }
         private readonly ILogger Log;
         private readonly string _configurationFilePath = $"plugins/config/{nameof(DatabasePlugin)}/conf.json";
         private DatabaseConfiguration _configuration;

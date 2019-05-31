@@ -53,8 +53,8 @@ namespace Toolkit.Commands
 
         public static int Handle(LanguageCommand command)
         {
-            new RedisPlugin().OnLoad();
-            new RedisPlugin().OnEnable();
+            new RedisPlugin(Logger.GetLogger<RedisPlugin>()).OnLoad();
+            new RedisPlugin(Logger.GetLogger<RedisPlugin>()).OnEnable();
             ChickenContainer.Initialize();
             foreach (object enume in Enum.GetValues(typeof(LanguageKey)))
             {

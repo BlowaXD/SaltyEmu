@@ -104,7 +104,7 @@ namespace Toolkit.Commands
             var algo = new BasicAlgorithmPlugin();
             algo.OnLoad();
             algo.OnEnable();
-            var tmp = new DatabasePlugin();
+            var tmp = new DatabasePlugin(Logger.GetLogger<DatabasePlugin>());
             tmp.OnLoad();
             tmp.OnEnable();
             ChickenContainer.Initialize();

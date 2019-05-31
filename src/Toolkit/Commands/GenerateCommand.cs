@@ -2,6 +2,7 @@
 using ChickenAPI.Core.Logging;
 using CommandLine;
 using SaltyEmu.BasicAlgorithmPlugin;
+using SaltyEmu.Core.Logging;
 using SaltyEmu.DatabasePlugin;
 using Toolkit.Generators.FromPackets;
 
@@ -21,7 +22,7 @@ namespace Toolkit.Commands
             var algo = new BasicAlgorithmPlugin();
             algo.OnLoad();
             algo.OnEnable();
-            var tmp = new DatabasePlugin();
+            var tmp = new DatabasePlugin(Logger.GetLogger<DatabasePlugin>());
             tmp.OnLoad();
             tmp.OnEnable();
 

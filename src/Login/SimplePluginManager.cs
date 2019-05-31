@@ -67,9 +67,5 @@ namespace Login
             directory.Create();
             return null;
         }
-
-        public DirectoryInfo GetPluginDirectory() => null;
-
-        public DirectoryInfo GetConfigDirectory() => null;
     }
 }

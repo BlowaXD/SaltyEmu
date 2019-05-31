@@ -25,9 +25,6 @@ namespace World.Network
 {
     public class ClientSession : ChannelHandlerAdapter, ISession
     {
-        private const byte PACKET_SPLIT_CHARACTER = 0xFF;
-
-
         private static readonly IPlayerManager PlayerManager = new Lazy<IPlayerManager>(ChickenContainer.Instance.Resolve<IPlayerManager>).Value;
         private static readonly ISessionService SessionService = new Lazy<ISessionService>(ChickenContainer.Instance.Resolve<ISessionService>).Value;
         private static readonly ICommandContainer Commands = new Lazy<ICommandContainer>(ChickenContainer.Instance.Resolve<ICommandContainer>).Value;

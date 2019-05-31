@@ -32,9 +32,9 @@ namespace World
 
         private static readonly List<IPlugin> Plugins = new List<IPlugin>
         {
-            new DatabasePlugin(),
+            new DatabasePlugin(Logger.GetLogger<DatabasePlugin>()),
             new BasicAlgorithmPlugin(),
-            new RedisPlugin(),
+            new RedisPlugin(Logger.GetLogger<RedisPlugin>()),
             new BasicPlugin(),
             new PathfinderPlugin(),
             new PacketHandlerPlugin(),

@@ -9,6 +9,7 @@ using ChickenAPI.Data.Account;
 using ChickenAPI.Data.Server;
 using Login.Cryptography.Factories;
 using Login.Network;
+using SaltyEmu.Core.Logging;
 using SaltyEmu.DatabasePlugin;
 using SaltyEmu.RedisWrappers;
 
@@ -16,7 +17,7 @@ namespace Login
 {
     internal class LoginServer
     {
-        // private static readonly Logger Log = Logger.GetLogger<LoginServer>();
+        private static readonly ILogger Log = Logger.GetLogger<LoginServer>();
         private static readonly IPluginManager PluginManager = new SimplePluginManager();
 
         private static ushort _port;
@@ -42,7 +43,8 @@ namespace Login
 
         private static void InitializeLogger()
         {
-            // Logger.Initialize();
+            ChickenContainer.Builder.Register(s => Logger.GetLogger(s.GetType())).As<ILogger>().InstancePerDependency();
+            Logger.Initialize();
         }
 
         private static void InitializeConfiguration()
@@ -62,9 +64,9 @@ namespace Login
             try
             {
                 IPlugin[] plugins = PluginManager.LoadPlugins(new DirectoryInfo("plugins"));
-                var dbPlugin = new DatabasePlugin();
+                var dbPlugin = new DatabasePlugin(Logger.GetLogger<DatabasePlugin>());
                 dbPlugin.OnLoad();
-                var redisPlugin = new RedisPlugin();
+                var redisPlugin = new RedisPlugin(Logger.GetLogger<RedisPlugin>());
                 redisPlugin.OnLoad();
 
                 dbPlugin.OnEnable();
@@ -76,7 +78,7 @@ namespace Login
             }
             catch (Exception e)
             {
-                // Log.Error("[PLUGINS]", e);
+                Log.Error("[PLUGINS]", e);
             }
         }
 

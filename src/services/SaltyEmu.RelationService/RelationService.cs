@@ -46,7 +46,7 @@ namespace SaltyEmu.RelationService
 
         private static readonly List<IPlugin> Plugins = new List<IPlugin>
         {
-            new DatabasePlugin.DatabasePlugin(),
+            new DatabasePlugin.DatabasePlugin(Logger.GetLogger<DatabasePlugin.DatabasePlugin>()),
         };
 
 
