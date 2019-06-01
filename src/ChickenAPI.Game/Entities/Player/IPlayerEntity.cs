@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using ChickenAPI.Data.Character;
+using ChickenAPI.Data.Enums.Game.Character;
 using ChickenAPI.Data.Item;
-using ChickenAPI.Enums.Game.Character;
 using ChickenAPI.Game.Battle.Interfaces;
 using ChickenAPI.Game.Entities.Mates;
 using ChickenAPI.Game.Families;

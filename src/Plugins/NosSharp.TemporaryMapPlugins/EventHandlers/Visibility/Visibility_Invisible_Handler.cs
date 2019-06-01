@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using ChickenAPI.Core.Events;
 using ChickenAPI.Core.Logging;
-using ChickenAPI.Enums.Game.Visibility;
+using ChickenAPI.Data.Enums.Game.Visibility;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Inventory.Extensions;
 using ChickenAPI.Game.Visibility;

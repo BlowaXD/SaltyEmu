@@ -2,13 +2,13 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using ChickenAPI.Data;
-using ChickenAPI.Enums.Game.Items;
+using ChickenAPI.Data.Enums.Game.Items;
 using ChickenAPI.Packets.Enumerations;
 using SaltyEmu.Database;
 using SaltyEmu.DatabasePlugin.Models.BCard;
 using SaltyEmu.DatabasePlugin.Models.Character;
 using SaltyEmu.DatabasePlugin.Models.Shop;
-using EquipmentType = ChickenAPI.Enums.Game.Items.EquipmentType;
+using EquipmentType = ChickenAPI.Data.Enums.Game.Items.EquipmentType;
 
 namespace SaltyEmu.DatabasePlugin.Models.Item
 {

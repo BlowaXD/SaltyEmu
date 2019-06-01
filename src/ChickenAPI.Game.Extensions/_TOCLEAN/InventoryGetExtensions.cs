@@ -8,7 +8,7 @@ using ChickenAPI.Game.Configuration;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Packets.Enumerations;
 using ChickenAPI.Packets.ServerPackets.Inventory;
-using EquipmentType = ChickenAPI.Enums.Game.Items.EquipmentType;
+using EquipmentType = ChickenAPI.Data.Enums.Game.Items.EquipmentType;
 
 namespace ChickenAPI.Game.Inventory.Extensions
 {

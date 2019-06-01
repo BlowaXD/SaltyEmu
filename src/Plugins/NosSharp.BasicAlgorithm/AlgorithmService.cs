@@ -1,5 +1,4 @@
 ﻿using ChickenAPI.Data.Character;
-using ChickenAPI.Enums.Game.Character;
 using ChickenAPI.Packets.Enumerations;
 using SaltyEmu.BasicAlgorithmPlugin.CharacterAlgorithms;
 using SaltyEmu.BasicAlgorithmPlugin.CharacterAlgorithms.Close;

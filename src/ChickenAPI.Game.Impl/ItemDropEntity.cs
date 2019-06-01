@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using ChickenAPI.Core.Utils;
 using ChickenAPI.Data.Item;
-using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Game._ECS.Components;
 using ChickenAPI.Game._ECS.Entities;
 using ChickenAPI.Packets.Enumerations;

@@ -6,13 +6,13 @@ using Autofac;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Utils;
 using ChickenAPI.Data.Character;
+using ChickenAPI.Data.Enums;
+using ChickenAPI.Data.Enums.Game.Character;
+using ChickenAPI.Data.Enums.Game.Entity;
+using ChickenAPI.Data.Enums.Game.Visibility;
 using ChickenAPI.Data.Families;
 using ChickenAPI.Data.Item;
 using ChickenAPI.Data.Skills;
-using ChickenAPI.Enums;
-using ChickenAPI.Enums.Game.Character;
-using ChickenAPI.Enums.Game.Entity;
-using ChickenAPI.Enums.Game.Visibility;
 using ChickenAPI.Game.Battle.Interfaces;
 using ChickenAPI.Game.Buffs;
 using ChickenAPI.Game.Entities.Mates;
@@ -35,7 +35,7 @@ using ChickenAPI.Game._ECS.Entities;
 using ChickenAPI.Game._Network;
 using ChickenAPI.Packets.Enumerations;
 using ChickenAPI.Packets.Interfaces;
-using EquipmentType = ChickenAPI.Enums.Game.Items.EquipmentType;
+using EquipmentType = ChickenAPI.Data.Enums.Game.Items.EquipmentType;
 
 namespace ChickenAPI.Game.Entities.Player
 {

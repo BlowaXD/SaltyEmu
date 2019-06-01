@@ -5,7 +5,6 @@ using Autofac;
 using ChickenAPI.Core.Events;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Logging;
-using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Game._ECS.Components;
 using ChickenAPI.Game._Events;
 using ChickenAPI.Packets.Enumerations;

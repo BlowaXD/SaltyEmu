@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq.Expressions;
-using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Game.Battle.Interfaces;
 using ChickenAPI.Game.Entities.Monster;
 using ChickenAPI.Game.Entities.Npc;

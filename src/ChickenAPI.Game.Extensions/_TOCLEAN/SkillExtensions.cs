@@ -6,7 +6,6 @@ using Autofac;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Data.Character;
 using ChickenAPI.Data.Skills;
-using ChickenAPI.Enums.Game.Character;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Entities.Player.Extensions;
 using ChickenAPI.Packets.Enumerations;

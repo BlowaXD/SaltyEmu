@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using ChickenAPI.Enums.Game.Families;
+using ChickenAPI.Data.Enums.Game.Families;
 using ChickenAPI.Packets.Enumerations;
 using SaltyEmu.Database;
 using SaltyEmu.DatabasePlugin.Models.Families;

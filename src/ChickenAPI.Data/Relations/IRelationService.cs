@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using ChickenAPI.Enums.Game.Relations;
+using ChickenAPI.Data.Enums.Game.Relations;
 using ChickenAPI.Packets.Enumerations;
 
 namespace ChickenAPI.Data.Relations

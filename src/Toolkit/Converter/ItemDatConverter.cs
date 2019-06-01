@@ -7,12 +7,12 @@ using Autofac;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Logging;
 using ChickenAPI.Data.BCard;
+using ChickenAPI.Data.Enums.Game.BCard;
+using ChickenAPI.Data.Enums.Game.Items;
 using ChickenAPI.Data.Item;
-using ChickenAPI.Enums.Game.BCard;
-using ChickenAPI.Enums.Game.Items;
 using ChickenAPI.Packets.Enumerations;
 using SaltyEmu.Core.Logging;
-using EquipmentType = ChickenAPI.Enums.Game.Items.EquipmentType;
+using EquipmentType = ChickenAPI.Data.Enums.Game.Items.EquipmentType;
 
 namespace Toolkit.Converter
 {

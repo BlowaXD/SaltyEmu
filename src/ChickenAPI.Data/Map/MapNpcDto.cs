@@ -1,5 +1,5 @@
-﻿using ChickenAPI.Data.NpcMonster;
-using ChickenAPI.Enums.Game.Entity;
+﻿using ChickenAPI.Data.Enums.Game.Entity;
+using ChickenAPI.Data.NpcMonster;
 
 namespace ChickenAPI.Data.Map
 {

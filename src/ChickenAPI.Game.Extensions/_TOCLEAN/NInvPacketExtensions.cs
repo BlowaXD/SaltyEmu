@@ -2,8 +2,6 @@
 using System.Linq;
 using System.Text;
 using ChickenAPI.Data.Shop;
-using ChickenAPI.Enums.Game.Character;
-using ChickenAPI.Enums.Game.Items;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Entities.Player.Extensions;
 using ChickenAPI.Packets.Enumerations;

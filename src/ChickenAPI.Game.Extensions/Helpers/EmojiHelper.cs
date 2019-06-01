@@ -1,4 +1,4 @@
-﻿using ChickenAPI.Enums.Game.Effects;
+﻿using ChickenAPI.Data.Enums.Game.Effects;
 using ChickenAPI.Game.Effects;
 using ChickenAPI.Game._ECS.Entities;
 using ChickenAPI.Packets.ServerPackets.Player;

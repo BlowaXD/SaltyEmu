@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using ChickenAPI.Enums.Game.Entity;
+using ChickenAPI.Data.Enums.Game.Entity;
 using ChickenAPI.Game.Entities.Mates;
 
 namespace ChickenAPI.Game.Entities.Player.Extensions

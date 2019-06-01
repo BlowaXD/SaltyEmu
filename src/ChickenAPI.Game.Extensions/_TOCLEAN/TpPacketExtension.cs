@@ -1,5 +1,4 @@
-﻿using ChickenAPI.Enums.Game.Entity;
-using ChickenAPI.Game.Entities.Monster;
+﻿using ChickenAPI.Game.Entities.Monster;
 using ChickenAPI.Game.Entities.Npc;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Movements;

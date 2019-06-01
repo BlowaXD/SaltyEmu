@@ -1,5 +1,4 @@
 ﻿using System;
-using ChickenAPI.Enums.Game.Character;
 using ChickenAPI.Packets.Enumerations;
 
 namespace SaltyEmu.BasicAlgorithmPlugin.CharacterAlgorithms.Damage

@@ -1,4 +1,4 @@
-﻿using ChickenAPI.Enums.Game.Buffs;
+﻿using ChickenAPI.Data.Enums.Game.Buffs;
 
 namespace ChickenAPI.Data.Skills
 {

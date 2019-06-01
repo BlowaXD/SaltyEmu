@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using ChickenAPI.Data;
-using ChickenAPI.Enums.Game.Entity;
+using ChickenAPI.Data.Enums.Game.Entity;
 using ChickenAPI.Packets.Enumerations;
 using SaltyEmu.Database;
 using SaltyEmu.DatabasePlugin.Models.BCard;

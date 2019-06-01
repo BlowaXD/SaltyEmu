@@ -11,8 +11,6 @@ using ChickenAPI.Core.Maths;
 using ChickenAPI.Data.Character;
 using ChickenAPI.Data.Item;
 using ChickenAPI.Data.Shop;
-using ChickenAPI.Enums.Game.Character;
-using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Game.Entities.Npc;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Entities.Player.Extensions;

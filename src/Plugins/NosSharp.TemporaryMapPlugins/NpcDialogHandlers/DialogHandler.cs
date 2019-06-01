@@ -1,5 +1,4 @@
 ﻿using ChickenAPI.Core.Logging;
-using ChickenAPI.Enums.Game.Character;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Entities.Player.Extensions;
 using ChickenAPI.Game.NpcDialog.Events;

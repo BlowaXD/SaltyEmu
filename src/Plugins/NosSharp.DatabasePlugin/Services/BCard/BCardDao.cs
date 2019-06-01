@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using ChickenAPI.Core.Logging;
 using ChickenAPI.Data.BCard;
-using ChickenAPI.Enums.Game.BCard;
+using ChickenAPI.Data.Enums.Game.BCard;
 using Microsoft.EntityFrameworkCore;
 using SaltyEmu.Database;
 using SaltyEmu.DatabasePlugin.Context;

@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using ChickenAPI.Data.BCard;
-using ChickenAPI.Enums.Game.BCard;
+using ChickenAPI.Data.Enums.Game.BCard;
 using ChickenAPI.Game.Battle.Interfaces;
 
 namespace ChickenAPI.Game.BCards

@@ -1,5 +1,5 @@
 ﻿using ChickenAPI.Core.Logging;
-using ChickenAPI.Enums.Game.Effects;
+using ChickenAPI.Data.Enums.Game.Effects;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.GuriHandling.Events;
 using ChickenAPI.Game.GuriHandling.Handling;

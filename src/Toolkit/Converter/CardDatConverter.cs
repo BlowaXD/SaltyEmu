@@ -6,9 +6,9 @@ using Autofac;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Logging;
 using ChickenAPI.Data.BCard;
+using ChickenAPI.Data.Enums.Game.BCard;
+using ChickenAPI.Data.Enums.Game.Buffs;
 using ChickenAPI.Data.Skills;
-using ChickenAPI.Enums.Game.BCard;
-using ChickenAPI.Enums.Game.Buffs;
 using SaltyEmu.Core.Logging;
 
 namespace Toolkit.Converter

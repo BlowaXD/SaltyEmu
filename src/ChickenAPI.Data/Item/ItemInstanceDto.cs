@@ -1,6 +1,4 @@
 ﻿using System;
-using ChickenAPI.Enums.Game.Entity;
-using ChickenAPI.Enums.Game.Items;
 using ChickenAPI.Packets.Enumerations;
 
 namespace ChickenAPI.Data.Item

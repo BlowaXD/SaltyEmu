@@ -7,7 +7,7 @@ using ChickenAPI.Core.Logging;
 using ChickenAPI.Core.Utils;
 using ChickenAPI.Data.Account;
 using ChickenAPI.Data.Character;
-using ChickenAPI.Enums;
+using ChickenAPI.Data.Enums;
 using CommandLine;
 using SaltyEmu.BasicAlgorithmPlugin;
 using SaltyEmu.Core.Logging;

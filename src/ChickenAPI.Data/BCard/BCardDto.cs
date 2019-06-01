@@ -1,4 +1,4 @@
-﻿using ChickenAPI.Enums.Game.BCard;
+﻿using ChickenAPI.Data.Enums.Game.BCard;
 
 namespace ChickenAPI.Data.BCard
 {

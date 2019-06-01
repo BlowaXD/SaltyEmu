@@ -9,11 +9,11 @@ using ChickenAPI.Core.Logging;
 using ChickenAPI.Data;
 using ChickenAPI.Data.BCard;
 using ChickenAPI.Data.Drop;
+using ChickenAPI.Data.Enums.Game.BCard;
+using ChickenAPI.Data.Enums.Game.Drop;
+using ChickenAPI.Data.Enums.Game.Entity;
 using ChickenAPI.Data.NpcMonster;
 using ChickenAPI.Data.Skills;
-using ChickenAPI.Enums.Game.BCard;
-using ChickenAPI.Enums.Game.Drop;
-using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Packets.Enumerations;
 using SaltyEmu.Core.Logging;
 

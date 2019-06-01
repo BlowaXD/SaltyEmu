@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using ChickenAPI.Data.Character;
-using ChickenAPI.Enums;
+using ChickenAPI.Data.Enums;
 
 namespace ChickenAPI.Data.Item
 {

@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ChickenAPI.Data.Enums;
 using ChickenAPI.Data.Skills;
-using ChickenAPI.Enums;
-using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Game.Battle.Extensions;
 using ChickenAPI.Game.Battle.Hitting;
 using ChickenAPI.Game.Battle.Interfaces;

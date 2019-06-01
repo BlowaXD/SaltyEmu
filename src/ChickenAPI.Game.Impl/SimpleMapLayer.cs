@@ -8,7 +8,6 @@ using ChickenAPI.Core.Utils;
 using ChickenAPI.Data.Map;
 using ChickenAPI.Data.NpcMonster;
 using ChickenAPI.Data.Shop;
-using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Game.Effects;
 using ChickenAPI.Game.Entities;
 using ChickenAPI.Game.Entities.Monster;

@@ -6,8 +6,8 @@ using ChickenAPI.Core.IPC.Protocol;
 using ChickenAPI.Core.Logging;
 using ChickenAPI.Data;
 using ChickenAPI.Data.Character;
+using ChickenAPI.Data.Enums.Game.Relations;
 using ChickenAPI.Data.Relations;
-using ChickenAPI.Enums.Game.Relations;
 using SaltyEmu.Communication.Utils;
 using SaltyEmu.FriendsPlugin.Protocol;
 

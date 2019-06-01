@@ -1,6 +1,5 @@
 ﻿using System.Threading.Tasks;
 using ChickenAPI.Core.Logging;
-using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Game.Entities.Npc;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Shops.Events;

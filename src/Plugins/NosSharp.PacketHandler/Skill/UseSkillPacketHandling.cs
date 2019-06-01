@@ -1,7 +1,6 @@
 ﻿using System.Threading.Tasks;
 using ChickenAPI.Core.Logging;
 using ChickenAPI.Data.Skills;
-using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Game.Battle.Extensions;
 using ChickenAPI.Game.Battle.Interfaces;
 using ChickenAPI.Game.Entities.Monster;

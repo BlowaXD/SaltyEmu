@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Linq;
 using ChickenAPI.Core.Logging;
+using ChickenAPI.Data.Enums.Game;
 using ChickenAPI.Data.Server;
-using ChickenAPI.Enums.Game;
 using SaltyEmu.Redis;
 using ServiceStack.Redis;
 using ServiceStack.Redis.Generic;

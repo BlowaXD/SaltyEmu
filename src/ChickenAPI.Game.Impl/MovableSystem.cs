@@ -3,7 +3,6 @@ using System.Linq;
 using System.Linq.Expressions;
 using ChickenAPI.Core.Logging;
 using ChickenAPI.Core.Utils;
-using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.IAs;
 using ChickenAPI.Game._ECS.Entities;

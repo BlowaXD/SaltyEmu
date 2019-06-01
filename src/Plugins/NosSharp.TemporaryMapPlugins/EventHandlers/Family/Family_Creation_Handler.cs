@@ -4,7 +4,6 @@ using ChickenAPI.Core.Events;
 using ChickenAPI.Core.Logging;
 using ChickenAPI.Data.Character;
 using ChickenAPI.Data.Families;
-using ChickenAPI.Enums.Game.Character;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Families.Events;
 using ChickenAPI.Game.Families.Extensions;

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using ChickenAPI.Data.Enums.Game.Relations;
 using ChickenAPI.Data.Relations;
-using ChickenAPI.Enums.Game.Relations;
 using SaltyEmu.Communication.Protocol;
 
 namespace SaltyEmu.FriendsPlugin.Protocol

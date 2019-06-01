@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
+using ChickenAPI.Data.Enums.Game.Items.Upgrade;
 using ChickenAPI.Data.Item;
-using ChickenAPI.Enums.Game.Items;
 using ChickenAPI.Game.Effects;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Entities.Player.Extensions;
@@ -8,7 +8,7 @@ using ChickenAPI.Game.Helpers;
 using ChickenAPI.Game.Inventory.Extensions;
 using ChickenAPI.Game.Inventory.ItemUpgrade.Events;
 using ChickenAPI.Packets.Enumerations;
-using EquipmentType = ChickenAPI.Enums.Game.Items.EquipmentType;
+using EquipmentType = ChickenAPI.Data.Enums.Game.Items.EquipmentType;
 
 namespace ChickenAPI.Game.Inventory.ItemUpgrade.Extension
 {

@@ -2,8 +2,8 @@
 using System.Threading.Tasks;
 using ChickenAPI.Core.Events;
 using ChickenAPI.Core.Logging;
+using ChickenAPI.Data.Enums.Game.Items;
 using ChickenAPI.Data.Item;
-using ChickenAPI.Enums.Game.Items;
 using ChickenAPI.Game.Effects;
 using ChickenAPI.Game.Entities;
 using ChickenAPI.Game.Entities.Player;
@@ -12,7 +12,7 @@ using ChickenAPI.Game.Inventory;
 using ChickenAPI.Game.Inventory.Events;
 using ChickenAPI.Game.Inventory.Extensions;
 using ChickenAPI.Packets.Enumerations;
-using EquipmentType = ChickenAPI.Enums.Game.Items.EquipmentType;
+using EquipmentType = ChickenAPI.Data.Enums.Game.Items.EquipmentType;
 
 namespace SaltyEmu.BasicPlugin.EventHandlers.Inventory
 {

@@ -1,5 +1,5 @@
 ﻿using System;
-using ChickenAPI.Enums.Game.Character;
+using ChickenAPI.Data.Enums.Game.Character;
 
 namespace ChickenAPI.Data.Server
 {

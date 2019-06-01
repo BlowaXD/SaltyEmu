@@ -1,4 +1,4 @@
-﻿using ChickenAPI.Enums.Game.Items;
+﻿using ChickenAPI.Data.Enums.Game.Items;
 using ChickenAPI.Game._Events;
 
 namespace ChickenAPI.Game.Inventory.Events

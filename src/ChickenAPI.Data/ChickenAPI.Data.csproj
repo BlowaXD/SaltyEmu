@@ -10,7 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ChickenAPI.Enums\ChickenAPI.Enums.csproj" />
+    <Folder Include="Enums\Game\Portals\" />
   </ItemGroup>
 
 </Project>

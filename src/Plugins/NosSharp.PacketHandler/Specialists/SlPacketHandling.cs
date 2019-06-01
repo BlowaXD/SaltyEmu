@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using ChickenAPI.Core.Logging;
-using ChickenAPI.Enums;
+using ChickenAPI.Data.Enums;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Specialists.Args;
 using ChickenAPI.Packets.ClientPackets.Specialists;

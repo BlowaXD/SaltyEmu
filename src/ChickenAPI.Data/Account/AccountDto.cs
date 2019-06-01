@@ -1,5 +1,5 @@
 ﻿using ChickenAPI.Core.i18n;
-using ChickenAPI.Enums;
+using ChickenAPI.Data.Enums;
 
 namespace ChickenAPI.Data.Account
 {

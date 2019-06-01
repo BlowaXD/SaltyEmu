@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Autofac;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Data.Character;
-using ChickenAPI.Enums.Game.Entity;
+using ChickenAPI.Data.Enums.Game.Entity;
 using ChickenAPI.Game.Entities.Mates;
 using ChickenAPI.Game.Helpers;
 using ChickenAPI.Game.Inventory.Extensions;

@@ -1,5 +1,5 @@
 ﻿using System;
-using ChickenAPI.Enums.Game.BCard;
+using ChickenAPI.Data.Enums.Game.BCard;
 
 namespace ChickenAPI.Game.BCards
 {
