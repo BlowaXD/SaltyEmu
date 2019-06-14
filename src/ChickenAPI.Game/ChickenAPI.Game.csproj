@@ -26,7 +26,7 @@
 
   <ItemGroup>
     <PackageReference Include="Autofac" Version="4.8.1" />
-    <PackageReference Include="NLog" Version="4.5.11" />
+    <PackageReference Include="NLog" Version="4.6.5" />
     <PackageReference Include="NLog.Config" Version="4.5.11" />
   </ItemGroup>
 
