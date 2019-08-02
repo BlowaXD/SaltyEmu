@@ -10,6 +10,13 @@ SaltyEmu is a software designed as a server emulator for the MMORPG Nostale.
 It's based on [ChickenAPI](https://github.com/BlowaXD/ChickenAPI) and has an event driven architecture.
 SaltyEmu is an opensource project, made for fun and skill improvements, it will stay as is.
 
+**This project is no more maintained, I'm working on a private project that runs [NosWings](https://noswings.com)**
+
+**Do not hesitate to study its code/architecture for learning purposes, there are a lot of good and bad designs**
+
+**The new project (WingsEmu) is an upgrade of SaltyEmu with much more "entreprise-grade" architecture choices thanks to my recent studies**
+
+**Some parts of WingsEmu might be put opensource**
 
 What I wanted to do :
 - Distributed Computing & Microservices oriented architecture
