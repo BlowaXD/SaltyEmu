@@ -91,7 +91,7 @@ What have failed so far :
 - Zanou (Big thanks for all the time you took to implement Nostale boring features...)
 - [Kiritsu](https://github.com/Kiritsu/) 
 - GodnessCookie
-- Quarry
+- [Quarry](https://github.com/imquarry)
 - Clavs
 - [SylEze](https://github.com/SylEze) (For helping me when I was questioning myself about some architectural choices)
 
