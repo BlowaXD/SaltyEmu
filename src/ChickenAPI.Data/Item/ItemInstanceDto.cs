@@ -1,6 +1,5 @@
 ﻿using System;
-using ChickenAPI.Enums.Game.Entity;
-using ChickenAPI.Enums.Game.Items;
+using ChickenAPI.Packets.Enumerations;
 
 namespace ChickenAPI.Data.Item
 {
@@ -42,7 +41,7 @@ namespace ChickenAPI.Data.Item
 
         public sbyte Rarity { get; set; }
 
-        public InventoryType Type { get; set; }
+        public PocketType Type { get; set; }
 
         public byte Upgrade { get; set; }
 

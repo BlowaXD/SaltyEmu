@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Data.Character;
-using ChickenAPI.Enums.Game.Character;
+using ChickenAPI.Data.Enums.Game.Character;
 using Microsoft.EntityFrameworkCore;
 using SaltyEmu.Database;
 using SaltyEmu.DatabasePlugin.Models.Character;
@@ -16,7 +17,7 @@ namespace SaltyEmu.DatabasePlugin.Services.Character
     {
         private readonly CharacterDto _baseConf;
 
-        public CharacterDao(DbContext context, IMapper mapper, CharacterDto baseConf) : base(context, mapper) => _baseConf = baseConf;
+        public CharacterDao(DbContext context, IMapper mapper, CharacterDto baseConf, ILogger log) : base(context, mapper, log) => _baseConf = baseConf;
 
         public IEnumerable<CharacterDto> GetActiveByAccountId(long accountId)
         {

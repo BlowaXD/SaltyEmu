@@ -1,6 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using ChickenAPI.Core.Events;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Data.Character;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Entities.Player.Extensions;
@@ -13,10 +14,8 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Locomotion
     {
         private readonly IAlgorithmService _algorithm;
 
-        public Locomotion_Untransform_Handler(IAlgorithmService algorithm)
-        {
-            _algorithm = algorithm;
-        }
+
+        public Locomotion_Untransform_Handler(ILogger log, IAlgorithmService algorithm) : base(log) => _algorithm = algorithm;
 
         protected override async Task Handle(LocomotionUntransformEvent e, CancellationToken cancellation)
         {

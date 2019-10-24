@@ -3,16 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Data.Character;
 using Microsoft.EntityFrameworkCore;
 using SaltyEmu.Database;
+using SaltyEmu.DatabasePlugin.Context;
 using SaltyEmu.DatabasePlugin.Models.Character;
 
 namespace SaltyEmu.DatabasePlugin.Services.Character
 {
     public class CharacterSkillDao : SynchronizedRepositoryBase<CharacterSkillDto, CharacterSkillModel>, ICharacterSkillService
     {
-        public CharacterSkillDao(DbContext context, IMapper mapper) : base(context, mapper)
+        public CharacterSkillDao(SaltyDbContext context, IMapper mapper, ILogger log) : base(context, mapper, log)
         {
         }
 

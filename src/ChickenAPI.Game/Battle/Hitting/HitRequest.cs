@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using ChickenAPI.Data.BCard;
 using ChickenAPI.Data.Skills;
-using ChickenAPI.Enums.Packets;
 using ChickenAPI.Game.Battle.Interfaces;
+using ChickenAPI.Packets.Enumerations;
 
 namespace ChickenAPI.Game.Battle.Hitting
 {

@@ -1,30 +1,33 @@
 ﻿using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using ChickenAPI.Core.i18n;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Data.Character;
-using ChickenAPI.Enums.Game.Character;
+using ChickenAPI.Data.Enums.Game.Character;
 using ChickenAPI.Game._i18n;
 using ChickenAPI.Game._Network;
-using ChickenAPI.Packets.CharacterSelectionScreen.Client;
-using ChickenAPI.Packets.Game.Server.UserInterface;
+using ChickenAPI.Packets.ClientPackets.CharacterSelectionScreen;
+using ChickenAPI.Packets.Enumerations;
+using ChickenAPI.Packets.ServerPackets.UI;
 using NW.Plugins.PacketHandling.Utils;
 
 namespace NW.Plugins.PacketHandling.CharacterScreen
 {
-    public class CreateCharacterHandler : GenericSessionPacketHandlerAsync<CharNewPacketBase>
+    public class CreateCharacterHandler : GenericSessionPacketHandlerAsync<CharNewPacket>
     {
         private readonly ICharacterService _characterService;
         private readonly IGameLanguageService _gameLanguageService;
         private readonly CharacterScreenLoadHandler _screenLoader;
 
-        public CreateCharacterHandler(ICharacterService characterService, IGameLanguageService gameLanguageService, CharacterScreenLoadHandler screenLoader)
+
+        public CreateCharacterHandler(ILogger log, ICharacterService characterService, IGameLanguageService gameLanguageService, CharacterScreenLoadHandler screenLoader) : base(log)
         {
             _characterService = characterService;
             _gameLanguageService = gameLanguageService;
             _screenLoader = screenLoader;
         }
 
-        protected override async Task Handle(CharNewPacketBase packet, ISession session)
+        protected override async Task Handle(CharNewPacket packet, ISession session)
         {
             long accountId = session.Account.Id;
             byte slot = packet.Slot;

@@ -1,20 +1,29 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.GuriHandling.Events;
-using ChickenAPI.Packets.Game.Client.Player;
+using ChickenAPI.Packets.ClientPackets.Player;
 using NW.Plugins.PacketHandling.Utils;
 
 namespace NW.Plugins.PacketHandling.Guri
 {
     public class GuriPacketHandling : GenericGamePacketHandlerAsync<ClientGuriPacket>
     {
+        public GuriPacketHandling(ILogger log) : base(log)
+        {
+        }
+
         protected override async Task Handle(ClientGuriPacket packet, IPlayerEntity player)
         {
-            string[] packetsplit = packet.OriginalContent.Split(' ', '^');
+            string[] packetsplit = new[] { "", "" }; // todo;
             if (packetsplit[1].ElementAt(0) == '#')
             {
-                if (!packet.VisualId.HasValue) return;
+                if (!packet.VisualId.HasValue)
+                {
+                    return;
+                }
+
                 await player.EmitEventAsync(new GuriEvent
                 {
                     EffectId = packet.Type,

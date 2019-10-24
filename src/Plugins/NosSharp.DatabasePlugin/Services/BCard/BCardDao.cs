@@ -3,17 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Data.BCard;
-using ChickenAPI.Enums.Game.BCard;
+using ChickenAPI.Data.Enums.Game.BCard;
 using Microsoft.EntityFrameworkCore;
 using SaltyEmu.Database;
+using SaltyEmu.DatabasePlugin.Context;
 using SaltyEmu.DatabasePlugin.Models.BCard;
 
 namespace SaltyEmu.DatabasePlugin.Services.BCard
 {
     public class BCardDao : MappedRepositoryBase<BCardDto, BCardModel>, IBCardService
     {
-        public BCardDao(DbContext context, IMapper mapper) : base(context, mapper)
+        public BCardDao(SaltyDbContext context, IMapper mapper, ILogger log) : base(context, mapper, log)
         {
         }
 

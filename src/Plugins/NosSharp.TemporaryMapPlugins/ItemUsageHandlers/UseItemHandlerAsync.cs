@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using ChickenAPI.Core.Logging;
-using ChickenAPI.Enums.Game.Items;
+using ChickenAPI.Data.Enums.Game.Items;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Inventory.Events;
 using ChickenAPI.Game.Inventory.ItemUsage;
@@ -10,9 +10,13 @@ namespace SaltyEmu.BasicPlugin.ItemUsageHandlers
 {
     public class UseItemHandlerContainer : IItemUsageContainerAsync
     {
-        private readonly Logger _log = Logger.GetLogger<UseItemHandlerContainer>();
-
+        private readonly ILogger _log;
         private readonly Dictionary<(long, ItemType), IUseItemRequestHandlerAsync> _handlers = new Dictionary<(long, ItemType), IUseItemRequestHandlerAsync>();
+
+        public UseItemHandlerContainer(ILogger log)
+        {
+            _log = log;
+        }
 
         public Task RegisterItemUsageCallback(IUseItemRequestHandlerAsync handler)
         {

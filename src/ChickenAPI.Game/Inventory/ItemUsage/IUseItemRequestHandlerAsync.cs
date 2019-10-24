@@ -1,6 +1,6 @@
-﻿using ChickenAPI.Enums.Game.Items;
-using ChickenAPI.Game.Entities.Player;
+﻿using ChickenAPI.Game.Entities.Player;
 using System.Threading.Tasks;
+using ChickenAPI.Data.Enums.Game.Items;
 using ChickenAPI.Game.Inventory.Events;
 
 namespace ChickenAPI.Game.Inventory.ItemUsage

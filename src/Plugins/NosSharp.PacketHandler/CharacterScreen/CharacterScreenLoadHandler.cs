@@ -1,21 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Core.Utils;
 using ChickenAPI.Data.Account;
 using ChickenAPI.Data.Character;
+using ChickenAPI.Data.Enums.Game;
+using ChickenAPI.Data.Enums.Game.Items;
 using ChickenAPI.Data.Item;
 using ChickenAPI.Data.Server;
-using ChickenAPI.Enums.Game;
-using ChickenAPI.Enums.Game.Items;
 using ChickenAPI.Game._Network;
-using ChickenAPI.Packets.CharacterSelectionScreen.Client;
-using ChickenAPI.Packets.CharacterSelectionScreen.Server;
+using ChickenAPI.Packets.ClientPackets.Login;
+using ChickenAPI.Packets.Interfaces;
+using ChickenAPI.Packets.ServerPackets.CharacterSelectionScreen;
 using NW.Plugins.PacketHandling.Utils;
 
 namespace NW.Plugins.PacketHandling.CharacterScreen
 {
-    public class CharacterScreenLoadHandler : GenericSessionPacketHandlerAsync<EntryPointPacketBase>
+    public class CharacterScreenLoadHandler : GenericSessionPacketHandlerAsync<EntryPointPacket>
     {
         private readonly IAccountService _accountService;
         private readonly ICharacterMateService _characterMateService;
@@ -23,17 +25,18 @@ namespace NW.Plugins.PacketHandling.CharacterScreen
         private readonly IItemInstanceService _itemInstanceService;
         private readonly ISessionService _sessionService;
 
-        public CharacterScreenLoadHandler(IAccountService accountService, ISessionService sessionService, ICharacterService characterService, IItemInstanceService itemInstanceService,
-            ICharacterMateService characterMateService)
+
+        public CharacterScreenLoadHandler(ILogger log, IAccountService accountService, ICharacterMateService characterMateService, ICharacterService characterService,
+            IItemInstanceService itemInstanceService, ISessionService sessionService) : base(log)
         {
             _accountService = accountService;
-            _sessionService = sessionService;
+            _characterMateService = characterMateService;
             _characterService = characterService;
             _itemInstanceService = itemInstanceService;
-            _characterMateService = characterMateService;
+            _sessionService = sessionService;
         }
 
-        private async Task<bool> AccountChecks(EntryPointPacketBase packetBase, ISession session)
+        private async Task<bool> AccountChecks(EntryPointPacket packetBase, ISession session)
         {
             string name = packetBase.Name;
             AccountDto accountDto = await _accountService.GetByNameAsync(name);
@@ -89,18 +92,19 @@ namespace NW.Plugins.PacketHandling.CharacterScreen
 
         public Task Handle(ISession session) => Handle(null, session);
 
-        protected override async Task Handle(EntryPointPacketBase packet, ISession session)
+        protected override async Task Handle(EntryPointPacket packet, ISession session)
         {
             if (session.Account == null && !await AccountChecks(packet, session))
             {
                 return;
             }
 
+            List<IPacket> packets = new List<IPacket>();
             Log.Info($"[LOAD_CHARACTERS] {session.Account.Name}");
             IEnumerable<CharacterDto> characters = await _characterService.GetActiveByAccountIdAsync(session.Account.Id);
 
             // load characterlist packetBase for each characterEntity in Player
-            await session.SendPacketAsync(new CListStartPacket { Type = 0 });
+            packets.Add(new ClistStartPacket { Type = 0 });
             foreach (CharacterDto character in characters)
             {
                 ItemInstanceDto[] equipment = new ItemInstanceDto[16];
@@ -125,7 +129,7 @@ namespace NW.Plugins.PacketHandling.CharacterScreen
                     }
                 }
 
-                await session.SendPacketAsync(new ClistPacketBase
+                packets.Add(new ClistPacket()
                 {
                     Slot = character.Slot,
                     Name = character.Name,
@@ -157,7 +161,8 @@ namespace NW.Plugins.PacketHandling.CharacterScreen
                 });
             }
 
-            await session.SendPacketAsync(new ClistEndPacketBase());
+            packets.Add(new ClistEndPacket());
+            await session.SendPacketsAsync(packets);
         }
     }
 }

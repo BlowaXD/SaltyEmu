@@ -1,10 +1,11 @@
-﻿using ChickenAPI.Game;
+﻿using ChickenAPI.Core.Configurations;
+using ChickenAPI.Game;
 using ChickenAPI.Game.Configuration;
 using ChickenAPI.Game.Configuration.Item_Managements;
 
 namespace SaltyEmu.BasicPlugin
 {
-    public class JsonGameConfiguration : IGameConfiguration
+    public class JsonGameConfiguration : IGameConfiguration, IConfiguration
     {
         public RateConfiguration Rates { get; set; } = new RateConfiguration
         {

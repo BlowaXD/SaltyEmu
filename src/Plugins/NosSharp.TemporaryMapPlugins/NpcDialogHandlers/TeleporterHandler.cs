@@ -10,8 +10,6 @@ namespace SaltyEmu.BasicPlugin.NpcDialogHandlers
 {
     public class TeleporterHandler
     {
-        private static readonly Logger Log = Logger.GetLogger<TeleporterHandler>();
-
         /// <summary>
         /// This method will teleport the requester to Krem or Alveus, depending on which dialog type he choosed
         /// </summary>
@@ -28,7 +26,7 @@ namespace SaltyEmu.BasicPlugin.NpcDialogHandlers
             if (player.Character.Gold <= 1000 * args.Type)
             {
                 // No Money -> SendMsg(NOMONEY);
-                Log.Info($"[TELEPORT][NO-MONEY] {player.Character.Name}");
+                // Log.Info($"[TELEPORT][NO-MONEY] {player.Character.Name}");
                 return;
             }
 
@@ -45,7 +43,7 @@ namespace SaltyEmu.BasicPlugin.NpcDialogHandlers
                     break;
             }
         }
-        
+
         [NpcDialogHandler(17)]
         public static void EnterArenaInstance(IPlayerEntity player, NpcDialogEvent args)
         {
@@ -71,7 +69,7 @@ namespace SaltyEmu.BasicPlugin.NpcDialogHandlers
             if (player.Character.Gold <= 500 * 1 * args.Type)
             {
                 // No Money -> SendMsg(NOMONEY);
-                Log.Info($"[TELEPORT][NO-MONEY] {player.Character.Name}");
+                // Log.Info($"[TELEPORT][NO-MONEY] {player.Character.Name}");
                 return;
             }
 
@@ -93,10 +91,10 @@ namespace SaltyEmu.BasicPlugin.NpcDialogHandlers
         [NpcDialogHandler(301)]
         public static void OnGrahamDialogTeleport(IPlayerEntity player, NpcDialogEvent args)
         {
-            Log.Info($"[TELEPORT][GRAHAM] {player.Character.Name}");
+            // Log.Info($"[TELEPORT][GRAHAM] {player.Character.Name}");
             // need to provide implementation
         }
-        
+
         [NpcDialogHandler(26)]
         public static void TeleportUnknow(IPlayerEntity player, NpcDialogEvent args)
         {
@@ -109,7 +107,7 @@ namespace SaltyEmu.BasicPlugin.NpcDialogHandlers
             if (player.Character.Gold <= 5000 * args.Type)
             {
                 // No Money -> SendMsg(NOMONEY);
-                Log.Info($"[TELEPORT][NO-MONEY] {player.Character.Name}");
+                // Log.Info($"[TELEPORT][NO-MONEY] {player.Character.Name}");
                 return;
             }
 
@@ -117,7 +115,7 @@ namespace SaltyEmu.BasicPlugin.NpcDialogHandlers
 
             //TeleportationHelper.TeleportTo(player, 20, 10, 91);
         }
-        
+
         [NpcDialogHandler(45)]
         public static void TeleportUnknow2(IPlayerEntity player, NpcDialogEvent args)
         {
@@ -130,7 +128,7 @@ namespace SaltyEmu.BasicPlugin.NpcDialogHandlers
             if (player.Character.Gold <= 500)
             {
                 // No Money -> SendMsg(NOMONEY);
-                Log.Info($"[TELEPORT][NO-MONEY] {player.Character.Name}");
+                // Log.Info($"[TELEPORT][NO-MONEY] {player.Character.Name}");
                 return;
             }
 
@@ -138,7 +136,7 @@ namespace SaltyEmu.BasicPlugin.NpcDialogHandlers
 
             player.TeleportTo(20, 10, 91);
         }
-        
+
         [NpcDialogHandler(132)]
         public static void TeleportUnknow3(IPlayerEntity player, NpcDialogEvent args)
         {
@@ -150,7 +148,7 @@ namespace SaltyEmu.BasicPlugin.NpcDialogHandlers
 
             //TeleportationHelper.TeleportTo(player, 20, 10, 91);
         }
-        
+
         [NpcDialogHandler(301)]
         public static void TeleportUnknow4(IPlayerEntity player, NpcDialogEvent args)
         {
@@ -162,7 +160,7 @@ namespace SaltyEmu.BasicPlugin.NpcDialogHandlers
 
             //TeleportationHelper.TeleportTo(player, 20, 10, 91);
         }
-        
+
         [NpcDialogHandler(150)]
         public static void EnterLod(IPlayerEntity player, NpcDialogEvent args)
         {
@@ -193,19 +191,19 @@ namespace SaltyEmu.BasicPlugin.NpcDialogHandlers
 
             player.TeleportTo(150, 153, 145);
         }
-        
+
         [NpcDialogHandler(5004)]
         public static void AlveusFromAct4(IPlayerEntity player, NpcDialogEvent args)
         {
             player.TeleportTo(145, 50, 41);
         }
-        
+
         [NpcDialogHandler(5011)]
         public static void GoToAct5(IPlayerEntity player, NpcDialogEvent args)
         {
             player.TeleportTo(170, 127, 46);
         }
-        
+
         [NpcDialogHandler(5012)]
         public static void TpUnknow(IPlayerEntity player, NpcDialogEvent args)
         {

@@ -1,14 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ChickenAPI.Data.Enums;
 using ChickenAPI.Data.Skills;
-using ChickenAPI.Enums;
-using ChickenAPI.Enums.Game.Entity;
-using ChickenAPI.Enums.Packets;
 using ChickenAPI.Game.Battle.Extensions;
 using ChickenAPI.Game.Battle.Hitting;
 using ChickenAPI.Game.Battle.Interfaces;
 using ChickenAPI.Game.Entities.Monster;
+using ChickenAPI.Packets.Enumerations;
 using Qmmands;
 using SaltyEmu.Commands.Checks;
 using SaltyEmu.Commands.Entities;

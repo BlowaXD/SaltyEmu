@@ -1,27 +1,29 @@
 ﻿using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Data.Character;
-using ChickenAPI.Enums.Game.Character;
+using ChickenAPI.Data.Enums.Game.Character;
 using ChickenAPI.Game._Network;
-using ChickenAPI.Packets.CharacterSelectionScreen.Client;
-using ChickenAPI.Packets.Game.Server.UserInterface;
+using ChickenAPI.Packets.ClientPackets.CharacterSelectionScreen;
+using ChickenAPI.Packets.Enumerations;
+using ChickenAPI.Packets.ServerPackets.UI;
 using NW.Plugins.PacketHandling.Utils;
 
 namespace NW.Plugins.PacketHandling.CharacterScreen
 {
-    public class CreateCharacterWrestlerHandler : GenericSessionPacketHandlerAsync<CharNewWrestlerPacketBase>
+    public class CreateCharacterWrestlerHandler : GenericSessionPacketHandlerAsync<CharNewJobPacket>
     {
         private readonly ICharacterService _characterService;
         private readonly CharacterScreenLoadHandler _screenLoader;
 
-        public CreateCharacterWrestlerHandler(ICharacterService characterService, CharacterScreenLoadHandler screenLoader)
+        public CreateCharacterWrestlerHandler(ILogger log, ICharacterService characterService, CharacterScreenLoadHandler screenLoader) : base(log)
         {
             _characterService = characterService;
             _screenLoader = screenLoader;
         }
 
-        protected override async Task Handle(CharNewWrestlerPacketBase packet, ISession session)
+        protected override async Task Handle(CharNewJobPacket packet, ISession session)
         {
             long accountId = session.Account.Id;
             byte slot = packet.Slot;
@@ -82,7 +84,7 @@ namespace NW.Plugins.PacketHandling.CharacterScreen
 
             CharacterDto newCharacter = _characterService.GetCreationCharacter();
 
-            newCharacter.Class = CharacterClassType.Wrestler;
+            newCharacter.Class = CharacterClassType.MartialArtist;
             newCharacter.Gender = packet.Gender;
             newCharacter.HairColor = packet.HairColor;
             newCharacter.HairStyle = packet.HairStyle;

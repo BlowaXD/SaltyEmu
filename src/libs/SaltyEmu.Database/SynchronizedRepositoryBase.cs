@@ -15,15 +15,16 @@ namespace SaltyEmu.Database
     public class SynchronizedRepositoryBase<TObject, TModel> : ISynchronizedRepository<TObject>
     where TObject : class, ISynchronizedDto where TModel : class, ISynchronizedModel, new()
     {
-        protected static readonly Logger Log = Logger.GetLogger<TModel>();
+        protected readonly ILogger Log;
         protected readonly DbContext Context;
         protected readonly DbSet<TModel> DbSet;
         protected readonly IMapper Mapper;
 
-        public SynchronizedRepositoryBase(DbContext context, IMapper mapper)
+        public SynchronizedRepositoryBase(DbContext context, IMapper mapper, ILogger log)
         {
             Context = context;
             Mapper = mapper;
+            Log = log;
             DbSet = context.Set<TModel>();
         }
 

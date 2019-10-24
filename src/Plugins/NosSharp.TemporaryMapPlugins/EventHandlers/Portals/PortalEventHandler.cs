@@ -18,10 +18,8 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Portals
     {
         private readonly IMapManager _mapManager;
 
-        public PortalEventHandler(IMapManager mapManager)
-        {
-            _mapManager = mapManager;
-        }
+
+        public PortalEventHandler(ILogger log, IMapManager mapManager) : base(log) => _mapManager = mapManager;
 
         protected override Task Handle(PortalTriggerEvent e, CancellationToken cancellation)
         {

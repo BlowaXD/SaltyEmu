@@ -1,14 +1,15 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using ChickenAPI.Core.Events;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Data.Item;
-using ChickenAPI.Enums.Game.Items;
 using ChickenAPI.Game;
 using ChickenAPI.Game.Configuration;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Inventory;
 using ChickenAPI.Game.Inventory.Events;
 using ChickenAPI.Game.Inventory.Extensions;
+using ChickenAPI.Packets.Enumerations;
 
 namespace SaltyEmu.BasicPlugin.EventHandlers.Inventory
 {
@@ -16,10 +17,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Inventory
     {
         private readonly IGameConfiguration _gameConfiguration;
 
-        public Inventory_MoveItem_Handler(IGameConfiguration gameConfiguration)
-        {
-            _gameConfiguration = gameConfiguration;
-        }
+        public Inventory_MoveItem_Handler(ILogger log, IGameConfiguration gameConfiguration) : base(log) => _gameConfiguration = gameConfiguration;
 
         protected override async Task Handle(InventoryMoveEvent args, CancellationToken cancellation)
         {
@@ -29,15 +27,15 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Inventory
             }
             InventoryComponent inv = player.Inventory;
 
-            ItemInstanceDto source = inv.GetSubInvFromInventoryType(args.InventoryType)[args.SourceSlot];
-            ItemInstanceDto dest = inv.GetSubInvFromInventoryType(args.InventoryType)[args.DestinationSlot];
+            ItemInstanceDto source = inv.GetSubInvFromInventoryType(args.PocketType)[args.SourceSlot];
+            ItemInstanceDto dest = inv.GetSubInvFromInventoryType(args.PocketType)[args.DestinationSlot];
 
             if (source == null)
             {
                 return;
             }
 
-            if (dest != null && (args.InventoryType == InventoryType.Main || args.InventoryType == InventoryType.Etc) && dest.ItemId == source.ItemId &&
+            if (dest != null && (args.PocketType == PocketType.Main || args.PocketType == PocketType.Etc) && dest.ItemId == source.ItemId &&
                 dest.Amount + source.Amount > _gameConfiguration.Inventory.MaxItemPerSlot)
             {
                 // if both source & dest are stackable && slots combined are > max slots

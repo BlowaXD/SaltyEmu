@@ -1,10 +1,10 @@
-﻿using ChickenAPI.Enums.Packets;
-using ChickenAPI.Game.Entities.Player;
+﻿using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Helpers;
 using ChickenAPI.Game.Inventory.ItemUpgrade.Events;
 using ChickenAPI.Game.Inventory.ItemUpgrade.Handlers;
 using ChickenAPI.Game.Inventory.ItemUpgrade.Handlers.Handling;
 using ChickenAPI.Game.Shops.Extensions;
+using ChickenAPI.Packets.Enumerations;
 
 namespace SaltyEmu.BasicPlugin.ItemUpgradeHandlers
 {
@@ -24,7 +24,7 @@ namespace SaltyEmu.BasicPlugin.ItemUpgradeHandlers
 
             if (e.CellonItem.Item.EffectValue > e.SecondItem.Item.MaxCellonLvl)
             {
-                player.SendTopscreenMessage("CELLON_LEVEL_TOO_HIGH", MsgPacketType.White);
+                player.SendTopscreenMessage("CELLON_LEVEL_TOO_HIGH", MessageType.White);
                 player.GenerateShopEndPacket(ShopEndPacketType.CloseSubWindow);
                 return;
             }
@@ -34,7 +34,7 @@ namespace SaltyEmu.BasicPlugin.ItemUpgradeHandlers
 
             if (e.SecondItem.Item.MaxCellon <= equipmentOptionsCount)
             {
-                player.SendTopscreenMessage("CELLON_FULL", MsgPacketType.White);
+                player.SendTopscreenMessage("CELLON_FULL", MessageType.White);
                 player.GenerateShopEndPacket(ShopEndPacketType.CloseSubWindow);
                 return;
             }
@@ -75,7 +75,7 @@ namespace SaltyEmu.BasicPlugin.ItemUpgradeHandlers
 
             if (player.Character.Gold < gold)
             {
-                player.SendTopscreenMessage("NOT_ENOUGH_GOLD", MsgPacketType.White);
+                player.SendTopscreenMessage("NOT_ENOUGH_GOLD", MessageType.White);
                 player.GenerateShopEndPacket(ShopEndPacketType.CloseSubWindow);
                 return;
             }

@@ -1,4 +1,4 @@
-﻿using ChickenAPI.Enums.Game.Character;
+﻿using ChickenAPI.Packets.Enumerations;
 
 namespace SaltyEmu.BasicAlgorithmPlugin.CharacterAlgorithms.HpMp
 {
@@ -9,7 +9,7 @@ namespace SaltyEmu.BasicAlgorithmPlugin.CharacterAlgorithms.HpMp
 
         public void Initialize()
         {
-            _stats = new int[(int)CharacterClassType.Unknown, MAX_LEVEL];
+            _stats = new int[(int)CharacterClassType.MartialArtist + 1, MAX_LEVEL];
 
             // todo improve that shit
             int actual = 60;
@@ -32,7 +32,7 @@ namespace SaltyEmu.BasicAlgorithmPlugin.CharacterAlgorithms.HpMp
                 _stats[(int)CharacterClassType.Swordman, i] = actual;
                 _stats[(int)CharacterClassType.Magician, i] = 3 * actual; // approx
                 _stats[(int)CharacterClassType.Archer, i] = actual + baseAdventurer; // approx
-                _stats[(int)CharacterClassType.Wrestler, i] = actual; // approx
+                _stats[(int)CharacterClassType.MartialArtist, i] = actual; // approx
             }
         }
 

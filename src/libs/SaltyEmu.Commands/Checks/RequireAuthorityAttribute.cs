@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using ChickenAPI.Enums;
+using ChickenAPI.Data.Enums;
 using ChickenAPI.Game.Entities.Player;
 using Qmmands;
 using SaltyEmu.Commands.Entities;

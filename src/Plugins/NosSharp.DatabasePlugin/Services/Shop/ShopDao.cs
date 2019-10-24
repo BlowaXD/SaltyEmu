@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Data.Shop;
 using Microsoft.EntityFrameworkCore;
 using SaltyEmu.Database;
@@ -14,7 +15,7 @@ namespace SaltyEmu.DatabasePlugin.Services.Shop
     {
         private readonly Dictionary<long, ShopDto[]> _shops;
 
-        public ShopDao(DbContext context, IMapper mapper) : base(context, mapper)
+        public ShopDao(DbContext context, IMapper mapper, ILogger log) : base(context, mapper, log)
         {
             IEnumerable<ShopDto> all = Get();
             IEnumerable<IGrouping<long, ShopDto>> tmp = all.GroupBy(s => s.MapNpcId);

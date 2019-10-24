@@ -1,8 +1,8 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using ChickenAPI.Core.Events;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Core.Maths;
-using ChickenAPI.Enums.Packets;
 using ChickenAPI.Game;
 using ChickenAPI.Game.Configuration;
 using ChickenAPI.Game.Entities.Player;
@@ -11,7 +11,8 @@ using ChickenAPI.Game.Helpers;
 using ChickenAPI.Game.Inventory.Extensions;
 using ChickenAPI.Game.Inventory.ItemUpgrade.Events;
 using ChickenAPI.Game.Shops.Extensions;
-using ChickenAPI.Packets.Game.Client.Inventory;
+using ChickenAPI.Packets.ClientPackets.Inventory;
+using ChickenAPI.Packets.Enumerations;
 
 namespace SaltyEmu.BasicPlugin.EventHandlers
 {
@@ -20,10 +21,11 @@ namespace SaltyEmu.BasicPlugin.EventHandlers
         private readonly IGameConfiguration _configuration;
         private readonly IRandomGenerator _random;
 
-        public Upgrading_Summing_Handler(IRandomGenerator random, IGameConfiguration configuration)
+
+        public Upgrading_Summing_Handler(ILogger log, IGameConfiguration configuration, IRandomGenerator random) : base(log)
         {
-            _random = random;
             _configuration = configuration;
+            _random = random;
         }
 
         protected override async Task Handle(SummingEvent e, CancellationToken cancellation)
@@ -45,16 +47,16 @@ namespace SaltyEmu.BasicPlugin.EventHandlers
                 e.Item.WaterResistance += (short)(e.SecondItem.WaterResistance + e.SecondItem.Item.WaterResistance);
                 e.Item.FireResistance += (short)(e.SecondItem.FireResistance + e.SecondItem.Item.FireResistance);
                 //session.Character.DeleteItemByItemInstanceId(itemToSum.Id);
-                await player.SendPacketAsync(new PdtiPacket { Unknow = 10, Unknow2 = 1, Unknow3 = 27, Unknow4 = 0, ItemVnum = e.Item.Item.Id, ItemUpgrade = e.Item.Sum });
+                await player.SendPacketAsync(new PdtiPacket { Unknow = 10, RecipeAmount = 1, Unknow3 = 27, Unknow4 = 0, ItemVnum = e.Item.Item.Id, ItemUpgrade = e.Item.Sum });
                 await player.SendChatMessageAsync("SUM_SUCCESS", SayColorType.Green);
-                await player.SendTopscreenMessage("SUM_SUCCESS", MsgPacketType.Whisper);
+                await player.SendTopscreenMessage("SUM_SUCCESS", MessageType.Whisper);
                 await player.SendGuri(GuriPacketType.AfterSumming, 1, 1324);
                 await player.SendPacketAsync(e.Item?.GenerateIvnPacket());
             }
             else
             {
                 await player.SendChatMessageAsync("SUM_FAILED", SayColorType.Purple);
-                await player.SendTopscreenMessage("SUM_FAILED", MsgPacketType.Whisper);
+                await player.SendTopscreenMessage("SUM_FAILED", MessageType.Whisper);
                 await player.SendGuri(GuriPacketType.AfterSumming, 1, 1332);
                 //session.Character.DeleteItemByItemInstanceId(itemToSum.Id);
                 //session.Character.DeleteItemByItemInstanceId(Id);

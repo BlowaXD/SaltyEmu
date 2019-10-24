@@ -1,5 +1,5 @@
 ﻿using System;
-using ChickenAPI.Enums.Packets;
+using ChickenAPI.Packets.Enumerations;
 
 namespace ChickenAPI.Game.Inventory.ItemUpgrade.Handlers.Handling
 {

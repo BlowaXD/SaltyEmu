@@ -1,10 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Data.Character;
 using ChickenAPI.Data.NpcMonster;
-using ChickenAPI.Enums.Packets;
-using ChickenAPI.Game.Entities.Mates;
-using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Entities.Player.Extensions;
 using ChickenAPI.Game.Families.Extensions;
 using ChickenAPI.Game.Helpers;
@@ -12,15 +10,18 @@ using ChickenAPI.Game.Inventory.Events;
 using ChickenAPI.Game.Managers;
 using ChickenAPI.Game._ECS.Entities;
 using ChickenAPI.Game._Network;
-using ChickenAPI.Packets.CharacterSelectionScreen.Client;
-using ChickenAPI.Packets.Game.Server.Map;
-using ChickenAPI.Packets.Game.Server.Player;
-using ChickenAPI.Packets.Game.Server.UserInterface;
+using ChickenAPI.Game.Entities.Mates;
+using ChickenAPI.Game.Entities.Player;
+using ChickenAPI.Packets.ClientPackets.CharacterSelectionScreen;
+using ChickenAPI.Packets.Enumerations;
+using ChickenAPI.Packets.ServerPackets.Map;
+using ChickenAPI.Packets.ServerPackets.Player;
+using ChickenAPI.Packets.ServerPackets.UI;
 using NW.Plugins.PacketHandling.Utils;
 
 namespace NW.Plugins.PacketHandling.CharacterScreen
 {
-    public class GameStartPacketHandler : GenericSessionPacketHandlerAsync<GameStartPacketBase>
+    public class GameStartPacketHandler : GenericSessionPacketHandlerAsync<GameStartPacket>
     {
         private readonly IAlgorithmService _algorithmService;
         private readonly ICharacterMateService _characterMateService;
@@ -32,7 +33,8 @@ namespace NW.Plugins.PacketHandling.CharacterScreen
         private readonly IPlayerManager _playerManager;
 
         public GameStartPacketHandler(IPlayerManager playerManager, IMapManager mapManager, IAlgorithmService algorithmService, ICharacterService characterService,
-            ICharacterSkillService characterSkillService, ICharacterQuickListService characterQuicklistService, ICharacterMateService characterMateService, INpcMonsterService npcMonsterService)
+            ICharacterSkillService characterSkillService, ICharacterQuickListService characterQuicklistService, ICharacterMateService characterMateService, INpcMonsterService npcMonsterService,
+            ILogger log) : base(log)
         {
             _playerManager = playerManager;
             _mapManager = mapManager;
@@ -45,7 +47,7 @@ namespace NW.Plugins.PacketHandling.CharacterScreen
         }
 
 
-        protected override async Task Handle(GameStartPacketBase packet, ISession session)
+        protected override async Task Handle(GameStartPacket packet, ISession session)
         {
             if (session.Player != null)
             {
@@ -72,7 +74,7 @@ namespace NW.Plugins.PacketHandling.CharacterScreen
             await session.Player.SendChatMessageAsync($"HEROXP : {dto.HeroXp}/{_algorithmService.GetHeroLevelXp(dto.Class, dto.Level)}", SayColorType.Yellow);
             await session.Player.SendChatMessageAsync("└----------------------------------------------┘", SayColorType.Yellow);
             await session.SendPacketAsync(new TitPacket { ClassType = "Adventurer", Name = dto.Name });
-            await session.SendPacketAsync(new MapoutPacket());
+            await session.SendPacketAsync(new MapOutPacket());
             session.Player.Character.SpPoint = 10000;
             session.Player.Character.SpAdditionPoint = 500000;
 
@@ -95,7 +97,7 @@ namespace NW.Plugins.PacketHandling.CharacterScreen
 
             // exts
             // MlInfo
-            await session.SendPacketAsync(new PClearPacket());
+            await session.SendPacketAsync(new PclearPacket());
             await session.Player.ActualizeGroupList();
             await session.Player.ActualizeUiGroupIcons();
             await session.SendPacketAsync(new ZzimPacket());

@@ -10,8 +10,10 @@ namespace SaltyEmu.Commands.TypeParsers
 {
     public sealed class ItemDtoTypeParser : TypeParser<ItemDto>
     {
-        public override async Task<TypeParserResult<ItemDto>> ParseAsync(string value, ICommandContext context, IServiceProvider provider)
+
+        public override async Task<TypeParserResult<ItemDto>> ParseAsync(Parameter parameter, string value, ICommandContext context, IServiceProvider provider)
         {
+
             if (!long.TryParse(value, out long result))
             {
                 return await Task.FromResult(new TypeParserResult<ItemDto>($"The given Item ID was invalid. ({value})"));

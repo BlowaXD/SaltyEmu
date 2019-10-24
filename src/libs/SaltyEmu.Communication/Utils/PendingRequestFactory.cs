@@ -5,10 +5,10 @@ namespace SaltyEmu.Communication.Utils
 {
     public class PendingRequestFactory : IPendingRequestFactory
     {
-        public PendingRequest Create(IIpcRequest request) => new PendingRequest
+        public PendingRequest Create(ISyncRpcRequest request) => new PendingRequest
         {
             Request = request,
-            Response = new TaskCompletionSource<IIpcResponse>()
+            Response = new TaskCompletionSource<ISyncRpcResponse>()
         };
     }
 }

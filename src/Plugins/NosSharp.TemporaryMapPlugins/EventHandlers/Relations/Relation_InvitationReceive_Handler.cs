@@ -2,8 +2,8 @@
 using System.Threading.Tasks;
 using ChickenAPI.Core.Events;
 using ChickenAPI.Core.i18n;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Data.Character;
-using ChickenAPI.Enums.Packets;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Entities.Player.Extensions;
 using ChickenAPI.Game.Helpers;
@@ -11,7 +11,8 @@ using ChickenAPI.Game.Managers;
 using ChickenAPI.Game.Relations.Events;
 using ChickenAPI.Game._i18n;
 using ChickenAPI.Packets;
-using ChickenAPI.Packets.Game.Server.Relations;
+using ChickenAPI.Packets.ClientPackets.Relations;
+using ChickenAPI.Packets.Enumerations;
 
 namespace SaltyEmu.BasicPlugin.EventHandlers.Relations
 {
@@ -20,10 +21,10 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Relations
         private readonly IPlayerManager _playerManager;
         private readonly ICharacterService _characterService;
 
-        public Relation_InvitationReceive_Handler(ICharacterService characterService, IPlayerManager playerManager)
+        public Relation_InvitationReceive_Handler(ILogger log, IPlayerManager playerManager, ICharacterService characterService) : base(log)
         {
-            _characterService = characterService;
             _playerManager = playerManager;
+            _characterService = characterService;
         }
 
         protected override async Task Handle(RelationInvitationReceiveEvent e, CancellationToken cancellation)
@@ -49,8 +50,8 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Relations
                 senderInfo = target.Character;
             }
 
-            PacketBase acceptPacket = new FInsPacket { CharacterId = e.Invitation.OwnerId, Type = FInsPacketType.Accept };
-            PacketBase refusePacket = new FInsPacket { CharacterId = e.Invitation.OwnerId, Type = FInsPacketType.Refuse };
+            PacketBase acceptPacket = new FinsPacket { CharacterId = e.Invitation.OwnerId, Type = FinsPacketType.Accepted };
+            PacketBase refusePacket = new FinsPacket { CharacterId = e.Invitation.OwnerId, Type = FinsPacketType.Rejected };
             string question = player.GetLanguageFormat(PlayerMessages.FRIEND_X_INVITED_YOU_TO_JOIN_HIS_FRIENDLIST, senderInfo.Name);
             await player.SendDialog(acceptPacket, refusePacket, question);
         }

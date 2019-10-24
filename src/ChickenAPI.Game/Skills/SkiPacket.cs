@@ -7,7 +7,7 @@ namespace ChickenAPI.Game.Skills
     [PacketHeader("ski")]
     public class SkiPacket : PacketBase
     {
-        [PacketIndex(0, SeparatorNestedElements = " ")]
+        [PacketIndex(0, SpecialSeparator = " ")]
         public List<long> SkillIds { get; set; }
     }
 }

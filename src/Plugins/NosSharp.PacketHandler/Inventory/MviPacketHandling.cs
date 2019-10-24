@@ -1,20 +1,27 @@
 ﻿using System.Threading.Tasks;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Inventory.Events;
-using ChickenAPI.Packets.Game.Client.Inventory;
+using ChickenAPI.Packets.ClientPackets.Inventory;
 using NW.Plugins.PacketHandling.Utils;
 
 namespace NW.Plugins.PacketHandling.Inventory
 {
     public class MviPacketHandling : GenericGamePacketHandlerAsync<MviPacket>
     {
-        protected override Task Handle(MviPacket packet, IPlayerEntity player) =>
-            player.EmitEventAsync(new InventoryMoveEvent
+        public MviPacketHandling(ILogger log) : base(log)
+        {
+        }
+
+        protected override async Task Handle(MviPacket packet, IPlayerEntity player)
+        {
+            await player.EmitEventAsync(new InventoryMoveEvent
             {
-                InventoryType = packet.InventoryType,
+                PocketType = packet.InventoryType,
                 Amount = packet.Amount,
-                SourceSlot = packet.InventorySlot,
+                SourceSlot = packet.Slot,
                 DestinationSlot = packet.DestinationSlot
             });
+        }
     }
 }

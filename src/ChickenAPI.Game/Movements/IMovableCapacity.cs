@@ -1,6 +1,6 @@
 ﻿using System;
 using ChickenAPI.Core.Utils;
-using ChickenAPI.Enums.Game.Entity;
+using ChickenAPI.Data.Enums.Game.Entity;
 using ChickenAPI.Game.Visibility;
 
 namespace ChickenAPI.Game.Movements

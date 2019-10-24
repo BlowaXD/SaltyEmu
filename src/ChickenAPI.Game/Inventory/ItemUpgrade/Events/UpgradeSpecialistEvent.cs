@@ -1,5 +1,5 @@
-﻿using ChickenAPI.Data.Item;
-using ChickenAPI.Enums.Game.Items;
+﻿using ChickenAPI.Data.Enums.Game.Items.Upgrade;
+using ChickenAPI.Data.Item;
 using ChickenAPI.Game._Events;
 
 namespace ChickenAPI.Game.Inventory.ItemUpgrade.Events

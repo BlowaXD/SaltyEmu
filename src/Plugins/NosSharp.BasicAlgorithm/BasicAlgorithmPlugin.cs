@@ -7,7 +7,7 @@ namespace SaltyEmu.BasicAlgorithmPlugin
 {
     public class BasicAlgorithmPlugin : IPlugin
     {
-        private static readonly Logger Log = Logger.GetLogger<BasicAlgorithmPlugin>();
+        // private static readonly Logger Log = Logger.GetLogger<BasicAlgorithmPlugin>();
         public PluginEnableTime EnableTime => PluginEnableTime.PreContainerBuild;
         public string Name => nameof(BasicAlgorithmPlugin);
 
@@ -21,9 +21,9 @@ namespace SaltyEmu.BasicAlgorithmPlugin
 
         public void OnLoad()
         {
-            Log.Info("Loading...");
+            // Log.Info("Loading...");
             AlgorithmDependenciesInjector.InjectDependencies();
-            Log.Info("Algorithms initialized");
+            // Log.Info("Algorithms initialized");
         }
 
         public void ReloadConfig()

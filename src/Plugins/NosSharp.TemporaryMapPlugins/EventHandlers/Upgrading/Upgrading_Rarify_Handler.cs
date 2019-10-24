@@ -7,9 +7,9 @@ using ChickenAPI.Core.Events;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Logging;
 using ChickenAPI.Core.Maths;
+using ChickenAPI.Data.Enums.Game.Items;
+using ChickenAPI.Data.Enums.Game.Items.Upgrade;
 using ChickenAPI.Data.Item;
-using ChickenAPI.Enums.Game.Items;
-using ChickenAPI.Enums.Packets;
 using ChickenAPI.Game;
 using ChickenAPI.Game.Configuration;
 using ChickenAPI.Game.Entities.Player;
@@ -19,6 +19,8 @@ using ChickenAPI.Game.Inventory.Extensions;
 using ChickenAPI.Game.Inventory.ItemUpgrade.Events;
 using ChickenAPI.Game.Inventory.ItemUpgrade.Extension;
 using ChickenAPI.Game.Shops.Extensions;
+using ChickenAPI.Packets.Enumerations;
+using EquipmentType = ChickenAPI.Data.Enums.Game.Items.EquipmentType;
 
 namespace SaltyEmu.BasicPlugin.EventHandlers
 {
@@ -27,7 +29,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers
         private readonly IGameConfiguration _configuration;
         private readonly IRandomGenerator _randomGenerator;
 
-        public Upgrading_Rarify_Handler(IGameConfiguration configuration, IRandomGenerator randomGenerator)
+        public Upgrading_Rarify_Handler(IGameConfiguration configuration, IRandomGenerator randomGenerator, ILogger log) : base(log)
         {
             _configuration = configuration;
             _randomGenerator = randomGenerator;
@@ -146,20 +148,20 @@ namespace SaltyEmu.BasicPlugin.EventHandlers
                     if ((e.Protection == RarifyProtection.Scroll || e.Protection == RarifyProtection.BlueAmulet ||
                         e.Protection == RarifyProtection.RedAmulet) && !e.IsCommand && e.Item.Item.IsHeroic)
                     {
-                        await player.SendTopscreenMessage("ITEM_IS_HEROIC", MsgPacketType.Whisper);
+                        await player.SendTopscreenMessage("ITEM_IS_HEROIC", MessageType.Whisper);
                         return;
                     }
 
                     if ((e.Protection == RarifyProtection.HeroicAmulet ||
                         e.Protection == RarifyProtection.RandomHeroicAmulet) && !e.Item.Item.IsHeroic)
                     {
-                        await player.SendTopscreenMessage("ITEM_NOT_HEROIC", MsgPacketType.Whisper);
+                        await player.SendTopscreenMessage("ITEM_NOT_HEROIC", MessageType.Whisper);
                         return;
                     }
 
                     if (e.Item.Item.IsHeroic && e.Item.Rarity == 8)
                     {
-                        await player.SendTopscreenMessage("ALREADY_MAX_RARE", MsgPacketType.Whisper);
+                        await player.SendTopscreenMessage("ALREADY_MAX_RARE", MessageType.Whisper);
                         return;
                     }
 

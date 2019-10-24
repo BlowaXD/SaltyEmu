@@ -1,15 +1,20 @@
 ﻿using System.Threading.Tasks;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Data.Item;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Inventory.Extensions;
 using ChickenAPI.Game.Inventory.ItemUpgrade.Events;
-using ChickenAPI.Packets.Game.Client;
+using ChickenAPI.Packets.ClientPackets.Player;
 using NW.Plugins.PacketHandling.Utils;
 
 namespace NW.Plugins.PacketHandling.Inventory
 {
     public class UpgradeItemPaketHandling : GenericGamePacketHandlerAsync<UpgradePacket>
     {
+        public UpgradeItemPaketHandling(ILogger log) : base(log)
+        {
+        }
+
         protected override async Task Handle(UpgradePacket packet, IPlayerEntity player)
         {
             ItemInstanceDto item = player.Inventory.GetItemFromSlotAndType(packet.Slot, packet.InventoryType);

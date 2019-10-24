@@ -1,35 +1,38 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
-using ChickenAPI.Enums;
-using ChickenAPI.Enums.Packets;
+using ChickenAPI.Core.Logging;
+using ChickenAPI.Data.Enums;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Specialists.Args;
-using ChickenAPI.Packets.Game.Client.Specialists;
+using ChickenAPI.Packets.ClientPackets.Specialists;
+using ChickenAPI.Packets.Enumerations;
 using NW.Plugins.PacketHandling.Utils;
 
 namespace NW.Plugins.PacketHandling.Specialists
 {
-    public class SlPacketHandling : GenericGamePacketHandlerAsync<SlPacket>
+    public class SlPacketHandling : GenericGamePacketHandlerAsync<SpTransformPacket>
     {
-        protected override Task Handle(SlPacket packet, IPlayerEntity player)
+        public SlPacketHandling(ILogger log) : base(log)
         {
-            string[] packetsplit = packet.OriginalContent.Split(' ', '^');
+        }
 
+        protected override Task Handle(SpTransformPacket packet, IPlayerEntity player)
+        {
             switch (packet.Type)
             {
                 case SlPacketType.WearSp:
                     return player.EmitEventAsync(new SpTransformEvent
                     {
-                        Wait = packetsplit[1].ElementAt(0) == '#' ? false : player.Session.Account.Authority >= AuthorityType.GameMaster ? false : true
+                        Wait = packet.Header.StartsWith("#") && player.Session.Account.Authority < AuthorityType.GameMaster
                     });
 
                 case SlPacketType.ChangePoints:
                     return player.EmitEventAsync(new SpChangePointsEvent
                     {
-                        Attack = packet.SpecialistDamage,
-                        Defense = packet.SpecialistDefense,
-                        Element = packet.SpecialistElement,
-                        HpMp = packet.SpecialistHp
+                        Attack = packet.SpecialistDamage.GetValueOrDefault(),
+                        Defense = packet.SpecialistDefense.GetValueOrDefault(),
+                        Element = packet.SpecialistElement.GetValueOrDefault(),
+                        HpMp = packet.SpecialistHP.GetValueOrDefault()
                     });
             }
 

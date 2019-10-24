@@ -7,6 +7,7 @@ using Autofac;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Logging;
 using ChickenAPI.Data.Shop;
+using SaltyEmu.Core.Logging;
 
 namespace Toolkit.Generators.FromPackets
 {

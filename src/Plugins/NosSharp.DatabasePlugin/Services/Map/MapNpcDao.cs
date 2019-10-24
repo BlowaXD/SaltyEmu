@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Data.Map;
 using Microsoft.EntityFrameworkCore;
 using SaltyEmu.Database;
@@ -14,10 +15,11 @@ namespace SaltyEmu.DatabasePlugin.Services.Map
     {
         private readonly Dictionary<long, MapNpcDto[]> _npcs;
 
-        public MapNpcDao(DbContext context, IMapper mapper) : base(context, mapper)
+        public MapNpcDao(DbContext context, IMapper mapper, ILogger log) : base(context, mapper, log)
         {
             _npcs = new Dictionary<long, MapNpcDto[]>(Get().GroupBy(s => s.MapId).ToDictionary(s => (long)s.Key, s => s.ToArray()));
         }
+
 
         public IEnumerable<MapNpcDto> GetByMapId(long mapId)
         {

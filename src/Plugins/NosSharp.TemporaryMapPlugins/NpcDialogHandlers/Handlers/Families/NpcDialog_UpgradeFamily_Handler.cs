@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using ChickenAPI.Enums.Packets;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Entities.Player.Extensions;
 using ChickenAPI.Game.Helpers;
 using ChickenAPI.Game.NpcDialog;
 using ChickenAPI.Game.NpcDialog.Events;
 using ChickenAPI.Game._i18n;
+using ChickenAPI.Packets.Enumerations;
 
 namespace SaltyEmu.BasicPlugin.NpcDialogHandlers.Handlers.Families
 {
@@ -23,7 +23,7 @@ namespace SaltyEmu.BasicPlugin.NpcDialogHandlers.Handlers.Families
                 return;
             }
 
-            if (player.FamilyCharacter.Authority != ChickenAPI.Enums.Game.Families.FamilyAuthority.Head)
+            if (player.FamilyCharacter.Authority != FamilyAuthority.Head)
             {
                 await player.SendChatMessageAsync(PlayerMessages.FAMILY_YOU_NEED_TO_BE_LEADER, SayColorType.Yellow);
                 await player.SendModalAsync(PlayerMessages.FAMILY_YOU_NEED_TO_BE_LEADER, ModalPacketType.Default);

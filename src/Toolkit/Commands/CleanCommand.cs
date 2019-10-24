@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using ChickenAPI.Core.Logging;
 using CommandLine;
+using SaltyEmu.Core.Logging;
 using Toolkit.Cleaners;
 
 namespace Toolkit.Commands
@@ -25,11 +26,6 @@ namespace Toolkit.Commands
             if (!File.Exists(opts.Input))
             {
                 return 1;
-            }
-
-            if (opts.Verbose)
-            {
-                Logger.Initialize();
             }
 
             switch (opts.CleanType)

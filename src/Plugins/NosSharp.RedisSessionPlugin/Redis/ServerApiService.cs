@@ -16,11 +16,12 @@ namespace SaltyEmu.RedisWrappers.Redis
     public class ServerApiService : IServerApiService
     {
         private static readonly string Prefix = nameof(WorldServerDto).ToLower();
-        private readonly Logger _log = Logger.GetLogger<ServerApiService>();
+        private readonly ILogger _log;
         private readonly ICacheClient _cache;
 
-        public ServerApiService(RedisConfiguration config)
+        public ServerApiService(RedisConfiguration config, ILogger log)
         {
+            _log = log;
             var options = new RedisCacheClientOptions
             {
                 ConnectionMultiplexer = ConnectionMultiplexer.Connect(config.Host),

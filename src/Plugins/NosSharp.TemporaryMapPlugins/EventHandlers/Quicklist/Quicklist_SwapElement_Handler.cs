@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using ChickenAPI.Core.Events;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Data.Character;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Quicklist.Events;
@@ -11,6 +12,10 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Quicklist
 {
     public class Quicklist_SwapElement_Handler : GenericEventPostProcessorBase<QuicklistSwapElementEvent>
     {
+        public Quicklist_SwapElement_Handler(ILogger log) : base(log)
+        {
+        }
+
         protected override async Task Handle(QuicklistSwapElementEvent e, CancellationToken cancellation)
         {
             if (!(e.Sender is IPlayerEntity player))

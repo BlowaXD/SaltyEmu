@@ -1,8 +1,9 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using ChickenAPI.Core.Events;
+using ChickenAPI.Core.Logging;
+using ChickenAPI.Data.Enums.Game.Items;
 using ChickenAPI.Data.Item;
-using ChickenAPI.Enums.Game.Items;
 using ChickenAPI.Game.Effects;
 using ChickenAPI.Game.Entities;
 using ChickenAPI.Game.Entities.Player;
@@ -10,11 +11,17 @@ using ChickenAPI.Game.Entities.Player.Extensions;
 using ChickenAPI.Game.Inventory;
 using ChickenAPI.Game.Inventory.Events;
 using ChickenAPI.Game.Inventory.Extensions;
+using ChickenAPI.Packets.Enumerations;
+using EquipmentType = ChickenAPI.Data.Enums.Game.Items.EquipmentType;
 
 namespace SaltyEmu.BasicPlugin.EventHandlers.Inventory
 {
     public class Inventory_WearItem_Handler : GenericEventPostProcessorBase<InventoryWearEvent>
     {
+        public Inventory_WearItem_Handler(ILogger log) : base(log)
+        {
+        }
+
         protected override async Task Handle(InventoryWearEvent e, CancellationToken cancellation)
         {
             if (!(e.Sender is IPlayerEntity player))
@@ -24,7 +31,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Inventory
 
             var inventory = player.Inventory;
 
-            ItemInstanceDto item = inventory.GetItemFromSlotAndType(e.InventorySlot, InventoryType.Equipment);
+            ItemInstanceDto item = inventory.GetItemFromSlotAndType(e.InventorySlot, PocketType.Equipment);
             if (item == null)
             {
                 return;
@@ -69,7 +76,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Inventory
                 // todo refacto to "MoveSlot" method
                 inventory.Equipment[itemToEquip.Slot] = alreadyEquipped;
                 alreadyEquipped.Slot = itemToEquip.Slot;
-                alreadyEquipped.Type = InventoryType.Equipment;
+                alreadyEquipped.Type = PocketType.Equipment;
             }
             else
             {
@@ -83,7 +90,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Inventory
 
             inventory.Wear[(int)itemToEquip.Item.EquipmentSlot] = itemToEquip;
             itemToEquip.Slot = (short)itemToEquip.Item.EquipmentSlot;
-            itemToEquip.Type = InventoryType.Wear;
+            itemToEquip.Type = PocketType.Wear;
 
             if (alreadyEquipped == null)
             {

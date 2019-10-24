@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using ChickenAPI.Enums.Game.BCard;
+using ChickenAPI.Data.Enums.Game.BCard;
 
 namespace ChickenAPI.Data.BCard
 {

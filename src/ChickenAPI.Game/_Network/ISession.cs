@@ -5,6 +5,7 @@ using ChickenAPI.Core.i18n;
 using ChickenAPI.Data.Account;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Packets;
+using ChickenAPI.Packets.Interfaces;
 
 namespace ChickenAPI.Game._Network
 {

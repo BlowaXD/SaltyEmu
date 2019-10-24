@@ -7,15 +7,18 @@ using Autofac;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Logging;
 using ChickenAPI.Data.BCard;
+using ChickenAPI.Data.Enums.Game.BCard;
+using ChickenAPI.Data.Enums.Game.Items;
 using ChickenAPI.Data.Item;
-using ChickenAPI.Enums.Game.BCard;
-using ChickenAPI.Enums.Game.Items;
+using ChickenAPI.Packets.Enumerations;
+using SaltyEmu.Core.Logging;
+using EquipmentType = ChickenAPI.Data.Enums.Game.Items.EquipmentType;
 
 namespace Toolkit.Converter
 {
     public class ItemDatConverter
     {
-        private static readonly Logger Log = Logger.GetLogger<ItemDatConverter>();
+        private static readonly ILogger Log = Logger.GetLogger<ItemDatConverter>();
         private static readonly string _file = "Item.dat";
         private readonly List<BCardDto> _itemCards = new List<BCardDto>();
         private readonly List<ItemDto> _items = new List<ItemDto>();
@@ -62,23 +65,23 @@ namespace Toolkit.Converter
                     switch (Convert.ToByte(currentLine[2]))
                     {
                         case 4:
-                            item.Type = InventoryType.Equipment;
+                            item.Type = PocketType.Equipment;
                             break;
 
                         case 8:
-                            item.Type = InventoryType.Equipment;
+                            item.Type = PocketType.Equipment;
                             break;
 
                         case 9:
-                            item.Type = InventoryType.Main;
+                            item.Type = PocketType.Main;
                             break;
 
                         case 10:
-                            item.Type = InventoryType.Etc;
+                            item.Type = PocketType.Etc;
                             break;
 
                         default:
-                            item.Type = (InventoryType)Enum.Parse(typeof(InventoryType), currentLine[2]);
+                            item.Type = (PocketType)Enum.Parse(typeof(PocketType), currentLine[2]);
                             break;
                     }
 
@@ -1026,7 +1029,7 @@ namespace Toolkit.Converter
 
                         case ItemType.Specialist:
 
-                            // item.isSpecialist = Convert.ToByte(currentLine[2]); item.Unknown = Convert.ToInt16(currentLine[3]);
+                            // item.isSpecialist = Convert.ToByte(currentLine[2]); item.FairyMoveType = Convert.ToInt16(currentLine[3]);
                             item.ElementRate = Convert.ToInt16(currentLine[4]);
                             item.Speed = Convert.ToByte(currentLine[5]);
                             item.SpType = Convert.ToByte(currentLine[13]);
@@ -1195,7 +1198,7 @@ namespace Toolkit.Converter
                             break;
                     }
 
-                    if (item.Type == InventoryType.Miniland)
+                    if (item.Type == PocketType.Miniland)
                     {
                         item.MinilandObjectPoint = int.Parse(currentLine[2]);
                         item.EffectValue = short.Parse(currentLine[8]);

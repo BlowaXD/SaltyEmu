@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Data.NpcMonster;
 using Microsoft.EntityFrameworkCore;
 using SaltyEmu.Database;
@@ -14,7 +15,7 @@ namespace SaltyEmu.DatabasePlugin.Services.NpcMonster
     {
         private readonly Dictionary<long, NpcMonsterSkillDto[]> _cacheByNpcMonsterId;
 
-        public NpcMonsterSkillDao(DbContext context, IMapper mapper) : base(context, mapper)
+        public NpcMonsterSkillDao(DbContext context, IMapper mapper, ILogger log) : base(context, mapper, log)
         {
             IEnumerable<NpcMonsterSkillDto> tmp = Get();
             _cacheByNpcMonsterId = tmp.GroupBy(s => s.NpcMonsterId).ToDictionary(s => s.Key, s => s.ToArray());

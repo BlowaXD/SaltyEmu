@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using ChickenAPI.Core.Logging;
+using ChickenAPI.Data.Enums;
 using ChickenAPI.Data.Item;
-using ChickenAPI.Enums;
-using ChickenAPI.Enums.Game.Items;
+using ChickenAPI.Packets.Enumerations;
 using Microsoft.EntityFrameworkCore;
 using SaltyEmu.Database;
 using SaltyEmu.DatabasePlugin.Models.Character;
@@ -14,7 +15,7 @@ namespace SaltyEmu.DatabasePlugin.Services.Character
 {
     public class CharacterItemDao : SynchronizedRepositoryBase<ItemInstanceDto, CharacterItemModel>, IItemInstanceService
     {
-        public CharacterItemDao(DbContext context, IMapper mapper) : base(context, mapper)
+        public CharacterItemDao(DbContext context, IMapper mapper, ILogger log) : base(context, mapper, log)
         {
         }
 
@@ -37,7 +38,7 @@ namespace SaltyEmu.DatabasePlugin.Services.Character
         {
             try
             {
-                return (await DbSet.Where(s => s.CharacterId == characterId && s.Item.Type == InventoryType.Wear).ToArrayAsync()).Select(Mapper.Map<ItemInstanceDto>).ToArray();
+                return (await DbSet.Where(s => s.CharacterId == characterId && s.Item.Type == PocketType.Wear).ToArrayAsync()).Select(Mapper.Map<ItemInstanceDto>).ToArray();
             }
             catch (Exception e)
             {

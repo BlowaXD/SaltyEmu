@@ -1,31 +1,35 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Data.Item;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Inventory.Events;
 using ChickenAPI.Game.Inventory.Extensions;
-using ChickenAPI.Packets.Game.Client.Inventory;
+using ChickenAPI.Packets.ClientPackets.Inventory;
 using NW.Plugins.PacketHandling.Utils;
 
 namespace NW.Plugins.PacketHandling.Inventory
 {
-    public class UseItemPaketHandling : GenericGamePacketHandlerAsync<UiPacket>
+    public class UseItemPaketHandling : GenericGamePacketHandlerAsync<UseItemPacket>
     {
-        protected override async Task Handle(UiPacket packet, IPlayerEntity player)
+        public UseItemPaketHandling(ILogger log) : base(log)
         {
-            ItemInstanceDto item = player.Inventory.GetItemFromSlotAndType(packet.InventorySlot, packet.InventoryType);
+        }
+
+        protected override async Task Handle(UseItemPacket packet, IPlayerEntity player)
+        {
+            ItemInstanceDto item = player.Inventory.GetItemFromSlotAndType(packet.Slot, packet.Type);
 
             if (item == null)
             {
                 return;
             }
 
-            string[] packetsplit = packet.OriginalContent.Split(' ', '^');
+            // string[] packetsplit = packet.OriginalContent.Split(' ', '^');
 
             await player.EmitEventAsync(new InventoryUseItemEvent
             {
                 Item = item,
-                Option = packetsplit[1].ElementAt(0) == '#' ? (byte)50 : (byte)0
+                Option = packet.Header.StartsWith("#") ? (byte)50 : (byte)0 // packetsplit[1].ElementAt(0) == '#' ? (byte)50 : (byte)0
             });
         }
     }

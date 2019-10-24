@@ -10,10 +10,6 @@ using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Logging;
 using ChickenAPI.Data.Item;
 using ChickenAPI.Data.Skills;
-using ChickenAPI.Enums;
-using ChickenAPI.Enums.Game.Entity;
-using ChickenAPI.Enums.Game.Items;
-using ChickenAPI.Enums.Packets;
 using ChickenAPI.Game.Effects;
 using ChickenAPI.Game.Entities.Extensions;
 using ChickenAPI.Game.Entities.Player;
@@ -24,6 +20,9 @@ using ChickenAPI.Game.Movements.Extensions;
 using ChickenAPI.Game.Skills.Extensions;
 using ChickenAPI.Game.Specialists.Args;
 using ChickenAPI.Game.Specialists.Extensions;
+using ChickenAPI.Packets.ClientPackets.Specialists;
+using ChickenAPI.Packets.Enumerations;
+using EquipmentType = ChickenAPI.Data.Enums.Game.Items.EquipmentType;
 
 namespace SaltyEmu.BasicPlugin.EventHandlers.Specialists
 {
@@ -31,7 +30,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Specialists
     {
         private readonly ISkillService _skillService;
 
-        public Specialist_Transform_Handler(ISkillService skillService)
+        public Specialist_Transform_Handler(ILogger log, ISkillService skillService) : base(log)
         {
             _skillService = skillService;
         }
@@ -69,7 +68,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Specialists
                 return;
             }
 
-            if (player.SkillComponent.CooldownsBySkillId.Any())
+            if (player.CooldownsBySkillId.Any())
             {
                 Log.Info("[SP_TRANSFORM] Cooldown needs to be clean");
                 // should have no cooldowns
@@ -78,7 +77,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Specialists
 
             if (e.Wait)
             {
-                await player.GenerateDelay(5000, DelayPacketType.Locomotion, $"#sl^0");
+                await player.SendDelayAsync(5000, DelayPacketType.Locomotion, new SpTransformPacket());
                 return;
             }
 

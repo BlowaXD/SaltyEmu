@@ -1,0 +1,38 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: microsoft/dotnet:2.2-sdk-alpine
+    steps:
+      - checkout
+      - run: 
+            name: Build solution
+            command : | 
+                dotnet restore
+                dotnet build
+  test_unit_testing:
+    docker:
+      - image: microsoft/dotnet:2.2-sdk-alpine
+    steps:
+      - checkout
+      - run: 
+            name: Run tests on ChickenAPI.Packets
+            command : echo "todo"
+  test_code_quality:
+    docker:
+      - image: microsoft/dotnet:2.2-sdk-alpine
+    steps:
+      - run: 
+            name: Test Code Quality
+            command : echo "todo"
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - build
+      - test_unit_testing:
+          requires:
+            - build
+      - test_code_quality:
+          requires:
+            - build

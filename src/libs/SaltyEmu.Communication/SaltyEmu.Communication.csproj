@@ -5,13 +5,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="ChickenAPI.Core" Version="1.0.0" />
     <PackageReference Include="MQTTnet" Version="2.8.5" />
     <PackageReference Include="MQTTnet.Extensions.ManagedClient" Version="2.8.5" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
     <PackageReference Include="RabbitMQ.Client" Version="5.1.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\ChickenAPI.Core\ChickenAPI.Core.csproj" />
     <ProjectReference Include="..\..\ChickenAPI.Data\ChickenAPI.Data.csproj" />
   </ItemGroup>
 

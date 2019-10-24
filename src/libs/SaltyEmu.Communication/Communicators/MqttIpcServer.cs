@@ -17,9 +17,9 @@ using SaltyEmu.Communication.Serializers;
 
 namespace SaltyEmu.Communication.Communicators
 {
-    public class MqttIpcServer : IIpcServer
+    public class MqttIpcServer : IRpcServer
     {
-        private readonly Logger _log = Logger.GetLogger<MqttIpcServer>();
+        private readonly ILogger _log;
         private readonly HashSet<string> _queues;
         private readonly IManagedMqttClient _client;
         private readonly IIpcSerializer _serializer;
@@ -29,16 +29,18 @@ namespace SaltyEmu.Communication.Communicators
         private readonly IIpcPacketHandlersContainer _packetHandlersContainer;
         private readonly IIpcPacketRouter _router;
 
-        public MqttIpcServer(MqttServerConfigurationBuilder builder, IIpcSerializer serializer, IIpcPacketRouter router, IIpcPacketHandlersContainer packetHandlersContainer) : this(builder.Build(),
-            serializer, router, packetHandlersContainer)
+        public MqttIpcServer(MqttServerConfigurationBuilder builder, IIpcSerializer serializer, IIpcPacketRouter router, IIpcPacketHandlersContainer packetHandlersContainer, ILogger log) : this(
+            builder.Build(),
+            serializer, router, packetHandlersContainer, log)
         {
         }
 
-        private MqttIpcServer(MqttIpcServerConfiguration configuration, IIpcSerializer serializer, IIpcPacketRouter router, IIpcPacketHandlersContainer packetHandlersContainer)
+        private MqttIpcServer(MqttIpcServerConfiguration configuration, IIpcSerializer serializer, IIpcPacketRouter router, IIpcPacketHandlersContainer packetHandlersContainer, ILogger log)
         {
             _serializer = serializer;
             _router = router;
             _packetHandlersContainer = packetHandlersContainer;
+            _log = log;
             string clientName = configuration.ClientName;
             string endPoint = configuration.EndPoint;
 
@@ -98,7 +100,7 @@ namespace SaltyEmu.Communication.Communicators
             _packetHandlersContainer.HandleAsync(request, type).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
-        public async Task ResponseAsync<T>(T response, Type packetType) where T : IIpcResponse
+        public async Task ResponseAsync<T>(T response, Type packetType) where T : ISyncRpcResponse
         {
             PacketContainer container = _packetFactory.ToPacket<T>(response);
 #if DEBUG

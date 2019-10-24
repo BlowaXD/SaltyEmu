@@ -2,15 +2,13 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Text;
 using Autofac;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Plugins;
 using ChickenAPI.Core.Plugins.Exceptions;
 using ChickenAPI.Packets;
-using ChickenAPI.Packets.Attributes;
-using ChickenAPI.Packets.Game.Server.Player;
+using ChickenAPI.Packets.Interfaces;
 using Essentials;
 using NLog;
 using NW.Plugins.PacketHandling;
@@ -23,8 +21,7 @@ using SaltyEmu.FriendsPlugin;
 using SaltyEmu.PathfinderPlugin;
 using SaltyEmu.RedisWrappers;
 using World.Network;
-using World.Packets;
-using Logger = ChickenAPI.Core.Logging.Logger;
+using Logger = SaltyEmu.Core.Logging.Logger;
 
 namespace World
 {
@@ -35,9 +32,9 @@ namespace World
 
         private static readonly List<IPlugin> Plugins = new List<IPlugin>
         {
-            new DatabasePlugin(),
+            new DatabasePlugin(Logger.GetLogger<DatabasePlugin>()),
             new BasicAlgorithmPlugin(),
-            new RedisPlugin(),
+            new RedisPlugin(Logger.GetLogger<RedisPlugin>()),
             new BasicPlugin(),
             new PathfinderPlugin(),
             new PacketHandlerPlugin(),
@@ -139,7 +136,15 @@ namespace World
             PrintHeader();
             InitializeLogger();
             InitializeConfigs();
-            ChickenContainer.Builder.Register(_ => new PluggablePacketFactory()).As<IPacketFactory>().SingleInstance();
+            IEnumerable<Type> packetTypes = typeof(IPacket).Assembly.GetTypes()
+                .Where(p => p.Namespace != "ChickenAPI.Packets.ServerPackets.Login" && p.Name != "NoS0575Packet"
+                    && p.GetInterfaces().Contains(typeof(IPacket)) && p.IsClass && !p.IsAbstract).ToArray();
+            ChickenContainer.Builder.Register(c => new Deserializer(packetTypes))
+                .AsImplementedInterfaces()
+                .SingleInstance();
+            ChickenContainer.Builder.Register(c => new Serializer(packetTypes))
+                .AsImplementedInterfaces()
+                .SingleInstance();
             if (InitializePlugins())
             {
                 return;

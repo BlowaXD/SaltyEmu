@@ -1,13 +1,18 @@
 ﻿using System.Threading.Tasks;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Quicklist.Events;
-using ChickenAPI.Packets.Game.Client.Player;
+using ChickenAPI.Packets.ClientPackets.Quicklist;
 using NW.Plugins.PacketHandling.Utils;
 
 namespace NW.Plugins.PacketHandling.Skill
 {
     public class QuickListPacketHandling : GenericGamePacketHandlerAsync<QsetPacket>
     {
+        public QuickListPacketHandling(ILogger log) : base(log)
+        {
+        }
+
         protected override async Task Handle(QsetPacket packet, IPlayerEntity player)
         {
             switch (packet.Type)

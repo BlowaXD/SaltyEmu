@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Linq;
 using ChickenAPI.Core.Logging;
+using ChickenAPI.Data.Enums.Game;
 using ChickenAPI.Data.Server;
-using ChickenAPI.Enums.Game;
 using SaltyEmu.Redis;
 using ServiceStack.Redis;
 using ServiceStack.Redis.Generic;
@@ -11,11 +11,12 @@ namespace SaltyEmu.RedisWrappers
 {
     public class RedisSessionService : ISessionService
     {
-        private readonly Logger _log = Logger.GetLogger<RedisPlugin>();
+        private readonly ILogger _log;
         private readonly IRedisTypedClient<PlayerSessionDto> _client;
 
-        public RedisSessionService(RedisConfiguration configuration)
+        public RedisSessionService(RedisConfiguration configuration, ILogger log)
         {
+            _log = log;
             _client = new RedisClient(new RedisEndpoint
             {
                 Host = configuration.Host,

@@ -1,13 +1,18 @@
 ﻿using System.Threading.Tasks;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Game.Entities.Events;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Packets.Game.Server.Entities;
+using ChickenAPI.Packets.ServerPackets.Entities;
 using NW.Plugins.PacketHandling.Utils;
 
 namespace NW.Plugins.PacketHandling.Entity
 {
     public class ReqInfoPacketHandling : GenericGamePacketHandlerAsync<ReqInfoPacket>
     {
+        public ReqInfoPacketHandling(ILogger log) : base(log)
+        {
+        }
+
         protected override async Task Handle(ReqInfoPacket packet, IPlayerEntity player)
         {
             if (packet.MateVNum.HasValue)

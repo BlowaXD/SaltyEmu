@@ -1,8 +1,8 @@
 ﻿using ChickenAPI.Data.Item;
-using ChickenAPI.Enums.Game.Items;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Inventory.Extensions;
-using ChickenAPI.Packets.Game.Server.Chat;
+using ChickenAPI.Packets.Enumerations;
+using ChickenAPI.Packets.ServerPackets.Chats;
 
 namespace ChickenAPI.Game.Extensions.PacketGeneration
 {
@@ -19,11 +19,13 @@ namespace ChickenAPI.Game.Extensions.PacketGeneration
                 VisualId = player.Id,
                 VisualType = player.Type,
                 Message = message.Replace(' ', '^'),
-                ItemData = new SayItemPacket.SayItemSubPacket
-                {
-                    IconId = item.Item.Type == InventoryType.Equipment ? (long?)null : item.ItemId,
-                    EquipmentInfo = item.Item.Type == InventoryType.Equipment ? item.GenerateEInfoPacket() : null
-                },
+                ItemData = item.Item.Type == PocketType.Equipment
+                    ? null
+                    : new SayItemPacket.SayItemSubPacket
+                    {
+                        IconId = item.Item.Type == PocketType.Equipment ? (long?)null : item.ItemId,
+                    },
+                EquipmentInfo = item.Item.Type == PocketType.Equipment ? item.GenerateEInfoPacket() : null
             };
         }
     }

@@ -3,8 +3,8 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using ChickenAPI.Core.Events;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Data.BCard;
-using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Game.Battle.Events;
 using ChickenAPI.Game.Battle.Extensions;
 using ChickenAPI.Game.Battle.Hitting;
@@ -17,7 +17,8 @@ using ChickenAPI.Game.Entities.Npc;
 using ChickenAPI.Game.Entities.Npc.Events;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Entities.Player.Events;
-using ChickenAPI.Packets.Game.Server.Battle;
+using ChickenAPI.Packets.Enumerations;
+using ChickenAPI.Packets.ServerPackets.Battle;
 
 namespace SaltyEmu.BasicPlugin.EventHandlers.Battle
 {
@@ -25,10 +26,8 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Battle
     {
         private readonly IBCardHandlerContainer _bCardHandlerContainer;
 
-        public Battle_ProcessHitRequest_Handler(IBCardHandlerContainer bCardHandlerContainer)
-        {
-            _bCardHandlerContainer = bCardHandlerContainer;
-        }
+
+        public Battle_ProcessHitRequest_Handler(ILogger log, IBCardHandlerContainer bCardHandlerContainer) : base(log) => _bCardHandlerContainer = bCardHandlerContainer;
 
         protected override async Task Handle(ProcessHitRequestEvent e, CancellationToken cancellation)
         {
@@ -76,7 +75,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Battle
             Log.Debug($"[{hitRequest.Sender.Type.ToString()}][{hitRequest.Sender.Id}] ATTACK -> [{hitRequest.Target.Type.ToString()}]({hitRequest.Target.Id}) : {givenDamages} damages");
 
             // sets the new target (for AI)
-            if (hitRequest.Target.Type != VisualType.Character && !hitRequest.Target.HasTarget)
+            if (hitRequest.Target.Type != VisualType.Player && !hitRequest.Target.HasTarget)
             {
                 hitRequest.Target.Target = hitRequest.Sender;
             }

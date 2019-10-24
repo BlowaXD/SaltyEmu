@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ChickenAPI.Game.Extensions\ChickenAPI.Game.Extensions.csproj" />
+    <ProjectReference Include="..\ChickenAPI.Game\ChickenAPI.Game.csproj" />
+  </ItemGroup>
+
+</Project>

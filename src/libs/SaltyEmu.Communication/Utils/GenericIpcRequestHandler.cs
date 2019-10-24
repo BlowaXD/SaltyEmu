@@ -5,12 +5,14 @@ using ChickenAPI.Core.Logging;
 
 namespace SaltyEmu.Communication.Utils
 {
-    public abstract class GenericIpcRequestHandler<TRequest, TResponse> : IIpcPacketHandler where TRequest : IIpcRequest
-                                                                                            where TResponse : IIpcResponse
+    public abstract class GenericIpcRequestHandler<TRequest, TResponse> : IIpcPacketHandler where TRequest : ISyncRpcRequest
+                                                                                            where TResponse : ISyncRpcResponse
     {
-        protected readonly Logger Log = Logger.GetLogger<GenericIpcRequestHandler<TRequest, TResponse>>();
+        protected readonly ILogger Log;
 
-        public async Task Handle(IIpcPacket packet)
+        protected GenericIpcRequestHandler(ILogger log) => Log = log;
+
+        public async Task Handle(IAsyncRpcRequest packet)
         {
             if (packet is TRequest request)
             {

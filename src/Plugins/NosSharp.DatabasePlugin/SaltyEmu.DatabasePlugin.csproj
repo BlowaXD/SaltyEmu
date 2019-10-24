@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="8.0.0" />
+    <PackageReference Include="ChickenAPI.Core" Version="1.0.0" />
     <PackageReference Include="EFCore.BulkExtensions" Version="2.1.8" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="2.2.1" />
@@ -27,6 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\ChickenAPI.Game.Impl\ChickenAPI.Game.Impl.csproj" />
     <ProjectReference Include="..\..\ChickenAPI.Game\ChickenAPI.Game.csproj" />
     <ProjectReference Include="..\..\libs\SaltyEmu.Database\SaltyEmu.Database.MSSQL.csproj" />
   </ItemGroup>

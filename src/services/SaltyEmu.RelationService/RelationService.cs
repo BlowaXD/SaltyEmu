@@ -11,6 +11,7 @@ using ChickenAPI.Core.Plugins.Exceptions;
 using ChickenAPI.Core.Utils;
 using SaltyEmu.Communication.Configs;
 using SaltyEmu.Communication.Utils;
+using SaltyEmu.Core.Logging;
 using SaltyEmu.Core.Plugins;
 using SaltyEmu.Redis;
 
@@ -18,8 +19,10 @@ namespace SaltyEmu.RelationService
 {
     internal class RelationService
     {
+        private static ILogger Log;
+
         private static readonly IPluginManager PluginManager = new SimplePluginManager();
-        private static readonly Logger Log = Logger.GetLogger("RelationService");
+        //private static readonly Logger Log = Logger.GetLogger("RelationService");
 
         private static void PrintHeader()
         {
@@ -43,7 +46,7 @@ namespace SaltyEmu.RelationService
 
         private static readonly List<IPlugin> Plugins = new List<IPlugin>
         {
-            new DatabasePlugin.DatabasePlugin(),
+            new DatabasePlugin.DatabasePlugin(Logger.GetLogger<DatabasePlugin.DatabasePlugin>()),
         };
 
 
@@ -79,6 +82,7 @@ namespace SaltyEmu.RelationService
 
         private static void InitializeLogger()
         {
+            ChickenContainer.Builder.Register(s => new Logger(typeof(RelationService))).As<ILogger>();
             Logger.Initialize();
         }
 
@@ -97,7 +101,7 @@ namespace SaltyEmu.RelationService
             ChickenContainer.Builder.Register(s => new MqttClientConfigurationBuilder().ConnectTo("localhost").WithName("relation-service-client"));
             ChickenContainer.Builder.Register(s => new MqttServerConfigurationBuilder().ConnectTo("localhost").WithName("relation-service-server"));
             ChickenContainer.Builder.RegisterAssemblyTypes(typeof(RelationService).Assembly).AsClosedTypesOf(typeof(GenericIpcRequestHandler<,>)).PropertiesAutowired();
-            ChickenContainer.Builder.RegisterAssemblyTypes(typeof(RelationService).Assembly).AsClosedTypesOf(typeof(GenericIpcPacketHandler<>)).PropertiesAutowired();
+            ChickenContainer.Builder.RegisterAssemblyTypes(typeof(RelationService).Assembly).AsClosedTypesOf(typeof(GenericAsyncRpcRequestHandler<>)).PropertiesAutowired();
             ChickenContainer.Builder.RegisterAssemblyTypes(typeof(RelationService).Assembly).AsImplementedInterfaces().PropertiesAutowired();
         }
 
@@ -115,9 +119,9 @@ namespace SaltyEmu.RelationService
             CommunicationIocInjector.Inject();
             ChickenContainer.Initialize();
             EnablePlugins(PluginEnableTime.PostContainerBuild);
-            var server = ChickenContainer.Instance.Resolve<IIpcServer>();
+            var server = ChickenContainer.Instance.Resolve<IRpcServer>();
             var container = ChickenContainer.Instance.Resolve<IIpcPacketHandlersContainer>();
-            foreach (Type handlerType in typeof(RelationService).Assembly.GetTypesImplementingGenericClass(typeof(GenericIpcRequestHandler<,>), typeof(GenericIpcPacketHandler<>)))
+            foreach (Type handlerType in typeof(RelationService).Assembly.GetTypesImplementingGenericClass(typeof(GenericIpcRequestHandler<,>), typeof(GenericAsyncRpcRequestHandler<>)))
             {
                 try
                 {

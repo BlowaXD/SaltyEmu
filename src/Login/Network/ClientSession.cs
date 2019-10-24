@@ -5,9 +5,9 @@ using System.Text;
 using ChickenAPI.Core.Logging;
 using ChickenAPI.Data.Account;
 using ChickenAPI.Data.Character;
+using ChickenAPI.Data.Enums;
+using ChickenAPI.Data.Enums.Game;
 using ChickenAPI.Data.Server;
-using ChickenAPI.Enums;
-using ChickenAPI.Enums.Game;
 using DotNetty.Transport.Channels;
 using DotNetty.Transport.Channels.Groups;
 using DotNetty.Transport.Channels.Sockets;
@@ -16,7 +16,7 @@ namespace Login.Network
 {
     public class ClientSession : ChannelHandlerAdapter
     {
-        public static readonly Logger Log = Logger.GetLogger<ClientSession>();
+        public readonly ILogger Log;
         public static ISessionService SessionService;
         public static IAccountService AccountService;
         public static IServerApiService ServerApi;
@@ -26,9 +26,10 @@ namespace Login.Network
         private readonly IChannel _channel;
         private IPEndPoint _endPoint;
 
-        public ClientSession(IChannel channel)
+        public ClientSession(IChannel channel, ILogger log)
         {
             _channel = channel;
+            Log = log;
         }
 
         public override void ChannelRegistered(IChannelHandlerContext context)

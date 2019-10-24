@@ -1,20 +1,26 @@
 ﻿using System.Threading.Tasks;
-using ChickenAPI.Enums.Game.Entity;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Game.Entities.Npc;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Shops.Events;
-using ChickenAPI.Packets.Game.Client.Shops;
+using ChickenAPI.Packets.ClientPackets.Npcs;
+using ChickenAPI.Packets.Enumerations;
+using ChickenAPI.Packets.ServerPackets.Shop;
 using NW.Plugins.PacketHandling.Utils;
 
 namespace NW.Plugins.PacketHandling.Shops
 {
-    public class NpcReqPacketHandling : GenericGamePacketHandlerAsync<ReceivedNpcReqPacket>
+    public class NpcReqPacketHandling : GenericGamePacketHandlerAsync<RequestNpcPacket>
     {
-        protected override async Task Handle(ReceivedNpcReqPacket packet, IPlayerEntity player)
+        public NpcReqPacketHandling(ILogger log) : base(log)
         {
-            if (packet.VisualType == VisualType.Character)
+        }
+
+        protected override async Task Handle(RequestNpcPacket packet, IPlayerEntity player)
+        {
+            if (packet.Type == VisualType.Player)
             {
-                IPlayerEntity shop = player.CurrentMap.GetPlayerById(packet.VisualId);
+                IPlayerEntity shop = player.CurrentMap.GetPlayerById(packet.TargetId);
                 if (shop == null)
                 {
                     return;
@@ -24,13 +30,18 @@ namespace NW.Plugins.PacketHandling.Shops
                 return;
             }
 
-            var npc = player.CurrentMap.GetEntity<INpcEntity>(packet.VisualId, VisualType.Npc);
+            var npc = player.CurrentMap.GetEntity<INpcEntity>(packet.TargetId, VisualType.Npc);
 
-            await player.SendPacketAsync(new SentNpcReqPacket
+            if (npc == null)
             {
-                VisualType = VisualType.Npc,
-                VisualId = npc.MapNpc.Id,
-                Dialog = npc.MapNpc.Dialog
+                return;
+            }
+
+            await player.SendPacketAsync(new RequestNpcPacket()
+            {
+                Type = VisualType.Npc,
+                TargetId = npc.MapNpc.Id,
+                Data = npc.MapNpc.Dialog
             });
         }
     }

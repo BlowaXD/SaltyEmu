@@ -7,12 +7,13 @@ using Autofac;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Logging;
 using ChickenAPI.Data.NpcMonster;
+using SaltyEmu.Core.Logging;
 
 namespace Toolkit.Converter
 {
     public class EInfoFiller
     {
-        private static readonly Logger Log = Logger.GetLogger<EInfoFiller>();
+        private static readonly ILogger Log = Logger.GetLogger<EInfoFiller>();
         private readonly List<NpcMonsterDto> _npcMonsters = new List<NpcMonsterDto>();
         private INpcMonsterService _npcMonsterService;
 

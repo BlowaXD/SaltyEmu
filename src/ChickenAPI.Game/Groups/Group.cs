@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using ChickenAPI.Enums.Game.Groups;
+using ChickenAPI.Data.Enums.Game.Groups;
 using ChickenAPI.Game.Entities.Player;
 
 namespace ChickenAPI.Game.Groups

@@ -7,6 +7,7 @@ using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Logging;
 using ChickenAPI.Core.Plugins;
 using ChickenAPI.Core.Plugins.Exceptions;
+using SaltyEmu.Core.Logging;
 using SaltyEmu.Core.Plugins;
 
 namespace SaltyEmu.CharacterSkillService
@@ -14,7 +15,7 @@ namespace SaltyEmu.CharacterSkillService
     class Program
     {
         private static readonly IPluginManager PluginManager = new SimplePluginManager();
-        private static readonly Logger Log = Logger.GetLogger("RelationService");
+        private static readonly ILogger Log = Logger.GetLogger<Program>();
 
         private static void PrintHeader()
         {

@@ -16,7 +16,6 @@ namespace Essentials
 {
     public class EssentialsPlugin : IPlugin
     {
-        private static readonly Logger Log = Logger.GetLogger<EssentialsPlugin>();
         public PluginEnableTime EnableTime => PluginEnableTime.PostContainerBuild;
         public string Name => "Essentials";
 
@@ -58,7 +57,7 @@ namespace Essentials
             }
             catch (Exception e)
             {
-                Log.Debug(e.StackTrace);
+                // Log.Debug(e.StackTrace);
             }
 
             return Task.CompletedTask;
@@ -73,7 +72,7 @@ namespace Essentials
             }
             catch (Exception e)
             {
-                Log.Debug(e.StackTrace);
+                // Log.Debug(e.StackTrace);
             }
         }
 

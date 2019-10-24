@@ -1,10 +1,11 @@
-﻿using ChickenAPI.Enums.Game.Items;
-using ChickenAPI.Enums.Packets;
+﻿using ChickenAPI.Data.Enums.Game.Items.Upgrade;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Helpers;
 using ChickenAPI.Game.Inventory.ItemUpgrade.Events;
 using ChickenAPI.Game.Inventory.ItemUpgrade.Handlers;
 using ChickenAPI.Game.Inventory.ItemUpgrade.Handlers.Handling;
+using ChickenAPI.Packets.Enumerations;
+using EquipmentType = ChickenAPI.Data.Enums.Game.Items.EquipmentType;
 
 namespace SaltyEmu.BasicPlugin.ItemUpgradeHandlers
 {

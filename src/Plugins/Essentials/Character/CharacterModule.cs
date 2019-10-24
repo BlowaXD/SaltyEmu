@@ -3,18 +3,17 @@ using System.Threading.Tasks;
 using Autofac;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Data.Character;
+using ChickenAPI.Data.Enums;
 using ChickenAPI.Data.Item;
-using ChickenAPI.Enums;
-using ChickenAPI.Enums.Game.Character;
-using ChickenAPI.Enums.Game.Items;
-using ChickenAPI.Enums.Packets;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Entities.Player.Extensions;
 using ChickenAPI.Game.Helpers;
 using ChickenAPI.Game.Inventory.Extensions;
+using ChickenAPI.Packets.Enumerations;
 using Qmmands;
 using SaltyEmu.Commands.Checks;
 using SaltyEmu.Commands.Entities;
+using EquipmentType = ChickenAPI.Data.Enums.Game.Items.EquipmentType;
 
 namespace Essentials.Character
 {

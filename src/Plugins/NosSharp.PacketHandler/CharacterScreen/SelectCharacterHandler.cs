@@ -1,20 +1,21 @@
 ﻿using System;
 using System.Threading.Tasks;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Data.Character;
 using ChickenAPI.Game._Network;
-using ChickenAPI.Packets.CharacterSelectionScreen.Client;
-using ChickenAPI.Packets.CharacterSelectionScreen.Server;
+using ChickenAPI.Packets.ClientPackets.CharacterSelectionScreen;
+using ChickenAPI.Packets.ServerPackets.CharacterSelectionScreen;
 using NW.Plugins.PacketHandling.Utils;
 
 namespace NW.Plugins.PacketHandling.CharacterScreen
 {
-    public class SelectCharacterHandler : GenericSessionPacketHandlerAsync<SelectPacketBase>
+    public class SelectCharacterHandler : GenericSessionPacketHandlerAsync<SelectPacket>
     {
         private readonly ICharacterService _characterService;
 
-        public SelectCharacterHandler(ICharacterService characterService) => _characterService = characterService;
+        public SelectCharacterHandler(ILogger log, ICharacterService characterService) : base(log) => _characterService = characterService;
 
-        protected override async Task Handle(SelectPacketBase packet, ISession session)
+        protected override async Task Handle(SelectPacket packet, ISession session)
         {
             try
             {
@@ -30,7 +31,7 @@ namespace NW.Plugins.PacketHandling.CharacterScreen
                 }
 
                 session.InitializeCharacterId(characterDto.Id);
-                await session.SendPacketAsync(new OkPacketBase());
+                await session.SendPacketAsync(new OkPacket());
             }
             catch (Exception ex)
             {

@@ -3,7 +3,7 @@ using ChickenAPI.Core.IPC.Protocol;
 
 namespace SaltyEmu.Communication.Protocol
 {
-    public class BaseResponse : IIpcResponse
+    public class BaseResponse : ISyncRpcResponse
     {
         private Guid _id;
 

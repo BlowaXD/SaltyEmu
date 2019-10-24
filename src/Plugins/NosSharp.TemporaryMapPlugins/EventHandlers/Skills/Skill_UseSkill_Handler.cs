@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using ChickenAPI.Core.Events;
+using ChickenAPI.Core.Logging;
+using ChickenAPI.Data.Enums.Game.Skill;
 using ChickenAPI.Data.Skills;
-using ChickenAPI.Enums.Game.Entity;
-using ChickenAPI.Enums.Game.Skill;
-using ChickenAPI.Enums.Packets;
 using ChickenAPI.Game.Battle.Events;
 using ChickenAPI.Game.Battle.Extensions;
 using ChickenAPI.Game.Battle.Hitting;
@@ -14,6 +13,7 @@ using ChickenAPI.Game.Battle.Interfaces;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Movements.Extensions;
 using ChickenAPI.Game.Skills.Args;
+using ChickenAPI.Packets.Enumerations;
 
 namespace SaltyEmu.BasicPlugin.EventHandlers.Skills
 {
@@ -21,10 +21,8 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Skills
     {
         private readonly IHitRequestFactory _hitRequestFactory;
 
-        public Skill_UseSkill_Handler(IHitRequestFactory hitRequestFactory)
-        {
-            _hitRequestFactory = hitRequestFactory;
-        }
+
+        public Skill_UseSkill_Handler(ILogger log, IHitRequestFactory hitRequestFactory) : base(log) => _hitRequestFactory = hitRequestFactory;
 
         protected override async Task Handle(UseSkillEvent e, CancellationToken cancellation)
         {
@@ -67,7 +65,7 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Skills
                         return;
                     }
 
-                    if (entity.Type == VisualType.Character && target.Type == VisualType.Character && !entity.CurrentMap.IsPvpEnabled && skill.HitType != 1)
+                    if (entity.Type == VisualType.Player && target.Type == VisualType.Player && !entity.CurrentMap.IsPvpEnabled && skill.HitType != 1)
                     {
                         if (!(player is null))
                         {

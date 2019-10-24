@@ -6,14 +6,15 @@ using System.Text;
 using Autofac;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Logging;
+using ChickenAPI.Data.Enums.Game.Entity;
 using ChickenAPI.Data.Map;
-using ChickenAPI.Enums.Game.Entity;
+using SaltyEmu.Core.Logging;
 
 namespace Toolkit.Generators.FromPackets
 {
     public class MapNpcGenerator
     {
-        private static readonly Logger Log = Logger.GetLogger<MapNpcGenerator>();
+        private static readonly ILogger Log = Logger.GetLogger<MapNpcGenerator>();
 
         private readonly List<MapNpcDto> _npcs = new List<MapNpcDto>();
 

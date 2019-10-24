@@ -5,7 +5,7 @@ namespace SaltyEmu.Communication.Utils
 {
     public class PendingRequest
     {
-        public IIpcRequest Request { get; set; }
-        public TaskCompletionSource<IIpcResponse> Response { get; set; }
+        public ISyncRpcRequest Request { get; set; }
+        public TaskCompletionSource<ISyncRpcResponse> Response { get; set; }
     }
 }

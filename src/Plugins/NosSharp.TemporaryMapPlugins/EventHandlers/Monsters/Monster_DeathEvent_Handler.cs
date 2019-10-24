@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Autofac;
 using ChickenAPI.Core.Events;
 using ChickenAPI.Core.IoC;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Core.Maths;
 using ChickenAPI.Core.Utils;
 using ChickenAPI.Data.NpcMonster;
@@ -20,13 +21,13 @@ namespace SaltyEmu.BasicPlugin.EventHandlers
 {
     public class Monster_DeathEvent_Handler : GenericEventPostProcessorBase<MonsterDeathEvent>
     {
-        private readonly IRandomGenerator Random;
-        private readonly IPathfinder PathFinder;
+        private readonly IRandomGenerator _random;
+        private readonly IPathfinder _pathFinder;
 
-        public Monster_DeathEvent_Handler(IRandomGenerator random, IPathfinder pathFinder)
+        public Monster_DeathEvent_Handler(ILogger log, IRandomGenerator random, IPathfinder pathFinder) : base(log)
         {
-            Random = random;
-            PathFinder = pathFinder;
+            _random = random;
+            _pathFinder = pathFinder;
         }
 
         protected override async Task Handle(MonsterDeathEvent e, CancellationToken cancellation)
@@ -49,16 +50,16 @@ namespace SaltyEmu.BasicPlugin.EventHandlers
                 await player.EmitEventAsync(new ExperienceGainEvent { Experience = xp, JobExperience = jobXp, HeroExperience = heroXp });
             }
 
-            if (Random.Next(100) < 100) // 100 should be modified with GoldDropRate
+            if (_random.Next(100) < 100) // 100 should be modified with GoldDropRate
             {
-                Position<short>[] pos = PathFinder.GetNeighbors(monster.Position, monster.CurrentMap.Map);
+                Position<short>[] pos = _pathFinder.GetNeighbors(monster.Position, monster.CurrentMap.Map);
                 IDropEntity drop = new ItemDropEntity(monster.CurrentMap.GetNextId())
                 {
                     ItemVnum = 1046,
                     IsGold = true,
                     DroppedTimeUtc = DateTime.Now,
-                    Position = pos.Length > 1 ? pos[Random.Next(pos.Length)] : monster.Position,
-                    Quantity = Random.Next(6 * monster.NpcMonster.Level, 12 * monster.NpcMonster.Level)
+                    Position = pos.Length > 1 ? pos[_random.Next(pos.Length)] : monster.Position,
+                    Quantity = _random.Next(6 * monster.NpcMonster.Level, 12 * monster.NpcMonster.Level)
                 };
                 drop.TransferEntity(monster.CurrentMap);
                 await monster.CurrentMap.BroadcastAsync(drop.GenerateDropPacket());

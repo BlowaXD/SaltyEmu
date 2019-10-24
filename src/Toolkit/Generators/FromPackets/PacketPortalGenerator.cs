@@ -7,13 +7,14 @@ using Autofac;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Logging;
 using ChickenAPI.Data.Map;
-using ChickenAPI.Enums.Game.Portals;
+using ChickenAPI.Packets.Enumerations;
+using SaltyEmu.Core.Logging;
 
 namespace Toolkit.Generators.FromPackets
 {
     public class PacketPortalGenerator
     {
-        private static readonly Logger Log = Logger.GetLogger<PacketPortalGenerator>();
+        private static readonly ILogger Log = Logger.GetLogger<PacketPortalGenerator>();
         private readonly List<PortalDto> _destinationPortals = new List<PortalDto>();
 
         private readonly List<PortalDto> _sourcePortals = new List<PortalDto>();

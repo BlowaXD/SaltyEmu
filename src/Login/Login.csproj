@@ -25,12 +25,13 @@
     <PackageReference Include="DotNetty.Codecs" Version="0.6.0" />
     <PackageReference Include="DotNetty.Common" Version="0.6.0" />
     <PackageReference Include="DotNetty.Transport" Version="0.6.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
-    <PackageReference Include="System.Memory" Version="4.5.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
+    <PackageReference Include="System.Memory" Version="4.5.3" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\ChickenAPI.Game\ChickenAPI.Game.csproj" />
+    <ProjectReference Include="..\libs\SaltyEmu.Core\SaltyEmu.Core.csproj" />
     <ProjectReference Include="..\Plugins\NosSharp.DatabasePlugin\SaltyEmu.DatabasePlugin.csproj" />
     <ProjectReference Include="..\Plugins\NosSharp.RedisSessionPlugin\SaltyEmu.RedisWrappers.csproj" />
   </ItemGroup>

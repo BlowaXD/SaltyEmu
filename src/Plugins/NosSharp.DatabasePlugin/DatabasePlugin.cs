@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Data.SqlClient;
+using ChickenAPI.Core.Configurations;
 using ChickenAPI.Core.Logging;
 using ChickenAPI.Core.Plugins;
 using ChickenAPI.Core.Plugins.Exceptions;
-using ChickenAPI.Core.Utils;
+using ChickenAPI.Game.Impl;
 using Microsoft.EntityFrameworkCore;
 using SaltyEmu.DatabasePlugin.Configuration;
 using SaltyEmu.DatabasePlugin.Context;
@@ -13,7 +14,11 @@ namespace SaltyEmu.DatabasePlugin
 {
     public class DatabasePlugin : IPlugin
     {
-        private static readonly Logger Log = Logger.GetLogger<DatabasePlugin>();
+        public DatabasePlugin(ILogger log)
+        {
+            Log = log;
+        }
+        private readonly ILogger Log;
         private readonly string _configurationFilePath = $"plugins/config/{nameof(DatabasePlugin)}/conf.json";
         private DatabaseConfiguration _configuration;
         public PluginEnableTime EnableTime => PluginEnableTime.PreContainerBuild;
@@ -22,7 +27,8 @@ namespace SaltyEmu.DatabasePlugin
         public void OnLoad()
         {
             Log.Info("Loading...");
-            _configuration = ConfigurationHelper.Load<DatabaseConfiguration>(_configurationFilePath, true); // database configuration
+            var loader = new ConfigurationHelper(new JsonConfigurationSerializer());
+            _configuration = loader.Load<DatabaseConfiguration>(_configurationFilePath, true); // database configuration
             if (!Initialize())
             {
                 throw new CriticalPluginException(this, "Verify your configuration in : " + _configurationFilePath);

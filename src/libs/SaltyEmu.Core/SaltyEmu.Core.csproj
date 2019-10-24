@@ -1,12 +1,17 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\ChickenAPI.Core\ChickenAPI.Core.csproj" />
-    <ProjectReference Include="..\..\Plugins\NosSharp.DatabasePlugin\SaltyEmu.DatabasePlugin.csproj" />
+    <PackageReference Include="ChickenAPI.Core" Version="1.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
+    <PackageReference Include="NLog" Version="4.6.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\ChickenAPI.Game\ChickenAPI.Game.csproj" />
   </ItemGroup>
 
 </Project>

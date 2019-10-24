@@ -38,12 +38,12 @@ namespace SaltyEmu.Communication.Routing
             string requestTopic = newTopic.ToString();
             string responseTopic = "";
 
-            if (type.GetInterfaces().Any(s => s == typeof(IIpcRequest)))
+            if (type.GetInterfaces().Any(s => s == typeof(ISyncRpcRequest)))
             {
                 requestTopic += RequestTopicSuffix;
                 responseTopic = newTopic + ResponseTopicSuffix;
             }
-            else if (type.GetInterfaces().Any(s => s == typeof(IIpcPacket)))
+            else if (type.GetInterfaces().Any(s => s == typeof(IAsyncRpcRequest)))
             {
                 requestTopic += PacketTopicSuffix;
             }
@@ -62,16 +62,16 @@ namespace SaltyEmu.Communication.Routing
 
             string requestTopic = "";
             string responseTopic = "";
-            if (type.GetInterfaces().Any(s => s == typeof(IIpcRequest)))
+            if (type.GetInterfaces().Any(s => s == typeof(ISyncRpcRequest)))
             {
                 requestTopic = type.FullName.ToLower() + RequestTopicSuffix;
                 responseTopic = type.FullName.ToLower() + ResponseTopicSuffix;
             }
-            else if (type.GetInterfaces().Any(s => s == typeof(IIpcPacket)))
+            else if (type.GetInterfaces().Any(s => s == typeof(IAsyncRpcRequest)))
             {
                 requestTopic = type.FullName.ToLower() + PacketTopicSuffix;
             }
-            else if (type.IsNested && type.GetInterfaces().Any(s => s == typeof(IIpcResponse)))
+            else if (type.IsNested && type.GetInterfaces().Any(s => s == typeof(ISyncRpcResponse)))
             {
                 responseTopic = type.FullName.ToLower().Replace('+', '.');
             }

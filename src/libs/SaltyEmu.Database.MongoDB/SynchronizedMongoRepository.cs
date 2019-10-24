@@ -11,16 +11,17 @@ namespace SaltyEmu.Database.MongoDB
 {
     public abstract class SynchronizedMongoRepository<TObject> : ISynchronizedRepository<TObject> where TObject : class, ISynchronizedDto
     {
-        protected readonly Logger Log = Logger.GetLogger($"Mongo-{typeof(TObject).Name}");
+        protected readonly ILogger Log;
         protected readonly IMongoDatabase Database;
         protected readonly IMongoCollection<TObject> Collection;
 
-        protected SynchronizedMongoRepository(MongoConfigurationBuilder builder) : this(builder.Build())
+        protected SynchronizedMongoRepository(MongoConfigurationBuilder builder, ILogger log) : this(builder.Build(), log)
         {
         }
 
-        private SynchronizedMongoRepository(MongoConfiguration conf)
+        private SynchronizedMongoRepository(MongoConfiguration conf, ILogger log)
         {
+            Log = log;
             MongoClientSettings settings = MongoClientSettings.FromConnectionString($"mongodb://{conf.Endpoint}:{conf.Port}");
             var client = new MongoClient(settings);
             client.Cluster.Initialize();

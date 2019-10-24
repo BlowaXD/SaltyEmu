@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using ChickenAPI.Enums.Game.Buffs;
+using ChickenAPI.Data.Enums.Game.Buffs;
 using SaltyEmu.Database;
 using SaltyEmu.DatabasePlugin.Models.BCard;
 

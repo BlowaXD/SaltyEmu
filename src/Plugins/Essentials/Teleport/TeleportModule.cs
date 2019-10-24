@@ -1,10 +1,10 @@
-﻿using ChickenAPI.Enums;
-using ChickenAPI.Game.Entities.Player;
+﻿using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Helpers;
 using Qmmands;
 using SaltyEmu.Commands.Checks;
 using SaltyEmu.Commands.Entities;
 using System.Threading.Tasks;
+using ChickenAPI.Data.Enums;
 using ChickenAPI.Game._ECS.Entities;
 
 namespace Essentials.Teleport

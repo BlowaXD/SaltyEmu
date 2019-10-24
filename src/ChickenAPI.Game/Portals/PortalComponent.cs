@@ -1,7 +1,7 @@
 ﻿using ChickenAPI.Data.Map;
-using ChickenAPI.Enums.Game.Portals;
 using ChickenAPI.Game._ECS.Components;
 using ChickenAPI.Game._ECS.Entities;
+using ChickenAPI.Packets.Enumerations;
 
 namespace ChickenAPI.Game.Portals
 {

@@ -1,20 +1,27 @@
 ﻿using System.Threading.Tasks;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.NpcDialog.Events;
-using ChickenAPI.Packets.Game.Client.Npcs;
+using ChickenAPI.Packets.ClientPackets.Npcs;
 using NW.Plugins.PacketHandling.Utils;
 
 namespace NW.Plugins.PacketHandling.Npc.Dialog
 {
     public class NRunPacketHandling : GenericGamePacketHandlerAsync<NrunPacket>
     {
-        protected override Task Handle(NrunPacket packet, IPlayerEntity player) =>
-            player.EmitEventAsync(new NpcDialogEvent
+        public NRunPacketHandling(ILogger log) : base(log)
+        {
+        }
+
+        protected override async Task Handle(NrunPacket packet, IPlayerEntity player)
+        {
+            await player.EmitEventAsync(new NpcDialogEvent
             {
-                DialogId = packet.Runner,
-                Type = packet.Type,
-                Value = packet.Value,
-                NpcId = packet.NpcId
+                DialogId = (long)packet.Runner,
+                Type = packet.Type.GetValueOrDefault(),
+                Value = (int)packet.VisualType,
+                NpcId = packet.VisualId.GetValueOrDefault()
             });
+        }
     }
 }

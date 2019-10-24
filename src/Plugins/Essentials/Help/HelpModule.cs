@@ -1,11 +1,11 @@
-﻿using ChickenAPI.Enums.Packets;
-using Qmmands;
+﻿using Qmmands;
 using SaltyEmu.Commands.Entities;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ChickenAPI.Game.Helpers;
+using ChickenAPI.Packets.Enumerations;
 
 namespace Essentials.Help
 {

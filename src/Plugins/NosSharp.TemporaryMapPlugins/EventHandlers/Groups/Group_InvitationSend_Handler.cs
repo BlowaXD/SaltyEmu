@@ -1,8 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using ChickenAPI.Core.Events;
-using ChickenAPI.Core.i18n;
-using ChickenAPI.Enums.Packets;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Entities.Player.Extensions;
 using ChickenAPI.Game.Groups;
@@ -11,8 +10,8 @@ using ChickenAPI.Game.Helpers;
 using ChickenAPI.Game.Managers;
 using ChickenAPI.Game._i18n;
 using ChickenAPI.Packets;
-using ChickenAPI.Packets.Game.Server.Group;
-using ChickenAPI.Packets.Game.Server.UserInterface;
+using ChickenAPI.Packets.Enumerations;
+using ChickenAPI.Packets.ServerPackets.Groups;
 
 namespace SaltyEmu.BasicPlugin.EventHandlers
 {
@@ -21,7 +20,8 @@ namespace SaltyEmu.BasicPlugin.EventHandlers
         private readonly IPlayerManager _playerManager;
         private readonly IGroupManager _groupManager;
 
-        public Group_InvitationSend_Handler(IPlayerManager playerManager, IGroupManager groupManager)
+
+        public Group_InvitationSend_Handler(ILogger log, IPlayerManager playerManager, IGroupManager groupManager) : base(log)
         {
             _playerManager = playerManager;
             _groupManager = groupManager;
@@ -44,8 +44,8 @@ namespace SaltyEmu.BasicPlugin.EventHandlers
             _groupManager.CreateInvitation(sender, target);
 
             await player.SendChatMessageAsync(PlayerMessages.GROUP_PLAYER_X_INVITED_TO_YOUR_GROUP, SayColorType.Yellow);
-            PacketBase acceptPacket = new PJoinPacket { CharacterId = target.Id, RequestType = PJoinPacketType.Accepted };
-            PacketBase refusePacket = new PJoinPacket { CharacterId = target.Id, RequestType = PJoinPacketType.Declined };
+            PacketBase acceptPacket = new PjoinPacket { CharacterId = target.Id, RequestType = GroupRequestType.Accepted };
+            PacketBase refusePacket = new PjoinPacket { CharacterId = target.Id, RequestType = GroupRequestType.Declined };
             string question = target.GetLanguageFormat(PlayerMessages.GROUP_PLAYER_X_INVITED_YOU_TO_JOIN_HIS_GROUP, sender.Character.Name);
             await target.SendDialog(acceptPacket, refusePacket, question);
         }

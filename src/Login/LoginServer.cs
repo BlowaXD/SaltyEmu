@@ -9,6 +9,7 @@ using ChickenAPI.Data.Account;
 using ChickenAPI.Data.Server;
 using Login.Cryptography.Factories;
 using Login.Network;
+using SaltyEmu.Core.Logging;
 using SaltyEmu.DatabasePlugin;
 using SaltyEmu.RedisWrappers;
 
@@ -16,8 +17,7 @@ namespace Login
 {
     internal class LoginServer
     {
-        private static readonly Logger Log = Logger.GetLogger<LoginServer>();
-        private static readonly IPluginManager PluginManager = new SimplePluginManager();
+        private static readonly ILogger Log = Logger.GetLogger<LoginServer>();
 
         private static ushort _port;
 
@@ -42,6 +42,7 @@ namespace Login
 
         private static void InitializeLogger()
         {
+            ChickenContainer.Builder.Register(s => Logger.GetLogger(s.GetType())).As<ILogger>().InstancePerDependency();
             Logger.Initialize();
         }
 
@@ -61,18 +62,14 @@ namespace Login
         {
             try
             {
-                IPlugin[] plugins = PluginManager.LoadPlugins(new DirectoryInfo("plugins"));
-                var dbPlugin = new DatabasePlugin();
+                new IoCPluginManager(Logger.GetLogger<IoCPluginManager>()).RegisterPlugins(new DirectoryInfo("plugins"), ChickenContainer.Builder);
+                var dbPlugin = new DatabasePlugin(Logger.GetLogger<DatabasePlugin>());
                 dbPlugin.OnLoad();
-                var redisPlugin = new RedisPlugin();
+                var redisPlugin = new RedisPlugin(Logger.GetLogger<RedisPlugin>());
                 redisPlugin.OnLoad();
 
                 dbPlugin.OnEnable();
                 redisPlugin.OnEnable();
-
-                if (plugins == null)
-                {
-                }
             }
             catch (Exception e)
             {
@@ -86,7 +83,6 @@ namespace Login
             InitializeLogger();
             InitializeConfiguration();
             InitializePlugins();
-            ChickenContainer.Builder.Register(s => PluginManager).As<IPluginManager>();
             ChickenContainer.Initialize();
             ClientSession.AccountService = ChickenContainer.Instance.Resolve<IAccountService>();
             ClientSession.ServerApi = ChickenContainer.Instance.Resolve<IServerApiService>();

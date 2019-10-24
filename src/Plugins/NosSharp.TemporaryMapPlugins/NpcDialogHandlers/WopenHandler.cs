@@ -1,23 +1,21 @@
-﻿using ChickenAPI.Core.Logging;
-using ChickenAPI.Game.Entities.Player;
+﻿using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.NpcDialog.Events;
 using ChickenAPI.Game.NpcDialog.Handling;
-using ChickenAPI.Packets.Game.Client.Npcs;
-using ChickenAPI.Packets.Game.Client.Shops;
+using ChickenAPI.Packets.ClientPackets.Npcs;
+using ChickenAPI.Packets.Enumerations;
+using ChickenAPI.Packets.ServerPackets.UI;
 
 namespace SaltyEmu.BasicPlugin.NpcDialogHandlers
 {
     public class WopenHandler
     {
-        private static readonly Logger Log = Logger.GetLogger<WopenHandler>();
-
         [NpcDialogHandler(2)]
         public static void UpgradeFromNpc(IPlayerEntity player, NpcDialogEvent args)
         {
             player.SendPacketAsync(new WopenPacket
             {
-                Type = 1,
-                Unknow = 0
+                Type = WindowType.UpgradeItem,
+                Unknown = 0,
             });
         }
 
@@ -26,8 +24,8 @@ namespace SaltyEmu.BasicPlugin.NpcDialogHandlers
         {
             player.SendPacketAsync(new WopenPacket
             {
-                Type = 3,
-                Unknow = 0
+                Type = WindowType.CellonItem,
+                Unknown = 0
             });
         }
 
@@ -36,8 +34,8 @@ namespace SaltyEmu.BasicPlugin.NpcDialogHandlers
         {
             player.SendPacketAsync(new WopenPacket
             {
-                Type = args.Type,
-                Unknow = 0
+                Type = (WindowType)args.Type,
+                Unknown = 0
             });
         }
 
@@ -46,8 +44,8 @@ namespace SaltyEmu.BasicPlugin.NpcDialogHandlers
         {
             player.SendPacketAsync(new WopenPacket
             {
-                Type = 27,
-                Unknow = 0
+                Type = WindowType.Production,
+                Unknown = 0
             });
             // Recipe
             /*string recipelist = "m_list 2";
@@ -69,11 +67,11 @@ namespace SaltyEmu.BasicPlugin.NpcDialogHandlers
         [NpcDialogHandler(18)]
         public static void TimeCircle(IPlayerEntity player, NpcDialogEvent args)
         {
-            player.SendPacketAsync(new SentNpcReqPacket
+            player.SendPacketAsync(new RequestNpcPacket
             {
-                VisualType = ChickenAPI.Enums.Game.Entity.VisualType.Character,
-                VisualId = player.Id,
-                Dialog = 17
+                Type = player.Type,
+                TargetId = player.Id,
+                Data = 17
             });
         }
 
@@ -93,8 +91,8 @@ namespace SaltyEmu.BasicPlugin.NpcDialogHandlers
                     */
             player.SendPacketAsync(new WopenPacket
             {
-                Type = 32,
-                Unknow = 1
+                Type = WindowType.NosBazaar,
+                Unknown = 1
             });
         }
     }

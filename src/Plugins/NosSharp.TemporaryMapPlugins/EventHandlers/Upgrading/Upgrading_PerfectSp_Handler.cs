@@ -1,8 +1,8 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using ChickenAPI.Core.Events;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Core.Maths;
-using ChickenAPI.Enums.Packets;
 using ChickenAPI.Game;
 using ChickenAPI.Game.Configuration;
 using ChickenAPI.Game.Effects;
@@ -11,6 +11,7 @@ using ChickenAPI.Game.Entities.Player.Extensions;
 using ChickenAPI.Game.Helpers;
 using ChickenAPI.Game.Inventory.ItemUpgrade.Events;
 using ChickenAPI.Game.Shops.Extensions;
+using ChickenAPI.Packets.Enumerations;
 
 namespace SaltyEmu.BasicPlugin.EventHandlers
 {
@@ -19,10 +20,11 @@ namespace SaltyEmu.BasicPlugin.EventHandlers
         private readonly IGameConfiguration _configuration;
         private readonly IRandomGenerator _random;
 
-        public Upgrading_PerfectSp_Handler(IRandomGenerator random, IGameConfiguration configuration)
+
+        public Upgrading_PerfectSp_Handler(ILogger log, IGameConfiguration configuration, IRandomGenerator random) : base(log)
         {
-            _random = random;
             _configuration = configuration;
+            _random = random;
         }
 
         protected override async Task Handle(PerfectSPCardEvent e, CancellationToken cancellation)
@@ -57,14 +59,14 @@ namespace SaltyEmu.BasicPlugin.EventHandlers
                     type == 14 ? e.SpCard.SpLight : e.SpCard.SpDark);
 
                 stoneup += count;
-                await player.SendTopscreenMessage("PERFECTSP_SUCCESS", MsgPacketType.White);
+                await player.SendTopscreenMessage("PERFECTSP_SUCCESS", MessageType.White);
                 await player.SendChatMessageAsync("PERFECTSP_SUCCESS", SayColorType.Green);
 
                 e.SpCard.SpStoneUpgrade++;
             }
             else
             {
-                await player.SendTopscreenMessage("PERFECTSP_FAILURE", MsgPacketType.White);
+                await player.SendTopscreenMessage("PERFECTSP_FAILURE", MessageType.White);
                 await player.SendChatMessageAsync("PERFECTSP_FAILURE", SayColorType.Purple);
             }
 

@@ -7,9 +7,10 @@ using ChickenAPI.Core.Logging;
 using ChickenAPI.Core.Utils;
 using ChickenAPI.Data.Account;
 using ChickenAPI.Data.Character;
-using ChickenAPI.Enums;
+using ChickenAPI.Data.Enums;
 using CommandLine;
 using SaltyEmu.BasicAlgorithmPlugin;
+using SaltyEmu.Core.Logging;
 using SaltyEmu.DatabasePlugin;
 using Toolkit.Converter;
 using Toolkit.Generators.FromPackets;
@@ -19,7 +20,7 @@ namespace Toolkit.Commands
     [Verb("parse")]
     public class ParseCommand
     {
-        private static readonly Logger Log = Logger.GetLogger<ParseCommand>();
+        private static readonly ILogger Log = Logger.GetLogger<ParseCommand>();
 
         [Value(0, Default = "all", HelpText = "Parsing type : card, skill, map, item, einfo, monster")]
         public string ParsingType { get; set; }
@@ -103,7 +104,7 @@ namespace Toolkit.Commands
             var algo = new BasicAlgorithmPlugin();
             algo.OnLoad();
             algo.OnEnable();
-            var tmp = new DatabasePlugin();
+            var tmp = new DatabasePlugin(Logger.GetLogger<DatabasePlugin>());
             tmp.OnLoad();
             tmp.OnEnable();
             ChickenContainer.Initialize();

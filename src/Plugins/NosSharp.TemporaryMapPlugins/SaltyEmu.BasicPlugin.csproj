@@ -5,7 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="ChickenAPI.Core" Version="1.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\ChickenAPI.Game.Extensions\ChickenAPI.Game.Extensions.csproj" />
+    <ProjectReference Include="..\..\ChickenAPI.Game.Impl\ChickenAPI.Game.Impl.csproj" />
     <ProjectReference Include="..\..\ChickenAPI.Game\ChickenAPI.Game.csproj" />
     <ProjectReference Include="..\..\libs\SaltyEmu.Commands\SaltyEmu.Commands.csproj" />
     <ProjectReference Include="..\..\libs\SaltyEmu.Communication\SaltyEmu.Communication.csproj" />

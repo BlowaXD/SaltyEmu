@@ -1,4 +1,5 @@
-﻿using ChickenAPI.Enums.Game.Character;
+﻿using System;
+using ChickenAPI.Packets.Enumerations;
 
 namespace SaltyEmu.BasicAlgorithmPlugin.CharacterAlgorithms.Damage
 {
@@ -9,7 +10,7 @@ namespace SaltyEmu.BasicAlgorithmPlugin.CharacterAlgorithms.Damage
 
         public void Initialize()
         {
-            _minDist = new int[(int)CharacterClassType.Unknown, MAX_LEVEL];
+            _minDist = new int[Enum.GetValues(typeof(CharacterClassType)).Length + 1, MAX_LEVEL];
 
             for (int i = 0; i < MAX_LEVEL; i++)
             {
@@ -17,7 +18,7 @@ namespace SaltyEmu.BasicAlgorithmPlugin.CharacterAlgorithms.Damage
                 _minDist[(int)CharacterClassType.Swordman, i] = i + 12; // approx
                 _minDist[(int)CharacterClassType.Magician, i] = 14 + i; // approx
                 _minDist[(int)CharacterClassType.Archer, i] = 2 * i; // approx
-                _minDist[(int)CharacterClassType.Wrestler, i] = 2 * i; // approx
+                _minDist[(int)CharacterClassType.MartialArtist, i] = 2 * i; // approx
             }
         }
 

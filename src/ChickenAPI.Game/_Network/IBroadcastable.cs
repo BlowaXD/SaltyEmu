@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using ChickenAPI.Packets;
+using ChickenAPI.Packets.Interfaces;
 
 namespace ChickenAPI.Game._Network
 {

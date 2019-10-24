@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Data.Character;
 using Microsoft.EntityFrameworkCore;
 using SaltyEmu.Database;
@@ -12,7 +13,7 @@ namespace SaltyEmu.DatabasePlugin.Services.Character
 {
     public class CharacterMateDao : MappedRepositoryBase<CharacterMateDto, CharacterMateModel>, ICharacterMateService
     {
-        public CharacterMateDao(DbContext context, IMapper mapper) : base(context, mapper)
+        public CharacterMateDao(SaltyDbContext context, IMapper mapper, ILogger log) : base(context, mapper, log)
         {
         }
 

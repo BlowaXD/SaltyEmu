@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
 using Autofac;
 using ChickenAPI.Core.IoC;
+using ChickenAPI.Data.Enums;
 using ChickenAPI.Data.Item;
-using ChickenAPI.Enums;
 using ChickenAPI.Game.Inventory.Events;
 using Qmmands;
 using SaltyEmu.Commands.Checks;

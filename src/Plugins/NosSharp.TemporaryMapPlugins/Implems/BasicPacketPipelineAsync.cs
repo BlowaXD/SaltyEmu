@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Threading.Tasks;
 using ChickenAPI.Game._Network;
-using ChickenAPI.Packets;
 using ChickenAPI.Packets.Attributes;
+using ChickenAPI.Packets.Interfaces;
 
 namespace SaltyEmu.BasicPlugin.Implems
 {
@@ -34,7 +34,7 @@ namespace SaltyEmu.BasicPlugin.Implems
 
         public Task Handle(IPacket packet, ISession session)
         {
-            if (!_packetProcessors.TryGetValue(packet.PacketType, out IPacketProcessor processor))
+            if (!_packetProcessors.TryGetValue(packet.GetType(), out IPacketProcessor processor))
             {
                 return Task.CompletedTask;
             }

@@ -1,8 +1,9 @@
 ﻿using System;
+using ChickenAPI.Core.Configurations;
 
 namespace SaltyEmu.DatabasePlugin.Configuration
 {
-    public class DatabaseConfiguration
+    public class DatabaseConfiguration : IConfiguration
     {
         public DatabaseConfiguration()
         {

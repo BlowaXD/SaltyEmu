@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Packets;
+using ChickenAPI.Packets.Interfaces;
 
 namespace SaltyEmu.Core.PacketHandling
 {

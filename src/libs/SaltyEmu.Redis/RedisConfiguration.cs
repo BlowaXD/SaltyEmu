@@ -1,6 +1,8 @@
-﻿namespace SaltyEmu.Redis
+﻿using ChickenAPI.Core.Configurations;
+
+namespace SaltyEmu.Redis
 {
-    public class RedisConfiguration
+    public class RedisConfiguration : IConfiguration
     {
         public RedisConfiguration()
         {

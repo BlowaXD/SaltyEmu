@@ -1,13 +1,13 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using ChickenAPI.Core.Events;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Data.Character;
 using ChickenAPI.Data.Families;
-using ChickenAPI.Enums.Game.Character;
-using ChickenAPI.Enums.Game.Families;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Families.Events;
 using ChickenAPI.Game.Families.Extensions;
+using ChickenAPI.Packets.Enumerations;
 
 namespace SaltyEmu.BasicPlugin.EventHandlers.Family
 {
@@ -16,10 +16,11 @@ namespace SaltyEmu.BasicPlugin.EventHandlers.Family
         private readonly ICharacterFamilyService _characterFamilyService;
         private readonly IFamilyService _familyService;
 
-        public Family_Creation_Handler(IFamilyService familyService, ICharacterFamilyService characterFamilyService)
+
+        public Family_Creation_Handler(ILogger log, ICharacterFamilyService characterFamilyService, IFamilyService familyService) : base(log)
         {
-            _familyService = familyService;
             _characterFamilyService = characterFamilyService;
+            _familyService = familyService;
         }
 
         protected override async Task Handle(FamilyCreationEvent e, CancellationToken cancellation)

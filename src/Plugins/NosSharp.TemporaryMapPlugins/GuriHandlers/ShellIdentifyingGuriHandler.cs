@@ -7,7 +7,7 @@ namespace SaltyEmu.BasicPlugin.GuriHandlers
 {
     public class ShellIdentifyingGuriHandler
     {
-        private static readonly Logger Log = Logger.GetLogger<ShellIdentifyingGuriHandler>();
+        // private static readonly Logger Log = Logger.GetLogger<ShellIdentifyingGuriHandler>();
 
         /// <summary>
         /// This method will teleport the requester to Act 6
@@ -18,7 +18,7 @@ namespace SaltyEmu.BasicPlugin.GuriHandlers
         [GuriEffect(204)]
         public static void OnShellIdentifyRequest(IPlayerEntity player, GuriEvent e)
         {
-            Log.Info($"[GURI][SHELL_IDENTIFY] {player.Character.Name} identified shell : ");
+            // Log.Info($"[GURI][SHELL_IDENTIFY] {player.Character.Name} identified shell : ");
         }
     }
 }

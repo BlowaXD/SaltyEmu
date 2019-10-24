@@ -11,7 +11,7 @@ namespace NW.Plugins.PacketHandling
 {
     public class PacketHandlerPlugin : IPlugin
     {
-        private static readonly Logger Log = Logger.GetLogger<PacketHandlerPlugin>();
+        // private static readonly Logger Log = Logger.GetLogger<PacketHandlerPlugin>();
         public PluginEnableTime EnableTime => PluginEnableTime.PostContainerBuild;
         public string Name => "SaltyEmu";
 
@@ -37,7 +37,7 @@ namespace NW.Plugins.PacketHandling
 
                         Type type = handlerType.BaseType.GenericTypeArguments[0];
 
-                        Log.Info($"[CHARACTER_SCREEN][HANDLING] {handlerType}");
+                        // Log.Info($"[CHARACTER_SCREEN][HANDLING] {handlerType}");
                         packetPipeline.RegisterAsync(handler, type).ConfigureAwait(false).GetAwaiter().GetResult();
                     }
                     catch (Exception)
@@ -58,7 +58,7 @@ namespace NW.Plugins.PacketHandling
 
                         Type type = handlerType.BaseType.GenericTypeArguments[0];
 
-                        Log.Info($"[GAME][HANDLING] {handlerType}");
+                        // Log.Info($"[GAME][HANDLING] {handlerType}");
                         packetPipeline.RegisterAsync(handler, type).ConfigureAwait(false).GetAwaiter().GetResult();
                     }
                     catch (Exception)
@@ -69,13 +69,13 @@ namespace NW.Plugins.PacketHandling
             }
             catch (Exception e)
             {
-                Log.Error("OnEnable", e);
+                // Log.Error("OnEnable", e);
             }
         }
 
         public void OnLoad()
         {
-            Log.Info("Loading...");
+            // Log.Info("Loading...");
             ChickenContainer.Builder.RegisterAssemblyTypes(typeof(PacketHandlerPlugin).Assembly).AsClosedTypesOf(typeof(GenericSessionPacketHandlerAsync<>)).PropertiesAutowired();
             ChickenContainer.Builder.RegisterAssemblyTypes(typeof(PacketHandlerPlugin).Assembly).AsClosedTypesOf(typeof(GenericGamePacketHandlerAsync<>)).PropertiesAutowired();
         }

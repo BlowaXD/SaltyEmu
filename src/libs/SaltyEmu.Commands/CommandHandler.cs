@@ -1,9 +1,7 @@
 ﻿using Autofac.Extensions.DependencyInjection;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Logging;
-using ChickenAPI.Enums.Packets;
 using ChickenAPI.Game.Entities.Player;
-using ChickenAPI.Game.Helpers;
 using Qmmands;
 using SaltyEmu.Commands.Entities;
 using SaltyEmu.Commands.Interfaces;
@@ -12,6 +10,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ChickenAPI.Game.Helpers;
+using ChickenAPI.Packets.Enumerations;
 
 namespace SaltyEmu.Commands
 {
@@ -21,17 +21,16 @@ namespace SaltyEmu.Commands
     public class CommandHandler : ICommandContainer
     {
         private readonly CommandService _commands;
-        private readonly Logger _logger;
+        private readonly ILogger _logger;
 
         public IServiceProvider Services { get; }
 
         /// <summary>
         ///     This class should be instanciated with our Container.
         /// </summary>
-        public CommandHandler()
+        public CommandHandler(ILogger logger)
         {
-            _logger = Logger.GetLogger<CommandHandler>();
-
+            _logger = logger;
             _commands = new CommandService(new CommandServiceConfiguration
             {
                 CaseSensitive = false,
@@ -45,7 +44,7 @@ namespace SaltyEmu.Commands
 
         public async Task AddModuleAsync<T>() where T : SaltyModuleBase
         {
-            await _commands.AddModuleAsync<T>();
+            _commands.AddModule<T>();
 
             IReadOnlyList<Command> readOnlyList = _commands.GetAllModules().FirstOrDefault(s => s.Type == typeof(T))?.Commands;
             if (readOnlyList != null)
@@ -66,7 +65,7 @@ namespace SaltyEmu.Commands
                 throw new ArgumentException("The given module is not registered in the command container.");
             }
 
-            await _commands.RemoveModuleAsync(module);
+            _commands.RemoveModule(module);
         }
 
         public Module[] GetModulesByName(string name, bool caseSensitive = true)
@@ -148,8 +147,8 @@ namespace SaltyEmu.Commands
                 builder.AddCommand(cmdBuilder);
             }
 
-            await _commands.RemoveModuleAsync(oldModule);
-            await _commands.AddModuleAsync(builder);
+            _commands.RemoveModule(oldModule);
+            _commands.AddModule(builder);
         }
 
         public void AddTypeParser<T>(TypeParser<T> typeParser)
@@ -190,7 +189,7 @@ namespace SaltyEmu.Commands
             var ctx = context as SaltyCommandContext;
             if (ctx is null)
             {
-                _logger.Debug($"Unknown context: {context.GetType()}. This is bad. Please report this.");
+                _logger.Debug($"FairyMoveType context: {context.GetType()}. This is bad. Please report this.");
             }
 
             _logger.Debug($"The command {command.Name} (from player {ctx.Player.Character.Name} [{ctx.Player.Character.Id}]) has successfully been executed.");

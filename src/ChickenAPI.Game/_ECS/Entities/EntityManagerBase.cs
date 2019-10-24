@@ -4,16 +4,15 @@ using System.Linq;
 using Autofac;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Logging;
-using ChickenAPI.Enums.Game.Entity;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game._ECS.Systems;
+using ChickenAPI.Packets.Enumerations;
 
 namespace ChickenAPI.Game._ECS.Entities
 {
     public abstract class EntityManagerBase : IEntityManager
     {
         protected static IEntityManagerContainer EmContainer = new Lazy<IEntityManagerContainer>(() => ChickenContainer.Instance.Resolve<IEntityManagerContainer>()).Value;
-        protected static readonly Logger Log = Logger.GetLogger<EntityManagerBase>();
 
         // entities
         protected readonly HashSet<IPlayerEntity> _players = new HashSet<IPlayerEntity>();
@@ -51,7 +50,7 @@ namespace ChickenAPI.Game._ECS.Entities
         {
             lock(LockObj)
             {
-                if (entity.Type == VisualType.Character)
+                if (entity.Type == VisualType.Player)
                 {
                     _players.Add(entity as IPlayerEntity);
                 }
@@ -66,7 +65,7 @@ namespace ChickenAPI.Game._ECS.Entities
                 entities.Add(entity.Id, entity);
                 UpdateCache();
                 // player cache
-                if (!ShouldUpdate && entity.Type == VisualType.Character)
+                if (!ShouldUpdate && entity.Type == VisualType.Player)
                 {
                     StartSystemUpdate();
                 }
@@ -77,7 +76,7 @@ namespace ChickenAPI.Game._ECS.Entities
         {
             lock(LockObj)
             {
-                if (entity.Type == VisualType.Character)
+                if (entity.Type == VisualType.Player)
                 {
                     _players.Remove(entity as IPlayerEntity);
                 }

@@ -6,12 +6,13 @@ using Autofac;
 using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Logging;
 using ChickenAPI.Data.Map;
+using SaltyEmu.Core.Logging;
 
 namespace Toolkit.Converter
 {
     public class MapDatConverter
     {
-        private static readonly Logger Log = Logger.GetLogger<MapDatConverter>();
+        private static readonly ILogger Log = Logger.GetLogger<MapDatConverter>();
         private readonly List<MapDto> _maps = new List<MapDto>();
         private IMapService _mapService;
 

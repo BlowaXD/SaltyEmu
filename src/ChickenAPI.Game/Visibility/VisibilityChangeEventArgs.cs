@@ -1,5 +1,5 @@
 ﻿using System;
-using ChickenAPI.Enums.Game.Visibility;
+using ChickenAPI.Data.Enums.Game.Visibility;
 
 namespace ChickenAPI.Game.Visibility
 {

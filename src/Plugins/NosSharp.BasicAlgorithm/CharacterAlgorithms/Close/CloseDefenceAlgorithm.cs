@@ -1,4 +1,4 @@
-﻿using ChickenAPI.Enums.Game.Character;
+﻿using ChickenAPI.Packets.Enumerations;
 
 namespace SaltyEmu.BasicAlgorithmPlugin.CharacterAlgorithms.Close
 {
@@ -9,7 +9,7 @@ namespace SaltyEmu.BasicAlgorithmPlugin.CharacterAlgorithms.Close
 
         public void Initialize()
         {
-            _stats = new int[(int)CharacterClassType.Unknown, MAX_LEVEL];
+            _stats = new int[(int)CharacterClassType.MartialArtist + 1, MAX_LEVEL];
 
 
             for (int i = 0; i < MAX_LEVEL; i++)
@@ -18,7 +18,7 @@ namespace SaltyEmu.BasicAlgorithmPlugin.CharacterAlgorithms.Close
                 _stats[(int)CharacterClassType.Swordman, i] = i + 2; // approx
                 _stats[(int)CharacterClassType.Magician, i] = (i + 11) / 2; // approx
                 _stats[(int)CharacterClassType.Archer, i] = i; // approx
-                _stats[(int)CharacterClassType.Wrestler, i] = i + 2; // approx
+                _stats[(int)CharacterClassType.MartialArtist, i] = i + 2; // approx
             }
         }
 

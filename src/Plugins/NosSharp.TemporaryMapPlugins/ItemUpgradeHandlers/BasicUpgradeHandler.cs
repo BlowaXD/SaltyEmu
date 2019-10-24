@@ -2,23 +2,25 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Logging;
-using ChickenAPI.Enums.Packets;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game.Inventory.ItemUpgrade;
 using ChickenAPI.Game.Inventory.ItemUpgrade.Events;
 using ChickenAPI.Game.Inventory.ItemUpgrade.Handlers;
 using ChickenAPI.Game.Inventory.ItemUpgrade.Handlers.Handling;
+using ChickenAPI.Packets.Enumerations;
 
 namespace SaltyEmu.BasicPlugin.ItemUpgradeHandlers
 {
     public class BasicUpgradeHandler : IItemUpgradeHandler
     {
-        private static readonly Logger Log = Logger.GetLogger<BasicUpgradeHandler>();
+        private readonly ILogger _log;
         protected readonly Dictionary<UpgradePacketType, ItemUpgradeHandler> HandlersByUpgradeType;
 
-        public BasicUpgradeHandler()
+        public BasicUpgradeHandler(ILogger log)
         {
+            _log = log;
             HandlersByUpgradeType = new Dictionary<UpgradePacketType, ItemUpgradeHandler>();
             Assembly currentAsm = Assembly.GetAssembly(typeof(BasicUpgradeHandler));
             // get types
@@ -42,7 +44,7 @@ namespace SaltyEmu.BasicPlugin.ItemUpgradeHandlers
                 return;
             }
 
-            Log.Info($"[REGISTER_HANDLER] UPGRADE_TYPE : {handlerAttribute.Type} REGISTERED !");
+            _log.Info($"[REGISTER_HANDLER] UPGRADE_TYPE : {handlerAttribute.Type} REGISTERED !");
             HandlersByUpgradeType.Add(handlerAttribute.Type, handlerAttribute);
         }
 

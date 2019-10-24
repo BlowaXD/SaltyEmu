@@ -4,7 +4,7 @@ using ChickenAPI.Data.Server;
 
 namespace SaltyEmu.Communication.Protocol
 {
-    public abstract class BaseBroadcastedPacket : IIpcPacket
+    public abstract class BaseBroadcastedPacket : IAsyncRpcRequest
     {
         public Guid Id { get; set; }
 

@@ -8,7 +8,7 @@ namespace SaltyEmu.Communication.Protocol
         PacketContainer Create<T>(string content);
         PacketContainer Create(Type type, string content);
 
-        PacketContainer ToPacket<T>(IIpcPacket packet);
-        PacketContainer ToPacket(Type type, IIpcPacket packet);
+        PacketContainer ToPacket<T>(T packet) where T : IAsyncRpcRequest;
+        PacketContainer ToPacket(Type type, IAsyncRpcRequest packet);
     }
 }

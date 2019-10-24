@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using ChickenAPI.Core.Logging;
 using ChickenAPI.Data.Skills;
 using Microsoft.EntityFrameworkCore;
 using SaltyEmu.Database;
@@ -14,7 +15,7 @@ namespace SaltyEmu.DatabasePlugin.Services.Skill
         private readonly Dictionary<long, SkillDto> _skills;
         private readonly Dictionary<long, SkillDto[]> _skillsByClassId;
 
-        public SkillDao(DbContext context, IMapper mapper) : base(context, mapper)
+        public SkillDao(DbContext context, IMapper mapper, ILogger log) : base(context, mapper, log)
         {
             IEnumerable<SkillDto> tmp = Get();
             _skills = tmp.ToDictionary(s => s.Id, s => s);

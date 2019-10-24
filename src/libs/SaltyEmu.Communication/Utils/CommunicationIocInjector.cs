@@ -17,8 +17,8 @@ namespace SaltyEmu.Communication.Utils
 
             ChickenContainer.Builder.RegisterType<RuntimeSmartIpcRouter>().As<IIpcPacketRouter>().PropertiesAutowired().SingleInstance();
             ChickenContainer.Builder.RegisterType<PacketHandlersContainer>().As<IIpcPacketHandlersContainer>().PropertiesAutowired().SingleInstance();
-            ChickenContainer.Builder.RegisterType<MqttIpcClient>().As<IIpcClient>().PropertiesAutowired().SingleInstance();
-            ChickenContainer.Builder.RegisterType<MqttIpcServer>().As<IIpcServer>().PropertiesAutowired().SingleInstance();
+            ChickenContainer.Builder.RegisterType<MqttIpcClient>().As<IRpcClient>().PropertiesAutowired().SingleInstance();
+            ChickenContainer.Builder.RegisterType<MqttIpcServer>().As<IRpcServer>().PropertiesAutowired().SingleInstance();
         }
     }
 }

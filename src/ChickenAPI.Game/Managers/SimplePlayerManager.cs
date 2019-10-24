@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using ChickenAPI.Game.Entities.Player;
 using ChickenAPI.Game._Network;
 using ChickenAPI.Packets;
+using ChickenAPI.Packets.Interfaces;
 
 namespace ChickenAPI.Game.Managers
 {

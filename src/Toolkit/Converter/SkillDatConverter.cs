@@ -8,15 +8,16 @@ using ChickenAPI.Core.IoC;
 using ChickenAPI.Core.Logging;
 using ChickenAPI.Data;
 using ChickenAPI.Data.BCard;
+using ChickenAPI.Data.Enums.Game.BCard;
 using ChickenAPI.Data.Skills;
-using ChickenAPI.Enums.Game.BCard;
+using SaltyEmu.Core.Logging;
 
 namespace Toolkit.Converter
 {
     public class SkillDatConverter
     {
         private const string FILE = "Skill.dat";
-        private static readonly Logger Log = Logger.GetLogger<CardDatConverter>();
+        private static readonly ILogger Log = Logger.GetLogger<CardDatConverter>();
         private static string _inputDirectory;
         private readonly List<BCardDto> _skillBCards = new List<BCardDto>();
 

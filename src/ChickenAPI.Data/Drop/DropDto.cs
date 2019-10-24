@@ -1,4 +1,4 @@
-﻿using ChickenAPI.Enums.Game.Drop;
+﻿using ChickenAPI.Data.Enums.Game.Drop;
 
 namespace ChickenAPI.Data.Drop
 {

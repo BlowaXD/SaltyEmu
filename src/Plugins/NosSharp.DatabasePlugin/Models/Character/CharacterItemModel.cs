@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using ChickenAPI.Data;
-using ChickenAPI.Enums.Game.Entity;
-using ChickenAPI.Enums.Game.Items;
+using ChickenAPI.Packets.Enumerations;
 using SaltyEmu.Database;
 using SaltyEmu.DatabasePlugin.Models.Item;
 
@@ -32,7 +31,7 @@ namespace SaltyEmu.DatabasePlugin.Models.Character
 
         public short Slot { get; set; }
 
-        public InventoryType Type { get; set; }
+        public PocketType Type { get; set; }
 
         public byte Design { get; set; }
 

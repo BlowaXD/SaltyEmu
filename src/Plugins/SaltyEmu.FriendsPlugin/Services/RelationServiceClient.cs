@@ -4,8 +4,9 @@ using System.Threading.Tasks;
 using ChickenAPI.Core.IPC;
 using ChickenAPI.Core.IPC.Protocol;
 using ChickenAPI.Core.Logging;
+using ChickenAPI.Data.Enums.Game.Relations;
 using ChickenAPI.Data.Relations;
-using ChickenAPI.Enums.Game.Relations;
+using ChickenAPI.Packets.Enumerations;
 using SaltyEmu.Communication.Communicators;
 using SaltyEmu.Communication.Configs;
 using SaltyEmu.FriendsPlugin.Protocol;
@@ -14,20 +15,21 @@ namespace SaltyEmu.FriendsPlugin.Services
 {
     public class RelationServiceClient : IRelationService
     {
-        private readonly IIpcClient _client;
-        private readonly Logger _log = Logger.GetLogger<RelationServiceClient>();
+        private readonly IRpcClient _client;
+        private readonly ILogger _log;
 
-        public RelationServiceClient(IIpcClient client)
+        public RelationServiceClient(IRpcClient client, ILogger log)
         {
             _client = client;
+            _log = log;
         }
 
-        private Task<TResponse> RequestAsync<TResponse>(IIpcRequest request) where TResponse : class, IIpcResponse
+        private Task<TResponse> RequestAsync<TResponse>(ISyncRpcRequest request) where TResponse : class, ISyncRpcResponse
         {
             return _client.RequestAsync<TResponse>(request);
         }
 
-        private Task BroadcastAsync<TPacket>(TPacket request) where TPacket : class, IIpcPacket
+        private Task BroadcastAsync<TPacket>(TPacket request) where TPacket : class, IAsyncRpcRequest
         {
             return _client.BroadcastAsync(request);
         }

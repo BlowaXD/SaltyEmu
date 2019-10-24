@@ -13,7 +13,7 @@ namespace SaltyEmu.Redis
 {
     public abstract class GenericRedisCacheClient<TObject> : ISynchronizedRepository<TObject> where TObject : class, ISynchronizedDto
     {
-        protected readonly Logger Log = Logger.GetLogger($"RedisCache({typeof(TObject).Name})");
+        protected readonly ILogger Log;
         protected readonly string DataPrefix;
         protected readonly string KeySetKey;
         protected readonly RedisHybridCacheClient CacheClient;
@@ -31,12 +31,13 @@ namespace SaltyEmu.Redis
 
         protected string ToKey(TObject obj) => ToKey(obj.Id);
 
-        protected GenericRedisCacheClient(RedisConfiguration conf) : this(typeof(TObject).Name.ToLower(), conf)
+        protected GenericRedisCacheClient(RedisConfiguration conf, ILogger log) : this(typeof(TObject).Name.ToLower(), conf, log)
         {
         }
 
-        private GenericRedisCacheClient(string basePrefix, RedisConfiguration conf)
+        private GenericRedisCacheClient(string basePrefix, RedisConfiguration conf, ILogger log)
         {
+            Log = log;
             DataPrefix = "data:" + basePrefix + ':';
             KeySetKey = "keys:" + basePrefix;
             var tmp = new RedisCacheClientOptions
